@@ -1,0 +1,29 @@
+    <header id="masthead" class="site-header" role="banner">
+      <div class="header-main">
+        <h1 class="site-title"><a href="/" rel="home">Teamtrope</a></h1>
+        <% if signed_in? %>  
+        <div class="search-toggle">
+          <a href="#search-container" class="screen-reader-text">Search</a>
+        </div>
+        <% end %>
+        <% if signed_in? %>
+          <%= render "layouts/signed_in_navigation.html" %>
+        <% else %>
+          <%= render "layouts/navigation.html" %>
+        <% end %>
+      </div>
+      
+      <% if signed_in? %>
+      <div id="search-container" class="search-box-wrapper hide">
+        <div class="search-box">
+          <form role="search" method="get" class="search-form" action="https://teamtrope.com/">
+            <label>
+              <span class="screen-reader-text">Search for:</span>
+              <input type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" title="Search for:" />
+            </label>
+            <input type="submit" class="search-submit" value="Search" />
+          </form>
+        </div>
+      </div>
+      <% end %>
+    </header><!-- #masthead -->

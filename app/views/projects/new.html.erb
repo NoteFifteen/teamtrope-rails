@@ -1,0 +1,10 @@
+<div class="padder">
+  <div class="page" id="blog-page" role="main">
+  <h1>New Project</h1>
+  <%= form_for @project do | f | %>
+    <%= f.label :final_title %><br />
+	<%= f.text_field :final_title %><br /><br />
+	<%= f.submit "Save Project" %>
+  <% end %>
+  </div>
+</div>

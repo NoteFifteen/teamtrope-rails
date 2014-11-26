@@ -1,0 +1,23 @@
+<% provide(:title, "New Status") %>
+<div id="content">
+  <div class="padder">
+  	<h1>New Status</h1>
+		<%= form_for @status do | f | %>
+			<%= f.label :form_name %><br />
+			<%= f.text_field :form_name %><br />
+			<%= f.label :date %><br />
+			<%= f.text_field :date %><br />
+			<%= f.label :project_id %><br />
+			<%= f.text_field :project_id %><br />
+			<%= f.label :user_id %><br />
+			<%= f.text_field :user_id %><br />
+			<%= f.label :entry_id %><br />
+			<%= f.text_field :entry_id %><br />
+			<%= f.label :process_step %><br />
+			<%= f.text_field :process_step %><br />
+			
+			<br />
+			<%= f.submit "Create Status" %>
+		<% end %>
+	</div>
+</div>
