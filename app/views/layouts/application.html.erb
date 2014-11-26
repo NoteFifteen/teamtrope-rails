@@ -772,10 +772,14 @@ margin: 0;
   <div id="page" class="hfeed site">
     <%= render 'layouts/header' %>
     <div id="main" class="site-main">
-    	<% flash.each do | message_type, message | %>
-    		<div class="alert alert-<%= message_type %>"><%= message %></div>
-    	<% end %>
-      <%= yield %>
+    	<div class="page">
+    		<div class='padder'>
+		    	<% flash.each do | message_type, message | %>
+    				<div class="alert alert-<%= message_type %>"><%= message %></div>
+		    	<% end %>
+      		<%= yield %>
+      	</div>
+      </div>
     </div>
     <%= render 'layouts/footer' %>
   </div><!-- #page -->

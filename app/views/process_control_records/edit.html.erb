@@ -1,43 +1,40 @@
 <% provide(:title, "Edit Process Control Record") %>
-<div id="content">
-  <div class="padder">
-  	<h1>Edit Process Control Record</h1>
-		<%= form_for @pcr do | f | %>
-			<%= f.label :days_to_complete_book %><br />
-			<%= f.text_field :days_to_complete_book %><br />
-			<%= f.label :intro_video %><br />
-			<%= f.text_field :intro_video %><br />
-			<%= f.label :who_can_complete %><br />
-			<%= f.text_field :who_can_complete %><br />
-			<%= f.label :is_approval_step %><br />
-			<%= f.text_field :is_approval_step %><br />
-			<%= f.label :days_to_complete_step %><br />
-			<%= f.text_field :days_to_complete_step %><br />
-			<%= f.label :not_approved_go_to %><br />
-			<%= f.text_field :not_approved_go_to %><br />
-			<%= f.label :tab_text %><br />
-			<%= f.text_field :tab_text %><br />
-			<%= f.label :help_link %><br />
-			<%= f.text_field :help_link %><br />
-			<%= f.label :step_name %><br />
-			<%= f.text_field :step_name %><br />
-			<%= f.label :form_name %><br />
-			<%= f.text_field :form_name %><br />
-			<%= f.label :prereq_fields %><br />
-			<%= f.text_field :prereq_fields %><br />
-			<%= f.label :show_steps %><br />
-			<%= f.text_field :show_steps %><br />
-			<%= f.label :workflow %><br />
-			<%= f.text_field :workflow %><br />
-			<%= f.label :icon %><br />
-			<%= f.text_field :icon %><br />
-			<%= f.label :phase %><br />
-			<%= f.text_field :phase %><br />
-			<%= f.label :next_step %><br />
-			<%= f.text_field :next_step %><br />
-			<%= f.label :is_process_step %><br />
-			<%= f.text_field :is_process_step %><br /><br />
-			<%= f.submit "Update PCR" %>
-		<% end %>
-	</div>
-</div>
+<h1>Edit Process Control Record</h1>
+<%= form_for @pcr do | f | %>
+	<%= f.label :days_to_complete_book %><br />
+	<%= f.text_field :days_to_complete_book %><br />
+	<%= f.label :intro_video %><br />
+	<%= f.text_field :intro_video %><br />
+	<%= f.label :who_can_complete %><br />
+	<%= f.text_field :who_can_complete %><br />
+	<%= f.label :is_approval_step %><br />
+	<%= f.text_field :is_approval_step %><br />
+	<%= f.label :days_to_complete_step %><br />
+	<%= f.text_field :days_to_complete_step %><br />
+	<%= f.label :not_approved_go_to %><br />
+	<%= f.text_field :not_approved_go_to %><br />
+	<%= f.label :tab_text %><br />
+	<%= f.text_field :tab_text %><br />
+	<%= f.label :help_link %><br />
+	<%= f.text_field :help_link %><br />
+	<%= f.label :step_name %><br />
+	<%= f.text_field :step_name %><br />
+	<%= f.label :form_name %><br />
+	<%= f.text_field :form_name %><br />
+	<%= f.label :prereq_fields %><br />
+	<%= f.text_field :prereq_fields %><br />
+	<%= f.label :show_steps %><br />
+	<%= f.text_field :show_steps %><br />
+	<%= f.label :workflow %><br />
+	<%= f.text_field :workflow %><br />
+	<%= f.label :icon %><br />
+	<%= f.text_field :icon %><br />
+	<%= f.label :phase %><br />
+	<%= f.text_field :phase %><br />
+	<%= f.label :next_step %><br />
+	<%= f.text_field :next_step %><br />
+	<%= f.label :is_process_step %><br />
+	<%= f.text_field :is_process_step %><br /><br />
+	<%= f.submit "Update PCR" %>
+<% end %>
+		

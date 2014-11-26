@@ -1,14 +1,10 @@
 <% provide(:title, "Process Control Records") %>
-<div id="content">
-  <div class="padder">
-  	<h1>Process Control Records</h1>
-  	<%= link_to "New", new_process_control_record_path %>
-    <div class="page" id="blog-page" role="main">
-    	<% @pcrs.each do | pcr |%>
-    		<%= link_to pcr.step_name, pcr %> |
-    		<%= link_to "Edit", edit_process_control_record_path(pcr) %> |
-    		<%= link_to "Delete", process_control_record_path(pcr), method: :delete, data: {confirm: "Are you sure you want to delete this status?"}%><br />
-    	<% end %>
-    </div>
-  </div>
+<h1>Process Control Records</h1>
+<%= link_to "New", new_process_control_record_path %>
+<div class="page" id="blog-page" role="main">
+<% @pcrs.each do | pcr |%>
+	<%= link_to pcr.step_name, pcr %> |
+		<%= link_to "Edit", edit_process_control_record_path(pcr) %> |
+		<%= link_to "Delete", process_control_record_path(pcr), method: :delete, data: {confirm: "Are you sure you want to delete this status?"}%><br />
+	<% end %>
 </div>
