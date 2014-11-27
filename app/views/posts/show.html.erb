@@ -1,0 +1,95 @@
+<% provide(:title, @post.title) %>
+	<div id="primary" class="content-area">
+		<div id="content" class="site-content" role="main">
+		
+		<%= link_to "Back", posts_path %>
+		<article id="post-<%= @post.title %>" class="post-<%= @post.title %> post type-post status-publish format-standard hentry category-booktrope-community category-group category-teamrooms">
+			<header class="entry-header">
+				<div class="entry-meta">
+					<span class="cat-links"><a href="https://teamtrope.com/category/booktrope-community/" title="View all posts in Booktrope Community" rel="category tag">Booktrope Community</a>, <a href="https://teamtrope.com/category/group/" title="View all posts in Groups" rel="category tag">Groups</a>, <a href="https://teamtrope.com/category/teamrooms/" title="View all posts in Teamrooms" rel="category tag">Teamrooms</a></span>
+				</div>
+				<h1 class="entry-title"><%= @post.title %></h1>
+				<div class="entry-meta">
+					<span class="entry-date">
+						<%= link_to time_tag(@post.post_date, class: "entry-date"), @post, rel:"bookmark" %>
+					</span>
+					<span class="byline">
+						<span class="author vcard">
+							<%= link_to @post.author.name, @post.author, class: "url fn n", rel: "author" %>
+						</span>
+					</span>
+					<span class="comments-link">
+						<a href="https://teamtrope.com/2014/11/amazon-inclusion-teamroom/#comments" title="Comment on Amazon Inclusion Teamroom">1 Comment</a>
+					</span>
+					<span class="edit-link">
+						<%= link_to "Edit", edit_post_path(@post), class: "post-edit-link" %>
+					</span>
+				</div><!-- .entry-meta -->
+			</header><!-- .entry-header -->
+			
+			<div class="entry-content">
+				<%= @post.content %>
+			</div><!-- .entry-content -->	
+		</article><!-- #post-## -->
+		
+		<nav class="navigation post-navigation" role="navigation">
+			<h1 class="screen-reader-text">Post navigation</h1>
+			<div class="nav-links">
+				<a href="https://teamtrope.com/2014/11/bookbub-clarification/" rel="prev">
+					<span class="meta-nav">Previous Post</span>BookBub Clarification!
+				</a>
+			</div><!-- .nav-links -->
+		</nav><!-- .navigation -->
+		
+		<div id="comments" class="comments-area">
+			<h2 class="comments-title">One thought on “Amazon Inclusion Teamroom”</h2>
+			
+			<ol class="comment-list">
+				<li id="comment-261" class="comment byuser comment-author-inazajac even thread-even depth-1">
+					<article id="div-comment-261" class="comment-body">
+						<footer class="comment-meta">
+							<div class="comment-author vcard">
+								<img src="https://teamtrope.com/wp-content/uploads/avatars/363/a2bb4d2ec1b3288914cbe7a332cfbd5b-bpthumb.jpg" class="avatar user-363-avatar avatar-34 photo" width="34" height="34" alt="Avatar of Ina Zajac" />
+								<b class="fn">
+								<a href="https://teamtrope.com/members/inazajac/" rel="external nofollow" class="url">Ina Zajac</a>
+								</b>
+								<span class="says">says:</span>
+							</div><!-- .comment-author -->
+							
+							<div class="comment-metadata">
+								<a href="https://teamtrope.com/2014/11/amazon-inclusion-teamroom/comment-page-1/#comment-261">
+									<time datetime="2014-11-18T18:35:08+00:00">November 18, 2014 at 6:35 pm</time>
+								</a>
+								<span class="edit-link">
+									<a class="comment-edit-link" href="https://teamtrope.com/wp-admin/comment.php?action=editcomment&amp;c=261">Edit</a>
+								</span>
+							</div><!-- .comment-metadata -->
+						</footer><!-- .comment-meta -->
+					
+						<div class="comment-content">
+							<p>Thanks so much for the reminder.<br>
+							Not only did I change my notification settings for the AI group, but also changed the “give me every single reply” option to “new topics only” in the author group. <img src="https://teamtrope.com/wp-includes/images/smilies/icon_smile.gif" alt=":-)" class="wp-smiley">  Yay! I’ve been getting 25 emails a day from that group.</p>
+						</div><!-- .comment-content -->	
+						
+						<div class="reply"></div><!-- .reply -->
+					</article><!-- .comment-body -->
+				</li><!-- #comment-## -->
+			</ol><!-- .comment-list -->
+		
+			<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2014/11/amazon-inclusion-teamroom/#respond" style="display:none;">Cancel reply</a></small></h3>
+				<form action="https://teamtrope.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate="">
+					<p class="logged-in-as">Logged in as <a href="https://teamtrope.com/members/justin/profile/edit/">Justin Jeffress</a>. <a href="https://teamtrope.com/wp-login.php?action=logout&amp;redirect_to=https%3A%2F%2Fteamtrope.com%2F2014%2F11%2Famazon-inclusion-teamroom%2F&amp;_wpnonce=eb8eda1bfb" title="Log out of this account">Log out?</a></p>																			<p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>						<p class="form-allowed-tags">You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes:  <code>&lt;a href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; &lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=""&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;strike&gt; &lt;strong&gt; </code></p>
+					<p class="form-submit">
+						<input name="submit" type="submit" id="submit" value="Post Comment">
+						<input type="hidden" name="comment_post_ID" value="27734" id="comment_post_ID">
+						<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+					</p>
+					<input type="hidden" id="_wp_unfiltered_html_comment_disabled" name="_wp_unfiltered_html_comment" value="973561167e" />
+					<script>(function(){if(window===window.parent){document.getElementById('_wp_unfiltered_html_comment_disabled').name='_wp_unfiltered_html_comment';}})();</script>
+				</form>
+			</div><!-- #respond -->
+		</div><!-- #comments -->
+	</div><!-- #content -->
+</div><!-- #primary -->
+<%= render "layouts/sidebar" %>

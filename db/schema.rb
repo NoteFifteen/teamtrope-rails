@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141125012321) do
+ActiveRecord::Schema.define(version: 20141127000910) do
+
+  create_table "post_tags", force: true do |t|
+    t.integer  "post_id"
+    t.integer  "tag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "post_tags", ["post_id", "tag_id"], name: "index_post_tags_on_post_id_and_tag_id"
+
+  create_table "posts", force: true do |t|
+    t.string   "title"
+    t.datetime "post_date"
+    t.integer  "author_id"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "posts", ["post_date", "title", "author_id"], name: "index_posts_on_post_date_and_title_and_author_id"
+  add_index "posts", ["post_date", "title"], name: "index_posts_on_post_date_and_title"
 
   create_table "process_control_records", force: true do |t|
     t.float    "days_to_complete_book"
@@ -139,6 +160,15 @@ ActiveRecord::Schema.define(version: 20141125012321) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "tags", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tags", ["id", "name"], name: "index_tags_on_id_and_name"
+  add_index "tags", ["name"], name: "index_tags_on_name"
 
   create_table "users", force: true do |t|
     t.string   "email"

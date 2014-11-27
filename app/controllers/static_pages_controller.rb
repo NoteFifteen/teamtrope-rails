@@ -4,6 +4,7 @@ class StaticPagesController < ApplicationController
   		redirect_to visitors_path
   	end
   end
+  
   def visitors
   end
 end

@@ -34,7 +34,7 @@ class ProjectsController < ApplicationController
 			flash[:success] = "Updated"
 			redirect_to @project
 		else
-			render 'new'
+			render 'edit'
 		end
   end
   

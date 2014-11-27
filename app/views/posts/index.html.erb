@@ -1,0 +1,326 @@
+<% provide(:title, "Posts") %>
+<%= link_to "New", new_post_path %>
+<div id="main-content" class="main-content">
+	<div id="primary" class="content-area">
+    <div id="content" class="site-content" role="main">
+    	<% @posts.each do | post | %>
+      <article id="post-<%= post.id %>" class="post-<%= post.id %> post type-post status-publish format-standard hentry category-booktrope-community category-group category-teamrooms">
+        <header class="entry-header">
+          <div class="entry-meta">
+            <span class="cat-links"><a href="https://teamtrope.com/category/booktrope-community/" title="View all posts in Booktrope Community" rel="category tag">Booktrope Community</a>, <a href="https://teamtrope.com/category/group/" title="View all posts in Groups" rel="category tag">Groups</a>, <a href="https://teamtrope.com/category/teamrooms/" title="View all posts in Teamrooms" rel="category tag">Teamrooms</a></span>
+          </div>
+          <h1 class="entry-title"><%= link_to post.title, post %></h1>
+          <div class="entry-meta">
+            <span class="entry-date">
+            	<%= link_to time_tag(post.post_date, class: "entry-date"), post, rel: "bookmark" %>
+            </span>
+            <span class="byline">
+            	<span class="author vcard">
+            		<%= link_to post.author.name, post.author, class: "url fn n", rel: "author" %>
+            	</span>
+            </span>
+            <span class="comments-link">
+            	<a href="https://teamtrope.com/2014/11/amazon-inclusion-teamroom/#comments" title="Comment on Amazon Inclusion Teamroom">1 Comment</a>
+            </span>
+            <span class="edit-link"><%= link_to "Edit", edit_post_path(post), class: "post-edit-link" %></span>
+            <span class="edit-link"><%= link_to "Delete", post_path(post), class: "post-edit-link", method: :delete, data: {confirm: "Are you sure you want to delete this post?"} %></span>
+          </div><!-- .entry-meta -->
+        </header><!-- .entry-header -->
+        
+        <div class="entry-content">
+        	<%= post.content %>
+				</div><!-- .entry-content -->
+				
+				<% if post.tags %>
+				<footer class="entry-meta">
+					<span class="tag-links">
+						<% post.tags.each do | tag | %>
+							<%= link_to tag.name, "#" %>
+						<% end %>
+					</span>
+				</footer>
+				<% end %>
+			</article><!-- #post-## -->
+
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<div id="main-content" class="main-content">
+	<div id="primary" class="content-area">
+    <div id="content" class="site-content" role="main">
+    
+      <article id="post-27734" class="post-27734 post type-post status-publish format-standard hentry category-booktrope-community category-group category-teamrooms">
+        <header class="entry-header">
+          <div class="entry-meta">
+            <span class="cat-links"><a href="https://teamtrope.com/category/booktrope-community/" title="View all posts in Booktrope Community" rel="category tag">Booktrope Community</a>, <a href="https://teamtrope.com/category/group/" title="View all posts in Groups" rel="category tag">Groups</a>, <a href="https://teamtrope.com/category/teamrooms/" title="View all posts in Teamrooms" rel="category tag">Teamrooms</a></span>
+          </div>
+          <h1 class="entry-title"><a href="https://teamtrope.com/2014/11/amazon-inclusion-teamroom/" rel="bookmark">Amazon Inclusion Teamroom</a></h1>
+          <div class="entry-meta">
+            <span class="entry-date">
+            	<a href="https://teamtrope.com/2014/11/amazon-inclusion-teamroom/" rel="bookmark">
+            		<time class="entry-date" datetime="2014-11-18T16:40:16+00:00">November 18, 2014</time>
+            	</a>
+            </span>
+            <span class="byline">
+            	<span class="author vcard">
+            		<a class="url fn n" href="https://teamtrope.com/author/katherine/" rel="author">Katherine Sears</a>
+            	</span>
+            </span>
+            <span class="comments-link">
+            	<a href="https://teamtrope.com/2014/11/amazon-inclusion-teamroom/#comments" title="Comment on Amazon Inclusion Teamroom">1 Comment</a>
+            </span>
+            <span class="edit-link"><a class="post-edit-link" href="https://teamtrope.com/wp-admin/post.php?post=27734&amp;action=edit">Edit</a></span>		</div><!-- .entry-meta -->
+        </header><!-- .entry-header -->
+        
+        <div class="entry-content">
+					<p style="color: #141823;">All - if your book (meaning any book you are a part of the team for) is part of the Amazon Inclusion Program, please be sure you are in the Teamroom for that program within Teamtrope.</p>
+					<p style="color: #141823;">NOTE - please do not join the group if you are &hellip; <a href="https://teamtrope.com/2014/11/amazon-inclusion-teamroom/">Continue Reading &#8250;&#8250;</a><!-- end of .read-more -->	</div><!-- .entry-content -->
+			</article><!-- #post-## -->
+			
+			<article id="post-27490" class="post-27490 post type-post status-publish format-standard hentry category-book-marketing category-booktrope-community category-process-3">
+				<header class="entry-header">
+					<div class="entry-meta">
+						<span class="cat-links"><a href="https://teamtrope.com/category/book-marketing/" title="View all posts in Book Marketing" rel="category tag">Book Marketing</a>, <a href="https://teamtrope.com/category/booktrope-community/" title="View all posts in Booktrope Community" rel="category tag">Booktrope Community</a>, <a href="https://teamtrope.com/category/process-3/" title="View all posts in Process" rel="category tag">Process</a></span>
+					</div>
+					<h1 class="entry-title"><a href="https://teamtrope.com/2014/11/bookbub-clarification/" rel="bookmark">BookBub Clarification!</a></h1>
+					<div class="entry-meta">
+						<span class="entry-date"><a href="https://teamtrope.com/2014/11/bookbub-clarification/" rel="bookmark"><time class="entry-date" datetime="2014-11-13T12:33:32+00:00">November 13, 2014</time></a></span> <span class="byline"><span class="author vcard"><a class="url fn n" href="https://teamtrope.com/author/katherine/" rel="author">Katherine Sears</a></span></span>			<span class="comments-link"><a href="https://teamtrope.com/2014/11/bookbub-clarification/#comments" title="Comment on BookBub Clarification!">1 Comment</a></span>
+						<span class="edit-link"><a class="post-edit-link" href="https://teamtrope.com/wp-admin/post.php?post=27490&amp;action=edit">Edit</a></span>
+					</div><!-- .entry-meta -->
+				</header><!-- .entry-header -->
+				
+				<div class="entry-content">
+					Some folks were a bit confused about the new BookBub Supplementary submission process and related policies, so I wanted to clarify a couple of key points.
+					<ul>
+						<li>We aren't just "OK" with you submitting, we are actively encouraging you to do so! <strong>PLEASE SUBMIT</strong> to BookBub if you have a promo coming &hellip; <a href="https://teamtrope.com/2014/11/bookbub-clarification/">Continue Reading &#8250;&#8250;</a><!-- end of .read-more -->	
+				</div><!-- .entry-content -->
+			</article><!-- #post-## -->
+			
+			<article id="post-26807" class="post-26807 post type-post status-publish format-standard hentry category-book-business category-booktrope-community category-news">
+				<header class="entry-header">
+					<div class="entry-meta">
+						<span class="cat-links"><a href="https://teamtrope.com/category/book-business/" title="View all posts in Book Business" rel="category tag">Book Business</a>, <a href="https://teamtrope.com/category/booktrope-community/" title="View all posts in Booktrope Community" rel="category tag">Booktrope Community</a>, <a href="https://teamtrope.com/category/news/" title="View all posts in News" rel="category tag">News</a></span>
+					</div>
+					<h1 class="entry-title"><a href="https://teamtrope.com/2014/10/amazon-inclusion-program/" rel="bookmark">Amazon Inclusion Program</a></h1>
+					<div class="entry-meta">
+						<span class="entry-date"><a href="https://teamtrope.com/2014/10/amazon-inclusion-program/" rel="bookmark"><time class="entry-date" datetime="2014-10-30T15:51:28+00:00">October 30, 2014</time></a></span> <span class="byline"><span class="author vcard"><a class="url fn n" href="https://teamtrope.com/author/katherine/" rel="author">Katherine Sears</a></span></span>			<span class="comments-link"><a href="https://teamtrope.com/2014/10/amazon-inclusion-program/#comments" title="Comment on Amazon Inclusion Program">12 Comments</a></span>
+						<span class="edit-link"><a class="post-edit-link" href="https://teamtrope.com/wp-admin/post.php?post=26807&amp;action=edit">Edit</a></span>		</div><!-- .entry-meta -->
+				</header><!-- .entry-header -->
+				<div class="entry-content">
+					Hello Again Teams!
+					
+					After joking about not having a name for the “new Amazon program” I realized I was serious. So, I put on my thinking cap, consulted with some other smart Booktrope folks, and came up with “Amazon Inclusion”. Since you are all word people, I probably don’t need to &hellip; <a href="https://teamtrope.com/2014/10/amazon-inclusion-program/">Continue Reading &#8250;&#8250;</a><!-- end of .read-more -->	</div><!-- .entry-content -->
+			</article><!-- #post-## -->
+			
+			<article id="post-26743" class="post-26743 post type-post status-publish format-standard hentry category-book-business category-booktrope-community category-news category-updates">
+				<header class="entry-header">
+					<div class="entry-meta">
+						<span class="cat-links"><a href="https://teamtrope.com/category/book-business/" title="View all posts in Book Business" rel="category tag">Book Business</a>, <a href="https://teamtrope.com/category/booktrope-community/" title="View all posts in Booktrope Community" rel="category tag">Booktrope Community</a>, <a href="https://teamtrope.com/category/news/" title="View all posts in News" rel="category tag">News</a>, <a href="https://teamtrope.com/category/updates/" title="View all posts in updates" rel="category tag">updates</a></span>
+					</div>
+					<h1 class="entry-title"><a href="https://teamtrope.com/2014/10/amazon-booktrope-strategic-partnership-round-2/" rel="bookmark">Amazon – Booktrope Strategic Partnership Round 2</a></h1>
+					<div class="entry-meta">
+						<span class="entry-date"><a href="https://teamtrope.com/2014/10/amazon-booktrope-strategic-partnership-round-2/" rel="bookmark"><time class="entry-date" datetime="2014-10-29T18:46:16+00:00">October 29, 2014</time></a></span> <span class="byline"><span class="author vcard"><a class="url fn n" href="https://teamtrope.com/author/katherine/" rel="author">Katherine Sears</a></span></span>			<span class="comments-link"><a href="https://teamtrope.com/2014/10/amazon-booktrope-strategic-partnership-round-2/#comments" title="Comment on Amazon – Booktrope Strategic Partnership Round 2">25 Comments</a></span>
+						<span class="edit-link"><a class="post-edit-link" href="https://teamtrope.com/wp-admin/post.php?post=26743&amp;action=edit">Edit</a></span>
+					</div><!-- .entry-meta -->
+				</header><!-- .entry-header -->
+				<div class="entry-content">
+					<strong>Hello Trope Family! </strong>
+					I am pleased to announce that we have our next round of books to enroll in our special program with Amazon (I might need to come up with a name for that LOL). The authors and teams have all been told, and we are thrilled to now &hellip; <a href="https://teamtrope.com/2014/10/amazon-booktrope-strategic-partnership-round-2/">Continue Reading &#8250;&#8250;</a><!-- end of .read-more -->	</div><!-- .entry-content -->
+			</article><!-- #post-## -->
+			
+			<article id="post-26535" class="post-26535 post type-post status-publish format-standard hentry category-booktrope-community category-news category-updates">
+				<header class="entry-header">
+					<div class="entry-meta">
+						<span class="cat-links"><a href="https://teamtrope.com/category/booktrope-community/" title="View all posts in Booktrope Community" rel="category tag">Booktrope Community</a>, <a href="https://teamtrope.com/category/news/" title="View all posts in News" rel="category tag">News</a>, <a href="https://teamtrope.com/category/updates/" title="View all posts in updates" rel="category tag">updates</a></span>
+					</div>
+					<h1 class="entry-title"><a href="https://teamtrope.com/2014/10/kdp-update-form-and-open-bookbub-submissions-available-now/" rel="bookmark">KDP Update form and open BookBub Submissions AVAILABLE now!</a></h1>
+					<div class="entry-meta">
+						<span class="entry-date"><a href="https://teamtrope.com/2014/10/kdp-update-form-and-open-bookbub-submissions-available-now/" rel="bookmark"><time class="entry-date" datetime="2014-10-27T13:10:37+00:00">October 27, 2014</time></a></span> <span class="byline"><span class="author vcard"><a class="url fn n" href="https://teamtrope.com/author/kelsey/" rel="author">Kelsey Wong</a></span></span>			<span class="comments-link"><a href="https://teamtrope.com/2014/10/kdp-update-form-and-open-bookbub-submissions-available-now/#comments" title="Comment on KDP Update form and open BookBub Submissions AVAILABLE now!">1 Comment</a></span>
+						<span class="edit-link"><a class="post-edit-link" href="https://teamtrope.com/wp-admin/post.php?post=26535&amp;action=edit">Edit</a></span>
+					</div><!-- .entry-meta -->
+				</header><!-- .entry-header -->
+				
+				<div class="entry-content">
+				My Booktrope Family, do we have some exciting updates for ya!
+				
+				Starting NOW! The KDP Update Form is now available for those already enrolled in KDP Select. As many of you guys who have enrolled in KDP Select in the recent days might have been wondering, now that I've signed up &hellip; <a href="https://teamtrope.com/2014/10/kdp-update-form-and-open-bookbub-submissions-available-now/">Continue Reading &#8250;&#8250;</a><!-- end of .read-more -->	</div><!-- .entry-content -->
+			</article><!-- #post-## -->
+			
+			<article id="post-26320" class="post-26320 post type-post status-publish format-standard hentry category-booktrope-community category-news">
+				<header class="entry-header">
+					<div class="entry-meta">
+						<span class="cat-links"><a href="https://teamtrope.com/category/booktrope-community/" title="View all posts in Booktrope Community" rel="category tag">Booktrope Community</a>, <a href="https://teamtrope.com/category/news/" title="View all posts in News" rel="category tag">News</a></span>
+					</div>
+					<h1 class="entry-title"><a href="https://teamtrope.com/2014/10/congratulations-to-jennifer-gilbert/" rel="bookmark">Congratulations to Jennifer Gilbert!</a></h1>
+					<div class="entry-meta">
+						<span class="entry-date"><a href="https://teamtrope.com/2014/10/congratulations-to-jennifer-gilbert/" rel="bookmark"><time class="entry-date" datetime="2014-10-21T12:20:06+00:00">October 21, 2014</time></a></span> <span class="byline"><span class="author vcard"><a class="url fn n" href="https://teamtrope.com/author/katherine/" rel="author">Katherine Sears</a></span></span>			<span class="comments-link"><a href="https://teamtrope.com/2014/10/congratulations-to-jennifer-gilbert/#comments" title="Comment on Congratulations to Jennifer Gilbert!">15 Comments</a></span>
+						<span class="edit-link"><a class="post-edit-link" href="https://teamtrope.com/wp-admin/post.php?post=26320&amp;action=edit">Edit</a></span>
+					</div><!-- .entry-meta -->
+				</header><!-- .entry-header -->
+				
+				<div class="entry-content">
+					Hello all,
+					
+					I have what I think is AMAZING news. Jennifer Gilbert, Book Manager and Program Manager extraordinaire has agreed to come on to the Booktrope corporate management team in an expanded role. Her new title will be VP of Strategic Development and she will continue to report to me. She &hellip; <a href="https://teamtrope.com/2014/10/congratulations-to-jennifer-gilbert/">Continue Reading &#8250;&#8250;</a><!-- end of .read-more -->
+				</div><!-- .entry-content -->
+			</article><!-- #post-## -->
+			
+			<article id="post-26239" class="post-26239 post type-post status-publish format-standard hentry category-book-marketing category-booktrope-community category-teamtrope tag-authors tag-book-managers tag-booktrope-community tag-communication tag-how-to-2 tag-teamtrope">
+				<header class="entry-header">
+					<div class="entry-meta">
+						<span class="cat-links"><a href="https://teamtrope.com/category/book-marketing/" title="View all posts in Book Marketing" rel="category tag">Book Marketing</a>, <a href="https://teamtrope.com/category/booktrope-community/" title="View all posts in Booktrope Community" rel="category tag">Booktrope Community</a>, <a href="https://teamtrope.com/category/teamtrope/" title="View all posts in Teamtrope" rel="category tag">Teamtrope</a></span>
+					</div>
+					<h1 class="entry-title"><a href="https://teamtrope.com/2014/10/latest-edition-of-faqs/" rel="bookmark">Latest Edition of FAQs</a></h1>
+					<div class="entry-meta">
+						<span class="entry-date">
+							<a href="https://teamtrope.com/2014/10/latest-edition-of-faqs/" rel="bookmark">
+								<time class="entry-date" datetime="2014-10-20T14:41:52+00:00">October 20, 2014</time>
+							</a>
+						</span>
+						<span class="byline">
+							<span class="author vcard">
+								<a class="url fn n" href="https://teamtrope.com/author/jennifergilbert/" rel="author">Jennifer Gilbert</a>
+							</span>
+						</span>
+						<span class="edit-link"><a class="post-edit-link" href="https://teamtrope.com/wp-admin/post.php?post=26239&amp;action=edit">Edit</a></span>
+					</div><!-- .entry-meta -->
+				</header><!-- .entry-header -->
+				
+				<div class="entry-content">
+					Hey Tropers! Welcome to the latest edition of Booktrope FAQs. As always, please let me know if you have any questions.
+					
+					Q: Who can write reviews for my books on Amazon?
+					
+					A: Per Amazon’s website:
+					
+					Yes allowed
+					
+					• Full disclosure: If you received a free product in exchange for your review, please clearly and &hellip; <a href="https://teamtrope.com/2014/10/latest-edition-of-faqs/">Continue Reading &#8250;&#8250;</a><!-- end of .read-more -->
+				</div><!-- .entry-content -->
+				<footer class="entry-meta">
+					<span class="tag-links">
+						<a href="https://teamtrope.com/tag/authors/" rel="tag">Authors</a><a href="https://teamtrope.com/tag/book-managers/" rel="tag">Book Managers</a>
+						<a href="https://teamtrope.com/tag/booktrope-community/" rel="tag">Booktrope Community</a><a href="https://teamtrope.com/tag/communication/" rel="tag">Communication</a>
+						<a href="https://teamtrope.com/tag/how-to-2/" rel="tag">how to</a><a href="https://teamtrope.com/tag/teamtrope/" rel="tag">Teamtrope</a>
+					</span>
+				</footer>
+			</article><!-- #post-## -->
+			
+			<article id="post-26116" class="post-26116 post type-post status-publish format-standard has-post-thumbnail hentry category-authors category-book-managers category-book-marketing category-books category-booktrope-community category-news tag-authors tag-book-managers tag-book-marketing tag-books tag-news has-post-thumbnail">
+				<a class="post-thumbnail" href="https://teamtrope.com/2014/10/book-managers-booktrope-expands-and-the-ranks-of-awesome-grow/">
+					<img width="672" height="372" src="https://teamtrope.com/wp-content/uploads/2014/10/Terracotta_Warriors_Xian_6612w-672x372.jpg" class="attachment-post-thumbnail wp-post-image" alt="Terracotta_Warriors_Xian_6612w" />
+				</a>
+				
+				<header class="entry-header">
+					<div class="entry-meta">
+						<span class="cat-links"><a href="https://teamtrope.com/category/authors/" title="View all posts in Authors" rel="category tag">Authors</a>, <a href="https://teamtrope.com/category/book-managers/" title="View all posts in Book Managers" rel="category tag">Book Managers</a>, <a href="https://teamtrope.com/category/book-marketing/" title="View all posts in Book Marketing" rel="category tag">Book Marketing</a>, <a href="https://teamtrope.com/category/books/" title="View all posts in books" rel="category tag">books</a>, <a href="https://teamtrope.com/category/booktrope-community/" title="View all posts in Booktrope Community" rel="category tag">Booktrope Community</a>, <a href="https://teamtrope.com/category/news/" title="View all posts in News" rel="category tag">News</a></span>
+					</div>
+					<h1 class="entry-title"><a href="https://teamtrope.com/2014/10/book-managers-booktrope-expands-and-the-ranks-of-awesome-grow/" rel="bookmark">Book Managers: Booktrope Expands and the Ranks of Awesome Grow</a></h1>
+					<div class="entry-meta">
+						<span class="entry-date">
+							<a href="https://teamtrope.com/2014/10/book-managers-booktrope-expands-and-the-ranks-of-awesome-grow/" rel="bookmark">
+								<time class="entry-date" datetime="2014-10-16T16:15:56+00:00">October 16, 2014</time>
+							</a>
+						</span>
+						<span class="byline"><span class="author vcard"><a class="url fn n" href="https://teamtrope.com/author/jessejames/" rel="author">Jesse James Freeman</a></span></span><span class="edit-link"><a class="post-edit-link" href="https://teamtrope.com/wp-admin/post.php?post=26116&amp;action=edit">Edit</a></span>
+					</div><!-- .entry-meta -->
+				</header><!-- .entry-header -->
+				
+				<div class="entry-content">
+					<span style="color: #222222;">Greetings Magicians of Words &amp; Art That's Related to Words aka Booktrope Family,</span>
+					<div style="color: #222222;">Booktrope, as you are all well aware, is currently experiencing a tremendous growth spike and endless possibilities abound: Amazon, IPG, KDP Select, Google Play Books (the list goes on and on and on). Many &hellip; <a href="https://teamtrope.com/2014/10/book-managers-booktrope-expands-and-the-ranks-of-awesome-grow/">Continue Reading &#8250;&#8250;</a><!-- end of .read-more --></div>
+				</div><!-- .entry-content -->
+				<footer class="entry-meta">
+					<span class="tag-links">
+						<a href="https://teamtrope.com/tag/authors/" rel="tag">Authors</a><a href="https://teamtrope.com/tag/book-managers/" rel="tag">Book Managers</a>
+						<a href="https://teamtrope.com/tag/book-marketing/" rel="tag">Book Marketing</a><a href="https://teamtrope.com/tag/books/" rel="tag">books</a>
+						<a href="https://teamtrope.com/tag/news/" rel="tag">News</a>
+					</span>
+				</footer>
+			</article><!-- #post-## -->
+			
+			<article id="post-26109" class="post-26109 post type-post status-publish format-standard hentry category-book-marketing category-booktrope-community category-how-to category-news category-process-3 category-project-section">
+				<header class="entry-header">
+					<div class="entry-meta">
+						<span class="cat-links">
+							<a href="https://teamtrope.com/category/book-marketing/" title="View all posts in Book Marketing" rel="category tag">Book Marketing</a>, 
+							<a href="https://teamtrope.com/category/booktrope-community/" title="View all posts in Booktrope Community" rel="category tag">Booktrope Community</a>, 
+							<a href="https://teamtrope.com/category/how-to/" title="View all posts in How To" rel="category tag">How To</a>, 
+							<a href="https://teamtrope.com/category/news/" title="View all posts in News" rel="category tag">News</a>, 
+							<a href="https://teamtrope.com/category/process-3/" title="View all posts in Process" rel="category tag">Process</a>, 
+							<a href="https://teamtrope.com/category/project-section/" title="View all posts in Project Section" rel="category tag">Project Section</a>
+						</span>
+					</div>
+					<h1 class="entry-title"><a href="https://teamtrope.com/2014/10/kdp-select-now-open/" rel="bookmark">KDP Select NOW OPEN!</a></h1>
+					<div class="entry-meta">
+						<span class="entry-date"><a href="https://teamtrope.com/2014/10/kdp-select-now-open/" rel="bookmark"><time class="entry-date" datetime="2014-10-16T13:57:26+00:00">October 16, 2014</time></a></span> <span class="byline"><span class="author vcard"><a class="url fn n" href="https://teamtrope.com/author/katherine/" rel="author">Katherine Sears</a></span></span>			<span class="comments-link"><a href="https://teamtrope.com/2014/10/kdp-select-now-open/#comments" title="Comment on KDP Select NOW OPEN!">2 Comments</a></span>
+						<span class="edit-link"><a class="post-edit-link" href="https://teamtrope.com/wp-admin/post.php?post=26109&amp;action=edit">Edit</a></span>
+					</div><!-- .entry-meta -->
+				</header><!-- .entry-header -->
+				
+				<div class="entry-content">
+					Hello All,
+					
+					As promised, we are opening up KDP Select to anyone who wants it, starting RIGHT NOW!
+					
+					I have not yet gotten a special program for us with the powers-that-be at the Big A, but we all know that can take months and I don’t want to make you all wait &hellip; <a href="https://teamtrope.com/2014/10/kdp-select-now-open/">Continue Reading &#8250;&#8250;</a><!-- end of .read-more -->	
+				</div><!-- .entry-content -->
+			</article><!-- #post-## -->
+			
+			<article id="post-25376" class="post-25376 post type-post status-publish format-standard hentry category-book-business category-book-managers category-book-marketing category-booktrope-community category-process-3 tag-kdp-select">
+				<header class="entry-header">
+					<div class="entry-meta">
+						<span class="cat-links">
+							<a href="https://teamtrope.com/category/book-business/" title="View all posts in Book Business" rel="category tag">Book Business</a>, 
+							<a href="https://teamtrope.com/category/book-managers/" title="View all posts in Book Managers" rel="category tag">Book Managers</a>, 
+							<a href="https://teamtrope.com/category/book-marketing/" title="View all posts in Book Marketing" rel="category tag">Book Marketing</a>, 
+							<a href="https://teamtrope.com/category/booktrope-community/" title="View all posts in Booktrope Community" rel="category tag">Booktrope Community</a>, 
+							<a href="https://teamtrope.com/category/process-3/" title="View all posts in Process" rel="category tag">Process</a>
+						</span>
+					</div>
+					<h1 class="entry-title"><a href="https://teamtrope.com/2014/10/kdp-select-poll/" rel="bookmark">KDP Select Poll</a></h1>
+					<div class="entry-meta">
+						<span class="entry-date">
+							<a href="https://teamtrope.com/2014/10/kdp-select-poll/" rel="bookmark">
+								<time class="entry-date" datetime="2014-10-06T16:13:53+00:00">October 6, 2014</time>
+							</a>
+						</span>
+						<span class="byline">
+							<span class="author vcard"><a class="url fn n" href="https://teamtrope.com/author/katherine/" rel="author">Katherine Sears</a></span>
+						</span>
+						<span class="comments-link"><a href="https://teamtrope.com/2014/10/kdp-select-poll/#comments" title="Comment on KDP Select Poll">56 Comments</a></span>
+						<span class="edit-link"><a class="post-edit-link" href="https://teamtrope.com/wp-admin/post.php?post=25376&amp;action=edit">Edit</a></span>
+					</div><!-- .entry-meta -->
+				</header><!-- .entry-header -->
+				
+				<div class="entry-content">
+					Hey All, <a href="https://teamtrope.com/wp-content/uploads/2014/10/Poll.png"><img class="alignleft wp-image-25383 size-thumbnail" src="https://teamtrope.com/wp-content/uploads/2014/10/Poll-150x150.png" alt="Poll" width="150" height="150" /></a>
+					
+					We are considering allowing folks to opt in to KDP Select soon - BUT - only if you are willing to sign up for a longer duration of time. One year is what we are currently evaluating.
+					
+					This would then allow &hellip; <a href="https://teamtrope.com/2014/10/kdp-select-poll/">Continue Reading &#8250;&#8250;</a><!-- end of .read-more -->
+				</div><!-- .entry-content -->
+				
+				<footer class="entry-meta">
+					<span class="tag-links">
+						<a href="https://teamtrope.com/tag/kdp-select/" rel="tag">KDP Select</a>
+					</span>
+				</footer>
+			</article><!-- #post-## -->
+			
+			<nav class="navigation paging-navigation" role="navigation">
+				<h1 class="screen-reader-text">Posts navigation</h1>
+				<div class="pagination loop-pagination">
+					<span class='page-numbers current'>1</span>
+					<a class='page-numbers' href='https://teamtrope.com/page/2/'>2</a>
+					<span class="page-numbers dots">&hellip;</span>
+					<a class='page-numbers' href='https://teamtrope.com/page/12/'>12</a>
+					<a class="next page-numbers" href="https://teamtrope.com/page/2/">Next &rarr;</a>
+				</div><!-- .pagination -->
+			</nav><!-- .navigation -->
+		</div><!-- #content -->
+	</div><!-- #primary -->
+</div>
+<%= render "layouts/sidebar" %>
