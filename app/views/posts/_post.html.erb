@@ -1,0 +1,38 @@
+		<article id="post-<%= post.title %>" class="post-<%= post.title %> post type-post status-publish format-standard hentry category-booktrope-community category-group category-teamrooms">
+			<header class="entry-header">
+				<div class="entry-meta">
+					<span class="cat-links"><a href="https://teamtrope.com/category/booktrope-community/" title="View all posts in Booktrope Community" rel="category tag">Booktrope Community</a>, <a href="https://teamtrope.com/category/group/" title="View all posts in Groups" rel="category tag">Groups</a>, <a href="https://teamtrope.com/category/teamrooms/" title="View all posts in Teamrooms" rel="category tag">Teamrooms</a></span>
+				</div>
+				<h1 class="entry-title"><%= post.title %></h1>
+				<div class="entry-meta">
+					<span class="entry-date">
+						<%= link_to time_tag(post.post_date, class: "entry-date"), post, rel:"bookmark" %>
+					</span>
+					<span class="byline">
+						<span class="author vcard">
+							<%= link_to post.author.name, post.author, class: "url fn n", rel: "author" %>
+						</span>
+					</span>
+					<span class="comments-link">
+						<a href="https://teamtrope.com/2014/11/amazon-inclusion-teamroom/#comments" title="Comment on Amazon Inclusion Teamroom">1 Comment</a>
+					</span>
+					<span class="edit-link">
+						<%= link_to "Edit", edit_post_path(post), class: "post-edit-link" %>
+					</span>
+				</div><!-- .entry-meta -->
+			</header><!-- .entry-header -->
+			
+			<div class="entry-content">
+				<%= post.content %>
+			</div><!-- .entry-content -->	
+			
+			<% if post.tags %>
+			<footer class="entry-meta">
+				<span class="tag-links">
+					<% post.tags.each do | tag | %>
+						<%= link_to tag.name, "#" %>
+					<% end %>
+				</span>
+			</footer>
+			<% end %>
+		</article><!-- #post-## -->
