@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :users
   resources :projects
-  resources :posts
+  resources :posts do
+  	resources :comments
+  end
   resources :process_control_records
   resources :statuses
 

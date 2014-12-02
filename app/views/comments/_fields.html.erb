@@ -1,0 +1,10 @@
+<%= render "shared/error_messages", object: f.object %>
+<p class="logged-in-as">Logged in as <%= link_to current_user.name, current_user %>. <%= link_to "Log out?", signout_path %></p>				
+<p class="comment-form-comment">
+	<%= f.label :content, "Comment" %><br>
+	<%= f.text_area :content, class: "comment", id: "comment", size:"45x8"%>
+</p>
+<p class="form-allowed-tags">
+	You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes:  <code>&lt;a href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; &lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=""&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;strike&gt; &lt;strong&gt; </code>
+</p>
+<%= f.hidden_field :user_id, value: current_user.id %>

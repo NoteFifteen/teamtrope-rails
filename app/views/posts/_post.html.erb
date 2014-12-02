@@ -15,7 +15,8 @@
 						</span>
 					</span>
 					<span class="comments-link">
-						<a href="https://teamtrope.com/2014/11/amazon-inclusion-teamroom/#comments" title="Comment on Amazon Inclusion Teamroom">1 Comment</a>
+						<% comment_title = "Comment on #{post.title}" %>
+						<%= link_to pluralize(post.comments.count, "comment"), post_path(post, anchor: "comments"), title: comment_title %>
 					</span>
 					<span class="edit-link">
 						<%= link_to "Edit", edit_post_path(post), class: "post-edit-link" %>
