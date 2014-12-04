@@ -42,3 +42,5 @@ gem 'bcrypt-ruby', '3.1.2'
 gem 'parse-ruby-client', '~> 0.2.0'
 
 gem 'humanize', '1.1.0'
+
+gem "paperclip", "~> 4.2"

@@ -2,7 +2,8 @@
 	<article id="div-comment-<%= comment.id %>" class="comment-body">
 		<footer class="comment-meta">
 			<div class="comment-author vcard">
-				<img src="https://teamtrope.com/wp-content/uploads/avatars/363/a2bb4d2ec1b3288914cbe7a332cfbd5b-bpthumb.jpg" class="avatar user-363-avatar avatar-34 photo" width="34" height="34" alt="Avatar of Ina Zajac" />
+				<%= link_to image_tag(comment.user.avatar.url(:thumb), size: "34x34", class: "avatar"), comment.user %>
+				
 				<b class="fn">
 					<%= link_to comment.user.name, comment.user, class: "url", rel: "external nofollow" %>
 				</b>

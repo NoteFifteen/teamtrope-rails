@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    
+    @users = User.all
   end
 
   def show
@@ -27,7 +27,11 @@ class UsersController < ApplicationController
     if @user.save
       sign_in @user
       flash[:success] = "Welcome to Teamtrope!"
-      redirect_to @user
+      if params[:user][:avatar].blank?
+	      redirect_to @user
+	    else
+	    	render :action => 'crop'
+	    end
     else
       render 'new'
     end
@@ -36,18 +40,25 @@ class UsersController < ApplicationController
   def edit
   end
 
-  def update
+  def update    
     if @user.update_attributes(user_params)
-      flash[:success] = "Profile updated"
-      redirect_to @user
-    else
-      render 'edit'
-    end
+	    flash[:success] = "Profile updated"
+  		if params[:user][:avatar].blank?
+  			if @user.cropping?
+		  		@user.avatar.reprocess! 
+		  	end
+	  		redirect_to @user
+	  	else
+	  		render :action => 'crop'
+	  	end
+  	else
+  		render 'edit'
+  	end     
   end
   
   private
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :avatar, :crop_x, :crop_y, :crop_w, :crop_h)
     end
     
     def correct_user

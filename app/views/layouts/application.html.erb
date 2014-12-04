@@ -766,6 +766,7 @@ margin: 0;
   <!-- Rails tags -->
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= yield(:head) %>
   <%= csrf_meta_tags %>
 </head>
 <body class="single single-projects postid-6187 logged-in no-customize-support custom-background group-blog masthead-fixed singular no-js" >
