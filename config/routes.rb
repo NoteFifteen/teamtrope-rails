@@ -15,8 +15,7 @@ Rails.application.routes.draw do
   resources :statuses
 
   # You can have the root of your site routed with "root"
-   #root 'static_pages#home'
-   root 'posts#index',                      via: 'get'
+   root 'static_pages#home'
    match 'signup',  to: 'users#new',        via: 'get'
    match 'signin',  to: 'sessions#new',     via: 'get'
    match 'signout', to: 'sessions#destroy', via: 'get'
