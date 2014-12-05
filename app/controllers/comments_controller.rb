@@ -1,9 +1,8 @@
 class CommentsController < ApplicationController
 	before_action :signed_in_user, only: [:show, :index, :destroy, :edit]
+	before_action :load_comment, only: [:show, :index, :update, :destroy]
 	
 	def show
-		@post = Post.find(params[:post_id])
-		@comment = @post.comments.find(params[:id])
 	end
 	
   def create
@@ -13,8 +12,6 @@ class CommentsController < ApplicationController
   end
 
   def update
-	  @post = Post.find(params[:post_id])
-  	@comment = @post.comments.find(params[:id])
   	if @comment.update_attributes(comment_params)
   		flash[:success] = "Comment Edited!"
   		redirect_to @post
@@ -24,13 +21,10 @@ class CommentsController < ApplicationController
   end
   
   def edit
-	  @post = Post.find(params[:post_id])
-	  @comment = @post.comments.find(params[:id])
+  	@comment = Comment.find(params[:format])
   end
   
   def destroy
-  	@post = Post.find(params[:post_id])
-  	@comment = @post.comments.find(params[:id])
   	@comment.destroy
   	flash[:notice] = "Comment has been destroyed."
     
@@ -42,5 +36,14 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:user_id, :content)
     end
     
+    def load_comment
+    	@comment = Comment.find(params[:id])
+    	@post = @comment.post
+    	
+	  	rescue ActiveRecord::RecordNotFound
+  			flash[:alert] = "The comment you were looking for could not be found."
+  			redirect_to posts_path
+    	
+    end
 
 end

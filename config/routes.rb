@@ -4,23 +4,28 @@ Rails.application.routes.draw do
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-  
-  resources :sessions, only: [:new, :create, :destroy]
-  resources :users
-  resources :projects
-  resources :posts do
-  	resources :comments
-  end
-  resources :process_control_records
-  resources :statuses
 
   # You can have the root of your site routed with "root"
    root 'static_pages#home'
-   match 'signup',  to: 'users#new',        via: 'get'
-   match 'signin',  to: 'sessions#new',     via: 'get'
-   match 'signout', to: 'sessions#destroy', via: 'get'
-   match 'visitors', to: 'static_pages#visitors', via: 'get'
 
+  resources :sessions, only: [:new, :create, :destroy]
+  resources :users do
+  	member do
+  		get 'activity'
+  	end
+  end
+  resources :projects
+  resources :posts do
+  	resources :comments, shallow: true
+  end
+	resources :process_control_records
+  resources :statuses
+  
+  match 'signup',  to: 'users#new',        via: 'get'
+  match 'signin',  to: 'sessions#new',     via: 'get'
+  match 'signout', to: 'sessions#destroy', via: 'get'
+  match 'visitors', to: 'static_pages#visitors', via: 'get'
+   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

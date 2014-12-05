@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :signed_in_user, only: [:show, :index, :destroy, :edit]
+  before_action :signed_in_user, only: [:show, :index, :destroy, :edit, :activity]
   before_action :correct_user,   only: [:edit, :update]
 
 
@@ -54,6 +54,10 @@ class UsersController < ApplicationController
   	else
   		render 'edit'
   	end     
+  end
+  
+  def activity
+  	@user = User.find(params[:id])
   end
   
   private
