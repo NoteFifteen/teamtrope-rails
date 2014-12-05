@@ -14,6 +14,11 @@ Rails.application.routes.draw do
   		get 'activity'
   	end
   end
+  
+  get '/users/:id/activity/mentions',  to: 'users#mentions',  as: 'mentions'
+  get '/users/:id/activity/favorites', to: 'users#favorites', as: 'favorites'
+  get '/users/:id/activity/groups',    to: 'users#groups',    as: 'groups'
+  
   resources :projects
   resources :posts do
   	resources :comments, shallow: true

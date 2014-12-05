@@ -56,7 +56,23 @@ class UsersController < ApplicationController
   	end     
   end
   
+  #TODO: Implement activity
   def activity
+  	@user = User.find(params[:id])
+  end
+  
+  #TODO: Implement mentions
+  def mentions
+  	@user = User.find(params[:id])
+  end
+  
+  #TODO: Implement groups
+  def groups
+  	@user = User.find(params[:id])
+  end
+  
+  #TODO: Implement favorites
+  def favorites
   	@user = User.find(params[:id])
   end
   

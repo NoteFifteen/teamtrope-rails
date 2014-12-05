@@ -1,0 +1,33 @@
+<div id="item-nav">
+	<div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
+		<ul>
+			<li id="activity-personal-li">
+				<%= link_to "Activity", activity_user_path(@user), id: "user-activity" %>
+			</li>								
+			<li id="xprofile-personal-li" class="current selected">
+				<%= link_to "Profile", @user, id: "user-xprofile" %>
+			</li>
+			<li id="notifications-personal-li">
+				<%= link_to ("Notifications " + content_tag(:span, "15", class: "count")).html_safe,  "#", id: "user-notifications" %>
+			</li>
+			<li id="messages-personal-li">
+				<%= link_to ("Messages " + content_tag(:span, "0", class: "no-count")).html_safe, "#", id: "user-messages" %>
+			</li>
+			<li id="groups-personal-li">
+				<%= link_to ("Groups " + content_tag(:span, "2", class: "count")).html_safe, "#", id: "user-groups" %>
+			</li>
+			<li id="forums-personal-li">
+				<%= link_to "Forums", "#", id: "user-forums" %>
+			</li>
+			<li id="invite-anyone-personal-li">
+				<%= link_to "Send Invites", "#", id: "user-invite-anyone" %>
+			</li>
+			<li id="docs-personal-li">
+				<%= link_to "Docs", "#", id: "user-docs" %>
+			</li>
+			<li id="settings-personal-li">
+				<%= link_to "Settings", "#", id: "user-settings" %>
+			</li>
+		</ul>
+	</div>
+</div><!-- #item-nav -->

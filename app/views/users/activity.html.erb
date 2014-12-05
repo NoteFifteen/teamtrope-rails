@@ -1,1 +1,209 @@
 <% provide(:title, "#{@user.name} Activity") %>
+<div id="primary" class="content-area">
+	<div id="content" class="site-content" role="main">
+		<article id="post-0" class="post-0 bp_members type-bp_members status-publish hentry">
+			<header class="entry-header">
+				<h1 class="entry-title"><%= link_to @user.name, @user%></h1>
+			</header><!-- .entry-header -->
+			
+			<div class="entry-content">
+				<div id="buddypress">
+					<%= render "users/header" %>
+					<%= render "users/navigation" %>
+									
+					<div id="item-body" role="main">
+						<%= render 'users/activity_navigation' %>					
+						<div class="bpfb_form_container">
+							<form action="https://teamtrope.com/activity/post/" method="post" id="whats-new-form" name="whats-new-form" role="complementary">
+								<div id="whats-new-avatar">
+									<%= link_to image_tag(@user.avatar.url(:thumb), size: "50x50", class: "avatar user-#{@user.id}-avatar avatar-50 photo", alt: "Profile picture of #{@user.name}"), @user %>
+								</div>
+								<p class="activity-greeting">What's new, <%= @user.name%>?</p>
+								<div id="whats-new-content">
+									<div id="whats-new-textarea">
+										<textarea name="whats-new" id="whats-new" cols="50" rows="10"></textarea>
+									</div>
+									<div class="bpfb_actions_container">
+										<div class="bpfb_toolbar_container">
+											<a href="#photos" class="bpfb_toolbarItem" title="Add photo, doc, pdf" id="bpfb_addPhotos"><span>Add photo, doc, pdf</span></a>&nbsp;
+											<a href="#videos" class="bpfb_toolbarItem" title="Add videos" id="bpfb_addVideos"><span>Add videos</span></a>&nbsp;
+											<a href="#links" class="bpfb_toolbarItem" title="Add links" id="bpfb_addLinks"><span>Add links</span></a>
+										</div>
+										<div class="bpfb_controls_container"></div>
+										<div class="bpfb_preview_container"></div>
+										<div class="bpfb_action_container"></div>
+										<input type="button" id="bpfb_cancel_action" value="Cancel" style="display:none">
+									</div>
+									
+									<div id="whats-new-options">
+										<div id="whats-new-submit">
+											<input type="submit" name="aw-whats-new-submit" id="aw-whats-new-submit" value="Post Update">
+										</div>
+									</div><!-- #whats-new-options -->
+								</div><!-- #whats-new-content -->
+								<input type="hidden" id="_wpnonce_post_update" name="_wpnonce_post_update" value="d37b2c9de6">
+								<input type="hidden" name="_wp_http_referer" value="/members/justin/activity/">	
+							</form>
+						</div><!-- #whats-new-form -->
+					
+						<div class="activity" role="main">
+							<noscript>
+								&lt;div class="pagination"&gt;
+								&lt;div class="pag-count"&gt;Viewing item 1 to 20 (of 30 items)&lt;/div&gt;
+								&lt;div class="pagination-links"&gt;&lt;span class='page-numbers current'&gt;1&lt;/span&gt;
+								&lt;a class='page-numbers' href='/members/justin/activity/?acpage=2'&gt;2&lt;/a&gt;
+								&lt;a class="next page-numbers" href="/members/justin/activity/?acpage=2"&gt;&amp;rarr;&lt;/a&gt;&lt;/div&gt;
+								&lt;/div&gt;
+							</noscript>
+							<ul id="activity-stream" class="activity-list item-list">
+								<li class="groups new_forum_post activity-item mini" id="activity-101112">
+									<div class="activity-avatar">
+										<a href="https://teamtrope.com/members/justin/">
+											<img src="https://teamtrope.com/wp-content/uploads/avatars/287/1b207d03dede2e9f9dabe9e6605601a4-bpthumb.jpg" class="avatar user-287-avatar avatar-50 photo" width="50" height="50" alt="Profile picture of Justin Jeffress">
+										</a>
+									</div>
+							
+									<div class="activity-content">
+										<div class="activity-header">
+											<p><a href="https://teamtrope.com/members/justin/" title="Justin Jeffress">Justin Jeffress</a> submitted form <a href="https://teamtrope.com/projects/four-rubbings-by-jennifer-hotes/">Update Project Status</a> for <a href="https://teamtrope.com/groups/jennifer-hotes-teamroom/" class=""><img src="https://secure.gravatar.com/avatar/7a6a587ae7afe54ab3540222532da43f?d=wavatar&amp;s=20&amp;r=G" class="avatar group-104-avatar avatar-20 photo" width="20" height="20" alt="Group logo of Jennifer Hotes: Teamroom"></a><a href="">Four Rubbings</a>: <a href="https://teamtrope.com/members/justin/" class="view activity-time-since" title="View Discussion"><span class="time-since">1 month, 1 week ago</span></a></p>
+										</div>
+									
+										<div class="activity-meta">
+											<a href="?ac=101112/#ac-form-101112" class="button acomment-reply bp-primary-action" id="acomment-comment-101112">Comment <span>0</span></a>
+											<a href="https://teamtrope.com/activity/favorite/101112/?_wpnonce=9b865e4b5e" class="button fav bp-secondary-action" title="Mark as Favorite">Favorite</a>
+											<a href="https://teamtrope.com/activity/delete/101112?_wpnonce=5a8bca2fda" class="button item-button bp-secondary-action delete-activity confirm" rel="nofollow">Delete</a>
+										</div>
+									</div>
+								
+									<div class="activity-comments">
+										<form action="https://teamtrope.com/activity/reply/" method="post" id="ac-form-101112" class="ac-form" style="display: none;">
+											<div class="ac-reply-avatar">
+												<img src="https://teamtrope.com/wp-content/uploads/avatars/287/1b207d03dede2e9f9dabe9e6605601a4-bpthumb.jpg" class="avatar user-287-avatar avatar-50 photo" width="50" height="50" alt="Profile picture of Justin Jeffress">
+										</div>
+											<div class="ac-reply-content">
+												<div class="ac-textarea">
+													<textarea id="ac-input-101112" class="ac-input" name="ac_input_101112"></textarea>
+												</div>
+												<input type="submit" name="ac_form_submit" value="Post"> &nbsp;
+												<a href="#" class="ac-reply-cancel">Cancel</a>
+												<input type="hidden" name="comment_form_id" value="101112">
+											</div>
+											<input type="hidden" id="_wpnonce_new_activity_comment" name="_wpnonce_new_activity_comment" value="2062d6c130">
+											<input type="hidden" name="_wp_http_referer" value="/members/justin/activity/">
+										</form>
+									</div>
+								</li>
+						
+								<li class="activity activity_comment activity-item" id="activity-73798">
+									<div class="activity-avatar">
+										<a href="https://teamtrope.com/members/justin/">
+											<img src="https://teamtrope.com/wp-content/uploads/avatars/287/1b207d03dede2e9f9dabe9e6605601a4-bpthumb.jpg" class="avatar user-287-avatar avatar-50 photo" width="50" height="50" alt="Profile picture of Justin Jeffress">
+										</a>
+									</div>
+								
+									<div class="activity-content">
+										<div class="activity-header">
+											<p><a href="https://teamtrope.com/members/justin/" title="Justin Jeffress">Justin Jeffress</a> posted a new activity comment <a href="https://teamtrope.com/activity/p/73408/" class="view activity-time-since" title="View Discussion"><span class="time-since">5 months, 1 week ago</span></a></p>
+										</div>
+										
+										<div class="activity-inner">
+											<p>Thanks! <a href="https://teamtrope.com/members/heatherludviksson/" rel="nofollow">@heatherludviksson</a> I just got a notification from the price changer that the price change has been confirmed.</p>
+										</div>
+								
+										<div class="activity-meta">
+											<a href="https://teamtrope.com/activity/p/73408/" class="button view bp-secondary-action" title="View Conversation">View Conversation</a>
+											<a href="https://teamtrope.com/activity/favorite/73798/?_wpnonce=9b865e4b5e" class="button fav bp-secondary-action" title="Mark as Favorite">Favorite</a>
+											<a href="https://teamtrope.com/activity/delete/73798?_wpnonce=5a8bca2fda" class="button item-button bp-secondary-action delete-activity confirm" rel="nofollow">Delete</a>
+										</div>
+									</div>
+								</li>
+								
+								<li class="friends friendship_created activity-item mini" id="activity-70019">
+									<div class="activity-avatar">
+										<a href="https://teamtrope.com/members/justin/">
+											<img src="https://teamtrope.com/wp-content/uploads/avatars/287/1b207d03dede2e9f9dabe9e6605601a4-bpthumb.jpg" class="avatar user-287-avatar avatar-50 photo" width="50" height="50" alt="Profile picture of Justin Jeffress">
+										</a>
+									</div>
+							
+									<div class="activity-content">
+										<div class="activity-header">
+											<p><a href="https://teamtrope.com/members/justin/" title="Justin Jeffress">Justin Jeffress</a> and <a href="https://teamtrope.com/members/carolineclouse/" class=""><img src="https://teamtrope.com/wp-content/uploads/avatars/426/dc8ee819a3933b2ac43848736c8024db-bpthumb.jpg" class="avatar user-426-avatar avatar-20 photo" width="20" height="20" alt="Profile picture of Caroline Clouse"></a><a href="https://teamtrope.com/members/carolineclouse/" title="Caroline Clouse">Caroline Clouse</a> are now friends <a href="https://teamtrope.com/activity/p/70019/" class="view activity-time-since" title="View Discussion"><span class="time-since">5 months, 4 weeks ago</span></a></p>
+										</div>
+								
+										<div class="activity-meta">
+											<a href="?ac=70019/#ac-form-70019" class="button acomment-reply bp-primary-action" id="acomment-comment-70019">Comment <span>0</span></a>
+											<a href="https://teamtrope.com/activity/favorite/70019/?_wpnonce=9b865e4b5e" class="button fav bp-secondary-action" title="Mark as Favorite">Favorite</a>
+											<a href="https://teamtrope.com/activity/delete/70019?_wpnonce=5a8bca2fda" class="button item-button bp-secondary-action delete-activity confirm" rel="nofollow">Delete</a>
+										</div>
+									</div>
+							
+									<div class="activity-comments">
+										<form action="https://teamtrope.com/activity/reply/" method="post" id="ac-form-70019" class="ac-form" style="display: none;">
+											<div class="ac-reply-avatar"><img src="https://teamtrope.com/wp-content/uploads/avatars/287/1b207d03dede2e9f9dabe9e6605601a4-bpthumb.jpg" class="avatar user-287-avatar avatar-50 photo" width="50" height="50" alt="Profile picture of Justin Jeffress"></div>
+											<div class="ac-reply-content">
+												<div class="ac-textarea">
+													<textarea id="ac-input-70019" class="ac-input" name="ac_input_70019"></textarea>
+												</div>
+												<input type="submit" name="ac_form_submit" value="Post"> &nbsp; <a href="#" class="ac-reply-cancel">Cancel</a>
+												<input type="hidden" name="comment_form_id" value="70019">
+											</div>
+											<input type="hidden" id="_wpnonce_new_activity_comment" name="_wpnonce_new_activity_comment" value="2062d6c130"><input type="hidden" name="_wp_http_referer" value="/members/justin/activity/">
+										</form>
+									</div>
+								</li>
+						
+								<li class="groups joined_group activity-item mini" id="activity-39379">
+									<div class="activity-avatar">
+										<a href="https://teamtrope.com/members/justin/">
+											<img src="https://teamtrope.com/wp-content/uploads/avatars/287/1b207d03dede2e9f9dabe9e6605601a4-bpthumb.jpg" class="avatar user-287-avatar avatar-50 photo" width="50" height="50" alt="Profile picture of Justin Jeffress">
+										</a>
+									</div>
+									
+									<div class="activity-content">
+										<div class="activity-header">
+											<p><a href="https://teamtrope.com/members/justin/" title="Justin Jeffress">Justin Jeffress</a> joined the group <a href="https://teamtrope.com/groups/manuscript-evaluation/" class=""><img src="https://teamtrope.com/wp-content/uploads/group-avatars/152/e901fa39c3549c147bb715a1e692a0fb-bpthumb.jpg" class="avatar group-152-avatar avatar-20 photo" width="20" height="20" alt="Group logo of 400 Manuscript Evaluation"></a><a href="https://teamtrope.com/groups/manuscript-evaluation/">400 Manuscript Evaluation</a> <a href="https://teamtrope.com/activity/p/39379/" class="view activity-time-since" title="View Discussion"><span class="time-since">11 months ago</span></a></p>
+										</div>
+								
+										<div class="activity-meta">
+											<a href="?ac=39379/#ac-form-39379" class="button acomment-reply bp-primary-action" id="acomment-comment-39379">Comment <span>0</span></a>
+											<a href="https://teamtrope.com/activity/favorite/39379/?_wpnonce=9b865e4b5e" class="button fav bp-secondary-action" title="Mark as Favorite">Favorite</a>
+											<a href="https://teamtrope.com/activity/delete/39379?_wpnonce=5a8bca2fda" class="button item-button bp-secondary-action delete-activity confirm" rel="nofollow">Delete</a>
+										</div>
+									</div>
+							
+									<div class="activity-comments">
+										<form action="https://teamtrope.com/activity/reply/" method="post" id="ac-form-39379" class="ac-form" style="display: none;">
+											<div class="ac-reply-avatar">
+												<img src="https://teamtrope.com/wp-content/uploads/avatars/287/1b207d03dede2e9f9dabe9e6605601a4-bpthumb.jpg" class="avatar user-287-avatar avatar-50 photo" width="50" height="50" alt="Profile picture of Justin Jeffress">
+											</div>
+									
+											<div class="ac-reply-content">
+												<div class="ac-textarea">
+													<textarea id="ac-input-39379" class="ac-input" name="ac_input_39379"></textarea>
+												</div>
+												<input type="submit" name="ac_form_submit" value="Post"> &nbsp; 
+												<a href="#" class="ac-reply-cancel">Cancel</a>
+												<input type="hidden" name="comment_form_id" value="39379">
+											</div>
+											<input type="hidden" id="_wpnonce_new_activity_comment" name="_wpnonce_new_activity_comment" value="2062d6c130"><input type="hidden" name="_wp_http_referer" value="/members/justin/activity/">
+										</form>
+									</div>
+								</li>
+								
+								<li class="load-more">
+									<a href="#more">Load More</a>
+								</li>
+							</ul>
+							<form action="" name="activity-loop-form" id="activity-loop-form" method="post">
+								<input type="hidden" id="_wpnonce_activity_filter" name="_wpnonce_activity_filter" value="5bb40fdfd7"><input type="hidden" name="_wp_http_referer" value="/members/justin/activity/">
+							</form>
+						</div><!-- .activity -->
+					</div><!-- #item-body -->					
+				</div><!-- #buddypress -->
+			</div><!-- .entry-content -->
+		</article><!-- #post-## -->
+	</div><!-- #content -->
+</div>
+<%= render "layouts/sidebar" %>
+
+
