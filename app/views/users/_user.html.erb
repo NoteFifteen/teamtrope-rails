@@ -1,0 +1,20 @@
+<li>
+	<div class="item-avatar">
+		<%= link_to image_tag(user.avatar.url(:thumb), class: "avatar user-#{user.id}-avatar avatar- photo", size: "50x50", alt: "Profile picture of #{user.name}"), user %>
+	</div>
+	<div class="item">
+		<div class="item-title">
+			<%= link_to user.name, user %><br />
+			<span class="update"> - "@cindywyckoff Cindy, thanks so much for that lovely message. Yes, after a bumpy start things will hopefully go well. I’d love to know how to go about hitting it out of the park… beyond dreaming. Thanks for your […] "
+				<span class="activity-read-more">
+					<a href="https://teamtrope.com/activity/p/91765/" rel="nofollow">View</a>
+				</span>
+			</span>
+		</div>
+		<div class="item-meta">
+			<span class="activity">active 4 minutes ago</span>
+		</div>
+	</div>
+	<div class="action"></div>
+	<div class="clear"></div>
+</li>

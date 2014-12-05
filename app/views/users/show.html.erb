@@ -1,4 +1,112 @@
 <% provide(:title, @user.name) %>
-<h1><%= @user.name %></h1>
-<%= image_tag @user.avatar.url(:thumb) %><br />
-<%= link_to "Edit", edit_user_path(@user) if current_user == @user  %>
+<div id="primary" class="content-area">
+	<div id="content" class="site-content" role="main">
+		<article id="post-0" class="post-0 bp_members type-bp_members status-publish hentry">
+			<header class="entry-header">
+				<h1 class="entry-title"><%= link_to @user.name, @user%></h1>
+			</header><!-- .entry-header -->
+			<div class="entry-content">
+				<div id="buddypress">
+					<div id="item-header" role="complementary">
+						<div id="item-header-avatar">
+							<a href="https://teamtrope.com/members/justin/">
+								
+							</a>
+							<%= link_to image_tag(
+														@user.avatar.url(:medium),
+														size: "150x150", 
+														class: "avatar user-#{@user.id}-avatar avatar- photo", 
+														alt: "Profile picture of #{@user.name}"), 
+								@user
+							 %>
+						</div><!-- #item-header-avatar -->
+					
+						<div id="item-header-content">
+							<h2 class="user-nicename">@justin</h2>
+							<h2 class="user-nicename"><%= @user.email %></h2>
+							<span class="activity">active 18 seconds ago</span>
+							<div id="item-meta">
+							<div id="latest-update"></div>
+							<div id="item-buttons"></div><!-- #item-buttons -->
+							</div><!-- #item-meta -->
+						</div><!-- #item-header-content -->
+					</div><!-- #item-header -->
+				
+					<div id="item-nav">
+						<div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
+							<ul>
+								<li id="activity-personal-li">
+									<%= link_to "Activity", activity_user_path(@user), id: "user-activity" %>
+								</li>								
+								<li id="xprofile-personal-li" class="current selected">
+									<a id="user-xprofile" href="https://teamtrope.com/members/justin/profile/">Profile</a>
+								</li>
+								<li id="notifications-personal-li">
+									<a id="user-notifications" href="https://teamtrope.com/members/justin/notifications/">Notifications <span class="count">15</span></a>
+								</li>
+								<li id="messages-personal-li">
+									<a id="user-messages" href="https://teamtrope.com/members/justin/messages/">Messages <span class="no-count">0</span></a>
+								</li>
+								<li id="groups-personal-li">
+									<a id="user-groups" href="https://teamtrope.com/members/justin/groups/">Groups <span class="count">2</span></a>
+								</li>
+								<li id="forums-personal-li">
+									<a id="user-forums" href="https://teamtrope.com/members/justin/forums/">Forums</a>
+								</li>
+								<li id="invite-anyone-personal-li">
+									<a id="user-invite-anyone" href="https://teamtrope.com/members/justin/invite-anyone/">Send Invites</a>
+								</li>
+								<li id="docs-personal-li">
+									<a id="user-docs" href="https://teamtrope.com/members/justin/docs/">Docs</a>
+								</li>
+								<li id="settings-personal-li">
+									<a id="user-settings" href="https://teamtrope.com/members/justin/settings/">Settings</a>
+								</li>
+							</ul>
+						</div>
+					</div><!-- #item-nav -->
+				
+					<div id="item-body" role="main">
+						<div class="item-list-tabs no-ajax" id="subnav" role="navigation">
+							<ul>
+								<li id="public-personal-li" class="current selected">
+									<a id="public" href="https://teamtrope.com/members/justin/profile/">View</a>
+								</li>
+								<% if current_user == @user %>
+								<li id="edit-personal-li">
+									<%= link_to "Edit", edit_user_path(@user), id: "edit"  %>
+								</li>
+								<% end %>
+								<li id="change-avatar-personal-li">
+									<a id="change-avatar" href="https://teamtrope.com/members/justin/profile/change-avatar/">Change Avatar</a>
+								</li>
+							</ul>
+						</div><!-- .item-list-tabs -->
+						
+						<div class="profile" role="main">
+							<div class="bp-widget base">
+								<h4>Base</h4>
+								<table class="profile-fields">
+									<tbody>
+										<tr class="field_1 field_name field_type_textbox">
+											<td class="label">Name</td>
+											<td class="data">
+												<p><% 
+												#TODO: update this link to point to the member search.
+												 %>
+												<%= link_to @user.name, "#", rel: "nofollow" %>
+												</p>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div><!-- .profile -->
+					</div><!-- #item-body -->
+				</div><!-- #buddypress -->
+			</div><!-- .entry-content -->
+		</article><!-- #post-## -->
+		
+	</div><!-- #content -->
+</div>
+<%= render "layouts/sidebar" %>

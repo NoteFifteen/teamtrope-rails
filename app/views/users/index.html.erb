@@ -1,11 +1,169 @@
 <% provide(:title, "Members") %>
-<h1>Members</h1>
-<% @users.each do | user | %>
-	<div>
-		<%= link_to image_tag(user.avatar.url(:thumb)), user %>
-		<%= link_to user.name, user %> | 
-		<%= link_to "Delete", user,
-		          method: :delete,
-              data: { confirm: 'Are you sure you want to delete this comment?' } %>
+<div id="main-content" class="main-content">
+	<div id="primary" class="content-area">
+		<div id="content" class="site-content" role="main">
+			<article class="bp_members type-bp_members status-publish hentry">
+				<header class="entry-header">
+					<h1 class="entry-title">Members</h1>
+				</header>
+				
+				<div class="entry-content">
+					<div id="buddypress">
+						<div id="members-dir-search" class="dir-search" role="search">
+							<form action="" method="get" id="search-members-form">
+								<label>
+									<input type="text" name="s" id="members_search" placeholder="Search Members...">
+								</label>
+								<input type="submit" id="members_search_submit" name="members_search_submit" value="Search">
+							</form>
+						</div><!-- #members-dir-search -->
+						
+						<!-- BP Profile Search 4.0.3 - start -->
+						<div class="item-list-tabs bps_header">
+							<ul>
+								<li><h4>Advanced Search</h4></li>
+								<li class="last">
+									<input id="bps_toggle24943" type="submit" value="Advanced Search">
+								</li>
+							</ul>
+					
+							<script type="text/javascript">
+							jQuery(document).ready(function($) {
+									$('#bps_auto24943').hide();
+									$('#bps_toggle24943').click(function(){
+									$('#bps_auto24943').toggle();
+								});
+							});
+							</script>
+						</div>
+						
+						<form action="https://teamtrope.com/members/" method="POST" id="bps_auto24943" class="standard-form" style="display: none;">
+							<div class="editfield field_35 field_roles">
+								<div class="checkbox">
+									<span class="label">Role(s)</span>
+									<label><input type="checkbox" name="field_35[]" value="Author">Author</label>
+									<label><input type="checkbox" name="field_35[]" value="Book Manager">Book Manager</label>
+									<label><input type="checkbox" name="field_35[]" value="Booktrope Staff">Booktrope Staff</label>
+									<label><input type="checkbox" name="field_35[]" value="Cover Designer">Cover Designer</label>
+									<label><input type="checkbox" name="field_35[]" value="Editor">Editor</label>
+									<label><input type="checkbox" name="field_35[]" value="Illustrator">Illustrator</label>
+									<label><input type="checkbox" name="field_35[]" value="Proofreader">Proofreader</label>
+								</div>
+								<p class="description">Choose the role or roles you are pursuing within Teamtrope.</p>
+							</div>
+							
+							<div class="editfield field_58 field_genres alt">
+								<div class="checkbox">
+									<span class="label">Genres</span>
+									<label><input type="checkbox" name="field_58[]" value="Business">Business</label>
+									<label><input type="checkbox" name="field_58[]" value="Childrens Books">Childrens Books</label>
+									<label><input type="checkbox" name="field_58[]" value="Entertainment">Entertainment</label>
+									<label><input type="checkbox" name="field_58[]" value="Fiction – General">Fiction – General</label>
+									<label><input type="checkbox" name="field_58[]" value="Fiction – Literary">Fiction – Literary</label>
+									<label><input type="checkbox" name="field_58[]" value="Fiction – Mystery and Thrillers">Fiction – Mystery and Thrillers</label>
+									<label><input type="checkbox" name="field_58[]" value="Fiction – Romance">Fiction – Romance</label>
+									<label><input type="checkbox" name="field_58[]" value="Fiction – Science Fiction and Fantasy">Fiction – Science Fiction and Fantasy</label>
+									<label><input type="checkbox" name="field_58[]" value="Food and Cooking">Food and Cooking</label>
+									<label><input type="checkbox" name="field_58[]" value="Gaming">Gaming</label>
+									<label><input type="checkbox" name="field_58[]" value="History">History</label>
+									<label><input type="checkbox" name="field_58[]" value="How To">How To</label>
+									<label><input type="checkbox" name="field_58[]" value="Humor">Humor</label>
+									<label><input type="checkbox" name="field_58[]" value="Law">Law</label>
+									<label><input type="checkbox" name="field_58[]" value="Medicine">Medicine</label>
+									<label><input type="checkbox" name="field_58[]" value="Memoir">Memoir</label>
+									<label><input type="checkbox" name="field_58[]" value="Philosophy">Philosophy</label>
+									<label><input type="checkbox" name="field_58[]" value="Poetry">Poetry</label>
+									<label><input type="checkbox" name="field_58[]" value="Politics">Politics</label>
+									<label><input type="checkbox" name="field_58[]" value="Religion">Religion</label>
+									<label><input type="checkbox" name="field_58[]" value="Science">Science</label>
+									<label><input type="checkbox" name="field_58[]" value="Spirituality">Spirituality</label>
+									<label><input type="checkbox" name="field_58[]" value="Sports">Sports</label>
+									<label><input type="checkbox" name="field_58[]" value="Technology">Technology</label>
+									<label><input type="checkbox" name="field_58[]" value="Women’s Contemporary Fiction">Women’s Contemporary Fiction</label>
+									<label><input type="checkbox" name="field_58[]" value="Young Adult Fiction">Young Adult Fiction</label>
+								</div>
+								<p class="description">Please choose all genres you wish to be professionally associated with. Members will use this list for preference matching and as team members review your project interest requests.</p>
+							</div>
+								
+							<div class="editfield field_1 field_name">
+								<input type="hidden" name="label_1" value="Name">
+								<label for="field_1">Name</label>
+								<input type="text" name="field_1" id="field_1" value="">
+								<p class="description"></p>
+							</div>
+								
+							<div class="submit">
+								<input type="submit" value="Search">
+							</div>
+							<input type="hidden" name="options[]" value="like">
+							<input type="hidden" name="bp_profile_search" value="24943">
+						</form>
+				
+						<!-- BP Profile Search 4.0.3 - end -->
+						<form action="" method="post" id="members-directory-form" class="dir-form">
+							<div class="item-list-tabs" role="navigation">
+								<ul>
+									<li class="selected" id="members-all">
+										<a href="https://teamtrope.com/members/">All Members <span><%= @users.count %></span></a>
+									</li>
+								</ul>
+							</div><!-- .item-list-tabs -->
+							
+							<div class="item-list-tabs" id="subnav" role="navigation">
+								<ul>
+									<li id="members-order-select" class="last filter">
+										<label for="members-order-by">Order By:</label>
+										<select id="members-order-by">
+											<option value="active">Last Active</option>
+											<option value="newest">Newest Registered</option>
+											<option value="alphabetical">Alphabetical</option>
+										</select>
+									</li>
+								</ul>
+							</div>
+					
+							<div id="members-dir-list" class="members dir-list">
+								<div id="pag-top" class="pagination">
+									<div class="pag-count" id="member-dir-count-top">
+										Viewing member 1 to 20 (of <%= @users.count %> active members)
+									</div>
+							
+									<div class="pagination-links" id="member-dir-pag-top">
+										<span class="page-numbers current">1</span>
+										<a class="page-numbers" href="/members/?upage=2">2</a>
+										<span class="page-numbers dots">…</span>
+										<a class="page-numbers" href="/members/?upage=25">25</a>
+										<a class="next page-numbers" href="/members/?upage=2">→</a>
+									</div>
+								</div>
+								
+								<ul id="members-list" class="item-list" role="main">							
+									<% @users.each do | user | %>
+										<%= render user %>
+									<% end %>
+								</ul>
+								
+								<div id="pag-bottom" class="pagination">
+									<div class="pag-count" id="member-dir-count-bottom">
+										Viewing member 1 to 20 (of <%= @users.count%> active members)
+									</div>
+									<div class="pagination-links" id="member-dir-pag-bottom">
+										<span class="page-numbers current">1</span>
+										<a class="page-numbers" href="/members/?upage=2">2</a>
+										<span class="page-numbers dots">…</span>
+										<a class="page-numbers" href="/members/?upage=25">25</a>
+										<a class="next page-numbers" href="/members/?upage=2">→</a>
+									</div>
+								</div>
+							</div><!-- #members-dir-list -->			
+							<input type="hidden" id="_wpnonce-member-filter" name="_wpnonce-member-filter" value="71140b1cb8">
+							<input type="hidden" name="_wp_http_referer" value="/members/">
+						</form><!-- #members-directory-form -->
+					</div><!-- #buddypress -->
+				</div>
+			</article>	
+		</div>
 	</div>
-<% end %>
+</div>
+<%= render "layouts/sidebar" %>
+
