@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+	self.per_page = 10
+
 	has_many :posts, foreign_key: "author_id", dependent: :destroy
 	has_many :comments, dependent: :destroy
 	
