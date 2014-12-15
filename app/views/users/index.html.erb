@@ -125,10 +125,19 @@
 							<div id="members-dir-list" class="members dir-list">
 								<div id="pag-top" class="pagination">
 									<div class="pag-count" id="member-dir-count-top">
-										Viewing member 1 to 20 (of <%= @users.count %> active members)
+										Viewing member 1 to 20 (of <%= @users.count %> active members)<br />
+										<%= page_entries_info @users %>
 									</div>
+									
+									<%= will_paginate @users, 
+																			previous_label: "<-",
+																			next_label: "->",
+																			class: "pagination-links"
+																			%>									
 							
 									<div class="pagination-links" id="member-dir-pag-top">
+
+									
 										<span class="page-numbers current">1</span>
 										<a class="page-numbers" href="/members/?upage=2">2</a>
 										<span class="page-numbers dots">…</span>
@@ -142,6 +151,7 @@
 										<%= render user %>
 									<% end %>
 								</ul>
+								
 								
 								<div id="pag-bottom" class="pagination">
 									<div class="pag-count" id="member-dir-count-bottom">

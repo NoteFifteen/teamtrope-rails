@@ -8,4 +8,8 @@ class Post < ActiveRecord::Base
 	default_scope -> { order('created_at DESC') }
 	
 	validates :author_id, presence: true
+	
+	has_attached_file :poster_image
+	validates_attachment_content_type :poster_image, :content_type => /\Aimage\/.*\Z/
+	
 end
