@@ -1,14 +1,6 @@
 <% provide(:title, "New Post") %>
 <h1>New Post</h1>
 <%= form_for @post, :html => { :multipart => true } do | f | %>
-	<%= f.label :title %><br />
-	<%= f.text_field :title %><br />
-	<%= f.label :post_date %><br />
-	<%= f.text_field :post_date %><br />
-	<%= f.hidden_field :author_id, value: current_user.id %><br />
-	<%= f.label :content %><br />
-	<%= f.text_area :content %><br /><br >
-	<%= f.file_field :poster_image %><br />
-	<br />
+	<%= render "fields", f: f %>
 	<%= f.submit "Create Post" %>
 <% end %>
