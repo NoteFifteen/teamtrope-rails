@@ -1,0 +1,10 @@
+<% provide(:title, "Posts | Tag | #{@tag.name.upcase }" )%>
+	<div id="primary" class="content-area">
+		<div id="content" class="site-content" role="main">
+			<h1>Posts tagged with <%= @tag.name.upcase %></h1>
+			<% @tag.posts.each do | post | %>
+				<%= render post %>
+			<% end %>
+		</div>
+	</div>
+	<%= render "layouts/sidebar" %>
