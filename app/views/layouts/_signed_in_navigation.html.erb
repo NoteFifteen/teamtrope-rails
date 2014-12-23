@@ -41,9 +41,9 @@
               </li>
               <li id="menu-item-1800" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1800"><a href="https://teamtrope.com/groups/booktrope-policy-procedures/docs/">Help!</a></li>
               <li id="menu-item-1942" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1942">
-              	<a href="#">Howdy, <%= current_user.name %>&nbsp;&nbsp;<%= image_tag current_user.avatar.url(:thumb), size: "26x26" %></a>
+              	<a href="#">Howdy, <%= current_user.name %>&nbsp;&nbsp;<%= image_tag current_user.profile.avatar.url(:thumb), size: "26x26" %></a>
               	<ul class="sub-menu">
-                	<li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to image_tag(current_user.avatar.url(:thumb), size: "64x64", class: "avatar"), current_user %></li>
+                	<li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to image_tag(current_user.profile.avatar.url(:thumb), size: "64x64", class: "avatar"), current_user %></li>
                 	<li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to "Logout", signout_path %></li>
               	</ul>
               </li>

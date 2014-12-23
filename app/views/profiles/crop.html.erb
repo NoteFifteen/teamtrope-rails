@@ -14,12 +14,12 @@
 			var rx = 100/coords.w;
 			var ry = 100/coords.h;
 			$('#preview').css({
-				width: Math.round(rx * <%= @user.avatar_geometry(:large).width %>) + 'px',
-				height: Math.round(ry * <%= @user.avatar_geometry(:large).height %>) + 'px',
+				width: Math.round(rx * <%= @profile.avatar_geometry(:large).width %>) + 'px',
+				height: Math.round(ry * <%= @profile.avatar_geometry(:large).height %>) + 'px',
 				marginLeft: '-' + Math.round(rx * coords.x) + 'px',
 				marginTop: '-' + Math.round(ry * coords.y) + 'px'
 			});		
-			var ratio = <%= @user.avatar_geometry(:original).width %> / <%= @user.avatar_geometry(:large).width %>;
+			var ratio = <%= @profile.avatar_geometry(:original).width %> / <%= @profile.avatar_geometry(:large).width %>;
 			$('#crop_x').val(Math.floor(coords.x * ratio));
 			$('#crop_y').val(Math.floor(coords.y * ratio));
 			$('#crop_w').val(Math.floor(coords.w * ratio));  
@@ -28,21 +28,14 @@
 	</script>
 <% end %>
 
-<%= image_tag @user.avatar.url(:large), :id => "cropbox" %>
+<%= image_tag @profile.avatar.url(:large), :id => "cropbox" %>
 
 <h4>Preview</h4>  
 <div style="width: 100px; height: 100px; overflow: hidden;">  
-  <%= image_tag @user.avatar.url(:large), :id => "preview" %>  
+  <%= image_tag @profile.avatar.url(:large), :id => "preview" %>  
 </div>
 
-<%= form_for @user do | form | %>
-	<%= form.label :password %><br />
-	<%= form.password_field :password, value: params[:user][:password] %><br />
-	
-	<%= form.label :password_confirmation, "Confirm Password" %><br />
-	<%= form.password_field :password_confirmation, value: params[:user][:password_confirmation]  %><br />	
-		
-	
+<%= form_for @profile do | form | %>	
 	<% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] %>
 		<%= form.hidden_field attribute, :id => attribute %>
 	<% end %>

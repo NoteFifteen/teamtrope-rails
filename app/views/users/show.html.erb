@@ -23,7 +23,8 @@
 								</li>
 								<% end %>
 								<li id="change-avatar-personal-li">
-									<a id="change-avatar" href="https://teamtrope.com/members/justin/profile/change-avatar/">Change Avatar</a>
+									<!--<a id="change-avatar" href="https://teamtrope.com/members/justin/profile/change-avatar/">Change Avatar</a>-->
+									<%= link_to "Change Avatar", edit_profile_path(current_user.profile.id) %>
 								</li>
 							</ul>
 						</div><!-- .item-list-tabs -->

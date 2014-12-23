@@ -25,13 +25,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+    	@user.create_profile
       sign_in @user
       flash[:success] = "Welcome to Teamtrope!"
-      if params[:user][:avatar].blank?
 	      redirect_to @user
-	    else
-	    	render :action => 'crop'
-	    end
     else
       render 'new'
     end
@@ -42,15 +39,8 @@ class UsersController < ApplicationController
 
   def update    
     if @user.update_attributes(user_params)
-	    flash[:success] = "Profile updated"
-  		if params[:user][:avatar].blank?
-  			if @user.cropping?
-		  		@user.avatar.reprocess! 
-		  	end
-	  		redirect_to @user
-	  	else
-	  		render :action => 'crop'
-	  	end
+		   flash[:success] = "Profile updated"
+	  	redirect_to @user
   	else
   		render 'edit'
   	end     

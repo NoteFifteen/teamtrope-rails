@@ -4,8 +4,6 @@
 	<div class="span6 offset3">
 		<%= form_for @user, :html => { :multipart => true } do |f| %>
 			<%= render 'fields', f: f %><br />
-			<%= f.file_field :avatar %><br />
-			<br />
 			<%= f.submit "Update my profile", class: "btn btn-large btn-primary" %>
 		<% end %>
 	</div>

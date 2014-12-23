@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   	member do
   		get 'activity'
   	end
+  	resources :profiles, shallow: true, only: [:edit,:update]
   end
   
   get '/users/:id/activity/mentions',  to: 'users#mentions',  as: 'mentions'
