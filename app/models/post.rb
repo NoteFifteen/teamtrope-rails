@@ -9,7 +9,7 @@ class Post < ActiveRecord::Base
 	
 	validates :author_id, presence: true
 	
-	has_attached_file :poster_image
-	validates_attachment_content_type :poster_image, :content_type => /\Aimage\/.*\Z/
+	has_attached_file :featured_image
+	validates_attachment_content_type :featured_image, :content_type => /\Aimage\/.*\Z/
 	
 end
