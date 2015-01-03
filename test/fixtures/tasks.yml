@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  name: MyString
+  icon: MyString
+  tab_text: MyString
+  intro_video: MyString
+  days_to_complete: 1
+
+two:
+  type: 
+  name: MyString
+  icon: MyString
+  tab_text: MyString
+  intro_video: MyString
+  days_to_complete: 1

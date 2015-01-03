@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141223070447) do
+ActiveRecord::Schema.define(version: 20141230215949) do
 
   create_table "comments", force: true do |t|
     t.text     "content"
@@ -198,6 +198,17 @@ ActiveRecord::Schema.define(version: 20141223070447) do
   add_index "tags", ["id", "name"], name: "index_tags_on_id_and_name"
   add_index "tags", ["name"], name: "index_tags_on_name"
 
+  create_table "tasks", force: true do |t|
+    t.string   "type"
+    t.string   "name"
+    t.string   "icon"
+    t.string   "tab_text"
+    t.string   "intro_video"
+    t.integer  "days_to_complete"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email"
     t.string   "name"
@@ -209,5 +220,29 @@ ActiveRecord::Schema.define(version: 20141223070447) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+
+  create_table "workflow_steps", force: true do |t|
+    t.integer  "workflow_id"
+    t.integer  "task_id"
+    t.integer  "next_step_id"
+    t.integer  "rejected_step_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "workflow_steps", ["next_step_id"], name: "index_workflow_steps_on_next_step_id"
+  add_index "workflow_steps", ["rejected_step_id"], name: "index_workflow_steps_on_rejected_step_id"
+  add_index "workflow_steps", ["task_id"], name: "index_workflow_steps_on_task_id"
+  add_index "workflow_steps", ["workflow_id", "task_id"], name: "index_workflow_steps_on_workflow_id_and_task_id", unique: true
+  add_index "workflow_steps", ["workflow_id"], name: "index_workflow_steps_on_workflow_id"
+
+  create_table "workflows", force: true do |t|
+    t.string   "name"
+    t.integer  "root_step_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "workflows", ["root_step_id"], name: "index_workflows_on_root_step_id"
 
 end

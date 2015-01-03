@@ -1,0 +1,33 @@
+<%= form_for(@workflow_step) do |f| %>
+  <% if @workflow_step.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@workflow_step.errors.count, "error") %> prohibited this workflow_step from being saved:</h2>
+
+      <ul>
+      <% @workflow_step.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :workflow_id %><br>
+    <%= f.text_field :workflow_id %>
+  </div>
+  <div class="field">
+    <%= f.label :task_id %><br>
+    <%= f.text_field :task_id %>
+  </div>
+  <div class="field">
+    <%= f.label :rejected_step %><br>
+    <%= f.text_field :rejected_step_id %>
+  </div>  
+  <div class="field">
+    <%= f.label :next_step %><br>
+    <%= f.text_field :next_step_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

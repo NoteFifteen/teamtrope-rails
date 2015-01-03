@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  workflow_id: 
+  task_id: 
+  next_task: 
+
+two:
+  workflow_id: 
+  task_id: 
+  next_task: 

@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  resources :workflow_steps
+
+  resources :workflows
+
+  resources :tasks
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

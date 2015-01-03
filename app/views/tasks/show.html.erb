@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @task.type %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @task.name %>
+</p>
+
+<p>
+  <strong>Icon:</strong>
+  <%= @task.icon %>
+</p>
+
+<p>
+  <strong>Tab text:</strong>
+  <%= @task.tab_text %>
+</p>
+
+<p>
+  <strong>Intro video:</strong>
+  <%= @task.intro_video %>
+</p>
+
+<p>
+  <strong>Days to complete:</strong>
+  <%= @task.days_to_complete %>
+</p>
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>
