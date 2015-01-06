@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :project_type_workflows
+
+  resources :project_types
+
   resources :workflow_steps
 
   resources :workflows

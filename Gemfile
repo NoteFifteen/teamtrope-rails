@@ -46,3 +46,9 @@ gem 'humanize', '1.1.0'
 gem "paperclip", "~> 4.2"
 
 gem 'will_paginate', '3.0.7'
+
+
+
+group :development do
+  gem 'rails-erd'
+end

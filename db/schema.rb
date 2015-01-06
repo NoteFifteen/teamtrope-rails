@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141230215949) do
+ActiveRecord::Schema.define(version: 20150106204901) do
 
   create_table "comments", force: true do |t|
     t.text     "content"
@@ -83,6 +83,23 @@ ActiveRecord::Schema.define(version: 20141230215949) do
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
+
+  create_table "project_type_workflows", force: true do |t|
+    t.integer  "workflow_id"
+    t.integer  "project_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "project_type_workflows", ["project_type_id"], name: "index_project_type_workflows_on_project_type_id"
+  add_index "project_type_workflows", ["workflow_id"], name: "index_project_type_workflows_on_workflow_id"
+
+  create_table "project_types", force: true do |t|
+    t.string   "name"
+    t.float    "team_total_percent"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "projects", force: true do |t|
     t.integer  "final_doc_file"
@@ -176,7 +193,10 @@ ActiveRecord::Schema.define(version: 20141230215949) do
     t.string   "step_mkt_info"
     t.string   "step_cover_design"
     t.string   "pcr_step"
+    t.integer  "project_type_id"
   end
+
+  add_index "projects", ["project_type_id"], name: "index_projects_on_project_type_id"
 
   create_table "statuses", force: true do |t|
     t.string   "form_name"

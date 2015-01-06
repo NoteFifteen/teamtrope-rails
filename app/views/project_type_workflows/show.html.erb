@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Workflow:</strong>
+  <%= @project_type_workflow.Workflow %>
+</p>
+
+<p>
+  <strong>Projecttype:</strong>
+  <%= @project_type_workflow.ProjectType %>
+</p>
+
+<%= link_to 'Edit', edit_project_type_workflow_path(@project_type_workflow) %> |
+<%= link_to 'Back', project_type_workflows_path %>

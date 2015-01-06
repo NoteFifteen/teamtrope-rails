@@ -1,0 +1,25 @@
+<%= form_for(@project_type_workflow) do |f| %>
+  <% if @project_type_workflow.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@project_type_workflow.errors.count, "error") %> prohibited this project_type_workflow from being saved:</h2>
+
+      <ul>
+      <% @project_type_workflow.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :Workflow_id %><br>
+    <%= f.text_field :Workflow_id %>
+  </div>
+  <div class="field">
+    <%= f.label :ProjectType_id %><br>
+    <%= f.text_field :ProjectType_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

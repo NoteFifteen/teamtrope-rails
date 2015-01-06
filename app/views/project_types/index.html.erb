@@ -1,0 +1,27 @@
+<h1>Listing project_types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Team total percent</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @project_types.each do |project_type| %>
+      <tr>
+        <td><%= project_type.name %></td>
+        <td><%= project_type.team_total_percent %></td>
+        <td><%= link_to 'Show', project_type %></td>
+        <td><%= link_to 'Edit', edit_project_type_path(project_type) %></td>
+        <td><%= link_to 'Destroy', project_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Project type', new_project_type_path %>
