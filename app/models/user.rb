@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
 	has_many :comments, dependent: :destroy
 	has_one :profile, dependent: :destroy
 	
+	has_many :team_memberships, foreign_key: :member_id, dependent: :destroy
+	has_many :projects, through: :team_memberships, source: :project, join_table: :roles
+	
   before_save { self.email = email.downcase }
   before_create :create_remember_token
   validates :name, presence: true, length: { maximum: 50}

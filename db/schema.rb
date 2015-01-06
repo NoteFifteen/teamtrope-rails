@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150106204901) do
+ActiveRecord::Schema.define(version: 20150106212455) do
 
   create_table "comments", force: true do |t|
     t.text     "content"
@@ -198,6 +198,12 @@ ActiveRecord::Schema.define(version: 20150106204901) do
 
   add_index "projects", ["project_type_id"], name: "index_projects_on_project_type_id"
 
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "statuses", force: true do |t|
     t.string   "form_name"
     t.datetime "date"
@@ -228,6 +234,20 @@ ActiveRecord::Schema.define(version: 20150106204901) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "team_memberships", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "member_id"
+    t.integer  "role_id"
+    t.float    "percentage"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "team_memberships", ["member_id"], name: "index_team_memberships_on_member_id"
+  add_index "team_memberships", ["project_id", "member_id", "role_id"], name: "index_team_memberships_on_project_id_and_member_id_and_role_id"
+  add_index "team_memberships", ["project_id"], name: "index_team_memberships_on_project_id"
+  add_index "team_memberships", ["role_id"], name: "index_team_memberships_on_role_id"
 
   create_table "users", force: true do |t|
     t.string   "email"

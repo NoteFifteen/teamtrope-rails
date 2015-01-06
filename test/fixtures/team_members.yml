@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project_id: 
+  member_id: 1
+  role_id: 
+  percentage: 1.5
+
+two:
+  project_id: 
+  member_id: 1
+  role_id: 
+  percentage: 1.5
