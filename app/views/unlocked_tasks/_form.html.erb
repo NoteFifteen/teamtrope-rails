@@ -1,0 +1,25 @@
+<%= form_for(@unlocked_task) do |f| %>
+  <% if @unlocked_task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@unlocked_task.errors.count, "error") %> prohibited this unlocked_task from being saved:</h2>
+
+      <ul>
+      <% @unlocked_task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :workflowstep_id %><br>
+    <%= f.text_field :workflowstep_id %>
+  </div>
+  <div class="field">
+    <%= f.label :unlocked_task_id %><br>
+    <%= f.number_field :unlocked_task_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

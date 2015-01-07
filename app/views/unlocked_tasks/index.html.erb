@@ -1,0 +1,27 @@
+<h1>Listing unlocked_tasks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Workflowstep</th>
+      <th>Unlocked task</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @unlocked_tasks.each do |unlocked_task| %>
+      <tr>
+        <td><%= unlocked_task.workflowstep %></td>
+        <td><%= unlocked_task.unlocked_task_id %></td>
+        <td><%= link_to 'Show', unlocked_task %></td>
+        <td><%= link_to 'Edit', edit_unlocked_task_path(unlocked_task) %></td>
+        <td><%= link_to 'Destroy', unlocked_task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Unlocked task', new_unlocked_task_path %>

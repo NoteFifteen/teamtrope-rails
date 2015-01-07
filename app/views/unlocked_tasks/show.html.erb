@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Workflowstep:</strong>
+  <%= @unlocked_task.workflowstep %>
+</p>
+
+<p>
+  <strong>Unlocked task:</strong>
+  <%= @unlocked_task.unlocked_task_id %>
+</p>
+
+<%= link_to 'Edit', edit_unlocked_task_path(@unlocked_task) %> |
+<%= link_to 'Back', unlocked_tasks_path %>

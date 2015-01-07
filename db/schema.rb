@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150106212455) do
+ActiveRecord::Schema.define(version: 20150107000343) do
 
   create_table "comments", force: true do |t|
     t.text     "content"
@@ -248,6 +248,16 @@ ActiveRecord::Schema.define(version: 20150106212455) do
   add_index "team_memberships", ["project_id", "member_id", "role_id"], name: "index_team_memberships_on_project_id_and_member_id_and_role_id"
   add_index "team_memberships", ["project_id"], name: "index_team_memberships_on_project_id"
   add_index "team_memberships", ["role_id"], name: "index_team_memberships_on_role_id"
+
+  create_table "unlocked_tasks", force: true do |t|
+    t.integer  "workflow_step_id"
+    t.integer  "unlocked_task_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "unlocked_tasks", ["unlocked_task_id"], name: "index_unlocked_tasks_on_unlocked_task_id"
+  add_index "unlocked_tasks", ["workflow_step_id"], name: "index_unlocked_tasks_on_workflow_step_id"
 
   create_table "users", force: true do |t|
     t.string   "email"

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :unlocked_tasks
+
   resources :project_type_workflows
 
   resources :project_types
