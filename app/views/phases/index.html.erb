@@ -1,0 +1,33 @@
+<h1>Listing phases</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Color</th>
+      <th>Color value</th>
+      <th>Icon</th>
+      <th>Verticial order</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @phases.each do |phase| %>
+      <tr>
+        <td><%= phase.name %></td>
+        <td><%= phase.color %></td>
+        <td><%= phase.color_value %></td>
+        <td><%= phase.icon %></td>
+        <td><%= phase.verticial_order %></td>
+        <td><%= link_to 'Show', phase %></td>
+        <td><%= link_to 'Edit', edit_phase_path(phase) %></td>
+        <td><%= link_to 'Destroy', phase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Phase', new_phase_path %>

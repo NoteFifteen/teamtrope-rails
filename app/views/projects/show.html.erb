@@ -29,7 +29,13 @@
       </label>
     </div><br/>
     
-    <a href='https://teamtrope.com/groups/the-key-to-everything/'>Link to Teamroom</a> Genre: Fantasy, Fiction, Horror
+    <a href='https://teamtrope.com/groups/the-key-to-everything/'>Link to Teamroom</a> Genre: 
+    <% isFirst = true %>
+    <% @project.genres.each do | genre |%>
+    	<%= ", " if !isFirst %>
+    	<%= "#{genre.name}" %>
+    	<% isFirst = false %>
+    <% end %>
     
     
     <!-- tabs -->
@@ -125,6 +131,26 @@
         <h4>Our Team</h4>
         <div id="members-dir-list" class="members dir-list">
           <ul id="members-list" class="item-list" role="main">
+          
+          	<% @project.members.each do | member | %>
+            <li>
+              <div class="item-avatar">
+								<%= link_to image_tag(member.profile.avatar.url(:medium),
+																		size: "180x180",
+																		class: "avatar user-#{member.id}-avatar avatar- photo",
+																		alt: "Profile picture of #{member.name}"),
+																		member %>
+              </div>
+              <div class="item">
+                <div class="item-title">
+                	<%= link_to member.name, member %><br />
+                  Author<br />
+                </div>
+                <div class="item-meta"></div>
+              </div>
+            </li>          		
+          	<% end %>
+          
             <li>
               <div class="item-avatar">
                 <a href="https://teamtrope.com/members/alex/"><img src="https://secure.gravatar.com/avatar/9de5b0d26da44ffe1a287ae24eb7bb35?d=wavatar&amp;s=180&amp;r=G" class="avatar user-11-avatar avatar-180 photo" width="180" height="180 alt="Profile picture of Alex Kimmell"" alt="Avatar Image" /></a>

@@ -4,8 +4,12 @@
   <h1>New Project</h1>
   <%= form_for @project do | f | %>
     <%= f.label :final_title %><br />
-	<%= f.text_field :final_title %><br /><br />
-	<%= f.submit "Save Project" %>
+		<%= f.text_field :final_title %><br /><br />
+	
+		<h2>Genres</h2>
+		<%= f.label :genre_ids, "Genres" %><br />
+		<%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: true } ) %><br /><br />
+		<%= f.submit "Save Project" %>
   <% end %>
   </div>
 </div>

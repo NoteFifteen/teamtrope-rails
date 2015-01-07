@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  color: MyString
+  color_value: MyString
+  icon: MyString
+  verticial_order: 1
+
+two:
+  name: MyString
+  color: MyString
+  color_value: MyString
+  icon: MyString
+  verticial_order: 1

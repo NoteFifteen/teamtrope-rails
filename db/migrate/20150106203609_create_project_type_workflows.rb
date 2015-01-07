@@ -6,5 +6,6 @@ class CreateProjectTypeWorkflows < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :project_type_workflows, [:workflow_id, :project_type_id]
   end
 end

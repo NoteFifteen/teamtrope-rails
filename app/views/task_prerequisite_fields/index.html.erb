@@ -1,0 +1,27 @@
+<h1>Listing task_prerequisite_fields</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Workflow step</th>
+      <th>Field name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @task_prerequisite_fields.each do |task_prerequisite_field| %>
+      <tr>
+        <td><%= task_prerequisite_field.workflow_step %></td>
+        <td><%= task_prerequisite_field.field_name %></td>
+        <td><%= link_to 'Show', task_prerequisite_field %></td>
+        <td><%= link_to 'Edit', edit_task_prerequisite_field_path(task_prerequisite_field) %></td>
+        <td><%= link_to 'Destroy', task_prerequisite_field, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Task prerequisite field', new_task_prerequisite_field_path %>

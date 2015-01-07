@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  role_id: 
+  project_type_id: 
+  suggested_percent: 1.5
+
+two:
+  role_id: 
+  project_type_id: 
+  suggested_percent: 1.5

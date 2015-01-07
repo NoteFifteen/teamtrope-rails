@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107000343) do
+ActiveRecord::Schema.define(version: 20150107035425) do
+
+  create_table "book_genres", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "genre_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "book_genres", ["genre_id"], name: "index_book_genres_on_genre_id"
+  add_index "book_genres", ["project_id"], name: "index_book_genres_on_project_id"
 
   create_table "comments", force: true do |t|
     t.text     "content"
@@ -26,6 +36,32 @@ ActiveRecord::Schema.define(version: 20150107000343) do
   add_index "comments", ["post_id"], name: "index_comments_on_post_id"
   add_index "comments", ["user_id", "created_at"], name: "index_comments_on_user_id_and_created_at"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
+  create_table "current_steps", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "workflow_step_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "current_steps", ["project_id"], name: "index_current_steps_on_project_id"
+  add_index "current_steps", ["workflow_step_id"], name: "index_current_steps_on_workflow_step_id"
+
+  create_table "genres", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "phases", force: true do |t|
+    t.string   "name"
+    t.string   "color"
+    t.string   "color_value"
+    t.string   "icon"
+    t.integer  "verticial_order"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "post_tags", force: true do |t|
     t.integer  "post_id"
@@ -198,6 +234,17 @@ ActiveRecord::Schema.define(version: 20150107000343) do
 
   add_index "projects", ["project_type_id"], name: "index_projects_on_project_type_id"
 
+  create_table "required_roles", force: true do |t|
+    t.integer  "role_id"
+    t.integer  "project_type_id"
+    t.float    "suggested_percent"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "required_roles", ["project_type_id"], name: "index_required_roles_on_project_type_id"
+  add_index "required_roles", ["role_id"], name: "index_required_roles_on_role_id"
+
   create_table "roles", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -223,6 +270,16 @@ ActiveRecord::Schema.define(version: 20150107000343) do
 
   add_index "tags", ["id", "name"], name: "index_tags_on_id_and_name"
   add_index "tags", ["name"], name: "index_tags_on_name"
+
+  create_table "task_prerequisite_fields", force: true do |t|
+    t.integer  "workflow_step_id"
+    t.string   "field_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "task_prerequisite_fields", ["field_name"], name: "index_task_prerequisite_fields_on_field_name"
+  add_index "task_prerequisite_fields", ["workflow_step_id"], name: "index_task_prerequisite_fields_on_workflow_step_id"
 
   create_table "tasks", force: true do |t|
     t.string   "type"
@@ -278,9 +335,12 @@ ActiveRecord::Schema.define(version: 20150107000343) do
     t.integer  "rejected_step_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "phase_id"
+    t.integer  "horizontal_order"
   end
 
   add_index "workflow_steps", ["next_step_id"], name: "index_workflow_steps_on_next_step_id"
+  add_index "workflow_steps", ["phase_id"], name: "index_workflow_steps_on_phase_id"
   add_index "workflow_steps", ["rejected_step_id"], name: "index_workflow_steps_on_rejected_step_id"
   add_index "workflow_steps", ["task_id"], name: "index_workflow_steps_on_task_id"
   add_index "workflow_steps", ["workflow_id", "task_id"], name: "index_workflow_steps_on_workflow_id_and_task_id", unique: true

@@ -1,0 +1,29 @@
+<h1>Listing required_roles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Role</th>
+      <th>Project type</th>
+      <th>Suggested percent</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @required_roles.each do |required_role| %>
+      <tr>
+        <td><%= required_role.role %></td>
+        <td><%= required_role.project_type %></td>
+        <td><%= required_role.suggested_percent %></td>
+        <td><%= link_to 'Show', required_role %></td>
+        <td><%= link_to 'Edit', edit_required_role_path(required_role) %></td>
+        <td><%= link_to 'Destroy', required_role, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Required role', new_required_role_path %>

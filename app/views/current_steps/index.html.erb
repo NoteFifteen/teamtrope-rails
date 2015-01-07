@@ -1,0 +1,27 @@
+<h1>Listing current_steps</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Workflow step</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @current_steps.each do |current_step| %>
+      <tr>
+        <td><%= current_step.project %></td>
+        <td><%= current_step.workflow_step %></td>
+        <td><%= link_to 'Show', current_step %></td>
+        <td><%= link_to 'Edit', edit_current_step_path(current_step) %></td>
+        <td><%= link_to 'Destroy', current_step, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Current step', new_current_step_path %>

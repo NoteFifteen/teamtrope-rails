@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @phase.name %>
+</p>
+
+<p>
+  <strong>Color:</strong>
+  <%= @phase.color %>
+</p>
+
+<p>
+  <strong>Color value:</strong>
+  <%= @phase.color_value %>
+</p>
+
+<p>
+  <strong>Icon:</strong>
+  <%= @phase.icon %>
+</p>
+
+<p>
+  <strong>Verticial order:</strong>
+  <%= @phase.verticial_order %>
+</p>
+
+<%= link_to 'Edit', edit_phase_path(@phase) %> |
+<%= link_to 'Back', phases_path %>

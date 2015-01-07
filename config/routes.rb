@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
 
+  resources :genres
+
+  resources :phases
+
+  resources :required_roles
+
+  resources :task_prerequisite_fields
+
+  resources :current_steps
+
   resources :unlocked_tasks
 
   resources :project_type_workflows

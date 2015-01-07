@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Role:</strong>
+  <%= @required_role.role %>
+</p>
+
+<p>
+  <strong>Project type:</strong>
+  <%= @required_role.project_type %>
+</p>
+
+<p>
+  <strong>Suggested percent:</strong>
+  <%= @required_role.suggested_percent %>
+</p>
+
+<%= link_to 'Edit', edit_required_role_path(@required_role) %> |
+<%= link_to 'Back', required_roles_path %>

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Workflow step:</strong>
+  <%= @task_prerequisite_field.workflow_step %>
+</p>
+
+<p>
+  <strong>Field name:</strong>
+  <%= @task_prerequisite_field.field_name %>
+</p>
+
+<%= link_to 'Edit', edit_task_prerequisite_field_path(@task_prerequisite_field) %> |
+<%= link_to 'Back', task_prerequisite_fields_path %>

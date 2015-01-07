@@ -183,5 +183,9 @@
 	<%= f.text_field :step_cover_design %><br />
 	<%= f.label :pcr_step %><br />
 	<%= f.text_field :pcr_step %><br />
+	
+	<h2>Genres</h2>
+	<%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: true } ) %><br /><br />	
+	
 	<br /><%= f.submit %>
 <% end %>
