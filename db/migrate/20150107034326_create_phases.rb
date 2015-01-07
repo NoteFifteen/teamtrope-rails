@@ -5,7 +5,7 @@ class CreatePhases < ActiveRecord::Migration
       t.string :color
       t.string :color_value
       t.string :icon
-      t.integer :verticial_order
+      t.integer :vertical_order
 
       t.timestamps
     end

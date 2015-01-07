@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20150107035425) do
     t.string   "color"
     t.string   "color_value"
     t.string   "icon"
-    t.integer  "verticial_order"
+    t.integer  "vertical_order"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
