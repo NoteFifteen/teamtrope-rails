@@ -2,8 +2,8 @@
 
 one:
   project_id: 
-  workflow_step_id: 
+  task_id: 
 
 two:
   project_id: 
-  workflow_step_id: 
+  task_id: 

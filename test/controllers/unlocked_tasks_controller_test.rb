@@ -18,7 +18,7 @@ class UnlockedTasksControllerTest < ActionController::TestCase
 
   test "should create unlocked_task" do
     assert_difference('UnlockedTask.count') do
-      post :create, unlocked_task: { unlocked_task_id: @unlocked_task.unlocked_task_id, workflowstep_id: @unlocked_task.workflowstep_id }
+      post :create, unlocked_task: { task_id: @unlocked_task.task_id, unlocked_task_id: @unlocked_task.unlocked_task_id }
     end
 
     assert_redirected_to unlocked_task_path(assigns(:unlocked_task))
@@ -35,7 +35,7 @@ class UnlockedTasksControllerTest < ActionController::TestCase
   end
 
   test "should update unlocked_task" do
-    patch :update, id: @unlocked_task, unlocked_task: { unlocked_task_id: @unlocked_task.unlocked_task_id, workflowstep_id: @unlocked_task.workflowstep_id }
+    patch :update, id: @unlocked_task, unlocked_task: { task_id: @unlocked_task.task_id, unlocked_task_id: @unlocked_task.unlocked_task_id }
     assert_redirected_to unlocked_task_path(assigns(:unlocked_task))
   end
 

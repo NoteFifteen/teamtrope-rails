@@ -18,7 +18,7 @@ class TasksControllerTest < ActionController::TestCase
 
   test "should create task" do
     assert_difference('Task.count') do
-      post :create, task: { days_to_complete: @task.days_to_complete, icon: @task.icon, intro_video: @task.intro_video, name: @task.name, tab_text: @task.tab_text, type: @task.type }
+      post :create, task: { days_to_complete: @task.days_to_complete, icon: @task.icon, intro_video: @task.intro_video, name: @task.name, next_id: @task.next_id, rejected_step_id: @task.rejected_step_id, tab_text: @task.tab_text, type: @task.type, workflow_id: @task.workflow_id }
     end
 
     assert_redirected_to task_path(assigns(:task))
@@ -35,7 +35,7 @@ class TasksControllerTest < ActionController::TestCase
   end
 
   test "should update task" do
-    patch :update, id: @task, task: { days_to_complete: @task.days_to_complete, icon: @task.icon, intro_video: @task.intro_video, name: @task.name, tab_text: @task.tab_text, type: @task.type }
+    patch :update, id: @task, task: { days_to_complete: @task.days_to_complete, icon: @task.icon, intro_video: @task.intro_video, name: @task.name, next_id: @task.next_id, rejected_step_id: @task.rejected_step_id, tab_text: @task.tab_text, type: @task.type, workflow_id: @task.workflow_id }
     assert_redirected_to task_path(assigns(:task))
   end
 

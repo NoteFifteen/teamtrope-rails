@@ -7,6 +7,6 @@ class Project < ActiveRecord::Base
 	has_many :book_genres, foreign_key: :project_id, dependent: :destroy
 	has_many :genres, through: :book_genres, source: :genre
 	
-	has_many :current_steps
+	has_many :current_tasks
 	
 end

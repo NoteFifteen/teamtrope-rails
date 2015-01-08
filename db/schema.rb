@@ -37,15 +37,16 @@ ActiveRecord::Schema.define(version: 20150107035425) do
   add_index "comments", ["user_id", "created_at"], name: "index_comments_on_user_id_and_created_at"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
-  create_table "current_steps", force: true do |t|
+  create_table "current_tasks", force: true do |t|
     t.integer  "project_id"
-    t.integer  "workflow_step_id"
+    t.integer  "task_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "current_steps", ["project_id"], name: "index_current_steps_on_project_id"
-  add_index "current_steps", ["workflow_step_id"], name: "index_current_steps_on_workflow_step_id"
+  add_index "current_tasks", ["project_id", "task_id"], name: "index_current_tasks_on_project_id_and_task_id", unique: true
+  add_index "current_tasks", ["project_id"], name: "index_current_tasks_on_project_id"
+  add_index "current_tasks", ["task_id"], name: "index_current_tasks_on_task_id"
 
   create_table "genres", force: true do |t|
     t.string   "name"
@@ -128,6 +129,7 @@ ActiveRecord::Schema.define(version: 20150107035425) do
   end
 
   add_index "project_type_workflows", ["project_type_id"], name: "index_project_type_workflows_on_project_type_id"
+  add_index "project_type_workflows", ["workflow_id", "project_type_id"], name: "index_ptws_on_workflow_id_project_type_id"
   add_index "project_type_workflows", ["workflow_id"], name: "index_project_type_workflows_on_workflow_id"
 
   create_table "project_types", force: true do |t|
@@ -272,16 +274,18 @@ ActiveRecord::Schema.define(version: 20150107035425) do
   add_index "tags", ["name"], name: "index_tags_on_name"
 
   create_table "task_prerequisite_fields", force: true do |t|
-    t.integer  "workflow_step_id"
+    t.integer  "task_id"
     t.string   "field_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "task_prerequisite_fields", ["field_name"], name: "index_task_prerequisite_fields_on_field_name"
-  add_index "task_prerequisite_fields", ["workflow_step_id"], name: "index_task_prerequisite_fields_on_workflow_step_id"
+  add_index "task_prerequisite_fields", ["task_id"], name: "index_task_prerequisite_fields_on_task_id"
 
   create_table "tasks", force: true do |t|
+    t.integer  "workflow_id"
+    t.integer  "next_id"
+    t.integer  "rejected_task_id"
     t.string   "type"
     t.string   "name"
     t.string   "icon"
@@ -291,6 +295,10 @@ ActiveRecord::Schema.define(version: 20150107035425) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "tasks", ["next_id"], name: "index_tasks_on_next_id"
+  add_index "tasks", ["rejected_task_id"], name: "index_tasks_on_rejected_task_id"
+  add_index "tasks", ["workflow_id"], name: "index_tasks_on_workflow_id"
 
   create_table "team_memberships", force: true do |t|
     t.integer  "project_id"
@@ -307,14 +315,14 @@ ActiveRecord::Schema.define(version: 20150107035425) do
   add_index "team_memberships", ["role_id"], name: "index_team_memberships_on_role_id"
 
   create_table "unlocked_tasks", force: true do |t|
-    t.integer  "workflow_step_id"
+    t.integer  "task_id"
     t.integer  "unlocked_task_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "unlocked_tasks", ["task_id"], name: "index_unlocked_tasks_on_task_id"
   add_index "unlocked_tasks", ["unlocked_task_id"], name: "index_unlocked_tasks_on_unlocked_task_id"
-  add_index "unlocked_tasks", ["workflow_step_id"], name: "index_unlocked_tasks_on_workflow_step_id"
 
   create_table "users", force: true do |t|
     t.string   "email"
@@ -328,31 +336,13 @@ ActiveRecord::Schema.define(version: 20150107035425) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["remember_token"], name: "index_users_on_remember_token"
 
-  create_table "workflow_steps", force: true do |t|
-    t.integer  "workflow_id"
-    t.integer  "task_id"
-    t.integer  "next_step_id"
-    t.integer  "rejected_step_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "phase_id"
-    t.integer  "horizontal_order"
-  end
-
-  add_index "workflow_steps", ["next_step_id"], name: "index_workflow_steps_on_next_step_id"
-  add_index "workflow_steps", ["phase_id"], name: "index_workflow_steps_on_phase_id"
-  add_index "workflow_steps", ["rejected_step_id"], name: "index_workflow_steps_on_rejected_step_id"
-  add_index "workflow_steps", ["task_id"], name: "index_workflow_steps_on_task_id"
-  add_index "workflow_steps", ["workflow_id", "task_id"], name: "index_workflow_steps_on_workflow_id_and_task_id", unique: true
-  add_index "workflow_steps", ["workflow_id"], name: "index_workflow_steps_on_workflow_id"
-
   create_table "workflows", force: true do |t|
     t.string   "name"
-    t.integer  "root_step_id"
+    t.integer  "root_task_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "workflows", ["root_step_id"], name: "index_workflows_on_root_step_id"
+  add_index "workflows", ["root_task_id"], name: "index_workflows_on_root_task_id"
 
 end

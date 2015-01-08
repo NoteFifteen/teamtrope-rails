@@ -18,7 +18,7 @@ class TaskPrerequisiteFieldsControllerTest < ActionController::TestCase
 
   test "should create task_prerequisite_field" do
     assert_difference('TaskPrerequisiteField.count') do
-      post :create, task_prerequisite_field: { field_name: @task_prerequisite_field.field_name, workflow_step_id: @task_prerequisite_field.workflow_step_id }
+      post :create, task_prerequisite_field: { field_name: @task_prerequisite_field.field_name, task_id: @task_prerequisite_field.task_id }
     end
 
     assert_redirected_to task_prerequisite_field_path(assigns(:task_prerequisite_field))
@@ -35,7 +35,7 @@ class TaskPrerequisiteFieldsControllerTest < ActionController::TestCase
   end
 
   test "should update task_prerequisite_field" do
-    patch :update, id: @task_prerequisite_field, task_prerequisite_field: { field_name: @task_prerequisite_field.field_name, workflow_step_id: @task_prerequisite_field.workflow_step_id }
+    patch :update, id: @task_prerequisite_field, task_prerequisite_field: { field_name: @task_prerequisite_field.field_name, task_id: @task_prerequisite_field.task_id }
     assert_redirected_to task_prerequisite_field_path(assigns(:task_prerequisite_field))
   end
 

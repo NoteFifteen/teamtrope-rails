@@ -69,6 +69,6 @@ class TaskPrerequisiteFieldsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_prerequisite_field_params
-      params.require(:task_prerequisite_field).permit(:workflow_step_id, :field_name)
+      params.require(:task_prerequisite_field).permit(:task_id, :field_name)
     end
 end

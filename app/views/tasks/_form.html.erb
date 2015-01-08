@@ -12,6 +12,18 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :workflow_id %><br>
+    <%= f.text_field :workflow_id %>
+  </div>
+  <div class="field">
+    <%= f.label :next_id %><br>
+    <%= f.number_field :next_id %>
+  </div>
+  <div class="field">
+    <%= f.label :rejected_task_id %><br>
+    <%= f.number_field :rejected_task_id %>
+  </div>
+  <div class="field">
     <%= f.label :type %><br>
     <%= f.text_field :type %>
   </div>
@@ -33,7 +45,7 @@
   </div>
   <div class="field">
     <%= f.label :days_to_complete %><br>
-    <%= f.number_field :days_to_complete %>
+    <%= f.text_field :days_to_complete %>
   </div>
   <div class="actions">
     <%= f.submit %>

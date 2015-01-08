@@ -69,6 +69,6 @@ class UnlockedTasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def unlocked_task_params
-      params.require(:unlocked_task).permit(:workflowstep_id, :unlocked_task_id)
+      params.require(:unlocked_task).permit(:task_id, :unlocked_task_id)
     end
 end

@@ -1,7 +1,7 @@
 class CreateUnlockedTasks < ActiveRecord::Migration
   def change
     create_table :unlocked_tasks do |t|
-      t.references :workflow_step, index: true
+      t.references :task, index: true
       t.integer :unlocked_task_id
 
       t.timestamps

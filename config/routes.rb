@@ -1,25 +1,23 @@
 Rails.application.routes.draw do
 
+  resources :task_prerequisite_fields
+
+  resources :current_tasks
+
+  resources :unlocked_tasks
+
   resources :genres
 
   resources :phases
 
   resources :required_roles
 
-  resources :task_prerequisite_fields
-
-  resources :current_steps
-
-  resources :unlocked_tasks
-
   resources :project_type_workflows
 
   resources :project_types
 
-  resources :workflow_steps
-
   resources :workflows
-
+  
   resources :tasks
 
   # The priority is based upon order of creation: first created -> highest priority.

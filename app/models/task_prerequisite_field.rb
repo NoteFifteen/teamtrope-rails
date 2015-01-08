@@ -1,3 +1,3 @@
 class TaskPrerequisiteField < ActiveRecord::Base
-  belongs_to :workflow_step
+  belongs_to :task
 end

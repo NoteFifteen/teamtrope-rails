@@ -1,6 +1,21 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Workflow:</strong>
+  <%= @task.workflow.name %>
+</p>
+
+<p>
+  <strong>Next:</strong>
+  <%= @task.next_id %>
+</p>
+
+<p>
+  <strong>Rejected task:</strong>
+  <%= @task.rejected_task_id %>
+</p>
+
+<p>
   <strong>Type:</strong>
   <%= @task.type %>
 </p>
