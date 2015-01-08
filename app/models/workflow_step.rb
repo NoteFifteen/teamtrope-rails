@@ -3,7 +3,6 @@ class WorkflowStep < ActiveRecord::Base
   belongs_to :task
   belongs_to :phase
   
-  has_one :workflow, foreign_key: :root_step_id
   has_one :current_step
   
   has_many :task_prerequisite_fields, foreign_key: :workflow_step_id
