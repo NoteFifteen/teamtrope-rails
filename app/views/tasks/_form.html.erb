@@ -13,15 +13,15 @@
 
   <div class="field">
     <%= f.label :workflow_id %><br>
-    <%= f.text_field :workflow_id %>
+    <%= f.collection_select :workflow_id, Workflow.all, :id, :name, include_blank: true %>
   </div>
   <div class="field">
     <%= f.label :next_id %><br>
-    <%= f.number_field :next_id %>
+    <%= f.collection_select :next_id, Task.all, :id, :name, include_blank: true %>
   </div>
   <div class="field">
     <%= f.label :rejected_task_id %><br>
-    <%= f.number_field :rejected_task_id %>
+    <%= f.collection_select :rejected_task_id, Task.all, :id, :name, include_blank: true %>
   </div>
   <div class="field">
     <%= f.label :type %><br>
