@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107035425) do
+ActiveRecord::Schema.define(version: 20150109230218) do
 
   create_table "book_genres", force: true do |t|
     t.integer  "project_id"
@@ -294,9 +294,13 @@ ActiveRecord::Schema.define(version: 20150107035425) do
     t.integer  "days_to_complete"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "phase_id"
+    t.integer  "horizontal_order"
   end
 
+  add_index "tasks", ["horizontal_order"], name: "index_tasks_on_horizontal_order"
   add_index "tasks", ["next_id"], name: "index_tasks_on_next_id"
+  add_index "tasks", ["phase_id"], name: "index_tasks_on_phase_id"
   add_index "tasks", ["rejected_task_id"], name: "index_tasks_on_rejected_task_id"
   add_index "tasks", ["workflow_id"], name: "index_tasks_on_workflow_id"
 

@@ -24,6 +24,10 @@
     <%= f.collection_select :rejected_task_id, Task.all, :id, :name, include_blank: true %>
   </div>
   <div class="field">
+    <%= f.label :phase_id %><br>
+    <%= f.collection_select :phase_id, Phase.all, :id, :name, include_blank: true %>
+  </div>  
+  <div class="field">
     <%= f.label :type %><br>
     <%= f.text_field :type %>
   </div>
@@ -47,6 +51,10 @@
     <%= f.label :days_to_complete %><br>
     <%= f.text_field :days_to_complete %>
   </div>
+  <div class="field">
+    <%= f.label :horizontal_order %><br>
+    <%= f.text_field :horizontal_order %>
+  </div>  
   <div class="actions">
     <%= f.submit %>
   </div>

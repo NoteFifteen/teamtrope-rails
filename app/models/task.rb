@@ -1,5 +1,6 @@
 class Task < ActiveRecord::Base
   belongs_to :workflow
+  belongs_to :phase
   
   has_many :unlocked_tasks
   
