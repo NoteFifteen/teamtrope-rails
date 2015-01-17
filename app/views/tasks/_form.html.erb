@@ -12,6 +12,30 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :tab_text %><br>
+    <%= f.text_field :tab_text %>
+  </div>  
+  <div class="field">
+    <%= f.label :icon %><br>
+    <%= f.text_field :icon %>
+  </div>
+  <div class="field">
+    <%= f.label :intro_video %><br>
+    <%= f.text_field :intro_video %>
+  </div>
+  <div class="field">
+    <%= f.label :days_to_complete %><br>
+    <%= f.text_field :days_to_complete %>
+  </div>
+  <div class="field">
+    <%= f.label :horizontal_order %><br>
+    <%= f.text_field :horizontal_order %>
+  </div>
+  <div class="field">
     <%= f.label :workflow_id %><br>
     <%= f.collection_select :workflow_id, Workflow.all, :id, :name, include_blank: true %>
   </div>
@@ -28,33 +52,19 @@
     <%= f.collection_select :phase_id, Phase.all, :id, :name, include_blank: true %>
   </div>  
   <div class="field">
-    <%= f.label :type %><br>
-    <%= f.text_field :type %>
+    <%= f.label :partial %><br>
+    <%
+    	partials_path = Rails.root.join("app", "views", "projects", "forms")
+    	partials = Array.new
+    	Dir.foreach(partials_path) do | partial |
+    		partials.push(partial) if partial.end_with? ".erb"
+    	end	
+    %>
+    <% partials = [ ["Edit Complete Date", "_edit_complete_date.html.erb"], ["Edit Manuscript", "_edited_manuscript.html.erb"], ["Original Manuscript","_original_manuscript.html.erb"] ]%>
+    <%= f.select("partial", partials, {include_blank: true} )%>
   </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :icon %><br>
-    <%= f.text_field :icon %>
-  </div>
-  <div class="field">
-    <%= f.label :tab_text %><br>
-    <%= f.text_field :tab_text %>
-  </div>
-  <div class="field">
-    <%= f.label :intro_video %><br>
-    <%= f.text_field :intro_video %>
-  </div>
-  <div class="field">
-    <%= f.label :days_to_complete %><br>
-    <%= f.text_field :days_to_complete %>
-  </div>
-  <div class="field">
-    <%= f.label :horizontal_order %><br>
-    <%= f.text_field :horizontal_order %>
-  </div>  
+
+  
   <div class="actions">
     <%= f.submit %>
   </div>

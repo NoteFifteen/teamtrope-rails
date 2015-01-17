@@ -6,11 +6,11 @@
     	<th>Horizontal Order</th>
       <th>Workflow</th>
       <th>Task Id</th>
+      <th>Name</th>
+      <th>Phase Id</th>
       <th>Next</th>
       <th>Rejected task</th>
-      <th>Phase Id</th>
-      <th>Type</th>
-      <th>Name</th>
+      <th>Partial</th>
       <th>Icon</th>
       <th>Tab text</th>
       <th>Intro video</th>
@@ -25,11 +25,11 @@
       	<td><%= task.horizontal_order %></td>
         <td><%= task.workflow.name %></td>
         <td><%= task.id %></td>
+        <td><%= task.name %></td>
+        <td><%= task.phase_id %></td>        
         <td><%= task.next_id %></td>
         <td><%= task.rejected_task_id %></td>
-        <td><%= task.phase_id %></td>
-        <td><%= task.type %></td>
-        <td><%= task.name %></td>
+        <td><%= task.partial %></td>
         <td><%= task.icon %></td>
         <td><%= task.tab_text %></td>
         <td><%= task.intro_video %></td>

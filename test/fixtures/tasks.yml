@@ -4,7 +4,7 @@ one:
   workflow_id: 
   next_id: 1
   rejected_step_id: 1
-  type: 
+  partial: 
   name: MyString
   icon: MyString
   tab_text: MyString
@@ -15,7 +15,7 @@ two:
   workflow_id: 
   next_id: 1
   rejected_step_id: 1
-  type: 
+  partial: 
   name: MyString
   icon: MyString
   tab_text: MyString

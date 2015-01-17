@@ -4,7 +4,7 @@ class CreateTasks < ActiveRecord::Migration
       t.references :workflow, index: true
       t.integer :next_id
       t.integer :rejected_task_id
-      t.string :type
+      t.string :partial
       t.string :name
       t.string :icon
       t.string :tab_text

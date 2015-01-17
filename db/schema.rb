@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 20150109230218) do
     t.datetime "updated_at"
   end
 
-  add_index "post_tags", ["post_id", "tag_id"], name: "index_post_tags_on_post_id_and_tag_id"
+  add_index "post_tags", ["post_id", "tag_id"], name: "index_post_tags_on_post_id_and_tag_id", unique: true
 
   create_table "posts", force: true do |t|
     t.string   "title"
@@ -286,7 +286,7 @@ ActiveRecord::Schema.define(version: 20150109230218) do
     t.integer  "workflow_id"
     t.integer  "next_id"
     t.integer  "rejected_task_id"
-    t.string   "type"
+    t.string   "partial"
     t.string   "name"
     t.string   "icon"
     t.string   "tab_text"
