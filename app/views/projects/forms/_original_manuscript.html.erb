@@ -1,0 +1,9 @@
+<span class="gform_description">Upload the Original Manuscript to unlock additional steps.</span>
+<%= simple_form_for @project do | f | %>
+<% puts action_name %>
+	<%= hidden_field_tag(:submitted_from_action, action_name) %>
+	<%= f.error_notification %>
+	<%= f.input :id, as: :hidden, value: @project.id %>
+  <%= f.input :manuscript_original, label: "Original Manuscript:", as: :file, required: true %>	
+  <%= f.submit "submit" %>
+<% end %>

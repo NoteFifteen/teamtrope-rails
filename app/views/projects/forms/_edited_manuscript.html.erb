@@ -1,0 +1,34 @@
+<h1>Submit Edited Manuscript</h1>
+<%= simple_form_for @project do | f | %>
+	<div class="gform_heading">
+		<span class="gform_description">
+		Once the editing process is complete, Author must upload your final manuscript for proofreading here.  You are only allowed to submit once, so please ensure editing is final! (.doc or .docx only) 
+		
+		<p>Please note the special formatting requirements required for uploading in step 2.2.</p>
+		</span>
+	</div>
+	<div class="gform_body">
+		<ul class="gform_fields top_label description_below">
+			<li>
+				<%= f.input :manuscript_edited, as: :file, label: "Final Manuscript", 
+						label_html: { class: "gfield_label" }, hint: ".doc or .docx file only",
+						required: true  %>
+			</li>
+			<li>
+				<label class="gfield_label">Do any of the following apply to your book?</label>
+				<%= f.input :childrens_book, as: :boolean, label: "Children's book" %>
+				<%= f.input :color_interior, as: :boolean, label: "Full color interior" %>
+				<%= f.input :has_index, as: :boolean, label: "My book has an index" %>
+				<%= f.input :has_internal_illustrations, as: :boolean, label: "My book has illustrations or images inserted throughout" %>
+			</li>
+		</ul>
+	</div>
+	<%= hidden_field_tag(:submitted_from_action, action_name) %>
+	<div class="gform_footer top_label">
+		<%= f.submit "submit" %>
+	</div>
+<% end %>
+<% 
+	#TODO: investigate checkbox collection 
+	#book_contains = [{:label => 'Children\'s Book'}, {:label => 'Full color interior'}, {:label=> 'My book has an index'} ] 
+%>
