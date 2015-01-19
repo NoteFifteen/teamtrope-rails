@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  Workflow_id: 
-  ProjectType_id: 
+  workflow_id: 
+  project_type_id: 
 
 two:
-  Workflow_id: 
-  ProjectType_id: 
+  workflow_id: 
+  project_type_id: 

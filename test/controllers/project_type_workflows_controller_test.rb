@@ -18,7 +18,7 @@ class ProjectTypeWorkflowsControllerTest < ActionController::TestCase
 
   test "should create project_type_workflow" do
     assert_difference('ProjectTypeWorkflow.count') do
-      post :create, project_type_workflow: { ProjectType_id: @project_type_workflow.ProjectType_id, Workflow_id: @project_type_workflow.Workflow_id }
+      post :create, project_type_workflow: { project_type_id: @project_type_workflow.project_type_id, workflow_id: @project_type_workflow.workflow_id }
     end
 
     assert_redirected_to project_type_workflow_path(assigns(:project_type_workflow))
@@ -35,7 +35,7 @@ class ProjectTypeWorkflowsControllerTest < ActionController::TestCase
   end
 
   test "should update project_type_workflow" do
-    patch :update, id: @project_type_workflow, project_type_workflow: { ProjectType_id: @project_type_workflow.ProjectType_id, Workflow_id: @project_type_workflow.Workflow_id }
+    patch :update, id: @project_type_workflow, project_type_workflow: { project_type_id: @project_type_workflow.project_type_id, workflow_id: @project_type_workflow.workflow_id }
     assert_redirected_to project_type_workflow_path(assigns(:project_type_workflow))
   end
 
