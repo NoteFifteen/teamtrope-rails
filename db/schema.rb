@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150109230218) do
+ActiveRecord::Schema.define(version: 20150117012907) do
 
   create_table "book_genres", force: true do |t|
     t.integer  "project_id"
@@ -272,6 +272,16 @@ ActiveRecord::Schema.define(version: 20150109230218) do
 
   add_index "tags", ["id", "name"], name: "index_tags_on_id_and_name"
   add_index "tags", ["name"], name: "index_tags_on_name"
+
+  create_table "task_performers", force: true do |t|
+    t.integer  "task_id"
+    t.integer  "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "task_performers", ["role_id"], name: "index_task_performers_on_role_id"
+  add_index "task_performers", ["task_id"], name: "index_task_performers_on_task_id"
 
   create_table "task_prerequisite_fields", force: true do |t|
     t.integer  "task_id"

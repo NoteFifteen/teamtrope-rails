@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :roles
+
   resources :task_prerequisite_fields
 
   resources :current_tasks

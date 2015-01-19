@@ -64,6 +64,10 @@
     <%= f.select("partial", partials, {include_blank: true} )%>
   </div>
 
+  <h2>Performer Roles</h2>
+  <div class="field">
+		<%= f.collection_check_boxes( :performer_ids, Role.all, :id, :name, {include_blank:  false}, { multiple: true } )%>	
+	</div>
   
   <div class="actions">
     <%= f.submit %>

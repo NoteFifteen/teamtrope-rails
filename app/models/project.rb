@@ -9,4 +9,6 @@ class Project < ActiveRecord::Base
 	
 	has_many :current_tasks
 	
+	#validates :manuscript_original, presence: true
+	
 end

@@ -204,7 +204,9 @@
         </b>
       </li>
 <%
-@result = Parse::Cloud::Function.new("getSalesDataForAsin").call("asin"=>@project.asin) 
+if false
+@result = Parse::Cloud::Function.new("getSalesDataForAsin").call("asin"=>@project.asin) %>
+<%
 sales_data_string = ""
 comma = ""
 @result["crawl"].each do | crawl_data |
@@ -215,7 +217,7 @@ comma = ""
 
 end		
 %>
-      <%@result = Parse::Cloud::Function.new("getCrawlDataForAsin").call("asin"=>@project.asin) %>
+      <% @result = Parse::Cloud::Function.new("getCrawlDataForAsin").call("asin"=>@project.asin) %>
       <li class="tab-content tab-content-5 typography">
         <h1>Rankings and Analytics</h1>
         <script type='text/javascript'>//<![CDATA[ 
@@ -282,9 +284,10 @@ end
 		    });
 		  });//]]>  
 		</script>
-		
+
 		<div id="price-ranking-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div></b>
 	  </li>
+<% end %>
 	  <li class="tab-content tab-content-6 typography">
 	    <h1>Update Project Status</h1>
 	    <div class='gf_browser_chrome gform_wrapper' id='gform_wrapper_74' ><a id='gf_74' name='gf_74' class='gform_anchor' ></a>
@@ -455,7 +458,7 @@ end
   	  -->
   	  <ul>
   	    <li class="tab-content tab-content-2 typography">
-  	      <h1>Project Interest Sign-Up</h1>
+  	      <h1>Project Interest Sign-Up</h1>  	      
   	      <div class='gf_browser_chrome gform_wrapper' id='gform_wrapper_38' >
   	      <a id='gf_38' name='gf_38' class='gform_anchor' ></a>
   	      <form method='post' enctype='multipart/form-data' target='gform_ajax_frame_38' id='gform_38'  action='/projects/dejection-songs-by-alex-kimmell/#gf_38'>
@@ -999,25 +1002,37 @@ end
 	
 	<!-- tabs -->
 	<div class="pcss3t pcss3t-icons-left  pcss3t-height-auto pcss3t-theme-3-red">
-  	  <input type="radio" name="pcss3t03" checked id="tab103" class="tab-content-first">
+  	<input type="radio" name="pcss3t03" checked id="tab103" class="tab-content-first">
 	  <label for="tab103">Edit Content<i class="icon-pencil"></i></label>
+	  
 	  <input type="radio" name="pcss3t03" id="tab203" class="tab-content-2">
-	  <label  class="tab-inactive" ">Orig. Man.<i class="icon-bookmark"></i></label>
+	  <label  for="tab203">Orig. Man.<i class="icon-bookmark"></i></label>
+	  
 	  <input type="radio" name="pcss3t03" id="tab303" class="tab-content-3">
-	  <label  class="tab-inactive" ">Submit Edit Complete Date<i class="icon-calendar"></i></label>
+	  <label  for="tab303">Submit Edit Complete Date<i class="icon-calendar"></i></label>
+	  
 	  <input type="radio" name="pcss3t03" id="tab403" class="tab-content-4">
-	  <label  class="tab-inactive" ">Submit Edited Manuscript<i class="icon-edit"></i></label>
+	  <label  for="tab403">Submit Edited Manuscript<i class="icon-edit"></i></label>
+	  
 	  <input type="radio" name="pcss3t03" id="tab503" class="tab-content-5">
-	  <label  class="tab-inactive" ">Submit Proofread<i class="icon-ok-sign"></i></label>
+	  <label  for="tab503">Submit Proofread<i class="icon-ok-sign"></i></label>
 	  <!--
 	  <input type="radio" name="pcss3t03" id="tab1503" class="tab-content-last">
 	  <label for="tab1503" class="right"><i class="icon-question-sign"></i></label>	
 	  -->
 	  <ul>
-	    <li class="tab-content tab-content-2 typography"></b></li>
-	    <li class="tab-content tab-content-3 typography"></b></li>
-	    <li class="tab-content tab-content-4 typography"></b></li>
-	    <li class="tab-content tab-content-5 typography"></b></li>
+	    <li class="tab-content tab-content-2 typography">
+	    	<h1>Original Manuscript</h1>
+	    	<%= render 'projects/forms/original_manuscript' %>
+	    </li>
+	    <li class="tab-content tab-content-3 typography">
+	    	<%= render 'projects/forms/edit_complete_date' %>
+	    </li>
+	    <li class="tab-content tab-content-4 typography">
+	    	<%= render 'projects/forms/edited_manuscript' %>
+	    </li>
+	    <li class="tab-content tab-content-5 typography">
+	    </li>
 	    <!--
 	    <li class="tab-content tab-content-last typography">
 	      <div class="typography">
@@ -1035,13 +1050,13 @@ end
 	  <input type="radio" name="pcss3t04" checked id="tab104" class="tab-content-first">
 	  <label for="tab104">Design Layout<i class="icon-screenshot"></i></label>
 	  <input type="radio" name="pcss3t04" id="tab204" class="tab-content-2">
-	  <label  class="tab-inactive" ">Choose Style<i class="icon-adjust"></i></label>
+	  <label for="tab204">Choose Style<i class="icon-adjust"></i></label>
 	  <input type="radio" name="pcss3t04" id="tab304" class="tab-content-3">
-	  <label  class="tab-inactive" ">Upload Layout<i class="icon-cloud-upload"></i></label>
+	  <label for="tab304">Upload Layout<i class="icon-cloud-upload"></i></label>
 	  <input type="radio" name="pcss3t04" id="tab404" class="tab-content-4">
-	  <label  class="tab-inactive" ">Approve Layout<i class="icon-thumbs-up"></i></label>
+	  <label for="tab404">Approve Layout<i class="icon-thumbs-up"></i></label>
 	  <input type="radio" name="pcss3t04" id="tab504" class="tab-content-5">
-	  <label  class="tab-inactive" ">Page Count<i class="icon-list-ol"></i></label>
+	  <label for="tab504">Page Count<i class="icon-list-ol"></i></label>
 	  <!--
 	  <input type="radio" name="pcss3t04" id="tab1504" class="tab-content-last">
 	  <label for="tab1504" class="right"><i class="icon-question-sign"></i></label>	

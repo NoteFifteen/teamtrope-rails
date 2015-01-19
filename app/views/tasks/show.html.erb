@@ -55,6 +55,13 @@
   <%= @task.horizontal_order %>
 </p>
 
+<p>
+	<strong>Performer Roles:</strong>
+	<% @task.performers.each_with_index do | performer, index | %>
+		<%= performer.name %>
+		<%= "," if !index != 0 && index != @task.performers.count-1 %> 
+	<% end %>
+</p>
 
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>
