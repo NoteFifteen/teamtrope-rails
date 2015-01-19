@@ -9,8 +9,8 @@ class Task < ActiveRecord::Base
   has_many :task_performers, foreign_key: :task_id, dependent: :destroy
   has_many :performers,      through: :task_performers,   source: :role
   
-  
-  before_save { self.partial = partial.gsub(/^_/,"").gsub(/\.html\.erb/,"") }
+  # if we have a partial to save make sure to strip off the leading '_' and the extensions
+  before_save { self.partial = partial.gsub(/^_/,"").gsub(/\.html\.erb/,"") unless partial.nil? }
   validates :workflow_id, presence: true
   
   def next_task
