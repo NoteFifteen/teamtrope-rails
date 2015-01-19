@@ -204,8 +204,7 @@
         </b>
       </li>
 <%
-@result = Parse::Cloud::Function.new("getSalesDataForAsin").call("asin"=>@project.asin) %>
-<%
+@result = Parse::Cloud::Function.new("getSalesDataForAsin").call("asin"=>@project.asin) 
 sales_data_string = ""
 comma = ""
 @result["crawl"].each do | crawl_data |
@@ -219,13 +218,11 @@ end
       <%@result = Parse::Cloud::Function.new("getCrawlDataForAsin").call("asin"=>@project.asin) %>
       <li class="tab-content tab-content-5 typography">
         <h1>Rankings and Analytics</h1>
-        <script src="//code.highcharts.com/highcharts.js"></script>
-        <script src="//code.highcharts.com/modules/exporting.js"></script>
         <script type='text/javascript'>//<![CDATA[ 
-          jQuery(document).ready(function ($) {
-            $('#daily-sales-container').highcharts(
+          $(document).ready(function() {
+            new Highcharts.Chart(
             {
-              chart:     { zoomType: 'xy'　},
+              chart:     { zoomType: 'xy', renderTo: "daily-sales-container"　},
               title:     { text: '<%=@result["title"]%>'　},
               subtitle:  { text: 'Sales Intelligence Estimates (Amazon US Only)'　},
               xAxis:    [{ type: 'datetime',　dateTimeLabelFormats: { month: '%e. %b',year: '%b' } }],
@@ -259,7 +256,7 @@ end
 		%>
 		<div id="daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 		<script type='text/javascript'>//<![CDATA[ 
-		  jQuery(document).ready(function ($) {
+		  $(document).ready(function() {
 		    $('#price-ranking-container').highcharts(
 		    {            
 		      chart:    { zoomType: 'xy' },
