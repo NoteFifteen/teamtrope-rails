@@ -89,28 +89,6 @@ ActiveRecord::Schema.define(version: 20150117012907) do
   add_index "posts", ["post_date", "title", "author_id"], name: "index_posts_on_post_date_and_title_and_author_id"
   add_index "posts", ["post_date", "title"], name: "index_posts_on_post_date_and_title"
 
-  create_table "process_control_records", force: true do |t|
-    t.float    "days_to_complete_book"
-    t.integer  "intro_video"
-    t.integer  "who_can_complete"
-    t.boolean  "is_approval_step"
-    t.float    "days_to_complete_step"
-    t.integer  "not_approved_go_to"
-    t.string   "tab_text"
-    t.string   "help_link"
-    t.string   "step_name"
-    t.string   "form_name"
-    t.string   "prereq_fields"
-    t.integer  "show_steps"
-    t.integer  "workflow"
-    t.string   "icon"
-    t.integer  "phase"
-    t.integer  "next_step"
-    t.boolean  "is_process_step"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "profiles", force: true do |t|
     t.integer  "user_id"
     t.string   "avatar_file_name"
