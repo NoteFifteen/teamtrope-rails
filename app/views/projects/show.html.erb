@@ -203,10 +203,13 @@
         </div>
         </b>
       </li>
+      <li class="tab-content tab-content-5 typography">
+      	<p><b>Temporarily Disabled:</b><br /> 
+      	When adding analytics back, you can delete this entire li and remove the if false that's wrapping the analytics tab content.</p>
+      </li>
 <%
 if false
-@result = Parse::Cloud::Function.new("getSalesDataForAsin").call("asin"=>@project.asin) %>
-<%
+@result = Parse::Cloud::Function.new("getSalesDataForAsin").call("asin"=>@project.asin) 
 sales_data_string = ""
 comma = ""
 @result["crawl"].each do | crawl_data |
@@ -221,7 +224,7 @@ end
       <li class="tab-content tab-content-5 typography">
         <h1>Rankings and Analytics</h1>
         <script type='text/javascript'>//<![CDATA[ 
-          $(document).ready(function() {
+          $(document).ready(function () {
             new Highcharts.Chart(
             {
               chart:     { zoomType: 'xy', renderTo: "daily-sales-container"　},
