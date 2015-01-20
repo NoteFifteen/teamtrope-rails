@@ -26,10 +26,6 @@
 			<th>Cover Designer</th>
 			<th>Edit Complete Date</th>
 			<th>Original Manuscript</th>
-			<th>Update</th>
-			<th>Status</th>
-			<th>by</th>
-			<th>on</th>
 			<th>ISBN</th>
 			<th>eBook ISBN</th>
 			<th>ASIN</th>
@@ -107,23 +103,19 @@
 				<td>Proofreader</td>
 				<td>Marketing Manager</td>
 				<td>Cover Designer</td>
-				<td>Edit Complete Date</td>
+				<td><%= project.edit_complete_date.strftime("%b %d %Y") %></td>
 				<td>Original Manuscript</td>
-				<td>Update</td>
-				<td>Status</td>
-				<td>by</td>
-				<td>on</td>
 				<td>ISBN</td>
 				<td>eBook ISBN</td>
 				<td>ASIN</td>
 				<td>LSI ISBN</td>
-				<td>Author Pct</td>
-				<td>Manager Pct</td>
-				<td>Project Manager Pct</td>
-				<td>Editor Pct</td>
-				<td>Designer Pct</td>
-				<td>Proofreader Pct</td>
-				<td>Other Pct</td>
+				<td><%= project.author_pct %></td>
+				<td><%= project.manager_pct %></td>
+				<td><%= project.project_manager_pct %></td>
+				<td><%= project.editor_pct %></td>
+				<td><%= project.designer_pct %></td>
+				<td><%= project.proofreader_pct %></td>
+				<td><%= project.other_pct %></td>
 				<td>Edited Manuscript</td>
 				<td>Children's Book?</td>
 				<td>Color Interior?</td>

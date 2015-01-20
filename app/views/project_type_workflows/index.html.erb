@@ -1,10 +1,10 @@
-<h1>Listing project_type_workflows</h1>
+<h1>Project Type Workflows</h1>
 
 <table>
   <thead>
     <tr>
+      <th>Project Type</th>
       <th>Workflow</th>
-      <th>Projecttype</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -12,8 +12,8 @@
   <tbody>
     <% @project_type_workflows.each do |project_type_workflow| %>
       <tr>
-        <td><%= project_type_workflow.Workflow %></td>
-        <td><%= project_type_workflow.ProjectType %></td>
+        <td><%= project_type_workflow.project_type.name %></td>
+        <td><%= project_type_workflow.workflow.name %></td>
         <td><%= link_to 'Show', project_type_workflow %></td>
         <td><%= link_to 'Edit', edit_project_type_workflow_path(project_type_workflow) %></td>
         <td><%= link_to 'Destroy', project_type_workflow, method: :delete, data: { confirm: 'Are you sure?' } %></td>

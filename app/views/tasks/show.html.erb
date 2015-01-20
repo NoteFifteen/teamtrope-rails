@@ -2,7 +2,7 @@
 
 <p>
   <strong>Workflow:</strong>
-  <%= @task.workflow.name %>
+  <%= @task.workflow.name unless @task.workflow.nil? %>
 </p>
 
 <p>

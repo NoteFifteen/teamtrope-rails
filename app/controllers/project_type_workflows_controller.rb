@@ -69,6 +69,6 @@ class ProjectTypeWorkflowsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_type_workflow_params
-      params.require(:project_type_workflow).permit(:Workflow_id, :ProjectType_id)
+      params.require(:project_type_workflow).permit(:workflow_id, :project_type_id)
     end
 end

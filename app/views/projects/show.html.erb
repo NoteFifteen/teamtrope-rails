@@ -51,15 +51,20 @@
     
     <br/>
     
-    <a href='https://teamtrope.com/groups/the-key-to-everything/'>Link to Teamroom</a> Genre: 
+    <a href='https://teamtrope.com/groups/the-key-to-everything/'>Link to Teamroom</a> | Genre: 
     <% isFirst = true %>
     <% @project.genres.each do | genre |%>
     	<%= ", " if !isFirst %>
     	<%= "#{genre.name}" %>
     	<% isFirst = false %>
     <% end %>
-    
-    
+ | Workflows:    
+       <% isFirst = true %>
+    <% @project.project_type.workflows.each do | wkflow |%>
+    	<%= ", " if !isFirst %>
+    	<%= "#{wkflow.name}" %>
+    	<% isFirst = false %>
+    <% end %> 
     <!-- tabs -->
     <div class="pcss3t pcss3t-icons-left  pcss3t-height-auto pcss3t-theme-3-white">
       <input type="radio" name="pcss3t01" checked id="tab101" class="tab-content-first">
