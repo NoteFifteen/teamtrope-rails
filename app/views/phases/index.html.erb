@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th>Name</th>
-			<th>Vertical order</th>
+			<th>Order</th>
       <th>Color value</th>
       <th>Color</th>
       <th>Icon</th>      
@@ -16,7 +16,7 @@
     <% @phases.each do |phase| %>
       <tr>
         <td><%= phase.name %></td>
-        <td><%= phase.vertical_order %></td>
+        <td><%= phase.order %></td>
         <td><%= content_tag :span, phase.color_value, style: ["background-color:#{phase.color_value};", "color:#ffffff"]  %></td>
         <td><%= phase.color %></td>
         <td><%= phase.icon %></td>

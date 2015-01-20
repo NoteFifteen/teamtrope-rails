@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :tabs
+
+  resources :project_views
+
   resources :roles
 
   resources :task_prerequisite_fields

@@ -32,10 +32,6 @@
     <%= f.text_field :days_to_complete %>
   </div>
   <div class="field">
-    <%= f.label :horizontal_order %><br>
-    <%= f.text_field :horizontal_order %>
-  </div>
-  <div class="field">
     <%= f.label :workflow_id %><br>
     <%= f.collection_select :workflow_id, Workflow.all, :id, :name, include_blank: true %>
   </div>
@@ -46,11 +42,7 @@
   <div class="field">
     <%= f.label :rejected_task_id %><br>
     <%= f.collection_select :rejected_task_id, Task.all, :id, :name, include_blank: true %>
-  </div>
-  <div class="field">
-    <%= f.label :phase_id %><br>
-    <%= f.collection_select :phase_id, Phase.all, :id, :name, include_blank: true %>
-  </div>  
+  </div> 
   <div class="field">
     <%= f.label :partial %><br> 
     <%= f.select("partial", load_partials, {include_blank: true} )%>

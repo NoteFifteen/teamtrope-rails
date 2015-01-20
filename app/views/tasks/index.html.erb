@@ -3,11 +3,9 @@
 <table>
   <thead>
     <tr>
-    	<th>Horizontal Order</th>
       <th>Workflow</th>
       <th>Task Id</th>
       <th>Name</th>
-      <th>Phase Id</th>
       <th>Next</th>
       <th>Rejected task</th>
       <th>Partial</th>
@@ -23,11 +21,9 @@
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
-      	<td><%= task.horizontal_order %></td>
         <td><%= task.workflow.name unless task.workflow.nil? %></td>
         <td><%= task.id %></td>
         <td><%= task.name %></td>
-        <td><%= task.phase.name unless task.phase.nil? %></td>        
         <td><%= task.next_id %></td>
         <td><%= task.rejected_task_id %></td>
         <td><%= task.partial %></td>

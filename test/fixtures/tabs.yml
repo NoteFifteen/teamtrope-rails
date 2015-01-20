@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  task_id: 
+  phase_id: 
+  order: 1
+
+two:
+  task_id: 
+  phase_id: 
+  order: 1

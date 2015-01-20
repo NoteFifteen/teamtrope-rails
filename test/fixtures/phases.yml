@@ -5,11 +5,11 @@ one:
   color: MyString
   color_value: MyString
   icon: MyString
-  verticial_order: 1
+  order: 1
 
 two:
   name: MyString
   color: MyString
   color_value: MyString
   icon: MyString
-  verticial_order: 1
+  order: 1

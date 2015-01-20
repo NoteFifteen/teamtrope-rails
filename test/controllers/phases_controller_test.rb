@@ -18,7 +18,7 @@ class PhasesControllerTest < ActionController::TestCase
 
   test "should create phase" do
     assert_difference('Phase.count') do
-      post :create, phase: { color: @phase.color, color_value: @phase.color_value, icon: @phase.icon, name: @phase.name, verticial_order: @phase.verticial_order }
+      post :create, phase: { color: @phase.color, color_value: @phase.color_value, icon: @phase.icon, name: @phase.name, order: @phase.order }
     end
 
     assert_redirected_to phase_path(assigns(:phase))
@@ -35,7 +35,7 @@ class PhasesControllerTest < ActionController::TestCase
   end
 
   test "should update phase" do
-    patch :update, id: @phase, phase: { color: @phase.color, color_value: @phase.color_value, icon: @phase.icon, name: @phase.name, verticial_order: @phase.verticial_order }
+    patch :update, id: @phase, phase: { color: @phase.color, color_value: @phase.color_value, icon: @phase.icon, name: @phase.name, order: @phase.order }
     assert_redirected_to phase_path(assigns(:phase))
   end
 

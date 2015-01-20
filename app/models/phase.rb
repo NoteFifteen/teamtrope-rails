@@ -1,8 +1,8 @@
 class Phase < ActiveRecord::Base
-	has_many :tasks
+
+	belongs_to :project_view
+	has_many :tabs
 	
-	def tasks_in_workflows(workflows)
-		self.tasks.where(workflow_id: workflows).order(:horizontal_order)
-	end
+	default_scope -> { order(:order) }
 	
 end
