@@ -14,11 +14,11 @@ class Task < ActiveRecord::Base
   validates :workflow_id, presence: true
   
   def next_task
-  	Task.where(id: self.next_id).first
+  	Task.find(next_id)
   end
   
   def rejected_task
-  	Task.where(id: self.rejected_task_id).first
+  	Task.find(rejected_task_id)
   end
   
 end
