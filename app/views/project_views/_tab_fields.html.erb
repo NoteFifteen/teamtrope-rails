@@ -1,0 +1,8 @@
+<fieldset>
+	<%= f.label :task_id %><br /><br />
+	<%= f.collection_select(:task_id, Task.all, :id, :name, {include_blank: true}) %><br /><br />
+	<%= f.label :order %><br /><br />
+	<%= f.text_field :order %><br /><br />
+	<%= f.hidden_field :_destroy %>
+	<%= link_to "Remove", "#", class: "remove_fields" %>
+</fieldset>

@@ -12,8 +12,8 @@
   <tbody>
     <% @unlocked_tasks.each do |unlocked_task| %>
       <tr>
-        <td><%= unlocked_task.task %></td>
-        <td><%= unlocked_task.unlocked_task_id %></td>
+        <td><%= unlocked_task.task.name unless unlocked_task.task.nil? %></td>
+        <td><%= unlocked_task.unlocked_task.name unless unlocked_task.unlocked_task.nil? %></td>
         <td><%= link_to 'Show', unlocked_task %></td>
         <td><%= link_to 'Edit', edit_unlocked_task_path(unlocked_task) %></td>
         <td><%= link_to 'Destroy', unlocked_task, method: :delete, data: { confirm: 'Are you sure?' } %></td>

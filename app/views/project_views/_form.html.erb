@@ -1,11 +1,28 @@
-<%= simple_form_for(@project_view) do |f| %>
-  <%= f.error_notification %>
+<%= form_for(@project_view) do |f| %>
+  <% if @project_view.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@project_view.errors.count, "error") %> prohibited this project_view from being saved:</h2>
 
-  <div class="form-inputs">
-    <%= f.association :project_type %>
+      <ul>
+      <% @project_view.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :project_type_id, "Project Type" %><br>
+    <%= f.collection_select :project_type_id, ProjectType.all, :id, :name, {include_blank: true} %><br /><br />
+    <%= f.fields_for :phases do | builder | %>
+    	<%= render 'phase_fields', f: builder %>
+    <% end %>
+    <%= link_to_add_fields "Add Phase", f, :phases %>
   </div>
+  
+  
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="actions">
+    <%= f.submit %>
   </div>
 <% end %>

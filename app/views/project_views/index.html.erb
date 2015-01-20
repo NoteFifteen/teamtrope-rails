@@ -11,7 +11,7 @@
   <tbody>
     <% @project_views.each do |project_view| %>
       <tr>
-        <td><%= project_view.project_type %></td>
+        <td><%= project_view.project_type.name %></td>
         <td><%= link_to 'Show', project_view %></td>
         <td><%= link_to 'Edit', edit_project_view_path(project_view) %></td>
         <td><%= link_to 'Destroy', project_view, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -1,6 +1,20 @@
 <p>
   <strong>Project type:</strong>
-  <%= @project_view.project_type %>
+  <%= @project_view.project_type.name %>
+</p>
+
+<p>
+	<ul>
+	<% @project_view.phases.each do | phase | %>
+		<li><%= phase.name %>
+			<ul>
+				<% phase.tabs.each do | tab | %>
+					<li><%= tab.task.name %></li>
+				<% end %>
+			</ul>
+		</li>
+	<% end %>
+	</ul>
 </p>
 
 <%= link_to 'Edit', edit_project_view_path(@project_view) %> |
