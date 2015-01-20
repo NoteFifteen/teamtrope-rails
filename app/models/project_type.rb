@@ -5,6 +5,7 @@ class ProjectType < ActiveRecord::Base
 
   has_many :required_roles
   has_many :roles, through: :required_roles, source: :role
-
-
+  
+  has_one :project_view
+  
 end
