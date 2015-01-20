@@ -6,28 +6,50 @@
     
     <div class="pcss3t pcss3t-icons-left  pcss3t-height-auto pcss3t-theme-3-all-white">			
       <label>Team: </label>
+      
+      
       <label class='green'>
-        <a href='https://teamtrope.com/members/majankaverstraete/'>
-          <img src="https://secure.gravatar.com/avatar/9ef3535beccc9a1121cd07466a317b8f?d=wavatar&amp;s=40&amp;r=G" class="avatar user-330-avatar avatar-40 photo" width="40" height="40 alt='Profile picture of Majanka Verstraete'" alt="Avatar Image" />
-        </a>
+      	<% if @project.has_book_manager? %>
+      		<%= link_to image_tag(@project.book_managers.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.book_managers.first.member %>
+        <% else %>
+        Needs Book Manager
+        <% end %>
       </label>
-      <label class='yellow'>Needs Project Manager</label>
+      
+      <label class='yellow'>
+      <% if @project.has_project_manager? %>
+	      <%= link_to image_tag(@project.project_managers.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.project_managers.first.member %>
+      <% else %>
+      Needs Project Manager	
+      <% end %>
+      </label>
+      
       <label class='red'>
-        <a href='https://teamtrope.com/members/katrinamendolera/'>
-          <img src="https://teamtrope.com/wp-content/uploads/avatars/253/40ca9bcb1ad385e6f59f927226b19127-bpfull.jpg" class="avatar user-253-avatar avatar-40 photo" width="40" height="40 alt='Profile picture of Katrina M. Randall'" alt="Avatar Image" />
-        </a>
+     	<% if @project.has_editor? %>
+     		<%= link_to image_tag(@project.editors.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.editors.first.member %>
+      <% else %>
+      Needs Editor
+      <% end %>
       </label>
+      
       <label class='red'>
-        <a href='https://teamtrope.com/members/coolglass/'>
-          <img src="https://teamtrope.com/wp-content/uploads/avatars/68/5d1112ae4fb16e5be61244dc5fa6cba0-bpfull.jpg" class="avatar user-68-avatar avatar-40 photo" width="40" height="40 alt='Profile picture of Cathy Shaw'" alt="Avatar Image" />
-        </a>
-      </label>
+     	<% if @project.has_proof_reader? %>
+     		<%= link_to image_tag(@project.proof_readers.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.proof_readers.first.member %>
+      <% else %>
+      Needs Proof Reader
+      <% end %>
+      </label>      
+      
       <label class='blue'>
-        <a href='https://teamtrope.com/members/gregsimanson/'>
-          <img src="https://teamtrope.com/wp-content/uploads/avatars/166/8e3fe8e0073763b092becb854503f639-bpfull.jpg" class="avatar user-166-avatar avatar-40 photo" width="40" height="40 alt='Profile picture of Greg Simanson'" alt="Avatar Image" />
-        </a>
+     	<% if @project.has_cover_designer? %>
+     		<%= link_to image_tag(@project.cover_designers.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.cover_designers.first.member %>
+      <% else %>
+      Needs Cover Designer
+      <% end %>
       </label>
-    </div><br/>
+    </div>
+    
+    <br/>
     
     <a href='https://teamtrope.com/groups/the-key-to-everything/'>Link to Teamroom</a> Genre: 
     <% isFirst = true %>
@@ -132,73 +154,25 @@
         <div id="members-dir-list" class="members dir-list">
           <ul id="members-list" class="item-list" role="main">
           
-          	<% @project.members.each do | member | %>
+          	<% @project.team_memberships.each do | membership | %>
             <li>
               <div class="item-avatar">
-								<%= link_to image_tag(member.profile.avatar.url(:medium),
+								<%= link_to image_tag(membership.member.profile.avatar.url(:medium),
 																		size: "180x180",
-																		class: "avatar user-#{member.id}-avatar avatar- photo",
-																		alt: "Profile picture of #{member.name}"),
-																		member %>
+																		class: "avatar user-#{membership.member.id}-avatar avatar- photo",
+																		alt: "Profile picture of #{membership.member.name}"),
+																		membership.member %>
               </div>
               <div class="item">
                 <div class="item-title">
-                	<%= link_to member.name, member %><br />
-                  Author<br />
+                	<%= link_to membership.member.name, membership.member %><br />
+                  <%= membership.role.name %> | <%= membership.percentage%>%<br />
                 </div>
                 <div class="item-meta"></div>
               </div>
             </li>          		
           	<% end %>
           
-            <li>
-              <div class="item-avatar">
-                <a href="https://teamtrope.com/members/alex/"><img src="https://secure.gravatar.com/avatar/9de5b0d26da44ffe1a287ae24eb7bb35?d=wavatar&amp;s=180&amp;r=G" class="avatar user-11-avatar avatar-180 photo" width="180" height="180 alt="Profile picture of Alex Kimmell"" alt="Avatar Image" /></a>
-              </div>
-              <div class="item">
-                <div class="item-title">
-                  <a href="https://teamtrope.com/members/alex/">Alex Kimmell</a><br />
-                  Author<br />
-                </div>
-                <div class="item-meta"></div>
-              </div>
-            </li>
-            <li>
-              <div class="item-avatar">
-                <a href="https://teamtrope.com/members/majankaverstraete/"><img src="https://secure.gravatar.com/avatar/9ef3535beccc9a1121cd07466a317b8f?d=wavatar&amp;s=180&amp;r=G" class="avatar user-330-avatar avatar-180 photo" width="180" height="180 alt="Profile picture of Majanka Verstraete"" alt="Avatar Image" /></a>
-              </div>
-              <div class="item">
-                <div class="item-title">
-                  <a href="https://teamtrope.com/members/majankaverstraete/">Majanka Verstraete</a><br>
-                  Book Manager<br>
-                </div>
-                <div class="item-meta"></div>
-              </div>
-            </li>
-            <li>
-              <div class="item-avatar">
-                <a href="https://teamtrope.com/members/katrinamendolera/"><img src="https://teamtrope.com/wp-content/uploads/avatars/253/40ca9bcb1ad385e6f59f927226b19127-bpfull.jpg" class="avatar user-253-avatar avatar-180 photo" width="180" height="180 alt="Profile picture of Katrina M. Randall"" alt="Avatar Image" /></a>
-              </div>
-              <div class="item">
-                <div class="item-title">
-                  <a href="https://teamtrope.com/members/katrinamendolera/">Katrina M. Randall</a><br>
-                  Project Manager, Editor<br>
-                </div>
-                <div class="item-meta"></div>
-              </div>
-            </li>
-            <li>
-              <div class="item-avatar">
-                <a href="https://teamtrope.com/members/gregsimanson/"><img src="https://teamtrope.com/wp-content/uploads/avatars/166/8e3fe8e0073763b092becb854503f639-bpfull.jpg" class="avatar user-166-avatar avatar-180 photo" width="180" height="180 alt="Profile picture of Greg Simanson"" alt="Avatar Image" /></a>
-              </div>
-              <div class="item">
-                <div class="item-title">
-                  <a href="https://teamtrope.com/members/gregsimanson/">Greg Simanson</a><br>
-                  Proofreader, Cover Designer<br>
-                </div>
-                <div class="item-meta"></div>
-              </div>
-            </li>
           </ul>
         </div>
         </b>

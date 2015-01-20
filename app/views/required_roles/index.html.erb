@@ -13,8 +13,8 @@
   <tbody>
     <% @required_roles.each do |required_role| %>
       <tr>
-        <td><%= required_role.role %></td>
-        <td><%= required_role.project_type %></td>
+        <td><%= required_role.role.name unless required_role.role.nil? %></td>
+        <td><%= required_role.project_type.name unless required_role.project_type.nil? %></td>
         <td><%= required_role.suggested_percent %></td>
         <td><%= link_to 'Show', required_role %></td>
         <td><%= link_to 'Edit', edit_required_role_path(required_role) %></td>

@@ -12,17 +12,18 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :role_id %><br>
-    <%= f.text_field :role_id %>
+    <%= f.label :project_type_id %><br>
+    <%= f.collection_select(:project_type_id, ProjectType.all, :id, :name, include_blank: true) %>
   </div>
   <div class="field">
-    <%= f.label :project_type_id %><br>
-    <%= f.text_field :project_type_id %>
+    <%= f.label :role_id %><br>
+    <%= f.collection_select(:role_id, Role.all, :id, :name, include_blank: true) %>
   </div>
   <div class="field">
     <%= f.label :suggested_percent %><br>
     <%= f.text_field :suggested_percent %>
   </div>
+  <br /><br />
   <div class="actions">
     <%= f.submit %>
   </div>

@@ -1,13 +1,12 @@
-<p id="notice"><%= notice %></p>
+<p>
+  <strong>Project type:</strong>
+  <%= @required_role.project_type.name unless @required_role.project_type.nil? %>
+</p>
+
 
 <p>
   <strong>Role:</strong>
-  <%= @required_role.role %>
-</p>
-
-<p>
-  <strong>Project type:</strong>
-  <%= @required_role.project_type %>
+  <%= @required_role.role.name unless @required_role.role.nil? %>
 </p>
 
 <p>
