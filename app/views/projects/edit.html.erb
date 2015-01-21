@@ -11,8 +11,6 @@
 	<%= f.text_field :final_pdf %><br />
 	<%= f.label :stock_image_request_link %><br />
 	<%= f.text_field :stock_image_request_link %><br />
-	<%= f.label :pcr_step_date %><br />
-	<%= f.text_field :pcr_step_date %><br />
 	<%= f.label :layout_notes %><br />
 	<%= f.text_field :layout_notes %><br />
 	<%= f.label :previously_published %><br />
@@ -35,16 +33,8 @@
 	<%= f.text_field :publication_date %><br />
 	<%= f.label :final_epub %><br />
 	<%= f.text_field :final_epub %><br />
-	<%= f.label :production_exception_date %><br />
-	<%= f.text_field :production_exception_date %><br />
 	<%= f.label :marketing_release_date %><br />
 	<%= f.text_field :marketing_release_date %><br />
-	<%= f.label :production_exception_reason %><br />
-	<%= f.text_field :production_exception_reason %><br />
-	<%= f.label :production_exception_approver %><br />
-	<%= f.text_field :production_exception_approver %><br />
-	<%= f.label :production_exception %><br />
-	<%= f.text_field :production_exception %><br />
 	<%= f.label :paperback_cover_type %><br />
 	<%= f.text_field :paperback_cover_type %><br />
 	<%= f.label :age_range %><br />
@@ -113,81 +103,15 @@
 	<%= f.text_field :manuscript_edited %><br />
 	<%= f.label :childrens_book %><br />
 	<%= f.text_field :childrens_book %><br />
-	<%= f.label :project_manager %><br />
-	<%= f.text_field :project_manager %><br />
-	<%= f.label :other_pct %><br />
-	<%= f.text_field :other_pct %><br />
 	<%= f.label :manuscript_proofed %><br />
 	<%= f.text_field :manuscript_proofed %><br />
-	<%= f.label :proofreader_pct %><br />
-	<%= f.text_field :proofreader_pct %><br />
-	<%= f.label :genre %><br />
-	<%= f.text_field :genre %><br />
-	<%= f.label :designer_pct %><br />
-	<%= f.text_field :designer_pct %><br />
-	<%= f.label :editor_pct %><br />
-	<%= f.text_field :editor_pct %><br />
-	<%= f.label :manager_pct %><br />
-	<%= f.text_field :manager_pct %><br />
-	<%= f.label :project_manager_pct %><br />
-	<%= f.text_field :project_manager_pct %><br />
 	<%= f.label :edit_complete_date %><br />
 	<%= f.text_field :edit_complete_date %><br />
-	<%= f.label :author_pct %><br />
-	<%= f.text_field :author_pct %><br />
-	<%= f.label :other3 %><br />
-	<%= f.text_field :other3 %><br />
-	<%= f.label :other2 %><br />
-	<%= f.text_field :other2 %><br />
-	<%= f.label :other %><br />
-	<%= f.text_field :other %><br />
-	<%= f.label :author %><br />
-	<%= f.text_field :author %><br />
-	<%= f.label :editor %><br />
-	<%= f.text_field :editor %><br />
-	<%= f.label :marketing_manager %><br />
-	<%= f.text_field :marketing_manager %><br />
 	<%= f.label :manuscript_original %><br />
 	<%= f.text_field :manuscript_original %><br />
-	<%= f.label :cover_designer %><br />
-	<%= f.text_field :cover_designer %><br />
-	<%= f.label :proofreader %><br />
-	<%= f.text_field :proofreader %><br />
-	<%= f.label :other3_pct %><br />
-	<%= f.text_field :other3_pct %><br />
-	<%= f.label :other2_pct %><br />
-	<%= f.text_field :other2_pct %><br />
-	
-	<h2>Control Numbers</h2>
-	<%= f.label :apple_id %><br />
-	<%= f.text_field :apple_id %><br />
-	<%= f.label :asin %><br />
-	<%= f.text_field :asin %><br />
-	<%= f.label :epub_isbn_no_dash %><br />
-	<%= f.text_field :epub_isbn_no_dash %><br />
-	<%= f.label :createspace_isbn %><br />
-	<%= f.text_field :createspace_isbn %><br />
-	<%= f.label :hardback_isbn %><br />
-	<%= f.text_field :hardback_isbn %><br />
-	<%= f.label :lsi_isbn %><br />
-	<%= f.text_field :lsi_isbn %><br />
-	<%= f.label :isbn %><br />
-	<%= f.text_field :isbn %><br />
-	<%= f.label :ebook_isbn %><br />
-	<%= f.text_field :ebook_isbn %><br />
-	<%= f.label :parse_id %><br />
-	<%= f.text_field :parse_id %><br />
-	
-	<h2>PCR Fields</h2>
-	<%= f.label :step_mkt_info %><br />
-	<%= f.text_field :step_mkt_info %><br />
-	<%= f.label :step_cover_design %><br />
-	<%= f.text_field :step_cover_design %><br />
-	<%= f.label :pcr_step %><br />
-	<%= f.text_field :pcr_step %><br />
 	
 	<h2>Genres</h2>
 	<%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: true } ) %><br /><br />	
 	
-	<br /><%= f.submit %>
+	<%= f.submit %>
 <% end %>
