@@ -24,7 +24,7 @@ class ProjectViewsController < ApplicationController
   # POST /project_views
   # POST /project_views.json
   def create
-    @project_view = ProjectView.new(project_view_params)
+    @project_view = ProjectView.new(new_project_view_params)
 
     respond_to do |format|
       if @project_view.save
@@ -41,7 +41,7 @@ class ProjectViewsController < ApplicationController
   # PATCH/PUT /project_views/1.json
   def update
     respond_to do |format|
-      if @project_view.update(project_view_params)
+      if @project_view.update(edit_project_view_params)
         format.html { redirect_to @project_view, notice: 'Project view was successfully updated.' }
         format.json { render :show, status: :ok, location: @project_view }
       else
@@ -68,7 +68,11 @@ class ProjectViewsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def project_view_params
-      params.require(:project_view).permit(:project_type_id)
+    def new_project_view_params
+      params.require(:project_view).permit(:project_type_id, phases_attributes: [:name, :order, :color, :color_value, :icon, tabs_attributes: [:task_id, :phase_id, :order]])
     end
+    
+    def edit_project_view_params
+      params.require(:project_view).permit(:project_type_id, phases_attributes: [:name, :order, :color, :color_value, :icon, :id, :_destroy, tabs_attributes: [:task_id, :phase_id, :order, :id, :_destroy]])
+    end    
 end

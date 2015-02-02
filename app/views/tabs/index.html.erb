@@ -1,4 +1,4 @@
-<h1>Listing tabs</h1>
+<h1>Tabs</h1>
 
 <table>
   <thead>
@@ -13,8 +13,8 @@
   <tbody>
     <% @tabs.each do |tab| %>
       <tr>
-        <td><%= tab.task %></td>
-        <td><%= tab.phase %></td>
+        <td><%= tab.task.name unless tab.task.nil? %></td>
+        <td><%= tab.phase.name unless tab.task.nil? %></td>
         <td><%= tab.order %></td>
         <td><%= link_to 'Show', tab %></td>
         <td><%= link_to 'Edit', edit_tab_path(tab) %></td>

@@ -2,12 +2,12 @@
 
 <p>
   <strong>Task:</strong>
-  <%= @tab.task %>
+  <%= @tab.task.name unless @tab.task.nil? %>
 </p>
 
 <p>
   <strong>Phase:</strong>
-  <%= @tab.phase %>
+  <%= @tab.phase.name unless @tab.phase.nil? %>
 </p>
 
 <p>

@@ -4,4 +4,6 @@ class Tab < ActiveRecord::Base
   
   default_scope -> { order(:order) }
   
+  validates :task_id, presence: true
+  
 end

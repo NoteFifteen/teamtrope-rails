@@ -1,0 +1,16 @@
+<fieldset>
+	<%= f.label :name %><br /><br />
+	<%= f.text_field :name %><br /><br />
+	<%= f.label :order %><br /><br />
+	<%= f.text_field :order %><br /><br />
+	<%= f.label :color %><br /><br />
+	<%= f.text_field :color %><br /><br />
+	<%= f.label :color_value %><br /><br />
+	<%= f.text_field :color_value %><br /><br />
+	<%= f.label :icon %><br /><br />
+	<%= f.text_field :icon %><br /><br />
+	<%= f.fields_for :tabs do | builder | %>
+		<%= render 'tab_fields', f: builder %>
+	<% end %>
+	<%= link_to_add_fields "Add Tab", f, :tabs %>
+</fieldset>

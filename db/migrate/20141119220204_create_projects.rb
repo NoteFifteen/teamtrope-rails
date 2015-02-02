@@ -5,7 +5,6 @@ class CreateProjects < ActiveRecord::Migration
       t.integer :final_manuscript_pdf
       t.integer :final_pdf
       t.string :stock_image_request_link
-      t.datetime :pcr_step_date
       t.text :layout_notes
       t.boolean :previously_published
       t.string :prev_publisher_and_date
@@ -17,11 +16,7 @@ class CreateProjects < ActiveRecord::Migration
       t.integer :final_mobi
       t.datetime :publication_date
       t.integer :final_epub
-      t.datetime :production_exception_date
       t.datetime :marketing_release_date
-      t.string :production_exception_reason
-      t.integer :production_exception_approver
-      t.boolean :production_exception
       t.string :paperback_cover_type
       t.string :age_range
       t.text :search_terms
@@ -56,28 +51,10 @@ class CreateProjects < ActiveRecord::Migration
       t.boolean :color_interior
       t.integer :manuscript_edited
       t.boolean :childrens_book
-      t.integer :project_manager
-      t.float :other_pct
       t.integer :manuscript_proofed
-      t.float :proofreader_pct
-      t.integer :genre
-      t.float :designer_pct
-      t.float :editor_pct
-      t.float :manager_pct
-      t.float :project_manager_pct
       t.datetime :edit_complete_date
-      t.float :author_pct
-      t.integer :other3
-      t.integer :other2
-      t.integer :other
-      t.integer :author
-      t.integer :editor
-      t.integer :marketing_manager
       t.integer :manuscript_original
-      t.integer :cover_designer
-      t.integer :proofreader
-      t.float :other3_pct
-      t.float :other2_pct
+
 
       t.timestamps
     end

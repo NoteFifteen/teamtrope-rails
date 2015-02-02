@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :task_id %><br>
-    <%= f.text_field :task_id %>
+    <%= f.collection_select :task_id, Task.all, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :unlocked_task_id %><br>
-    <%= f.number_field :unlocked_task_id %>
+    <%= f.collection_select :unlocked_task_id, Task.all, :id, :name %>
   </div>
   <div class="actions">
     <%= f.submit %>

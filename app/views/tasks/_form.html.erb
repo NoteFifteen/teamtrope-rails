@@ -50,7 +50,12 @@
 
   <h2>Performer Roles</h2>
   <div class="field">
-		<%= f.collection_check_boxes( :performer_ids, Role.all, :id, :name, {include_blank:  false}, { multiple: true } )%>	
+		<%= f.collection_check_boxes(:performer_ids, Role.all, :id, :name, {include_blank:  false}, { multiple: true } )%>	
+	</div>
+
+  <h2>Unlocked Tasks</h2>
+  <div class="field">
+		<%#= f.collection_check_boxes(:unlocked_task_ids, Task.all, :id, :name, {include_blank:  false}, { multiple: true } )%>	
 	</div>
   
   <div class="actions">
