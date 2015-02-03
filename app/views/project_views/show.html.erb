@@ -7,14 +7,13 @@
 <% @project_view.phases.includes(:tabs).each do | phase | %>
     <!-- rails tabs -->
     <div class="pcss3t pcss3t-icons-left  pcss3t-height-auto pcss3t-theme-3-<%= phase.color %>">
-      <input type="radio" name="pcss3t0<%= phase.order %>" checked id="tab00<%= phase.order %>" <%= "class='tab-content-first'" if !isFirst %>>
+      <input type="radio" name="pcss3t0<%= phase.order %>" checked id="tab00<%= phase.order %>" class="tab-content-first" >
       <label for="tab00<%= phase.order %>"><%= phase.name %><i class="<%= phase.icon %>"></i></label>
 <% form_content = "" %>
 <%= form_content %>
 <% phase.tabs.includes(:task).each do | tab | %>
       <input type="radio" name="pcss3t0<%= phase.order %>" id="tab<%= tab.order+1 %>0<%= phase.order %>" class="tab-content-<%= tab.order+1 %>">
       <label for="tab<%= tab.order+1 %>0<%= phase.order %>"><%= tab.task.name %><i class="<%= tab.task.icon %>"></i></label>
-      <% puts tab.task.performers.inspect %>
 		<% form_content << " <li class='tab-content tab-content-" %>
 		<% form_content << "#{tab.order+1}" %>
 		<% form_content << " typography'>" %>
