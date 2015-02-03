@@ -16,6 +16,4 @@ class Task < ActiveRecord::Base
   # if we have a partial to save make sure to strip off the leading '_' and the extensions
   before_save { self.partial = partial.gsub(/^_/,"").gsub(/\.html\.erb/,"") unless partial.nil? }
   
-  validates :workflow_id, presence: true
-  
 end
