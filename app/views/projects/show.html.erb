@@ -67,8 +67,8 @@
 		<% form_content << " <li class='tab-content tab-content-" %>
 		<% form_content << "#{tab.order+1}" %>
 		<% form_content << " typography'>" %>
-		<% partial_path = "projects/forms/#{tab.task.partial}" %>
-		<% form_content += render partial_path %>
+		<% partial_path = "projects/forms/#{tab.task.partial}" unless tab.task.partial.nil? %>
+		<% form_content += render partial_path unless tab.task.partial.empty? %>
 		<% form_content << "</li>" %>
 <% end %>
 		<ul>
