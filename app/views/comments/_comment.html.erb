@@ -14,10 +14,12 @@
 				<a href="https://teamtrope.com/2014/11/amazon-inclusion-teamroom/comment-page-1/#comment-261">
 					<%= time_tag(comment.created_at) %>
 				</a>
-				<% if can_edit_comment? comment.user %>
+				<% if can? :edit, comment %>
 				<span class="edit-link">
 					<%= link_to "Edit", edit_comment_path(@post, comment), class: "comment-edit-link" %>
 				</span>
+				<% end %>
+				<% if can? :delete, comment %>
 				<span class="edit-link">
 				<%= link_to 'Delete', [ comment],
                method: :delete,

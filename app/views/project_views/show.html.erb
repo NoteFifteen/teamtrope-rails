@@ -3,19 +3,36 @@
   <%= @project_view.project_type.name %>
 </p>
 
-<p>
-	<ul>
-	<% @project_view.phases.each do | phase | %>
-		<li><%= phase.name %>
-			<ul>
-				<% phase.tabs.each do | tab | %>
-					<li><%= tab.task.name %></li>
-				<% end %>
-			</ul>
-		</li>
-	<% end %>
-	</ul>
-</p>
+<% isFirst = false %>
+<% @project_view.phases.includes(:tabs).each do | phase | %>
+    <!-- rails tabs -->
+    <div class="pcss3t pcss3t-icons-left  pcss3t-height-auto pcss3t-theme-3-<%= phase.color %>">
+      <input type="radio" name="pcss3t0<%= phase.order %>" checked id="tab00<%= phase.order %>" <%= "class='tab-content-first'" if !isFirst %>>
+      <label for="tab00<%= phase.order %>"><%= phase.name %><i class="<%= phase.icon %>"></i></label>
+<% form_content = "" %>
+<%= form_content %>
+<% phase.tabs.includes(:task).each do | tab | %>
+      <input type="radio" name="pcss3t0<%= phase.order %>" id="tab<%= tab.order+1 %>0<%= phase.order %>" class="tab-content-<%= tab.order+1 %>">
+      <label for="tab<%= tab.order+1 %>0<%= phase.order %>"><%= tab.task.name %><i class="<%= tab.task.icon %>"></i></label>
+      <% puts tab.task.performers.inspect %>
+		<% form_content << " <li class='tab-content tab-content-" %>
+		<% form_content << "#{tab.order+1}" %>
+		<% form_content << " typography'>" %>
+		
+
+			<% #partial_path = "projects/forms/#{tab.task.partial}" unless tab.task.partial.nil? %>
+			<% #form_content += render partial_path unless tab.task.partial.empty? %>
+foo
+		
+		<% form_content << "</li>" %>
+<% end %>
+		<ul>
+<%= form_content.html_safe %></li>
+		</ul>
+	</div>
+	<!--/ rails tabs -->
+<% end %>
 
 <%= link_to 'Edit', edit_project_view_path(@project_view) %> |
 <%= link_to 'Back', project_views_path %>
+

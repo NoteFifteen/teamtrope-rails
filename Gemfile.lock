@@ -30,6 +30,7 @@ GEM
     arel (5.0.1.20140414130214)
     bcrypt-ruby (3.1.2)
     builder (3.2.2)
+    cancancan (1.10.1)
     choice (0.1.7)
     climate_control (0.0.3)
       activesupport (>= 3.0)
@@ -160,6 +161,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby (= 3.1.2)
+  cancancan (~> 1.10)
   coffee-rails (~> 4.0.0)
   figaro
   highcharts-rails (~> 3.0.0)

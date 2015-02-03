@@ -1,1 +1,55 @@
+<%
+@result = Parse::Cloud::Function.new("getSalesDataForAsin").call("asin"=>"B00GJ1XZSS") 
+sales_data_string = ""
+comma = ""
+%>
 <h1>Rankings and Analytics</h1>
+<script type='text/javascript'>
+	$("input[id=tab500]").change(function (event) {
+		new Highcharts.Chart(
+		{
+			chart:     { zoomType: 'xy', renderTo: "daily-sales-container"　},
+			title:     { text: '<%=@result["title"]%>'　},
+			subtitle:  { text: 'Sales Intelligence Estimates (Amazon US Only)'　},
+			xAxis:    [{ type: 'datetime',　dateTimeLabelFormats: { month: '%e. %b',year: '%b' } }],
+			yAxis:     { title: { text: 'Sales Estimate' }, min: 0 },
+			tooltip:   { shared: true },
+			series:   [
+			{ name: 'Sales',
+			  color: '#1394BB',
+			  type: 'column',
+			  data: <%= @result["crawl"].map{ |crawl_data| [Time.parse(crawl_data["crawlDate"]["iso"]).utc.to_i * 1000, crawl_data["dailySales"]] }.inspect %>
+			}]
+		});
+	});
+</script>
+<div id="daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
+<% @result = Parse::Cloud::Function.new("getCrawlDataForAsin").call("asin"=>"B00GJ1XZSS") %>
+<script type='text/javascript'>
+	$("input[id=tab500]").change(function(event) {
+		new Highcharts.Chart(
+		{
+			chart:    { zoomType: 'xy', renderTo: "price-ranking-container" },
+			title:    { text: '<%=@result["title"]%>' },
+			subtitle: { text: 'Amazon Price and Ranking Numbers'},
+			xAxis:  [ { type: 'datetime', dateTimeLabelFormats: { month: '%e. %b', year: '%b'} } ],
+			yAxis:  [ { title: { text: 'Price', style: { color: '#AED991' } }, min: 0, labels: { format: '${value}', style: { color: '#AED991' } }, opposite: true }, { labels: { format: '{value}',style: { color: '#1394BB' } }, min: 0, title: { text: 'Ranking', style: { color: '#1394BB' } }, reversed: true }],
+			tooltip: { shared: true },
+			legend:  { layout: 'vertical', align: 'left', x: 20, verticalAlign: 'top', y: 0, floating: true, backgroundColor: '#FFFFFF' },
+			series: [
+				{ name: 'Price', color: '#AED991', type: 'area', 
+				 	data: <%= @result["crawl"].reject{|crawl_data| !crawl_data["got_price"] }.map{ |crawl_data|  [Time.parse(crawl_data["crawl_date"]["iso"]).utc.to_i*1000, crawl_data["kindle_price"]] }.inspect %>,
+				 	tooltip: { valuePrefix: '$', valueDecimals: '2' }
+				},
+				{ 
+					name: 'Ranking', color: '#1394BB',
+					type: 'spline',
+					yAxis: 1,
+					data: <%= @result["crawl"].map{|crawl_data| [Time.parse(crawl_data["crawl_date"]["iso"]).utc.to_i*1000, crawl_data["sales_rank"]]}.inspect %>,
+					tooltip: { valueSuffix: ' ' }
+				} 
+			]
+		});
+	});
+</script>
+<div id="price-ranking-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div></b>

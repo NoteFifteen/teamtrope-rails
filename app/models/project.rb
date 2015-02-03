@@ -4,6 +4,8 @@ class Project < ActiveRecord::Base
 	has_many :team_memberships
 	has_many :members, through: :team_memberships, source: :member
 	
+	has_many :roles, through: :team_memberships, source: :role
+	
 	has_many :book_genres, foreign_key: :project_id, dependent: :destroy
 	has_many :genres, through: :book_genres, source: :genre
 	
@@ -16,6 +18,26 @@ class Project < ActiveRecord::Base
 		required_roles.all? {| required_role | team_members.include? required_role }
 	end
 	
+	def is_team_member?(user)
+		members.ids.include?(user.id)
+	end
+	
+	def is_my_editor?(user)
+		team_memberships.where(member_id: user.id, role_id: Role.where(name: "Editor")).count > 0
+	end
+	
+	def team_roles(user)
+		team_memberships.where(member_id: user.id).map { | membership | membership.role }
+	end
+	
+	def team_members_with_roles
+		team_memberships.select("roles.name").joins(:role).includes(:role, 
+		:member).order("roles.name").group_by(&:member_id).map do | key, memberships |
+				{ :member => memberships.first.member, :roles => memberships.map {|membership| 
+				membership.role.name }.join(", ")  
+				}
+		end	
+	end
 	
 	def self.provide_methods_for(role)
 		Project.class_eval %Q{	

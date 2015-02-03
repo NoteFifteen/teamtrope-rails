@@ -3,6 +3,15 @@
     <h1 class="entry-title"><%= @project.final_title %></h1><br />
     <%= link_to "Edit", edit_project_path(@project) %> | 
     <%= link_to "Back" , projects_path %>
+    
+    <div>
+	    <% if @project.is_team_member? current_user %>
+	    	You are this team's <%= @project.team_roles(current_user).map{ | role | role.name.to_s }.join(", ") %>
+	    <% else %>
+	    	You are not a member of this team.
+	    <% end %>
+    </div>    
+    
     <div class="pcss3t pcss3t-icons-left  pcss3t-height-auto pcss3t-theme-3-all-white">			
       <label>Team: </label>     
       <label class='green'>
@@ -43,17 +52,14 @@
     </div>   
     <br/>    
     <a href='https://teamtrope.com/groups/the-key-to-everything/'>Link to Teamroom</a> <span> Genre: 
-    <% isFirst = true %>
-    <% @project.genres.each do | genre |%>
-    	<%= ", " if !isFirst %>
-    	<%= "#{genre.name}" %>
-    	<% isFirst = false %>
-    <% end %></span>
+    <%= @project.genres.map { |genre| genre.name }.join(", ") %>
+    </span>
 		<% merged_array = [] %>
 		<% @project.current_tasks.each do | current_task | %>
 		<% merged_array.concat(current_task.task.unlocked_tasks.map { |ut| ut.unlocked_task_id }) %>
 		<% end %>
 		<% merged_array.uniq! %>
+		<% isFirst = true %>
 <% @project.project_type.project_view.phases.includes(:tabs).each do | phase | %>
     <!-- rails tabs -->
     <div class="pcss3t pcss3t-icons-left  pcss3t-height-auto pcss3t-theme-3-<%= phase.color %>">
@@ -64,11 +70,18 @@
 <% phase.tabs.includes(:task).each do | tab | %>
       <input type="radio" name="pcss3t0<%= phase.order %>" id="tab<%= tab.order+1 %>0<%= phase.order %>" class="tab-content-<%= tab.order+1 %>">
       <label <%=  "class=tab-inactive" unless merged_array.include? tab.task.id%> for="tab<%= tab.order+1 %>0<%= phase.order %>"><%= tab.task.name %><i class="<%= tab.task.icon %>"></i></label>
+      <% puts tab.task.performers.inspect %>
 		<% form_content << " <li class='tab-content tab-content-" %>
 		<% form_content << "#{tab.order+1}" %>
 		<% form_content << " typography'>" %>
-		<% partial_path = "projects/forms/#{tab.task.partial}" unless tab.task.partial.nil? %>
-		<% form_content += render partial_path unless tab.task.partial.empty? %>
+		<% if tab.task.performers.where(id: @project.team_roles(current_user)).count > 0 || current_user.role?(:booktrope_staff)%>
+			<% partial_path = "projects/forms/#{tab.task.partial}" unless tab.task.partial.nil? %>
+			<% form_content += render partial_path unless tab.task.partial.empty? %>
+		<% else %>
+			<% form_content << "<h1>Access Denied</h1>" %>
+			<% form_content << "You must be this project's: #{tab.task.performers.map { |role| role.name }.join(', ')} " %>
+		<% end %>
+		
 		<% form_content << "</li>" %>
 <% end %>
 		<ul>

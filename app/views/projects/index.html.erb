@@ -87,9 +87,14 @@
 		<% @projects.each do | project | %>
 			<tr>
 				<td class="book-title">
-					<%= link_to project.final_title, project %> | 
-					<%= link_to "Edit", edit_project_path(project) %> |
-					<%= link_to "Delete", project_path(project), method: :delete, data: {confirm: "Are you sure you want to delete this project?"}%><br />
+					<%= link_to project.final_title, project %> 
+					<% if can? :edit, project %>
+					| <%= link_to "Edit", edit_project_path(project)  %>
+					<% end%>
+					<% if can? :delete, project %> 
+					| <%= link_to "Delete", project_path(project), method: :delete, data: {confirm: "Are you sure you want to delete this project?"}%><br />
+					<% end %>
+					
 				</td>
 				<td>Days in Step</td>
 				<td>Author</td>
@@ -103,7 +108,7 @@
 				<td>Proofreader</td>
 				<td>Marketing Manager</td>
 				<td>Cover Designer</td>
-				<td><%= project.edit_complete_date.strftime("%b %d %Y") %></td>
+				<td><%= project.edit_complete_date.try(:strftime, "%b %d %Y") %></td>
 				<td>Original Manuscript</td>
 				<td>ISBN</td>
 				<td>eBook ISBN</td>

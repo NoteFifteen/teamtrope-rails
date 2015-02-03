@@ -20,9 +20,11 @@
 						<% comment_title = "Comment on #{post.title}" %>
 						<%= link_to pluralize(post.comments.count, "comment"), post_path(post, anchor: "comments"), title: comment_title %>
 					</span>
+					<% if can? :update, post %>
 					<span class="edit-link">
 						<%= link_to "Edit", edit_post_path(post), class: "post-edit-link" %>
 					</span>
+					<% end %>
 				</div><!-- .entry-meta -->
 			</header><!-- .entry-header -->
 			

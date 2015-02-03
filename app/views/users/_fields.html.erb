@@ -12,3 +12,9 @@
 <%= f.label :password_confirmation, "Confirm Password" %><br />
 <%= f.password_field :password_confirmation %><br />
 
+<h2><%= f.label :role %></h2>
+<% User::ROLES.each do | role | %>
+	<%= check_box_tag "user[roles][]", role, @user.roles.include?(role) %>
+	<%= h role.humanize %><br />
+<% end %>
+<%= hidden_field_tag "user[roles][]", "" %>
