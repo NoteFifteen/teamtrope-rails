@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150121042828) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "book_genres", force: true do |t|
     t.integer  "project_id"
     t.integer  "genre_id"
@@ -20,8 +23,8 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "book_genres", ["genre_id"], name: "index_book_genres_on_genre_id"
-  add_index "book_genres", ["project_id"], name: "index_book_genres_on_project_id"
+  add_index "book_genres", ["genre_id"], name: "index_book_genres_on_genre_id", using: :btree
+  add_index "book_genres", ["project_id"], name: "index_book_genres_on_project_id", using: :btree
 
   create_table "comments", force: true do |t|
     t.text     "content"
@@ -31,11 +34,11 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["post_id", "created_at"], name: "index_comments_on_post_id_and_created_at"
-  add_index "comments", ["post_id", "user_id", "created_at"], name: "index_comments_on_post_id_and_user_id_and_created_at", unique: true
-  add_index "comments", ["post_id"], name: "index_comments_on_post_id"
-  add_index "comments", ["user_id", "created_at"], name: "index_comments_on_user_id_and_created_at"
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+  add_index "comments", ["post_id", "created_at"], name: "index_comments_on_post_id_and_created_at", using: :btree
+  add_index "comments", ["post_id", "user_id", "created_at"], name: "index_comments_on_post_id_and_user_id_and_created_at", unique: true, using: :btree
+  add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
+  add_index "comments", ["user_id", "created_at"], name: "index_comments_on_user_id_and_created_at", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "current_tasks", force: true do |t|
     t.integer  "project_id"
@@ -44,9 +47,9 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "current_tasks", ["project_id", "task_id"], name: "index_current_tasks_on_project_id_and_task_id", unique: true
-  add_index "current_tasks", ["project_id"], name: "index_current_tasks_on_project_id"
-  add_index "current_tasks", ["task_id"], name: "index_current_tasks_on_task_id"
+  add_index "current_tasks", ["project_id", "task_id"], name: "index_current_tasks_on_project_id_and_task_id", unique: true, using: :btree
+  add_index "current_tasks", ["project_id"], name: "index_current_tasks_on_project_id", using: :btree
+  add_index "current_tasks", ["task_id"], name: "index_current_tasks_on_task_id", using: :btree
 
   create_table "genres", force: true do |t|
     t.string   "name"
@@ -65,7 +68,7 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "phases", ["project_view_id"], name: "index_phases_on_project_view_id"
+  add_index "phases", ["project_view_id"], name: "index_phases_on_project_view_id", using: :btree
 
   create_table "post_tags", force: true do |t|
     t.integer  "post_id"
@@ -74,7 +77,7 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "post_tags", ["post_id", "tag_id"], name: "index_post_tags_on_post_id_and_tag_id", unique: true
+  add_index "post_tags", ["post_id", "tag_id"], name: "index_post_tags_on_post_id_and_tag_id", unique: true, using: :btree
 
   create_table "posts", force: true do |t|
     t.string   "title"
@@ -89,8 +92,8 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "featured_image_updated_at"
   end
 
-  add_index "posts", ["post_date", "title", "author_id"], name: "index_posts_on_post_date_and_title_and_author_id"
-  add_index "posts", ["post_date", "title"], name: "index_posts_on_post_date_and_title"
+  add_index "posts", ["post_date", "title", "author_id"], name: "index_posts_on_post_date_and_title_and_author_id", using: :btree
+  add_index "posts", ["post_date", "title"], name: "index_posts_on_post_date_and_title", using: :btree
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"
@@ -100,7 +103,7 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "avatar_updated_at"
   end
 
-  add_index "profiles", ["user_id"], name: "index_profiles_on_user_id"
+  add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
 
   create_table "project_type_workflows", force: true do |t|
     t.integer  "workflow_id"
@@ -109,9 +112,9 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "project_type_workflows", ["project_type_id"], name: "index_project_type_workflows_on_project_type_id"
-  add_index "project_type_workflows", ["workflow_id", "project_type_id"], name: "index_ptws_on_workflow_id_project_type_id"
-  add_index "project_type_workflows", ["workflow_id"], name: "index_project_type_workflows_on_workflow_id"
+  add_index "project_type_workflows", ["project_type_id"], name: "index_project_type_workflows_on_project_type_id", using: :btree
+  add_index "project_type_workflows", ["workflow_id", "project_type_id"], name: "index_ptws_on_workflow_id_project_type_id", using: :btree
+  add_index "project_type_workflows", ["workflow_id"], name: "index_project_type_workflows_on_workflow_id", using: :btree
 
   create_table "project_types", force: true do |t|
     t.string   "name"
@@ -126,7 +129,7 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "project_views", ["project_type_id"], name: "index_project_views_on_project_type_id"
+  add_index "project_views", ["project_type_id"], name: "index_project_views_on_project_type_id", using: :btree
 
   create_table "projects", force: true do |t|
     t.integer  "final_doc_file"
@@ -187,7 +190,7 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.integer  "project_type_id"
   end
 
-  add_index "projects", ["project_type_id"], name: "index_projects_on_project_type_id"
+  add_index "projects", ["project_type_id"], name: "index_projects_on_project_type_id", using: :btree
 
   create_table "required_roles", force: true do |t|
     t.integer  "role_id"
@@ -197,8 +200,8 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "required_roles", ["project_type_id"], name: "index_required_roles_on_project_type_id"
-  add_index "required_roles", ["role_id"], name: "index_required_roles_on_role_id"
+  add_index "required_roles", ["project_type_id"], name: "index_required_roles_on_project_type_id", using: :btree
+  add_index "required_roles", ["role_id"], name: "index_required_roles_on_role_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -225,8 +228,8 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "tabs", ["phase_id"], name: "index_tabs_on_phase_id"
-  add_index "tabs", ["task_id"], name: "index_tabs_on_task_id"
+  add_index "tabs", ["phase_id"], name: "index_tabs_on_phase_id", using: :btree
+  add_index "tabs", ["task_id"], name: "index_tabs_on_task_id", using: :btree
 
   create_table "tags", force: true do |t|
     t.string   "name"
@@ -234,8 +237,8 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "tags", ["id", "name"], name: "index_tags_on_id_and_name"
-  add_index "tags", ["name"], name: "index_tags_on_name"
+  add_index "tags", ["id", "name"], name: "index_tags_on_id_and_name", using: :btree
+  add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
 
   create_table "task_performers", force: true do |t|
     t.integer  "task_id"
@@ -244,8 +247,8 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "task_performers", ["role_id"], name: "index_task_performers_on_role_id"
-  add_index "task_performers", ["task_id"], name: "index_task_performers_on_task_id"
+  add_index "task_performers", ["role_id"], name: "index_task_performers_on_role_id", using: :btree
+  add_index "task_performers", ["task_id"], name: "index_task_performers_on_task_id", using: :btree
 
   create_table "task_prerequisite_fields", force: true do |t|
     t.integer  "task_id"
@@ -254,7 +257,7 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "task_prerequisite_fields", ["task_id"], name: "index_task_prerequisite_fields_on_task_id"
+  add_index "task_prerequisite_fields", ["task_id"], name: "index_task_prerequisite_fields_on_task_id", using: :btree
 
   create_table "tasks", force: true do |t|
     t.integer  "workflow_id"
@@ -270,9 +273,9 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "tasks", ["next_id"], name: "index_tasks_on_next_id"
-  add_index "tasks", ["rejected_task_id"], name: "index_tasks_on_rejected_task_id"
-  add_index "tasks", ["workflow_id"], name: "index_tasks_on_workflow_id"
+  add_index "tasks", ["next_id"], name: "index_tasks_on_next_id", using: :btree
+  add_index "tasks", ["rejected_task_id"], name: "index_tasks_on_rejected_task_id", using: :btree
+  add_index "tasks", ["workflow_id"], name: "index_tasks_on_workflow_id", using: :btree
 
   create_table "team_memberships", force: true do |t|
     t.integer  "project_id"
@@ -283,10 +286,10 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "team_memberships", ["member_id"], name: "index_team_memberships_on_member_id"
-  add_index "team_memberships", ["project_id", "member_id", "role_id"], name: "index_team_memberships_on_project_id_and_member_id_and_role_id"
-  add_index "team_memberships", ["project_id"], name: "index_team_memberships_on_project_id"
-  add_index "team_memberships", ["role_id"], name: "index_team_memberships_on_role_id"
+  add_index "team_memberships", ["member_id"], name: "index_team_memberships_on_member_id", using: :btree
+  add_index "team_memberships", ["project_id", "member_id", "role_id"], name: "index_team_memberships_on_project_id_and_member_id_and_role_id", using: :btree
+  add_index "team_memberships", ["project_id"], name: "index_team_memberships_on_project_id", using: :btree
+  add_index "team_memberships", ["role_id"], name: "index_team_memberships_on_role_id", using: :btree
 
   create_table "unlocked_tasks", force: true do |t|
     t.integer  "task_id"
@@ -295,8 +298,8 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "unlocked_tasks", ["task_id"], name: "index_unlocked_tasks_on_task_id"
-  add_index "unlocked_tasks", ["unlocked_task_id"], name: "index_unlocked_tasks_on_unlocked_task_id"
+  add_index "unlocked_tasks", ["task_id"], name: "index_unlocked_tasks_on_task_id", using: :btree
+  add_index "unlocked_tasks", ["unlocked_task_id"], name: "index_unlocked_tasks_on_unlocked_task_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email"
@@ -308,8 +311,8 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.integer  "roles_mask"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
   create_table "workflows", force: true do |t|
     t.string   "name"
@@ -318,6 +321,6 @@ ActiveRecord::Schema.define(version: 20150121042828) do
     t.datetime "updated_at"
   end
 
-  add_index "workflows", ["root_task_id"], name: "index_workflows_on_root_task_id"
+  add_index "workflows", ["root_task_id"], name: "index_workflows_on_root_task_id", using: :btree
 
 end

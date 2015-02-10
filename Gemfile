@@ -55,9 +55,9 @@ gem 'figaro'
 gem 'simple_form'
 
 gem 'cancancan', '~> 1.10'
+gem 'pg',             '0.17.1'
 
 group :production do
-  gem 'pg',             '0.17.1'
   gem 'rails_12factor', '0.0.2'
 end
 
