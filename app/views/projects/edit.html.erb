@@ -1,8 +1,10 @@
 <% provide(:title, "Edit Project") %>
 <h1>Edit Project</h1>
 <%= form_for(@project) do | f | %>
+	<%= f.label :final_title %><br />
+	<%= f.text_field :final_title %><br />	
 	<%= f.label :project_type_id %><br />
-	<%= f.text_field :project_type_id %><br />
+	<%= f.collection_select :project_type_id, ProjectType.all, :id, :name %><br />
 	<%= f.label :final_doc_file %><br />
 	<%= f.text_field :final_doc_file %><br />
 	<%= f.label :final_manuscript_pdf %><br />
@@ -59,8 +61,6 @@
 	<%= f.text_field :author_bio %><br />
 	<%= f.label :blurb_description %><br />
 	<%= f.text_field :blurb_description %><br />
-	<%= f.label :final_title %><br />
-	<%= f.text_field :final_title %><br />
 	<%= f.label :cover_art_approval_date %><br />
 	<%= f.text_field :cover_art_approval_date %><br />
 	<%= f.label :alternative_cover_template %><br />
