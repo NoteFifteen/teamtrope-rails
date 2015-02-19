@@ -25,6 +25,12 @@ Rails.application.routes.draw do
   resources :workflows
   
   resources :tasks
+  
+  match '/parse/get_amazon_sales_rank',            to: 'parse#get_amazon_sales_rank',          via: 'get'
+  match '/parse/get_queued_items',                 to: 'parse#get_queued_items',               via: 'get'
+  match '/parse/add_book_to_price_change_queue',   to: 'parse#add_book_to_price_change_queue', via: 'get'
+  match '/parse/get_sales_data_for_channel',       to: 'parse#get_sales_data_for_channel',     via: 'get'
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -50,7 +56,6 @@ Rails.application.routes.draw do
   end
   
   resources :tags, except: :index
-  resources :process_control_records
   resources :statuses
   
   match 'signup',  to: 'users#new',        via: 'get'
