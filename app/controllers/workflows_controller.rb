@@ -10,6 +10,9 @@ class WorkflowsController < ApplicationController
   # GET /workflows/1
   # GET /workflows/1.json
   def show
+    @root_task = @workflow.root
+
+    # @workflow_tree = @workflow.get_task_tree
   end
 
   # GET /workflows/new
