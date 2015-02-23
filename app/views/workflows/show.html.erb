@@ -1,9 +1,24 @@
 <p id="notice"><%= notice %></p>
 
+<%= stylesheet_link_tag "jstree/themes/default/style.min", media: "all" %>
+<%= javascript_include_tag "jstree/jstree.min" %>
+
 <p>
   <strong>Name:</strong>
   <%= @workflow.name %>
 </p>
+
+<div>
+  <% if @root_task == nil %>
+      <span>No tasks have been defined for this workflow.</span>
+  <% else %>
+      <div id="workflow_tree"></div>
+
+      <script>
+          $("#workflow_tree").jstree({'core': { 'data': <%= @workflow.get_task_tree.to_json.html_safe %> } } );
+      </script>
+  <% end %>
+</div>
 
 <%= link_to 'Edit', edit_workflow_path(@workflow) %> |
 <%= link_to 'Back', workflows_path %>
