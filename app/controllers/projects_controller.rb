@@ -51,7 +51,7 @@ class ProjectsController < ApplicationController
   
   def edit_complete_date
   	if @project.update(update_project_params)
-  		@project.create_activity :submitted_edit_complete_date, owner: current_user, parameters: { text: " set the 'Edit Complete Date' to #{@project.edit_complete_date.strftime("%Y/%m/%d")}", form_data: params}
+  		@project.create_activity :submitted_edit_complete_date, owner: current_user, parameters: { text: " set the 'Edit Complete Date' to #{@project.edit_complete_date.strftime("%Y/%m/%d")}", form_data: params[:project]}
   		flash[:success] = "Edit Complete Date Set"
   		redirect_to @project
   	else
@@ -59,7 +59,15 @@ class ProjectsController < ApplicationController
   	end
   end
   
-
+  def original_manuscript
+  	if @project.update(update_project_params)
+  		@project.create_activity :submitted_original_manuscript, owner: current_user, parameters: {text: "Uploaded the Original Manuscript", form_data: params[:project]}
+  		flash[:success] = "Original Manuscript Uploaded"
+  		redirect_to @project
+  	else
+  		render 'show'
+  	end
+  end
   
   private
   def new_project_params

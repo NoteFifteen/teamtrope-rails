@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :projects
   
   match '/projects/edit_complete_date/:id',  to: 'projects#edit_complete_date',  via: 'patch'
+  match '/projects/original_manuscript/:id', to: 'projects#original_manuscript', via: 'patch'
   
   resources :posts do
   	resources :comments, shallow: true
