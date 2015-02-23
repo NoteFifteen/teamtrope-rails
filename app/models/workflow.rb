@@ -20,9 +20,7 @@ class Workflow < ActiveRecord::Base
         task = task.next_task
         break if task == nil
       end
-
     end
-
     return tree
   end
 
@@ -41,8 +39,6 @@ class Workflow < ActiveRecord::Base
         :li_attr => [],
         :a_attr => []
     }
-
-    return node
   end
 
 end
