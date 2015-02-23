@@ -1,4 +1,7 @@
 class Project < ActiveRecord::Base
+
+	include PublicActivity::Model
+
 	belongs_to :project_type
 	
 	has_many :team_memberships

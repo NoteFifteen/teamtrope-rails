@@ -1,30 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :tabs
-
-  resources :project_views
-
-  resources :roles
-
-  resources :task_prerequisite_fields
-
-  resources :current_tasks
-
-  resources :unlocked_tasks
-
-  resources :genres
-
-  resources :phases
-
-  resources :required_roles
-
-  resources :project_type_workflows
-
-  resources :project_types
-
-  resources :workflows
-  
-  resources :tasks
   
   match '/parse/get_amazon_sales_rank',            to: 'parse#get_amazon_sales_rank',          via: 'get'
   match '/parse/get_queued_items',                 to: 'parse#get_queued_items',               via: 'get'
@@ -51,6 +26,9 @@ Rails.application.routes.draw do
   get '/users/:id/activity/groups',    to: 'users#groups',    as: 'groups'
   
   resources :projects
+  
+  match '/projects/edit_complete_date/:id',  to: 'projects#edit_complete_date',  via: 'patch'
+  
   resources :posts do
   	resources :comments, shallow: true
   end
@@ -62,6 +40,20 @@ Rails.application.routes.draw do
   match 'signin',  to: 'sessions#new',     via: 'get'
   match 'signout', to: 'sessions#destroy', via: 'get'
   match 'visitors', to: 'static_pages#visitors', via: 'get'
+  
+  resources :tabs
+  resources :project_views
+  resources :roles
+  resources :task_prerequisite_fields
+  resources :current_tasks
+  resources :unlocked_tasks
+  resources :genres
+  resources :phases
+  resources :required_roles
+  resources :project_type_workflows
+  resources :project_types
+  resources :workflows
+  resources :tasks   
    
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

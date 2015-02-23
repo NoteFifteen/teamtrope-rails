@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
-	before_action :signed_in_user, only: [:show, :index, :destroy, :edit]
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+	before_action :signed_in_user #, only: [:show, :index, :destroy, :edit]
+  before_action :set_project, except: [:create, :new, :index]
 
   def index
   	@projects = Project.all
@@ -28,7 +28,7 @@ class ProjectsController < ApplicationController
     flash[:notice] = "Project has been destroyed."
     redirect_to projects_path
   end
-  
+    
   def update
 		if @project.update(update_project_params)
 			flash[:success] = "Updated"
@@ -43,8 +43,23 @@ class ProjectsController < ApplicationController
   end
   
   def show
-	
+		@activities = PublicActivity::Activity.order("created_at DESC").where(trackable_type: "Project", trackable_id: @project)
   end
+  
+  
+  # form actions
+  
+  def edit_complete_date
+  	if @project.update(update_project_params)
+  		@project.create_activity :submitted_edit_complete_date, owner: current_user, parameters: { text: " set the 'Edit Complete Date' to #{@project.edit_complete_date.strftime("%Y/%m/%d")}", form_data: params}
+  		flash[:success] = "Edit Complete Date Set"
+  		redirect_to @project
+  	else
+  		render 'show'
+  	end
+  end
+  
+
   
   private
   def new_project_params

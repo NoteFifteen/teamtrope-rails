@@ -1,22 +1,14 @@
 <h1>Editing Complete Date</h1>
-<%= simple_form_for @project do | f | %>
+<%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'edit_complete_date', id: @project.id) do | f | %>
 <%= f.error_notification %>
-	<div class="gform_heading">
-		<span class="gform_description">
+
 		The team commits to completing the editing process by the date entered below. This step must be completed as soon as possible after the editor and author agree to work together. We will not issue a creative team agreement until this step is complete.
-		</span>
-	</div>
-	<div class="gform_body">
-		<ul class="gform_fields top_label description_below">
-		<li>
-			<%= f.input :edit_complete_date, as: :date, start_year: Date.today.year, 
+		
+		<%= f.input :edit_complete_date, as: :date, start_year: Date.today.year, 
 					label: "Editing Complete Commited Date", 
 					hint: "Please enter the date that the team commits to completing the final edit",
 					required: true  %>
-		</li>
-	</div>
-	<%= hidden_field_tag(:submitted_from_action, action_name) %>
-	<div class="gform_footer top_label">
+
 		<%= f.submit "submit" %>
-	</div>
+
 <% end %>
