@@ -69,6 +69,16 @@ class ProjectsController < ApplicationController
   	end
   end
   
+  def edited_manuscript
+  	if @project.update(update_project_params)
+  		@project.create_activity :submitted_edited_manuscript, owner: current_user, parameters: {text: "Uploaded the Edited Manuscript", form_data: params[:project]}
+  		flash[:success] = "Edited Manuscript Uploaded"
+  		redirect_to @project
+  	else
+  		render 'show'
+  	end
+  end
+  
   private
   def new_project_params
   	params.require(:project).permit(:final_title)
