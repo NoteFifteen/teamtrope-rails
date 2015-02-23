@@ -54,7 +54,7 @@ gem 'figaro'
 
 gem 'simple_form'
 
-gem 'public_activity'
+gem 'public_activity', git: 'https://github.com/pokonski/public_activity.git'
 
 gem 'cancancan', '~> 1.10'
 gem 'pg',             '0.17.1'
