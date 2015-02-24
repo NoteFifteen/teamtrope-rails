@@ -13,7 +13,9 @@ class Project < ActiveRecord::Base
 	has_many :genres, through: :book_genres, source: :genre
 	
 	has_many :current_tasks
-	
+
+  has_one :control_number, dependent: :destroy
+
 	def team_complete?
 		required_roles = project_type.required_roles.ids
 		team_members = team_memberships.map { |member| member.role_id   }

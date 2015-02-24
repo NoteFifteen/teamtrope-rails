@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  imprint: MyString
+  asin: MyString
+  apple_id: MyString
+  epub_isbn: MyString
+  hardback_isbn: MyString
+  paperback_isbn: MyString
+  parse_id: MyString
+
+two:
+  imprint: MyString
+  asin: MyString
+  apple_id: MyString
+  epub_isbn: MyString
+  hardback_isbn: MyString
+  paperback_isbn: MyString
+  parse_id: MyString

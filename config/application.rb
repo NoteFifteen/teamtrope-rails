@@ -22,6 +22,6 @@ module Teamtrope
     
     # Override secrets.yml with application.yml
     config.secret_key_base = Figaro.env.secret_key_base
-    
+
   end
 end
