@@ -91,7 +91,58 @@ module Booktrope
 				end
 			end
 		end
-		
+
+    # Accepts a ControlNumber model and creates or updates the equivalent
+    # record in Parse.
+    def ParseWrapper.update_project_control_numbers(control_number)
+
+      case control_number.parse_id
+        when String
+          book = prepare_book(control_number.parse_id)
+        else
+          book = Parse::Object.new("Book")
+      end
+
+      # Iterate through the Model's attributes and send
+      # over the ones that are populated.
+      control_number.attributes.each do |key, value|
+        next if value.blank?
+
+        case key
+          when 'project_id'
+            book["teamtropeProjectId"] = value
+          when 'asin'
+            book["asin"] = value
+          when 'apple_id'
+            book["appleId"] = value
+          when 'hardback_isbn'
+            book["hardbackIsbn"] = value
+          when 'paperback_isbn'
+            book["paperbackIsbn"] = value
+            book["createspaceIsbn"] = value.gsub(/-/, '')
+            book["lightningSource"] = value.gsub(/-/, '').to_i
+          when 'epub_isbn'
+            book["epubIsbn"] = value
+            book["epubIsbnItunes"] = value.gsub(/-/, '')
+
+          # This could be the "Publisher" field, but there are a lot of variances
+          #when 'imprint'
+
+          # There is no equivalent field for this value in the Book object
+          #when 'ebook_library_price'
+        end
+      end
+
+      # Save the object in Parse
+      book.save
+
+      # Update the control_number record if possible
+      if(control_number.parse_id.blank? || control_number.parse_id != book['objectId'])
+        control_number.parse_id = book['objectId'];
+        control_number.save
+      end
+    end
+
 		private 
 		def ParseWrapper.prepare_book(book, load = false)
 			case book

@@ -84,6 +84,9 @@ class ProjectsController < ApplicationController
     @control_number ||= @project.build_control_number
 
     if @control_number.update(update_control_number_params)
+      # Update the record in Parse
+      Booktrope::ParseWrapper.update_project_control_numbers @control_number
+
       # Record activity here
       @project.create_activity :updated_control_numbers, owner: current_user,
                                parameters: {text: "Updated the Control Numbers", form_data: params[:project]}
