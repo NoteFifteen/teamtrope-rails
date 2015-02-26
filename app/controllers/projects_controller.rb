@@ -78,7 +78,24 @@ class ProjectsController < ApplicationController
   		render 'show'
   	end
   end
-  
+
+  def edit_control_numbers
+    @control_number = @project.control_number
+    @control_number ||= @project.build_control_number
+
+    if @control_number.update(update_control_number_params)
+      # Update the record in Parse
+      Booktrope::ParseWrapper.update_project_control_numbers @control_number
+
+      # Record activity here
+      @project.create_activity :updated_control_numbers, owner: current_user,
+                               parameters: {text: "Updated the Control Numbers", form_data: params[:project]}
+      flash[:success] = "Updated the Control Numbers"
+    end
+
+    redirect_to @project
+  end
+
   private
   def new_project_params
   	params.require(:project).permit(:final_title)
@@ -87,12 +104,17 @@ class ProjectsController < ApplicationController
   def update_project_params
   	params.require(:project).permit(:id, :final_doc_file, :final_manuscript_pdf, :final_pdf, :stock_image_request_link, :layout_notes, :previously_published, :prev_publisher_and_date, :stock_cover_image, :cover_concept_notes, :proofed_word_count, :cover_concept, :teamroom_link, :final_mobi, :publication_date, :final_epub, :marketing_release_date, :paperback_cover_type, :age_range, :search_terms, :bisac_code_3, :bisac_code_2, :bisac_code_1, :ebook_price, :print_price, :blurb_one_line, :endorsements, :author_bio, :blurb_description, :final_title, :cover_art_approval_date, :alternative_cover_template, :createspace_cover, :lightning_source_cover, :ebook_front_cover, :layout_approved_date, :final_page_count, :layout_upload, :use_pen_name_on_title, :use_pen_name_for_copyright, :exact_name_on_copyright, :pen_name, :special_text_treatment, :has_sub_chapters, :layout_style_choice, :has_index, :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited, :childrens_book, :manuscript_proofed, :edit_complete_date, :manuscript_original, :genre_ids => [])
   end
-  
+
+  def update_control_number_params
+    params.require(:control_number).permit(:id, :imprint, :ebook_library_price, :asin, :apple_id, :epub_isbn,
+                                           :hardback_isbn, :paperback_isbn, :parse_id)
+  end
+
   def set_project
   	@project = Project.find(params[:id])
   	rescue ActiveRecord::RecordNotFound
   		flash[:alert] = "The project you were looking for could not be found."
   		redirect_to projects_path
   end
-  
+
 end

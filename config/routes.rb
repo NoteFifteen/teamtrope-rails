@@ -27,10 +27,13 @@ Rails.application.routes.draw do
   
   resources :projects
   
-  match '/projects/edit_complete_date/:id',  to: 'projects#edit_complete_date',  via: 'patch'
-  match '/projects/original_manuscript/:id', to: 'projects#original_manuscript', via: 'patch'
-  match '/projects/edited_manuscript/:id',   to: 'projects#edited_manuscript',   via: 'patch'
-  
+  match '/projects/edit_complete_date/:id',   to: 'projects#edit_complete_date',  via: 'patch'
+  match '/projects/original_manuscript/:id',  to: 'projects#original_manuscript', via: 'patch'
+  match '/projects/edited_manuscript/:id',    to: 'projects#edited_manuscript',   via: 'patch'
+
+  # Post is defined for this path since creates and updates are used interchangeably.
+  match '/projects/edit_control_numbers/:id', to: 'projects#edit_control_numbers',   via: 'post'
+
   resources :posts do
   	resources :comments, shallow: true
   end
