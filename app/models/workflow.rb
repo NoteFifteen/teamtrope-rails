@@ -1,6 +1,8 @@
 class Workflow < ActiveRecord::Base
 	has_many :tasks
 	belongs_to :root, class_name: "Task", foreign_key: :root_task_id
+	
+	has_many :project_type_workflows
 
   # Step through the workflow and build an array of tree nodes which
   # will be converted to JSON and assembled with jstree for display.
