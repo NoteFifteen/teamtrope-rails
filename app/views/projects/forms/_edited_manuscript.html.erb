@@ -16,6 +16,7 @@
 	<%= f.input :has_index, as: :boolean, label: "My book has an index" %>
 	<%= f.input :has_internal_illustrations, as: :boolean, label: "My book has illustrations or images inserted throughout" %>
 
+	<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
 	<%= f.submit "submit" %>
 <% end %>
 <% 

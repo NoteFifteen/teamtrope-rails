@@ -77,7 +77,7 @@
 		<% form_content << " typography'>" %>
 		<% if tab.task.performers.where(id: @project.team_roles(current_user)).count > 0 || current_user.role?(:booktrope_staff)%>
 			<% partial_path = "projects/forms/#{tab.task.partial}" unless tab.task.partial.nil? %>
-			<% form_content += render partial_path unless tab.task.partial.empty? %>
+			<% form_content += render(partial: partial_path, locals: { current_tab: tab }) unless tab.task.partial.empty? %>
 		<% else %>
 			<% form_content << "<h1>Access Denied</h1>" %>
 			<% form_content << "You must be this project's: #{tab.task.performers.map { |role| role.name }.join(', ')} " %>

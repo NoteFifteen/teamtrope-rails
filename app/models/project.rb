@@ -17,15 +17,18 @@ class Project < ActiveRecord::Base
   has_one :control_number, dependent: :destroy
   
   has_attached_file :manuscript_original
+  has_attached_file :manuscript_edited
+  
+  ContentType_Document = ['application/msword', 
+  			'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
   
   validates_attachment :manuscript_original,
-  	:content_type => 
-  		{
-  			content_type:
-  			['application/msword', 
-  			'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
-  		}, 
-  	:size => {:in => 0..120.megabytes}
+  	:content_type => { content_type: ContentType_Document }, 
+  	:size => { :in => 0..120.megabytes }
+  	
+  validates_attachment :manuscript_edited,
+  	:content_type => { content_type: ContentType_Document },
+  	:size => { :in => 0..120.megabytes }
 
 	def team_complete?
 		required_roles = project_type.required_roles.ids

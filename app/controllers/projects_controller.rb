@@ -48,11 +48,15 @@ class ProjectsController < ApplicationController
   
   
   # form actions
+  # TODO: form_data is now saved using to_s instead of passing the params array.
+  # this prevents a crash when there is a temp file in params. Might want to come up with 
+  # a cleaner solution
   
   def edit_complete_date
   	if @project.update(update_project_params)
   		@project.create_activity :submitted_edit_complete_date, owner: current_user, parameters: { text: " set the 'Edit Complete Date' to #{@project.edit_complete_date.strftime("%Y/%m/%d")}", form_data: params[:project].to_s}
   		flash[:success] = "Edit Complete Date Set"
+			update_current_task	
   		redirect_to @project
   	else
   		render 'show'
@@ -63,6 +67,7 @@ class ProjectsController < ApplicationController
   	if @project.update(update_project_params)
   		@project.create_activity :submitted_original_manuscript, owner: current_user, parameters: {text: "Uploaded the Original Manuscript", form_data: params[:project].to_s}
   		flash[:success] = "Original Manuscript Uploaded"
+  		update_current_task  		
   		redirect_to @project
   	else
   		render 'show'
@@ -72,6 +77,7 @@ class ProjectsController < ApplicationController
   def edited_manuscript
   	if @project.update(update_project_params)
   		@project.create_activity :submitted_edited_manuscript, owner: current_user, parameters: {text: "Uploaded the Edited Manuscript", form_data: params[:project].to_s}
+  		update_current_task
   		flash[:success] = "Edited Manuscript Uploaded"
   		redirect_to @project
   	else
@@ -89,7 +95,7 @@ class ProjectsController < ApplicationController
 
       # Record activity here
       @project.create_activity :updated_control_numbers, owner: current_user,
-                               parameters: {text: "Updated the Control Numbers", form_data: params[:project]}
+                               parameters: {text: "Updated the Control Numbers", form_data: params[:project].to_s}
       flash[:success] = "Updated the Control Numbers"
     end
 
@@ -117,4 +123,11 @@ class ProjectsController < ApplicationController
   		redirect_to projects_path
   end
   
+  def update_current_task
+  	current_task = @project.current_tasks.where(task_id: params[:submitted_task_id]).first
+  	unless current_task.nil? || current_task.task.next_task.nil?
+  		current_task.task_id = current_task.task.next_task.id
+  		current_task.save
+  	end
+  end
 end
