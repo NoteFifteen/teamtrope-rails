@@ -15,6 +15,17 @@ class Project < ActiveRecord::Base
 	has_many :current_tasks
 
   has_one :control_number, dependent: :destroy
+  
+  has_attached_file :manuscript_original
+  
+  validates_attachment :manuscript_original,
+  	:content_type => 
+  		{
+  			content_type:
+  			['application/msword', 
+  			'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
+  		}, 
+  	:size => {:in => 0..120.megabytes}
 
 	def team_complete?
 		required_roles = project_type.required_roles.ids

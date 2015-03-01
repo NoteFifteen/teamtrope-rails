@@ -1,21 +1,15 @@
 class CreateProjects < ActiveRecord::Migration
   def change
     create_table :projects do |t|
-      t.integer :final_doc_file
-      t.integer :final_manuscript_pdf
-      t.integer :final_pdf
+
       t.string :stock_image_request_link
       t.text :layout_notes
       t.boolean :previously_published
       t.string :prev_publisher_and_date
-      t.integer :stock_cover_image
       t.text :cover_concept_notes
       t.float :proofed_word_count
-      t.integer :cover_concept
       t.string :teamroom_link
-      t.integer :final_mobi
       t.datetime :publication_date
-      t.integer :final_epub
       t.datetime :marketing_release_date
       t.string :paperback_cover_type
       t.string :age_range
@@ -29,15 +23,11 @@ class CreateProjects < ActiveRecord::Migration
       t.text :endorsements
       t.text :author_bio
       t.text :blurb_description
+      t.string :title
       t.string :final_title
       t.datetime :cover_art_approval_date
-      t.integer :alternative_cover_template
-      t.integer :createspace_cover
-      t.integer :lightning_source_cover
-      t.integer :ebook_front_cover
       t.datetime :layout_approved_date
       t.float :final_page_count
-      t.integer :layout_upload
       t.boolean :use_pen_name_on_title
       t.boolean :use_pen_name_for_copyright
       t.string :exact_name_on_copyright
@@ -49,12 +39,31 @@ class CreateProjects < ActiveRecord::Migration
       t.boolean :non_standard_size
       t.boolean :has_internal_illustrations
       t.boolean :color_interior
-      t.integer :manuscript_edited
-      t.boolean :childrens_book
-      t.integer :manuscript_proofed
+      t.boolean :childrens_book    
       t.datetime :edit_complete_date
-      t.integer :manuscript_original
-
+      
+      #docs
+      t.attachment :manuscript_proofed
+      t.attachment :manuscript_edited
+      t.attachment :manuscript_original
+      t.attachment :final_doc_file
+      
+      #pdfs
+      t.attachment :final_manuscript_pdf
+      t.attachment :final_pdf
+			t.attachment :layout_upload
+      t.attachment :createspace_cover
+      t.attachment :lightning_source_cover
+      t.attachment :alternative_cover_template
+      
+      #images
+      t.attachment :cover_concept
+      t.attachment :stock_cover_image
+      t.attachment :ebook_front_cover
+    
+      #book files
+      t.attachment :final_mobi
+			t.attachment :final_epub      
 
       t.timestamps
     end

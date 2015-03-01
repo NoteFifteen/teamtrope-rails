@@ -56,7 +56,8 @@
     </span>
 		<% merged_array = [] %>
 		<% @project.current_tasks.each do | current_task | %>
-		<% merged_array.concat(current_task.task.unlocked_tasks.map { |ut| ut.unlocked_task_id }) %>
+			<% merged_array.push current_task.task_id %>
+			<% merged_array.concat(current_task.task.unlocked_tasks.map { |ut| ut.unlocked_task_id }) %>
 		<% end %>
 		<% merged_array.uniq! %>
 <% @project.project_type.project_view.phases.includes(:tabs).each do | phase | %>
@@ -91,5 +92,5 @@
 	</div>
 	<!--/ rails tabs -->
 <% end %>
-</div>	
-		</div>
+	</div>	
+</div>
