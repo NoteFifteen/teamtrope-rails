@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require jquery-validate/jquery.validate
+//= require jquery-validate/additional-methods
 //= require highcharts
 //= require highcharts/highcharts-more
 //= require highcharts/modules/exporting

@@ -30,7 +30,13 @@ class Project < ActiveRecord::Base
   	:content_type => { content_type: ContentType_Document },
   	:size => { :in => 0..120.megabytes }
 
-	def team_complete?
+  # Available options for the layout style form -> layout style. Stored in 'layout_style_choice'
+  LayoutStyleFonts = [['Cambria'], ['Covington'], ['Headline Two Exp'],['Letter Gothic'],['Lobster'],['Lucida Fax'],['M V Boli']]
+
+  # Available options for the layout style -> Left Side Page Header Display - Name.  Stored in page_header_display_name
+  PageHeaderDisplayNameChoices = [['Full Name'], ['Last Name Only']]
+
+  def team_complete?
 		required_roles = project_type.required_roles.ids
 		team_members = team_memberships.map { |member| member.role_id   }
 		
