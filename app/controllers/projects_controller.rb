@@ -109,6 +109,8 @@ class ProjectsController < ApplicationController
       @project.create_activity :updated_control_numbers, owner: current_user,
                                parameters: {text: "Updated the Control Numbers", form_data: params[:project].to_s}
       flash[:success] = "Updated the Control Numbers"
+    else
+      render 'show'
     end
 
     redirect_to @project
@@ -124,9 +126,10 @@ class ProjectsController < ApplicationController
       @project.create_activity :approved_layout, owner: current_user,
                                parameters: { text: activity_text, form_data: params[:project].to_s }
       flash[:success] = 'Approved the Layout'
+      redirect_to @project
+    else
+      render 'show'
     end
-
-    redirect_to @project
   end
 
   private

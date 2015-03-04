@@ -37,6 +37,7 @@
     <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'approve_layout', id: @project.id),
         html: { id: "approve_layout" } do |f| %>
         <%= f.error_notification %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
 
         <%= f.collection_radio_buttons :layout_approved,
                [['approved', 'Yes'],
