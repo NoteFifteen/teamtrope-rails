@@ -63,6 +63,22 @@ class ProjectsController < ApplicationController
   	end
   end
   
+  # sets the revenue allocation per team_membership
+  def revenue_allocation_split
+  	if @project.update(update_project_params)
+
+  		@project.create_activity :revenue_allocation_split, owner: current_user, parameters: { text: " set the revenue allocation split", form_data: params[:project][:team_memberships_attributes].to_s}						
+			update_current_task
+			
+			Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, DateTime.parse("#{params[:effective_date][:year]}/#{params[:effective_date][:month]}/#{params[:effective_date][:day]}")
+  		
+	  	flash[:success] = "Revenue Allocation Split Set"
+	  	redirect_to @project
+	  else
+	  	render 'show'
+	  end
+  end
+  
   def original_manuscript
   	if @project.update(update_project_params)
   		@project.create_activity :submitted_original_manuscript, owner: current_user, parameters: {text: "Uploaded the Original Manuscript", form_data: params[:project].to_s}
@@ -150,7 +166,7 @@ class ProjectsController < ApplicationController
   end
   
   def update_project_params
-  	params.require(:project).permit(:id, :final_title, :final_doc_file, :final_manuscript_pdf, :final_pdf, :stock_image_request_link, :layout_notes, :previously_published, :prev_publisher_and_date, :stock_cover_image, :cover_concept_notes, :proofed_word_count, :cover_concept, :teamroom_link, :final_mobi, :publication_date, :final_epub, :marketing_release_date, :paperback_cover_type, :age_range, :search_terms, :bisac_code_3, :bisac_code_2, :bisac_code_1, :ebook_price, :print_price, :blurb_one_line, :endorsements, :author_bio, :blurb_description, :final_title, :cover_art_approval_date, :alternative_cover_template, :createspace_cover, :lightning_source_cover, :ebook_front_cover, :layout_approved_date, :layout_approved, :layout_approval_issue_list, :final_page_count, :layout_upload, :page_header_display_name, :use_pen_name_on_title, :use_pen_name_for_copyright, :exact_name_on_copyright, :pen_name, :special_text_treatment, :has_sub_chapters, :layout_style_choice, :has_index, :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited, :childrens_book, :manuscript_proofed, :edit_complete_date, :manuscript_original, :genre_ids => [])
+  	params.require(:project).permit(:id, :final_title, :final_doc_file, :final_manuscript_pdf, :final_pdf, :stock_image_request_link, :layout_notes, :previously_published, :prev_publisher_and_date, :stock_cover_image, :cover_concept_notes, :proofed_word_count, :cover_concept, :teamroom_link, :final_mobi, :publication_date, :final_epub, :marketing_release_date, :paperback_cover_type, :age_range, :search_terms, :bisac_code_3, :bisac_code_2, :bisac_code_1, :ebook_price, :print_price, :blurb_one_line, :endorsements, :author_bio, :blurb_description, :final_title, :cover_art_approval_date, :alternative_cover_template, :createspace_cover, :lightning_source_cover, :ebook_front_cover, :layout_approved_date, :layout_approved, :layout_approval_issue_list, :final_page_count, :layout_upload, :page_header_display_name, :use_pen_name_on_title, :use_pen_name_for_copyright, :exact_name_on_copyright, :pen_name, :special_text_treatment, :has_sub_chapters, :layout_style_choice, :has_index, :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited, :childrens_book, :manuscript_proofed, :edit_complete_date, :manuscript_original, :genre_ids => [], :team_memberships_attributes => [:percentage, :id, :_destroy])
   end
 
   def update_control_number_params

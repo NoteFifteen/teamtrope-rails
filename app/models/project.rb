@@ -30,6 +30,8 @@ class Project < ActiveRecord::Base
   validates_attachment :manuscript_edited,
   	:content_type => { content_type: ContentType_Document },
   	:size => { :in => 0..120.megabytes }
+  	
+	accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true    	
 
   # Available options for the layout style form -> layout style. Stored in 'layout_style_choice'
   LayoutStyleFonts = [['Cambria'], ['Covington'], ['Headline Two Exp'],['Letter Gothic'],['Lobster'],['Lucida Fax'],['M V Boli']]

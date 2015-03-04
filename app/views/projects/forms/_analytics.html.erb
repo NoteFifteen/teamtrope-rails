@@ -4,7 +4,13 @@ sales_data_string = ""
 comma = ""
 %>
 <h1>Rankings and Analytics</h1>
+<div class="results" id="results"></div>
 <script type='text/javascript'>
+//$.post("/parse/get_amazon_sales_rank.json", {"parse": {"book":"pe2oMCIf9b"}}, 
+//	function(data){$('div#results').text(data[0].asin);}
+//	);
+
+	<% # TODO: Refactor views/projects/show to pass the tab id as a local when calling render partial %>
 	$("input[id=tab500]").change(function (event) {
 		new Highcharts.Chart(
 		{

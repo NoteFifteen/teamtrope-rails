@@ -35,7 +35,8 @@ Rails.application.routes.draw do
   match '/projects/approve_layout/:id',       to: 'projects#approve_layout',      via: 'patch'
 
   # Post is defined for this path since creates and updates are used interchangeably.
-  match '/projects/edit_control_numbers/:id', to: 'projects#edit_control_numbers',   via: 'post'
+  match '/projects/edit_control_numbers/:id',     to: 'projects#edit_control_numbers',     via: 'post'
+  match '/projects/revenue_allocation_split/:id', to: 'projects#revenue_allocation_split', via: 'post'
 
   resources :posts do
   	resources :comments, shallow: true

@@ -16,10 +16,6 @@ module Booktrope
 			nook:   { table_name: NookSalesData,   fields: ["nookId", "isbn", "dailySales", "country", "crawlDate"]}
 		}
 		
-		#def initialize
-			#ParseHelper.init_development
-		#end
-		
 		def ParseWrapper.request
 			begin
 				yield
@@ -63,6 +59,49 @@ module Booktrope
 				
 				end.get
 			end
+		end
+		
+		def ParseWrapper.save_revenue_allocation_record_to_parse(project, current_user, submitted_date)
+
+  		fields = { sentToRjMetrics: false, submittedBy: current_user.id,
+  								teamtropeId: project.id }  		
+  		project.team_memberships.includes(:role).each do | tm |
+  			field_name = tm.role.name.gsub(/ /, "")
+  			field_name = field_name[0].downcase + field_name[1, field_name.length]
+  			fields[field_name + 'Id']  = tm.member_id
+  			fields[field_name + 'Pct'] = tm.percentage
+  		end
+  		
+  		fields["submittedEffectiveDate"] = Parse::Date.new(submitted_date)
+  		
+  		if submitted_date == Date.today
+  			if submitted_date.day != 1
+  				fields["effectiveDate"] = (submitted_date + 1.month) - ( submitted_date.day - 1)
+  			else
+  				fields["effectiveDate"] = submitted_date
+  			end
+  		elsif Date.today > submitted_date
+  			fields["effectiveDate"] = ((Date.today + 1.month) - (Date.today.day - 1)).to_s
+  		else
+  			fields["effectiveDate"] = (submitted_date) - (submitted_date.day - 1)
+  		end
+
+  		fields["effectiveDate"] = Parse::Date.new(fields["effectiveDate"])
+  		
+  		
+  		ParseWrapper.add_team_revenue_allocation(fields)
+  		
+		end		
+		
+		def ParseWrapper.add_team_revenue_allocation(fields)
+		
+			raise "fields must be a Hash" unless fields.class == Hash
+		
+			team_revenue_allocation = Parse::Object.new("TeamRevenueAllocationRails")
+			fields.each do | key, value |
+				team_revenue_allocation[key] = value
+			end
+			team_revenue_allocation.save
 		end
 		
 		def ParseWrapper.add_book_to_price_change_queue(book, price, date, isEnd = false, isPriceIncrease = false)
