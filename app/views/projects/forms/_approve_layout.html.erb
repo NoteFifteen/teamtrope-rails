@@ -1,1 +1,76 @@
-<h1>Approve Layout</h1>
+<div class="layout_approval">
+    <h2>Layout Approval Instructions</h2>
+
+    <p>
+      Authors: Please review the latest Layout Proof of your book and give final sign off. Your Layout Proof can be found
+      and downloaded by clicking the "Assets" tab above.
+    </p>
+    <p>
+      This is your final opportunity to review your manuscript before it goes to press. Following approval, you will incur
+      a fee for any requested changes.
+    </p>
+
+    <p>Specifically, you should be reviewing for the following:</p>
+
+    <ul>
+        <li>Is title correct on Title Page? On Headers?</li>
+        <li>Are Editor, Designer, Proofreader credited correctly on the Copyright Page? Note: This is at your team's
+            discretion. Some of these roles will not always be credited on this page.
+        </li>
+        <li>Is all front/back matter (Acknowledgments, Dedication, Author's Note, etc.) correct?</li>
+        <li>To the best of your knowledge, are the books listed on the "More Great Reads" page appropriate (similar
+            genres, target audiences, themes, etc.)? If you have other books published by Booktrope, are they listed?
+        </li>
+        <li>Is layout consistent with your intentions?</li>
+    </ul>
+
+    <p>While we are happy to correct minor typos or proofreading errors at this stage, we ask that you not request
+    other changes to content, fonts, or other stylistic items.</p>
+</div>
+
+<!-- This is where we would break the page for step 2 -->
+<hr />
+
+<div class="layout_approval">
+    <p><strong>Is Layout Approved? *</strong></p>
+
+    <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'approve_layout', id: @project.id),
+        html: { id: "approve_layout" } do |f| %>
+        <%= f.error_notification %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
+        <%= f.collection_radio_buttons :layout_approved,
+               [['approved', 'Yes'],
+                ['approved_revisions', 'Yes, with revisions (please complete the following to provide revision requests). Click the "Plus" sign to add a new line for each revision.']],
+               :first, :last,
+               :item_wrapper_tag => 'div',
+               :item_wrapper_class => 'radio'
+        %>
+
+      <!-- need hidden input for list -->
+      <%= f.input_field :layout_approval_issue_list, as: :hidden %>
+
+      <table id="approval_issue_list">
+        <thead>
+        <tr>
+          <th>Page</th>
+          <th>Problem</th>
+          <th>Fix</th>
+          <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+
+</div>
+
+<!-- This is where we would break the page for step 3 -->
+<hr />
+<div class="layout_approval">
+  <h3>Important Timeline Information</h3>
+  <p>Please ensure you are working on your cover design and publication fact sheet, as these will be due in the coming days. Following the revision process (if applicable) and final internal review, we will let you know your final page count so you can finalize pricing and cover templates.</p>
+
+    <%= f.submit 'Save' %>
+    <% end %>
+  </div>
