@@ -11,3 +11,5 @@ Rails.application.config.assets.precompile += %w( jquery.Jcrop.min.js )
 
 Rails.application.config.assets.precompile += %w( jstree/themes/default/style.min.css )
 Rails.application.config.assets.precompile += %w( jstree/jstree.min.js )
+
+Rails.application.config.assets.precompile += %w( jquery-validate/jquery.validate.min.js, jquery-validate/additional-methods.min.js)
