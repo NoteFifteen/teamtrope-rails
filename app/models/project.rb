@@ -18,6 +18,7 @@ class Project < ActiveRecord::Base
   
   has_attached_file :manuscript_original
   has_attached_file :manuscript_edited
+  has_attached_file :layout_upload
   
   ContentType_Document = ['application/msword', 
   			'application/vnd.openxmlformats-officedocument.wordprocessingml.document']

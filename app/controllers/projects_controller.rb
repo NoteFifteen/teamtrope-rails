@@ -85,6 +85,18 @@ class ProjectsController < ApplicationController
   	end
   end
 
+  def layout_upload
+    if @project.update(update_project_params)
+      @project.create_activity :uploaded_layout, owner: current_user,
+                               parameters: {text: "Uploaded the Layout", form_data: params[:project].to_s}
+      flash[:success] = "Layout Uploaded"
+      update_current_task
+      redirect_to @project
+    else
+      render 'show'
+    end
+  end
+
   def edit_control_numbers
     @control_number = @project.control_number
     @control_number ||= @project.build_control_number
