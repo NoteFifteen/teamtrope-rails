@@ -116,9 +116,14 @@ class ProjectsController < ApplicationController
 
   def edit_layout_style
     if @project.update(update_project_params)
+      @project.create_activity :edited_layout_style, owner: current_user,
+                               parameters: {text: 'Chose Layout Style', form_data: params[:project].to_s}
+      flash[:success] = 'Layout Style Updated'
+      update_current_task
+      redirect_to @project
+    else
+      render 'show'
     end
-
-    redirect_to @project
   end
 
   private
