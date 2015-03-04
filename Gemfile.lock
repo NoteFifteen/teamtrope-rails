@@ -38,7 +38,13 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
+    autoprefixer-rails (5.1.7)
+      execjs
+      json
     bcrypt-ruby (3.1.2)
+    bootstrap-sass (3.3.3)
+      autoprefixer-rails (>= 5.0.0.1)
+      sass (>= 3.2.19)
     builder (3.2.2)
     cancancan (1.10.1)
     choice (0.1.7)
@@ -171,6 +177,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby (= 3.1.2)
+  bootstrap-sass (~> 3.3.3)
   cancancan (~> 1.10)
   coffee-rails (~> 4.0.0)
   figaro
@@ -186,7 +193,7 @@ DEPENDENCIES
   rails (= 4.1.6)
   rails-erd
   rails_12factor (= 0.0.2)
-  sass-rails (~> 4.0.3)
+  sass-rails (>= 3.2)
   sdoc (~> 0.4.0)
   seed_dump
   simple_form

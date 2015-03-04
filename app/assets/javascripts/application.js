@@ -17,4 +17,5 @@
 //= require highcharts/highcharts-more
 //= require highcharts/modules/exporting
 //= require turbolinks
+//= require bootstrap-sprockets
 //= require_tree .
