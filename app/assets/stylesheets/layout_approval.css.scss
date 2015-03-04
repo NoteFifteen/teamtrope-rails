@@ -1,0 +1,9 @@
+/* Necessary to override some bad CSS being included from
+  legacy Teamtrope.com */
+.layout_approval ul li{
+  list-style: disc;
+}
+
+div.layout_approval {
+  width: 640px;
+}
