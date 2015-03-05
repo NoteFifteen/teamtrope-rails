@@ -57,11 +57,12 @@ jQuery ->
     }
   });
 
-## Custom validation rules for the Revenue Split partial
-$("#revenue_allocation_split").validate({
-	rules: {
-		fullAmount: {
-			percentageSum: [".percentage"]
-		}
-	}
-});
+  ## Custom validation rules for the Revenue Split partial
+  $("#revenue_allocation_split").validate({
+    ignore: []
+    rules: {
+      fullAmount: {
+        revenueSplitValidation: [".percentage"]
+      }
+    }
+  });

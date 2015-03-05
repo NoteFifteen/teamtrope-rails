@@ -68,10 +68,11 @@ class ProjectsController < ApplicationController
   	if @project.update(update_project_params)
 
   		@project.create_activity :revenue_allocation_split, owner: current_user, parameters: { text: " set the revenue allocation split", form_data: params[:project][:team_memberships_attributes].to_s}						
-			update_current_task
-			
+			update_current_task			
 			Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, DateTime.parse("#{params[:effective_date][:year]}/#{params[:effective_date][:month]}/#{params[:effective_date][:day]}")
   		
+  		#TODO: Hellosign-rails integration
+  		  		
 	  	flash[:success] = "Revenue Allocation Split Set"
 	  	redirect_to @project
 	  else
