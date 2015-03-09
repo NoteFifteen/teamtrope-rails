@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   match '/projects/layout_upload/:id',            to: 'projects#layout_upload',            via: 'patch'
   match '/projects/approve_layout/:id',           to: 'projects#approve_layout',           via: 'patch'
   match '/projects/revenue_allocation_split/:id', to: 'projects#revenue_allocation_split', via: 'patch'
+  match '/projects/submit_form_1099/:id',         to: 'projects#submit_form_1099',         via: 'patch'
   
   # Post is defined for this path since creates and updates are used interchangeably.
   match '/projects/edit_control_numbers/:id',     to: 'projects#edit_control_numbers',     via: 'post'

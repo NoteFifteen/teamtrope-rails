@@ -1,5 +1,4 @@
 <h1>Revenue Split</h1>
-<font color="#ff0000">Must not exceed <%= @project.project_type.team_total_percent %>%</font><br /><br />
 <script>
 	var maxPercent = <%= @project.project_type.team_total_percent %>;
 	var total = 0;
@@ -11,8 +10,8 @@
         total += parseFloat($(this).val());
     });
 
-    return this.optional(element) || total < parseFloat(value);
-	}, jQuery.validator.format("Revenue allocation total must not exceed " + maxPercent + "%"));
+    return this.optional(element) || total <= parseFloat(value);
+	}, jQuery.validator.format("You have exceed " + maxPercent + "% Please adjust the percents so they sum up accordingly."));
 	
 </script>
 <div>
@@ -27,7 +26,10 @@
 		<% end %>
 		
 		<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
 		<%= hidden_field_tag :fullAmount, @project.project_type.team_total_percent %><br />
+
+		<span><strong>Total:</strong> <span id="split_threshold">0</span> <font color="#ff0000">Must not exceed <%= @project.project_type.team_total_percent %>%</font></span><br /><br />		
 		
 		<%= select_date (Date.today.day == 1)? Date.today : Date.today + 1.month, prefix: :effective_date, start_year: Date.today.year, discard_day: true %><br /><br />
 		<div>The date you would like this allocation agreement to take effect.</div><br />	

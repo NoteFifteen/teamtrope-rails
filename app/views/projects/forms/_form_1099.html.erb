@@ -1,1 +1,113 @@
 <h1>1099 Form Info</h1>
+<%= simple_form_for @project, 
+		url: url_for(controller: 'projects', action: 'submit_form_1099', id: @project),
+		html: { id: 'form_1099' } do | f | %>
+
+	<%= f.error_notification %>
+	<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
+	<p>Please provide us with the following information so that we can properly credit your earnings. You only need to submit this form once - if you have already done so for another book or project, please do not resubmit.</p><br />
+	
+	<label>Is this the first time you are submitting the form, or is this a change in information?<span class="">*</span></label><br />
+	<%
+			[[true, "First time I'm submitting the form"],
+			[false, "I've already submittted a form in the past. This is an update to my information."]].each do | radio_item | %>
+			
+			<%= radio_button_tag 'first_time?', radio_item.first %> <%= radio_item.last %><br />
+				
+	<%  end %>
+	
+	<br />
+	
+	<!-- End Page 1 -->
+	
+	<h2>Personal Information</h2>
+	Name<br />
+	<%= text_field_tag 'first_name' %><br />
+	First<br />
+	
+	<%= text_field_tag 'last_name' %><br />
+	Last<br />
+	
+	Middle Initial<br />
+	<%= text_field_tag 'middle_initial' %><br />
+	
+	Phone<br />
+	<%= text_field_tag 'phone' %><br />
+	
+	Email<br />
+	<%= text_field_tag 'email' %><br />
+	
+	
+	<label>Are you a US citizen or permanent resident?<span class="">*</span></label><br />
+	<%
+		[[true, "Yes"],[false, "No"]].each do | radio_item |
+	%>
+		<%= radio_button_tag 'us_citizen_or_resident?', radio_item.first %><%= radio_item.last %><br />
+	<% end %>
+
+	<!-- End Page 2 -->
+
+
+	<h2>Location Information</h2>
+	Address<br />
+	<%= text_field_tag 'address' %><br />
+	Street Address<br />
+	
+	<%= text_field_tag 'address_2' %><br />
+	Address Line 2<br />
+	
+	<%= text_field_tag 'city' %><br />
+	City<br />
+	
+	<%= text_field_tag 'state' %><br />
+	State/Province/Region<br />
+	
+	<%= text_field_tag 'zip' %><br />
+	ZIP/Postal Code<br />
+	
+	Country<br />
+	
+	<!-- End Page 3 -->
+	
+	<h2>Tax Information</h2>
+	<div>Please fill out only one. Either SSN or Business name and EIN.</div><br />
+	
+	<% [['ssn', 'SSN (Social Security Number'],['eid', 'EIN (Business Tax ID)']].each do | radio_button | %>
+		<%= radio_button_tag 'tax_id', radio_button.first %> <%= radio_button.last %><br />
+	<% end %>
+	
+	<div>Required only for US citizens and permanent residents. If you are located outside of the US, you will be paid via Paypal. Please provide your Paypal account email address below.</div><br />
+	
+	<div id="social_security_number_wrapper">
+		Social Security Number<br />
+		<%= text_field_tag 'social_security_number' %><br />
+	</div>
+	
+	<div id="business_tax_id_wrapper">
+		Tax ID<br />
+		<%= text_field_tag 'business_tax_id' %><br />
+		
+		Business Name<br />
+		<%= text_field_tag 'business_name' %><br />		
+	</div>
+	
+	
+	<h2>Banking Information</h2>
+	Name of Bank<br />
+	<%= text_field_tag 'bank_name' %><br />
+	
+	Type of Account<br />
+	<% [['checking', 'Checking'],['savings', 'Savings']].each do | radio_item | %>
+		<%= radio_button_tag 'account_type', radio_item.first %><%= radio_item.last %><br />
+	<% end %>
+	
+	Routing Number<br />
+	<%= text_field_tag 'routing_number' %><br />
+	Account Number<br />
+	<%= text_field_tag 'account_number' %><br />
+	
+	<br />
+	
+	<%= f.submit "Submit" %>
+ <% end %>

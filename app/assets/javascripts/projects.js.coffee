@@ -57,7 +57,8 @@ jQuery ->
     }
   });
 
-  ## Custom validation rules for the Revenue Split partial
+## Custom validation rules for the Revenue Split partial
+jQuery ->
   $("#revenue_allocation_split").validate({
     ignore: []
     rules: {
@@ -65,4 +66,78 @@ jQuery ->
         revenueSplitValidation: [".percentage"]
       }
     }
+  });
+  
+## Revenue Split Partial javascript - Sums the revenue split and displays it so the user
+## can easily tell if they have exceeded the threshold or not.
+jQuery(document).ready () ->				
+	$(".percentage").bind("propertychange change click keyup input paste", (event) =>
+		total = 0
+		$(".percentage").each (index, obj) =>
+			total += parseFloat($(obj).val())
+		$("#split_threshold").html(total)
+	)
+	
+	$(".percentage").first().trigger("change")  
+
+jQuery ->
+	field = $("input[name=tax_id]:radio")
+	field_value = $("input[name=tax_id]:checked")
+	
+	if ! field.is(':checked')
+		$('#business_tax_id_wrapper').hide()
+		$('#social_security_number_wrapper').hide()
+			
+	$(field).change (event) =>
+
+		if field.is(':checked')
+			field_value = $("input[name=tax_id]:checked")
+			
+			if field_value.val() == 'ssn'
+				$('#social_security_number_wrapper').slideDown()
+				$('#business_tax_id_wrapper').slideUp()
+			else
+				$('#social_security_number_wrapper').slideUp()
+				$('#business_tax_id_wrapper').slideDown()
+				
+jQuery -> 
+  $("#form_1099").validate({
+  	rules: {
+  		first_name: {
+  			required: true
+  		},
+  		last_name: {
+  			required: true
+  		},
+  		phone: {
+  			required: true
+  		}
+  		email: {
+  			required: true
+  		},
+  		address: {
+  			required: true
+  		},
+  		city: {
+  			required: true
+  		},
+  		state: {
+  			required: true
+  		},
+  		zip: {
+  			required: true
+  		},
+  		bank_name: {
+  			required: true
+  		},
+  		account_type: {
+  			required: true
+  		},
+  		routing_number: {
+  			required: true
+  		},
+  		account_number: {
+  			required: true
+  		}
+  	}
   });
