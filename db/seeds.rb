@@ -8,6 +8,16 @@ end
 genre_seeds = Rails.root.join('db', 'seed-data', 'genres.yml')
 Genre.create!(YAML::load_file(genre_seeds))
 
+# create the imprints
+Imprint.create!([
+  {name: "Booktrope Editions"},
+  {name: "Entice"},
+  {name: "Gravity"},
+  {name: "Vox Dei"},
+  {name: "Forsaken"},
+  {name: "Edge"}
+])
+
 # create the roles
 Role.create!([
   {name: "Author"},

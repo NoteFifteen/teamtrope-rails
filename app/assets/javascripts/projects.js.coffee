@@ -80,25 +80,95 @@ jQuery(document).ready () ->
 	
 	$(".percentage").first().trigger("change")  
 
-jQuery ->
-	field = $("input[name=tax_id]:radio")
-	field_value = $("input[name=tax_id]:checked")
-	
-	if ! field.is(':checked')
-		$('#business_tax_id_wrapper').hide()
-		$('#social_security_number_wrapper').hide()
-			
-	$(field).change (event) =>
 
+jQuery ->
+
+  field = $("input[name=project\\[previously_published\\]]:radio")
+  field_value = $("input[name=project\\[previously_published\\]]:checked")
+
+  if ! field.is(':checked') || field_value.val() == 'false'
+    $('.previously_published_true').hide()
+
+  $(field).change (event) =>
+     if field.is(':checked')
+       field_value = $("input[name=project\\[previously_published\\]]:checked")
+
+       if field_value.val() == 'true'
+         $('.previously_published_true').slideDown()
+       else
+         $('.previously_published_true').slideUp()
+         ##$('.optional input').val('').prop("checked", false)
+
+jQuery ->
+	field = $("input[name=does_contain_images]:radio")
+	field_value = $("input[name=does_contain_images]:checked")
+	
+	$(field).change (event) =>
 		if field.is(':checked')
-			field_value = $("input[name=tax_id]:checked")
+			field_value = $("input[name=does_contain_images]:checked")
 			
-			if field_value.val() == 'ssn'
-				$('#social_security_number_wrapper').slideDown()
-				$('#business_tax_id_wrapper').slideUp()
+			if field_value.val() == '1'
+				$('.does_contain_images_1').slideDown()
+				$('.does_contain_images_2').slideUp()
+			else if field_value.val() == '2'
+				$('.does_contain_images_2').slideDown()
+				$('.does_contain_images_1').slideUp()
 			else
-				$('#social_security_number_wrapper').slideUp()
-				$('#business_tax_id_wrapper').slideDown()
+				$('.does_contain_images_1').slideUp()
+				$('.does_contain_images_2').slideUp()
+				
+jQuery.validator.addMethod("pfm_checklist", (value, element, params) ->
+	is_user_ready_to_upload = true
+	$(params[0]).each (index, obj) ->
+		if ! obj.checked
+			is_user_ready_to_upload = false
+	return is_user_ready_to_upload
+, jQuery.validator.format("You must sign off that you have completed all steps in order to submit the form.")
+)
+
+jQuery ->
+	$("#submit_proofread").validate({
+		rules:{
+			checklist_0: { 		
+				pfm_checklist: [".proofread_manuscript_checklist"] 
+			},
+			'project[has_sub_chapters]': {
+				required: true
+			},
+			does_contain_images: {
+				required: true
+			},
+			teamtrope_link: {
+				required: {
+					depends: (element) =>
+						return $("input[name=does_contain_images]:checked").val() == '1';
+				}
+			},
+			dropbox_link: {
+				required: {
+					depends: (element) =>
+						return $("input[name=does_contain_images]:checked").val() == '2';
+				}
+			},
+			'project[imprint_id]': {
+				required: true
+			},
+			'project[previously_published]': {
+				required: true
+			},
+			'project[prev_publisher_and_date]': {
+				required: {
+					depends: (element) =>
+						return $("input[name=project\\[previously_published\\]]:radio").is(':checked');
+				}
+			},
+			'project[manuscript_proofed]': {
+				required: true
+			}
+		}
+	})
+
+
 				
 jQuery -> 
   $("#form_1099").validate({
