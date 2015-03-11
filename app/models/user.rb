@@ -16,12 +16,13 @@ class User < ActiveRecord::Base
   validates :email, presence: true, 
 							format: {with: VALID_EMAIL_REGEX},
 							uniqueness: { case_sensitive: false }		
-  
-  validates :password, length: { minimum: 8 }
-  validates :password_confirmation, presence: true
   has_secure_password
+
+  # There's a conflict with the has_secure_password
+  # validates :password, length: { minimum: 8 }
+  # validates :password_confirmation, presence: true
   
-  default_scope -> { order('name ASC') }
+  default_scope -> { order('LOWER(name) ASC') }
   
   scope :with_role, ->(role) { where("roles_mask & #{2**ROLES.index(role.to_s)} > 0") }
   

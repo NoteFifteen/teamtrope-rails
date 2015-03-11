@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   
   resources :projects
 
+  match '/projects/accept_team_member/:id',       to: 'projects#accept_team_member',       via: [:patch, :post]
   match '/projects/approve_cover_art/:id',        to: 'projects#approve_cover_art',        via: 'patch'
   match '/projects/approve_layout/:id',           to: 'projects#approve_layout',           via: 'patch'
   match '/projects/cover_concept_upload/:id',     to: 'projects#cover_concept_upload',     via: 'patch'
@@ -40,6 +41,7 @@ Rails.application.routes.draw do
   match '/projects/proofed_manuscript/:id',       to: 'projects#proofed_manuscript',       via: 'patch'
   match '/projects/revenue_allocation_split/:id', to: 'projects#revenue_allocation_split', via: 'patch'
   match '/projects/submit_form_1099/:id',         to: 'projects#submit_form_1099',         via: 'patch'
+  match '/projects/update_final_page_count/:id',  to: 'projects#update_final_page_count',  via: 'patch'
 
   resources :posts do
   	resources :comments, shallow: true

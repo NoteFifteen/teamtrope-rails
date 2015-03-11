@@ -1,35 +1,14 @@
 <h1>Final Page Count</h1>
-<div class="gf_browser_safari gform_wrapper" id="gform_wrapper_52">
-	<a id="gf_52" name="gf_52" class="gform_anchor"></a>
-	<form method="post" enctype="multipart/form-data" target="gform_ajax_frame_52" id="gform_52" action="/projects/dejection-songs-by-alex-kimmell/#gf_52">
-		<div class="gform_heading">
-			<span class="gform_description">For Booktrope Production Team use Only. This is where the Booktrope Production Team indicates the final page count.</span>
-		</div>
-		<div class="gform_body">
-			<ul id="gform_fields_52" class="gform_fields top_label description_below">
-				<li id="field_52_8" class="gfield gfield_contains_required">
-					<label class="gfield_label" for="input_52_8">Page Count<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<input name="input_8" id="input_52_8" type="text" value="" class="medium" tabindex="1">
-					</div>
-				</li>
-				<li id="field_52_10" class="gfield">
-					<label class="gfield_label" for="input_52_10">Go to Project</label>
-					<div class="ginput_container">
-						<input name="input_10" id="input_52_10" type="text" value="https://teamtrope.com/projects/dejection-songs-by-alex-kimmell/" class="medium" tabindex="2">
-					</div>
-				</li>
-			</ul>
-		</div>
-		<div class="gform_footer top_label"> 
-			<input type="submit" id="gform_submit_button_52" class="gform_button button" value="Submit" tabindex="3" onclick="if(window[&quot;gf_submitting_52&quot;]){return false;}  window[&quot;gf_submitting_52&quot;]=true; "><input type="hidden" name="gform_ajax" value="form_id=52&amp;title=&amp;description=1&amp;tabindex=1">
-			<input type="hidden" class="gform_hidden" name="is_submit_52" value="1">
-			<input type="hidden" class="gform_hidden" name="gform_submit" value="52">
-			<input type="hidden" class="gform_hidden" name="gform_unique_id" value="">
-			<input type="hidden" class="gform_hidden" name="state_52" value="WyJbXSIsIjRmY2NjODBlOGIxY2YzNWY4OWJkNTk5YTMyYTU5ZGZhIl0=">
-			<input type="hidden" class="gform_hidden" name="gform_target_page_number_52" id="gform_target_page_number_52" value="0">
-			<input type="hidden" class="gform_hidden" name="gform_source_page_number_52" id="gform_source_page_number_52" value="1">
-			<input type="hidden" name="gform_field_values" value="">
-		</div>
-	</form>
+<div>
+
+    <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'update_final_page_count', id: @project.id) do |f| %>
+        <%= f.error_notification %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
+        <p>For Booktrope Production Team use Only. This is where the Booktrope Production Team indicates the final page count.</p>
+
+        <%= f.input :final_page_count, label: 'Page Count *' %>
+
+        <%= f.submit %>
+    <% end %>
 </div>

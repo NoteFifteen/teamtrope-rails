@@ -6,4 +6,9 @@ class Role < ActiveRecord::Base
 	has_many :tasks,     through: :task_performers, source: :task	
 	
 	default_scope -> { order("name asc") }
+
+  def normalized_name
+    name.downcase.gsub(/ /, '_')
+  end
+
 end
