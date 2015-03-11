@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150304031340) do
+ActiveRecord::Schema.define(version: 20150310061917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,12 @@ ActiveRecord::Schema.define(version: 20150304031340) do
   add_index "current_tasks", ["task_id"], name: "index_current_tasks_on_task_id", using: :btree
 
   create_table "genres", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "imprints", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -270,8 +276,10 @@ ActiveRecord::Schema.define(version: 20150304031340) do
     t.datetime "updated_at"
     t.integer  "project_type_id"
     t.string   "page_header_display_name"
+    t.integer  "imprint_id"
   end
 
+  add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree
   add_index "projects", ["project_type_id"], name: "index_projects_on_project_type_id", using: :btree
 
   create_table "required_roles", force: true do |t|

@@ -3,6 +3,7 @@ class Project < ActiveRecord::Base
 	include PublicActivity::Model
 
 	belongs_to :project_type
+	belongs_to :imprint
 	
 	has_many :team_memberships
 	has_many :members, through: :team_memberships, source: :member
@@ -18,6 +19,7 @@ class Project < ActiveRecord::Base
   
   has_attached_file :manuscript_original
   has_attached_file :manuscript_edited
+  has_attached_file :manuscript_proofed
   has_attached_file :layout_upload
   
   ContentType_Document = ['application/msword', 
@@ -28,6 +30,10 @@ class Project < ActiveRecord::Base
   	:size => { :in => 0..120.megabytes }
   	
   validates_attachment :manuscript_edited,
+  	:content_type => { content_type: ContentType_Document },
+  	:size => { :in => 0..120.megabytes }
+  	
+  validates_attachment :manuscript_proofed,
   	:content_type => { content_type: ContentType_Document },
   	:size => { :in => 0..120.megabytes }
   	

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  
+
   match '/parse/get_amazon_sales_rank',            to: 'parse#get_amazon_sales_rank',          via: 'get'
   match '/parse/get_queued_items',                 to: 'parse#get_queued_items',               via: 'get'
   match '/parse/add_book_to_price_change_queue',   to: 'parse#add_book_to_price_change_queue', via: 'get'
@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   match '/projects/approve_layout/:id',           to: 'projects#approve_layout',           via: 'patch'
   match '/projects/revenue_allocation_split/:id', to: 'projects#revenue_allocation_split', via: 'patch'
   match '/projects/submit_form_1099/:id',         to: 'projects#submit_form_1099',         via: 'patch'
+  match '/projects/proofed_manuscript/:id',       to: 'projects#proofed_manuscript',       via: 'patch'
   
   # Post is defined for this path since creates and updates are used interchangeably.
   match '/projects/edit_control_numbers/:id',     to: 'projects#edit_control_numbers',     via: 'post'
@@ -64,7 +65,8 @@ Rails.application.routes.draw do
   resources :project_type_workflows
   resources :project_types
   resources :workflows
-  resources :tasks   
+  resources :tasks
+  resources :imprints 
    
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

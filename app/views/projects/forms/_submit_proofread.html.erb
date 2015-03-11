@@ -1,107 +1,103 @@
 <h1>Submit Final Proofed Document</h1>
-
-<div class="gf_browser_safari gform_wrapper" id="gform_wrapper_63" style="">
-	<a id="gf_63" name="gf_63" class="gform_anchor"></a>
-	<form method="post" enctype="multipart/form-data" target="gform_ajax_frame_63" id="gform_63" action="/projects/dejection-songs-by-alex-kimmell/#gf_63">
-		<div class="gform_heading">
-			<span class="gform_description">The Author must upload your final manuscript after proofreading here.  This is your LAST CHANCE to submit corrections for typos or any other proofreading errors. Content or proofing changes requested after the book has gone through layout may result in additional fees.You are only allowed to submit once, so please ensure editing is final! (.doc or .docx only)</span>
+<div class="gf_browser_safari gform_wrapper" id="" style="">
+	<%= simple_form_for @project,
+			url: url_for(controller: 'projects', action: 'proofed_manuscript', id: @project) ,
+			html: { id: "submit_proofread" } do | f |%>
+		<div>
+			<span>The Author must upload your final manuscript after proofreading here.  This is your LAST CHANCE to submit corrections for typos or any other proofreading errors. Content or proofing changes requested after the book has gone through layout may result in additional fees.You are only allowed to submit once, so please ensure editing is final! (.doc or .docx only)</span>
 		</div>
 		
-		<div class="gform_body">
-			<ul id="gform_fields_63" class="gform_fields top_label description_below">
-				<li id="field_63_11" class="gfield gfield_contains_required">
-					<label class="gfield_label">Are you ready to upload your proofread manuscript for layout?<span class="gfield_required">*</span></label>
-					<div class="ginput_container">			
-						<ul class="gfield_checkbox" id="input_63_11">
-							<li class="gchoice_11_1">
-								<input name="input_11.1" type="checkbox" onclick="gf_apply_rules(63,[0,1]);" value="Content text has been converted to palatino linotype, size 10" id="choice_11_1" tabindex="1">
-								<label for="choice_11_1" id="label_11_1">Content text has been converted to palatino linotype, size 10</label>
-							</li>
-							<li class="gchoice_11_2">
-								<input name="input_11.2" type="checkbox" onclick="gf_apply_rules(63,[0,1]);" value="Any Acknowledgments, Dedication, Author Notes, etc. that I want included are included in this manuscript" id="choice_11_2" tabindex="2">
-								<label for="choice_11_2" id="label_11_2">Any Acknowledgments, Dedication, Author Notes, etc. that I want included are included in this manuscript</label>
-							</li>
-							<li class="gchoice_11_3">
-								<input name="input_11.3" type="checkbox" onclick="gf_apply_rules(63,[0,1]);" value="Any and all tracked changes have been accepted or rejected; Comments have been removed" id="choice_11_3" tabindex="3">
-								<label for="choice_11_3" id="label_11_3">Any and all tracked changes have been accepted or rejected; Comments have been removed</label>
-							</li>
-							<li class="gchoice_11_4">
-								<input name="input_11.4" type="checkbox" onclick="gf_apply_rules(63,[0,1]);" value="All text is fully justified (text is aligned with both the left and right margin)" id="choice_11_4" tabindex="4">
-								<label for="choice_11_4" id="label_11_4">All text is fully justified (text is aligned with both the left and right margin)</label>
-							</li>
-							<li class="gchoice_11_5">
-								<input name="input_11.5" type="checkbox" onclick="gf_apply_rules(63,[0,1]);" value="Chapter Headings are the way I want them to appear in the final manuscript (e.g. &quot;Chapter One,&quot; &quot;Chapter 1&quot;, &quot;1&quot;, &quot;CHAPTER ONE&quot;). Also, I have reviewed and made sure that Chapter Numbering is correct (No missing or duplicated numbers)." id="choice_11_5" tabindex="5">
-								<label for="choice_11_5" id="label_11_5">Chapter Headings are the way I want them to appear in the final manuscript (e.g. "Chapter One," "Chapter 1", "1", "CHAPTER ONE"). Also, I have reviewed and made sure that Chapter Numbering is correct (No missing or duplicated numbers).</label>
-							</li>
-							<li class="gchoice_11_6">
-								<input name="input_11.6" type="checkbox" onclick="gf_apply_rules(63,[0,1]);" value="All editing and stylistic choices (italics, caps) have been made and are final" id="choice_11_6" tabindex="6">
-								<label for="choice_11_6" id="label_11_6">All editing and stylistic choices (italics, caps) have been made and are final</label>
-							</li>
-							<li class="gchoice_11_7">
-								<input name="input_11.7" type="checkbox" onclick="gf_apply_rules(63,[0,1]);" value="All chapter headings are size 14 font and there is a page break inserted between each chapter" id="choice_11_7" tabindex="7">
-								<label for="choice_11_7" id="label_11_7">All chapter headings are size 14 font and there is a page break inserted between each chapter</label>
-							</li>
-							<li class="gchoice_11_8">
-								<input name="input_11.8" type="checkbox" onclick="gf_apply_rules(63,[0,1]);" value="I have looked over and approved the delivered proofreading and the content.  Nothing more will be added or removed from this document, and no further changes will be made." id="choice_11_8" tabindex="8">
-								<label for="choice_11_8" id="label_11_8">I have looked over and approved the delivered proofreading and the content.  Nothing more will be added or removed from this document, and no further changes will be made.</label>
-							</li>
+		<div>
+			<ul>
+				<li>
+					<label >Are you ready to upload your proofread manuscript for layout?<span>*</span></label>
+					
+					<div>
+						<ul class="gfield_checkbox">
+						<%
+							[ 'Content text has been converted to palatino linotype, size 10',
+							'Any Acknowledgments, Dedication, Author Notes, etc. that I want included are included in this manuscript',
+							'Any and all tracked changes have been accepted or rejected; Comments have been removed',
+							'All text is fully justified (text is aligned with both the left and right margin)',
+							'Chapter Headings are the way I want them to appear in the final manuscript (e.g. "Chapter One," "Chapter 1", "1", "CHAPTER ONE"). Also, I have reviewed and made sure that Chapter Numbering is correct (No missing or duplicated numbers).',
+							'All editing and stylistic choices (italics, caps) have been made and are final',
+							'All chapter headings are size 14 font and there is a page break inserted between each chapter',
+							'I have looked over and approved the delivered proofreading and the content.  Nothing more will be added or removed from this document, and no further changes will be made.'
+							].each_with_index do | label, index |
+						%>
+							<li><%= check_box_tag "checklist_#{index}", index, false, class: "proofread_manuscript_checklist" %> <%= label_tag "checklist_#{index}", label %></li>
+						<% end %>
 						</ul>
 					</div>
-					<div class="gfield_description">Preparing your document with the above items will ensure layout is completely accurately and timely. 
+					
+					<div>Preparing your document with the above items will ensure layout is completely accurately and timely. 
 						IMPORTANT: Once you have submitted your manuscript via this form, the expectation is that NO FURTHER content or proofing changes will be requested. If they are, you may be responsible for additional fees. 
-					</div>
+					</div>					
 				</li>
-				<li id="field_63_21" class="gfield">
-					<label class="gfield_label">Scene Changes</label>
-					<div class="ginput_container">
-						<ul class="gfield_checkbox" id="input_63_21">
-							<li class="gchoice_21_1">
-								<input name="input_21.1" type="checkbox" onclick="gf_apply_rules(63,[0]);" value="breaks are shown as three asterisks (***)" id="choice_21_1" tabindex="9">
-								<label for="choice_21_1" id="label_21_1">All narrative breaks/scene changes are indicated with three asterisks (***).</label>
-							</li>
-						</ul>
+				
+				<li>
+					<label>Scene Changes</label>
+					<div>
+						<%= check_box_tag 'scene_changes' %> <%= label_tag 'scene_changes', 'All narrative breaks/scene changes are indicated with three asterisks (***).' %>
 					</div>
-					<div class="gfield_description">Checking this box will instruct us to add a scene change indicator (a line or other graphic mark at the layout artist's discretion) to separate scenes in the book. 
+					<div>
+						Checking this box will instruct us to add a scene change indicator (a line or other graphic mark at the layout artist's discretion) to separate scenes in the book. 
 						Note: If you prefer your breaks to appear as blank space in the final book, please leave this unchecked and note as much in the "text needing special treatment" field below. 
 					</div>
 				</li>
-				<li id="field_63_13" class="gfield gfield_contains_required">
-					<label class="gfield_label">Does your book contain sub-chapters?<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<ul class="gfield_radio" id="input_63_13">
-							<li class="gchoice_13_0">
-								<input name="input_13" type="radio" value="0" id="choice_13_0" tabindex="10" onclick="gf_apply_rules(63,[0]);">
-								<label for="choice_13_0" id="label_13_0">No</label>
-							</li>
-							<li class="gchoice_13_1">
-								<input name="input_13" type="radio" value="1" id="choice_13_1" tabindex="11" onclick="gf_apply_rules(63,[0]);">
-								<label for="choice_13_1" id="label_13_1">Yes, and all sub-section headers are indicated by increments of increasing font size</label>
-							</li>
-						</ul>
-					</div>
+				
+				<li>
+					<label>Does your book contain sub-chapters?<span>*</span></label>
+					<%= f.collection_radio_buttons :has_sub_chapters, [[false, 'No'],[true, 'Yes, and all sub-section headers are indicated by increments of increasing font size']], :first, :last, :collection_wrapper_tag => 'ul', :item_wrapper_tag => 'li' %>
 				</li>
-				<li id="field_63_14" class="gfield gfield_contains_required">
-					<label class="gfield_label">Does your manuscript contain images?<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<ul class="gfield_radio" id="input_63_14">
-							<li class="gchoice_14_0">
-								<input name="input_14" type="radio" value="No" checked="checked" id="choice_14_0" tabindex="12" onclick="gf_apply_rules(63,[0,26,15,16]);">
-								<label for="choice_14_0" id="label_14_0">No</label>
-							</li>
-							<li class="gchoice_14_1">
-								<input name="input_14" type="radio" value="Yes ‐ I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don't need to increase their size) have been uploaded to the Docs section of my teamroom." id="choice_14_1" tabindex="13" onclick="gf_apply_rules(63,[0,26,15,16]);">
-								<label for="choice_14_1" id="label_14_1">Yes ‐ I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don't need to increase their size) have been uploaded to the Docs section of my teamroom.</label>
-							</li>
-							<li class="gchoice_14_2">
-								<input name="input_14" type="radio" value="Yes - I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don't need to increase their size) have been uploaded to a Dropbox folder available here:" id="choice_14_2" tabindex="14" onclick="gf_apply_rules(63,[0,26,15,16]);">
-								<label for="choice_14_2" id="label_14_2">Yes - I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don't need to increase their size) have been uploaded to a Dropbox folder available here:</label>
-							</li>
+				
+				<li>
+					<label>Does your manuscript contain images?<span>*</span></label>
+					<div>
+						<ul class="gfield_checkbox">
+						<% 
+							[
+								'No', 
+								'Yes ‐ I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don\'t need to increase their size) have been uploaded to the Docs section of my teamroom.',
+								'Yes - I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don\'t need to increase their size) have been uploaded to a Dropbox folder available here:'
+							].each_with_index do | radio, index | %>
+							<li><label><%= radio_button_tag :does_contain_images, index %> <strong><%= radio %></strong></label></li>
+						<% end %>
 						</ul>
 					</div>
-					<div class="gfield_description">
+					<div>
 						<p>If your manuscript contains images: Please insert the images into the manuscript so we have an idea of where you want them placed, size, positioning, etc. Note that due to the difference in dimensions between your proofread manuscript and the final product, we may not be able to replicate exactly.</p> 
 						<p>The images you insert in your manuscript are placeholders only - they will be replaced with the print-ready jpegs you provide. You MUST provide the print-ready jpegs in either the Docs section of your teamroom or Dropbox.</p>
-						<p> Images must be jpegs and they must be 300 dpi and large enough height x width that we won't need to increase their size.</p>  </div></li><li id="field_63_26" class="gfield               gfield_contains_required" style="display: none;"><label class="gfield_label" for="input_63_26">Link to Images in Docs Section of Teamroom<span class="gfield_required">*</span></label><div class="ginput_container"><input name="input_26" id="input_63_26" type="text" value="http://" class="medium" tabindex="15" onchange="gf_apply_rules(63,[0]);" onkeyup="clearTimeout(__gf_timeout_handle); __gf_timeout_handle = setTimeout(&quot;gf_apply_rules(63,[0])&quot;, 300);"></div></li><li id="field_63_15" class="gfield               gfield_contains_required" style="display: none;"><label class="gfield_label" for="input_63_15">Link to Dropbox file containing images<span class="gfield_required">*</span></label><div class="ginput_container"><input name="input_15" id="input_63_15" type="text" value="http://" class="medium" tabindex="16" onchange="gf_apply_rules(63,[0]);" onkeyup="clearTimeout(__gf_timeout_handle); __gf_timeout_handle = setTimeout(&quot;gf_apply_rules(63,[0])&quot;, 300);"></div></li><li id="field_63_25" class="gfield               gfield_contains_required"><label class="gfield_label">Imprint<span class="gfield_required">*</span></label><div class="ginput_container"><ul class="gfield_radio" id="input_63_25"><li class="gchoice_25_0"><input name="input_25" type="radio" value="Booktrope Editions" id="choice_25_0" tabindex="17" onclick="gf_apply_rules(63,[0]);"><label for="choice_25_0" id="label_25_0">Booktrope Editions</label></li><li class="gchoice_25_1"><input name="input_25" type="radio" value="Entice" id="choice_25_1" tabindex="18" onclick="gf_apply_rules(63,[0]);"><label for="choice_25_1" id="label_25_1">Entice</label></li><li class="gchoice_25_2"><input name="input_25" type="radio" value="Gravity" id="choice_25_2" tabindex="19" onclick="gf_apply_rules(63,[0]);"><label for="choice_25_2" id="label_25_2">Gravity</label></li><li class="gchoice_25_3"><input name="input_25" type="radio" value="Vox Dei" id="choice_25_3" tabindex="20" onclick="gf_apply_rules(63,[0]);"><label for="choice_25_3" id="label_25_3">Vox Dei</label></li><li class="gchoice_25_4"><input name="input_25" type="radio" value="Forsaken" id="choice_25_4" tabindex="21" onclick="gf_apply_rules(63,[0]);"><label for="choice_25_4" id="label_25_4">Forsaken</label></li><li class="gchoice_25_5"><input name="input_25" type="radio" value="Edge" id="choice_25_5" tabindex="22" onclick="gf_apply_rules(63,[0]);"><label for="choice_25_5" id="label_25_5">Edge</label></li></ul></div><div class="gfield_description">IMPORTANT: If you have not discussed being part of a specific imprint with the imprint's Managing Director or Booktrope Management, please select "Booktrope Editions." </div></li><li id="field_63_16" class="gfield               gfield_contains_required" style="display: none;"><label class="gfield_label" for="input_63_16">Excel file containing information for where images should go in manuscript<span class="gfield_required">*</span></label><div class="ginput_container"><input type="hidden" name="MAX_FILE_SIZE" value="125829120"><input name="input_16" id="input_63_16" type="file" class="medium" tabindex="23"></div></li><li id="field_63_22" class="gfield"><label class="gfield_label" for="input_63_22">I have sections of text needing special treatment (optional)</label><div class="ginput_container"><textarea name="input_22" id="input_63_22" class="textarea medium" tabindex="24" onchange="gf_apply_rules(63,[0]);" onkeyup="clearTimeout(__gf_timeout_handle); __gf_timeout_handle = setTimeout(&quot;gf_apply_rules(63,[0])&quot;, 300);" rows="10" cols="50"></textarea><div class="charleft ginput_counter">0 of 1200 max characters</div></div><div class="gfield_description"><p>Please include page/chapter numbers when possible.</p>
+						<p> Images must be jpegs and they must be 300 dpi and large enough height x width that we won't need to increase their size.</p>
+					</div>
+				</li>
+				
+				<li class="does_contain_images_1" style="display: none;">
+					<label>Link to Images in Docs Section of Teamroom<span>*</span></label>
+					<div>
+						<%= text_field_tag "teamtrope_link" %>
+					</div>
+				</li>
+				
+				<li class="does_contain_images_2" style="display: none;">
+					<label>Link to Dropbox file containing images<span>*</span></label>
+					<div>
+						<%= text_field_tag "dropbox_link" %>
+					</div>
+				</li>
+				
+				<li>
+					<div>
+					<%= f.input :special_text_treatment, 
+								label: 'I have sections of text needing special treatment (optional)', 
+								as: :text,
+								input_html: { class: %q[textarea medium], rows: 10, cols: 50 }
+						%>
+						<div class="charleft ginput_counter">0 of 1200 max characters</div>
+					</div>
+					
+					<div>
+						<p>Please include page/chapter numbers when possible.</p>
 						<p>Examples include:</p> 
 						<ul>
 							<li>A letter or newspaper article</li>
@@ -110,81 +106,22 @@
 						</ul>
 					</div>
 				</li>
-				<li id="field_63_10" class="gfield gfield_contains_required">
-					<label class="gfield_label" for="input_63_10">Manuscript Word Count<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<input name="input_10" id="input_63_10" type="text" value="" class="medium" tabindex="25" onchange="gf_apply_rules(63,[0]);" onkeyup="clearTimeout(__gf_timeout_handle); __gf_timeout_handle = setTimeout(&quot;gf_apply_rules(63,[0])&quot;, 300);">
-					</div>
-					<div class="gfield_description">In Word: Go to File, Properties, click on the Statistics tab and enter the "Words:" count value. This will help us estimate and schedule your layout resource efficiently.</div>
+				
+				<li>
+					<%= f.input :proofed_word_count, label: 'Manuscript Word Count', required: true %>
+					<div>In Word: Go to File, Properties, click on the Statistics tab and enter the "Words:" count value. This will help us estimate and schedule your layout resource efficiently.</div>
 				</li>
-				<li id="field_63_19" class="gfield gfield_contains_required">
-					<label class="gfield_label">Was this book previously published?<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<ul class="gfield_radio" id="input_63_19">
-							<li class="gchoice_19_0">
-								<input name="input_19" type="radio" value="1" id="choice_19_0" tabindex="26" onclick="gf_apply_rules(63,[0,27,20]);">
-								<label for="choice_19_0" id="label_19_0">Yes</label>
-							</li>
-							<li class="gchoice_19_1">
-								<input name="input_19" type="radio" value="0" id="choice_19_1" tabindex="27" onclick="gf_apply_rules(63,[0,27,20]);">
-								<label for="choice_19_1" id="label_19_1">No</label>
-							</li>
-						</ul>
-					</div>
+								
+				<li >
+					<%= f.input :manuscript_proofed, label: "Final Manuscript:", as: :file, required: true %>	
+					<div>.doc or .docx file only</div>
 				</li>
-				<li id="field_63_27" class="gfield gfield_contains_required" style="display: none;">
-					<label class="gfield_label" for="input_63_27">Title of Previously Published Edition<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<input name="input_27" id="input_63_27" type="text" value="" class="medium" tabindex="28" onchange="gf_apply_rules(63,[0]);" onkeyup="clearTimeout(__gf_timeout_handle); __gf_timeout_handle = setTimeout(&quot;gf_apply_rules(63,[0])&quot;, 300);">
-					</div>
-					<div class="gfield_description">Please provide the EXACT title of the previously published edition. </div>
-				</li>
-				<li id="field_63_20" class="gfield gfield_contains_required" style="display: none;">
-					<label class="gfield_label" for="input_63_20">Year and Publisher<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<input name="input_20" id="input_63_20" type="text" value="" class="medium" tabindex="29" onchange="gf_apply_rules(63,[0]);" onkeyup="clearTimeout(__gf_timeout_handle); __gf_timeout_handle = setTimeout(&quot;gf_apply_rules(63,[0])&quot;, 300);">
-					</div>
-					<div class="gfield_description">You must provide the year AND publisher if your book was previously published.  Layout cannot start until this is provided.</div>
-				</li>
-				<li id="field_63_1" class="gfield gfield_contains_required" style="display: none;">
-					<label class="gfield_label" for="input_63_1">Final Manuscript<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<input type="hidden" name="MAX_FILE_SIZE" value="125829120">
-						<input name="input_1" id="input_63_1" type="file" class="medium" tabindex="30">
-					</div>
-					<div class="gfield_description">.doc or .docx file only</div>
-				</li>
-				<li id="field_63_18" class="gfield">
-					<label class="gfield_label" for="input_63_18">Are you planning a launch party or other event for which you need books on hand by a specfiic date?</label>
-					<div class="ginput_container">
-						<input name="input_18" id="input_63_18" type="text" value="" class="datepicker medium mdy datepicker_with_icon hasDatepicker" tabindex="31">
-						<img class="ui-datepicker-trigger" src="https://teamtrope.com/wp-content/plugins/gravityforms/images/calendar.png" alt="..." title="...">
-					</div>
-					<input type="hidden" id="gforms_calendar_icon_input_63_18" class="gform_hidden" value="https://teamtrope.com/wp-content/plugins/gravityforms/images/calendar.png">
-					<div class="gfield_description"><b>IMPORTANT: Assuming no unusual complications, at this point you should expect for it to take approximately 2 weeks for your books to be finalized and then 2-3 weeks for standard shipping time from the time your book is published.  <b> Please note that while we will do everything we can to work with you to meet this date, we have a queue of manuscripts going through our system at all times.   Deadlines are also dependent on the creative team providing necessary feedback and deliverables (including cover templates and publication fact sheet) within two days of layout being approved.</b></b></div>
-				</li>
-				<li id="field_63_24" class="gfield">
-					<b>
-						<label class="gfield_label" for="input_63_24">Go to Project`</label>
-						<div class="ginput_container">
-							<input name="input_24" id="input_63_24" type="text" value="https://teamtrope.com/projects/dejection-songs-by-alex-kimmell/" class="medium" tabindex="32" onchange="gf_apply_rules(63,[0]);" onkeyup="clearTimeout(__gf_timeout_handle); __gf_timeout_handle = setTimeout(&quot;gf_apply_rules(63,[0])&quot;, 300);">
-						</div>
-					</b>
-				</li>
-				<b></b>
+								
+
 			</ul>
+			
 		</div>
-		<b>
-		<div class="gform_footer top_label">
-			<input type="submit" id="gform_submit_button_63" class="gform_button button" value="Submit" tabindex="33" onclick="if(window[&quot;gf_submitting_63&quot;]){return false;}  window[&quot;gf_submitting_63&quot;]=true; " style="display: none;"><input type="hidden" name="gform_ajax" value="form_id=63&amp;title=&amp;description=1&amp;tabindex=1">
-			<input type="hidden" class="gform_hidden" name="is_submit_63" value="1">
-			<input type="hidden" class="gform_hidden" name="gform_submit" value="63">
-			<input type="hidden" class="gform_hidden" name="gform_unique_id" value="">
-			<input type="hidden" class="gform_hidden" name="state_63" value="WyJbXSIsIjRmY2NjODBlOGIxY2YzNWY4OWJkNTk5YTMyYTU5ZGZhIl0=">
-			<input type="hidden" class="gform_hidden" name="gform_target_page_number_63" id="gform_target_page_number_63" value="0">
-			<input type="hidden" class="gform_hidden" name="gform_source_page_number_63" id="gform_source_page_number_63" value="1">
-			<input type="hidden" name="gform_field_values" value="">
-		</div>
-		</b>
-	</form>
+		<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+		<%= f.submit "Submit" %>
+	<% end %>
 </div>
