@@ -150,18 +150,6 @@ jQuery ->
 						return $("input[name=does_contain_images]:checked").val() == '2';
 				}
 			},
-			'project[imprint_id]': {
-				required: true
-			},
-			'project[previously_published]': {
-				required: true
-			},
-			'project[prev_publisher_and_date]': {
-				required: {
-					depends: (element) =>
-						return $("input[name=project\\[previously_published\\]]:radio").is(':checked');
-				}
-			},
 			'project[manuscript_proofed]': {
 				required: true
 			}

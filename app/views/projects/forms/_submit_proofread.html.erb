@@ -87,11 +87,6 @@
 				</li>
 				
 				<li>
-					<label >Imprint<span>*</span></label> <%= f.collection_select :imprint_id, Imprint.all, :id, :name %>
-					<div>IMPORTANT: If you have not discussed being part of a specific imprint with the imprint's Managing Director or Booktrope Management, please select "Booktrope Editions." </div>
-				</li>
-				
-				<li>
 					<div>
 					<%= f.input :special_text_treatment, 
 								label: 'I have sections of text needing special treatment (optional)', 
@@ -116,32 +111,7 @@
 					<%= f.input :proofed_word_count, label: 'Manuscript Word Count', required: true %>
 					<div>In Word: Go to File, Properties, click on the Statistics tab and enter the "Words:" count value. This will help us estimate and schedule your layout resource efficiently.</div>
 				</li>
-				
-				<li>
-					<label>Was this book previously published?<span>*</span></label>
-					<div>
-						<%= f.collection_radio_buttons :previously_published,
-                                            [[true, 'Yes'], [false, 'No']],
-                                             :first, :last,
-                                             :collection_wrapper_tag => 'ul',
-                                             :item_wrapper_tag => 'li' %>
-					</div>
-				</li>
-				
-				<li class="previously_published_true" style="display: none;">
-
-					<label>Title of Previously Published Edition<span>*</span></label>
-					<div class="ginput_container">
-						<input name="input_27" id="input_63_27" type="text" value="" class="medium" tabindex="28" onchange="gf_apply_rules(63,[0]);" onkeyup="clearTimeout(__gf_timeout_handle); __gf_timeout_handle = setTimeout(&quot;gf_apply_rules(63,[0])&quot;, 300);">
-					</div>
-					<div class="gfield_description">Please provide the EXACT title of the previously published edition. </div>
-				</li>
-				
-				<li class="previously_published_true" style="display: none;">
-					<%= f.input :prev_publisher_and_date, label: 'Year and Publisher', required: true %>
-					<div>You must provide the year AND publisher if your book was previously published.  Layout cannot start until this is provided.</div>
-				</li>
-				
+								
 				<li >
 					<%= f.input :manuscript_proofed, label: "Final Manuscript:", as: :file, required: true %>	
 					<div>.doc or .docx file only</div>
