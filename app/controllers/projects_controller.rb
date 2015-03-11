@@ -44,6 +44,7 @@ class ProjectsController < ApplicationController
   
   def show
 		@activities = PublicActivity::Activity.order("created_at DESC").where(trackable_type: "Project", trackable_id: @project)
+    @users = User.all
   end
   
   
@@ -51,7 +52,24 @@ class ProjectsController < ApplicationController
   # TODO: form_data is now saved using to_s instead of passing the params array.
   # this prevents a crash when there is a temp file in params. Might want to come up with 
   # a cleaner solution
-  
+
+  def accept_team_member
+    @membership = @project.team_memberships.new(team_memberships_params)
+    if @membership.save
+      @project.create_activity :accept_team_member, owner: current_user,
+                               parameters: { text: ' added new team member', form_data: params[:team_membership].to_s}
+      update_current_task
+      Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, DateTime.parse("#{params[:effective_date][:year]}/#{params[:effective_date][:month]}/#{params[:effective_date][:day]}")
+
+      #TODO: Hellosign-rails integration
+
+      flash[:success] = 'Accepted a Team Member'
+      redirect_to @project
+    else
+      render 'show'
+    end
+  end
+
   def edit_complete_date
   	if @project.update(update_project_params)
   		@project.create_activity :submitted_edit_complete_date, owner: current_user, parameters: { text: " set the 'Edit Complete Date' to #{@project.edit_complete_date.strftime("%Y/%m/%d")}", form_data: params[:project].to_s}
@@ -161,6 +179,18 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def update_final_page_count
+    if @project.update(update_project_params)
+      update_current_task
+      @project.create_activity :updated_final_page_count, owner: current_user,
+                                parameters: { text: 'Updated Final Page Count', form_data: params[:project].to_s}
+      flash[:success] = 'Updated Final Page Count'
+      redirect_to @project
+    else
+        render 'show'
+    end
+  end
+
   private
   def new_project_params
   	params.require(:project).permit(:title)
@@ -188,5 +218,9 @@ class ProjectsController < ApplicationController
   		current_task.task_id = current_task.task.next_task.id
   		current_task.save
   	end
+  end
+
+  def team_memberships_params
+    params.require(:team_membership).permit(:role_id, :member_id, :percentage)
   end
 end

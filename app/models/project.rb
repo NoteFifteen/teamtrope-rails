@@ -41,11 +41,19 @@ class Project < ActiveRecord::Base
 
   def team_complete?
 		required_roles = project_type.required_roles.ids
-		team_members = team_memberships.map { |member| member.role_id   }
+		team_members = team_memberships.map { |member| member.role_id }
 		
 		required_roles.all? {| required_role | team_members.include? required_role }
 	end
-	
+
+  def available_roles
+    required_roles = project_type.required_roles.ids
+    team_members = team_memberships.map { |member| member.role_id }
+    available = required_roles - team_members
+
+    project_type.roles.where(id: available)
+  end
+
 	def is_team_member?(user)
 		members.ids.include?(user.id)
 	end
@@ -66,7 +74,24 @@ class Project < ActiveRecord::Base
 				}
 		end	
 	end
-	
+
+  def team_allocations
+    team = []
+    project_type.required_roles.each do |rr|
+
+      role = self.send(rr.role.normalized_name.pluralize).first
+      member_name = (role.nil?) ? '' : role.member.name
+      member_percentage = (role.nil?) ? 0 : self.send(rr.role.normalized_name.pluralize).first.percentage
+
+      team << { :role_name => rr.role.name,
+                :member_name => member_name,
+                :suggested_percentage => rr.suggested_percent,
+                :allocated_percentage => member_percentage
+             }
+    end
+    return team
+  end
+
 	def self.provide_methods_for(role)
 		Project.class_eval %Q{	
 			def has_#{role.downcase.gsub(/ /, "_")}?

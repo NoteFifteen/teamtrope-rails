@@ -13,3 +13,7 @@ Rails.application.config.assets.precompile += %w( jstree/themes/default/style.mi
 Rails.application.config.assets.precompile += %w( jstree/jstree.min.js )
 
 Rails.application.config.assets.precompile += %w( jquery-validate/jquery.validate.min.js, jquery-validate/additional-methods.min.js)
+
+# http://harvesthq.github.io/chosen/
+Rails.application.config.assets.precompile += %w( chosen/chosen.jquery.js chosen/chosen.css)
+
