@@ -6,11 +6,11 @@
 	jQuery.validator.addMethod("revenueSplitValidation", function(value, element, params)
 	{       
 		total = 0;
-    $(params[0]).each(function() {
-        total += parseFloat($(this).val());
-    });
+        $(params[0]).each(function() {
+            total += parseFloat($(this).val());
+        });
 
-    return this.optional(element) || total <= parseFloat(value);
+        return this.optional(element) || total <= parseFloat(value);
 	}, jQuery.validator.format("You have exceed " + maxPercent + "% Please adjust the percents so they sum up accordingly."));
 	
 </script>
@@ -20,7 +20,9 @@
                       id: @project), html: { id: "revenue_allocation_split" } do | f| %>
                       
 		<%= f.simple_fields_for :team_memberships do | builder | %>
-			<%= builder.object.member.name %>
+            <% next if builder.object.new_record? %>
+
+            <%= builder.object.member.name %>
 			<%= builder.input :id, as: :hidden %>
 			<%= builder.input :percentage, label: builder.object.role.name + " Percentage ", input_html: { class: "percentage" }  %><br />
 		<% end %>
