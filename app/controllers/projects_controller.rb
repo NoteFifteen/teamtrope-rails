@@ -275,16 +275,15 @@ class ProjectsController < ApplicationController
   	end
   end
 
-<<<<<<< HEAD
   def reject_current_task
     current_task = @project.current_tasks.where(task_id: params[:submitted_task_id]).first
     unless current_task.nil? || current_task.task.rejected_task.nil?
       current_task.task_id = current_task.task.rejected_task.id
       current_task.save
     end
-=======
+  end
+
   def team_memberships_params
     params.require(:team_membership).permit(:role_id, :member_id, :percentage)
->>>>>>> WIP - Accept Team Member Form
   end
 end
