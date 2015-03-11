@@ -81,6 +81,10 @@ jQuery(document).ready () ->
 	$(".percentage").first().trigger("change")  
 
 
+## per task 205 https://booktrope.acunote.com/projects/47888/tasks/205
+## previously published was removed from the submit proofed form, but I left the jquery 
+## that shows and hides the related fields since the fields are going to be moved to another
+## form.
 jQuery ->
 
   field = $("input[name=project\\[previously_published\\]]:radio")
