@@ -16,7 +16,10 @@ class Project < ActiveRecord::Base
 	has_many :current_tasks
 
   has_one :control_number, dependent: :destroy
-  
+
+  # Not an actual column, but used in the ProjectsController
+  attr_accessor :cover_art_approval_decision
+
   has_attached_file :manuscript_original
   has_attached_file :manuscript_edited
   has_attached_file :manuscript_proofed

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   
   resources :projects
 
+  match '/projects/approve_cover_art/:id',        to: 'projects#approve_cover_art',        via: 'patch'
   match '/projects/approve_layout/:id',           to: 'projects#approve_layout',           via: 'patch'
   match '/projects/cover_concept_upload/:id',     to: 'projects#cover_concept_upload',     via: 'patch'
   # Post is defined for this path since creates and updates are used interchangeably.

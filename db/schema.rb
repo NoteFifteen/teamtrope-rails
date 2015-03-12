@@ -196,8 +196,6 @@ ActiveRecord::Schema.define(version: 20150310061917) do
     t.string   "final_title"
     t.datetime "cover_art_approval_date"
     t.datetime "layout_approved_date"
-    t.string   "layout_approved"
-    t.text     "layout_approval_issue_list"
     t.float    "final_page_count"
     t.boolean  "use_pen_name_on_title"
     t.boolean  "use_pen_name_for_copyright"
@@ -276,6 +274,8 @@ ActiveRecord::Schema.define(version: 20150310061917) do
     t.datetime "updated_at"
     t.integer  "project_type_id"
     t.string   "page_header_display_name"
+    t.text     "layout_approval_issue_list"
+    t.string   "layout_approved"
     t.integer  "imprint_id"
   end
 

@@ -76,7 +76,7 @@ tasks =  {
 	:production_complete =>           { task: { workflow_id: :production,  next_id: nil,                 rejected_task_id: nil,   partial: nil,                        name: "Production Complete",       icon: "",                 tab_text: "",                          intro_video: "" ,  days_to_complete: nil }, unlocked: ["1099 Form", "Accept Member", "Assets", "Blog Tour", "Media Kit", "Project Details", "Promos", "Revenue Split", "Print Corner", "Control Numbers", "Analytics", "Team", "Status Update", "Marketing Expense", "KDP Select Enrollment", "KDP Select Update"]}, 
 
 	:upload_cover_concept =>          { task: { workflow_id: :design,      next_id: :approve_cover_art,     rejected_task_id: nil,   partial: "upload_cover_concept",     name: "Cover Concept",             icon: "icon-bookmark",    tab_text: "Cover Concept",          intro_video: "" ,  days_to_complete: nil }, root: true, unlocked: []}, 
-	:approve_cover_art =>             { task: { workflow_id: :design,      next_id: :upload_cover_templates,rejected_task_id: nil,   partial: "approve_cover_art",        name: "Approve Cover Art",         icon: "icon-thumbs-up",   tab_text: "Approve Cover Art",      intro_video: "" ,  days_to_complete: nil }, unlocked: []}, 
+	:approve_cover_art =>             { task: { workflow_id: :design,      next_id: :upload_cover_templates, rejected_task_id: :upload_cover_concept,   partial: "approve_cover_art",        name: "Approve Cover Art",         icon: "icon-thumbs-up",   tab_text: "Approve Cover Art",      intro_video: "" ,  days_to_complete: nil }, unlocked: []},
 	:upload_cover_templates =>        { task: { workflow_id: :design,      next_id: :design_complete,       rejected_task_id: nil,   partial: "upload_cover_templates",   name: "Final Covers",              icon: "icon-cloud-upload",tab_text: "Final Covers",           intro_video: "" ,  days_to_complete: nil }, unlocked: []}, 
 	:design_complete =>               { task: { workflow_id: :design,      next_id: nil,                    rejected_task_id: nil,   partial: nil,                        name: "Design Complete",           icon: "",                 tab_text: "",                       intro_video: "" ,  days_to_complete: nil }, unlocked: []}, 
 
@@ -126,6 +126,12 @@ Task.all.each do | task |
 	
 	if tasks[task.partial.to_sym][:task][:next_id]
 		task.next_id = tasks[tasks[task.partial.to_sym][:task][:next_id]][:id] 
+		task.save
+	end
+
+  # Handle the rejected tasks
+	if tasks[task.partial.to_sym][:task][:rejected_task_id]
+		task.rejected_task_id = tasks[tasks[task.partial.to_sym][:task][:rejected_task_id]][:id]
 		task.save
 	end
 end

@@ -203,3 +203,36 @@ jQuery ->
   		}
   	}
   });
+
+## This is for the Approve Cover Art partial, and handles the optional inputs for
+## the notes if they do not approve the Cover Art.
+jQuery(document).ready () ->
+  field = $("input[name=project\\[cover_art_approval_decision\\]]:radio")
+  field_value = $("input[name=project\\[cover_art_approval_decision\\]]:checked")
+
+  if ! field.is(':checked') || field_value.val() != 'true'
+    $('#cover_concept_notes_box').hide()
+
+  $(field).change (event) =>
+    if field.is(':checked')
+      field_value = $("input[name=project\\[cover_art_approval_decision\\]]:checked")
+
+      if field_value.val() == 'true'
+        $('#cover_concept_notes_box').hide()
+      else
+        $('#cover_concept_notes_box').show()
+
+  ## Custom validation rules for the Approve Cover Art partial
+  $( "#approve_cover_art" ).validate({
+    rules: {
+      'project[cover_art_approval_decision]': {
+        required: true
+      },
+      'project[cover_concept_notes]': {
+        required: {
+          depends: (element) =>
+            return $("input[name=project\\[cover_art_approval_decision\\]]:radio").is(':checked');
+        }
+      }
+    }
+  });
