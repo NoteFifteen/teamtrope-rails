@@ -21,10 +21,11 @@ class Project < ActiveRecord::Base
   has_attached_file :manuscript_edited
   has_attached_file :manuscript_proofed
   has_attached_file :layout_upload
-  
-  ContentType_Document = ['application/msword', 
+  has_attached_file :cover_concept
+
+  ContentType_Document = ['application/msword',
   			'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
-  
+
   validates_attachment :manuscript_original,
   	:content_type => { content_type: ContentType_Document }, 
   	:size => { :in => 0..120.megabytes }
@@ -37,7 +38,7 @@ class Project < ActiveRecord::Base
   	:content_type => { content_type: ContentType_Document },
   	:size => { :in => 0..120.megabytes }
   	
-	accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true    	
+	accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
 
   # Available options for the layout style form -> layout style. Stored in 'layout_style_choice'
   LayoutStyleFonts = [['Cambria'], ['Covington'], ['Headline Two Exp'],['Letter Gothic'],['Lobster'],['Lucida Fax'],['M V Boli']]
