@@ -1,8 +1,8 @@
 <h1>Free/Price Promo</h1>
 <div class="gf_browser_safari gform_wrapper">
-	<%= form_tag url_for(controller: 'projects', action: 'price_promotion', id: @project), 
-				method: :patch,
-			  id: "price_promotion_form" do | f | %>
+	<%= simple_form_for @project, 
+				url: url_for(controller: 'projects', action: 'price_promotion', id: @project),
+				html: { id: "price_promotion_form" } do | f | %>
 		<div>
 			<span>
 				<p>NOTE: If you are enrolled in KDP Select, DO NOT use this form to schedule your Free or Kindle Countdown promotions. For KDP promos, please use the "KDP Update" Form located in your book's Project.</p> 
@@ -12,46 +12,41 @@
 			</span>
 		</div>
 		<div>
-			<ul>
+			<ul>	
+				<%= f.simple_fields_for :price_change_promotions, f.object.price_change_promotions.build do | builder | %>
 				<li>
 					<label>Please select the type of promotion you'd like to schedule<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<ul>
-						<% 
-							[
-								{ value: 'temporary_force_free', label: 'Temporary iTunes/Force free' }, 
-								{ value: 'temporary_price_drop', label: 'Temporary Price promotion' },
-								{ value: 'permanent_force_free', label: 'Permanent iTunes/Force free' },
-								{ value: 'permanent_price_drop', label: 'Permanent or Indefinite Time* Price change' }
-							].each do | radio | %>
-							<li><label><%= radio_button_tag :price_change_type, radio[:value] %> <strong><%= radio[:label] %></strong></label></li>
-						<% end %>						
-						</ul>					
-					</div>
+					<%= builder.collection_radio_buttons :type, [
+							[ 'temporary_force_free', 'Temporary iTunes/Force free' ], 
+							[ 'temporary_price_drop', 'Temporary Price promotion' ],
+							[ 'permanent_force_free', 'Permanent iTunes/Force free' ],
+							[ 'permanent_price_drop', 'Permanent or Indefinite Time* Price change' ]
+						], :first, :last,
+						collection_wrapper_tag: 'ul',
+						item_wrapper_tag: 'li' %>
 					<div>
 						*If you are doing a promotion and want a temporary price change but you aren't sure when you'll want to raise the price again (or what price you'll want to raise it to), use this option.  Please be sure to submit this form again, using the Permanent Price Change option, when you want the book removed from "free" status and priced on iTunes again.
 					</div>
 				</li>
-				
 				<li class="start_date" style="display: none;">
-					<%= label_tag :start_date, "Start Date:" %><br />
-					<%= select_date Date.today, prefix: :start_date, start_year: Date.today.year %>
+					<%= builder.input :start_date, as: :date, label: 'Start Date' %>
+					<%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(4i)]", "8" %>
+					<%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(5i)]", "0" %>
+					<%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(6i)]", "0" %>
 				</li>
-
 				<li class="price_promotion" style="display: none;">
-					<%= label_tag :price_promotion, "Promotion Price" %><br />
-					<%= text_field_tag :price_promotion %><br />
+					<%= builder.input :price_promotion, label: 'Promotion Price' %>
 				</li>
-				
 				<li class="end_date" style="display: none;">
-					<%= label_tag :end_date, "End Date:" %><br />
-					<%= select_date Date.today + 1, prefix: :end_date, start_year: Date.today.year %>					
+					<%= builder.input :end_date, as: :date, label: 'End Date' %>
+					<%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(4i)]", "7" %>
+					<%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(5i)]", "59" %>
+					<%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(6i)]", "59" %>					
 				</li>
-				
 				<li class="price_after_promotion" style="display: none;">
-					<%= label_tag :price_after_promotion, "Price After Promotion" %><br />
-					<%= text_field_tag :price_after_promotion %><br />
+					<%= builder.input :price_after_promotion, label: 'Price After Promotion' %>
 				</li>
+				<% end %>
 				
 				<li class="temp_price_promotion" style="display: none;">
 					<label class="gfield_label">Get the word out about your $0.99 price promotions and contact the sites below</label>
@@ -69,8 +64,12 @@
 						*Booktrope will pay this expense and treat it as a marketing expense shared across the team.  Please use the following paypal address accounting@booktrope.com.
 					</div>					
 				</li>
-			<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
-			<%= submit_tag "Submit" %>
+				
+				<li>
+					<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+					<%= submit_tag "Submit" %>
+				</li>
+			</ul>
 		</div>
 	<% end %>
 </div>

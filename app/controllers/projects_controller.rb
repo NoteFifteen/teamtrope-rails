@@ -246,25 +246,20 @@ class ProjectsController < ApplicationController
   end
 
 	def price_promotion
-		start_time = Time.parse("#{params[:start_date][:year]}/#{params[:start_date][:month]}/#{params[:start_date][:day]}").dst?? "07:00:00 0000"  : "08:00:00 0000"
-		end_time = Time.parse("#{params[:end_date][:year]}/#{params[:end_date][:month]}/#{params[:end_date][:day]}").dst?? "06:59:59 0000"  : "07:59:59 0000"
-		start_date = DateTime.parse("#{params[:start_date][:year]}/#{params[:start_date][:month]}/#{params[:start_date][:day]} #{start_time}")
-		end_date =   DateTime.parse("#{params[:end_date][:year]}/#{params[:end_date][:month]}/#{params[:end_date][:day]} #{end_time}")
+			
+		if @project.update(update_project_params)
 		
-		case params[:price_change_type]
-		when "temporary_force_free"
-			Booktrope::ParseWrapper::add_book_to_price_change_queue(@project.control_number.parse_id, 0.00, start_date, force_free: true)
-			Booktrope::ParseWrapper::add_book_to_price_change_queue(@project.control_number.parse_id, params[:price_after_promotion], end_date, force_free: true, is_end: true, is_price_increase: true)		
-		when "temporary_price_drop"
-			Booktrope::ParseWrapper::add_book_to_price_change_queue(@project.control_number.parse_id, params[:price_promotion], start_date)
-			Booktrope::ParseWrapper::add_book_to_price_change_queue(@project.control_number.parse_id, params[:price_after_promotion], end_date, is_end: true, is_price_increase: true)
-		when "permanent_force_free"
-			Booktrope::ParseWrapper::add_book_to_price_change_queue(@project.control_number.parse_id, 0.00, start_date, force_free: true)
-		when "permanent_price_drop"
-			Booktrope::ParseWrapper::add_book_to_price_change_queue(@project.control_number.parse_id, params[:price_promotion], start_date)
+			@project.create_activity :submitted_price_promotion, owner: current_user,
+                               parameters: {text: 'submitted a price promotion', 
+                               form_data: params[:project].to_s}
+                               
+			update_current_task
+			flash[:success] = 'Price Promotion Submitted.'
+			redirect_to @project
+		else
+			render 'show'
 		end
-	
-		redirect_to @project
+		
 	end
 
   private
@@ -273,7 +268,20 @@ class ProjectsController < ApplicationController
   end
   
   def update_project_params
-  	params.require(:project).permit(:id, :final_title, :final_doc_file, :final_manuscript_pdf, :final_pdf, :stock_image_request_link, :layout_notes, :previously_published, :prev_publisher_and_date, :stock_cover_image, :cover_concept, :cover_concept_notes, :proofed_word_count, :teamroom_link, :final_mobi, :publication_date, :final_epub, :marketing_release_date, :paperback_cover_type, :age_range, :search_terms, :bisac_code_3, :bisac_code_2, :bisac_code_1, :ebook_price, :print_price, :blurb_one_line, :endorsements, :author_bio, :blurb_description, :final_title, :cover_art_approval_date, :alternative_cover_template, :createspace_cover, :lightning_source_cover, :ebook_front_cover, :layout_approved_date, :layout_approved, :layout_approval_issue_list, :final_page_count, :layout_upload, :page_header_display_name, :use_pen_name_on_title, :use_pen_name_for_copyright, :exact_name_on_copyright, :pen_name, :special_text_treatment, :has_sub_chapters, :layout_style_choice, :has_index, :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited, :childrens_book, :manuscript_proofed, :edit_complete_date, :manuscript_original, :imprint_id, :genre_ids => [], :team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy])
+  	params.require(:project).permit(:id, :final_title, :final_doc_file, :final_manuscript_pdf, 
+  		:final_pdf, :stock_image_request_link, :layout_notes, :previously_published, :prev_publisher_and_date,
+  		:stock_cover_image, :cover_concept_notes, :proofed_word_count, :cover_concept, :teamroom_link, :final_mobi,
+  		:publication_date, :final_epub, :marketing_release_date, :paperback_cover_type, :age_range, :search_terms,
+  		:bisac_code_3, :bisac_code_2, :bisac_code_1, :ebook_price, :print_price, :blurb_one_line, :endorsements,
+  		:author_bio, :blurb_description, :final_title, :cover_art_approval_date, :alternative_cover_template,
+  		:createspace_cover, :lightning_source_cover, :ebook_front_cover, :layout_approved_date, :layout_approved,
+  		:layout_approval_issue_list, :final_page_count, :layout_upload, :page_header_display_name, :use_pen_name_on_title,
+  		:use_pen_name_for_copyright, :exact_name_on_copyright, :pen_name, :special_text_treatment, :has_sub_chapters,
+  		:layout_style_choice, :has_index, :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited,
+  		:childrens_book, :manuscript_proofed, :edit_complete_date, :manuscript_original, :imprint_id, 
+  		:genre_ids => [], :team_memberships_attributes => [:percentage, :id, :_destroy],
+  		:price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion]
+  		)
   end
 
   def update_control_number_params

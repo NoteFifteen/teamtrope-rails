@@ -82,12 +82,14 @@ jQuery(document).ready () ->
 
 
 jQuery ->
-	field = $("input[name=price_change_type]:radio")
-	field_value = $("input[name=price_change_type]:checked")
+	selector = "input[name=project\\[price_change_promotions_attributes\\]\\[0\\]\\[type\\]]"
+	
+	field = $(selector + ":radio")
+	field_value = $(selector + ":checked")
 	
 	$(field).change (event) =>
 		if field.is(':checked')
-			field_value = $("input[name=price_change_type]:checked")
+			field_value = $(selector + ":checked")
 			
 			switch field_value.val()
 				when "temporary_force_free"
@@ -119,19 +121,19 @@ jQuery ->
 jQuery ->
 	$("#price_promotion_form").validate({
 		rules: {
-			price_change_type: {
+			'project[price_change_promotions_attributes][0][type]': {
 				required: true
 			},
-			start_date: {
+			'project[price_change_promotions_attributes][0][start_date]': {
 				required: true
 			},
-			end_date: {
+			'project[price_change_promotions_attributes][0][end_date]': {
 				required: true
 			},
-			price_promotion: {
+			'project[price_change_promotions_attributes][0][price_promotion]': {
 				required: true
 			},
-			price_after_promotion: {
+			'project[price_change_promotions_attributes][0][price_after_promotion]': {
 				required: true
 			}
 		}

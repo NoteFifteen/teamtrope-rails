@@ -116,6 +116,7 @@ module Booktrope
 			options = default_options.merge(options)
 						
 			book = prepare_book(book, true)
+			queue_entry_ids = []
 
 			ParseWrapper.request do 
 				sales_channels = Parse::Query.new("SalesChannel").get.each do | channel |
@@ -139,8 +140,10 @@ module Booktrope
 					queue_entry["isPriceIncrease"] = options[:is_price_increase]
 				
 					queue_entry.save
+					queue_entry_ids.push queue_entry["objectId"]
 				end
 			end
+			queue_entry_ids
 		end
 
     # Accepts a ControlNumber model and creates or updates the equivalent

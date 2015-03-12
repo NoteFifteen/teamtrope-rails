@@ -16,6 +16,9 @@ class Project < ActiveRecord::Base
 	has_many :current_tasks
 
   has_one :control_number, dependent: :destroy
+  
+  has_many :price_change_promotions, dependent: :destroy
+  
 
   # Not an actual column, but used in the ProjectsController
   attr_accessor :cover_art_approval_decision
@@ -40,6 +43,9 @@ class Project < ActiveRecord::Base
   validates_attachment :manuscript_proofed,
   	:content_type => { content_type: ContentType_Document },
   	:size => { :in => 0..120.megabytes }
+  	
+	accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
+	accepts_nested_attributes_for :price_change_promotions, reject_if: :all_blank, allow_destroy: true    	
 
   # Validates that files are JPEG
   validates_attachment :cover_concept,
