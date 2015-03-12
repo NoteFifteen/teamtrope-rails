@@ -3,7 +3,7 @@
 
 <div>
 
-  <%= simple_form_for([@project, @project.team_memberships.build], url: url_for(:controller => 'projects', :action => 'accept_team_member', id: @project.id))  do |f| %>
+  <%= simple_form_for(@project, url: url_for(:controller => 'projects', :action => 'accept_team_member', id: @project.id))  do |f| %>
       <%= f.error_notification %>
       <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
 
@@ -11,32 +11,35 @@
         <div class="col-md-6">
           <h1>Accept Team Member</h1>
           <%= f.input :project_id, input_html: { value: @project.id }, as: :hidden %>
-          <%= f.input :role_id, label: 'Available Team Roles',
-                      collection: @project.available_roles,
-                      label_method: :name, value_method: :id,
-                      input_html: {
-                              id: 'accept_team_member_roles'
-                      },
-                      :include_blank => 'Select a Role',
-                      required: true
-          %>
 
-          <%= f.input :member_id, label: 'New Team Member',
-                      collection: [], label_method: :name, value_method: :id,
-                      input_html: {
-                              class: 'chosen-select',
-                              id: 'accept_team_member_users'
-                      },
-                      :include_blank => 'Select a Member to add..',
-                      required: true
-          %>
+          <%= f.simple_fields_for :team_memberships, f.object.team_memberships.build do | builder | %>
+              <%= builder.input :role_id, label: 'Available Team Roles',
+                          collection: @project.available_roles,
+                          label_method: :name, value_method: :id,
+                          input_html: {
+                                  id: 'accept_team_member_roles'
+                          },
+                          :include_blank => 'Select a Role',
+                          required: true
+              %>
 
-          <%= f.input :percentage, label: " Percentage ",
-                      input_html: {
-                              id: 'accept_team_member_percentage_input'
-                      },
-                      required: true
-          %>
+              <%= builder.input :member_id, label: 'New Team Member',
+                          collection: [], label_method: :name, value_method: :id,
+                          input_html: {
+                                  class: 'chosen-select',
+                                  id: 'accept_team_member_users'
+                          },
+                          :include_blank => 'Select a Member to add..',
+                          required: true
+              %>
+
+              <%= builder.input :percentage, label: " Percentage ",
+                          input_html: {
+                                  id: 'accept_team_member_percentage_input'
+                          },
+                          required: true
+              %>
+          <% end %>
 
           <%= select_date (Date.today.day == 1)? Date.today : Date.today + 1.month, prefix: :effective_date, start_year: Date.today.year, discard_day: true %><br /><br />
 

@@ -194,20 +194,20 @@ if Rails.env == "development"
 	])
 
 	users = [
-		{email: "#{ENV["admin_user"]}@booktrope.com", name: "#{ENV["admin_user"]}", password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 1},	
-		{email: "charles.buckowski@booktrope.com",   name: "Charles Buckowski",   password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 0},
-		{email: "stephen.king@booktrope.com",        name: "Stephen King",        password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 0},
-		{email: "michael.crichton@booktrope.com",    name: "Michael Crichton",    password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 0},
-		{email: "issac.asimov@booktrope.com",        name: "Issac Asimov",        password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 0},
-		{email: "arthur.c.clark@booktrope.com",      name: "Arthur C. Clark",     password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 0},
-		{email: "j.r.r.tolkien@booktrope.com",       name: "J.R.R. Tolkien",      password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 0},
-    {email: "chuck.palahniuk@booktrope.com",     name: "Chuck Palahniuk",     password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 0},
-    {email: "kurt.vonnegut@booktrope.com",       name: "Kurt Vonnegut",       password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 0},
-    {email: "mark.twain@booktrope.com",          name: "Mark Twain",          password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 0},
-    {email: "charles.dickens@booktrope.com",     name: "Charles Dickens",     password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 0},
-    {email: "william.shakespeare@booktrope.com", name: "William Shakespeare", password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 0},
-    {email: "jack.kerouac@booktrope.com",        name: "Jack Kerouac",        password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 0},
-    {email: "truman.capote@booktrope.com",       name: "Truman Capote",       password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 0},
+    {email: "#{ENV["admin_user"]}@booktrope.com", name: "#{ENV["admin_user"]}", password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 1},
+    {email: "charles.buckowski@booktrope.com",   name: "Charles Buckowski",   password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 4},
+    {email: "stephen.king@booktrope.com",        name: "Stephen King",        password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 8},
+    {email: "michael.crichton@booktrope.com",    name: "Michael Crichton",    password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 36},
+    {email: "issac.asimov@booktrope.com",        name: "Issac Asimov",        password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 32},
+    {email: "arthur.c.clark@booktrope.com",      name: "Arthur C. Clark",     password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 64},
+    {email: "j.r.r.tolkien@booktrope.com",       name: "J.R.R. Tolkien",      password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 128},
+    {email: "chuck.palahniuk@booktrope.com",     name: "Chuck Palahniuk",     password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 260},
+    {email: "kurt.vonnegut@booktrope.com",       name: "Kurt Vonnegut",       password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 532},
+    {email: "mark.twain@booktrope.com",          name: "Mark Twain",          password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 36},
+    {email: "charles.dickens@booktrope.com",     name: "Charles Dickens",     password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 132},
+    {email: "william.shakespeare@booktrope.com", name: "William Shakespeare", password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 160},
+    {email: "jack.kerouac@booktrope.com",        name: "Jack Kerouac",        password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 32},
+    {email: "truman.capote@booktrope.com",       name: "Truman Capote",       password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 128},
 	]
 	users.each do | u |
 		user = User.create!(u)
