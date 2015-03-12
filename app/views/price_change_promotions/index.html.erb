@@ -9,6 +9,7 @@
       <th>Price after promotion</th>
       <th>Type</th>
       <th>Sites</th>
+      <th>Parse IDs</th>
       <th>Project</th>
       <th colspan="3"></th>
     </tr>
@@ -23,6 +24,7 @@
         <td><%= price_change_promotion.price_after_promotion %></td>
         <td><%= price_change_promotion.type.humanize %></td>
         <td><%= price_change_promotion.sites %></td>
+        <td><%= price_change_promotion.parse_ids %></td>
         <td><%= link_to price_change_promotion.project.title, price_change_promotion.project %></td>
         <td><%= link_to 'Show', price_change_promotion %></td>
         <td><%= link_to 'Edit', edit_price_change_promotion_path(price_change_promotion) %></td>

@@ -1,4 +1,5 @@
 class PriceChangePromotion < ActiveRecord::Base
+
   belongs_to :project
   
   TYPES = %w[temporary_force_free temporary_price_drop permanent_force_free permanent_price_drop]
@@ -27,18 +28,32 @@ class PriceChangePromotion < ActiveRecord::Base
 			queue.push([price_promotion, start_date.to_datetime])
 		end
 		
+		is_new = (self.parse_ids).nil?? true  : false
+		
 		queue.each do | price_change |
-			# using the splat operator decomposes the array into the params list
-			# https://codequizzes.wordpress.com/2013/09/29/rubys-splat-operator/
 			book = project.control_number.parse_id
-			parse_id_hash = Booktrope::ParseWrapper::add_book_to_price_change_queue(book, *price_change)
 			
-			unless self.parse_ids.nil?
-				self.parse_ids.merge! parse_id_hash
-			else
-				self.parse_ids = parse_id_hash
+			parse_keys = nil
+
+			if !is_new && !self.parse_ids.nil?			
+				key = price_change.last == Hash && price_change.last[:is_end] ? "end_ids" : "start_ids"
+				parse_keys = self.parse_ids[key].split(',')
 			end
 			
+			#adding the last 
+			price_change.last[:parse_keys] = parse_keys if price_change.last.class == Hash
+			
+			# using the splat operator decomposes the array into the params list
+			# https://codequizzes.wordpress.com/2013/09/29/rubys-splat-operator/
+			parse_id_hash = Booktrope::ParseWrapper::add_book_to_price_change_queue(book, *price_change)
+			
+			if is_new
+				unless self.parse_ids.nil?
+					self.parse_ids.merge! parse_id_hash
+				else
+					self.parse_ids = parse_id_hash
+				end
+			end
 		end
 		
 		true

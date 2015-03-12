@@ -110,14 +110,37 @@ module Booktrope
 			{ 
 				is_end: false,
 				is_price_increase: false,
-				force_free: false
+				force_free: false,
+				parse_keys: nil
 			}
 			
 			options = default_options.merge(options)
 						
 			book = prepare_book(book, true)
+			if options[:parse_keys].nil?
+				ParseWrapper.create_price_queue_entries(book, price, date, options)
+			else
+				ParseWrapper.update_price_queue_entries(book, price, date, options)
+			end
+		end
+		
+		def ParseWrapper.update_price_queue_entries(book, price, date, **options)
+			options[:parse_keys].each do | parse_key |
+					queue_entry = Parse::Query.new(PriceChangeQueue).eq("objectId", parse_key).get.first
+					
+					queue_entry["price"] = price.to_f
+					queue_entry["status"] = 0
+					queue_entry["changeDate"] = Parse::Date.new(date)
+					queue_entry["isEnd"] = options[:is_end]
+				
+					queue_entry.save				
+			end
+			{ (options[:is_end]) ? :end_ids : :start_ids => options[:parse_keys].join(',') }
+		end
+		
+		
+		def ParseWrapper.create_price_queue_entries(book, price, date, **options)
 			queue_entry_ids = []
-
 			ParseWrapper.request do 
 				sales_channels = Parse::Query.new("SalesChannel").get.each do | channel |
 				
@@ -143,7 +166,7 @@ module Booktrope
 					queue_entry_ids.push queue_entry["objectId"]
 				end
 			end
-			{ (options[:is_end]) ? :end_ids : :start_ids => queue_entry_ids }
+			{ (options[:is_end]) ? :end_ids : :start_ids => queue_entry_ids.join(',') }		
 		end
 
     # Accepts a ControlNumber model and creates or updates the equivalent
