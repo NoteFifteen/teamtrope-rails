@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310061917) do
+ActiveRecord::Schema.define(version: 20150312062417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,20 @@ ActiveRecord::Schema.define(version: 20150310061917) do
 
   add_index "posts", ["post_date", "title", "author_id"], name: "index_posts_on_post_date_and_title_and_author_id", using: :btree
   add_index "posts", ["post_date", "title"], name: "index_posts_on_post_date_and_title", using: :btree
+
+  create_table "price_change_promotions", force: true do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.float    "price_promotion"
+    t.float    "price_after_promotion"
+    t.integer  "type_mask"
+    t.integer  "sites"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "price_change_promotions", ["project_id"], name: "index_price_change_promotions_on_project_id", using: :btree
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"

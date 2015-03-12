@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @price_change_promotion.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @price_change_promotion.end_date %>
+</p>
+
+<p>
+  <strong>Price promotion:</strong>
+  <%= @price_change_promotion.price_promotion %>
+</p>
+
+<p>
+  <strong>Price after promotion:</strong>
+  <%= @price_change_promotion.price_after_promotion %>
+</p>
+
+<p>
+  <strong>Type mask:</strong>
+  <%= @price_change_promotion.type_mask %>
+</p>
+
+<p>
+  <strong>Sites:</strong>
+  <%= @price_change_promotion.sites %>
+</p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @price_change_promotion.project %>
+</p>
+
+<%= link_to 'Edit', edit_price_change_promotion_path(@price_change_promotion) %> |
+<%= link_to 'Back', price_change_promotions_path %>

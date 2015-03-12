@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  resources :price_change_promotions
+
   match '/parse/get_amazon_sales_rank',            to: 'parse#get_amazon_sales_rank',          via: 'get'
   match '/parse/get_queued_items',                 to: 'parse#get_queued_items',               via: 'get'
   match '/parse/add_book_to_price_change_queue',   to: 'parse#add_book_to_price_change_queue', via: 'get'

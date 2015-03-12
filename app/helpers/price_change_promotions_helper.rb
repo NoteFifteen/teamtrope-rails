@@ -1,0 +1,2 @@
+module PriceChangePromotionsHelper
+end
