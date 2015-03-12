@@ -262,6 +262,37 @@ class ProjectsController < ApplicationController
 		
 	end
 
+  def approve_cover_art
+    # This is an attribute accessor used as a flag for deciding what to update below
+    approved = (params[:project][:cover_art_approval_decision] == 'true')
+
+    if approved
+      # Set the approval date
+      @project.touch(:cover_art_approval_date)
+      @project.update_attribute(:cover_concept_notes, nil)
+      update_current_task
+      activity_text = 'Approved the Cover Art'
+      flash[:success] = activity_text
+    else
+    # Not approved, revert to previous step
+      if @project.update_attribute(:cover_concept_notes, params[:project][:cover_concept_notes])
+        reject_current_task
+        activity_text = 'Rejected the Cover Art'
+        flash[:success] = activity_text
+      else
+        # Some sort of failure updating the model.
+        flash[:error] = 'An error occurred during update'
+        render 'show'
+      end
+    end
+
+    if ! activity_text.nil?
+      @project.create_activity :approved_cover_art, owner: current_user,
+                               parameters: { text: activity_text, form_data: params[:project].to_s }
+      redirect_to @project
+    end
+  end
+
   private
   def new_project_params
   	params.require(:project).permit(:title)
