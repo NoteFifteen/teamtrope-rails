@@ -10,27 +10,35 @@ class PriceChangePromotion < ActiveRecord::Base
   	true
   }
     
-  after_save {
+  before_save {
 		
 		queue = []
 		
 		case type
 		when "temporary_force_free"
-			queue.push([project.control_number.parse_id, 0, start_date.to_datetime, force_free: true])
-			queue.push([project.control_number.parse_id, price_after_promotion, end_date.to_datetime, force_free: true, is_end: true, is_price_increase: true])
+			queue.push([0, start_date.to_datetime, force_free: true])
+			queue.push([price_after_promotion, end_date.to_datetime, force_free: true, is_end: true, is_price_increase: true])
 		when "temporary_price_drop"					
-			queue.push([project.control_number.parse_id, price_promotion, start_date.to_datetime])
-			queue.push([project.control_number.parse_id, price_after_promotion, end_date.to_datetime, is_end: true, is_price_increase: true])
+			queue.push([price_promotion, start_date.to_datetime])
+			queue.push([price_after_promotion, end_date.to_datetime, is_end: true, is_price_increase: true])
 		when "permanent_force_free"
-			queue.push([ project.control_number.parse_id, 0, start_date.to_datetime, force_free: true])
+			queue.push([0, start_date.to_datetime, force_free: true])
 		when "permanent_price_drop"
-			queue.push([project.control_number.parse_id, price_promotion, start_date.to_datetime])
+			queue.push([price_promotion, start_date.to_datetime])
 		end
 		
 		queue.each do | price_change |
 			# using the splat operator decomposes the array into the params list
 			# https://codequizzes.wordpress.com/2013/09/29/rubys-splat-operator/
-			Booktrope::ParseWrapper::add_book_to_price_change_queue(*price_change)
+			book = project.control_number.parse_id
+			parse_id_hash = Booktrope::ParseWrapper::add_book_to_price_change_queue(book, *price_change)
+			
+			unless self.parse_ids.nil?
+				self.parse_ids.merge! parse_id_hash
+			else
+				self.parse_ids = parse_id_hash
+			end
+			
 		end
 		
 		true

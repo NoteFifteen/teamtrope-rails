@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312062417) do
+ActiveRecord::Schema.define(version: 20150312094919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -144,6 +145,7 @@ ActiveRecord::Schema.define(version: 20150312062417) do
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.hstore   "parse_ids"
   end
 
   add_index "price_change_promotions", ["project_id"], name: "index_price_change_promotions_on_project_id", using: :btree

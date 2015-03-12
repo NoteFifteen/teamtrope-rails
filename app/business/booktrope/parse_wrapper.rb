@@ -143,7 +143,7 @@ module Booktrope
 					queue_entry_ids.push queue_entry["objectId"]
 				end
 			end
-			queue_entry_ids
+			{ (options[:is_end]) ? :end_ids : :start_ids => queue_entry_ids }
 		end
 
     # Accepts a ControlNumber model and creates or updates the equivalent
