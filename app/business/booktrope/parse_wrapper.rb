@@ -104,12 +104,24 @@ module Booktrope
 			team_revenue_allocation.save
 		end
 		
-		def ParseWrapper.add_book_to_price_change_queue(book, price, date, isEnd = false, isPriceIncrease = false)
+
+		def ParseWrapper.add_book_to_price_change_queue(book, price, date, **options)
+			default_options = 
+			{ 
+				is_end: false,
+				is_price_increase: false,
+				force_free: false
+			}
 			
+			options = default_options.merge(options)
+						
 			book = prepare_book(book, true)
 
 			ParseWrapper.request do 
 				sales_channels = Parse::Query.new("SalesChannel").get.each do | channel |
+				
+					next if options[:force_free] && !channel["canForceFree"] # only if channel allows it.
+				
 					queue_entry = Parse::Object.new(PriceChangeQueue)
 					queue_entry["book"] = book
 					queue_entry["asin"] = book["asin"]
@@ -123,8 +135,8 @@ module Booktrope
 					queue_entry["price"] = price.to_f
 					queue_entry["status"] = 0
 					queue_entry["changeDate"] = Parse::Date.new(date)
-					queue_entry["isEnd"] = isEnd
-					queue_entry["isPriceIncrease"] = isPriceIncrease
+					queue_entry["isEnd"] = options[:is_end]
+					queue_entry["isPriceIncrease"] = options[:is_price_increase]
 				
 					queue_entry.save
 				end

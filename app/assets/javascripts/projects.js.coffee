@@ -81,6 +81,63 @@ jQuery(document).ready () ->
 	$(".percentage").first().trigger("change")  
 
 
+jQuery ->
+	field = $("input[name=price_change_type]:radio")
+	field_value = $("input[name=price_change_type]:checked")
+	
+	$(field).change (event) =>
+		if field.is(':checked')
+			field_value = $("input[name=price_change_type]:checked")
+			
+			switch field_value.val()
+				when "temporary_force_free"
+					$(".start_date").slideDown()
+					$(".end_date").slideDown()
+					$(".price_promotion").slideUp()
+					$(".price_after_promotion").slideDown()
+					$(".temp_price_promotion").slideUp()
+				when "temporary_price_drop"
+					$(".start_date").slideDown()
+					$(".end_date").slideDown()
+					$(".price_promotion").slideDown()
+					$(".price_after_promotion").slideDown()
+					$(".temp_price_promotion").slideDown()
+				when "permanent_force_free"
+					$(".start_date").slideDown()
+					$(".end_date").slideUp()
+					$(".price_promotion").slideUp()
+					$(".price_after_promotion").slideUp()
+					$(".temp_price_promotion").slideUp()
+				when "permanent_price_drop"
+					$(".start_date").slideDown()
+					$(".end_date").slideUp()
+					$(".price_promotion").slideDown()
+					$(".price_after_promotion").slideUp()
+					$(".temp_price_promotion").slideUp()
+
+
+jQuery ->
+	$("#price_promotion_form").validate({
+		rules: {
+			price_change_type: {
+				required: true
+			},
+			start_date: {
+				required: true
+			},
+			end_date: {
+				required: true
+			},
+			price_promotion: {
+				required: true
+			},
+			price_after_promotion: {
+				required: true
+			}
+		}
+	})
+
+
 ## per task 205 https://booktrope.acunote.com/projects/47888/tasks/205
 ## previously published was removed from the submit proofed form, but I left the jquery 
 ## that shows and hides the related fields since the fields are going to be moved to another
@@ -159,8 +216,6 @@ jQuery ->
 			}
 		}
 	})
-
-
 				
 jQuery -> 
   $("#form_1099").validate({

@@ -245,6 +245,28 @@ class ProjectsController < ApplicationController
     end
   end
 
+	def price_promotion
+		start_time = Time.parse("#{params[:start_date][:year]}/#{params[:start_date][:month]}/#{params[:start_date][:day]}").dst?? "07:00:00 0000"  : "08:00:00 0000"
+		end_time = Time.parse("#{params[:end_date][:year]}/#{params[:end_date][:month]}/#{params[:end_date][:day]}").dst?? "06:59:59 0000"  : "07:59:59 0000"
+		start_date = DateTime.parse("#{params[:start_date][:year]}/#{params[:start_date][:month]}/#{params[:start_date][:day]} #{start_time}")
+		end_date =   DateTime.parse("#{params[:end_date][:year]}/#{params[:end_date][:month]}/#{params[:end_date][:day]} #{end_time}")
+		
+		case params[:price_change_type]
+		when "temporary_force_free"
+			Booktrope::ParseWrapper::add_book_to_price_change_queue(@project.control_number.parse_id, 0.00, start_date, force_free: true)
+			Booktrope::ParseWrapper::add_book_to_price_change_queue(@project.control_number.parse_id, params[:price_after_promotion], end_date, force_free: true, is_end: true, is_price_increase: true)		
+		when "temporary_price_drop"
+			Booktrope::ParseWrapper::add_book_to_price_change_queue(@project.control_number.parse_id, params[:price_promotion], start_date)
+			Booktrope::ParseWrapper::add_book_to_price_change_queue(@project.control_number.parse_id, params[:price_after_promotion], end_date, is_end: true, is_price_increase: true)
+		when "permanent_force_free"
+			Booktrope::ParseWrapper::add_book_to_price_change_queue(@project.control_number.parse_id, 0.00, start_date, force_free: true)
+		when "permanent_price_drop"
+			Booktrope::ParseWrapper::add_book_to_price_change_queue(@project.control_number.parse_id, params[:price_promotion], start_date)
+		end
+	
+		redirect_to @project
+	end
+
   private
   def new_project_params
   	params.require(:project).permit(:title)
