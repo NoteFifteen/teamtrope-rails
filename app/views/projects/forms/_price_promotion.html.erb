@@ -13,10 +13,10 @@
 		</div>
 		<div>
 			<ul>	
-				<%= f.simple_fields_for :price_change_promotions, f.object.price_change_promotions.build do | builder | %>
+				<%= f.simple_fields_for :price_change_promotions, f.object.price_change_promotions.build do | pcp | %>
 				<li>
 					<label>Please select the type of promotion you'd like to schedule<span class="gfield_required">*</span></label>
-					<%= builder.collection_radio_buttons :type, [
+					<%= pcp.collection_radio_buttons :type, [
 							[ 'temporary_force_free', 'Temporary iTunes/Force free' ], 
 							[ 'temporary_price_drop', 'Temporary Price promotion' ],
 							[ 'permanent_force_free', 'Permanent iTunes/Force free' ],
@@ -29,41 +29,36 @@
 					</div>
 				</li>
 				<li class="start_date" style="display: none;">
-					<%= builder.input :start_date, as: :date, label: 'Start Date' %>
+					<%= pcp.input :start_date, as: :date, label: 'Start Date' %>
 					<%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(4i)]", "8" %>
 					<%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(5i)]", "0" %>
 					<%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(6i)]", "0" %>
 				</li>
 				<li class="price_promotion" style="display: none;">
-					<%= builder.input :price_promotion, label: 'Promotion Price' %>
+					<%= pcp.input :price_promotion, label: 'Promotion Price' %>
 				</li>
 				<li class="end_date" style="display: none;">
-					<%= builder.input :end_date, as: :date, label: 'End Date' %>
+					<%= pcp.input :end_date, as: :date, label: 'End Date' %>
 					<%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(4i)]", "7" %>
 					<%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(5i)]", "59" %>
 					<%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(6i)]", "59" %>					
 				</li>
 				<li class="price_after_promotion" style="display: none;">
-					<%= builder.input :price_after_promotion, label: 'Price After Promotion' %>
+					<%= pcp.input :price_after_promotion, label: 'Price After Promotion' %>
 				</li>
-				<% end %>
 				
 				<li class="temp_price_promotion" style="display: none;">
-					<label class="gfield_label">Get the word out about your $0.99 price promotions and contact the sites below</label>
-					<ul>
-						<%
-							[ 
-								{ value: 'midlist',        label: 'The Midlist (Only submit for Free Feature, not the $100 ad) - https://www.themidlist.com/submit'},
-								{ value: 'bargain_booksy', label: 'Bargain Booksy (only submit for free editorial consideration, not the $50 guarantee) - http://bargainbooksy.com/for-authors/'},
-							].each do | check_box |
-						%>
-							<li><label><%= check_box_tag check_box[:value] %> <%= label_tag "checklist", check_box[:label] %></label></li>
-						<% end %>
-					</ul>
+					<label>Get the word out about your $0.99 price promotions and contact the sites below</label>
+					<%= pcp.collection_check_boxes :sites, PriceChangePromotion::SITES, 
+						:first, :last,
+						collection_wrapper_tag: 'ul',
+						item_wrapper_tag: 'li'
+					%>
 					<div>If you're doing a $0.99 promotion, we strongly encourage you to submit to these sites to help let readers know about the deal.  Don't forget to spread the word on social media as well!
 						*Booktrope will pay this expense and treat it as a marketing expense shared across the team.  Please use the following paypal address accounting@booktrope.com.
-					</div>					
+					</div>
 				</li>
+				<% end %>
 				
 				<li>
 					<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>

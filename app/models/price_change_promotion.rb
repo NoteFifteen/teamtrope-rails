@@ -5,7 +5,13 @@ class PriceChangePromotion < ActiveRecord::Base
   TYPES = %w[temporary_force_free temporary_price_drop permanent_force_free permanent_price_drop]
   
   before_destroy :destroy_parse_queue_entries
-    
+  
+  SITES = 
+  [ 
+  	['midlist', 'The Midlist (Only submit for Free Feature, not the $100 ad) - https://www.themidlist.com/submit'], 
+  	['bargain_booksy', 'Bargain Booksy (only submit for free editorial consideration, not the $50 guarantee) - http://bargainbooksy.com/for-authors/'] 
+  ]
+  
   before_save {
   	self.start_date = adjust_date_for_dst start_date
   	self.end_date =  adjust_date_for_dst end_date
