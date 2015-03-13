@@ -310,7 +310,7 @@ class ProjectsController < ApplicationController
   		:use_pen_name_for_copyright, :exact_name_on_copyright, :pen_name, :special_text_treatment, :has_sub_chapters,
   		:layout_style_choice, :has_index, :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited,
   		:childrens_book, :manuscript_proofed, :edit_complete_date, :manuscript_original, :imprint_id, 
-  		:genre_ids => [], :team_memberships_attributes => [:percentage, :id, :_destroy],
+  		:genre_ids => [], :team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy],
   		:price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion]
   		)
   end
