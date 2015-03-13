@@ -4,6 +4,8 @@ class PriceChangePromotion < ActiveRecord::Base
   
   TYPES = %w[temporary_force_free temporary_price_drop permanent_force_free permanent_price_drop]
   
+  before_destroy :destroy_parse_queue_entries
+    
   before_save {
   	self.start_date = adjust_date_for_dst start_date
   	self.end_date =  adjust_date_for_dst end_date
@@ -77,5 +79,10 @@ class PriceChangePromotion < ActiveRecord::Base
 	  		return date - 1.hour
 	  	end
 	  	date
+  	end
+  	
+  	def destroy_parse_queue_entries
+  		Booktrope::ParseWrapper.destroy_price_queue_entries( 
+  							parse_ids.map{ | key, value | value.split(',') }.flatten )
   	end
 end

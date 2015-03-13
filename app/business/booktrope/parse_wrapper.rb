@@ -124,8 +124,21 @@ module Booktrope
 			end
 		end
 		
+		def ParseWrapper.destroy_price_queue_entries(entries)
+			entries.each do | entry |				
+				ParseWrapper.request do
+								puts entry
+		
+					queue_entry = Parse::Query.new(PriceChangeQueue).eq("objectId", entry).get.first
+					queue_entry.parse_delete unless queue_entry.nil?
+				end
+				
+			end
+		end
+		
 		def ParseWrapper.update_price_queue_entries(book, price, date, **options)
 			options[:parse_keys].each do | parse_key |
+				ParseWrapper.request do
 					queue_entry = Parse::Query.new(PriceChangeQueue).eq("objectId", parse_key).get.first
 					
 					queue_entry["price"] = price.to_f
@@ -133,7 +146,8 @@ module Booktrope
 					queue_entry["changeDate"] = Parse::Date.new(date)
 					queue_entry["isEnd"] = options[:is_end]
 				
-					queue_entry.save				
+					queue_entry.save
+				end	
 			end
 			{ (options[:is_end]) ? :end_ids : :start_ids => options[:parse_keys].join(',') }
 		end
