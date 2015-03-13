@@ -19,7 +19,9 @@ class Project < ActiveRecord::Base
   
   has_many :price_change_promotions, dependent: :destroy
   
-
+	accepts_nested_attributes_for :price_change_promotions, reject_if: :all_blank, allow_destroy: true
+	accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
+	
   # Not an actual column, but used in the ProjectsController
   attr_accessor :cover_art_approval_decision
 
@@ -48,10 +50,7 @@ class Project < ActiveRecord::Base
   validates_attachment :cover_concept,
   	:content_type => { content_type: ['image/jpeg', 'image/pjpeg'] },
     :file_name => { :matches => [/jpe?g\Z/] },
-  	:size => { :in => 0..120.megabytes }
-
-	accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
-	accepts_nested_attributes_for :price_change_promotions, reject_if: :all_blank, allow_destroy: true    	
+  	:size => { :in => 0..120.megabytes }   	
 
   # Validates that files are JPEG
   validates_attachment :cover_concept,
@@ -59,7 +58,7 @@ class Project < ActiveRecord::Base
     :file_name => { :matches => [/jpe?g\Z/] },
   	:size => { :in => 0..120.megabytes }
 
-	accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
+
 
   # Available options for the layout style form -> layout style. Stored in 'layout_style_choice'
   LayoutStyleFonts = [['Cambria'], ['Covington'], ['Headline Two Exp'],['Letter Gothic'],['Lobster'],['Lucida Fax'],['M V Boli']]
