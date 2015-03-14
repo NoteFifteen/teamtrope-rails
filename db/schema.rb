@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312094919) do
+ActiveRecord::Schema.define(version: 20150313231029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -314,6 +314,16 @@ ActiveRecord::Schema.define(version: 20150312094919) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "status_updates", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "type_index"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "status_updates", ["project_id"], name: "index_status_updates_on_project_id", using: :btree
 
   create_table "statuses", force: true do |t|
     t.string   "form_name"

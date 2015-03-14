@@ -139,6 +139,14 @@ jQuery ->
 		}
 	})
 
+jQuery ->
+	$("#status_update").validate({
+		rules: {
+			'project[status_updates_attributes][0][type]': {
+				required: true
+			}
+		}
+	})
 
 ## per task 205 https://booktrope.acunote.com/projects/47888/tasks/205
 ## previously published was removed from the submit proofed form, but I left the jquery 

@@ -53,6 +53,19 @@ class ProjectsController < ApplicationController
   # this prevents a crash when there is a temp file in params. Might want to come up with 
   # a cleaner solution
 
+	def update_status
+		if @project.update(update_project_params)
+			@project.create_activity :update_status, owner: current_user,
+                               parameters: { text: ' posted a status update', form_data: params[:project].to_s}
+      update_current_task
+      
+			flash[:success] = 'Posted Status Update'
+			redirect_to @project
+		else
+			render 'show'
+		end
+	end
+
   def accept_team_member
     if @project.update(update_project_params)
       @project.create_activity :accept_team_member, owner: current_user,
@@ -202,49 +215,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def approve_cover_art
-    # This is an attribute accessor used as a flag for deciding what to update below
-    approved = (params[:project][:cover_art_approval_decision] == 'true')
-
-    if approved
-      # Set the approval date
-      @project.touch(:cover_art_approval_date)
-      @project.update_attribute(:cover_concept_notes, nil)
-      update_current_task
-      activity_text = 'Approved the Cover Art'
-      flash[:success] = activity_text
-    else
-    # Not approved, revert to previous step
-      if @project.update_attribute(:cover_concept_notes, params[:project][:cover_concept_notes])
-        reject_current_task
-        activity_text = 'Rejected the Cover Art'
-        flash[:success] = activity_text
-      else
-        # Some sort of failure updating the model.
-        flash[:error] = 'An error occurred during update'
-        render 'show'
-      end
-    end
-
-    if ! activity_text.nil?
-      @project.create_activity :approved_cover_art, owner: current_user,
-                               parameters: { text: activity_text, form_data: params[:project].to_s }
-      redirect_to @project
-    end
-  end
-
-  def update_final_page_count
-    if @project.update(update_project_params)
-      update_current_task
-      @project.create_activity :updated_final_page_count, owner: current_user,
-                                parameters: { text: 'Updated Final Page Count', form_data: params[:project].to_s}
-      flash[:success] = 'Updated Final Page Count'
-      redirect_to @project
-    else
-        render 'show'
-    end
-  end
-
 	def price_promotion
 			
 		if @project.update(update_project_params)
@@ -293,6 +263,18 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def update_final_page_count
+    if @project.update(update_project_params)
+      update_current_task
+      @project.create_activity :updated_final_page_count, owner: current_user,
+                                parameters: { text: 'Updated Final Page Count', form_data: params[:project].to_s}
+      flash[:success] = 'Updated Final Page Count'
+      redirect_to @project
+    else
+        render 'show'
+    end
+  end
+
   private
   def new_project_params
   	params.require(:project).permit(:title)
@@ -311,7 +293,8 @@ class ProjectsController < ApplicationController
   		:layout_style_choice, :has_index, :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited,
   		:childrens_book, :manuscript_proofed, :edit_complete_date, :manuscript_original, :imprint_id, 
   		:genre_ids => [], :team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy],
-  		:price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion]
+  		:price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion],
+  		:status_updates_attributes => [:type, :status]
   		)
   end
 
