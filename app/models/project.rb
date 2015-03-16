@@ -33,33 +33,54 @@ class Project < ActiveRecord::Base
   has_attached_file :manuscript_proofed
   has_attached_file :layout_upload
   has_attached_file :cover_concept
+  has_attached_file :final_pdf
+  has_attached_file :final_doc_file
 
-  ContentType_Document = ['application/msword',
-  			'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
-
-  validates_attachment :manuscript_original,
-  	:content_type => { content_type: ContentType_Document }, 
-  	:size => { :in => 0..120.megabytes }
+  
+  DefaultContentTypeDocumentParams = [
+  	:content_type => { 
+  		content_type: [ 'application/msword',
+  				'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  			] 
+  	}, 
+  	:size => { :in => 0..120.megabytes }]
   	
-  validates_attachment :manuscript_edited,
-  	:content_type => { content_type: ContentType_Document },
+  DefaultContentTypePdfParams =[
+  	:content_type => {
+  		content_type: 'application/pdf'
+  	},
   	:size => { :in => 0..120.megabytes }
+  ]
+
+  DefaultContentTypeImageParams = 
+  [
+  	:content_type => { content_type: ['image/jpeg', 'image/pjpeg'] },
+    :file_name => { :matches => [/jpe?g\Z/] },
+  	:size => { :in => 0..120.megabytes }
+  ]
+
+  validates_attachment :manuscript_original, 
+  	*DefaultContentTypeDocumentParams
+
+  validates_attachment :manuscript_edited,
+		*DefaultContentTypeDocumentParams
   	
   validates_attachment :manuscript_proofed,
-  	:content_type => { content_type: ContentType_Document },
-  	:size => { :in => 0..120.megabytes }
+  	*DefaultContentTypeDocumentParams
+  	
+  validates_attachment :final_pdf,
+  	*DefaultContentTypePdfParams
+  	
+  validates_attachment :final_doc_file,
+  	*DefaultContentTypeDocumentParams
 
   # Validates that files are JPEG
   validates_attachment :cover_concept,
-  	:content_type => { content_type: ['image/jpeg', 'image/pjpeg'] },
-    :file_name => { :matches => [/jpe?g\Z/] },
-  	:size => { :in => 0..120.megabytes }   	
+  	*DefaultContentTypeImageParams
 
   # Validates that files are JPEG
   validates_attachment :cover_concept,
-  	:content_type => { content_type: ['image/jpeg', 'image/pjpeg'] },
-    :file_name => { :matches => [/jpe?g\Z/] },
-  	:size => { :in => 0..120.megabytes }
+  	*DefaultContentTypeImageParams
 
 
 

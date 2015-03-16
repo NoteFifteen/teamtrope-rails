@@ -274,6 +274,18 @@ class ProjectsController < ApplicationController
         render 'show'
     end
   end
+  
+  def final_manuscript
+  	if @project.update(update_project_params)
+  		update_current_task
+      @project.create_activity :upload_final_manuscript, owner: current_user,
+                                parameters: { text: 'Uploaded Final Manuscript', form_data: params[:project].to_s}
+      flash[:success] = 'Uploaded Final Manuscript'
+      redirect_to @project
+  	else
+  		render 'show'
+  	end
+  end
 
   private
   def new_project_params

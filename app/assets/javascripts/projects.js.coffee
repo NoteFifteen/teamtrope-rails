@@ -144,7 +144,28 @@ jQuery ->
 		rules: {
 			'project[status_updates_attributes][0][type]': {
 				required: true
+			},
+			'project[status_updates_attributes][0][status]': {
+				required: true
 			}
+		}
+	})
+	
+jQuery ->
+	$("#final_manuscript").validate({
+		rules: {
+			'project[final_pdf]': {
+				required: true,
+				accept: "application/pdf",
+			},
+			'project[final_doc_file]': {
+				required: true,
+				accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
+			}
+		},
+		messages: {
+			'project[final_pdf]': "You must upload a pdf file.",
+			'project[final_doc_file]': "You must upload a doc or docx file."
 		}
 	})
 

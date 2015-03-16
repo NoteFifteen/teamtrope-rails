@@ -1,43 +1,32 @@
 <h1>Final Manuscript</h1>
-<div class="gf_browser_safari gform_wrapper" id="gform_wrapper_70">
-	<a id="gf_70" name="gf_70" class="gform_anchor"></a>
-	<form method="post" enctype="multipart/form-data" target="gform_ajax_frame_70" id="gform_70" action="/projects/dejection-songs-by-alex-kimmell/#gf_70">
-		<div class="gform_heading">
-			<span class="gform_description">Booktrope Staff Only</span>
+<div class="gf_browser_safari gform_wrapper">
+	<%= simple_form_for @project,
+				url: url_for(controller: 'projects', action: 'final_manuscript', id: @project),
+				html: {id: "final_manuscript"} do | f | 
+				%>
+        <%= f.error_notification %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>				
+		<div>
+			<span>Booktrope Staff Only</span>
 		</div>
 		<div class="gform_body">
-			<ul id="gform_fields_70" class="gform_fields top_label description_below">
-				<li id="field_70_14" class="gfield">
-					<label class="gfield_label" for="input_70_14">Final PDF</label>
-					<div class="ginput_container">
-						<input type="hidden" name="MAX_FILE_SIZE" value="125829120">
-						<input name="input_14" id="input_70_14" type="file" class="medium" tabindex="1">
+		
+			<ul>
+			
+				<li>
+					<div>
+						<%= f.input :final_pdf, label: 'Final PDF' , as: :file, required: true %>
 					</div>
 				</li>
-				<li id="field_70_13" class="gfield">
-					<label class="gfield_label" for="input_70_13">Final Word Doc</label>
-					<div class="ginput_container">
-						<input type="hidden" name="MAX_FILE_SIZE" value="125829120">
-						<input name="input_13" id="input_70_13" type="file" class="medium" tabindex="2">
+				
+				<li>
+					<div>
+						<%= f.input :final_doc_file, label: 'Final Word Doc', as: :file, required: true %>
 					</div>
 				</li>
-				<li id="field_70_16" class="gfield">
-					<label class="gfield_label" for="input_70_16">Go to Project</label>
-					<div class="ginput_container">
-						<input name="input_16" id="input_70_16" type="text" value="https://teamtrope.com/projects/dejection-songs-by-alex-kimmell/" class="medium" tabindex="3">
-					</div>
-				</li>
+				
 			</ul>
+			<%= f.submit "Submit" %>
 		</div>
-		<div class="gform_footer top_label">
-			<input type="submit" id="gform_submit_button_70" class="gform_button button" value="Submit" tabindex="4" onclick="if(window[&quot;gf_submitting_70&quot;]){return false;}  window[&quot;gf_submitting_70&quot;]=true; "><input type="hidden" name="gform_ajax" value="form_id=70&amp;title=&amp;description=1&amp;tabindex=1">
-			<input type="hidden" class="gform_hidden" name="is_submit_70" value="1">
-			<input type="hidden" class="gform_hidden" name="gform_submit" value="70">
-			<input type="hidden" class="gform_hidden" name="gform_unique_id" value="">
-			<input type="hidden" class="gform_hidden" name="state_70" value="WyJbXSIsIjRmY2NjODBlOGIxY2YzNWY4OWJkNTk5YTMyYTU5ZGZhIl0=">
-			<input type="hidden" class="gform_hidden" name="gform_target_page_number_70" id="gform_target_page_number_70" value="0">
-			<input type="hidden" class="gform_hidden" name="gform_source_page_number_70" id="gform_source_page_number_70" value="1">
-			<input type="hidden" name="gform_field_values" value="">
-		</div>
-	</form>
+	<% end %>
 </div>
