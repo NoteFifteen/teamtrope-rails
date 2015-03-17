@@ -265,6 +265,21 @@ jQuery ->
 			}
 		}
 	})
+
+jQuery ->
+	field = $("input[name=tax_id]:radio")
+	field_value = $("input[name=tax_id]:checked")
+	
+	$(field).change (event) =>
+		if field.is(':checked')
+			field_value = $("input[name=tax_id]:checked")
+			
+			if field_value.val() == 'ssn'
+				$('#social_security_number_wrapper').slideDown()
+				$('#business_tax_id_wrapper').slideUp()
+			else 
+				$('#social_security_number_wrapper').slideUp()
+				$('#business_tax_id_wrapper').slideDown()
 				
 jQuery -> 
   $("#form_1099").validate({

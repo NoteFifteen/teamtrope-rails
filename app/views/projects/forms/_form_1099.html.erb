@@ -13,7 +13,7 @@
 			[[true, "First time I'm submitting the form"],
 			[false, "I've already submittted a form in the past. This is an update to my information."]].each do | radio_item | %>
 			
-			<%= radio_button_tag 'first_time?', radio_item.first %> <%= radio_item.last %><br />
+			<%= radio_button_tag 'first_time', radio_item.first %> <%= radio_item.last %><br />
 				
 	<%  end %>
 	
@@ -43,7 +43,7 @@
 	<%
 		[[true, "Yes"],[false, "No"]].each do | radio_item |
 	%>
-		<%= radio_button_tag 'us_citizen_or_resident?', radio_item.first %><%= radio_item.last %><br />
+		<%= radio_button_tag 'us_citizen_or_resident', radio_item.first %><%= radio_item.last %><br />
 	<% end %>
 
 	<!-- End Page 2 -->
@@ -79,12 +79,12 @@
 	
 	<div>Required only for US citizens and permanent residents. If you are located outside of the US, you will be paid via Paypal. Please provide your Paypal account email address below.</div><br />
 	
-	<div id="social_security_number_wrapper">
+	<div id="social_security_number_wrapper" style="display: none; ">
 		Social Security Number<br />
 		<%= text_field_tag 'social_security_number' %><br />
 	</div>
 	
-	<div id="business_tax_id_wrapper">
+	<div id="business_tax_id_wrapper" style="display: none;">
 		Tax ID<br />
 		<%= text_field_tag 'business_tax_id' %><br />
 		
