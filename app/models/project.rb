@@ -22,14 +22,18 @@ class Project < ActiveRecord::Base
 
   has_many :media_kits, dependent: :destroy
   
+  has_one  :published_file, dependent: :destroy
   has_many :price_change_promotions, dependent: :destroy
 
   has_many :status_updates, dependent: :destroy
 
+  #TODO: we might not need to allow destroy via the project form for associations that
+  # are only written by form. (media_kits, price_change_promotions, published_file, status_update)
   accepts_nested_attributes_for :audit_team_membership_removals, reject_if: :all_blank, allow_destroy: false
   accepts_nested_attributes_for :kdp_select_enrollment, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :media_kits, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :price_change_promotions, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :published_file, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :status_updates, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
 
@@ -44,51 +48,28 @@ class Project < ActiveRecord::Base
   has_attached_file :final_pdf
   has_attached_file :final_doc_file
 
-  
-  DefaultContentTypeDocumentParams = [
-  	:content_type => { 
-  		content_type: [ 'application/msword',
-  				'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-  			] 
-  	}, 
-  	:size => { :in => 0..120.megabytes }]
-  	
-  DefaultContentTypePdfParams =[
-  	:content_type => {
-  		content_type: 'application/pdf'
-  	},
-  	:size => { :in => 0..120.megabytes }
-  ]
-
-  DefaultContentTypeImageParams = 
-  [
-  	:content_type => { content_type: ['image/jpeg', 'image/pjpeg'] },
-    :file_name => { :matches => [/jpe?g\Z/] },
-  	:size => { :in => 0..120.megabytes }
-  ]
-
   validates_attachment :manuscript_original, 
-  	*DefaultContentTypeDocumentParams
+  	*Constants::DefaultContentTypeDocumentParams
 
   validates_attachment :manuscript_edited,
-		*DefaultContentTypeDocumentParams
+		*Constants::DefaultContentTypeDocumentParams
   	
   validates_attachment :manuscript_proofed,
-  	*DefaultContentTypeDocumentParams
+  	*Constants::DefaultContentTypeDocumentParams
   	
   validates_attachment :final_pdf,
-  	*DefaultContentTypePdfParams
+  	*Constants::DefaultContentTypePdfParams
   	
   validates_attachment :final_doc_file,
-  	*DefaultContentTypeDocumentParams
+  	*Constants::DefaultContentTypeDocumentParams
 
   # Validates that files are JPEG
   validates_attachment :cover_concept,
-  	*DefaultContentTypeImageParams
+  	*Constants::DefaultContentTypeImageParams
 
   # Validates that files are JPEG
   validates_attachment :cover_concept,
-  	*DefaultContentTypeImageParams
+  	*Constants::DefaultContentTypeImageParams
 
   # Available options for the layout style form -> layout style. Stored in 'layout_style_choice'
   LayoutStyleFonts = [['Cambria'], ['Covington'], ['Headline Two Exp'],['Letter Gothic'],['Lobster'],['Lucida Fax'],['M V Boli']]

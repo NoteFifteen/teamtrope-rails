@@ -341,6 +341,18 @@ class ProjectsController < ApplicationController
   	end
   end
   
+  def publish_book
+  	if @project.update(update_project_params)
+  		update_current_task
+      @project.create_activity :publish_book, owner: current_user,
+                                parameters: { text: 'Submitted the Publish Book form', form_data: params[:project].to_s}
+      flash[:success] = 'Submitted Publish Book'
+      redirect_to @project
+  	else
+  		render 'show'
+  	end  	
+  end
+  
   def marketing_release_date
   	if @project.update(update_project_params)
   		update_current_task
@@ -386,6 +398,7 @@ class ProjectsController < ApplicationController
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
   		:media_kits_attributes => [:document],
   		:price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion],
+  		:published_file_attributes => [:publication_date, :mobi, :epub, :pdf],
   		:status_updates_attributes => [:type, :status],
   		:team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy]
   		)
