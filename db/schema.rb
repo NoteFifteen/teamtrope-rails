@@ -34,6 +34,20 @@ ActiveRecord::Schema.define(version: 20150317005237) do
   add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
+  create_table "audit_team_membership_removals", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "member_id"
+    t.integer  "role_id"
+    t.float    "percentage"
+    t.string   "reason"
+    t.text     "notes"
+    t.boolean  "notified_member"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "audit_team_membership_removals", ["project_id"], name: "index_audit_team_membership_removals_on_project_id", using: :btree
+
   create_table "book_genres", force: true do |t|
     t.integer  "project_id"
     t.integer  "genre_id"

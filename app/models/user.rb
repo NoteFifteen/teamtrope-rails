@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 	has_one :profile, dependent: :destroy
 	
 	has_many :team_memberships, foreign_key: :member_id, dependent: :destroy
+	has_many :audit_team_membership_removals, foreign_key: :member_id
 	has_many :projects, through: :team_memberships, source: :project, join_table: :roles
 	
   before_save { self.email = email.downcase }

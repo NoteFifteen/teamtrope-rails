@@ -82,6 +82,43 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def remove_team_member
+    # Parameters are spread around and need to be used on multiple objects
+    project_id = params[:id]
+    member_attributes = params[:project][:audit_team_membership_removals_attributes]['0']
+    membership_id = member_attributes[:member_id]
+
+    team_membership = @project.team_memberships.where(id: membership_id).first
+    if !team_membership.nil?
+      # Add audit
+      audit_params = {
+          project_id: project_id,
+          member_id: team_membership.member_id,
+          role_id: team_membership.role_id,
+          percentage: team_membership.percentage,
+          reason: member_attributes[:reason],
+          notes: (member_attributes[:reason] == 'other') ? params[:other] : nil,
+          notified_member: member_attributes[:notified_member]
+      }
+
+      audit = AuditTeamMembershipRemoval.new(audit_params)
+      audit.save
+      team_membership.destroy
+
+      # Schedule update in parse for the 1st of next month or today if it's the 1st
+      Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, (DateTime.now.day == 1) ? DateTime.now : DateTime.now.next_month.at_beginning_of_month
+
+      @project.create_activity :removed_team_member,
+                               owner: current_user, parameters: { text: ' Removed team member', form_data: audit_params.to_s}
+      flash[:success] = 'Removed a team member'
+
+      redirect_to @project
+    else
+      flash[:error] = 'Error while removing a team member'
+      render 'show'
+    end
+  end
+
   def edit_complete_date
   	if @project.update(update_project_params)
   		@project.create_activity :submitted_edit_complete_date, owner: current_user, parameters: { text: " set the 'Edit Complete Date' to #{@project.edit_complete_date.strftime("%Y/%m/%d")}", form_data: params[:project].to_s}

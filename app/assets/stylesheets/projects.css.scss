@@ -3,3 +3,30 @@
   margin:7px 2px;
   border:1px solid red;
 }
+
+/**
+ * Temporarily necessary to override the pcss3t styles and to clean up the inputs
+ *
+ * Used on the Team Change page forms.
+ */
+.collection_list_input * {
+  margin-top: 0px !important;
+}
+
+.collection_list_input li {
+  padding-left: 0px !important;
+}
+
+.collection_list_input li label {
+  font-weight: normal;
+  padding-left: 5px;
+}
+
+.collection_list_input input {
+  padding: 2px 2px;
+}
+
+#remove_team_member_errors div {
+  color: red !important;
+  font-weight: bold;
+}

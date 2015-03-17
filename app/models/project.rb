@@ -6,6 +6,7 @@ class Project < ActiveRecord::Base
 	belongs_to :imprint
 	
 	has_many :team_memberships
+  has_many :audit_team_membership_removals
 	has_many :members, through: :team_memberships, source: :member
 	
 	has_many :roles, through: :team_memberships, source: :role
@@ -27,7 +28,8 @@ class Project < ActiveRecord::Base
 	accepts_nested_attributes_for :price_change_promotions, reject_if: :all_blank, allow_destroy: true
 	accepts_nested_attributes_for :status_updates, reject_if: :all_blank, allow_destroy: true
 	accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
-	
+  accepts_nested_attributes_for :audit_team_membership_removals, reject_if: :all_blank, allow_destroy: false
+
   # Not an actual column, but used in the ProjectsController
   attr_accessor :cover_art_approval_decision
 
@@ -84,8 +86,6 @@ class Project < ActiveRecord::Base
   # Validates that files are JPEG
   validates_attachment :cover_concept,
   	*DefaultContentTypeImageParams
-
-
 
   # Available options for the layout style form -> layout style. Stored in 'layout_style_choice'
   LayoutStyleFonts = [['Cambria'], ['Covington'], ['Headline Two Exp'],['Letter Gothic'],['Lobster'],['Lucida Fax'],['M V Boli']]
@@ -146,7 +146,17 @@ class Project < ActiveRecord::Base
     return team
   end
 
-	def self.provide_methods_for(role)
+  def members_available_for_removal
+    team_memberships.reject{|s| s.new_record? }
+                    .reject{|s| s.role.normalized_name == 'author' }
+                    .map { |member| {
+                      membership_id: member.id,
+                      member_name: member.member.name + ' (' + member.role.name + ')'
+                    }
+     }
+  end
+
+  def self.provide_methods_for(role)
 		Project.class_eval %Q{	
 			def has_#{role.downcase.gsub(/ /, "_")}?
 				team_memberships.where(role_id: Role.where(name: "#{role}")).count > 0
