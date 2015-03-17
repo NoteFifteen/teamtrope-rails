@@ -298,6 +298,18 @@ class ProjectsController < ApplicationController
   		render 'show'
   	end
   end
+  
+  def media_kit
+  	if @project.update(update_project_params)
+  		update_current_task
+  		@project.create_activity :media_kit, owner: current_user,
+  															parameters: { text: 'Uploaded Media Kit', form_data: params[:project].to_s}
+  		flash[:success] = 'Media Kit Uploaded.'
+  		redirect_to @project  		
+  	else
+  		render 'show'
+  	end
+  end
 
   private
   def new_project_params
@@ -316,9 +328,11 @@ class ProjectsController < ApplicationController
   		:use_pen_name_for_copyright, :exact_name_on_copyright, :pen_name, :special_text_treatment, :has_sub_chapters,
   		:layout_style_choice, :has_index, :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited,
   		:childrens_book, :manuscript_proofed, :edit_complete_date, :manuscript_original, :imprint_id, 
-  		:genre_ids => [], :team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy],
+  		:genre_ids => [],
+  		:media_kits_attributes => [:document],
   		:price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion],
-  		:status_updates_attributes => [:type, :status]
+  		:status_updates_attributes => [:type, :status],
+  		:team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy]
   		)
   end
 

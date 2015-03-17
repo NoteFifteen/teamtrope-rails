@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150313231029) do
+ActiveRecord::Schema.define(version: 20150317005237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,18 @@ ActiveRecord::Schema.define(version: 20150313231029) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "media_kits", force: true do |t|
+    t.integer  "project_id"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "media_kits", ["project_id"], name: "index_media_kits_on_project_id", using: :btree
 
   create_table "phases", force: true do |t|
     t.integer  "project_view_id"

@@ -17,10 +17,13 @@ class Project < ActiveRecord::Base
 
   has_one :control_number, dependent: :destroy
   
+  has_many :media_kits, dependent: :destroy
+  
   has_many :price_change_promotions, dependent: :destroy
 
   has_many :status_updates, dependent: :destroy
 
+	accepts_nested_attributes_for :media_kits, reject_if: :all_blank, allow_destroy: true
 	accepts_nested_attributes_for :price_change_promotions, reject_if: :all_blank, allow_destroy: true
 	accepts_nested_attributes_for :status_updates, reject_if: :all_blank, allow_destroy: true
 	accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true

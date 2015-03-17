@@ -81,6 +81,7 @@ jQuery(document).ready () ->
 	$(".percentage").first().trigger("change")  
 
 
+## price change promotion form event handlers
 jQuery ->
 	selector = "input[name=project\\[price_change_promotions_attributes\\]\\[0\\]\\[type\\]]"
 	
@@ -117,7 +118,7 @@ jQuery ->
 					$(".price_after_promotion").slideUp()
 					$(".temp_price_promotion").slideUp()
 
-
+## price change promotion form validators
 jQuery ->
 	$("#price_promotion_form").validate({
 		rules: {
@@ -139,6 +140,7 @@ jQuery ->
 		}
 	})
 
+## status update form validations
 jQuery ->
 	$("#status_update").validate({
 		rules: {
@@ -150,7 +152,8 @@ jQuery ->
 			}
 		}
 	})
-	
+
+## final manuscript form validations
 jQuery ->
 	$("#final_manuscript").validate({
 		rules: {
@@ -166,6 +169,20 @@ jQuery ->
 		messages: {
 			'project[final_pdf]': "You must upload a pdf file.",
 			'project[final_doc_file]': "You must upload a doc or docx file."
+		}
+	})
+	
+## Media Kit Form validations
+jQuery ->
+	$("#media_kit").validate({
+		rules: {
+			'project[media_kits_attributes][0][document]': {
+				required: true,
+				accept: "application/(pdf|msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)",
+			}
+		},
+		messages: {
+			'project[media_kits_attributes][0][document]': "You must upload either a pdf, doc, or docx file."
 		}
 	})
 
@@ -208,7 +225,8 @@ jQuery ->
 			else
 				$('.does_contain_images_1').slideUp()
 				$('.does_contain_images_2').slideUp()
-				
+
+## proof read manuscript custom validator				
 jQuery.validator.addMethod("pfm_checklist", (value, element, params) ->
 	is_user_ready_to_upload = true
 	$(params[0]).each (index, obj) ->
