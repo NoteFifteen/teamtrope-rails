@@ -1,38 +1,25 @@
 <h1>Release Date</h1>
-<div class="gf_browser_safari gform_wrapper" id="gform_wrapper_54">
-	<a id="gf_54" name="gf_54" class="gform_anchor"></a>
-	<form method="post" enctype="multipart/form-data" target="gform_ajax_frame_54" id="gform_54" action="/projects/dejection-songs-by-alex-kimmell/#gf_54">
-		<div class="gform_heading">
-			<span class="gform_description"></span>
-		</div>
-		<div class="gform_body">
-			<ul id="gform_fields_54" class="gform_fields top_label description_below">
-				<li id="field_54_8" class="gfield">
-					<label class="gfield_label" for="input_54_8">Planned Marketing Release Date*</label>
-					<div class="ginput_container">
-						<input name="input_8" id="input_54_8" type="text" value="" class="datepicker medium mdy datepicker_with_icon hasDatepicker" tabindex="1">
-						<img class="ui-datepicker-trigger" src="https://teamtrope.com/wp-content/plugins/gravityforms/images/calendar.png" alt="..." title="...">
-					</div>
-					<input type="hidden" id="gforms_calendar_icon_input_54_8" class="gform_hidden" value="https://teamtrope.com/wp-content/plugins/gravityforms/images/calendar.png">
-					<div class="gfield_description">*Please note:  Your marketing release date is NOT the same as the date your publication date.  Each sales channel and format (Amazon, Barnes and Noble, etc) has a different review process and can take anywhere from 1 day - 2 weeks before it's available for sale. For planning purposes, from the point you have approved the layout and submitted your cover templates and publication fact sheet, you can expect your book to be available in approximately 3-4 weeks.</div>
-				</li>
-				<li id="field_54_10" class="gfield">
-					<label class="gfield_label" for="input_54_10">Go to Project</label>
-					<div class="ginput_container">
-						<input name="input_10" id="input_54_10" type="text" value="https://teamtrope.com/projects/dejection-songs-by-alex-kimmell/" class="medium" tabindex="2">
-					</div>
+<div class="gf_browser_safari gform_wrapper">
+	<a id="gf_54" name="gf_54" class="gform_anchor"></a> 
+	<%= simple_form_for @project,
+				url: url_for(controller: "projects", action: "marketing_release_date", id: @project), 
+				html: { id: "marketing_release_date"} do | f | %>
+		<%= f.error_notification %>
+		<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+		<div>
+			<ul>
+				<li>
+					<%= f.input :marketing_release_date, 
+							label: "Planned Marketing Release Date*",
+							as: :date,
+							start_year: Date.today.year, 
+							discard_time: true %>
+					<div >*Please note:  Your marketing release date is NOT the same as the date your publication date.  Each sales channel and format (Amazon, Barnes and Noble, etc) has a different review process and can take anywhere from 1 day - 2 weeks before it's available for sale. For planning purposes, from the point you have approved the layout and submitted your cover templates and publication fact sheet, you can expect your book to be available in approximately 3-4 weeks.</div>
 				</li>
 			</ul>
 		</div>
-		<div class="gform_footer top_label">
-			<input type="submit" id="gform_submit_button_54" class="gform_button button" value="Submit" tabindex="3" onclick="if(window[&quot;gf_submitting_54&quot;]){return false;}  window[&quot;gf_submitting_54&quot;]=true; "><input type="hidden" name="gform_ajax" value="form_id=54&amp;title=&amp;description=1&amp;tabindex=1">
-			<input type="hidden" class="gform_hidden" name="is_submit_54" value="1">
-			<input type="hidden" class="gform_hidden" name="gform_submit" value="54">
-			<input type="hidden" class="gform_hidden" name="gform_unique_id" value="">
-			<input type="hidden" class="gform_hidden" name="state_54" value="WyJbXSIsIjRmY2NjODBlOGIxY2YzNWY4OWJkNTk5YTMyYTU5ZGZhIl0=">
-			<input type="hidden" class="gform_hidden" name="gform_target_page_number_54" id="gform_target_page_number_54" value="0">
-			<input type="hidden" class="gform_hidden" name="gform_source_page_number_54" id="gform_source_page_number_54" value="1">
-			<input type="hidden" name="gform_field_values" value="">
+		<div>
+			<%= f.submit 'submit' %>
 		</div>
-	</form>
+	<% end %>
 </div>

@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   match '/projects/edited_manuscript/:id',        to: 'projects#edited_manuscript',        via: 'patch'
   match '/projects/final_manuscript/:id',         to: 'projects#final_manuscript',         via: 'patch'
   match '/projects/layout_upload/:id',            to: 'projects#layout_upload',            via: 'patch'
+  match '/projects/marketing_release_date/:id',   to: 'projects#marketing_release_date',   via: 'patch'
   match '/projects/original_manuscript/:id',      to: 'projects#original_manuscript',      via: 'patch'
   match '/projects/price_promotion/:id',          to: 'projects#price_promotion',          via: 'patch'
   match '/projects/proofed_manuscript/:id',       to: 'projects#proofed_manuscript',       via: 'patch'

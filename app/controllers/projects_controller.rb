@@ -286,6 +286,18 @@ class ProjectsController < ApplicationController
   		render 'show'
   	end
   end
+  
+  def marketing_release_date
+  	if @project.update(update_project_params)
+  		update_current_task
+  		@project.create_activity :marketing_release_date, owner: current_user,
+  															parameters: { text: 'Set Marketing Release Date', form_data: params[:project].to_s}
+  		flash[:success] = 'Marketing Release Date Set'
+  		redirect_to @project
+  	else
+  		render 'show'
+  	end
+  end
 
   private
   def new_project_params
