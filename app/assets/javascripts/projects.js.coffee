@@ -185,6 +185,30 @@ jQuery ->
 			'project[media_kits_attributes][0][document]': "You must upload either a pdf, doc, or docx file."
 		}
 	})
+	
+jQuery ->
+	$("#publish_book").validate({
+		rules: {
+			'project[published_file_attributes][mobi]': {
+				required: true,
+				#accept: "application/octet-stream"
+			},
+			'project[published_file_attributes][epub]': {
+				required: true,
+				#accept: "application/(epub\+zip|octet-stream)"
+				extension: '.epub'
+			},
+			'project[published_file_attributes][pdf]': {
+				required: true,
+				accept: "application/pdf"
+			}
+		},
+		messages: {
+			'project[published_file_attributes][mobi]': 'You must upload a mobi file.'
+			'project[published_file_attributes][epub]': 'You must upload an epub file.'
+			'project[published_file_attributes][pdf]':  'You must upload a pdf.'
+		}
+	})	
 
 ## per task 205 https://booktrope.acunote.com/projects/47888/tasks/205
 ## previously published was removed from the submit proofed form, but I left the jquery 
@@ -322,7 +346,7 @@ jQuery ->
   		}
   	}
   });
-
+  
 ## This is for the Approve Cover Art partial, and handles the optional inputs for
 ## the notes if they do not approve the Cover Art.
 jQuery(document).ready () ->

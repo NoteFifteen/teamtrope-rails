@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317005237) do
+ActiveRecord::Schema.define(version: 20150317030107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -309,6 +309,27 @@ ActiveRecord::Schema.define(version: 20150317005237) do
 
   add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree
   add_index "projects", ["project_type_id"], name: "index_projects_on_project_type_id", using: :btree
+
+  create_table "published_files", force: true do |t|
+    t.integer  "project_id"
+    t.string   "mobi_file_name"
+    t.string   "mobi_content_type"
+    t.integer  "mobi_file_size"
+    t.datetime "mobi_updated_at"
+    t.string   "epub_file_name"
+    t.string   "epub_content_type"
+    t.integer  "epub_file_size"
+    t.datetime "epub_updated_at"
+    t.string   "pdf_file_name"
+    t.string   "pdf_content_type"
+    t.integer  "pdf_file_size"
+    t.datetime "pdf_updated_at"
+    t.date     "publication_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "published_files", ["project_id"], name: "index_published_files_on_project_id", using: :btree
 
   create_table "required_roles", force: true do |t|
     t.integer  "role_id"

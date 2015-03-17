@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   match '/projects/original_manuscript/:id',      to: 'projects#original_manuscript',      via: 'patch'
   match '/projects/price_promotion/:id',          to: 'projects#price_promotion',          via: 'patch'
   match '/projects/proofed_manuscript/:id',       to: 'projects#proofed_manuscript',       via: 'patch'
+  match '/projects/publish_book/:id',             to: 'projects#publish_book',             via: 'patch'
   match '/projects/revenue_allocation_split/:id', to: 'projects#revenue_allocation_split', via: 'patch'
   match '/projects/submit_form_1099/:id',         to: 'projects#submit_form_1099',         via: 'patch'
   match '/projects/update_final_page_count/:id',  to: 'projects#update_final_page_count',  via: 'patch'
