@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317005237) do
+ActiveRecord::Schema.define(version: 20150317224149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,19 @@ ActiveRecord::Schema.define(version: 20150317005237) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "kdp_select_enrollments", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "member_id"
+    t.date     "enrollment_date"
+    t.string   "update_type"
+    t.json     "update_data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "kdp_select_enrollments", ["member_id"], name: "index_kdp_select_enrollments_on_member_id", using: :btree
+  add_index "kdp_select_enrollments", ["project_id"], name: "index_kdp_select_enrollments_on_project_id", using: :btree
 
   create_table "media_kits", force: true do |t|
     t.integer  "project_id"

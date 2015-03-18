@@ -30,3 +30,8 @@
   color: red !important;
   font-weight: bold;
 }
+
+/* Override pcss3t & typography styles to fix funny fonts */
+.container * {
+  font-family: inherit !important;
+}

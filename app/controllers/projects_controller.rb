@@ -192,6 +192,23 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def kdp_select
+    if @project.update(update_project_params)
+      # update_current_task
+      @project.create_activity :media_kit, owner: current_user,
+                               parameters: { text: 'Enrolled in KDP Select', form_data: params[:project].to_s}
+      flash[:success] = 'Enrolled in KDP Select'
+      redirect_to @project
+    else
+      render 'show'
+    end
+  end
+
+  def kdp_update
+
+    redirect_to @project
+  end
+
   def cover_concept_upload
     if @project.update(update_project_params)
       @project.create_activity :uploaded_cover_concept, owner: current_user,
@@ -366,6 +383,7 @@ class ProjectsController < ApplicationController
   		:layout_style_choice, :has_index, :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited,
   		:childrens_book, :manuscript_proofed, :edit_complete_date, :manuscript_original, :imprint_id, 
   		:genre_ids => [],
+      :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
   		:media_kits_attributes => [:document],
   		:price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion],
   		:status_updates_attributes => [:type, :status],

@@ -38,6 +38,8 @@ Rails.application.routes.draw do
   match '/projects/edit_layout_style/:id',        to: 'projects#edit_layout_style',        via: 'patch'
   match '/projects/edited_manuscript/:id',        to: 'projects#edited_manuscript',        via: 'patch'
   match '/projects/final_manuscript/:id',         to: 'projects#final_manuscript',         via: 'patch'
+  match '/projects/kdp_select/:id',               to: 'projects#kdp_select',               via: 'patch'
+  match '/projects/kdp_update/:id',               to: 'projects#kdp_update',               via: 'patch'
   match '/projects/layout_upload/:id',            to: 'projects#layout_upload',            via: 'patch'
   match '/projects/marketing_release_date/:id',   to: 'projects#marketing_release_date',   via: 'patch'
   match '/projects/media_kit/:id',                to: 'projects#media_kit',                via: 'patch'

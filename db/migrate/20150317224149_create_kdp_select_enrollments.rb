@@ -4,7 +4,8 @@ class CreateKdpSelectEnrollments < ActiveRecord::Migration
       t.references :project, index: true
       t.integer :member_id
       t.date :enrollment_date
-      t.json :update_options
+      t.string :update_type
+      t.json :update_data
 
       t.timestamps
     end
