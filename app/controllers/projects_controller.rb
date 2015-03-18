@@ -377,6 +377,18 @@ class ProjectsController < ApplicationController
   	end
   end
 
+  def blog_tour
+  	if @project.update(update_project_params)
+  		update_current_task
+  		@project.create_activity :blog_tour, owner: current_user,
+  				parameters: { text: 'Scheduled a Blog Tour', form_data: params[:project].to_s}
+  		flash[:success] = 'Blog Tour Scheduled.'
+  		redirect_to @project  		
+  	else
+  		render 'show'
+  	end
+  end
+
   private
   def new_project_params
   	params.require(:project).permit(:title)
@@ -395,6 +407,7 @@ class ProjectsController < ApplicationController
   		:layout_style_choice, :has_index, :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited,
   		:childrens_book, :manuscript_proofed, :edit_complete_date, :manuscript_original, :imprint_id, 
   		:genre_ids => [],
+  		:blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
   		:media_kits_attributes => [:document],
   		:price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion],

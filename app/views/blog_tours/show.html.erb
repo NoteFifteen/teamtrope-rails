@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @blog_tour.project %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= @blog_tour.cost %>
+</p>
+
+<p>
+  <strong>Tour type:</strong>
+  <%= @blog_tour.tour_type %>
+</p>
+
+<p>
+  <strong>Blog tour service:</strong>
+  <%= @blog_tour.blog_tour_service %>
+</p>
+
+<p>
+  <strong>Number of stops:</strong>
+  <%= @blog_tour.number_of_stops %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @blog_tour.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @blog_tour.end_date %>
+</p>
+
+<%= link_to 'Edit', edit_blog_tour_path(@blog_tour) %> |
+<%= link_to 'Back', blog_tours_path %>

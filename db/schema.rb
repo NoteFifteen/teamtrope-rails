@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317224149) do
+ActiveRecord::Schema.define(version: 20150318231204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,20 @@ ActiveRecord::Schema.define(version: 20150317224149) do
   end
 
   add_index "audit_team_membership_removals", ["project_id"], name: "index_audit_team_membership_removals_on_project_id", using: :btree
+
+  create_table "blog_tours", force: true do |t|
+    t.integer  "project_id"
+    t.float    "cost"
+    t.string   "tour_type"
+    t.string   "blog_tour_service"
+    t.integer  "number_of_stops"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "blog_tours", ["project_id"], name: "index_blog_tours_on_project_id", using: :btree
 
   create_table "book_genres", force: true do |t|
     t.integer  "project_id"

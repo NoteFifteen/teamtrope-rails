@@ -1,0 +1,2 @@
+module BlogToursHelper
+end

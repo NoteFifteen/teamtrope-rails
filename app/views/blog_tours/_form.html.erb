@@ -1,0 +1,17 @@
+<%= simple_form_for(@blog_tour) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :project %>
+    <%= f.input :cost %>
+    <%= f.input :tour_type %>
+    <%= f.input :blog_tour_service %>
+    <%= f.input :number_of_stops %>
+    <%= f.input :start_date %>
+    <%= f.input :end_date %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

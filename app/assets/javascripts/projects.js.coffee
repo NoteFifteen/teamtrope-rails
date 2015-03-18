@@ -208,7 +208,24 @@ jQuery ->
 			'project[published_file_attributes][epub]': 'You must upload an epub file.'
 			'project[published_file_attributes][pdf]':  'You must upload a pdf.'
 		}
-	})	
+	})
+
+	
+## Blog Tour Form validations
+jQuery.validator.addMethod("blogTourCostValidator", (value, element, params) ->
+	return value < 100
+, jQuery.validator.format("Cost must not exceed $100.")
+)
+
+jQuery ->
+	$("#blog_tour").validate({
+		rules: {
+			'project[blog_tours_attributes][0][cost]': {
+				required: true,
+				blogTourCostValidator: "#project_blog_tour_cost"
+			}
+		}
+	})
 
 ## per task 205 https://booktrope.acunote.com/projects/47888/tasks/205
 ## previously published was removed from the submit proofed form, but I left the jquery 

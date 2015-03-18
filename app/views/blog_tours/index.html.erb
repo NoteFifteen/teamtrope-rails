@@ -1,0 +1,37 @@
+<h1>Listing blog_tours</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Cost</th>
+      <th>Tour type</th>
+      <th>Blog tour service</th>
+      <th>Number of stops</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @blog_tours.each do |blog_tour| %>
+      <tr>
+        <td><%= blog_tour.project %></td>
+        <td><%= blog_tour.cost %></td>
+        <td><%= blog_tour.tour_type %></td>
+        <td><%= blog_tour.blog_tour_service %></td>
+        <td><%= blog_tour.number_of_stops %></td>
+        <td><%= blog_tour.start_date %></td>
+        <td><%= blog_tour.end_date %></td>
+        <td><%= link_to 'Show', blog_tour %></td>
+        <td><%= link_to 'Edit', edit_blog_tour_path(blog_tour) %></td>
+        <td><%= link_to 'Destroy', blog_tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Blog tour', new_blog_tour_path %>
