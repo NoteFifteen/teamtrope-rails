@@ -267,8 +267,9 @@ jQuery ->
 				$('.does_contain_images_1').slideUp()
 				$('.does_contain_images_2').slideUp()
 
-## proof read manuscript custom validator				
-jQuery.validator.addMethod("pfm_checklist", (value, element, params) ->
+
+## checklist custom validator				
+jQuery.validator.addMethod("checklistValidator", (value, element, params) ->
 	is_user_ready_to_upload = true
 	$(params[0]).each (index, obj) ->
 		if ! obj.checked
@@ -277,11 +278,37 @@ jQuery.validator.addMethod("pfm_checklist", (value, element, params) ->
 , jQuery.validator.format("You must sign off that you have completed all steps in order to submit the form.")
 )
 
+## upload_cover_templates
+jQuery ->
+	$("#upload_cover_templates").validate({
+		rules: {
+			checklist_0: {
+				checklistValidator: [".upload_cover_checklist"]
+			},
+			'project[cover_template_attributes][ebook_front_cover]': {
+				required: true,
+				accept: "image/p?jpeg"
+			},
+			'project[cover_template_attributes][createspace_cover]': {
+				required: true,
+				accept: "application/pdf"
+			},
+			'project[cover_template_attributes][lightning_source_cover]': {
+				required: true,
+				accept: "application/pdf"
+			}
+			'project[cover_template_attributes][alternative_cover]': {
+				accept: "application/pdf"
+			}
+		}
+	})
+
+## submit proofread
 jQuery ->
 	$("#submit_proofread").validate({
 		rules:{
 			checklist_0: { 		
-				pfm_checklist: [".proofread_manuscript_checklist"] 
+				checklistValidator: [".proofread_manuscript_checklist"] 
 			},
 			'project[has_sub_chapters]': {
 				required: true

@@ -28,6 +28,7 @@ class Project < ActiveRecord::Base
   has_many :status_updates, dependent: :destroy
   
   has_many :blog_tours, dependent: :destroy
+  has_one :cover_template, dependent: :destroy
 
   #TODO: we might not need to allow destroy via the project form for associations that
   # are only written by form. (media_kits, price_change_promotions, published_file, status_update)
@@ -36,6 +37,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :kdp_select_enrollment, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :media_kits, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :price_change_promotions, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :cover_template, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :published_file, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :status_updates, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
@@ -79,6 +81,13 @@ class Project < ActiveRecord::Base
 
   # Available options for the layout style -> Left Side Page Header Display - Name.  Stored in page_header_display_name
   PageHeaderDisplayNameChoices = [['Full Name'], ['Last Name Only']]
+
+	# mainly used for debugging purposes. 
+	# Returns the current_task for a particular workflow
+	def current_task_for_workflow(workflow)
+		current_tasks.joins(:task).includes(:task).where("tasks.workflow_id = ? ", 
+							Workflow.where(name: workflow).first).first
+	end
 
   def team_complete?
 		required_roles = project_type.required_roles.ids

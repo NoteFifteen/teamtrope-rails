@@ -52,18 +52,11 @@ class CreateProjects < ActiveRecord::Migration
       t.attachment :final_manuscript_pdf
       t.attachment :final_pdf
 			t.attachment :layout_upload
-      t.attachment :createspace_cover
-      t.attachment :lightning_source_cover
-      t.attachment :alternative_cover_template
       
       #images
       t.attachment :cover_concept
       t.attachment :stock_cover_image
-      t.attachment :ebook_front_cover
-    
-      #book files
-      t.attachment :final_mobi
-			t.attachment :final_epub      
+          
 
       t.timestamps
     end

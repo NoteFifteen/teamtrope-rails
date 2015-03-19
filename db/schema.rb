@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150318231204) do
+ActiveRecord::Schema.define(version: 20150319012056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,30 @@ ActiveRecord::Schema.define(version: 20150318231204) do
   end
 
   add_index "control_numbers", ["project_id"], name: "index_control_numbers_on_project_id", using: :btree
+
+  create_table "cover_templates", force: true do |t|
+    t.integer  "project_id"
+    t.string   "ebook_front_cover_file_name"
+    t.string   "ebook_front_cover_content_type"
+    t.integer  "ebook_front_cover_file_size"
+    t.datetime "ebook_front_cover_updated_at"
+    t.string   "createspace_cover_file_name"
+    t.string   "createspace_cover_content_type"
+    t.integer  "createspace_cover_file_size"
+    t.datetime "createspace_cover_updated_at"
+    t.string   "lightning_source_cover_file_name"
+    t.string   "lightning_source_cover_content_type"
+    t.integer  "lightning_source_cover_file_size"
+    t.datetime "lightning_source_cover_updated_at"
+    t.string   "alternative_cover_file_name"
+    t.string   "alternative_cover_content_type"
+    t.integer  "alternative_cover_file_size"
+    t.datetime "alternative_cover_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cover_templates", ["project_id"], name: "index_cover_templates_on_project_id", using: :btree
 
   create_table "current_tasks", force: true do |t|
     t.integer  "project_id"
@@ -307,18 +331,6 @@ ActiveRecord::Schema.define(version: 20150318231204) do
     t.string   "layout_upload_content_type"
     t.integer  "layout_upload_file_size"
     t.datetime "layout_upload_updated_at"
-    t.string   "createspace_cover_file_name"
-    t.string   "createspace_cover_content_type"
-    t.integer  "createspace_cover_file_size"
-    t.datetime "createspace_cover_updated_at"
-    t.string   "lightning_source_cover_file_name"
-    t.string   "lightning_source_cover_content_type"
-    t.integer  "lightning_source_cover_file_size"
-    t.datetime "lightning_source_cover_updated_at"
-    t.string   "alternative_cover_template_file_name"
-    t.string   "alternative_cover_template_content_type"
-    t.integer  "alternative_cover_template_file_size"
-    t.datetime "alternative_cover_template_updated_at"
     t.string   "cover_concept_file_name"
     t.string   "cover_concept_content_type"
     t.integer  "cover_concept_file_size"
@@ -327,18 +339,6 @@ ActiveRecord::Schema.define(version: 20150318231204) do
     t.string   "stock_cover_image_content_type"
     t.integer  "stock_cover_image_file_size"
     t.datetime "stock_cover_image_updated_at"
-    t.string   "ebook_front_cover_file_name"
-    t.string   "ebook_front_cover_content_type"
-    t.integer  "ebook_front_cover_file_size"
-    t.datetime "ebook_front_cover_updated_at"
-    t.string   "final_mobi_file_name"
-    t.string   "final_mobi_content_type"
-    t.integer  "final_mobi_file_size"
-    t.datetime "final_mobi_updated_at"
-    t.string   "final_epub_file_name"
-    t.string   "final_epub_content_type"
-    t.integer  "final_epub_file_size"
-    t.datetime "final_epub_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_type_id"

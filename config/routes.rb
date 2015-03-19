@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   match '/projects/submit_form_1099/:id',         to: 'projects#submit_form_1099',         via: 'patch'
   match '/projects/update_final_page_count/:id',  to: 'projects#update_final_page_count',  via: 'patch'
   match '/projects/update_status/:id',            to: 'projects#update_status',            via: 'patch'
+  match '/projects/upload_cover_templates/:id',   to: 'projects#upload_cover_templates',   via: 'patch'
 
   resources :posts do
   	resources :comments, shallow: true

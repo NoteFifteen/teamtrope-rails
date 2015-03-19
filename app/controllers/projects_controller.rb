@@ -329,6 +329,18 @@ class ProjectsController < ApplicationController
     end
   end
   
+  def upload_cover_templates
+    if @project.update(update_project_params)
+      update_current_task
+      @project.create_activity :uploaded_cover_templates, owner: current_user,
+                                parameters: { text: 'Uploaded Cover Templates', form_data: params[:project].to_s}
+      flash[:success] = 'Uploaded Cover Templates'
+      redirect_to @project
+    else
+        render 'show'
+    end  
+  end
+  
   def final_manuscript
   	if @project.update(update_project_params)
   		update_current_task
@@ -397,11 +409,10 @@ class ProjectsController < ApplicationController
   def update_project_params
   	params.require(:project).permit(:id, :final_title, :final_doc_file, :final_manuscript_pdf, 
   		:final_pdf, :stock_image_request_link, :layout_notes, :previously_published, :prev_publisher_and_date,
-  		:stock_cover_image, :cover_concept_notes, :proofed_word_count, :cover_concept, :teamroom_link, :final_mobi,
-  		:publication_date, :final_epub, :marketing_release_date, :paperback_cover_type, :age_range, :search_terms,
+  		:stock_cover_image, :cover_concept_notes, :proofed_word_count, :cover_concept, :teamroom_link,
+  		:publication_date, :marketing_release_date, :paperback_cover_type, :age_range, :search_terms,
   		:bisac_code_3, :bisac_code_2, :bisac_code_1, :ebook_price, :print_price, :blurb_one_line, :endorsements,
-  		:author_bio, :blurb_description, :final_title, :cover_art_approval_date, :alternative_cover_template,
-  		:createspace_cover, :lightning_source_cover, :ebook_front_cover, :layout_approved_date, :layout_approved,
+  		:author_bio, :blurb_description, :cover_art_approval_date,:layout_approved_date, :layout_approved,
   		:layout_approval_issue_list, :final_page_count, :layout_upload, :page_header_display_name, :use_pen_name_on_title,
   		:use_pen_name_for_copyright, :exact_name_on_copyright, :pen_name, :special_text_treatment, :has_sub_chapters,
   		:layout_style_choice, :has_index, :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited,
@@ -411,6 +422,7 @@ class ProjectsController < ApplicationController
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
   		:media_kits_attributes => [:document],
   		:price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion],
+  		:cover_template_attributes => [:ebook_front_cover, :createspace_cover, :lightning_source_cover, :alternative_cover],
   		:published_file_attributes => [:publication_date, :mobi, :epub, :pdf],
   		:status_updates_attributes => [:type, :status],
   		:team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy]

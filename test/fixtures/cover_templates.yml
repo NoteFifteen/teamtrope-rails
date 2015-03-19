@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project_id: 
+  front_cover: 
+  createspace_cover: 
+  lightning_source_cover: 
+  alternate: 
+
+two:
+  project_id: 
+  front_cover: 
+  createspace_cover: 
+  lightning_source_cover: 
+  alternate: 
