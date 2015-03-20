@@ -195,7 +195,7 @@ class ProjectsController < ApplicationController
   def kdp_select
     if @project.update(update_project_params)
       # update_current_task
-      @project.create_activity :media_kit, owner: current_user,
+      @project.create_activity :kdp_select_enrolled, owner: current_user,
                                parameters: { text: 'Enrolled in KDP Select', form_data: params[:project].to_s}
       flash[:success] = 'Enrolled in KDP Select'
       redirect_to @project
@@ -204,9 +204,37 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def kdp_update
 
-    redirect_to @project
+  def kdp_update
+    # @todo At the moment this function just stores data, but in the future it may be necessary to track the
+    #       dates surrounding enrollment and the expiration, when it's activated, etc.  It may also be necessary
+    #       to limit when updates can be made (such as if a certain promo is already running).
+
+    # The form passes back a bunch of variables not related to KdpSelectEnrollment so we
+    # have to rewrite them here.
+    kdp_update_attributes = params[:project][:kdp_select_enrollment_attributes]
+
+    kdp_select = @project.kdp_select_enrollment
+    if !kdp_select.nil?
+      # update the kdp_select record
+      kdp_params = {
+          member_id: current_user.id,
+          update_type: kdp_update_attributes[:update_type],
+          update_data: kdp_update_attributes[:update_data]
+      }
+      if kdp_select.update(kdp_params)
+        @project.create_activity :kdp_select_updated, owner: current_user,
+                                 parameters: { text: 'Updated KDP Select', form_data: kdp_update_attributes.to_s}
+        flash[:success] = 'Updated KDP Select'
+        redirect_to @project
+      else
+        flash[:error] = 'Error updating KDP enrollment record!'
+        render 'show'
+      end
+    else
+      flash[:error] = 'Could not find an enrollment record!'
+      render 'show'
+    end
   end
 
   def cover_concept_upload

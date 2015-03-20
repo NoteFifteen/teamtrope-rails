@@ -35,3 +35,13 @@
 .container * {
   font-family: inherit !important;
 }
+
+/** Try to make the errors show up better **/
+span.validationError {
+  color: red !important;
+  font-weight: bold;
+}
+
+input.validationError {
+  border: 1px dotted red;
+}

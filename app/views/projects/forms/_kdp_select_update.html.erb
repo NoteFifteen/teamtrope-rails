@@ -1,1 +1,179 @@
-<h1>KDP Select Update</h1>
+
+<!-- KDP Select Update -->
+<% if @project.kdp_select_enrollment.nil? || @project.kdp_select_enrollment.new_record? %>
+    <div class="container">
+      <h1>KDP Select Update</h1>
+      <div class="row">
+        <div class="col-md-8 error">
+          <p>You aren't enrolled in the KDP Select program yet.</p>
+
+          <p>Go to the <strong>KDP Select</strong> tab to enroll.  Afterwards you can come here to schedule promotions
+            or end your enrollment.</p>
+        </div>
+      </div>
+    </div>
+<% else %>
+  <div class="container kdp_select_update_container">
+    <h1>KDP Select Update</h1>
+    <div class="row">
+      <div class="col-md-8">
+        <%= simple_form_for @project,
+                            url: url_for(controller: 'projects', action: 'kdp_update', id: @project),
+                            html: { id: "kdp_update" } do |f| %>
+          <%= f.error_notification %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
+              <div id="kdp_update_first_page">
+                <h2>Note: You can only participate in EITHER the Kindle Countdown Deal OR the Free Book Promotion for each
+                  90-day period.</h2>
+                <br/>
+                <div>
+                  <span><strong>Author Name:</strong> <%= @project.authors.first.member.name %> </span><br/>
+                  <span><strong>Book Title:</strong> <%= @project.final_title %> </span><br/>
+                </div>
+                <br/>
+                <div>
+                  <%= f.simple_fields_for :kdp_select_enrollment, f.object.kdp_select_enrollment do | builder | %>
+                      <%= builder.input :member_id, as: :hidden, input_html: { value: current_user.id } %>
+                      <%= builder.input :update_data, as: :hidden, input_html: { value: '' } %>
+
+                      <div class="collection_list_input">
+                        <label>Which updates are you requesting today?<span class="required">*</span><br/>
+                        <%= builder.collection_radio_buttons :update_type,
+                                 [
+                                     ['countdown_deal', 'Countdown Deal'],
+                                     ['free_book_promo', 'Free Book Promotion'],
+                                     ['remove_from_kdp', 'Remove this book from KDP Select at the end of the current 90 day period'],
+                                 ],
+                                 :first, :last,
+                                 :collection_wrapper_tag => 'ul',
+                                 :item_wrapper_tag => 'li',
+                                 input_html: {
+                                         id: 'kdp_update_type'
+                                 }
+                        %>
+                        </label>
+                      </div>
+                  <% end %>
+
+                  <button id="kdp_update_option_button" class="btn btn-primary" type="button">Next</button>
+                </div>
+              </div>
+
+              <div id="kdp_update_countdown_deal" style="display: none;">
+                <h2>Countdown Deal</h2>
+                <p>
+                  We will check your request for adherence to each of these conditions. Here are some parameters for
+                  scheduling Kindle Countdown Deals:
+                  <ul style="list-style-type: disc;">
+                      <li>Your book has been enrolled in KDP Select for 30 days or more</li>
+                      <li>The regular list price for your book has not been changed for 30 days or more</li>
+                      <li>The minimum discount for your book is $1.00</li>
+                      <li>The maximum duration of the Kindle Countdown Deals is 7 days</li>
+                      <li>The minimum time increment is 1 hour</li>
+                      <li>The maximum number of price increments is 5</li>
+                      <li>The latest end time for your Kindle Countdown Deals is 14 days before your KDP Select period ends.
+                      However, If you renew your book in KDP Select for another consecutive 90-day period, the latest end
+                      time of your Kindle Countdown Deals may be the last day of your current KDP Select period.</li>
+                  </ul>
+                </p>
+                <p>Please give at least 48 hours notice before enrolling into Kindle Countdown.</p>
+                <br/>
+                <div>
+                  <label>Start Date<span class="required">*</span><br/>
+                    <%= select_date Date.today + 2.days, prefix: :countdown_start_date %>
+                  </label>
+                </div>
+                <div>
+                  <label>Start Time<span class="required">*</span><br/>
+                    <%= select_time Time.parse('00:00:00'), prefix: :countdown_start_time, ampm: true %>
+                  </label>
+                </div>
+                <div>
+                  <label>Number of days to run the countdown<span class="required">*</span><br/>
+                  <%= select_tag 'countdown_num_days', options_from_collection_for_select((1..7).to_a.map{|n| [n,n]}, :first, :first) %><br/>
+                  </label>
+                </div>
+                <div>
+                  <label>Number of Price Increments<span class="required">*</span><br/>
+                    <%= select_tag 'countdown_num_price_increments',
+                                   options_from_collection_for_select((1..5).to_a.map{|n| [n,n]}, :first, :first) %><br/>
+                  </label>
+                </div>
+                <div>
+                  <label>Starting Promotional Price<span class="required">*</span><br/>
+                    <%= text_field_tag 'countdown_start_price', nil, placeholder: 'Enter starting price..' %>
+                  </label>
+                </div>
+                <br/>
+                <button id="kdp_update_countdown_back_button" class="btn btn-primary" type="button">Back</button>
+                <button id="kdp_update_countdown_submit_button" class="btn btn-success" type="submit">Submit</button>
+              </div>
+
+              <div id="kdp_update_free_book_promo" style="display: none;">
+                <h2>Free Book Promo</h2>
+                <p>
+                  You can offer any book enrolled in KDP Select free to readers for up to five days at your discretion
+                  during each 90-day enrollment period in KDP Select. You can pick the days when you want to run your
+                  free promotions, choosing to go one day at a time or offering your book free for multiple days in a
+                  row. The start and end times of your promotions will be approximately midnight Pacific Standard Time
+                  on the day it starts and midnight Pacific Standard Time on the day it ends.
+                </p>
+                <br/>
+                <div>
+                  <label>How many date ranges do you want to include?<span class="required">*</span><br/>
+                    <%= select_tag 'free_book_num_date_ranges',
+                                   options_from_collection_for_select((1..5).to_a.map{|n| [n,n]}, :first, :first) %><br/><br/>
+                  </label>
+                </div>
+                <div>
+                  <table>
+                    <tr>
+                      <th>#</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                    </tr>
+                    <tr id="free_book_date_range_1">
+                      <td>1</td>
+                      <td><%= select_date Date.today + 2.days, prefix: :free_book_start_date_1 %></td>
+                      <td><%= select_date Date.today + 3.days, prefix: :free_book_end_date_1 %></td>
+                    </tr>
+                    <tr id="free_book_date_range_2" style="display: none;">
+                      <td>2</td>
+                      <td><%= select_date Date.today + 3.days, prefix: :free_book_start_date_2 %></td>
+                      <td><%= select_date Date.today + 4.days, prefix: :free_book_end_date_2 %></td>
+                    </tr>
+                    <tr id="free_book_date_range_3" style="display: none;">
+                      <td>3</td>
+                      <td><%= select_date Date.today + 4.days, prefix: :free_book_start_date_3 %></td>
+                      <td><%= select_date Date.today + 5.days, prefix: :free_book_end_date_3 %></td>
+                    </tr>
+                    <tr id="free_book_date_range_4" style="display: none;">
+                      <td>4</td>
+                      <td><%= select_date Date.today + 5.days, prefix: :free_book_start_date_4 %></td>
+                      <td><%= select_date Date.today + 6.days, prefix: :free_book_end_date_4 %></td>
+                    </tr>
+                    <tr id="free_book_date_range_5" style="display: none;">
+                      <td>5</td>
+                      <td><%= select_date Date.today + 6.days, prefix: :free_book_start_date_5 %></td>
+                      <td><%= select_date Date.today + 7.days, prefix: :free_book_end_date_5 %></td>
+                    </tr>
+                  </table>
+                </div>
+
+                <button id="kdp_update_free_book_back_button" class="btn btn-primary" type="button">Back</button>
+                <button id="kdp_update_free_book_submit_button" class="btn btn-success" type="submit">Submit</button>
+              </div>
+
+              <div id="kdp_remove_from_kdp" style="display: none;">
+                <h2>Remove Book from KDP Select</h2>
+                <p>This book will be removed at the end of the current 90 day period.</p>
+                <br/>
+                <button id="kdp_remove_from_kdp_back_button" class="btn btn-primary" type="button">Back</button>
+                <button id="kdp_remove_from_kdp_submit_button" class="btn btn-success" type="submit">Submit</button>
+              </div>
+      <% end %>
+        </div>
+      </div>
+  </div>
+<% end %>
