@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project_id: 
+  author_name: MyString
+  series_name: MyString
+  series_number: MyString
+  description: MyText
+  author_bio: MyText
+  endorsements: MyText
+  one_line_blurb: MyString
+  print_price: MyString
+  ebook_price: MyString
+  bisac_code_one: MyString
+  bisac_code_two: MyString
+  bisac_code_three: MyString
+  search_terms: MyText
+  age_range: MyString
+  paperback_cover_type: MyString
+
+two:
+  project_id: 
+  author_name: MyString
+  series_name: MyString
+  series_number: MyString
+  description: MyText
+  author_bio: MyText
+  endorsements: MyText
+  one_line_blurb: MyString
+  print_price: MyString
+  ebook_price: MyString
+  bisac_code_one: MyString
+  bisac_code_two: MyString
+  bisac_code_three: MyString
+  search_terms: MyText
+  age_range: MyString
+  paperback_cover_type: MyString

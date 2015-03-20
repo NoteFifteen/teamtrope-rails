@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project_id: 
+  cost: 1.5
+  tour_type: MyString
+  blog_tour_service: MyString
+  number_of_stops: 1
+  start_date: 2015-03-18
+  end_date: 2015-03-18
+
+two:
+  project_id: 
+  cost: 1.5
+  tour_type: MyString
+  blog_tour_service: MyString
+  number_of_stops: 1
+  start_date: 2015-03-18
+  end_date: 2015-03-18

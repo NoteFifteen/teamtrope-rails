@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+  resources :publication_fact_sheets
 
   match '/parse/get_amazon_sales_rank',            to: 'parse#get_amazon_sales_rank',          via: 'get'
   match '/parse/get_queued_items',                 to: 'parse#get_queued_items',               via: 'get'
@@ -31,6 +32,7 @@ Rails.application.routes.draw do
   match '/projects/accept_team_member/:id',       to: 'projects#accept_team_member',       via: [:patch, :post]
   match '/projects/approve_cover_art/:id',        to: 'projects#approve_cover_art',        via: 'patch'
   match '/projects/approve_layout/:id',           to: 'projects#approve_layout',           via: 'patch'
+  match '/projects/blog_tour/:id',                to: 'projects#blog_tour',                via: 'patch'
   match '/projects/cover_concept_upload/:id',     to: 'projects#cover_concept_upload',     via: 'patch'
   # Post is defined for this path since creates and updates are used interchangeably.
   match '/projects/edit_control_numbers/:id',     to: 'projects#edit_control_numbers',     via: 'post'
@@ -46,11 +48,14 @@ Rails.application.routes.draw do
   match '/projects/original_manuscript/:id',      to: 'projects#original_manuscript',      via: 'patch'
   match '/projects/price_promotion/:id',          to: 'projects#price_promotion',          via: 'patch'
   match '/projects/proofed_manuscript/:id',       to: 'projects#proofed_manuscript',       via: 'patch'
+  match '/projects/publish_book/:id',             to: 'projects#publish_book',             via: 'patch'
   match '/projects/remove_team_member/:id',       to: 'projects#remove_team_member',       via: 'patch'
   match '/projects/revenue_allocation_split/:id', to: 'projects#revenue_allocation_split', via: 'patch'
   match '/projects/submit_form_1099/:id',         to: 'projects#submit_form_1099',         via: 'patch'
+  match '/projects/submit_submit_pfs/:id',        to: 'projects#submit_pfs',               via: 'patch'
   match '/projects/update_final_page_count/:id',  to: 'projects#update_final_page_count',  via: 'patch'
   match '/projects/update_status/:id',            to: 'projects#update_status',            via: 'patch'
+  match '/projects/upload_cover_templates/:id',   to: 'projects#upload_cover_templates',   via: 'patch'
 
   resources :posts do
   	resources :comments, shallow: true
@@ -68,6 +73,7 @@ Rails.application.routes.draw do
   resources :project_views
   resources :roles
   resources :task_prerequisite_fields
+  resources :blog_tours
   resources :current_tasks
   resources :unlocked_tasks
   resources :genres
@@ -80,6 +86,7 @@ Rails.application.routes.draw do
   resources :imprints
   resources :status_updates
   resources :price_change_promotions  
+  
    
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

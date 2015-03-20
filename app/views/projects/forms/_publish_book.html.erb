@@ -1,1 +1,34 @@
 <h1>Publish Book</h1>
+<div class="gf_browser_safari gform_wrapper" id="gform_wrapper_68">
+	<%= simple_form_for @project,
+											url: url_for(controller: 'projects', action: 'publish_book', id: @project),
+											html: { id: "publish_book" } do | f | %>
+		<%= f.error_notification %>
+		<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>		
+		<div class="gform_body">
+			<ul>
+				<%= f.simple_fields_for :published_file, ((f.object.published_file.nil?) ? f.object.build_published_file : f.object.published_file) do | published_file | %>
+					<li>
+						<%= published_file.input :publication_date, label: "Publication Date", start_year: Date.today.year %>
+						<div class="gfield_description">Enter the Booktrope official publication date for the book.</div>
+					</li>
+					
+					<li>
+						<%= published_file.input :mobi, label: '.mobi File', required: true %>
+					</li>
+					
+					<li>
+						<%= published_file.input :epub, label: '.epub File', required: true %>
+					</li>
+					
+					<li>
+						<%= published_file.input :pdf, label: '.pdf File', required: true %>
+					</li>
+				<% end %>
+			</ul>
+		</div>
+		<div>
+			<%= f.submit "submit" %>
+		</div>
+	<% end %>
+</div>

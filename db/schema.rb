@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317224149) do
+ActiveRecord::Schema.define(version: 20150319225253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,20 @@ ActiveRecord::Schema.define(version: 20150317224149) do
   end
 
   add_index "audit_team_membership_removals", ["project_id"], name: "index_audit_team_membership_removals_on_project_id", using: :btree
+
+  create_table "blog_tours", force: true do |t|
+    t.integer  "project_id"
+    t.float    "cost"
+    t.string   "tour_type"
+    t.string   "blog_tour_service"
+    t.integer  "number_of_stops"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "blog_tours", ["project_id"], name: "index_blog_tours_on_project_id", using: :btree
 
   create_table "book_genres", force: true do |t|
     t.integer  "project_id"
@@ -87,6 +101,30 @@ ActiveRecord::Schema.define(version: 20150317224149) do
   end
 
   add_index "control_numbers", ["project_id"], name: "index_control_numbers_on_project_id", using: :btree
+
+  create_table "cover_templates", force: true do |t|
+    t.integer  "project_id"
+    t.string   "ebook_front_cover_file_name"
+    t.string   "ebook_front_cover_content_type"
+    t.integer  "ebook_front_cover_file_size"
+    t.datetime "ebook_front_cover_updated_at"
+    t.string   "createspace_cover_file_name"
+    t.string   "createspace_cover_content_type"
+    t.integer  "createspace_cover_file_size"
+    t.datetime "createspace_cover_updated_at"
+    t.string   "lightning_source_cover_file_name"
+    t.string   "lightning_source_cover_content_type"
+    t.integer  "lightning_source_cover_file_size"
+    t.datetime "lightning_source_cover_updated_at"
+    t.string   "alternative_cover_file_name"
+    t.string   "alternative_cover_content_type"
+    t.integer  "alternative_cover_file_size"
+    t.datetime "alternative_cover_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cover_templates", ["project_id"], name: "index_cover_templates_on_project_id", using: :btree
 
   create_table "current_tasks", force: true do |t|
     t.integer  "project_id"
@@ -235,18 +273,6 @@ ActiveRecord::Schema.define(version: 20150317224149) do
     t.string   "teamroom_link"
     t.datetime "publication_date"
     t.datetime "marketing_release_date"
-    t.string   "paperback_cover_type"
-    t.string   "age_range"
-    t.text     "search_terms"
-    t.string   "bisac_code_3"
-    t.string   "bisac_code_2"
-    t.string   "bisac_code_1"
-    t.float    "ebook_price"
-    t.float    "print_price"
-    t.string   "blurb_one_line"
-    t.text     "endorsements"
-    t.text     "author_bio"
-    t.text     "blurb_description"
     t.string   "title"
     t.string   "final_title"
     t.datetime "cover_art_approval_date"
@@ -293,18 +319,6 @@ ActiveRecord::Schema.define(version: 20150317224149) do
     t.string   "layout_upload_content_type"
     t.integer  "layout_upload_file_size"
     t.datetime "layout_upload_updated_at"
-    t.string   "createspace_cover_file_name"
-    t.string   "createspace_cover_content_type"
-    t.integer  "createspace_cover_file_size"
-    t.datetime "createspace_cover_updated_at"
-    t.string   "lightning_source_cover_file_name"
-    t.string   "lightning_source_cover_content_type"
-    t.integer  "lightning_source_cover_file_size"
-    t.datetime "lightning_source_cover_updated_at"
-    t.string   "alternative_cover_template_file_name"
-    t.string   "alternative_cover_template_content_type"
-    t.integer  "alternative_cover_template_file_size"
-    t.datetime "alternative_cover_template_updated_at"
     t.string   "cover_concept_file_name"
     t.string   "cover_concept_content_type"
     t.integer  "cover_concept_file_size"
@@ -313,18 +327,6 @@ ActiveRecord::Schema.define(version: 20150317224149) do
     t.string   "stock_cover_image_content_type"
     t.integer  "stock_cover_image_file_size"
     t.datetime "stock_cover_image_updated_at"
-    t.string   "ebook_front_cover_file_name"
-    t.string   "ebook_front_cover_content_type"
-    t.integer  "ebook_front_cover_file_size"
-    t.datetime "ebook_front_cover_updated_at"
-    t.string   "final_mobi_file_name"
-    t.string   "final_mobi_content_type"
-    t.integer  "final_mobi_file_size"
-    t.datetime "final_mobi_updated_at"
-    t.string   "final_epub_file_name"
-    t.string   "final_epub_content_type"
-    t.integer  "final_epub_file_size"
-    t.datetime "final_epub_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_type_id"
@@ -336,6 +338,50 @@ ActiveRecord::Schema.define(version: 20150317224149) do
 
   add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree
   add_index "projects", ["project_type_id"], name: "index_projects_on_project_type_id", using: :btree
+
+  create_table "publication_fact_sheets", force: true do |t|
+    t.integer  "project_id"
+    t.string   "author_name"
+    t.string   "series_name"
+    t.string   "series_number"
+    t.text     "description"
+    t.text     "author_bio"
+    t.text     "endorsements"
+    t.string   "one_line_blurb"
+    t.string   "print_price"
+    t.string   "ebook_price"
+    t.string   "bisac_code_one"
+    t.string   "bisac_code_two"
+    t.string   "bisac_code_three"
+    t.text     "search_terms"
+    t.string   "age_range"
+    t.string   "paperback_cover_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "publication_fact_sheets", ["project_id"], name: "index_publication_fact_sheets_on_project_id", using: :btree
+
+  create_table "published_files", force: true do |t|
+    t.integer  "project_id"
+    t.string   "mobi_file_name"
+    t.string   "mobi_content_type"
+    t.integer  "mobi_file_size"
+    t.datetime "mobi_updated_at"
+    t.string   "epub_file_name"
+    t.string   "epub_content_type"
+    t.integer  "epub_file_size"
+    t.datetime "epub_updated_at"
+    t.string   "pdf_file_name"
+    t.string   "pdf_content_type"
+    t.integer  "pdf_file_size"
+    t.datetime "pdf_updated_at"
+    t.date     "publication_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "published_files", ["project_id"], name: "index_published_files_on_project_id", using: :btree
 
   create_table "required_roles", force: true do |t|
     t.integer  "role_id"

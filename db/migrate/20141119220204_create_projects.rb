@@ -11,18 +11,6 @@ class CreateProjects < ActiveRecord::Migration
       t.string :teamroom_link
       t.datetime :publication_date
       t.datetime :marketing_release_date
-      t.string :paperback_cover_type
-      t.string :age_range
-      t.text :search_terms
-      t.string :bisac_code_3
-      t.string :bisac_code_2
-      t.string :bisac_code_1
-      t.float :ebook_price
-      t.float :print_price
-      t.string :blurb_one_line
-      t.text :endorsements
-      t.text :author_bio
-      t.text :blurb_description
       t.string :title
       t.string :final_title
       t.datetime :cover_art_approval_date
@@ -52,18 +40,11 @@ class CreateProjects < ActiveRecord::Migration
       t.attachment :final_manuscript_pdf
       t.attachment :final_pdf
 			t.attachment :layout_upload
-      t.attachment :createspace_cover
-      t.attachment :lightning_source_cover
-      t.attachment :alternative_cover_template
       
       #images
       t.attachment :cover_concept
       t.attachment :stock_cover_image
-      t.attachment :ebook_front_cover
-    
-      #book files
-      t.attachment :final_mobi
-			t.attachment :final_epub      
+          
 
       t.timestamps
     end

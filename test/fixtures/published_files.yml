@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project_id: 
+  mobi: 
+  epub: 
+  pdf: 
+  publication_date: 2015-03-16
+
+two:
+  project_id: 
+  mobi: 
+  epub: 
+  pdf: 
+  publication_date: 2015-03-16

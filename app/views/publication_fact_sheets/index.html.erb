@@ -1,0 +1,55 @@
+<h1>Listing publication_fact_sheets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Author name</th>
+      <th>Series name</th>
+      <th>Series number</th>
+      <th>Description</th>
+      <th>Author bio</th>
+      <th>Endorsements</th>
+      <th>One line blurb</th>
+      <th>Print price</th>
+      <th>Ebook price</th>
+      <th>Bisac code one</th>
+      <th>Bisac code two</th>
+      <th>Bisac code three</th>
+      <th>Search terms</th>
+      <th>Age range</th>
+      <th>Paperback cover type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @publication_fact_sheets.each do |publication_fact_sheet| %>
+      <tr>
+        <td><%= publication_fact_sheet.project %></td>
+        <td><%= publication_fact_sheet.author_name %></td>
+        <td><%= publication_fact_sheet.series_name %></td>
+        <td><%= publication_fact_sheet.series_number %></td>
+        <td><%= publication_fact_sheet.description %></td>
+        <td><%= publication_fact_sheet.author_bio %></td>
+        <td><%= publication_fact_sheet.endorsements %></td>
+        <td><%= publication_fact_sheet.one_line_blurb %></td>
+        <td><%= publication_fact_sheet.print_price %></td>
+        <td><%= publication_fact_sheet.ebook_price %></td>
+        <td><%= publication_fact_sheet.bisac_code_one %></td>
+        <td><%= publication_fact_sheet.bisac_code_two %></td>
+        <td><%= publication_fact_sheet.bisac_code_three %></td>
+        <td><%= publication_fact_sheet.search_terms %></td>
+        <td><%= publication_fact_sheet.age_range %></td>
+        <td><%= publication_fact_sheet.paperback_cover_type %></td>
+        <td><%= link_to 'Show', publication_fact_sheet %></td>
+        <td><%= link_to 'Edit', edit_publication_fact_sheet_path(publication_fact_sheet) %></td>
+        <td><%= link_to 'Destroy', publication_fact_sheet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Publication fact sheet', new_publication_fact_sheet_path %>
