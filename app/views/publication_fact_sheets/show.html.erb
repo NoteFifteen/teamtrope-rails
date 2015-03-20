@@ -1,0 +1,84 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @publication_fact_sheet.project %>
+</p>
+
+<p>
+  <strong>Author name:</strong>
+  <%= @publication_fact_sheet.author_name %>
+</p>
+
+<p>
+  <strong>Series name:</strong>
+  <%= @publication_fact_sheet.series_name %>
+</p>
+
+<p>
+  <strong>Series number:</strong>
+  <%= @publication_fact_sheet.series_number %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @publication_fact_sheet.description %>
+</p>
+
+<p>
+  <strong>Author bio:</strong>
+  <%= @publication_fact_sheet.author_bio %>
+</p>
+
+<p>
+  <strong>Endorsements:</strong>
+  <%= @publication_fact_sheet.endorsements %>
+</p>
+
+<p>
+  <strong>One line blurb:</strong>
+  <%= @publication_fact_sheet.one_line_blurb %>
+</p>
+
+<p>
+  <strong>Print price:</strong>
+  <%= @publication_fact_sheet.print_price %>
+</p>
+
+<p>
+  <strong>Ebook price:</strong>
+  <%= @publication_fact_sheet.ebook_price %>
+</p>
+
+<p>
+  <strong>Bisac code one:</strong>
+  <%= @publication_fact_sheet.bisac_code_one %>
+</p>
+
+<p>
+  <strong>Bisac code two:</strong>
+  <%= @publication_fact_sheet.bisac_code_two %>
+</p>
+
+<p>
+  <strong>Bisac code three:</strong>
+  <%= @publication_fact_sheet.bisac_code_three %>
+</p>
+
+<p>
+  <strong>Search terms:</strong>
+  <%= @publication_fact_sheet.search_terms %>
+</p>
+
+<p>
+  <strong>Age range:</strong>
+  <%= @publication_fact_sheet.age_range %>
+</p>
+
+<p>
+  <strong>Paperback cover type:</strong>
+  <%= @publication_fact_sheet.paperback_cover_type %>
+</p>
+
+<%= link_to 'Edit', edit_publication_fact_sheet_path(@publication_fact_sheet) %> |
+<%= link_to 'Back', publication_fact_sheets_path %>

@@ -30,6 +30,8 @@ class Project < ActiveRecord::Base
   has_many :blog_tours, dependent: :destroy
   has_one :cover_template, dependent: :destroy
 
+  has_one :publication_fact_sheet, dependent: :destroy
+
   #TODO: we might not need to allow destroy via the project form for associations that
   # are only written by form. (media_kits, price_change_promotions, published_file, status_update)
   accepts_nested_attributes_for :audit_team_membership_removals, reject_if: :all_blank, allow_destroy: false
@@ -37,6 +39,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :kdp_select_enrollment, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :media_kits, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :price_change_promotions, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :publication_fact_sheet, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :cover_template, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :published_file, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :status_updates, reject_if: :all_blank, allow_destroy: true

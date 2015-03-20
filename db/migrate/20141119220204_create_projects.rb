@@ -11,18 +11,6 @@ class CreateProjects < ActiveRecord::Migration
       t.string :teamroom_link
       t.datetime :publication_date
       t.datetime :marketing_release_date
-      t.string :paperback_cover_type
-      t.string :age_range
-      t.text :search_terms
-      t.string :bisac_code_3
-      t.string :bisac_code_2
-      t.string :bisac_code_1
-      t.float :ebook_price
-      t.float :print_price
-      t.string :blurb_one_line
-      t.text :endorsements
-      t.text :author_bio
-      t.text :blurb_description
       t.string :title
       t.string :final_title
       t.datetime :cover_art_approval_date

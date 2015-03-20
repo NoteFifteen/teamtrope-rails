@@ -1,0 +1,26 @@
+<%= simple_form_for(@publication_fact_sheet) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :project %>
+    <%= f.input :author_name %>
+    <%= f.input :series_name %>
+    <%= f.input :series_number %>
+    <%= f.input :description %>
+    <%= f.input :author_bio %>
+    <%= f.input :endorsements %>
+    <%= f.input :one_line_blurb %>
+    <%= f.input :print_price %>
+    <%= f.input :ebook_price %>
+    <%= f.input :bisac_code_one %>
+    <%= f.input :bisac_code_two %>
+    <%= f.input :bisac_code_three %>
+    <%= f.input :search_terms %>
+    <%= f.input :age_range %>
+    <%= f.input :paperback_cover_type %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

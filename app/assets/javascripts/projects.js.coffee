@@ -302,6 +302,18 @@ jQuery ->
 			}
 		}
 	})
+	
+jQuery ->
+	$("#publication_fact_sheet").validate({
+		rules: {
+			'project[publication_fact_sheet_attributes][age_range]': {
+				required: true
+			},
+			'project[publication_fact_sheet_attributes][paperback_cover_type]': {
+				required: true
+			}
+		}
+	})
 
 ## submit proofread
 jQuery ->

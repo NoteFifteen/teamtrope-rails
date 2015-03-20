@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150319012056) do
+ActiveRecord::Schema.define(version: 20150319225253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -273,18 +273,6 @@ ActiveRecord::Schema.define(version: 20150319012056) do
     t.string   "teamroom_link"
     t.datetime "publication_date"
     t.datetime "marketing_release_date"
-    t.string   "paperback_cover_type"
-    t.string   "age_range"
-    t.text     "search_terms"
-    t.string   "bisac_code_3"
-    t.string   "bisac_code_2"
-    t.string   "bisac_code_1"
-    t.float    "ebook_price"
-    t.float    "print_price"
-    t.string   "blurb_one_line"
-    t.text     "endorsements"
-    t.text     "author_bio"
-    t.text     "blurb_description"
     t.string   "title"
     t.string   "final_title"
     t.datetime "cover_art_approval_date"
@@ -350,6 +338,29 @@ ActiveRecord::Schema.define(version: 20150319012056) do
 
   add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree
   add_index "projects", ["project_type_id"], name: "index_projects_on_project_type_id", using: :btree
+
+  create_table "publication_fact_sheets", force: true do |t|
+    t.integer  "project_id"
+    t.string   "author_name"
+    t.string   "series_name"
+    t.string   "series_number"
+    t.text     "description"
+    t.text     "author_bio"
+    t.text     "endorsements"
+    t.string   "one_line_blurb"
+    t.string   "print_price"
+    t.string   "ebook_price"
+    t.string   "bisac_code_one"
+    t.string   "bisac_code_two"
+    t.string   "bisac_code_three"
+    t.text     "search_terms"
+    t.string   "age_range"
+    t.string   "paperback_cover_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "publication_fact_sheets", ["project_id"], name: "index_publication_fact_sheets_on_project_id", using: :btree
 
   create_table "published_files", force: true do |t|
     t.integer  "project_id"

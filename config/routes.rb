@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  resources :publication_fact_sheets
+
   match '/parse/get_amazon_sales_rank',            to: 'parse#get_amazon_sales_rank',          via: 'get'
   match '/parse/get_queued_items',                 to: 'parse#get_queued_items',               via: 'get'
   match '/parse/add_book_to_price_change_queue',   to: 'parse#add_book_to_price_change_queue', via: 'get'
@@ -50,6 +52,7 @@ Rails.application.routes.draw do
   match '/projects/remove_team_member/:id',       to: 'projects#remove_team_member',       via: 'patch'
   match '/projects/revenue_allocation_split/:id', to: 'projects#revenue_allocation_split', via: 'patch'
   match '/projects/submit_form_1099/:id',         to: 'projects#submit_form_1099',         via: 'patch'
+  match '/projects/submit_submit_pfs/:id',        to: 'projects#submit_pfs',               via: 'patch'
   match '/projects/update_final_page_count/:id',  to: 'projects#update_final_page_count',  via: 'patch'
   match '/projects/update_status/:id',            to: 'projects#update_status',            via: 'patch'
   match '/projects/upload_cover_templates/:id',   to: 'projects#upload_cover_templates',   via: 'patch'

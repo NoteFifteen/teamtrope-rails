@@ -1,34 +1,153 @@
 <h1>Publication Fact Sheet (PFS)</h1>
-<div class="gf_browser_safari gform_wrapper" id="gform_wrapper_48" style="">
-	<a id="gf_48" name="gf_48" class="gform_anchor"></a>
-	<form method="post" enctype="multipart/form-data" target="gform_ajax_frame_48" id="gform_48" action="/projects/dejection-songs-by-alex-kimmell/#gf_48">
-		<div class="gform_heading">
-			<span class="gform_description">Please upload the cover templates.  </span>
+<div class="gf_browser_safari gform_wrapper">
+	<%= simple_form_for @project,
+				url: url_for(controller: 'projects', action: 'submit_pfs', id: @project),
+				html: { id: "publication_fact_sheet"} do | f | %>
+	<%= f.error_notification %>
+	<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>	
+		<div>
+			<span>This is it! Please submit this form one time only once all information is complete and FINAL. We will use this information and the files to set up and complete your book. Once submitted, the information and image cannot be revised or updated without incurring a change fee.</span>
 		</div>
-		<div class="gform_body">
-			<ul id="gform_fields_48" class="gform_fields top_label description_below">
-				<li id="field_48_1" class="gfield gfield_contains_required">
-					<label class="gfield_label" for="input_48_1">Front Cover File<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<input type="hidden" name="MAX_FILE_SIZE" value="125829120">
-						<input name="input_1" id="input_48_1" type="file" class="medium" tabindex="1">
+		<div>
+			<ul>
+				<li><!-- gsection -->
+					<h2><!-- gsection_title -->Final Title</h2>
+				</li>
+
+				<li>
+					<%= f.input :final_title, label: 'Final Title', required: true %>
+					<div class="gfield_description">This is the final agreed upon official book title. </div>
+				</li>
+				
+				<%= f.simple_fields_for :publication_fact_sheet, 
+					(f.object.publication_fact_sheet.nil?)? f.object.build_publication_fact_sheet : 
+					f.object.publication_fact_sheet do | pfs | %>
+				<li>
+					<%= pfs.input :author_name, label: 'Author Name', required: true %>
+					<div><!-- gfield_description --> This is the name of the Author exactly as it appears on the cover and title page. If multiple Authors, please separate with a comma and indicate roles (e.g. "Jane Doe (Author), Joe Blow (Illustrator)"). </div>					
+				</li>
+				
+				<li>
+					<%= pfs.input :series_name, label: 'Series name' %>
+					<div><!-- gfield_description -->If this book is part of a series, please enter the series name EXACTLY as you want it displayed on Amazon, Barnes and Noble, etc. Example: The River Valley Collection</div>
+				</li>
+				
+				<li>
+					<%= pfs.input :series_number, label: 'Series Number' %>
+					<div><!-- gfield_description -->If this book is part of a series, please enter the series number here.</div>
+				</li>
+				
+				<li><!-- gsection -->
+					<h2><!-- gsection_title -->Book and Author Description</h2>				
+				</li>
+				
+				<li>
+					<%= pfs.input :description, label: 'Back Blurb / Book Description', 
+								required: true,
+								input_html: { rows: 10, cols: 50 }
+					 %>
+					<div><!-- gfield_description -->
+						<p>
+							It must have an appealing and informative back cover. The material on the back cover is frequently used elsewhere, such as for your Amazon and Barnes &amp; Noble .com descriptions. It needs to give someone a desire to read your book, pure and simple.
+							Also, be sure to consider relevant keywords for SEO - popular words people search for on Google/Amazon to find books like this. Relevant cities, genres, topics. You can use the Google Key Word tool to see how popular search terms are.
+							Bottom line - the book back should be another invitation to read - like the cover design - and convey the appropriate flavor of the book!
+					 </p>
+					 <p>NOTE: If you want to format your description or author bio (e.g. add italics, paragraph formatting, etc.), you can do so after the book has been published via the author's Amazon Author Central account.</p>
 					</div>
-					<div class="gfield_description">Final Front cover jpeg only
-						<p></p> 
-						This will be used as your ebook cover and for display on vendor sites such as Amazon and BN.com</div></li><li id="field_48_2" class="gfield"><label class="gfield_label" for="input_48_2">CreateSpace Cover Template File</label><div class="ginput_container"><input type="hidden" name="MAX_FILE_SIZE" value="125829120"><input name="input_2" id="input_48_2" type="file" class="medium" tabindex="2"></div><div class="gfield_description">.pdf only</div></li><li id="field_48_3" class="gfield"><label class="gfield_label" for="input_48_3">Lightning Source Cover Template File</label><div class="ginput_container"><input type="hidden" name="MAX_FILE_SIZE" value="125829120"><input name="input_3" id="input_48_3" type="file" class="medium" tabindex="3"></div><div class="gfield_description">Please save the cover file for lightning source in the form [isbn_number_without_dashes]-cvr.pdf on your local computer before uploading here. Example: 1234567890123-cvr.pdf.</div></li><li id="field_48_14" class="gfield"><label class="gfield_label" for="input_48_14">Alternate Template File</label><div class="ginput_container"><input type="hidden" name="MAX_FILE_SIZE" value="125829120"><input name="input_14" id="input_48_14" type="file" class="medium" tabindex="4"></div><div class="gfield_description">This field is not typically used; do not upload anything here unless you have specifically discussed with Booktrope management. </div></li><li id="field_48_7" class="gfield               gfield_contains_required"><label class="gfield_label">Book Manager and Author Sign Off on following:<span class="gfield_required">*</span></label><div class="ginput_container"><ul class="gfield_checkbox" id="input_48_7"><li class="gchoice_7_1"><input name="input_7.1" type="checkbox" onclick="gf_apply_rules(48,[0]);" value="Author bio is correct?" id="choice_7_1" tabindex="5"><label for="choice_7_1" id="label_7_1">Author bio is correct?</label></li><li class="gchoice_7_2"><input name="input_7.2" type="checkbox" onclick="gf_apply_rules(48,[0]);" value="Book blurb on back is final?" id="choice_7_2" tabindex="6"><label for="choice_7_2" id="label_7_2">Book blurb on back is final?</label></li><li class="gchoice_7_3"><input name="input_7.3" type="checkbox" onclick="gf_apply_rules(48,[0]);" value="ISBN bar code matches ISBN on title page of laid out document?" id="choice_7_3" tabindex="7"><label for="choice_7_3" id="label_7_3">ISBN bar code matches ISBN on title page of laid out document?</label></li><li class="gchoice_7_4"><input name="input_7.4" type="checkbox" onclick="gf_apply_rules(48,[0]);" value="Author name and title are correct on front cover?" id="choice_7_4" tabindex="8"><label for="choice_7_4" id="label_7_4">Author name and title are correct on front cover?</label></li></ul></div></li><li id="field_48_16" class="gfield"><label class="gfield_label" for="input_48_16">Go to Project</label><div class="ginput_container"><input name="input_16" id="input_48_16" type="text" value="https://teamtrope.com/projects/dejection-songs-by-alex-kimmell/" class="medium" tabindex="9" onchange="gf_apply_rules(48,[0]);" onkeyup="clearTimeout(__gf_timeout_handle); __gf_timeout_handle = setTimeout(&quot;gf_apply_rules(48,[0])&quot;, 300);">
+					 
+				</li>
+				
+				<li>
+					<%= pfs.input :author_bio, label: 'Author Bio',
+								required: true,
+								input_html: { rows: 10, cols: 50 } %>
+					<div><!-- gfield_description -->Be sure to include: author name, writing experience, and any work experience that pertains to the book (like if you wrote a diet book and you’re a certified nutritionist). Also, always include where they can find more information about the author (website URL).</div>
+				</li>
+				
+				<li>
+					<%= pfs.input :endorsements,
+								input_html: { rows: 10, cols: 50 } %>
+					<div><!-- gfield_description -->NOTE: Endorsements will be added while uploading to BN.com and itunes, but not Amazon. Authors must add endorsements to Amazon via their Author Central Account. </div>					
+				</li>
+				
+				<li>
+					<%= pfs.input :one_line_blurb, required: true %>
+					<div><!-- gfield_description -->Short blurb for inclusion in "Other Great Reads" at the back of similar books. Short blurb for inclusion in “Other Great Reads” at the back of similar Booktrope books - This is a
+					short catchy phrase to communicate the flavor of the book. We include it at the end of other, similar
+					books. Here is an example: 
+					Riversong by Tess Hardwick (Contemporary Romance) Sometimes we must face our deepest fears to find hope again. A redemptive story of forgiveness and friendship.
 					</div>
 				</li>
+				
+				<li><!-- gsection -->
+					<h2><!-- gsection_title -->Pricing</h2>
+				</li>
+				
+				<li>
+					<%= pfs.input :print_price, label: 'Print Price', required: true %>
+					<div class="gfield_description">In US dollars</div>					
+				</li>
+				
+				<li>
+					<%= pfs.input :ebook_price, label: 'ebook Price', required: true %>
+					<div class="gfield_description">In US dollars. Fiction ebooks are recommended to be priced between $2.99 - $4.99. For exceptions, please talk to your book manager team leader.</div>					
+				</li>
+				
+				<li><!-- gsection -->
+					<h2><!-- gsection_title -->Classification and Search Terms</h2>
+					<div><!-- gsection_description -->
+					Please place BISAC Codes here (include both the description AND the number). If Juvenile, please specify a grade level (e.g. eighth, ninth, twelfth, college freshman...).
+					Enter 3 Codes in order of priority. Use this link for reference:
+					<a href="https://www.bisg.org/complete-bisac-subject-headings-2013-edition" target="_blank">Code List</a>
+					</div>					
+				</li>
+				
+				<li>
+					<%= pfs.input :bisac_code_one, label: 'BISAC Code One', required: true %>
+				</li>
+				
+				<li>
+					<%= pfs.input :bisac_code_two, label: 'BISAC Code Two' %>
+				</li>
+				
+				<li>
+					<%= pfs.input :bisac_code_three, label: 'BISAC Code Three' %>
+				</li>
+				
+				<li>
+					<%= pfs.input :search_terms,
+								label: 'Search Terms (up to 7, separate by commas)',
+								input_html: { rows: 10, cols: 50 } %>
+					<div>
+						Separate terms by commas. These are popular terms, or keywords, about your book that readers would use to search for a book of this nature on Amazon. The search terms help SEO so your book appears to new readers! 
+						<p>
+							Please read Amazon's guidelines on Search Terms here.  You cannot use anything misrepresentative, such as the name of an author that is not associated with your book.
+							<a href="https://kdp.amazon.com/self-publishing/help?topicId=A2EZES9JAJ6H02">Search Term Guidelines</a>
+						</p>
+					</div>								
+				</li>
+				
+				<li>
+					<%= pfs.label :age_range, 'What age range is most appropriate for your book?<span>*</span>'.html_safe %>
+					<%= pfs.collection_radio_buttons :age_range, PublicationFactSheet::AGE_RANGES,
+								 :first, :last, required: true,
+								 collection_wrapper_tag: 'ul',
+								 item_wrapper_tag: 'li' %>
+								 
+				</li>
+				
+				<li>
+					<%= pfs.label :paperback_cover_type, 'Do you want your paperback cover to be matte or glossy?<span>*</span>'.html_safe %>
+					<%= pfs.collection_radio_buttons :paperback_cover_type, PublicationFactSheet::COVER_TYPES,
+								:first, :last, required: true,
+								collection_wrapper_tag: 'ul',
+								item_wrapper_tag: 'li' %>
+				</li>				
+				<% end %>
 			</ul>
 		</div>
-		<div class="gform_footer top_label">
-			<input type="submit" id="gform_submit_button_48" class="gform_button button" value="Submit" tabindex="10" onclick="if(window[&quot;gf_submitting_48&quot;]){return false;}  window[&quot;gf_submitting_48&quot;]=true; " style="display: none;"><input type="hidden" name="gform_ajax" value="form_id=48&amp;title=&amp;description=1&amp;tabindex=1">
-			<input type="hidden" class="gform_hidden" name="is_submit_48" value="1">
-			<input type="hidden" class="gform_hidden" name="gform_submit" value="48">
-			<input type="hidden" class="gform_hidden" name="gform_unique_id" value="">
-			<input type="hidden" class="gform_hidden" name="state_48" value="WyJbXSIsIjRmY2NjODBlOGIxY2YzNWY4OWJkNTk5YTMyYTU5ZGZhIl0=">
-			<input type="hidden" class="gform_hidden" name="gform_target_page_number_48" id="gform_target_page_number_48" value="0">
-			<input type="hidden" class="gform_hidden" name="gform_source_page_number_48" id="gform_source_page_number_48" value="1">
-			<input type="hidden" name="gform_field_values" value="">
+    <div>
+    	<%= f.submit 'submit' %>
 		</div>
-	</form>
+	<% end %>
 </div>

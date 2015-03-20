@@ -341,10 +341,22 @@ class ProjectsController < ApplicationController
     end  
   end
   
+  def submit_pfs
+  	if @project.update(update_project_params)
+  		update_current_task
+      @project.create_activity :submitted_pfs, owner: current_user,
+                                parameters: { text: 'Submitted the Publication Fact Sheet', form_data: params[:project].to_s}
+      flash[:success] = 'Submitted Publication Fact Sheet'
+      redirect_to @project
+  	else
+  		render 'show'
+  	end  	
+  end
+  
   def final_manuscript
   	if @project.update(update_project_params)
   		update_current_task
-      @project.create_activity :upload_final_manuscript, owner: current_user,
+      @project.create_activity :uploaded_final_manuscript, owner: current_user,
                                 parameters: { text: 'Uploaded Final Manuscript', form_data: params[:project].to_s}
       flash[:success] = 'Uploaded Final Manuscript'
       redirect_to @project
@@ -356,7 +368,7 @@ class ProjectsController < ApplicationController
   def publish_book
   	if @project.update(update_project_params)
   		update_current_task
-      @project.create_activity :publish_book, owner: current_user,
+      @project.create_activity :published_book, owner: current_user,
                                 parameters: { text: 'Submitted the Publish Book form', form_data: params[:project].to_s}
       flash[:success] = 'Submitted Publish Book'
       redirect_to @project
@@ -410,9 +422,7 @@ class ProjectsController < ApplicationController
   	params.require(:project).permit(:id, :final_title, :final_doc_file, :final_manuscript_pdf, 
   		:final_pdf, :stock_image_request_link, :layout_notes, :previously_published, :prev_publisher_and_date,
   		:stock_cover_image, :cover_concept_notes, :proofed_word_count, :cover_concept, :teamroom_link,
-  		:publication_date, :marketing_release_date, :paperback_cover_type, :age_range, :search_terms,
-  		:bisac_code_3, :bisac_code_2, :bisac_code_1, :ebook_price, :print_price, :blurb_one_line, :endorsements,
-  		:author_bio, :blurb_description, :cover_art_approval_date,:layout_approved_date, :layout_approved,
+  		:publication_date, :marketing_release_date, :cover_art_approval_date,:layout_approved_date, :layout_approved,
   		:layout_approval_issue_list, :final_page_count, :layout_upload, :page_header_display_name, :use_pen_name_on_title,
   		:use_pen_name_for_copyright, :exact_name_on_copyright, :pen_name, :special_text_treatment, :has_sub_chapters,
   		:layout_style_choice, :has_index, :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited,
@@ -423,6 +433,10 @@ class ProjectsController < ApplicationController
   		:media_kits_attributes => [:document],
   		:price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion],
   		:cover_template_attributes => [:ebook_front_cover, :createspace_cover, :lightning_source_cover, :alternative_cover],
+  		:publication_fact_sheet_attributes => [ :author_name, :series_name, :series_number, :description, 
+  					:author_bio, :endorsements, :one_line_blurb, :print_price, :ebook_price, 
+  					:bisac_code_one, :bisac_code_two, :bisac_code_three, :search_terms, :age_range, 
+  					:paperback_cover_type ],
   		:published_file_attributes => [:publication_date, :mobi, :epub, :pdf],
   		:status_updates_attributes => [:type, :status],
   		:team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy]

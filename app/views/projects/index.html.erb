@@ -87,7 +87,7 @@
 		<% @projects.each do | project | %>
 			<tr>
 				<td class="book-title">
-					<%= link_to project.final_title, project %> 
+					<%= link_to project.title, project %> 
 					<% if can? :edit, project %>
 					| <%= link_to "Edit", edit_project_path(project)  %>
 					<% end%>
