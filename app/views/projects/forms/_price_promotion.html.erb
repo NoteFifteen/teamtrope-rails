@@ -29,7 +29,7 @@
 					</div>
 				</li>
 				<li class="start_date" style="display: none;">
-					<%= pcp.input :start_date, as: :date, label: 'Start Date' %>
+					<%= pcp.input :start_date, as: :date, start_year: Date.today.year, label: 'Start Date' %>
 					<%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(4i)]", "8" %>
 					<%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(5i)]", "0" %>
 					<%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(6i)]", "0" %>
@@ -38,7 +38,7 @@
 					<%= pcp.input :price_promotion, label: 'Promotion Price' %>
 				</li>
 				<li class="end_date" style="display: none;">
-					<%= pcp.input :end_date, as: :date, label: 'End Date' %>
+					<%= pcp.input :end_date, as: :date, start_year: Date.today.year, label: 'End Date' %>
 					<%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(4i)]", "7" %>
 					<%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(5i)]", "59" %>
 					<%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(6i)]", "59" %>					

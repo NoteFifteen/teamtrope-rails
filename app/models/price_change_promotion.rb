@@ -43,14 +43,20 @@ class PriceChangePromotion < ActiveRecord::Base
 			
 			parse_keys = nil
 
-			if !is_new && !self.parse_ids.nil?			
-				key = price_change.last == Hash && price_change.last[:is_end] ? "end_ids" : "start_ids"
+			if !is_new && !self.parse_ids.nil?
+			
+				key = "start_ids"
+				if (price_change.last.class == Hash) && price_change.last[:is_end]
+					key = "end_ids"
+				end
 				parse_keys = self.parse_ids[key].split(',')
 			end
 			
-			#adding the last 
+			#TODO: look into moving this outside of the loop and putting into the case above.
+			# at that point we already know if is_end is true so there's no need to figure out
+			# which hash, we also already know if have parse_ids. 
 			price_change.last[:parse_keys] = parse_keys if price_change.last.class == Hash
-			
+				
 			# using the splat operator decomposes the array into the params list
 			# https://codequizzes.wordpress.com/2013/09/29/rubys-splat-operator/
 			parse_id_hash = Booktrope::ParseWrapper::add_book_to_price_change_queue(book, *price_change)
@@ -89,6 +95,6 @@ class PriceChangePromotion < ActiveRecord::Base
   	
   	def destroy_parse_queue_entries
   		Booktrope::ParseWrapper.destroy_price_queue_entries( 
-  							parse_ids.map{ | key, value | value.split(',') }.flatten )
+  							parse_ids.map{ | key, value | value.split(',') }.flatten ) unless parse_ids.nil?
   	end
 end

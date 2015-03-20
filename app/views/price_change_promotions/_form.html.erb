@@ -3,7 +3,14 @@
 
   <div class="form-inputs">
     <%= f.input :start_date, as: :date %>
+		<%= hidden_field_tag "price_change_promotion[start_date(4i)]", "8" %>
+		<%= hidden_field_tag "price_change_promotion[start_date(5i)]", "0" %>
+		<%= hidden_field_tag "price_change_promotion[start_date(6i)]", "0" %>    
     <%= f.input :end_date, as: :date %>
+		<%= hidden_field_tag "price_change_promotion[end_date(4i)]", "7" %>
+		<%= hidden_field_tag "price_change_promotion[end_date(5i)]", "59" %>
+		<%= hidden_field_tag "price_change_promotion[end_date(6i)]", "59" %>	    
+    
     <%= f.input :price_promotion %>
     <%= f.input :price_after_promotion %>
     <%= f.input :type_mask %>
