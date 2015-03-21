@@ -55,7 +55,11 @@ class PriceChangePromotion < ActiveRecord::Base
 			#TODO: look into moving this outside of the loop and putting into the case above.
 			# at that point we already know if is_end is true so there's no need to figure out
 			# which hash, we also already know if have parse_ids. 
-			price_change.last[:parse_keys] = parse_keys if price_change.last.class == Hash
+			if price_change.last.class == Hash
+				price_change.last[:parse_keys] = parse_keys 
+			elsif !is_new
+				price_change.push({ parse_keys: parse_keys })
+			end
 				
 			# using the splat operator decomposes the array into the params list
 			# https://codequizzes.wordpress.com/2013/09/29/rubys-splat-operator/
