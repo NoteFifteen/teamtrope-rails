@@ -55,6 +55,8 @@ class Project < ActiveRecord::Base
   has_attached_file :cover_concept
   has_attached_file :final_pdf
   has_attached_file :final_doc_file
+  has_attached_file :final_manuscript_pdf
+  has_attached_file :stock_cover_image
 
   validates_attachment :manuscript_original, 
   	*Constants::DefaultContentTypeDocumentParams
