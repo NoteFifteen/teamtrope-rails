@@ -1,58 +1,37 @@
-<h1>Request Image</h1>
-<div class="gf_browser_safari gform_wrapper" id="gform_wrapper_61">
-	<a id="gf_61" name="gf_61" class="gform_anchor"></a>
-	<form method="post" enctype="multipart/form-data" target="gform_ajax_frame_61" id="gform_61" action="/projects/dejection-songs-by-alex-kimmell/#gf_61" _lpchecked="1">
-		<div class="gform_heading">
-			<span class="gform_description"></span>
-		</div>
-		<div class="gform_body">
-			<ul id="gform_fields_61" class="gform_fields top_label description_below">
-				<li id="field_61_9" class="gfield gfield_contains_required">
-					<label class="gfield_label" for="input_61_9_shim">Shutterstock or DollarPhotoClub.com Image Links<span class="gfield_required">*</span></label>
-					<div class="ginput_container ginput_list">
-						<input type="text" id="input_61_9_shim" style="position:absolute;left:-999em;" onfocus="jQuery( &quot;#field_61_9 table tr td:first-child input&quot; ).focus();">
-						<table class="gfield_list">
-							<colgroup>
-								<col id="gfield_list_9_col_1" class="gfield_list_col_odd">
-								<col id="gfield_list_9_col_2" class="gfield_list_col_even">
-								<col id="gfield_list_9_col_3" class="gfield_list_col_odd">
-							</colgroup>
-							<thead>
-								<tr>
-									<th>Subject</th>
-									<th>Link</th>
-									<th>&nbsp;</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="gfield_list_row_odd">
-									<td class="gfield_list_cell gfield_list_9_cell1">
-										<input type="text" name="input_9[]" value="" tabindex="1">
-									</td>
-									<td class="gfield_list_cell gfield_list_9_cell2">
-										<input type="text" name="input_9[]" value="" tabindex="2">
-									</td>
-									<td class="gfield_list_icons">
-										<img src="https://teamtrope.com/wp-content/plugins/gravityforms/images/add.png" class="add_list_item " title="Add another row" alt="Add a row" onclick="gformAddListItem(this, 0)" style="cursor:pointer; margin:0 3px;">
-										<img src="https://teamtrope.com/wp-content/plugins/gravityforms/images/remove.png" title="Remove this row" alt="Remove this row" class="delete_list_item" style="cursor:pointer; visibility:hidden;" onclick="gformDeleteListItem(this, 0)">
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="gfield_description">Enter a word or two describing the subject of the image (to help us make sure we're getting the right one for you), and then enter the full link (including the http://)</div>
-				</li>
-			</ul>
-		</div>
-		<div class="gform_footer top_label">
-      <input type="submit" id="gform_submit_button_61" class="gform_button button" value="Submit" tabindex="3" onclick="if(window[&quot;gf_submitting_61&quot;]){return false;}  window[&quot;gf_submitting_61&quot;]=true; "><input type="hidden" name="gform_ajax" value="form_id=61&amp;title=&amp;description=1&amp;tabindex=1">
-			<input type="hidden" class="gform_hidden" name="is_submit_61" value="1">
-			<input type="hidden" class="gform_hidden" name="gform_submit" value="61">
-			<input type="hidden" class="gform_hidden" name="gform_unique_id" value="">
-			<input type="hidden" class="gform_hidden" name="state_61" value="WyJbXSIsIjRmY2NjODBlOGIxY2YzNWY4OWJkNTk5YTMyYTU5ZGZhIl0=">
-			<input type="hidden" class="gform_hidden" name="gform_target_page_number_61" id="gform_target_page_number_61" value="0">
-			<input type="hidden" class="gform_hidden" name="gform_source_page_number_61" id="gform_source_page_number_61" value="1">
-			<input type="hidden" name="gform_field_values" value="">
-		</div>
-	</form>
+
+<!-- Request Image -->
+<div class="container">
+  <h1>Request Image</h1>
+  <div class="row">
+    <div class="col-md-8">
+        <!-- form -->
+      <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'request_images', id: @project), html: { id: 'request_images_form' } do | f | %>
+        <%= f.error_notification %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
+        <%= f.simple_fields_for :cover_concept, (f.object.cover_concept.nil?) ? f.object.build_cover_concept : f.object.cover_concept do | cc | %>
+
+          <div>
+            <label>Shutterstock or DollarPhotoClub.com Image Links<span class="required">*</span>
+              <%= cc.input_field :image_request_list, as: :hidden %>
+              <table id="image_request_list_table" class="table" style="display: table;">
+                <thead>
+                <tr>
+                  <th>Subject</th>
+                  <th>Link</th>
+                  <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </label>
+          </div>
+          <span>Enter a word or two describing the subject of the image (to help us make sure we're getting the right one for you), and then enter the full link (including the http://)<br/></span>
+        <% end %>
+        <br/>
+        <%= f.submit 'Submit' %>
+      <% end %>
+    </div>
+  </div>
 </div>

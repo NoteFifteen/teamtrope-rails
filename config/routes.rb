@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   match '/projects/publish_book/:id',             to: 'projects#publish_book',             via: 'patch'
   match '/projects/remove_team_member/:id',       to: 'projects#remove_team_member',       via: 'patch'
   match '/projects/revenue_allocation_split/:id', to: 'projects#revenue_allocation_split', via: 'patch'
+  match '/projects/request_images/:id',           to: 'projects#request_images',           via: 'patch'
   match '/projects/submit_form_1099/:id',         to: 'projects#submit_form_1099',         via: 'patch'
   match '/projects/submit_submit_pfs/:id',        to: 'projects#submit_pfs',               via: 'patch'
   match '/projects/update_final_page_count/:id',  to: 'projects#update_final_page_count',  via: 'patch'

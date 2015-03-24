@@ -32,7 +32,7 @@
 }
 
 /* Override pcss3t & typography styles to fix funny fonts */
-.container * {
+.container h1,h2,h3 {
   font-family: inherit !important;
 }
 
@@ -45,3 +45,17 @@ span.validationError {
 input.validationError {
   border: 1px dotted red;
 }
+
+#image_request_list_table {
+  width: 800px;
+  margin-bottom: 2px;
+}
+
+#image_request_list_table th {
+  padding: 0px !important;
+}
+
+#image_request_list_table td {
+  vertical-align: middle;
+}
+

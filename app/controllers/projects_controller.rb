@@ -358,6 +358,18 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def request_images
+    if @project.update(update_project_params)
+      update_current_task
+      @project.create_activity :requested_images, owner: current_user,
+                               parameters: { text: 'Requested Images', form_data: params[:project].to_s }
+      flash[:success] = 'Requested Images'
+      redirect_to @project
+    else
+      render 'show'
+    end
+  end
+
   def update_final_page_count
     if @project.update(update_project_params)
       update_current_task
@@ -482,7 +494,7 @@ class ProjectsController < ApplicationController
   		:childrens_book, :manuscript_proofed, :edit_complete_date, :manuscript_original, :imprint_id, 
   		:genre_ids => [],
   		:blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
-      :cover_concept_attributes => [:cover_concept, :cover_concept_notes, :cover_art_approval_date, :stock_cover_image],
+      :cover_concept_attributes => [:cover_concept, :cover_concept_notes, :cover_art_approval_date, :stock_cover_image, :image_request_list],
       :cover_template_attributes => [:ebook_front_cover, :createspace_cover, :lightning_source_cover, :alternative_cover],
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
   		:marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information ],
