@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  resources :marketing_expenses
+
   resources :publication_fact_sheets
 
   match '/parse/get_amazon_sales_rank',            to: 'parse#get_amazon_sales_rank',          via: 'get'
@@ -43,6 +45,7 @@ Rails.application.routes.draw do
   match '/projects/kdp_select/:id',               to: 'projects#kdp_select',               via: 'patch'
   match '/projects/kdp_update/:id',               to: 'projects#kdp_update',               via: 'patch'
   match '/projects/layout_upload/:id',            to: 'projects#layout_upload',            via: 'patch'
+  match '/projects/marketing_expense/:id',        to: 'projects#marketing_expense',        via: 'patch'
   match '/projects/marketing_release_date/:id',   to: 'projects#marketing_release_date',   via: 'patch'
   match '/projects/media_kit/:id',                to: 'projects#media_kit',                via: 'patch'
   match '/projects/original_manuscript/:id',      to: 'projects#original_manuscript',      via: 'patch'

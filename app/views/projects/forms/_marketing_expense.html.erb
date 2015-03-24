@@ -1,115 +1,113 @@
 <h1>Marketing Expense</h1>
-<div class="gf_browser_safari gform_wrapper" id="gform_wrapper_72" style="">
-	<a id="gf_72" name="gf_72" class="gform_anchor"></a>
-	<form method="post" enctype="multipart/form-data" target="gform_ajax_frame_72" id="gform_72" action="/projects/dejection-songs-by-alex-kimmell/#gf_72">
-		<div class="gform_heading">
-			<span class="gform_description">Booktrope will use this form to record pre-approved marketing promotion expenses (blog tours, newsletter ads, etc) that are to be allocated across the team per the Creative Team Agreement.</span>
+<div class="gf_browser_safari gform_wrapper">
+
+<script type="text/javascript">
+//TODO: figure our how we handle others
+/*
+	$(document).ready(function() {
+		$("#project_marketing_expenses_attributes_0_expense_type").change(function(){
+			select_value = $("#project_marketing_expenses_attributes_0_expense_type option:selected");
+				if(select_value.val() == "Other - Please Describe below")
+				{
+					$(".other_expense_type").slideDown();
+				}
+				else
+				{
+					$(".other_expense_type").slideUp();
+				}
+		});
+	});
+*/
+</script>
+
+	<%= simple_form_for @project,
+				url: url_for(controller: 'projects', action: 'marketing_expense', id: @project),
+				html: { id: "marketing_expense" } do | f | %>
+		<div><!-- gform_heading -->
+			<span><!-- gform_description -->Booktrope will use this form to record pre-approved marketing promotion expenses (blog tours, newsletter ads, etc) that are to be allocated across the team per the Creative Team Agreement.</span>
 		</div>
-		<div class="gform_body">
-			<ul id="gform_fields_72" class="gform_fields top_label description_below">
-				<li id="field_72_10" class="gfield gfield_contains_required">
-					<label class="gfield_label" for="input_72_10">Book Title<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<input name="input_10" id="input_72_10" type="text" value="A Chorus of Wolves" class="medium" tabindex="1">
-					</div>
+		<div><!-- gform_body -->
+			<ul>
+			
+			<%= f.simple_fields_for :marketing_expenses, f.object.marketing_expenses.build do | marketing_expense | %>
+				<li>
+					<%= marketing_expense.input :invoice_due_date, 
+								label: 'Invoice Due Date',
+								required: true,
+								start_year: Date.today.year %>
+					<div><!-- gfield_description -->The date the invoice is paid.</div>
 				</li>
 				
-				<li id="field_72_1" class="gfield gfield_contains_required">
-					<label class="gfield_label" for="input_72_1">Date of Spend<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<input name="input_1" id="input_72_1" type="text" value="" class="datepicker medium mdy datepicker_with_icon hasDatepicker" tabindex="2">
-						<img class="ui-datepicker-trigger" src="https://teamtrope.com/wp-content/plugins/gravityforms/images/calendar.png" alt="..." title="...">
-					</div>
-					<input type="hidden" id="gforms_calendar_icon_input_72_1" class="gform_hidden" value="https://teamtrope.com/wp-content/plugins/gravityforms/images/calendar.png">
-					<div class="gfield_description">The date the invoice is paid.</div>
+				<li>
+					<%= marketing_expense.input :start_date,
+								label: 'Date Marketing Activity Starts',
+								required: true,
+								start_year: Date.today.year %>
+					<div><!-- gfield_description -->Date the marketing activity is scheduled to occur.  (Example, date the newsletter ad is scheduled, date the blog tour will start.)</div>					
 				</li>
 				
-				<li id="field_72_2" class="gfield gfield_contains_required">
-					<label class="gfield_label" for="input_72_2">Date Marketing Activity Starts<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<input name="input_2" id="input_72_2" type="text" value="" class="datepicker medium mdy datepicker_with_icon hasDatepicker" tabindex="3">
-						<img class="ui-datepicker-trigger" src="https://teamtrope.com/wp-content/plugins/gravityforms/images/calendar.png" alt="..." title="...">
-					</div>
-					<input type="hidden" id="gforms_calendar_icon_input_72_2" class="gform_hidden" value="https://teamtrope.com/wp-content/plugins/gravityforms/images/calendar.png">
-					<div class="gfield_description">Date the marketing activity is scheduled to occur.  (Example, date the newsletter ad is scheduled, date the blog tour will start.)</div>
+				<li>
+					<%= marketing_expense.input :end_date,
+								label: 'Date Marketing Activity Ends',
+								required: true,
+								start_year: Date.today.year %>
 				</li>
 				
-				<li id="field_72_3" class="gfield">
-					<label class="gfield_label" for="input_72_3">Date Marketing Activity Ends</label>
-					<div class="ginput_container">
-						<input name="input_3" id="input_72_3" type="text" value="" class="datepicker medium mdy datepicker_with_icon hasDatepicker" tabindex="4">
-						<img class="ui-datepicker-trigger" src="https://teamtrope.com/wp-content/plugins/gravityforms/images/calendar.png" alt="..." title="...">
-					</div>
-					<input type="hidden" id="gforms_calendar_icon_input_72_3" class="gform_hidden" value="https://teamtrope.com/wp-content/plugins/gravityforms/images/calendar.png">
+				<li>
+					<%= marketing_expense.input :expense_type,
+								label: 'Type of Marketing Activity',
+								collection: MarketingExpense::EXPENSE_TYPES,
+								include_blank: true,
+								required: true,
+								html: {id: "expense_type_select"} %>
 				</li>
 				
-				<li id="field_72_4" class="gfield gfield_contains_required">
-					<label class="gfield_label" for="input_72_4">Type of Marketing Activity<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<select name="input_4" id="input_72_4" onchange="gf_apply_rules(72,[5]);" class="medium gfield_select" tabindex="5">
-							<option value="Blog Tour">Blog Tour</option>
-							<option value="Newsletter Ad - Discounted Price">Newsletter Ad - Discounted Price</option>
-							<option value="Newsletter Ad - List Price">Newsletter Ad - List Price</option>
-							<option value="Contest Giveaway">Contest Giveaway</option>
-							<option value="Facebook Ad">Facebook Ad</option>
-							<option value="Other - please describe below">Other - please describe below</option>
-						</select>
-					</div>
+				<li>
+					<%= marketing_expense.input :service_provider,
+								label: 'Marketing Service Provider',
+								collection: MarketingExpense::SERVICE_PROVIDERS,
+								include_blank: true,
+								required: true %>
 				</li>
 				
-				<li id="field_72_5" class="gfield gfield_contains_required" style="display: none;">
+				<li>
+					<%= marketing_expense.input :cost, 
+								label: 'Cost of Marketing Activity (Expense)',
+								required: true %>
+				</li>
+				
+				<li>
+					<%= marketing_expense.input :other_information,
+								input_html: { rows: 10, cols: 20 } %>
+				</li>
+			<% end %>
+			
+			
+			<!--
+			TODO: determine how we handle the others.
+			
+			If we decide to keep these fields we should probably interlace them between the dropdowns that
+			make them appear for a better user experience.
+			
+				<li id="field_72_5" class="other_expense_type" style="display: none;">
 					<label class="gfield_label" for="input_72_5">Describe "Other" Marketing Activity<span class="gfield_required">*</span></label>
 					<div class="ginput_container">
 						<input name="input_5" id="input_72_5" type="text" value="" class="medium" tabindex="6">
 					</div>
 				</li>
 				
-				<li id="field_72_7" class="gfield gfield_contains_required">
-					<label class="gfield_label" for="input_72_7">Marketing Service Provider<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<select name="input_7" id="input_72_7" onchange="gf_apply_rules(72,[8]);" class="medium gfield_select" tabindex="7">
-							<option value="BookBub">BookBub</option>
-							<option value="eReader News Today">eReader News Today</option>
-							<option value="Bargain eBook Hunter">Bargain eBook Hunter</option>
-							<option value="Kindle Books and Tips d/b/a Gagler Enterprises">Kindle Books and Tips d/b/a Gagler Enterprises</option>
-							<option value="eBookFling">eBookFling</option><option value="eReader Buddy">eReader Buddy</option>
-							<option value="Other - Please specify below">Other - Please specify below</option>
-						</select>
-					</div>
-				</li>
-				
-				<li id="field_72_8" class="gfield gfield_contains_required" style="display: none;">
+				<li id="field_72_8" class="other_service_provider" style="display: none;">
 					<label class="gfield_label" for="input_72_8">Describe "Other" Service Provider<span class="gfield_required">*</span></label>
 					<div class="ginput_container">
 						<input name="input_8" id="input_72_8" type="text" value="" class="medium" tabindex="8">
 					</div>
 				</li>
+			-->
 				
-				<li id="field_72_6" class="gfield gfield_contains_required">
-					<label class="gfield_label" for="input_72_6">Cost of Marketing Activity (Expense)<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<input name="input_6" id="input_72_6" type="text" value="" class="medium" tabindex="9">
-					</div>
-				</li>
-				
-				<li id="field_72_9" class="gfield">
-					<label class="gfield_label" for="input_72_9">Other information</label>
-					<div class="ginput_container">
-						<input name="input_9" id="input_72_9" type="text" value="" class="medium" tabindex="10">
-					</div>
-				</li>
 			</ul>
 		</div>
-		<div class="gform_footer top_label">
-			<input type="submit" id="gform_submit_button_72" class="gform_button button" value="Submit" tabindex="11" onclick="if(window[&quot;gf_submitting_72&quot;]){return false;}  window[&quot;gf_submitting_72&quot;]=true; ">
-			<input type="hidden" name="gform_ajax" value="form_id=72&amp;title=&amp;description=1&amp;tabindex=1">
-			<input type="hidden" class="gform_hidden" name="is_submit_72" value="1">
-			<input type="hidden" class="gform_hidden" name="gform_submit" value="72">
-			<input type="hidden" class="gform_hidden" name="gform_unique_id" value="">
-			<input type="hidden" class="gform_hidden" name="state_72" value="WyJbXSIsIjRmY2NjODBlOGIxY2YzNWY4OWJkNTk5YTMyYTU5ZGZhIl0=">
-			<input type="hidden" class="gform_hidden" name="gform_target_page_number_72" id="gform_target_page_number_72" value="0">
-			<input type="hidden" class="gform_hidden" name="gform_source_page_number_72" id="gform_source_page_number_72" value="1">
-			<input type="hidden" name="gform_field_values" value="">
+		<div>
+			<%= f.submit 'submit' %>
 		</div>
-	</form>
+	<% end %>
 </div>

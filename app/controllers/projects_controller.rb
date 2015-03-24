@@ -440,6 +440,18 @@ class ProjectsController < ApplicationController
   		render 'show'
   	end
   end
+  
+  def marketing_expense
+  	if @project.update(update_project_params)
+  		update_current_task
+  		@project.create_activity :marketing_expense, owner: current_user,
+  				parameters: { text: 'Submitted a Marketing Expense', form_data: params[:project].to_s}
+  		flash[:success] = 'Submitted Marketing Expense.'
+  		redirect_to @project  		
+  	else
+  		render 'show'
+  	end  	
+  end
 
   private
   def new_project_params
@@ -458,6 +470,7 @@ class ProjectsController < ApplicationController
   		:genre_ids => [],
   		:blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
+  		:marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information ],
   		:media_kits_attributes => [:document],
   		:price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion],
   		:cover_template_attributes => [:ebook_front_cover, :createspace_cover, :lightning_source_cover, :alternative_cover],

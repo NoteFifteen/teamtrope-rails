@@ -31,6 +31,7 @@ class Project < ActiveRecord::Base
   has_one :cover_template, dependent: :destroy
 
   has_one :publication_fact_sheet, dependent: :destroy
+  has_many :marketing_expenses, dependent: :destroy
 
   #TODO: we might not need to allow destroy via the project form for associations that
   # are only written by form. (media_kits, price_change_promotions, published_file, status_update)
@@ -38,6 +39,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :blog_tours, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :kdp_select_enrollment, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :media_kits, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :marketing_expenses, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :price_change_promotions, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :publication_fact_sheet, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :cover_template, reject_if: :all_blank, allow_destroy: true
@@ -72,10 +74,6 @@ class Project < ActiveRecord::Base
   	
   validates_attachment :final_doc_file,
   	*Constants::DefaultContentTypeDocumentParams
-
-  # Validates that files are JPEG
-  validates_attachment :cover_concept,
-  	*Constants::DefaultContentTypeImageParams
 
   # Validates that files are JPEG
   validates_attachment :cover_concept,

@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @marketing_expense.project %>
+</p>
+
+<p>
+  <strong>Invoice due date:</strong>
+  <%= @marketing_expense.invoice_due_date %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @marketing_expense.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @marketing_expense.end_date %>
+</p>
+
+<p>
+  <strong>Type mask:</strong>
+  <%= @marketing_expense.expense_type.join(',') %>
+</p>
+
+<p>
+  <strong>Service provider mask:</strong>
+  <%= @marketing_expense.service_provider.join(',') %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= @marketing_expense.cost %>
+</p>
+
+<p>
+  <strong>Other information:</strong>
+  <%= @marketing_expense.other_information %>
+</p>
+
+<%= link_to 'Edit', edit_marketing_expense_path(@marketing_expense) %> |
+<%= link_to 'Back', marketing_expenses_path %>

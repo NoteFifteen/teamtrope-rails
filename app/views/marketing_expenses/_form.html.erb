@@ -1,0 +1,18 @@
+<%= simple_form_for(@marketing_expense) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :project %>
+    <%= f.input :invoice_due_date %>
+    <%= f.input :start_date %>
+    <%= f.input :end_date %>
+    <%= f.input :expense_type, collection: MarketingExpense::EXPENSE_TYPES %>
+		<%= f.input :service_provider, collection: MarketingExpense::SERVICE_PROVIDERS %>
+    <%= f.input :cost %>
+    <%= f.input :other_information %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -1,0 +1,39 @@
+<h1>Listing marketing_expenses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Invoice due date</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Type mask</th>
+      <th>Service provider mask</th>
+      <th>Cost</th>
+      <th>Other information</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @marketing_expenses.each do |marketing_expense| %>
+      <tr>
+        <td><%= link_to marketing_expense.project.try(:title), marketing_expense.project %></td>
+        <td><%= marketing_expense.invoice_due_date %></td>
+        <td><%= marketing_expense.start_date %></td>
+        <td><%= marketing_expense.end_date %></td>
+        <td><%= marketing_expense.expense_type.join(',') %></td>
+        <td><%= marketing_expense.service_provider.join(',') %></td>
+        <td><%= marketing_expense.cost %></td>
+        <td><%= marketing_expense.other_information %></td>
+        <td><%= link_to 'Show', marketing_expense %></td>
+        <td><%= link_to 'Edit', edit_marketing_expense_path(marketing_expense) %></td>
+        <td><%= link_to 'Destroy', marketing_expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Marketing expense', new_marketing_expense_path %>

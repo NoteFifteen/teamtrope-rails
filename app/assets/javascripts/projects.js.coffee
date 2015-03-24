@@ -314,6 +314,12 @@ jQuery ->
 			}
 		}
 	})
+	
+jQuery ->
+	$("#marketing_expense").validate({
+		rules: {
+		}
+	})
 
 ## submit proofread
 jQuery ->

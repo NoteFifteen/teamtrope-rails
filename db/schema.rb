@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150319225253) do
+ActiveRecord::Schema.define(version: 20150321005957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -161,6 +161,21 @@ ActiveRecord::Schema.define(version: 20150319225253) do
 
   add_index "kdp_select_enrollments", ["member_id"], name: "index_kdp_select_enrollments_on_member_id", using: :btree
   add_index "kdp_select_enrollments", ["project_id"], name: "index_kdp_select_enrollments_on_project_id", using: :btree
+
+  create_table "marketing_expenses", force: true do |t|
+    t.integer  "project_id"
+    t.date     "invoice_due_date"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "type_mask"
+    t.integer  "service_provider_mask"
+    t.float    "cost"
+    t.text     "other_information"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "marketing_expenses", ["project_id"], name: "index_marketing_expenses_on_project_id", using: :btree
 
   create_table "media_kits", force: true do |t|
     t.integer  "project_id"
@@ -409,17 +424,6 @@ ActiveRecord::Schema.define(version: 20150319225253) do
   end
 
   add_index "status_updates", ["project_id"], name: "index_status_updates_on_project_id", using: :btree
-
-  create_table "statuses", force: true do |t|
-    t.string   "form_name"
-    t.datetime "date"
-    t.float    "project_id"
-    t.float    "user_id"
-    t.float    "entry_id"
-    t.string   "process_step"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "tabs", force: true do |t|
     t.integer  "task_id"
