@@ -1,5 +1,5 @@
 <% provide(:title, @project.final_title) %>
-    <img class="thumbalignright" src="https://teamtrope.com/wp-content/uploads/2013/07/A-Chorus-of-Wolves-Cover.jpg"><br/>
+		<%= image_tag @project.cover_template.ebook_front_cover, class: 'thumbalignright' if @project.try(:cover_template).try(:ebook_front_cover?) %>    
     <h1 class="entry-title"><%= @project.title %></h1><br />
     <% if can? :edit, @project %><%= link_to "Edit", edit_project_path(@project) %> | <% end %>
     <%= link_to "Back" , projects_path %>
