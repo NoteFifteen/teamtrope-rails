@@ -13,9 +13,9 @@ Teamtrope.Layout.IssueList = function(table) {
 Teamtrope.Layout.IssueList.prototype.drawRow = function (rowData) {
     var row = $("<tr />");
     this.table.append(row);
-    row.append($("<td> <input name=\"page\" value=\"" + rowData.page + "\"></td>"));
-    row.append($("<td> <input name=\"problem\" value=\"" + rowData.problem + "\"></td>"));
-    row.append($("<td> <input name=\"fix\" value=\"" + rowData.fix + "\"></td>"));
+    row.append($("<td class=\"issue_list_number\"> <input type=\"text\" pattern=\"[0-9]*\" class=\"form-control\" name=\"page\" value=\"" + rowData.page + "\"></td>"));
+    row.append($("<td class=\"issue_list_text\"> <input type=\"text\" class=\"form-control\" name=\"problem\" value=\"" + rowData.problem + "\"></td>"));
+    row.append($("<td class=\"issue_list_text\"> <input type=\"text\" class=\"form-control\" name=\"fix\" value=\"" + rowData.fix + "\"></td>"));
     row.append($("<td> <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\" onclick=\"issueList.addRow(this, 0);\"></span> <span class=\"glyphicon glyphicon-minus\" aria-hidden=\"true\" onclick=\"issueList.removeRow(this);\"></span> </td>"));
 };
 
@@ -92,8 +92,8 @@ Teamtrope.Layout.IssueList.prototype.initialize = function (issue_list_json) {
 // is not the selected option and register an on-change event
 // to reveal and hide the inputs based on selection.
 $(document).ready(function() {
-    var field = $("input[name=project\\[layout_approved\\]]:radio");
-    var field_value = $("input[name=project\\[layout_approved\\]]:checked");
+    var field = $("input[name=project\\[layout_attributes\\]\\[layout_approved\\]]:radio");
+    var field_value = $("input[name=project\\[layout_attributes\\]\\[layout_approved\\]]:checked");
 
     if (! field.is(':checked') || field_value.val() == 'approved') {
         $('#approval_issue_list').hide();
@@ -101,30 +101,30 @@ $(document).ready(function() {
 
     $(field).change(function() {
         if (field.is(':checked')) {
-            field_value = $("input[name=project\\[layout_approved\\]]:checked");
+            field_value = $("input[name=project\\[layout_attributes\\]\\[layout_approved\\]]:checked");
 
             if (field_value.val() == 'approved_revisions') {
-                $('#approval_issue_list').slideDown();
+                $('#approval_issue_list_table').slideDown();
             }
             else {
-                $('#approval_issue_list').slideUp();
+                $('#approval_issue_list_table').slideUp();
                 $('#approval_issue_list input').val('');
             }
         }
     });
 
     // Populate the issue list from a hidden field containing the JSON data
-    issueList = new Teamtrope.Layout.IssueList( $("#approval_issue_list") );
-    issueList.initialize( $("#project_layout_approval_issue_list").val() );
+    issueList = new Teamtrope.Layout.IssueList( $("#approval_issue_list_table") );
+    issueList.initialize( $("#project_layout_attributes_layout_approval_issue_list").val() );
 
     // Populate the hidden field with JSON data or clear it depending on
     // approval choice during submit.
     $("#approve_layout").submit(function() {
         if (! field.is(':checked') || field_value.val() == 'approved') {
-            $("#project_layout_approval_issue_list").val('');
+            $("#project_layout_attributes_layout_approval_issue_list").val('');
         }
 
-        $("#project_layout_approval_issue_list").val(issueList.tableToJson());
+        $("#project_layout_attributes_layout_approval_issue_list").val(issueList.tableToJson());
     });
 
 });

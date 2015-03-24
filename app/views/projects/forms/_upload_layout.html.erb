@@ -1,18 +1,22 @@
-<h1>Layout Upload</h1>
 
-<div>
-  <p>For Booktrope Production Team use Only. This is where the Booktrope Production Team will upload a proof of the final layout design.</p>
+<!-- Layout Upload -->
+<div class="container">
+    <h1>Layout Upload</h1>
+    <div class="col-md-8">
+      <p>For Booktrope Production Team use Only. This is where the Booktrope Production Team will upload a proof of the final layout design.</p>
 
-  <%= simple_form_for @project, url: url_for(controller: "projects", action: "layout_upload", id: @project) do | f | %>
-      <%= f.error_notification %>
-      <%= f.input :layout_upload, label: "Layout File *", as: :file, required: true %>
-      <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
-      <p>The Booktrope Production Team will upload the layout file here for team review. (.pdf only)</p>
+      <%= simple_form_for @project, url: url_for(controller: "projects", action: "layout_upload", id: @project) do | f | %>
+          <%= f.error_notification %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+          <%= f.simple_fields_for :layout, (f.object.layout.nil?) ? f.object.build_layout : f.object.layout do | l | %>
+            <%= l.input :layout_upload, label: "Layout File *", as: :file, required: true %>
+            <p>The Booktrope Production Team will upload the layout file here for team review. (.pdf only)</p>
+            <%= l.input :layout_notes, as: :text, label: 'Layout Info', input_html: { rows: 10, cols: 50 } %>
+          <% end %>
 
-      <%= f.input :layout_notes, as: :text, label: 'Layout Info', input_html: { rows: 10, cols: 50 } %>
+          <p>Information from the Production team about this layout sample.</p>
+          <%= f.submit "Submit" %>
+      <% end %>
 
-      <p>Information from the Production team about this layout sample.</p>
-      <%= f.submit "Submit" %>
-  <% end %>
-
+    </div>
 </div>

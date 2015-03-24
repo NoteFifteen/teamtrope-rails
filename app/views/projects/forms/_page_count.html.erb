@@ -1,5 +1,8 @@
-<h1>Final Page Count</h1>
-<div>
+
+<!-- Final Page Count -->
+<div class="container">
+  <h1>Final Page Count</h1>
+  <div class="col-md-8">
 
     <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'update_final_page_count', id: @project.id) do |f| %>
         <%= f.error_notification %>
@@ -7,8 +10,10 @@
 
         <p>For Booktrope Production Team use Only. This is where the Booktrope Production Team indicates the final page count.</p>
 
-        <%= f.input :final_page_count, label: 'Page Count *' %>
-
+        <%= f.simple_fields_for :layout, (f.object.layout.nil?) ? f.object.build_layout : f.object.layout do | l | %>
+          <%= l.input :final_page_count, label: 'Page Count *' %>
+        <% end %>
         <%= f.submit %>
     <% end %>
+  </div>
 </div>

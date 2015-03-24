@@ -283,7 +283,7 @@ class ProjectsController < ApplicationController
 
   def approve_layout
     # Set the approval date
-    @project.touch(:layout_approved_date)
+    @project.layout.touch(:layout_approved_date)
 
     if @project.update(update_project_params)
       update_current_task
@@ -484,19 +484,19 @@ class ProjectsController < ApplicationController
   end
   
   def update_project_params
-  	params.require(:project).permit(:id, :final_title, :final_doc_file, :final_manuscript_pdf, 
-  		:final_pdf, :stock_image_request_link, :layout_notes, :previously_published, :prev_publisher_and_date,
-  		:proofed_word_count, :teamroom_link,
-  		:publication_date, :marketing_release_date, :layout_approved_date, :layout_approved,
-  		:layout_approval_issue_list, :final_page_count, :layout_upload, :page_header_display_name, :use_pen_name_on_title,
-  		:use_pen_name_for_copyright, :exact_name_on_copyright, :pen_name, :special_text_treatment, :has_sub_chapters,
-  		:layout_style_choice, :has_index, :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited,
-  		:childrens_book, :manuscript_proofed, :edit_complete_date, :manuscript_original, :imprint_id, 
+  	params.require(:project).permit(:id, :final_title, :final_doc_file, :final_manuscript_pdf, :final_pdf,
+      :stock_image_request_link, :previously_published, :prev_publisher_and_date, :proofed_word_count, :teamroom_link,
+      :publication_date, :marketing_release_date, :special_text_treatment, :has_sub_chapters, :has_index,
+      :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited, :childrens_book,
+      :manuscript_proofed, :edit_complete_date, :manuscript_original, :imprint_id,
   		:genre_ids => [],
   		:blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
-      :cover_concept_attributes => [:cover_concept, :cover_concept_notes, :cover_art_approval_date, :stock_cover_image, :image_request_list],
+      :cover_concept_attributes => [:id, :cover_concept, :cover_concept_notes, :cover_art_approval_date, :stock_cover_image, :image_request_list],
       :cover_template_attributes => [:ebook_front_cover, :createspace_cover, :lightning_source_cover, :alternative_cover],
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
+      :layout_attributes => [:id, :layout_style_choice, :page_header_display_name, :use_pen_name_on_title, :pen_name,
+                             :use_pen_name_for_copyright, :exact_name_on_copyright, :layout_upload, :layout_notes,
+                             :layout_approved, :layout_approved_date, :layout_approval_issue_list, :final_page_count],
   		:marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information ],
   		:media_kits_attributes => [:document],
   		:price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion],

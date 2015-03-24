@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324055911) do
+ActiveRecord::Schema.define(version: 20150324174122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,6 +181,29 @@ ActiveRecord::Schema.define(version: 20150324055911) do
   add_index "kdp_select_enrollments", ["member_id"], name: "index_kdp_select_enrollments_on_member_id", using: :btree
   add_index "kdp_select_enrollments", ["project_id"], name: "index_kdp_select_enrollments_on_project_id", using: :btree
 
+  create_table "layouts", force: true do |t|
+    t.integer  "project_id"
+    t.string   "layout_style_choice"
+    t.string   "page_header_display_name"
+    t.boolean  "use_pen_name_on_title"
+    t.string   "pen_name"
+    t.boolean  "use_pen_name_for_copyright"
+    t.string   "exact_name_on_copyright"
+    t.string   "layout_upload_file_name"
+    t.string   "layout_upload_content_type"
+    t.integer  "layout_upload_file_size"
+    t.datetime "layout_upload_updated_at"
+    t.text     "layout_notes"
+    t.string   "layout_approved"
+    t.datetime "layout_approved_date"
+    t.json     "layout_approval_issue_list"
+    t.integer  "final_page_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "layouts", ["project_id"], name: "index_layouts_on_project_id", using: :btree
+
   create_table "marketing_expenses", force: true do |t|
     t.integer  "project_id"
     t.date     "invoice_due_date"
@@ -299,7 +322,6 @@ ActiveRecord::Schema.define(version: 20150324055911) do
 
   create_table "projects", force: true do |t|
     t.string   "stock_image_request_link"
-    t.text     "layout_notes"
     t.boolean  "previously_published"
     t.string   "prev_publisher_and_date"
     t.float    "proofed_word_count"
@@ -308,15 +330,8 @@ ActiveRecord::Schema.define(version: 20150324055911) do
     t.datetime "marketing_release_date"
     t.string   "title"
     t.string   "final_title"
-    t.datetime "layout_approved_date"
-    t.float    "final_page_count"
-    t.boolean  "use_pen_name_on_title"
-    t.boolean  "use_pen_name_for_copyright"
-    t.string   "exact_name_on_copyright"
-    t.string   "pen_name"
     t.text     "special_text_treatment"
     t.boolean  "has_sub_chapters"
-    t.string   "layout_style_choice"
     t.boolean  "has_index"
     t.boolean  "non_standard_size"
     t.boolean  "has_internal_illustrations"
@@ -347,16 +362,9 @@ ActiveRecord::Schema.define(version: 20150324055911) do
     t.string   "final_pdf_content_type"
     t.integer  "final_pdf_file_size"
     t.datetime "final_pdf_updated_at"
-    t.string   "layout_upload_file_name"
-    t.string   "layout_upload_content_type"
-    t.integer  "layout_upload_file_size"
-    t.datetime "layout_upload_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_type_id"
-    t.string   "page_header_display_name"
-    t.text     "layout_approval_issue_list"
-    t.string   "layout_approved"
     t.integer  "imprint_id"
   end
 

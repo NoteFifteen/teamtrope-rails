@@ -5,34 +5,25 @@ class Project < ActiveRecord::Base
 	belongs_to :project_type
 	belongs_to :imprint
 	
-	has_many :team_memberships
   has_many :audit_team_membership_removals
-	has_many :members, through: :team_memberships, source: :member
-	
-	has_many :roles, through: :team_memberships, source: :role
-	
-	has_many :book_genres, foreign_key: :project_id, dependent: :destroy
-	has_many :genres, through: :book_genres, source: :genre
-	
-	has_many :current_tasks
-
-  has_one :control_number, dependent: :destroy
-
-  has_one :kdp_select_enrollment, dependent: :destroy
-
-  has_many :media_kits, dependent: :destroy
-  
-  has_one  :published_file, dependent: :destroy
-  has_many :price_change_promotions, dependent: :destroy
-
-  has_many :status_updates, dependent: :destroy
-  
   has_many :blog_tours, dependent: :destroy
-  has_one :cover_concept, dependent: :destroy
-  has_one :cover_template, dependent: :destroy
-
-  has_one :publication_fact_sheet, dependent: :destroy
+  has_many :book_genres, foreign_key: :project_id, dependent: :destroy
+  has_one  :control_number, dependent: :destroy
+  has_one  :cover_concept, dependent: :destroy
+  has_one  :cover_template, dependent: :destroy
+  has_many :current_tasks
+	has_many :genres, through: :book_genres, source: :genre
+  has_one  :kdp_select_enrollment, dependent: :destroy
+  has_one  :layout, dependent: :destroy
   has_many :marketing_expenses, dependent: :destroy
+  has_many :media_kits, dependent: :destroy
+  has_many :members, through: :team_memberships, source: :member
+  has_many :price_change_promotions, dependent: :destroy
+  has_one  :publication_fact_sheet, dependent: :destroy
+  has_one  :published_file, dependent: :destroy
+  has_many :roles, through: :team_memberships, source: :role
+  has_many :status_updates, dependent: :destroy
+  has_many :team_memberships
 
   #TODO: we might not need to allow destroy via the project form for associations that
   # are only written by form. (media_kits, price_change_promotions, published_file, status_update)
@@ -41,6 +32,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :cover_template, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :cover_concept, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :kdp_select_enrollment, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :layout, reject_if: :all_blank, allow_destroy: false
   accepts_nested_attributes_for :media_kits, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :marketing_expenses, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :price_change_promotions, reject_if: :all_blank, allow_destroy: true
@@ -55,7 +47,6 @@ class Project < ActiveRecord::Base
   has_attached_file :manuscript_original
   has_attached_file :manuscript_edited
   has_attached_file :manuscript_proofed
-  has_attached_file :layout_upload
   has_attached_file :final_pdf
   has_attached_file :final_doc_file
   has_attached_file :final_manuscript_pdf
@@ -75,13 +66,7 @@ class Project < ActiveRecord::Base
   validates_attachment :final_doc_file,
   	*Constants::DefaultContentTypeDocumentParams
 
-  # Available options for the layout style form -> layout style. Stored in 'layout_style_choice'
-  LayoutStyleFonts = [['Cambria'], ['Covington'], ['Headline Two Exp'],['Letter Gothic'],['Lobster'],['Lucida Fax'],['M V Boli']]
-
-  # Available options for the layout style -> Left Side Page Header Display - Name.  Stored in page_header_display_name
-  PageHeaderDisplayNameChoices = [['Full Name'], ['Last Name Only']]
-
-	# mainly used for debugging purposes. 
+	# mainly used for debugging purposes.
 	# Returns the current_task for a particular workflow
 	def current_task_for_workflow(workflow)
 		current_tasks.joins(:task).includes(:task).where("tasks.workflow_id = ? ", 
@@ -167,6 +152,5 @@ class Project < ActiveRecord::Base
 	Role.all.map{ |role| role.name  }.each do | role |
 		provide_methods_for(role)
 	end
-	
-	
+
 end

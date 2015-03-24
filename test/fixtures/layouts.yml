@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project_id: 
+  layout_style_choice: MyString
+  page_header_display_name: MyString
+  use_pen_name_on_title: false
+  pen_name: MyString
+  use_pen_name_for_copyright: false
+  exact_name_on_copyright: MyString
+  layout_upload: 
+  layout_notes: MyText
+  layout_approved: MyString
+  layout_approved_date: 2015-03-24 10:41:22
+  layout_approval_issue_list: 
+  final_page_count: 
+
+two:
+  project_id: 
+  layout_style_choice: MyString
+  page_header_display_name: MyString
+  use_pen_name_on_title: false
+  pen_name: MyString
+  use_pen_name_for_copyright: false
+  exact_name_on_copyright: MyString
+  layout_upload: 
+  layout_notes: MyText
+  layout_approved: MyString
+  layout_approved_date: 2015-03-24 10:41:22
+  layout_approval_issue_list: 
+  final_page_count: 

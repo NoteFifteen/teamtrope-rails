@@ -1,99 +1,104 @@
-<h1>Select Layout Style</h1>
 
-<div>
-  <div>
-    <span>Review the options and indicate which chapter style you prefer.</span>
-  </div>
+<!-- Layout Style -->
+<div class="container">
+  <h1>Select Layout Style</h1>
 
-  <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'edit_layout_style', id: @project.id),
-                      html: { id: "edit_layout_style" } do |f| %>
+  <div class="col-md-8">
+    <div>
+      <span>Review the options and indicate which chapter style you prefer.</span>
+    </div>
+
+    <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'edit_layout_style', id: @project.id),
+                        html: { id: "edit_layout_style" } do |f| %>
       <%= f.error_notification %>
       <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
-      <div>
-        <ul>
-          <li>
-            <label>Select your Inside Book Title and Chapter font<span>*</span></label>
-                <%=
-                   f.collection_radio_buttons(:layout_style_choice,
-                                              Project::LayoutStyleFonts, :first, :first,
-                                              :collection_wrapper_tag => 'ul',
-                                              :item_wrapper_tag => 'li'
-                   ) do |font|
-                     font.label {
-                       image_name = font.text.delete(' ')
-                       pdf_name = "sample-" + image_name.downcase + ".pdf"
+      <%= f.simple_fields_for :layout, (f.object.layout.nil?) ? f.object.build_layout : f.object.layout do | l | %>
+        <div>
+          <ul>
+            <li>
+              <label>Select your Inside Book Title and Chapter font<span>*</span></label>
+              <%= l.collection_radio_buttons(:layout_style_choice,
+                                             Layout::LayoutStyleFonts, :first, :first,
+                                             :collection_wrapper_tag => 'ul',
+                                             :item_wrapper_tag => 'li'
+                  ) do |font|
+                    font.label {
+                      image_name = font.text.delete(' ')
+                      pdf_name = "sample-" + image_name.downcase + ".pdf"
 
-                       font.radio_button + " &nbsp; #{font.text}<br>".html_safe +
-                           image_tag("layout_examples/#{image_name}.png") + "<br>".html_safe +
-                           link_to("see full sample", asset_path("pdf/layout_examples/#{pdf_name}"), :target => '_blank')
-                     }
-                   end
+                      font.radio_button + " &nbsp; #{font.text}<br>".html_safe +
+                              image_tag("layout_examples/#{image_name}.png") + "<br>".html_safe +
+                              link_to("see full sample", asset_path("pdf/layout_examples/#{pdf_name}"), :target => '_blank')
+                    }
+                  end
+              %>
+              <br>
+              <div>(Note: &nbsp;This font will only impact print books, not ebooks, so 9/10
+                readers will not be affected by this)
+              </div>
+            </li>
+
+            <li>
+              <label>Left Side Page Header Display - Name<span>*</span></label>
+              <div>
+                <%= l.collection_radio_buttons :page_header_display_name,
+                                               Layout::PageHeaderDisplayNameChoices, :first, :last,
+                                               :collection_wrapper_tag => 'ul',
+                                               :item_wrapper_tag => 'li'
                 %>
-            <br>
-            <div>(Note: &nbsp;This font will only impact print books, not ebooks, so 9/10
-              readers will not be affected by this)
-            </div>
-          </li>
+              </div>
+              <div>
+                You are choosing the text that will display on the left side header of all interior pages in the book.<br>
+                Note: Right side page header is always the title of book.
+              </div>
+            </li>
 
-          <li>
-            <label>Left Side Page Header Display - Name<span>*</span></label>
-            <div>
-              <%= f.collection_radio_buttons :page_header_display_name,
-                                             Project::PageHeaderDisplayNameChoices, :first, :last,
-                                             :collection_wrapper_tag => 'ul',
-                                             :item_wrapper_tag => 'li'
-              %>
-            </div>
-            <div>
-              You are choosing the text that will display on the left side header of all interior pages in the book.<br>
-              Note: Right side page header is always the title of book.
-            </div>
-          </li>
-
-          <li>
-            <label>Are you using a pen name on the title?<span>*</span></label>
-            <div>
-              <!-- The choice here should conditionally unlock fields below -->
-              <%= f.collection_radio_buttons :use_pen_name_on_title,
-                                             [[true, 'Yes'], [false, 'No']], :first, :last,
-                                             :collection_wrapper_tag => 'ul',
-                                             :item_wrapper_tag => 'li'
-              %>
-            </div>
-          </li>
-
-          <!--
-            All pen-name related fields are classed with 'pen_name_optional' to identify then, and used by jQuery
-            to enable/disable the relevant fields and their validation.
-            -->
-
-          <li class='pen_name_optional'>
-            <%= f.input :pen_name, label: 'What is your pen name?' %>
-          </li>
-
-          <li class='pen_name_optional'>
-            <label>Are you using a pen name for the copyright?<span>*</span></label>
-            <div>
-                <%= f.collection_radio_buttons :use_pen_name_for_copyright,
+            <li>
+              <label>Are you using a pen name on the title?<span>*</span></label>
+              <div>
+                <!-- The choice here should conditionally unlock fields below -->
+                <%= l.collection_radio_buttons :use_pen_name_on_title,
                                                [[true, 'Yes'], [false, 'No']], :first, :last,
                                                :collection_wrapper_tag => 'ul',
                                                :item_wrapper_tag => 'li'
                 %>
-            </div>
-            <div>
-              According to the copyright office, you can use either but we generally recommend you use your legal name,
-              unless you want to remain completely anonymous – then we can go with your pen name.
-            </div>
-          </li>
+              </div>
+            </li>
 
-          <li class='pen_name_optional'>
-            <%= f.input :exact_name_on_copyright, label: 'What is the exact name you want to appear on the copyright?' %>
-          </li>
+            <!--
+              All pen-name related fields are classed with 'pen_name_optional' to identify then, and used by jQuery
+              to enable/disable the relevant fields and their validation.
+              -->
 
-        </ul>
-      </div>
+            <li class='pen_name_optional'>
+              <%= l.input :pen_name, label: 'What is your pen name?' %>
+            </li>
+
+            <li class='pen_name_optional'>
+              <label>Are you using a pen name for the copyright?<span>*</span></label>
+              <div>
+                <%= l.collection_radio_buttons :use_pen_name_for_copyright,
+                                               [[true, 'Yes'], [false, 'No']], :first, :last,
+                                               :collection_wrapper_tag => 'ul',
+                                               :item_wrapper_tag => 'li'
+                %>
+              </div>
+              <div>
+                According to the copyright office, you can use either but we generally recommend you use your legal name,
+                unless you want to remain completely anonymous – then we can go with your pen name.
+              </div>
+            </li>
+
+            <li class='pen_name_optional'>
+              <%= l.input :exact_name_on_copyright, label: 'What is the exact name you want to appear on the copyright?' %>
+            </li>
+
+          </ul>
+        </div>
+      <% end %>
       <div>
         <%= f.submit 'Save' %>
       </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
