@@ -8,5 +8,9 @@ class CreateCoverConcepts < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    remove_columns :projects, :cover_concept_notes
+    remove_columns :projects, :cover_art_approval_date
+    remove_attachment :projects, :cover_concept
   end
 end
