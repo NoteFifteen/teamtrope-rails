@@ -345,6 +345,19 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def add_stock_cover_image
+    if @project.update(update_project_params)
+      @project.create_activity :stock_cover_image_uploaded, owner: current_user,
+                               parameters: {text: 'Uploaded the Stock Cover Image', form_data: params[:project].to_s}
+      flash[:success] = 'Stock Cover Image Uploaded'
+      update_current_task
+      redirect_to @project
+    else
+      flash[:error] = 'Error uploading Stock Cover Image'
+      render 'show'
+    end
+  end
+
   def update_final_page_count
     if @project.update(update_project_params)
       update_current_task
@@ -461,7 +474,7 @@ class ProjectsController < ApplicationController
   def update_project_params
   	params.require(:project).permit(:id, :final_title, :final_doc_file, :final_manuscript_pdf, 
   		:final_pdf, :stock_image_request_link, :layout_notes, :previously_published, :prev_publisher_and_date,
-  		:stock_cover_image,  :proofed_word_count, :teamroom_link,
+  		:proofed_word_count, :teamroom_link,
   		:publication_date, :marketing_release_date, :layout_approved_date, :layout_approved,
   		:layout_approval_issue_list, :final_page_count, :layout_upload, :page_header_display_name, :use_pen_name_on_title,
   		:use_pen_name_for_copyright, :exact_name_on_copyright, :pen_name, :special_text_treatment, :has_sub_chapters,
@@ -469,7 +482,7 @@ class ProjectsController < ApplicationController
   		:childrens_book, :manuscript_proofed, :edit_complete_date, :manuscript_original, :imprint_id, 
   		:genre_ids => [],
   		:blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
-      :cover_concept_attributes => [:cover_concept, :cover_concept_notes, :cover_art_approval_date],
+      :cover_concept_attributes => [:cover_concept, :cover_concept_notes, :cover_art_approval_date, :stock_cover_image],
       :cover_template_attributes => [:ebook_front_cover, :createspace_cover, :lightning_source_cover, :alternative_cover],
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
   		:marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information ],

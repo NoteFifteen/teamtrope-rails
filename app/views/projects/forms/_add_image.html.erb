@@ -1,29 +1,20 @@
-<h1>Add Image</h1>
-<div class="gf_browser_safari gform_wrapper" id="gform_wrapper_66">
-	<a id="gf_66" name="gf_66" class="gform_anchor"></a>
-	<form method="post" enctype="multipart/form-data" target="gform_ajax_frame_66" id="gform_66" action="/projects/dejection-songs-by-alex-kimmell/#gf_66">
-		<div class="gform_heading">
-			<span class="gform_description"></span>
-		</div>
-		<div class="gform_body">
-			<ul id="gform_fields_66" class="gform_fields top_label description_below">
-				<li id="field_66_8" class="gfield gfield_contains_required">
-					<label class="gfield_label" for="input_66_8">Stock Cover Image<span class="gfield_required">*</span></label>
-					<div class="ginput_container"><input type="hidden" name="MAX_FILE_SIZE" value="125829120">
-						<input name="input_8" id="input_66_8" type="file" class="medium" tabindex="1">
-					</div>
-				</li>
-			</ul>
-		</div>
-		<div class="gform_footer top_label">
-			<input type="submit" id="gform_submit_button_66" class="gform_button button" value="Submit" tabindex="2" onclick="if(window[&quot;gf_submitting_66&quot;]){return false;}  window[&quot;gf_submitting_66&quot;]=true; "><input type="hidden" name="gform_ajax" value="form_id=66&amp;title=&amp;description=1&amp;tabindex=1">
-			<input type="hidden" class="gform_hidden" name="is_submit_66" value="1">
-			<input type="hidden" class="gform_hidden" name="gform_submit" value="66">
-			<input type="hidden" class="gform_hidden" name="gform_unique_id" value="">
-			<input type="hidden" class="gform_hidden" name="state_66" value="WyJbXSIsIjRmY2NjODBlOGIxY2YzNWY4OWJkNTk5YTMyYTU5ZGZhIl0=">
-			<input type="hidden" class="gform_hidden" name="gform_target_page_number_66" id="gform_target_page_number_66" value="0">
-			<input type="hidden" class="gform_hidden" name="gform_source_page_number_66" id="gform_source_page_number_66" value="1">
-			<input type="hidden" name="gform_field_values" value="">
-		</div>
-	</form>
+
+<!-- Add Stock Cover Image -->
+<div class="container">
+  <h1>Add Image</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'add_stock_cover_image', id: @project) do | f | %>
+        <%= f.error_notification %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
+        <%= f.simple_fields_for :cover_concept, (f.object.cover_concept.nil?) ? f.object.build_cover_concept : f.object.cover_concept do | cc | %>
+            <%= cc.input :stock_cover_image, label: 'Stock Cover Image *', as: :file, required: true %>
+        <% end %>
+        <p>Please select an image file (jpg).</p>
+        <br/>
+        <%= f.submit "Submit" %>
+      <% end %>
+    </div>
+  </div>
 </div>

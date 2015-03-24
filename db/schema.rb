@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324020712) do
+ActiveRecord::Schema.define(version: 20150324040952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,10 @@ ActiveRecord::Schema.define(version: 20150324020712) do
     t.datetime "cover_concept_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "stock_cover_image_file_name"
+    t.string   "stock_cover_image_content_type"
+    t.integer  "stock_cover_image_file_size"
+    t.datetime "stock_cover_image_updated_at"
   end
 
   add_index "cover_concepts", ["project_id"], name: "index_cover_concepts_on_project_id", using: :btree
@@ -346,10 +350,6 @@ ActiveRecord::Schema.define(version: 20150324020712) do
     t.string   "layout_upload_content_type"
     t.integer  "layout_upload_file_size"
     t.datetime "layout_upload_updated_at"
-    t.string   "stock_cover_image_file_name"
-    t.string   "stock_cover_image_content_type"
-    t.integer  "stock_cover_image_file_size"
-    t.datetime "stock_cover_image_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_type_id"

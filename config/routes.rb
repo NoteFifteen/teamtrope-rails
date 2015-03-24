@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   resources :projects
 
   match '/projects/accept_team_member/:id',       to: 'projects#accept_team_member',       via: [:patch, :post]
+  match '/projects/add_stock_cover_image/:id',    to: 'projects#add_stock_cover_image',    via: 'patch'
   match '/projects/approve_cover_art/:id',        to: 'projects#approve_cover_art',        via: 'patch'
   match '/projects/approve_layout/:id',           to: 'projects#approve_layout',           via: 'patch'
   match '/projects/blog_tour/:id',                to: 'projects#blog_tour',                via: 'patch'
