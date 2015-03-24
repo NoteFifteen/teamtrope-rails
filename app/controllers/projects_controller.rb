@@ -319,15 +319,15 @@ class ProjectsController < ApplicationController
     approved = (params[:project][:cover_art_approval_decision] == 'true')
 
     if approved
-      # Set the approval date
-      @project.touch(:cover_art_approval_date)
-      @project.update_attribute(:cover_concept_notes, nil)
+      # Set the approval date & wipe notes
+      @project.cover_concept.touch(:cover_art_approval_date)
+      @project.cover_concept.update_attribute(:cover_concept_notes, nil)
       update_current_task
       activity_text = 'Approved the Cover Art'
       flash[:success] = activity_text
     else
     # Not approved, revert to previous step
-      if @project.update_attribute(:cover_concept_notes, params[:project][:cover_concept_notes])
+      if @project.cover_concept.update_attribute(:cover_concept_notes, params[:project][:cover_concept_notes])
         reject_current_task
         activity_text = 'Rejected the Cover Art'
         flash[:success] = activity_text
@@ -461,20 +461,21 @@ class ProjectsController < ApplicationController
   def update_project_params
   	params.require(:project).permit(:id, :final_title, :final_doc_file, :final_manuscript_pdf, 
   		:final_pdf, :stock_image_request_link, :layout_notes, :previously_published, :prev_publisher_and_date,
-  		:stock_cover_image, :cover_concept_notes, :proofed_word_count, :cover_concept, :teamroom_link,
-  		:publication_date, :marketing_release_date, :cover_art_approval_date,:layout_approved_date, :layout_approved,
+  		:stock_cover_image,  :proofed_word_count, :teamroom_link,
+  		:publication_date, :marketing_release_date, :layout_approved_date, :layout_approved,
   		:layout_approval_issue_list, :final_page_count, :layout_upload, :page_header_display_name, :use_pen_name_on_title,
   		:use_pen_name_for_copyright, :exact_name_on_copyright, :pen_name, :special_text_treatment, :has_sub_chapters,
   		:layout_style_choice, :has_index, :non_standard_size, :has_internal_illustrations, :color_interior, :manuscript_edited,
   		:childrens_book, :manuscript_proofed, :edit_complete_date, :manuscript_original, :imprint_id, 
   		:genre_ids => [],
   		:blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
+      :cover_concept_attributes => [:cover_concept, :cover_concept_notes, :cover_art_approval_date],
+      :cover_template_attributes => [:ebook_front_cover, :createspace_cover, :lightning_source_cover, :alternative_cover],
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
   		:marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information ],
   		:media_kits_attributes => [:document],
   		:price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion],
-  		:cover_template_attributes => [:ebook_front_cover, :createspace_cover, :lightning_source_cover, :alternative_cover],
-  		:publication_fact_sheet_attributes => [ :author_name, :series_name, :series_number, :description, 
+  		:publication_fact_sheet_attributes => [ :author_name, :series_name, :series_number, :description,
   					:author_bio, :endorsements, :one_line_blurb, :print_price, :ebook_price, 
   					:bisac_code_one, :bisac_code_two, :bisac_code_three, :search_terms, :age_range, 
   					:paperback_cover_type ],

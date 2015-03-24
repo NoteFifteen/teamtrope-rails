@@ -28,6 +28,7 @@ class Project < ActiveRecord::Base
   has_many :status_updates, dependent: :destroy
   
   has_many :blog_tours, dependent: :destroy
+  has_one :cover_concept, dependent: :destroy
   has_one :cover_template, dependent: :destroy
 
   has_one :publication_fact_sheet, dependent: :destroy
@@ -37,12 +38,13 @@ class Project < ActiveRecord::Base
   # are only written by form. (media_kits, price_change_promotions, published_file, status_update)
   accepts_nested_attributes_for :audit_team_membership_removals, reject_if: :all_blank, allow_destroy: false
   accepts_nested_attributes_for :blog_tours, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :cover_template, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :cover_concept, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :kdp_select_enrollment, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :media_kits, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :marketing_expenses, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :price_change_promotions, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :publication_fact_sheet, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :cover_template, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :published_file, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :status_updates, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
@@ -54,7 +56,6 @@ class Project < ActiveRecord::Base
   has_attached_file :manuscript_edited
   has_attached_file :manuscript_proofed
   has_attached_file :layout_upload
-  has_attached_file :cover_concept
   has_attached_file :final_pdf
   has_attached_file :final_doc_file
   has_attached_file :final_manuscript_pdf
@@ -74,10 +75,6 @@ class Project < ActiveRecord::Base
   	
   validates_attachment :final_doc_file,
   	*Constants::DefaultContentTypeDocumentParams
-
-  # Validates that files are JPEG
-  validates_attachment :cover_concept,
-  	*Constants::DefaultContentTypeImageParams
 
   # Available options for the layout style form -> layout style. Stored in 'layout_style_choice'
   LayoutStyleFonts = [['Cambria'], ['Covington'], ['Headline Two Exp'],['Letter Gothic'],['Lobster'],['Lucida Fax'],['M V Boli']]

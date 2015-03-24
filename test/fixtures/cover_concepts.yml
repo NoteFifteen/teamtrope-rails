@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project_id: 
+  cover_concept_notes: MyText
+  cover_art_approval_date: 2015-03-23
+  cover_concept: 
+
+two:
+  project_id: 
+  cover_concept_notes: MyText
+  cover_art_approval_date: 2015-03-23
+  cover_concept: 

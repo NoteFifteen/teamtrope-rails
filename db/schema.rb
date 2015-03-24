@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321005957) do
+ActiveRecord::Schema.define(version: 20150324020712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,20 @@ ActiveRecord::Schema.define(version: 20150321005957) do
   end
 
   add_index "control_numbers", ["project_id"], name: "index_control_numbers_on_project_id", using: :btree
+
+  create_table "cover_concepts", force: true do |t|
+    t.integer  "project_id"
+    t.text     "cover_concept_notes"
+    t.date     "cover_art_approval_date"
+    t.string   "cover_concept_file_name"
+    t.string   "cover_concept_content_type"
+    t.integer  "cover_concept_file_size"
+    t.datetime "cover_concept_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cover_concepts", ["project_id"], name: "index_cover_concepts_on_project_id", using: :btree
 
   create_table "cover_templates", force: true do |t|
     t.integer  "project_id"
@@ -363,8 +377,8 @@ ActiveRecord::Schema.define(version: 20150321005957) do
     t.text     "author_bio"
     t.text     "endorsements"
     t.string   "one_line_blurb"
-    t.string   "print_price"
-    t.string   "ebook_price"
+    t.float    "print_price"
+    t.float    "ebook_price"
     t.string   "bisac_code_one"
     t.string   "bisac_code_two"
     t.string   "bisac_code_three"

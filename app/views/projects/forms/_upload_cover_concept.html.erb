@@ -1,17 +1,24 @@
-<h1>Upload Cover Concept</h1>
-<div class="row">
-  <div class="col-md-6">
-    <p>When you are ready for Booktrope management to review your cover, upload it here. We will review and approve or
-      give notes on necessary changes. If your design is not approved, you will have a chance to upload a revised cover
-      concept.</p>
 
-    <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'cover_concept_upload', id: @project) do | f | %>
-        <%= f.error_notification %>
-        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+<!-- Upload Cover Concept -->
+<div class="container">
+    <h1>Upload Cover Concept</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <p>When you are ready for Booktrope management to review your cover, upload it here. We will review and approve or
+          give notes on necessary changes. If your design is not approved, you will have a chance to upload a revised cover
+          concept.</p>
 
-        <%= f.input :cover_concept, label: 'Cover Concept *', as: :file, required: true %>
-        <p>Please select an image file (jpg) of your cover concept for approval.</p>
-        <%= f.submit "Submit"%>
-    <% end %>
-  </div>
+        <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'cover_concept_upload', id: @project) do | f | %>
+            <%= f.error_notification %>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
+            <%= f.simple_fields_for :cover_concept, (f.object.cover_concept.nil?) ? f.object.build_cover_concept : f.object.cover_concept do | cc | %>
+                <%= cc.input :cover_concept, label: 'Cover Concept *', as: :file, required: true %>
+            <% end %>
+
+            <p>Please select an image file (jpg) of your cover concept for approval.</p>
+            <%= f.submit "Submit"%>
+        <% end %>
+      </div>
+    </div>
 </div>
