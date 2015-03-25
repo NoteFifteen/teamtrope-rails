@@ -9,22 +9,28 @@
 		<div>
 			<span>Booktrope Staff Only</span>
 		</div>
-		<div class="gform_body">
-		
+		<div><!--gform_body-->
 			<ul>
-			
+				<%= f.simple_fields_for :final_manuscript, 
+							((f.object.final_manuscript.nil?)? 
+									f.object.build_final_manuscript : 
+									f.object.final_manuscript) do | final_manuscript | %>
 				<li>
 					<div>
-						<%= f.input :final_pdf, label: 'Final PDF' , as: :file, required: true %>
+						<%= final_manuscript.input :pdf,
+									label: 'Final PDF' ,
+									as: :file, required: true %>
 					</div>
 				</li>
 				
 				<li>
 					<div>
-						<%= f.input :final_doc_file, label: 'Final Word Doc', as: :file, required: true %>
+						<%= final_manuscript.input :doc, 
+									label: 'Final Word Doc',
+									as: :file, required: true %>
 					</div>
 				</li>
-				
+				<% end %>
 			</ul>
 			<%= f.submit "Submit" %>
 		</div>

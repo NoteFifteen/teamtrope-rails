@@ -4,10 +4,7 @@
 <a href="https://teamtrope.com/wp-content/uploads/2013/07/A-Chorus-of-Wolves-Cover.jpg">DOWNLOAD</a><br/>
 
 <%= render @project.published_file  unless @project.published_file.nil? %>
-
-<h4>Final Files</h4><strong>Final PDF:</strong> N/A<br/>
-<strong>Final Doc File:</strong> N/A<br/>
-
+<%= render @project.final_manuscript unless @project.final_manuscript.nil? %>
 <%= render @project.publication_fact_sheet unless @project.publication_fact_sheet.nil? %>
 <%= render @project.cover_template unless @project.cover_template.nil? %>
 
@@ -34,9 +31,5 @@ Previously Published?: No<br/>
 
 <%= render @project.manuscript unless @project.manuscript.nil? %>
 
-
 <h4>Edit Complete Date</h4>
 Edit Complete Date: <%= @project.edit_complete_date.try(:strftime, "%Y-%m-%d") %><br/>
-        
-<h4>Manuscript</h4>
-N/A<br/>

@@ -30,12 +30,8 @@ class CreateProjects < ActiveRecord::Migration
       t.boolean :childrens_book    
       t.datetime :edit_complete_date
       
-      #docs
-      t.attachment :final_doc_file
-      
       #pdfs
       t.attachment :final_manuscript_pdf
-      t.attachment :final_pdf
 			t.attachment :layout_upload
       
       #images

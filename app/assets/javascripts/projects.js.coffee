@@ -157,18 +157,18 @@ jQuery ->
 jQuery ->
 	$("#final_manuscript").validate({
 		rules: {
-			'project[final_pdf]': {
+			'project[final_manuscript_attributes][pdf]': {
 				required: true,
 				accept: "application/pdf",
 			},
-			'project[final_doc_file]': {
+			'project[final_manuscript_attributes][doc]': {
 				required: true,
 				accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
 			}
 		},
 		messages: {
-			'project[final_pdf]': "You must upload a pdf file.",
-			'project[final_doc_file]': "You must upload a doc or docx file."
+			'project[final_manuscript_attributes][pdf]': "You must upload a pdf file.",
+			'project[final_manuscript_attributes][doc]': "You must upload either a doc or docx file."
 		}
 	})
 	

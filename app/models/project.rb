@@ -12,6 +12,7 @@ class Project < ActiveRecord::Base
   has_one  :cover_concept, dependent: :destroy
   has_one  :cover_template, dependent: :destroy
   has_many :current_tasks
+  has_one  :final_manuscript, dependent: :destroy
 	has_many :genres, through: :book_genres, source: :genre
   has_one  :kdp_select_enrollment, dependent: :destroy
   has_one  :layout, dependent: :destroy
@@ -32,6 +33,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :blog_tours, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :cover_template, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :cover_concept, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :final_manuscript, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :kdp_select_enrollment, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :layout, reject_if: :all_blank, allow_destroy: false
   accepts_nested_attributes_for :media_kits, reject_if: :all_blank, allow_destroy: true
@@ -46,16 +48,8 @@ class Project < ActiveRecord::Base
   # Not an actual column, but used in the ProjectsController
   attr_accessor :cover_art_approval_decision
 
-  has_attached_file :final_pdf
-  has_attached_file :final_doc_file
   has_attached_file :final_manuscript_pdf
   	
-  validates_attachment :final_pdf,
-  	*Constants::DefaultContentTypePdfParams
-  	
-  validates_attachment :final_doc_file,
-  	*Constants::DefaultContentTypeDocumentParams
-
 	# mainly used for debugging purposes.
 	# Returns the current_task for a particular workflow
 	def current_task_for_workflow(workflow)

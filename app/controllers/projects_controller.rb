@@ -484,8 +484,8 @@ class ProjectsController < ApplicationController
   end
   
   def update_project_params
-  	params.require(:project).permit(:id, :final_title, :final_doc_file, :final_manuscript_pdf, :final_pdf,
-      :stock_image_request_link, :previously_published, :prev_publisher_and_date, :proofed_word_count, :teamroom_link,
+  	params.require(:project).permit(:id, :final_title, :final_manuscript_pdf, :stock_image_request_link, 
+      :previously_published, :prev_publisher_and_date, :proofed_word_count, :teamroom_link,
       :publication_date, :marketing_release_date, :special_text_treatment, :has_sub_chapters, :has_index,
       :non_standard_size, :has_internal_illustrations, :color_interior, :childrens_book,
       :edit_complete_date, :imprint_id,
@@ -493,6 +493,7 @@ class ProjectsController < ApplicationController
   		:blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
       :cover_concept_attributes => [:id, :cover_concept, :cover_concept_notes, :cover_art_approval_date, :stock_cover_image, :image_request_list],
       :cover_template_attributes => [:ebook_front_cover, :createspace_cover, :lightning_source_cover, :alternative_cover],
+      :final_manuscript_attributes => [:id, :pdf, :doc],
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
       :layout_attributes => [:id, :layout_style_choice, :page_header_display_name, :use_pen_name_on_title, :pen_name,
                              :use_pen_name_for_copyright, :exact_name_on_copyright, :layout_upload, :layout_notes,

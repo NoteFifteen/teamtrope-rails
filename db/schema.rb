@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324220205) do
+ActiveRecord::Schema.define(version: 20150325003820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,22 @@ ActiveRecord::Schema.define(version: 20150324220205) do
   add_index "current_tasks", ["project_id", "task_id"], name: "index_current_tasks_on_project_id_and_task_id", unique: true, using: :btree
   add_index "current_tasks", ["project_id"], name: "index_current_tasks_on_project_id", using: :btree
   add_index "current_tasks", ["task_id"], name: "index_current_tasks_on_task_id", using: :btree
+
+  create_table "final_manuscripts", force: true do |t|
+    t.integer  "project_id"
+    t.string   "doc_file_name"
+    t.string   "doc_content_type"
+    t.integer  "doc_file_size"
+    t.datetime "doc_updated_at"
+    t.string   "pdf_file_name"
+    t.string   "pdf_content_type"
+    t.integer  "pdf_file_size"
+    t.datetime "pdf_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "final_manuscripts", ["project_id"], name: "index_final_manuscripts_on_project_id", using: :btree
 
   create_table "genres", force: true do |t|
     t.string   "name"
@@ -358,18 +374,10 @@ ActiveRecord::Schema.define(version: 20150324220205) do
     t.boolean  "color_interior"
     t.boolean  "childrens_book"
     t.datetime "edit_complete_date"
-    t.string   "final_doc_file_file_name"
-    t.string   "final_doc_file_content_type"
-    t.integer  "final_doc_file_file_size"
-    t.datetime "final_doc_file_updated_at"
     t.string   "final_manuscript_pdf_file_name"
     t.string   "final_manuscript_pdf_content_type"
     t.integer  "final_manuscript_pdf_file_size"
     t.datetime "final_manuscript_pdf_updated_at"
-    t.string   "final_pdf_file_name"
-    t.string   "final_pdf_content_type"
-    t.integer  "final_pdf_file_size"
-    t.datetime "final_pdf_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_type_id"
