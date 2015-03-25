@@ -8,6 +8,8 @@ $(document).ready(function() {
      */
     var team_select = $('#remove_team_member_users');
 
+    var team_memberships = team_memberships || '';
+
     // Populate based on JSON membership list
     if(team_memberships.length > 0) {
         $.each(team_memberships, function() {

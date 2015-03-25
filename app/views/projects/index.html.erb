@@ -97,17 +97,17 @@
 					
 				</td>
 				<td>Days in Step</td>
-				<td>Author</td>
+				<td><%= (project.authors.try(:first).try(:member).nil?) ? 'N/A' : project.authors.first.member.name %></td>
 				<td>Genre</td>
 				<td>Teamroom Link</td>
-				<td>Prod Workflow Step</td>
-				<td>Design Step</td>
-				<td>Marketing Step</td>
-				<td>Project Manager</td>
-				<td>Editor</td>
-				<td>Proofreader</td>
+				<td><%= project.current_task_for_workflow('Production').try(:task).try(:name) %></td>
+				<td><%= project.current_task_for_workflow('Design').try(:task).try(:name) %></td>
+				<td><%= project.current_task_for_workflow('Marketing').try(:task).try(:name) %></td>
+                <td><%= (project.project_managers.try(:first).try(:member).nil?) ? 'N/A' : project.project_managers.first.member.name %></td>
+                <td><%= (project.editors.try(:first).try(:member).nil?) ? 'N/A' : project.editors.first.member.name %></td>
+                <td><%= (project.proof_readers.try(:first).try(:member).nil?) ? 'N/A' : project.proof_readers.first.member.name %></td>
 				<td>Marketing Manager</td>
-				<td>Cover Designer</td>
+                <td><%= (project.cover_designers.try(:first).try(:member).nil?) ? 'N/A' : project.cover_designers.first.member.name %></td>
 				<td><%= project.edit_complete_date.try(:strftime, "%b %d %Y") %></td>
 				<td>Original Manuscript</td>
 				<td>ISBN</td>

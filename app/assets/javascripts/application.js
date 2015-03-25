@@ -20,4 +20,5 @@
 //= require highcharts/modules/exporting
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require chosen/chosen.jquery
 //= require_tree .

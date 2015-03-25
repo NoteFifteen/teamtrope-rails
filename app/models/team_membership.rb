@@ -1,9 +1,9 @@
 class TeamMembership < ActiveRecord::Base
-  belongs_to :project
+  belongs_to :project, inverse_of: :team_memberships
   belongs_to :role
   belongs_to :member, foreign_key: :member_id, class_name: :User
 
-  validates :project_id, presence: true
+  validates_presence_of :project
   validates :role_id, presence: true
   validates :member_id, presence: true
   validates :percentage, presence: true

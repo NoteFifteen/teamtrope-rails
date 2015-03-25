@@ -11,7 +11,7 @@ class Project < ActiveRecord::Base
   has_one  :control_number, dependent: :destroy
   has_one  :cover_concept, dependent: :destroy
   has_one  :cover_template, dependent: :destroy
-  has_many :current_tasks
+  has_many :current_tasks, dependent: :destroy
   has_one  :final_manuscript, dependent: :destroy
 	has_many :genres, through: :book_genres, source: :genre
   has_one  :kdp_select_enrollment, dependent: :destroy
@@ -25,7 +25,7 @@ class Project < ActiveRecord::Base
   has_one  :published_file, dependent: :destroy
   has_many :roles, through: :team_memberships, source: :role
   has_many :status_updates, dependent: :destroy
-  has_many :team_memberships
+  has_many :team_memberships, inverse_of: :project
 
   #TODO: we might not need to allow destroy via the project form for associations that
   # are only written by form. (media_kits, price_change_promotions, published_file, status_update)
@@ -54,6 +54,15 @@ class Project < ActiveRecord::Base
 		current_tasks.joins(:task).includes(:task).where("tasks.workflow_id = ? ", 
 							Workflow.where(name: workflow).first).first
 	end
+
+  # Necessary to set up the initial records for current_tasks for the workflow
+  # based on the project type.
+  def create_workflow_tasks
+    if self.current_tasks.empty?
+      self.project_type.workflows.each { |t| self.current_tasks.build(task_id: t.root_task_id) }
+      self.save
+    end
+  end
 
   def team_complete?
 		required_roles = project_type.required_roles.ids

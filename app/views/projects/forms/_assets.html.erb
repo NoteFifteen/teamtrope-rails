@@ -10,18 +10,20 @@
 
 <h4>Stock Image Request</h4>
 <img class="alignright" width="340px" src=""> Image Request: <br/>
-<h4>Cover Concept Notes</h4> Cover Concept Notes: <br/>
+<h4>Cover Concept Notes</h4>
+Cover Concept Notes: <%= @project.cover_concept.cover_concept_notes %><br/>
+
 <h4>Cover Concept</h4>N/A<br/>
 <h4>Page Count</h4>
-Final Page Count: N/A<br/>
+Final Page Count: <%= (@project.layout.final_page_count.nil?) ? 'N/A' : @project.layout.final_page_count %><br/>
 
 <h4>Marketing Release Date</h4>
 Marketing Release Date: <%= @project.marketing_release_date.try(:strftime, "%Y-%m-%d") %><br/>
 
 <h4>Layout Options</h4> 
-Layout Style: <br/>
-Use Pen Name?: No<br/>
-Use Pen Name for Copyright?: No<br/>
+Layout Style: <%= (@project.layout.layout_style_choice.nil?) ? 'N/A' : @project.layout.layout_style_choice %><br/>
+Use Pen Name?: <%= (@project.layout.pen_name.nil?) ? 'N/A' : @project.layout.pen_name %><br/>
+Use Pen Name for Copyright?: <%= (@project.layout.use_pen_name_for_copyright.nil?) ? 'N/A' : ((@project.layout.use_pen_name_for_copyright) ? 'Yes' : 'No') %><br/>
 
 <h4>Proofed Document</h4>
 Has Sub-Chapters? No<br/>

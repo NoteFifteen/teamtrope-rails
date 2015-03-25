@@ -1,5 +1,3 @@
-<%= stylesheet_link_tag "chosen/chosen.css", media: "all" %>
-<%= javascript_include_tag "chosen/chosen.jquery.js" %>
 
 <div>
 
@@ -91,8 +89,6 @@
 <script>
     // Bind the Chosen helper to the select object
     $("#accept_team_member_users").chosen({width: '200px;'});
-
-    // var allocations = <%= @project.project_type.required_roles.map { |r| [ r.role.name, r.suggested_percent ] }.to_json.html_safe %>
 
     // Set up our JS framework for this form
     var acceptForm = new Teamtrope.BuildTeam.AcceptMember(

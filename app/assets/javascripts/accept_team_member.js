@@ -205,12 +205,12 @@ Teamtrope.BuildTeam.AcceptMember.PercentageCalculator.prototype.updateIndicator 
 
 // Initial setup for the Accept Team Member form
 $(document).ready(function() {
-    acceptForm = acceptForm || new Teamtrope.BuildTeam.AcceptMember(
+    var acceptForm = acceptForm || new Teamtrope.BuildTeam.AcceptMember(
                                     $('#accept_team_member_roles'),
                                     $('#accept_team_member_users')
                                 );
 
-    percentageCalculator = percentageCalculator || new Teamtrope.BuildTeam.AcceptMember.PercentageCalculator(
+    var percentageCalculator = percentageCalculator || new Teamtrope.BuildTeam.AcceptMember.PercentageCalculator(
         $('#accept_team_member_percentage_input'),
         $('#accept_team_member_percentage_indicator')
     );

@@ -1,15 +1,75 @@
 <% provide(:title, "New Project") %>
-<div class="padder">
-  <div class="page" id="blog-page" role="main">
+<div class="container">
   <h1>New Project</h1>
-  <%= form_for @project do | f | %>
-    <%= f.label :final_title %><br />
-		<%= f.text_field :final_title %><br /><br />
-	
-		<h2>Genres</h2>
-		<%= f.label :genre_ids, "Genres" %><br />
-		<%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: true } ) %><br /><br />
-		<%= f.submit "Save Project" %>
+  <% if ! current_user.role?(:author) && ! current_user.role?(:booktrope_staff) %>
+      <h2>Sorry, you cannot create a new project unless you are either an Author or Booktrope Staff</h2>
+  <% else %>
+      <div class="col-md-8">
+        <%= simple_form_for @project do | f | %>
+
+          <div>
+            <label>Title:<br/>
+              <%= f.input :title, label: false, :input_html => { type: 'text', size: '40' } %>
+            </label>
+          </div>
+
+          <div>
+            <%= f.simple_fields_for :team_memberships, f.object.team_memberships.build do | member | %>
+              <label>Author:<br/>
+                <% if current_user.role?(:booktrope_staff) %>
+                  <%= member.input :member_id,
+                        label: false,
+                        collection: User.with_role('author'),
+                        label_method: :name, value_method: :id,
+                        input_html: {
+                                class: 'chosen-select',
+                                id: 'new_project_authors_list'
+                        },
+                        :include_blank => 'Select an Author..',
+                        required: true
+                  %>
+                <% else %>
+                  <span><em><%= current_user.name %></em></span>
+                  <%= member.input :member_id, as: :hidden, :input_html => { :value => current_user.id } %>
+                <% end %>
+              </label>
+              <%= member.input :role_id, as: :hidden, :input_html => { :value => Role.where(name: 'Author').first.id } %>
+            <% end %>
+          </div>
+
+          <div>
+            <label>Genres:<br/>
+              <%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: true } ) %><br /><br />
+            </label>
+          </div>
+
+          <div>
+            <label>Project Type:<br/>
+              <%= f.input :project_type_id,
+                     label: false,
+                     collection: ProjectType.all,
+                     label_method: :name, value_method: :id,
+                     :include_blank => 'Select Project Type',
+                     required: true,
+                     :selected => ProjectType.where(name: 'Standard Project').first.id
+              %>
+            </label>
+          </div>
+          <br/>
+
+        <%= f.submit 'Create Project' %>
+      <% end %>
+        <br/>
+      </div>
+
+      <% if current_user.role?(:booktrope_staff) %>
+        <script>
+          $(document).ready(function() {
+              $("#new_project_authors_list").chosen({width: '200px;'})
+          });
+        </script>
+      <% end %>
+
   <% end %>
-  </div>
+
 </div>

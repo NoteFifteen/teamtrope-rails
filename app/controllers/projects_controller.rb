@@ -14,11 +14,18 @@ class ProjectsController < ApplicationController
   end
   
   def create
+    author_percentage = RequiredRole.joins(:project_type, :role).where("project_types.id = ? AND roles.name = ?", params[:project][:project_type_id], 'Author').first.suggested_percent
+    params[:project][:team_memberships_attributes]['0'][:percentage] = author_percentage
+    params[:project][:final_title] = params[:project][:title]
+
   	@project = Project.new(new_project_params)
   	if @project.save
-  		flash[:success] = "New Project Created!"
+  		flash[:success] = 'New Project Created!'
+     # Need to create method to set the current tasks based on the workflow
+      @project.create_workflow_tasks
   		redirect_to projects_path
-  	else
+    else
+      flash[:error] = 'Error creating project!'
   		render 'new'
   	end
   end
@@ -480,7 +487,7 @@ class ProjectsController < ApplicationController
 
   private
   def new_project_params
-  	params.require(:project).permit(:title)
+  	params.require(:project).permit(:title, :final_title, :project_type_id, :genre_ids => [], :team_memberships_attributes => [:role_id, :member_id, :percentage])
   end
   
   def update_project_params
