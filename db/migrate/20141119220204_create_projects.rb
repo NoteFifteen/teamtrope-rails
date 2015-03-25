@@ -31,8 +31,7 @@ class CreateProjects < ActiveRecord::Migration
       t.datetime :edit_complete_date
       
       #pdfs
-      t.attachment :final_manuscript_pdf
-			t.attachment :layout_upload
+      t.attachment :layout_upload
       
       #images
       t.attachment :cover_concept

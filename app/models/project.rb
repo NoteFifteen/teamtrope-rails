@@ -47,8 +47,6 @@ class Project < ActiveRecord::Base
 
   # Not an actual column, but used in the ProjectsController
   attr_accessor :cover_art_approval_decision
-
-  has_attached_file :final_manuscript_pdf
   	
 	# mainly used for debugging purposes.
 	# Returns the current_task for a particular workflow

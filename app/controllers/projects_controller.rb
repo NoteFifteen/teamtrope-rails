@@ -484,7 +484,7 @@ class ProjectsController < ApplicationController
   end
   
   def update_project_params
-  	params.require(:project).permit(:id, :final_title, :final_manuscript_pdf, :stock_image_request_link, 
+  	params.require(:project).permit(:id, :final_title, :stock_image_request_link, 
       :previously_published, :prev_publisher_and_date, :proofed_word_count, :teamroom_link,
       :publication_date, :marketing_release_date, :special_text_treatment, :has_sub_chapters, :has_index,
       :non_standard_size, :has_internal_illustrations, :color_interior, :childrens_book,
