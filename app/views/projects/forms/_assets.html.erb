@@ -19,7 +19,7 @@
 Final Page Count: N/A<br/>
 
 <h4>Marketing Release Date</h4>
-Marketing Release Date: N/A<br/>
+Marketing Release Date: <%= @project.marketing_release_date.try(:strftime, "%Y-%m-%d") %><br/>
 
 <h4>Layout Options</h4> 
 Layout Style: <br/>
@@ -32,11 +32,11 @@ Special Text Treatment: <br/>
 Word Count: N/A<br/>
 Previously Published?: No<br/>
 
-<h4>Manuscript</h4>
-N/A<br/>
+<%= render @project.manuscript unless @project.manuscript.nil? %>
+
 
 <h4>Edit Complete Date</h4>
-Edit Complete Date: <%= @project.edit_complete_date.try(:strftime, "Y-m-d") %><br/>
+Edit Complete Date: <%= @project.edit_complete_date.try(:strftime, "%Y-%m-%d") %><br/>
         
 <h4>Manuscript</h4>
 N/A<br/>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324174122) do
+ActiveRecord::Schema.define(version: 20150324220205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,6 +204,26 @@ ActiveRecord::Schema.define(version: 20150324174122) do
 
   add_index "layouts", ["project_id"], name: "index_layouts_on_project_id", using: :btree
 
+  create_table "manuscripts", force: true do |t|
+    t.integer  "project_id"
+    t.string   "original_file_name"
+    t.string   "original_content_type"
+    t.integer  "original_file_size"
+    t.datetime "original_updated_at"
+    t.string   "edited_file_name"
+    t.string   "edited_content_type"
+    t.integer  "edited_file_size"
+    t.datetime "edited_updated_at"
+    t.string   "proofed_file_name"
+    t.string   "proofed_content_type"
+    t.integer  "proofed_file_size"
+    t.datetime "proofed_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "manuscripts", ["project_id"], name: "index_manuscripts_on_project_id", using: :btree
+
   create_table "marketing_expenses", force: true do |t|
     t.integer  "project_id"
     t.date     "invoice_due_date"
@@ -338,18 +358,6 @@ ActiveRecord::Schema.define(version: 20150324174122) do
     t.boolean  "color_interior"
     t.boolean  "childrens_book"
     t.datetime "edit_complete_date"
-    t.string   "manuscript_proofed_file_name"
-    t.string   "manuscript_proofed_content_type"
-    t.integer  "manuscript_proofed_file_size"
-    t.datetime "manuscript_proofed_updated_at"
-    t.string   "manuscript_edited_file_name"
-    t.string   "manuscript_edited_content_type"
-    t.integer  "manuscript_edited_file_size"
-    t.datetime "manuscript_edited_updated_at"
-    t.string   "manuscript_original_file_name"
-    t.string   "manuscript_original_content_type"
-    t.integer  "manuscript_original_file_size"
-    t.datetime "manuscript_original_updated_at"
     t.string   "final_doc_file_file_name"
     t.string   "final_doc_file_content_type"
     t.integer  "final_doc_file_file_size"

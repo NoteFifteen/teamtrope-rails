@@ -1,23 +1,40 @@
 <h1>Submit Edited Manuscript</h1>
-<%= simple_form_for @project, url: url_for(controller: "projects", action: "edited_manuscript", id: @project) do | f | %>
+
+<%= simple_form_for @project, 
+			url: url_for(controller: "projects", action: "edited_manuscript", id: @project),
+			html: { id: "submit_edited_manuscript" } do | f | %>
+			
+	<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
 
 	Once the editing process is complete, Author must upload your final manuscript for proofreading here.  You are only allowed to submit once, so please ensure editing is final! (.doc or .docx only) 
 		
 	Please note the special formatting requirements required for uploading in step 2.2.
 		
-	<%= f.input :manuscript_edited, as: :file, label: "Final Manuscript", 
-				label_html: { class: "gfield_label" }, hint: ".doc or .docx file only",
-				required: true  %>
+	<ul>
+		<%= f.simple_fields_for :manuscript, 
+					(f.object.manuscript.nil?)? f.object.build_manuscript : f.object.manuscript  do | manuscript | %>
+		<li>
 
-	<label >Do any of the following apply to your book?</label>
+			<%= manuscript.input :edited, as: :file,
+						label: "Final Manuscript", 
+						required: true  %>
+			<div>.doc or .docx file only</div>
+		</li>
+		<% end %>
+		
+		<li>
+			<label>Do any of the following apply to your book?</label>
+			<ul>
+				<li><%= f.input :childrens_book, as: :boolean, label: "Children's book" %></li>
+				<li><%= f.input :color_interior, as: :boolean, label: "Full color interior" %></li>
+				<li><%= f.input :has_index, as: :boolean, label: "My book has an index" %></li>
+				<li><%= f.input :has_internal_illustrations, as: :boolean, label: "My book has illustrations or images inserted throughout" %></li>
+			</ul>
+		</li>
 
-	<%= f.input :childrens_book, as: :boolean, label: "Children's book" %>
-	<%= f.input :color_interior, as: :boolean, label: "Full color interior" %>
-	<%= f.input :has_index, as: :boolean, label: "My book has an index" %>
-	<%= f.input :has_internal_illustrations, as: :boolean, label: "My book has illustrations or images inserted throughout" %>
-
-	<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+	
 	<%= f.submit "submit" %>
+	</ul>
 <% end %>
 <% 
 	#TODO: investigate checkbox collection 

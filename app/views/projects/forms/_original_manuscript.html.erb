@@ -1,8 +1,20 @@
 <h1>Original Manuscript</h1>
 Upload the Original Manuscript to unlock additional steps.
-<%= simple_form_for @project, url: url_for(controller: "projects", action: "original_manuscript", id: @project) do | f | %>
+<%= simple_form_for @project, 
+				url: url_for(controller: 'projects', action: 'original_manuscript', id: @project),
+				html: { id: 'original_manuscript' } do | f | %>
 	<%= f.error_notification %>
-  <%= f.input :manuscript_original, label: "Original Manuscript:", as: :file, required: true %>	
-  <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+  <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>	
+	
+	<ul>
+	<%= f.simple_fields_for :manuscript,
+				((f.object.manuscript.nil?) ? f.object.build_manuscript : f.object.manuscript) do | manuscript | %>
+		<li>
+	  	<%= manuscript.input :original,
+	  				label: "Original Manuscript:", as: :file, required: true %>
+	  </li>  
+  <% end %>
+  </ul>
+  
   <%= f.submit "submit" %>
 <% end %>

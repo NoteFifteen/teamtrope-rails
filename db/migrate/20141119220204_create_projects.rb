@@ -31,9 +31,6 @@ class CreateProjects < ActiveRecord::Migration
       t.datetime :edit_complete_date
       
       #docs
-      t.attachment :manuscript_proofed
-      t.attachment :manuscript_edited
-      t.attachment :manuscript_original
       t.attachment :final_doc_file
       
       #pdfs

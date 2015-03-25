@@ -111,12 +111,17 @@
 					<%= f.input :proofed_word_count, label: 'Manuscript Word Count', required: true %>
 					<div>In Word: Go to File, Properties, click on the Statistics tab and enter the "Words:" count value. This will help us estimate and schedule your layout resource efficiently.</div>
 				</li>
-								
-				<li >
-					<%= f.input :manuscript_proofed, label: "Final Manuscript:", as: :file, required: true %>	
+				
+				<%= f.simple_fields_for :manuscript,
+							((f.object.manuscript.nil?)?
+								 f.object.build_manuscript : f.object.manuscript) do | manuscript | %>		
+				<li>
+					<%= manuscript.input :proofed,
+								label: "Final Manuscript:",
+								as: :file, required: true %>	
 					<div>.doc or .docx file only</div>
 				</li>
-								
+				<% end %>
 
 			</ul>
 			

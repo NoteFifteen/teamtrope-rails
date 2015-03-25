@@ -316,6 +316,31 @@ jQuery ->
 	})
 	
 jQuery ->
+	$("#original_manuscript").validate({
+		rules: {
+			'project[manuscript_attributes][original]': {
+				required: true
+				accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
+			}
+		},
+		messages: {
+			'project[manuscript_attributes][original]': 'You must upload either a doc or docx file.'
+		}		
+	})
+	
+jQuery ->
+	$("#submit_edited_manuscript").validate({
+		rules: {
+			'project[manuscript_attributes][edited]': {
+				accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
+			}
+		},
+		messages: {
+			'project[manuscript_attributes][edited]': 'You must upload either a doc or docx file.'
+		}
+	})
+	
+jQuery ->
 	$("#marketing_expense").validate({
 		rules: {
 		}
@@ -346,8 +371,9 @@ jQuery ->
 						return $("input[name=does_contain_images]:checked").val() == '2';
 				}
 			},
-			'project[manuscript_proofed]': {
+			'project[manuscript_attributes][proofed]': {
 				required: true
+				accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
 			}
 		}
 	})
