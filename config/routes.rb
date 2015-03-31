@@ -29,6 +29,9 @@ Rails.application.routes.draw do
   get '/users/:id/activity/favorites', to: 'users#favorites', as: 'favorites'
   get '/users/:id/activity/groups',    to: 'users#groups',    as: 'groups'
   
+  get '/box/request_access', to: 'static_pages#box_request_access', as: 'box_request'
+  get '/box/redirect',       to: 'static_pages#box_redirect',       as: 'box-redirect'
+  
   resources :projects
 
   match '/projects/accept_team_member/:id',       to: 'projects#accept_team_member',       via: [:patch, :post]

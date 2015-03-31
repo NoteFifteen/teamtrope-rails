@@ -379,12 +379,12 @@ jQuery ->
 	})
 
 jQuery ->
-	field = $("input[name=tax_id]:radio")
-	field_value = $("input[name=tax_id]:checked")
+	field = $("input[name=form_1099\\[tax_id\\]]:radio")
+	field_value = $("input[name=form_1099\\[tax_id\\]]:checked")
 	
 	$(field).change (event) =>
 		if field.is(':checked')
-			field_value = $("input[name=tax_id]:checked")
+			field_value = $("input[name=form_1099\\[tax_id\\]]:checked")
 			
 			if field_value.val() == 'ssn'
 				$('#social_security_number_wrapper').slideDown()
@@ -396,40 +396,43 @@ jQuery ->
 jQuery -> 
   $("#form_1099").validate({
   	rules: {
-  		first_name: {
+  		'form_1099[first_time]': {
   			required: true
   		},
-  		last_name: {
+  		'form_1099[first_name]': {
   			required: true
   		},
-  		phone: {
+  		'form_1099[last_name]': {
+  			required: true
+  		},
+  		'form_1099[phone]': {
   			required: true
   		}
-  		email: {
+  		'form_1099[email]': {
   			required: true
   		},
-  		address: {
+  		'form_1099[address]': {
   			required: true
   		},
-  		city: {
+  		'form_1099[city]': {
   			required: true
   		},
-  		state: {
+  		'form_1099[state]': {
   			required: true
   		},
-  		zip: {
+  		'form_1099[zip]': {
   			required: true
   		},
-  		bank_name: {
+  		'form_1099[bank_name]': {
   			required: true
   		},
-  		account_type: {
+  		'form_1099[account_type]': {
   			required: true
   		},
-  		routing_number: {
+  		'form_1099[routing_number]': {
   			required: true
   		},
-  		account_number: {
+  		'form_1099[account_number]': {
   			required: true
   		}
   	}

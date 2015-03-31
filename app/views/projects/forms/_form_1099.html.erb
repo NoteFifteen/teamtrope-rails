@@ -6,108 +6,155 @@
 	<%= f.error_notification %>
 	<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
 
-	<p>Please provide us with the following information so that we can properly credit your earnings. You only need to submit this form once - if you have already done so for another book or project, please do not resubmit.</p><br />
+	<div>
+		<p>Please provide us with the following information so that we can properly credit your earnings. You only need to submit this form once - if you have already done so for another book or project, please do not resubmit.</p>
+	</div>
+	<div>
+		<ul>
 	
-	<label>Is this the first time you are submitting the form, or is this a change in information?<span class="">*</span></label><br />
-	<%
-			[[true, "First time I'm submitting the form"],
-			[false, "I've already submittted a form in the past. This is an update to my information."]].each do | radio_item | %>
+			<li>
+				<div>
+					<label>Is this the first time you are submitting the form, or is this a change in information?<span class="">*</span></label>
+				</div>
+				<ul>
+				<%
+					[[true, "First time I'm submitting the form"],
+					[false, "I've already submittted a form in the past. This is an update to my information."]].each do | radio_item | 
+				%>
+					<li class="required"><label><%= radio_button_tag 'form_1099[first_time]', radio_item.first %> <%= radio_item.last %></label></li>
+				<% end %>
+				</ul>
+			</li>
+	
+			<!-- End Page 1 -->
+			<li>
+				<h2>Personal Information</h2>
+			</li>
+	
+			<li class="required">
+				<%= label_tag 'Name', nil, class: 'required' %><br />
+				<%= text_field_tag 'form_1099[first_name]', nil, class: 'required' %><br />
+				First<br />
+				<%= text_field_tag 'form_1099[last_name]', nil, class: 'required' %><br />
+				Last
+			</li>
+	
+			<li class="required">
+				<%= label_tag "Middle Initial" %><br />
+				<%= text_field_tag 'form_1099[middle_initial]' %><br />
+			</li>
+	
+			<li class="required">
+				<%= label_tag 'Phone', nil, class: 'required' %><br />
+				<%= text_field_tag 'form_1099[phone]', nil, class: 'required' %><br />
+			</li>
+	
+			<li class="required">
+				<%= label_tag 'Email', nil, class: 'required' %><br />
+				<%= text_field_tag 'form_1099[email]', nil, class: 'required' %><br />
+			</li>
+	
+			<li class="required">
+				<div>
+					<label>Are you a US citizen or permanent resident?<span class="required">*</span></label>
+				</div>
+				<ul>
+				<%
+					[[true, "Yes"],[false, "No"]].each do | radio_item |
+				%>
+					<li><label><%= radio_button_tag 'form_1099[us_citizen_or_resident]', radio_item.first %><%= radio_item.last %></label></li>
+				<% end %>
+				</ul>
+			</li>
+
+			<!-- End Page 2 -->
+	
+			<li>
+				<h2>Location Information</h2>
+			</li>
 			
-			<%= radio_button_tag 'first_time', radio_item.first %> <%= radio_item.last %><br />
-				
-	<%  end %>
+			<!-- TODO: align this to be more like a contact form -->
+			<li class="required">
+				<%= label_tag 'Address', nil, class: 'required' %><br />
+				<%= text_field_tag 'form_1099[address]', nil, class: 'required' %><br />
+				Street Address<br />
 	
-	<br />
+				<%= text_field_tag 'form_1099[address_2]', nil %><br />
+				Address Line 2<br />
 	
-	<!-- End Page 1 -->
+				<%= text_field_tag 'form_1099[city]', nil, class: 'required' %><br />
+				City<br />
 	
-	<h2>Personal Information</h2>
-	Name<br />
-	<%= text_field_tag 'first_name' %><br />
-	First<br />
+				<%= text_field_tag 'form_1099[state]', nil, class: 'required' %><br />
+				State/Province/Region<br />
 	
-	<%= text_field_tag 'last_name' %><br />
-	Last<br />
+				<%= text_field_tag 'form_1099[zip]', nil, class: 'required' %><br />
+				ZIP/Postal Code<br />
 	
-	Middle Initial<br />
-	<%= text_field_tag 'middle_initial' %><br />
+				<%= text_field_tag 'form_1099[country]', nil, class: 'required' %><br />
+				Country<br />
+			</li>
 	
-	Phone<br />
-	<%= text_field_tag 'phone' %><br />
+			<!-- End Page 3 -->
 	
-	Email<br />
-	<%= text_field_tag 'email' %><br />
+			<li>
+				<h2>Tax Information</h2>
+				<div>Please fill out only one. Either SSN or Business name and EIN.</div>
+			</li>
 	
+			<li class="required">
+				<ul>
+				<% [['ssn', 'SSN (Social Security Number'],['eid', 'EIN (Business Tax ID)']].each do | radio_button | %>
+					<li><label><%= radio_button_tag 'form_1099[tax_id]', radio_button.first %> <%= radio_button.last %></label></li>
+				<% end %>
+				</ul>
+				<div>Required only for US citizens and permanent residents. If you are located outside of the US, you will be paid via Paypal. Please provide your Paypal account email address below.</div><br />
+			</li>
 	
-	<label>Are you a US citizen or permanent resident?<span class="">*</span></label><br />
-	<%
-		[[true, "Yes"],[false, "No"]].each do | radio_item |
-	%>
-		<%= radio_button_tag 'us_citizen_or_resident', radio_item.first %><%= radio_item.last %><br />
-	<% end %>
-
-	<!-- End Page 2 -->
-
-
-	<h2>Location Information</h2>
-	Address<br />
-	<%= text_field_tag 'address' %><br />
-	Street Address<br />
+			<li id="social_security_number_wrapper" class="required" style="display: none; ">
+				<%= label_tag 'social_security_number','Social Security Number', class: 'required' %><br />
+				<%= text_field_tag 'form_1099[social_security_number]', nil, class: 'required' %>
+			</li>
 	
-	<%= text_field_tag 'address_2' %><br />
-	Address Line 2<br />
-	
-	<%= text_field_tag 'city' %><br />
-	City<br />
-	
-	<%= text_field_tag 'state' %><br />
-	State/Province/Region<br />
-	
-	<%= text_field_tag 'zip' %><br />
-	ZIP/Postal Code<br />
-	
-	Country<br />
-	
-	<!-- End Page 3 -->
-	
-	<h2>Tax Information</h2>
-	<div>Please fill out only one. Either SSN or Business name and EIN.</div><br />
-	
-	<% [['ssn', 'SSN (Social Security Number'],['eid', 'EIN (Business Tax ID)']].each do | radio_button | %>
-		<%= radio_button_tag 'tax_id', radio_button.first %> <%= radio_button.last %><br />
-	<% end %>
-	
-	<div>Required only for US citizens and permanent residents. If you are located outside of the US, you will be paid via Paypal. Please provide your Paypal account email address below.</div><br />
-	
-	<div id="social_security_number_wrapper" style="display: none; ">
-		Social Security Number<br />
-		<%= text_field_tag 'social_security_number' %><br />
-	</div>
-	
-	<div id="business_tax_id_wrapper" style="display: none;">
-		Tax ID<br />
-		<%= text_field_tag 'business_tax_id' %><br />
+			<li id="business_tax_id_wrapper" class="required" style="display: none;">
+				<%= label_tag 'business_tax_id', 'Tax ID', class: 'required' %><br />
+				<%= text_field_tag 'form_1099[business_tax_id]', nil, class: 'required' %><br />
 		
-		Business Name<br />
-		<%= text_field_tag 'business_name' %><br />		
+				<%= label_tag 'business_name', 'Business Name', class: 'required' %><br />
+				<%= text_field_tag 'form_1099[business_name]', nil, class: 'required' %>
+			</li>
+	
+			<li>
+				<h2>Banking Information</h2>
+			</li>
+	
+			<li class="required">
+				<%= label_tag 'bank_name', 'Name of Bank', class: 'required' %><br />
+				<%= text_field_tag 'form_1099[bank_name]', nil, class: 'required' %>
+			</li>
+	
+			<li class="required">
+				<%= label_tag 'account_type', 'Type of Account', class: 'required' %><br />
+				<ul>
+				<% [['checking', 'Checking'],['savings', 'Savings']].each do | radio_item | %>
+					<li><label><%= radio_button_tag 'form_1099[account_type]', radio_item.first %><%= radio_item.last %></label></li>
+				<% end %>
+				</ul>
+			</li>
+	
+			<li class="required">
+				<%= label_tag 'routing_number', 'Routing Number', class: 'required' %><br />
+				<%= text_field_tag 'form_1099[routing_number]', nil, class: 'required' %>
+			</li>
+	
+			<li class="required">
+				<%= label_tag 'account_number', 'Account Number', class: 'required' %><br />
+				<%= text_field_tag 'form_1099[account_number]', nil, class: 'required' %>
+			</li>	
+		</ul>
 	</div>
 	
-	
-	<h2>Banking Information</h2>
-	Name of Bank<br />
-	<%= text_field_tag 'bank_name' %><br />
-	
-	Type of Account<br />
-	<% [['checking', 'Checking'],['savings', 'Savings']].each do | radio_item | %>
-		<%= radio_button_tag 'account_type', radio_item.first %><%= radio_item.last %><br />
-	<% end %>
-	
-	Routing Number<br />
-	<%= text_field_tag 'routing_number' %><br />
-	Account Number<br />
-	<%= text_field_tag 'account_number' %><br />
-	
-	<br />
-	
-	<%= f.submit "Submit" %>
+	<div>
+		<%= f.submit "Submit" %>
+	</div>
  <% end %>

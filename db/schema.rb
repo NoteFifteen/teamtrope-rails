@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150325003820) do
+ActiveRecord::Schema.define(version: 20150326003834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,16 @@ ActiveRecord::Schema.define(version: 20150325003820) do
 
   add_index "book_genres", ["genre_id"], name: "index_book_genres_on_genre_id", using: :btree
   add_index "book_genres", ["project_id"], name: "index_book_genres_on_project_id", using: :btree
+
+  create_table "box_credentials", force: true do |t|
+    t.string   "access_token"
+    t.string   "refresh_token"
+    t.string   "anti_forgery_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "box_credentials", ["anti_forgery_token"], name: "index_box_credentials_on_anti_forgery_token", unique: true, using: :btree
 
   create_table "comments", force: true do |t|
     t.text     "content"

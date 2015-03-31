@@ -63,6 +63,8 @@ gem 'public_activity', git: 'https://github.com/pokonski/public_activity.git'
 gem 'cancancan', '~> 1.10'
 gem 'pg',             '0.17.1'
 
+gem 'boxr'
+
 group :production do
   gem 'rails_12factor', '0.0.2'
 end

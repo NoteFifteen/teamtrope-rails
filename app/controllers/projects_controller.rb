@@ -88,6 +88,30 @@ class ProjectsController < ApplicationController
       render 'show'
     end
   end
+  
+	def submit_form_1099
+		# This data is sensitive. We do not store it locally. 
+		# instead we store it in box. 
+		
+		#upload_1099_data returns true or Boxr::BoxrError 
+		result = Booktrope::BoxrWrapper.upload_1099_data(params[:form_1099])
+		if result && result.class != Boxr::BoxrError
+			flash[:success] = 'Submitted 1099'
+			redirect_to @project
+		else
+		
+			if result.class == Boxr::BoxrError
+				msg = result.to_s
+			else
+				msg = "There was an error #{result.to_s}"
+			end
+			
+		
+			flash[:error] = msg
+			render 'show'
+		end
+	
+	end
 
   def remove_team_member
     # Parameters are spread around and need to be used on multiple objects
