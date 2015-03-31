@@ -1,7 +1,8 @@
 <h4>Published Files</h4>
-<%= image_tag @project.cover_template.ebook_front_cover, class: 'alignright', width: "340px" if @project.try(:cover_template).try(:ebook_front_cover?) %>
-<strong>Cover:</strong> 
-<a href="https://teamtrope.com/wp-content/uploads/2013/07/A-Chorus-of-Wolves-Cover.jpg">DOWNLOAD</a><br/>
+<%= image_tag download_ebook_front_cover_path(@project), class: 'alignright', width: "340px" if @project.try(:cover_template).try(:ebook_front_cover?) %>
+
+<strong>Cover:</strong>
+<%= link_to "DOWNLOAD", download_ebook_front_cover_path(@project) if @project.try(:cover_template).try(:ebook_front_cover?)%><br/>
 
 <%= render @project.published_file  unless @project.published_file.nil? %>
 <%= render @project.final_manuscript unless @project.final_manuscript.nil? %>
@@ -10,22 +11,13 @@
 
 <h4>Stock Image Request</h4>
 <img class="alignright" width="340px" src=""> Image Request: <br/>
-<h4>Cover Concept Notes</h4>
-Cover Concept Notes: <%= @project.cover_concept.cover_concept_notes unless @project.cover_concept.nil? %><br/>
 
-<h4>Cover Concept</h4>N/A<br/>
+<%= render @project.cover_concept unless @project.cover_concept.nil? %>
+
 <h4>Page Count</h4>
-Final Page Count: <%= (@project.layout.final_page_count.nil?) ? 'N/A' : @project.layout.final_page_count unless @project.layout.nil? %><br/>
+Final Page Count: <%= (@project.layout.try(:final_page_count).nil?) ? 'N/A' : @project.layout.final_page_count %><br/>
 
-<h4>Marketing Release Date</h4>
-Marketing Release Date: <%= @project.marketing_release_date.try(:strftime, "%Y-%m-%d") %><br/>
-
-<h4>Layout Options</h4>
-<% unless @project.layout.nil? %>
-Layout Style: <%= (@project.layout.layout_style_choice.nil?) ? 'N/A' : @project.layout.layout_style_choice %><br/>
-Use Pen Name?: <%= (@project.layout.pen_name.nil?) ? 'N/A' : @project.layout.pen_name %><br/>
-Use Pen Name for Copyright?: <%= (@project.layout.use_pen_name_for_copyright.nil?) ? 'N/A' : ((@project.layout.use_pen_name_for_copyright) ? 'Yes' : 'No') %><br/>
-<% end %>
+<%= render @project.layout unless @project.layout.nil? %>
 
 <h4>Proofed Document</h4>
 Has Sub-Chapters? No<br/>
@@ -34,6 +26,11 @@ Word Count: N/A<br/>
 Previously Published?: No<br/>
 
 <%= render @project.manuscript unless @project.manuscript.nil? %>
+
+<h4>Marketing Release Date</h4>
+Marketing Release Date: <%= @project.marketing_release_date.try(:strftime, "%Y-%m-%d") %><br/>
+
+<%= render @project.media_kits unless @project.media_kits.nil? %>
 
 <h4>Edit Complete Date</h4>
 Edit Complete Date: <%= @project.edit_complete_date.try(:strftime, "%Y-%m-%d") %><br/>

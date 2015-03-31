@@ -42,6 +42,10 @@ GEM
     autoprefixer-rails (5.1.7)
       execjs
       json
+    aws-sdk (1.14.1)
+      json (~> 1.4)
+      nokogiri (< 1.6.0)
+      uuidtools (~> 2.1)
     bcrypt-ruby (3.1.2)
     bootstrap-sass (3.3.3)
       autoprefixer-rails (>= 5.0.0.1)
@@ -97,6 +101,7 @@ GEM
     multi_json (1.10.1)
     net-http-persistent (2.9.4)
     netrc (0.10.2)
+    nokogiri (1.5.10)
     oj (2.12.1)
     paperclip (4.2.1)
       activemodel (>= 3.0.0)
@@ -179,12 +184,14 @@ GEM
     uglifier (2.7.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    uuidtools (2.1.4)
     will_paginate (3.0.7)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk
   bcrypt-ruby (= 3.1.2)
   bootstrap-sass (~> 3.3.3)
   boxr

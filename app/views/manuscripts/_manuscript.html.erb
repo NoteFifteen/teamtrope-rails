@@ -1,4 +1,4 @@
 <h4>Manuscript</h4>
-Original: <%= link_to "DOWNLOAD", manuscript.original.url if manuscript.original? %><br />
-Edited:   <%= link_to "DOWNLOAD", manuscript.edited.url   if manuscript.edited?   %><br />
-Proofed:  <%= link_to "DOWNLOAD", manuscript.proofed.url  if manuscript.proofed?  %><br />
+Original: <%= link_to "DOWNLOAD", download_original_manuscript_path(@project) if manuscript.original? %><br />
+Edited:   <%= link_to "DOWNLOAD", download_edited_manuscript_path(@project)   if manuscript.edited?   %><br />
+Proofed:  <%= link_to "DOWNLOAD", download_proofed_manuscript_path(@project)  if manuscript.proofed?  %><br />

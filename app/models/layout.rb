@@ -1,7 +1,7 @@
 class Layout < ActiveRecord::Base
   belongs_to :project
 
-  has_attached_file :layout_upload
+  has_attached_file :layout_upload, :s3_permissions => 'authenticated-read'
 
   validates_attachment :layout_upload,
     *Constants::DefaultContentTypePdfParams

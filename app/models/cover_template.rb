@@ -1,10 +1,10 @@
 class CoverTemplate < ActiveRecord::Base
   belongs_to :project
   
-  has_attached_file :alternative_cover
-  has_attached_file :createspace_cover
-  has_attached_file :ebook_front_cover
-  has_attached_file :lightning_source_cover
+  has_attached_file :alternative_cover, :s3_permissions => 'authenticated-read'
+  has_attached_file :createspace_cover, :s3_permissions => 'authenticated-read'
+  has_attached_file :ebook_front_cover, :s3_permissions => 'authenticated-read'
+  has_attached_file :lightning_source_cover, :s3_permissions => 'authenticated-read'
   
   validates_attachment :alternative_cover,
   	*Constants::DefaultContentTypePdfParams

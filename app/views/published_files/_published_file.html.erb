@@ -1,3 +1,3 @@
-<strong>Mobi:</strong> <%= link_to 'DOWNLOAD', published_file.mobi.url %><br/>
-<strong>ePub:</strong> <%= link_to 'DOWNLOAD', published_file.epub.url %><br/>
-<strong>PDF:</strong> <%= link_to 'DOWNLOAD', published_file.pdf.url %><br/>
+<strong>Mobi:</strong> <%= link_to 'DOWNLOAD', download_published_file_mobi_path(@project) %><br/>
+<strong>ePub:</strong> <%= link_to 'DOWNLOAD', download_published_file_epub_path(@project) %><br/>
+<strong>PDF:</strong>  <%= link_to 'DOWNLOAD', download_published_file_pdf_path(@project) %><br/>

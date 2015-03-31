@@ -1,5 +1,6 @@
 <% provide(:title, @project.final_title) %>
-		<%= image_tag @project.cover_template.ebook_front_cover, class: 'thumbalignright' if @project.try(:cover_template).try(:ebook_front_cover?) %>    
+    <%= image_tag download_ebook_front_cover_path(@project), class: 'thumbalignright' if @project.try(:cover_template).try(:ebook_front_cover?) %>
+
     <h1 class="entry-title"><%= @project.title %></h1><br />
     <% if can? :edit, @project %><%= link_to "Edit", edit_project_path(@project) %> | <% end %>
     <%= link_to "Back" , projects_path %>

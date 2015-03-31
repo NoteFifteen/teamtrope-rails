@@ -65,6 +65,28 @@ Rails.application.routes.draw do
   match '/projects/update_status/:id',            to: 'projects#update_status',            via: 'patch'
   match '/projects/upload_cover_templates/:id',   to: 'projects#upload_cover_templates',   via: 'patch'
 
+  match '/projects/download_original_manuscript/:id',  to: 'projects#download_original_manuscript', via: 'get', as: 'download_original_manuscript'
+  match '/projects/download_edited_manuscript/:id',    to: 'projects#download_edited_manuscript',   via: 'get', as: 'download_edited_manuscript'
+  match '/projects/download_proofed_manuscript/:id',   to: 'projects#download_proofed_manuscript',  via: 'get', as: 'download_proofed_manuscript'
+
+  match '/projects/download_published_file_mobi/:id',  to: 'projects#download_published_file_mobi', via: 'get', as: 'download_published_file_mobi'
+  match '/projects/download_published_file_epub/:id',  to: 'projects#download_published_file_epub', via: 'get', as: 'download_published_file_epub'
+  match '/projects/download_published_file_pdf/:id',   to: 'projects#download_published_file_pdf',  via: 'get', as: 'download_published_file_pdf'
+
+  match '/projects/download_media_kit/:id',            to: 'projects#download_media_kit',           via: 'get', as: 'download_media_kit'
+  match '/projects/download_layout/:id',               to: 'projects#download_layout',              via: 'get', as: 'download_layout'
+
+  match '/projects/download_final_manuscript_pdf/:id', to: 'projects#download_final_manuscript_pdf', via: 'get', as: 'download_final_manuscript_pdf'
+  match '/projects/download_final_manuscript_doc/:id', to: 'projects#download_final_manuscript_doc', via: 'get', as: 'download_final_manuscript_doc'
+
+  match '/projects/download_alternate_cover/:id',        to: 'projects#download_alternate_cover',        via: 'get', as: 'download_alternate_cover'
+  match '/projects/download_createspace_cover/:id',      to: 'projects#download_createspace_cover',      via: 'get', as: 'download_createspace_cover'
+  match '/projects/download_ebook_front_cover/:id',      to: 'projects#download_ebook_front_cover',      via: 'get', as: 'download_ebook_front_cover'
+  match '/projects/download_lightning_source_cover/:id', to: 'projects#download_lightning_source_cover', via: 'get', as: 'download_lightning_source_cover'
+
+  match '/projects/download_cover_concept/:id',          to: 'projects#download_cover_concept',          via: 'get', as: 'download_cover_concept'
+  match '/projects/download_stock_cover_image/:id',      to: 'projects#download_stock_cover_image',      via: 'get', as: 'download_stock_cover_image'
+
   resources :posts do
   	resources :comments, shallow: true
   end

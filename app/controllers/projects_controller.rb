@@ -509,6 +509,70 @@ class ProjectsController < ApplicationController
   	end  	
   end
 
+  def download_original_manuscript
+    redirect_to @project.manuscript.original.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+    def download_edited_manuscript
+    redirect_to @project.manuscript.edited.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+    def download_proofed_manuscript
+    redirect_to @project.manuscript.proofed.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_published_file_mobi
+    redirect_to @project.published_file.mobi.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_published_file_epub
+    redirect_to @project.published_file.epub.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_published_file_pdf
+    redirect_to @project.published_file.pdf.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_media_kits
+    redirect_to @project.media_kits.document.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_layout
+    redirect_to @project.layout.layout_upload.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_final_manuscript_pdf
+    redirect_to @project.final_manuscript.pdf.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_final_manuscript_doc
+    redirect_to @project.final_manuscript.doc.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_alternate_cover
+    redirect_to @project.cover_template.alternate_cover.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_createspace_cover
+    redirect_to @project.cover_template.createspace_cover.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_ebook_front_cover
+    redirect_to @project.cover_template.ebook_front_cover.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_lightning_source_cover
+    redirect_to @project.cover_template.lightning_source_cover.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_cover_concept
+    redirect_to @project.cover_concept.cover_concept.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_stock_cover_image
+    redirect_to @project.cover_concept.stock_cover_image.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
   private
   def new_project_params
   	params.require(:project).permit(:title, :final_title, :project_type_id, :genre_ids => [], :team_memberships_attributes => [:role_id, :member_id, :percentage])
