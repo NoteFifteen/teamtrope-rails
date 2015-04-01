@@ -32,7 +32,9 @@ Rails.application.routes.draw do
   get '/box/request_access', to: 'static_pages#box_request_access', as: 'box_request'
   get '/box/redirect',       to: 'static_pages#box_redirect',       as: 'box-redirect'
   
-  resources :projects
+  resources :projects do
+    resource :analytics, only: [:show]
+  end
 
   match '/projects/accept_team_member/:id',       to: 'projects#accept_team_member',       via: [:patch, :post]
   match '/projects/add_stock_cover_image/:id',    to: 'projects#add_stock_cover_image',    via: 'patch'
