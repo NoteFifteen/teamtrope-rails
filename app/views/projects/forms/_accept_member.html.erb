@@ -112,7 +112,7 @@
     }.to_json.html_safe %>);
 
     // Add our list of available members for the various roles
-    acceptForm.addMembersToRole('book_manager', <%= User.with_role('book_manager').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
+    acceptForm.addMembersToRole('book_managers', <%= User.with_role('book_manager').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
     acceptForm.addMembersToRole('cover_designers', <%= User.with_role('cover_designer').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
     acceptForm.addMembersToRole('editors', <%= User.with_role('editor').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
     acceptForm.addMembersToRole('project_managers', <%= User.with_role('project_manager').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
