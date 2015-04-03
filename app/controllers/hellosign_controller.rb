@@ -7,7 +7,7 @@ class HellosignController < ApplicationController
     event = JSON.parse(params[:json])
     if event['signature_request']
       id = event['signature_request']['signature_request_id']
-      document = HsDocument.where(hellosign_id: id).first_or_create
+      document = HellosignDocument.where(hellosign_id: id).first_or_create
       document.update_attributes(status: event['event']['event_type'])
     end
     render json: 'Hello API Event Received',
