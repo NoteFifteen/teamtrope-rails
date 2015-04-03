@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hellosign_document_id: 
+  team_membership_id: 
+
+two:
+  hellosign_document_id: 
+  team_membership_id: 

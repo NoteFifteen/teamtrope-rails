@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/ltlai/hellosign-ruby-sdk.git
+  revision: 1b84f46f7d5374617facee378f54887fef964df1
+  branch: parsed-errors
+  specs:
+    hellosign-ruby-sdk (3.0.9)
+      faraday
+      multi_json
+
+GIT
   remote: https://github.com/pokonski/public_activity.git
   revision: 09522be90a61607bfae2278c53fe1b487285ea75
   specs:
@@ -71,6 +80,8 @@ GEM
     coffee-script-source (1.8.0)
     erubis (2.7.0)
     execjs (2.2.2)
+    faraday (0.9.1)
+      multipart-post (>= 1.2, < 3)
     figaro (1.0.0)
       thor (~> 0.14)
     hashie (3.4.0)
@@ -99,6 +110,7 @@ GEM
     mime-types (2.4.3)
     minitest (5.5.1)
     multi_json (1.10.1)
+    multipart-post (2.0.0)
     net-http-persistent (2.9.4)
     netrc (0.10.2)
     nokogiri (1.5.10)
@@ -198,6 +210,7 @@ DEPENDENCIES
   cancancan (~> 1.10)
   coffee-rails (~> 4.0.0)
   figaro
+  hellosign-ruby-sdk!
   highcharts-rails (~> 3.0.0)
   humanize (= 1.1.0)
   jbuilder (~> 2.0)

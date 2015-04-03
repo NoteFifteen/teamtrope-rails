@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-
   resources :marketing_expenses
 
   resources :publication_fact_sheets
@@ -31,6 +30,8 @@ Rails.application.routes.draw do
   
   get '/box/request_access', to: 'static_pages#box_request_access', as: 'box_request'
   get '/box/redirect',       to: 'static_pages#box_redirect',       as: 'box-redirect'
+  
+  post 'hellosign' => 'hellosign#record_event'
   
   resources :projects do
     resource :analytics, only: [:show]

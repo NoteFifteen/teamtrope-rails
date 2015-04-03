@@ -74,13 +74,14 @@ class ProjectsController < ApplicationController
 	end
 
   def accept_team_member
+
+  
     if @project.update(update_project_params)
       @project.create_activity :accept_team_member, owner: current_user,
                                parameters: { text: ' added new team member', form_data: params[:project].to_s}
       update_current_task
       Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, DateTime.parse("#{params[:effective_date][:year]}/#{params[:effective_date][:month]}/#{params[:effective_date][:day]}")
 
-      #TODO: Hellosign-rails integration
 
       flash[:success] = 'Accepted a Team Member'
       redirect_to @project

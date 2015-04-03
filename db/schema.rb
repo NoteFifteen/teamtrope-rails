@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150326003834) do
+ActiveRecord::Schema.define(version: 20150403002922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -187,6 +187,24 @@ ActiveRecord::Schema.define(version: 20150326003834) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "hellosign_documents", force: true do |t|
+    t.string   "name"
+    t.string   "hellosign_id"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "hellosign_signatures", force: true do |t|
+    t.integer  "hellosign_document_id"
+    t.integer  "team_membership_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "hellosign_signatures", ["hellosign_document_id"], name: "index_hellosign_signatures_on_hellosign_document_id", using: :btree
+  add_index "hellosign_signatures", ["team_membership_id"], name: "index_hellosign_signatures_on_team_membership_id", using: :btree
 
   create_table "imprints", force: true do |t|
     t.string   "name"
@@ -384,30 +402,6 @@ ActiveRecord::Schema.define(version: 20150326003834) do
     t.boolean  "color_interior"
     t.boolean  "childrens_book"
     t.datetime "edit_complete_date"
-    t.string   "manuscript_proofed_file_name"
-    t.string   "manuscript_proofed_content_type"
-    t.integer  "manuscript_proofed_file_size"
-    t.datetime "manuscript_proofed_updated_at"
-    t.string   "manuscript_edited_file_name"
-    t.string   "manuscript_edited_content_type"
-    t.integer  "manuscript_edited_file_size"
-    t.datetime "manuscript_edited_updated_at"
-    t.string   "manuscript_original_file_name"
-    t.string   "manuscript_original_content_type"
-    t.integer  "manuscript_original_file_size"
-    t.datetime "manuscript_original_updated_at"
-    t.string   "final_doc_file_file_name"
-    t.string   "final_doc_file_content_type"
-    t.integer  "final_doc_file_file_size"
-    t.datetime "final_doc_file_updated_at"
-    t.string   "final_manuscript_pdf_file_name"
-    t.string   "final_manuscript_pdf_content_type"
-    t.integer  "final_manuscript_pdf_file_size"
-    t.datetime "final_manuscript_pdf_updated_at"
-    t.string   "final_pdf_file_name"
-    t.string   "final_pdf_content_type"
-    t.integer  "final_pdf_file_size"
-    t.datetime "final_pdf_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "project_type_id"
@@ -474,6 +468,7 @@ ActiveRecord::Schema.define(version: 20150326003834) do
 
   create_table "roles", force: true do |t|
     t.string   "name"
+    t.text     "contract_description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
