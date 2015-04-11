@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   get 'wordpress_import/import'
   post 'wordpress_import/upload'
 
-
   resources :marketing_expenses
 
   resources :publication_fact_sheets

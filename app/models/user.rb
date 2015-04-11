@@ -46,9 +46,9 @@ class User < ActiveRecord::Base
 
   def self.find_for_wordpress_oauth2(oauth, signed_in_user=nil)
 
+
     #if the user was already signed in / but they navigated through the authorization with wordpress
     if signed_in_user
-
       #update / synch any information you want from the authentication service.
       if signed_in_user.email.nil? or signed_in_user.email.eql?('')
         signed_in_user.update_attributes(email: oauth['info']['email'])
