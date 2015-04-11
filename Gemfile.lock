@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/jwickard/omniauth-wordpress-oauth2-plugin.git
+  revision: fb807b8cbf5b0bb9e8401c082876c43dbf8950b0
+  specs:
+    omniauth-wordpress_hosted (0.0.2)
+      omniauth-oauth2
+
+GIT
   remote: https://github.com/ltlai/hellosign-ruby-sdk.git
   revision: 1b84f46f7d5374617facee378f54887fef964df1
   branch: parsed-errors
@@ -55,6 +62,7 @@ GEM
       json (~> 1.4)
       nokogiri (< 1.6.0)
       uuidtools (~> 2.1)
+    bcrypt (3.1.10)
     bcrypt-ruby (3.1.2)
     bootstrap-sass (3.3.3)
       autoprefixer-rails (>= 5.0.0.1)
@@ -90,6 +98,13 @@ GEM
       sass (~> 3.2.19)
     compass-rails (2.0.0)
       compass (>= 0.12.2)
+    devise (3.4.1)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      responders
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.2.2)
     faraday (0.9.1)
@@ -123,16 +138,33 @@ GEM
       railties (>= 3.1.0)
       turbolinks
     json (1.8.2)
+    jwt (1.4.1)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
     minitest (5.5.1)
     multi_json (1.10.1)
+    multi_xml (0.5.5)
     multipart-post (2.0.0)
     net-http-persistent (2.9.4)
     netrc (0.10.2)
     nokogiri (1.5.10)
+    oauth2 (1.0.0)
+      faraday (>= 0.8, < 0.10)
+      jwt (~> 1.0)
+      multi_json (~> 1.3)
+      multi_xml (~> 0.5)
+      rack (~> 1.2)
     oj (2.12.1)
+    omniauth (1.2.2)
+      hashie (>= 1.2, < 4)
+      rack (~> 1.0)
+    omniauth-oauth2 (1.2.0)
+      faraday (>= 0.8, < 0.10)
+      multi_json (~> 1.3)
+      oauth2 (~> 1.0)
+      omniauth (~> 1.2)
+    orm_adapter (0.5.0)
     paperclip (4.2.1)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -174,6 +206,8 @@ GEM
     rake (10.4.2)
     rdoc (4.2.0)
       json (~> 1.4)
+    responders (1.1.2)
+      railties (>= 3.2, < 4.2)
     rest (3.0.3)
       net-http-persistent (>= 2.9.1)
       netrc
@@ -215,6 +249,8 @@ GEM
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     uuidtools (2.1.4)
+    warden (1.2.3)
+      rack (>= 1.0)
     will_paginate (3.0.7)
 
 PLATFORMS
@@ -228,6 +264,7 @@ DEPENDENCIES
   cancancan (~> 1.10)
   chosen-rails
   coffee-rails (~> 4.0.0)
+  devise
   figaro
   hellosign-ruby-sdk!
   highcharts-rails (~> 3.0.0)
@@ -236,6 +273,8 @@ DEPENDENCIES
   jquery-datatables-rails (~> 3.2.0)
   jquery-rails
   jquery-turbolinks
+  omniauth
+  omniauth-wordpress_hosted!
   paperclip (~> 4.2)
   parse-ruby-client (~> 0.2.0)
   pg (= 0.17.1)
