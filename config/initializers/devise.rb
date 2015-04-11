@@ -234,12 +234,14 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
    config.omniauth :wordpress_oauth2,
-               "kSKs6mk3L9xTXOeLmryceEhOWE6yPK", "gaD0DKnXO87l15agQxHpKW31L0GRyv",
-  			strategy_class: OmniAuth::Strategies::WordpressHosted,
-  			client_options: {
-          site: 'https://teamtrope.com',
-          token_url: "/oauth/token",
-          access_url: "/oauth/me/"        }
+    "kSKs6mk3L9xTXOeLmryceEhOWE6yPK", "gaD0DKnXO87l15agQxHpKW31L0GRyv",
+    strategy_class: OmniAuth::Strategies::WordpressHosted,
+    client_options: {
+      site: 'https://teamtrope.com',
+      token_url: "/oauth/token",
+      access_url: "/oauth/me/"
+    }
+
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
