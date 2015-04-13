@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
    root 'static_pages#home'
 
-  resources :sessions, only: [:new, :create, :destroy]
   resources :users do
   	member do
   		get 'activity'
@@ -99,9 +98,6 @@ Rails.application.routes.draw do
   resources :tags, except: :index
   resources :statuses
 
-  match 'signup',  to: 'users#new',        via: 'get'
-  match 'signin',  to: 'sessions#new',     via: 'get'
-  match 'signout', to: 'sessions#destroy', via: 'get'
   match 'visitors', to: 'static_pages#visitors', via: 'get'
 
   resources :tabs
