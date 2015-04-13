@@ -37,47 +37,47 @@ class UsersController < ApplicationController
   def edit
   end
 
-  def update    
+  def update
     if @user.update_attributes(user_params)
 		   flash[:success] = "Profile updated"
 	  	redirect_to @user
   	else
   		render 'edit'
-  	end     
+  	end
   end
-  
+
   #TODO: Implement activity
   def activity
   	@user = User.find(params[:id])
   end
-  
+
   #TODO: Implement mentions
   def mentions
   	@user = User.find(params[:id])
   end
-  
+
   #TODO: Implement groups
   def groups
   	@user = User.find(params[:id])
   end
-  
+
   #TODO: Implement favorites
   def favorites
   	@user = User.find(params[:id])
   end
-  
+
   private
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :roles => [])
     end
-    
+
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)
     end
-    
+
     #def admin_user
     #  redirect_to(root_url) unless current_user.admin?
     #end
-  
+
 end
