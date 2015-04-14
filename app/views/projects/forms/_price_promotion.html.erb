@@ -16,12 +16,7 @@
 				<%= f.simple_fields_for :price_change_promotions, f.object.price_change_promotions.build do | pcp | %>
 				<li>
 					<label>Please select the type of promotion you'd like to schedule<span class="gfield_required">*</span></label>
-					<%= pcp.collection_radio_buttons :type, [
-							[ 'temporary_force_free', 'Temporary iTunes/Force free' ], 
-							[ 'temporary_price_drop', 'Temporary Price promotion' ],
-							[ 'permanent_force_free', 'Permanent iTunes/Force free' ],
-							[ 'permanent_price_drop', 'Permanent or Indefinite Time* Price change' ]
-						], :first, :last,
+					<%= pcp.collection_radio_buttons :type,PriceChangePromotion::PROMOTION_TYPES, :first, :last,
 						collection_wrapper_tag: 'ul',
 						item_wrapper_tag: 'li' %>
 					<div>

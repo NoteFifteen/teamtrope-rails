@@ -34,11 +34,38 @@ table.projectListTable thead th.sorting {
   margin-bottom: 0px !important;
 }
 
+input.upload_cover_checklist {
+  margin-right: 5px !important;
+}
+
+li.cover_template_list {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+li.cover_template_sign_off {
+  padding-top: 2px;
+  padding-bottom: 3px;
+}
 
 #edit_layout_style .error {
   padding:5px;
   margin:7px 2px;
   border:1px solid red;
+}
+
+label.error {
+  color: red;
+}
+
+input.proofread_manuscript_checklist {
+  float: left;
+  margin: 5px 10px 5px 0px !important;
+}
+
+label.proofread_manuscript_checklist {
+  display: block;
+  overflow: auto;
 }
 
 /**

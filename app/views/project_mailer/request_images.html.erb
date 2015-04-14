@@ -1,0 +1,19 @@
+<p>The following image(s) have been requested:</p>
+
+<table cellspacing="0" border="0" height="100%" cellpadding="3" cellspacing="3" width="100%">
+  <thead>
+  <tr>
+    <th style="text-align: left; background-color: #555555; color: white; font-size: 11pt; line-height: 26px;">Subject</th>
+    <th style="text-align: left;  background-color: #555555; color: white; font-size: 11pt; line-height: 26px;">Link</th>
+  </tr>
+  </thead>
+  <tbody style="border: 2px solid black;">
+  <% @project.cover_concept.image_request_list.each do |img| %>
+      <tr bgcolor="<%= cycle('#ffffff', '#a3a9af') -%>">
+        <td style="text-align: left; overflow: auto; font-family: Arial, Helvetica, sans-serif; font-size: 11pt; line-height: 22px;"> <%= img['subject']  %></td>
+        <td style="text-align: left; overflow: auto; font-family: Arial, Helvetica, sans-serif; font-size: 11pt; line-height: 22px;"> <%= img['link'] %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<br>

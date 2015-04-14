@@ -1,0 +1,9 @@
+
+<table cellspacing="0" border="0" height="100%" style="background-color: #fafafa;" cellpadding="3" cellspacing="3" width="100%">
+<% @message_tokens.each do |key, val| %>
+    <tr bgcolor="<%= cycle('#a3a9af', '#ffffff') -%>">
+      <td width="50%" style="text-align: left; overflow: auto; font-family: Arial, Helvetica, sans-serif; font-size: 11pt; line-height: 22px;"><%= key %></td>
+      <td width="50%" style="text-align: left; overflow: auto; font-family: Arial, Helvetica, sans-serif; font-size: 11pt; line-height: 22px;"><%= val %></td>
+    </tr>
+<% end %>
+</table>

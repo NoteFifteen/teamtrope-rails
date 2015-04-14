@@ -301,7 +301,7 @@ jQuery ->
 jQuery.validator.addMethod("checklistValidator", (value, element, params) ->
   is_user_ready_to_upload = true
   $(params[0]).each (index, obj) ->
-    if ! obj.checked
+    if ! $(obj).is(':checked')
       is_user_ready_to_upload = false
   return is_user_ready_to_upload
 , jQuery.validator.format("You must sign off that you have completed all steps in order to submit the form.")
@@ -384,7 +384,7 @@ jQuery ->
   $("#submit_proofread").validate({
     rules:{
       checklist_0: {
-        checklistValidator: [".proofread_manuscript_checklist"]
+        checklistValidator: ["input.proofread_manuscript_checklist"]
       },
       'project[has_sub_chapters]': {
         required: true
@@ -407,28 +407,9 @@ jQuery ->
       'project[manuscript_attributes][proofed]': {
         required: true
         accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
-      },
-      'project[proofed_word_count]': {
-        required: true,
-        pattern: /^\d+(?:,\d+)*$/
-      },
+      }
     }
   })
-
-jQuery ->
-  field = $("input[name=form_1099\\[tax_id\\]]:radio")
-  field_value = $("input[name=form_1099\\[tax_id\\]]:checked")
-
-  $(field).change (event) =>
-    if field.is(':checked')
-      field_value = $("input[name=form_1099\\[tax_id\\]]:checked")
-
-      if field_value.val() == 'ssn'
-        $('#social_security_number_wrapper').slideDown()
-        $('#business_tax_id_wrapper').slideUp()
-      else
-        $('#social_security_number_wrapper').slideUp()
-        $('#business_tax_id_wrapper').slideDown()
 
 jQuery ->
   $("#form_1099").validate({

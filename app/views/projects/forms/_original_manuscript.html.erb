@@ -1,22 +1,32 @@
-<h1>Original Manuscript</h1>
-Upload the Original Manuscript to unlock additional steps.
-<%= simple_form_for @project,
-        url: url_for(controller: 'projects', action: 'original_manuscript', id: @project),
-        html: { id: 'original_manuscript' } do | f | %>
-  <%= f.error_notification %>
-  <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
 
-  <ul>
-  <%= f.simple_fields_for :manuscript,
-        ((f.object.manuscript.nil?) ? f.object.build_manuscript : f.object.manuscript) do | manuscript | %>
-    <li>
-      <%= manuscript.input :original,
-            label: "Original Manuscript:", as: :file, required: true %>
-      <div class="gfield_description">.doc or .docx file only</div>
-    </li>
-  <% end %>
-  </ul>
-  <div>
-    <%= f.submit "submit" %>
+<!-- Original Manuscript -->
+<div class="container">
+  <h1>Original Manuscript</h1>
+  <div class="row">
+    <div class="col-md-6">
+
+        Upload the Original Manuscript to unlock additional steps.
+        <%= simple_form_for @project,
+                        url: url_for(controller: 'projects', action: 'original_manuscript', id: @project),
+                        html: { id: 'original_manuscript' } do | f | %>
+            <%= f.error_notification %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
+            <ul>
+            <%= f.simple_fields_for :manuscript,
+                        ((f.object.manuscript.nil?) ? f.object.build_manuscript : f.object.manuscript) do | manuscript | %>
+                <li>
+                <%= manuscript.input :original,
+                            label: "Original Manuscript:", as: :file, required: true %>
+              </li>
+              <li><span>.doc & .docx files only!</span></li>
+
+            <% end %>
+          </ul>
+          <br>
+
+          <%= f.submit "submit" %>
+        <% end %>
+    </div>
   </div>
-<% end %>
+</div>

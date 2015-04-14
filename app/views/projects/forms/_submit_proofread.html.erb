@@ -1,134 +1,139 @@
-<h1>Submit Final Proofed Document</h1>
-<div class="gf_browser_safari gform_wrapper" id="" style="">
-  <%= simple_form_for @project,
-      url: url_for(controller: 'projects', action: 'proofed_manuscript', id: @project) ,
-      html: { id: "submit_proofread" } do | f |%>
-    <div>
-      <span>The Author must upload your final manuscript after proofreading here.  This is your LAST CHANCE to submit corrections for typos or any other proofreading errors. Content or proofing changes requested after the book has gone through layout may result in additional fees.You are only allowed to submit once, so please ensure editing is final! (.doc or .docx only)</span>
-    </div>
 
-    <div>
-      <ul>
-        <li>
-          <label >Are you ready to upload your proofread manuscript for layout?<span>*</span></label>
+<!-- Submit Final Proofed Document -->
+<div class="container">
+  <h1>Submit Final Proofed Document</h1>
+  <div class="row">
+    <div class="col-md-12">
 
-          <div>
-            <ul class="gfield_checkbox">
-            <%
-              [ 'Content text has been converted to palatino linotype, size 10',
-              'Any Acknowledgments, Dedication, Author Notes, etc. that I want included are included in this manuscript',
-              'Any and all tracked changes have been accepted or rejected; Comments have been removed',
-              'All text is fully justified (text is aligned with both the left and right margin)',
-              'Chapter Headings are the way I want them to appear in the final manuscript (e.g. "Chapter One," "Chapter 1", "1", "CHAPTER ONE"). Also, I have reviewed and made sure that Chapter Numbering is correct (No missing or duplicated numbers).',
-              'All editing and stylistic choices (italics, caps) have been made and are final',
-              'All chapter headings are size 14 font and there is a page break inserted between each chapter',
-              'I have looked over and approved the delivered proofreading and the content.  Nothing more will be added or removed from this document, and no further changes will be made.'
-              ].each_with_index do | label, index |
-            %>
-              <li><%= check_box_tag "checklist_#{index}", index, false, class: "proofread_manuscript_checklist" %> <%= label_tag "checklist_#{index}", label %></li>
-            <% end %>
-            </ul>
-          </div>
+        <%= simple_form_for @project,
+                url: url_for(controller: 'projects', action: 'proofed_manuscript', id: @project) ,
+                html: { id: "submit_proofread" } do | f |%>
+            <div>
+                <span>The Author must upload your final manuscript after proofreading here.  This is your LAST CHANCE to submit corrections for typos or any other proofreading errors. Content or proofing changes requested after the book has gone through layout may result in additional fees.You are only allowed to submit once, so please ensure editing is final! (.doc or .docx only)</span>
+            </div>
 
-          <div>Preparing your document with the above items will ensure layout is completely accurately and timely.
-            IMPORTANT: Once you have submitted your manuscript via this form, the expectation is that NO FURTHER content or proofing changes will be requested. If they are, you may be responsible for additional fees.
-          </div>
-        </li>
+            <div>
+                <ul>
+                    <li>
+                        <label >Are you ready to upload your proofread manuscript for layout?<span>*</span></label>
 
-        <li>
-          <label>Scene Changes</label>
-          <div>
-            <%= check_box_tag 'scene_changes' %> <%= label_tag 'scene_changes', 'All narrative breaks/scene changes are indicated with three asterisks (***).' %>
-          </div>
-          <div>
-            Checking this box will instruct us to add a scene change indicator (a line or other graphic mark at the layout artist's discretion) to separate scenes in the book.
-            Note: If you prefer your breaks to appear as blank space in the final book, please leave this unchecked and note as much in the "text needing special treatment" field below.
-          </div>
-        </li>
+                        <div>
+                            <ul>
+                            <%
+                                [ 'Content text has been converted to palatino linotype, size 10',
+                                'Any Acknowledgments, Dedication, Author Notes, etc. that I want included are included in this manuscript',
+                                'Any and all tracked changes have been accepted or rejected; Comments have been removed',
+                                'All text is fully justified (text is aligned with both the left and right margin)',
+                                'Chapter Headings are the way I want them to appear in the final manuscript (e.g. "Chapter One," "Chapter 1", "1", "CHAPTER ONE"). Also, I have reviewed and made sure that Chapter Numbering is correct (No missing or duplicated numbers).',
+                                'All editing and stylistic choices (italics, caps) have been made and are final',
+                                'All chapter headings are size 14 font and there is a page break inserted between each chapter',
+                                'I have looked over and approved the delivered proofreading and the content.  Nothing more will be added or removed from this document, and no further changes will be made.'
+                                ].each_with_index do | label, index |
+                            %>
+                                <li><%= check_box_tag "checklist_#{index}", index, false, class: "proofread_manuscript_checklist" %> <%= label_tag "checklist_#{index}", label, class: "proofread_manuscript_checklist" %></li>
+                            <% end %>
+                            </ul>
+                        </div>
 
-        <li>
-          <label>Does your book contain sub-chapters?<span>*</span></label>
-          <%= f.collection_radio_buttons :has_sub_chapters, [[false, 'No'],[true, 'Yes, and all sub-section headers are indicated by increments of increasing font size']], :first, :last, :collection_wrapper_tag => 'ul', :item_wrapper_tag => 'li' %>
-        </li>
+                        <div>Preparing your document with the above items will ensure layout is completely accurately and timely.
+                            IMPORTANT: Once you have submitted your manuscript via this form, the expectation is that NO FURTHER content or proofing changes will be requested. If they are, you may be responsible for additional fees.
+                        </div>
+                    </li>
 
-        <li>
-          <label>Does your manuscript contain images?<span>*</span></label>
-          <div>
-            <ul class="gfield_checkbox">
-            <%
-              [
-                'No',
-                'Yes ‐ I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don\'t need to increase their size) have been uploaded to the Docs section of my teamroom.',
-                'Yes - I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don\'t need to increase their size) have been uploaded to a Dropbox folder available here:'
-              ].each_with_index do | radio, index | %>
-              <li><label><%= radio_button_tag :does_contain_images, index %> <strong><%= radio %></strong></label></li>
-            <% end %>
-            </ul>
-          </div>
-          <div>
-            <p>If your manuscript contains images: Please insert the images into the manuscript so we have an idea of where you want them placed, size, positioning, etc. Note that due to the difference in dimensions between your proofread manuscript and the final product, we may not be able to replicate exactly.</p>
-            <p>The images you insert in your manuscript are placeholders only - they will be replaced with the print-ready jpegs you provide. You MUST provide the print-ready jpegs in either the Docs section of your teamroom or Dropbox.</p>
-            <p> Images must be jpegs and they must be 300 dpi and large enough height x width that we won't need to increase their size.</p>
-          </div>
-        </li>
+                    <li>
+                        <label>Scene Changes</label>
+                        <div>
+                            <%= check_box_tag 'scene_changes' %> <%= label_tag 'scene_changes', 'All narrative breaks/scene changes are indicated with three asterisks (***).' %>
+                        </div>
+                        <div>
+                            Checking this box will instruct us to add a scene change indicator (a line or other graphic mark at the layout artist's discretion) to separate scenes in the book.
+                            Note: If you prefer your breaks to appear as blank space in the final book, please leave this unchecked and note as much in the "text needing special treatment" field below.
+                        </div>
+                    </li>
 
-        <li class="does_contain_images_1" style="display: none;">
-          <label>Link to Images in Docs Section of Teamroom<span>*</span></label>
-          <div>
-            <%= text_field_tag "teamtrope_link" %>
-          </div>
-        </li>
+                    <li>
+                        <label>Does your book contain sub-chapters?<span>*</span></label>
+                        <%= f.collection_radio_buttons :has_sub_chapters, [[false, 'No'],[true, 'Yes, and all sub-section headers are indicated by increments of increasing font size']], :first, :last, :collection_wrapper_tag => 'ul', :item_wrapper_tag => 'li' %>
+                    </li>
 
-        <li class="does_contain_images_2" style="display: none;">
-          <label>Link to Dropbox file containing images<span>*</span></label>
-          <div>
-            <%= text_field_tag "dropbox_link" %>
-          </div>
-        </li>
+                    <li>
+                        <label>Does your manuscript contain images?<span>*</span></label>
+                        <div>
+                            <ul class="gfield_checkbox">
+                            <%
+                                [
+                                    'No',
+                                    'Yes ‐ I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don\'t need to increase their size) have been uploaded to the Docs section of my teamroom.',
+                                    'Yes - I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don\'t need to increase their size) have been uploaded to a Dropbox folder available here:'
+                                ].each_with_index do | radio, index | %>
+                                <li><label><%= radio_button_tag :does_contain_images, index %> <strong><%= radio %></strong></label></li>
+                            <% end %>
+                            </ul>
+                        </div>
+                        <div>
+                            <p>If your manuscript contains images: Please insert the images into the manuscript so we have an idea of where you want them placed, size, positioning, etc. Note that due to the difference in dimensions between your proofread manuscript and the final product, we may not be able to replicate exactly.</p>
+                            <p>The images you insert in your manuscript are placeholders only - they will be replaced with the print-ready jpegs you provide. You MUST provide the print-ready jpegs in either the Docs section of your teamroom or Dropbox.</p>
+                            <p> Images must be jpegs and they must be 300 dpi and large enough height x width that we won't need to increase their size.</p>
+                        </div>
+                    </li>
 
-        <li>
-          <div>
-          <%= f.input :special_text_treatment,
-                label: 'I have sections of text needing special treatment (optional)',
-                as: :text,
-                input_html: { class: %q[textarea medium], rows: 10, cols: 50 }
-            %>
-            <div class="charleft ginput_counter">0 of 1200 max characters</div>
-          </div>
+                    <li class="does_contain_images_1" style="display: none;">
+                        <label>Link to Images in Docs Section of Teamroom<span>*</span></label>
+                        <div>
+                            <%= text_field_tag "teamtrope_link" %>
+                        </div>
+                    </li>
 
-          <div>
-            <p>Please include page/chapter numbers when possible.</p>
-            <p>Examples include:</p>
-            <ul>
-              <li>A letter or newspaper article</li>
-              <li>Text messages or anything that should be offset from the body text</li>
-              <li>Any other special requests</li>
-            </ul>
-          </div>
-        </li>
+                    <li class="does_contain_images_2" style="display: none;">
+                        <label>Link to Dropbox file containing images<span>*</span></label>
+                        <div>
+                            <%= text_field_tag "dropbox_link" %>
+                        </div>
+                    </li>
 
-        <li>
-          <%= f.input :proofed_word_count, label: 'Manuscript Word Count',
-                as: :string,
-                required: true %>
-          <div>In Word: Go to File, Properties, click on the Statistics tab and enter the "Words:" count value. This will help us estimate and schedule your layout resource efficiently.</div>
-        </li>
+                    <li>
+                        <div>
+                        <%= f.input :special_text_treatment,
+                                    label: 'I have sections of text needing special treatment (optional)',
+                                    as: :text,
+                                    input_html: { class: %q[textarea medium], rows: 10, cols: 50 }
+                            %>
+                            <div class="charleft ginput_counter">0 of 1200 max characters</div>
+                        </div>
 
-        <%= f.simple_fields_for :manuscript,
-              ((f.object.manuscript.nil?)?
-                 f.object.build_manuscript : f.object.manuscript) do | manuscript | %>
-        <li>
-          <%= manuscript.input :proofed,
-                label: "Final Manuscript:",
-                as: :file, required: true %>
-          <div>.doc or .docx file only</div>
-        </li>
+                        <div>
+                            <p>Please include page/chapter numbers when possible.</p>
+                            <p>Examples include:</p>
+                            <ul>
+                                <li>A letter or newspaper article</li>
+                                <li>Text messages or anything that should be offset from the body text</li>
+                                <li>Any other special requests</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <%= f.input :proofed_word_count, label: 'Manuscript Word Count', required: true %>
+                        <div>In Word: Go to File, Properties, click on the Statistics tab and enter the "Words:" count value. This will help us estimate and schedule your layout resource efficiently.</div>
+                    </li>
+
+                    <%= f.simple_fields_for :manuscript,
+                                ((f.object.manuscript.nil?)?
+                                     f.object.build_manuscript : f.object.manuscript) do | manuscript | %>
+                    <li>
+                        <%= manuscript.input :proofed,
+                                    label: "Final Manuscript:",
+                                    as: :file, required: true %>
+                        <div>.doc or .docx file only</div>
+                    </li>
+                    <% end %>
+
+                </ul>
+            </div>
+            <br>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+            <%= f.submit "Submit" %>
         <% end %>
-
-      </ul>
-
     </div>
-    <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
-    <%= f.submit "Submit" %>
-  <% end %>
+  </div>
 </div>

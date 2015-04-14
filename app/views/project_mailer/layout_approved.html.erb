@@ -1,0 +1,12 @@
+<p>Thank you for approving the sample layout, the production team will review your input and make any changes necessary in the final book layout.</p>
+<br>
+<p>- Booktrope</p>
+
+<p>Layout Approval Date: <%= @project.layout.layout_approved_date %> </p>
+
+<% if(@project.layout.layout_approved == 'approved_revisions') %>
+
+    <%= render 'layout_approval_list_table' %>
+
+<% end %>
+<br>

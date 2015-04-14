@@ -1,25 +1,31 @@
-<h1>Release Date</h1>
-<div class="gf_browser_safari gform_wrapper">
-	<a id="gf_54" name="gf_54" class="gform_anchor"></a> 
-	<%= simple_form_for @project,
+
+<!-- Marketing Release Date -->
+<div class="container">
+  <h1>Release Date</h1>
+  <div class="row">
+    <div class="col-md-8">
+    	<%= simple_form_for @project,
 				url: url_for(controller: "projects", action: "marketing_release_date", id: @project), 
 				html: { id: "marketing_release_date"} do | f | %>
-		<%= f.error_notification %>
-		<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
-		<div>
-			<ul>
-				<li>
-					<%= f.input :marketing_release_date, 
-							label: "Planned Marketing Release Date*",
-							as: :date,
-							start_year: Date.today.year, 
-							discard_time: true %>
-					<div >*Please note:  Your marketing release date is NOT the same as the date your publication date.  Each sales channel and format (Amazon, Barnes and Noble, etc) has a different review process and can take anywhere from 1 day - 2 weeks before it's available for sale. For planning purposes, from the point you have approved the layout and submitted your cover templates and publication fact sheet, you can expect your book to be available in approximately 3-4 weeks.</div>
-				</li>
-			</ul>
-		</div>
-		<div>
-			<%= f.submit 'submit' %>
-		</div>
-	<% end %>
+            <%= f.error_notification %>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+            <div>
+                <ul>
+                    <li>
+                        <%= f.input :marketing_release_date,
+                                label: "Planned Marketing Release Date*",
+                                as: :date,
+                                start_year: Date.today.year,
+                                discard_time: true %>
+                        <div >*Please note:  Your marketing release date is NOT the same as the date your publication date.  Each sales channel and format (Amazon, Barnes and Noble, etc) has a different review process and can take anywhere from 1 day - 2 weeks before it's available for sale. For planning purposes, from the point you have approved the layout and submitted your cover templates and publication fact sheet, you can expect your book to be available in approximately 3-4 weeks.</div>
+                    </li>
+                </ul>
+            </div>
+            <div>
+              <br>
+              <%= f.submit 'submit' %>
+            </div>
+    	<% end %>
+      </div>
+    </div>
 </div>

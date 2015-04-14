@@ -23,6 +23,20 @@ class TeamMembership < ActiveRecord::Base
       ['other','<input id="team_removal_reason_otsher_input" name="team_removal_reason_other_input" type="text" value="Other">'.html_safe]
   ]
 
+  private
+
+  # The Removal Reasons in an array of arrays of reasons in ['key' => 'val'] format.  We have a key, we need the value.
+  def get_removal_reason(key)
+    reason = ''
+    RemovalReasons.each do |reason_key, reason_val|
+      if reason_key == key
+        reason = reason_val
+        break
+      end
+    end
+
+    reason
+  end
 
   private
 

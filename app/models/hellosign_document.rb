@@ -3,13 +3,13 @@ class HellosignDocument < ActiveRecord::Base
   has_many :team_memberships, through: :hellosign_signatures
 
   def HellosignDocument.send_creative_team_agreement(team_membership)
-    #hellosign_hash = create_team_agreement_hash(team_membership)
-    #response = HelloSign.send_signature_request_with_template(hellosign_hash)
-
-    #doc = HellosignDocument.create!( name: 'Creative Team Agreement',
-    #      hellosign_id: response.data['signature_request_id'] )
-
-    #doc.hellosign_signatures.create!( team_membership_id: team_membership.id )
+    # hellosign_hash = create_team_agreement_hash(team_membership)
+    # response = HelloSign.send_signature_request_with_template(hellosign_hash)
+    #
+    # doc = HellosignDocument.create!( name: 'Creative Team Agreement',
+    # 			hellosign_id: response.data['signature_request_id'] )
+    #
+    # doc.hellosign_signatures.create!( team_membership_id: team_membership.id )
   end
 
   private
@@ -24,20 +24,20 @@ class HellosignDocument < ActiveRecord::Base
       signers:
       [
         {
-          email_address: team_membership.member.email,
+          email_address: sanitize_address(team_membership.member.email, 'to'),
           name: team_membership.member.name,
           role: 'Client'
         },
         {
-          email_address: 'justin.jeffress+ken@booktrope.com',
+          email_address: sanitize_address('justin.jeffress+ken@booktrope.com', 'to'),
           name: 'Ken Shear',
           role: 'Booktrope-CEO'
         }
       ],
       ccs:
       [
-        { email_address: 'justin.jeffress+intake@booktrope.com', role: 'Intake Manager'},
-        { email_address: 'justin.jeffress+hr@booktrope.com', role: 'HR/Accounting'}
+        { email_address: sanitize_address('justin.jeffress+intake@booktrope.com', 'cc'), role: 'Intake Manager'},
+        { email_address: sanitize_address('justin.jeffress+hr@booktrope.com', 'cc'), role: 'HR/Accounting'}
       ],
       custom_fields:
       {
@@ -48,4 +48,18 @@ class HellosignDocument < ActiveRecord::Base
     }
   end
 
+  # Make use of the Sanitizer which will use the config to get the correct recipients
+  # and use them, but only if active.
+  def HellosignDocument.sanitize_address(original_address, type)
+    # Fake a message & pass it into the sanitizer
+    mail       = Mail.new
+    mail[:to]  = original_address
+    mail[:cc]  = original_address
+    mail[:bcc] = original_address
+    sanitizer  = SanitizeEmail::OverriddenAddresses.new(mail)
+
+    # Grab the sanitized address.  This method does not return the friendly name containing
+    # the original address which HelloSign chokes on.
+    sanitizer.send("sanitized_#{type}")
+  end
 end

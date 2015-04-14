@@ -92,6 +92,9 @@ gem 'friendly_id', '~> 5.1.0'
 #use unicorn for webserver
 gem 'unicorn'
 
+# Used for disabling/rewriting email addresses in non-production environments
+gem "sanitize_email"
+
 group :production do
   gem 'rails_12factor', '0.0.2'
 

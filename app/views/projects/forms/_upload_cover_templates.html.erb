@@ -1,20 +1,23 @@
-<h1>Upload Cover Templates</h1>
-<div class="gf_browser_safari gform_wrapper">
-	<%= simple_form_for @project, 
+
+<!-- Upload Cover Templates -->
+<div class="container">
+  <h1>Upload Cover Templates</h1>
+  <div class="col-md-8">
+	<%= simple_form_for @project,
 				url: url_for(controller: 'projects', action: 'upload_cover_templates', id: @project),
 				html: { id: "upload_cover_templates" } do | f | %>
 		<%= f.error_notification %>
 		<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>	
 		<div>
-			<span>Please upload the cover templates.</span>
+			<h5>Please upload the cover templates.</h5>
 		</div>
 		<div>		
-			<ul>
+			<ul class="cover_template_list">
 			<%= f.simple_fields_for :cover_template, 
 				(f.object.cover_template.nil?)? f.object.build_cover_template : 
 				f.object.cover_template do | cover_template | %>
 				
-				<li>
+				<li class="cover_template_list">
 					<%= cover_template.input :ebook_front_cover, label: 'Front Cover File', required: true %>
 					<div><!-- gfield_description -->Final Front cover jpeg only
 						<p></p> 
@@ -22,25 +25,25 @@
 					</div>					
 				</li>
 			
-				<li>
+				<li class="cover_template_list">
 					<%= cover_template.input :createspace_cover, label: 'CreateSpace Cover Template File', required: true %>
 					<div><!-- gfield_description -->.pdf only</div>
 				</li>	
 				
-				<li>
+				<li class="cover_template_list">
 					<%= cover_template.input :lightning_source_cover, label: 'Lightning Source Cover Template File', required: true %>
 					<div><!-- gfield_description -->Please save the cover file for lightning source in the form [isbn_number_without_dashes]-cvr.pdf on your local computer before uploading here. Example: 1234567890123-cvr.pdf.</div>
 				</li>	
 				
-				<li>
+				<li class="cover_template_list">
 					<%= cover_template.input :alternative_cover, label: 'Alternate Template File' %>
 					<div><!-- gfield_description -->This field is not typically used; do not upload anything here unless you have specifically discussed with Booktrope management. </div>					
 				</li>
 				
-				<li>
+				<li class="cover_template_list">
 					<%= label_tag "Book Manager and Author Sign Off on following:" %>
 					<div>
-						<ul>
+						<ul class="cover_template_sign_off">
 							<%
 								[
 									'Author bio is correct?',
@@ -49,7 +52,7 @@
 									'Author name and title are correct on front cover?'
 								].each_with_index do | check_box, index |
 							%>
-								<li>
+								<li class="cover_template_sign_off">
 									<%= check_box_tag "checklist_#{index}", index, false, class: "upload_cover_checklist required" %>
 									<%= label_tag "checklist_#{index}",check_box, class: "required" %>
 								</li>
@@ -60,8 +63,10 @@
 			<% end %>
 			</ul>
 		</div>
+        <br>
 		<div>
 			<%= f.submit "submit" %>
 		</div>
 	<% end %>
+  </div>
 </div>

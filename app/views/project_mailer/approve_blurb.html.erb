@@ -1,0 +1,13 @@
+<% if @approved %>
+    <p>The following blurb has been reviewed and was approved as of <%= @project.approve_blurb.blurb_approval_date %>.</p>
+<% else %>
+    <p>The following blurb has been reviewed and was not approved.  Please notify the team if necessary.</p>
+<% end %>
+
+<b>Blurb:</b>
+<pre><%= @project.try(:draft_blurb).try(:draft_blurb) %></pre>
+
+<br>
+<b>Blurb Notes:</b>
+<pre><%= @project.try(:approve_blurb).try(:blurb_notes) %></pre>
+

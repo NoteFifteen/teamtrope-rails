@@ -1,0 +1,20 @@
+<p>Layout Approved with the following Revisions:</p>
+
+<table cellspacing="0" border="0" height="100%" cellpadding="3" cellspacing="3" width="100%">
+  <thead>
+  <tr>
+    <th style="text-align: right; background-color: #555555; color: white; font-size: 11pt; line-height: 26px;">Page</th>
+    <th style="text-align: left;  background-color: #555555; color: white; font-size: 11pt; line-height: 26px;">Issue</th>
+    <th style="text-align: left;  background-color: #555555; color: white; font-size: 11pt; line-height: 26px;">Fix</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @project.layout.layout_approval_issue_list.each do |issue| %>
+      <tr bgcolor="<%= cycle('#ffffff', '#a3a9af') -%>">
+        <td style="text-align: right; overflow: auto; font-family: Arial, Helvetica, sans-serif; font-size: 11pt; line-height: 22px;"> <%= issue['page']  %></td>
+        <td style="text-align: left;  overflow: auto; font-family: Arial, Helvetica, sans-serif; font-size: 11pt; line-height: 22px;"> <%= issue['problem'] %></td>
+        <td style="text-align: left;  overflow: auto; font-family: Arial, Helvetica, sans-serif; font-size: 11pt; line-height: 22px;"> <%= issue['fix']   %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

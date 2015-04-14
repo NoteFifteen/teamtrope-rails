@@ -1,0 +1,20 @@
+<p>Artwork Rights Requests:</p>
+
+<table cellspacing="0" border="0" height="100%" cellpadding="3" cellspacing="3" width="100%">
+  <thead>
+  <tr>
+    <th style="text-align: left; background-color: #555555; color: white; font-size: 11pt; line-height: 26px;">Type</th>
+    <th style="text-align: left;  background-color: #555555; color: white; font-size: 11pt; line-height: 26px;">Full Legal Name</th>
+    <th style="text-align: left;  background-color: #555555; color: white; font-size: 11pt; line-height: 26px;">Email Address</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @project.artwork_rights_requests.each do |row| %>
+    <tr bgcolor="<%= cycle('#ffffff', '#a3a9af') -%>">
+      <td style="text-align: left; overflow: auto; font-family: Arial, Helvetica, sans-serif; font-size: 11pt; line-height: 22px;"> <%= row.role_type %></td>
+      <td style="text-align: left;  overflow: auto; font-family: Arial, Helvetica, sans-serif; font-size: 11pt; line-height: 22px;"> <%= row.full_name %></td>
+      <td style="text-align: left;  overflow: auto; font-family: Arial, Helvetica, sans-serif; font-size: 11pt; line-height: 22px;"> <%= row.email %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
