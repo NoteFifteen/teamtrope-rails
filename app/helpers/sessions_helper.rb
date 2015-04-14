@@ -3,7 +3,7 @@ module SessionsHelper
   def signed_in_user
     unless signed_in?
       store_location
-      redirect_to new_user_session_path, notice: "Please sign in."
+      redirect_to user_omniauth_authorize_path(:wordpress_hosted)
     end
   end
 

@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
 	# devise configuration
-	devise :database_authenticatable, :registerable,
+	devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:wordpress_hosted]
 
