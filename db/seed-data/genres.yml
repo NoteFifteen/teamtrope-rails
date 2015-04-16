@@ -1,97 +1,199 @@
 ---
-- :name: Action Adventure
-- :name: Authorship
-- :name: Biography
-- :name: Blog
-- :name: Business
-- :name: Chatwin
-- :name: Chicklit
-- :name: Children's
-- :name: Christian Fiction
-- :name: Christian Living
-- :name: Collection
-- :name: Comedy
-- :name: Coming Of Age
-- :name: Commercial Fiction
-- :name: contemporary fiction
-- :name: Contemporary Romance
-- :name: Contemporary Women's Fiction
-- :name: Cooking
-- :name: Dramatic Comedy
-- :name: Dystopian
-- :name: Entertainment
-- :name: Entice
-- :name: Environmentalism
-- :name: Erotica
-- :name: Fantasy
-- :name: Fiction
-- :name: Food
-- :name: Gaming
-- :name: GLBT
-- :name: Health &amp; Fitness
-- :name: Health and Medicine
-- :name: Health Care
-- :name: Healthy Living
-- :name: Historical
-- :name: Historical Fantasy
-- :name: Historical Fiction
-- :name: Historical Romance
-- :name: Historical Thriller
-- :name: History
-- :name: Horror
-- :name: How To
-- :name: Humor
-- :name: Inspirational
-- :name: Law
-- :name: LGBT
-- :name: Literary
-- :name: Literary Fiction
-- :name: Magical Realism
-- :name: Marketing
-- :name: Memoir
-- :name: Men's Humor
-- :name: Middle-Grade
-- :name: Military
-- :name: Mystery
-- :name: New Adult
-- :name: Non-Fiction
-- :name: Paranormal
-- :name: Paranormal Romance
-- :name: Parenting
-- :name: Personal Growth
-- :name: Philosophy
-- :name: Plays
-- :name: Poetic Fiction
-- :name: Poetry
-- :name: Political
-- :name: Politics
-- :name: psychological thriller
-- :name: Psychology
-- :name: Religion
-- :name: Romance
-- :name: Romantic Suspense
-- :name: Science
-- :name: Science Fiction
-- :name: Screenplays
-- :name: Sea Stories
-- :name: Self Help
-- :name: Sexuality
-- :name: Short Stories
-- :name: Spirituality
-- :name: Sports
-- :name: Sports/Running
-- :name: Steampunk
-- :name: Super Hero
-- :name: Supernatural
-- :name: Suspense
-- :name: tbd
-- :name: Technology
-- :name: Thriller
-- :name: True Crime
-- :name: Urban Fantasy
-- :name: Western
-- :name: Women's Contemporary Fiction
-- :name: Women's Fiction
-- :name: Writing
-- :name: YA Fantasy
-- :name: Young Adult
+- :wp_id: '1054'
+  :name: Action Adventure
+- :wp_id: '26'
+  :name: Authorship
+- :wp_id: '27'
+  :name: Biography
+- :wp_id: '155'
+  :name: Blog
+- :wp_id: '28'
+  :name: Business
+- :wp_id: '1424'
+  :name: Chatwin
+- :wp_id: '973'
+  :name: Chicklit
+- :wp_id: '99'
+  :name: Children's
+- :wp_id: '101'
+  :name: Christian Fiction
+- :wp_id: '133'
+  :name: Christian Living
+- :wp_id: '1729'
+  :name: Collection
+- :wp_id: '78'
+  :name: Comedy
+- :wp_id: '100'
+  :name: Coming Of Age
+- :wp_id: '997'
+  :name: Commercial Fiction
+- :wp_id: '2106'
+  :name: Contemporary Fiction
+- :wp_id: '96'
+  :name: Contemporary Romance
+- :wp_id: '93'
+  :name: Contemporary Women’s Fiction
+- :wp_id: '67'
+  :name: Cooking
+- :wp_id: '1075'
+  :name: Dramatic Comedy
+- :wp_id: '1317'
+  :name: Dystopian
+- :wp_id: '2209'
+  :name: ebook
+- :wp_id: '2206'
+  :name: Edge
+- :wp_id: '29'
+  :name: Entertainment
+- :wp_id: '2129'
+  :name: Entice
+- :wp_id: '30'
+  :name: Environmentalism
+- :wp_id: '90'
+  :name: Erotica
+- :wp_id: '31'
+  :name: Fantasy
+- :wp_id: '32'
+  :name: Fiction
+- :wp_id: '33'
+  :name: Food
+- :wp_id: '2208'
+  :name: Forsaken
+- :wp_id: '34'
+  :name: Gaming
+- :wp_id: '92'
+  :name: GLBT
+- :wp_id: '1233'
+  :name: Health &amp; Fitness
+- :wp_id: '35'
+  :name: Health and Medicine
+- :wp_id: '36'
+  :name: Health Care
+- :wp_id: '66'
+  :name: Healthy Living
+- :wp_id: '1070'
+  :name: Historical
+- :wp_id: '76'
+  :name: Historical Fantasy
+- :wp_id: '37'
+  :name: Historical Fiction
+- :wp_id: '1244'
+  :name: Historical Romance
+- :wp_id: '475'
+  :name: Historical Thriller
+- :wp_id: '38'
+  :name: History
+- :wp_id: '68'
+  :name: Horror
+- :wp_id: '39'
+  :name: How To
+- :wp_id: '40'
+  :name: Humor
+- :wp_id: '41'
+  :name: Inspirational
+- :wp_id: '42'
+  :name: Law
+- :wp_id: '1109'
+  :name: LGBT
+- :wp_id: '43'
+  :name: Literary
+- :wp_id: '70'
+  :name: Literary Fiction
+- :wp_id: '1242'
+  :name: Magical Realism
+- :wp_id: '150'
+  :name: Marketing
+- :wp_id: '44'
+  :name: Memoir
+- :wp_id: '79'
+  :name: Men’s Humor
+- :wp_id: '1108'
+  :name: Middle-Grade
+- :wp_id: '45'
+  :name: Military
+- :wp_id: '46'
+  :name: Mystery
+- :wp_id: '650'
+  :name: New Adult
+- :wp_id: '91'
+  :name: Non-Fiction
+- :wp_id: '128'
+  :name: Paranormal
+- :wp_id: '127'
+  :name: Paranormal Romance
+- :wp_id: '47'
+  :name: Parenting
+- :wp_id: '1717'
+  :name: Personal Growth
+- :wp_id: '48'
+  :name: Philosophy
+- :wp_id: '49'
+  :name: Plays
+- :wp_id: '688'
+  :name: Poetic Fiction
+- :wp_id: '50'
+  :name: Poetry
+- :wp_id: '103'
+  :name: Political
+- :wp_id: '51'
+  :name: Politics
+- :wp_id: '1409'
+  :name: Psychological Thriller
+- :wp_id: '52'
+  :name: Psychology
+- :wp_id: '53'
+  :name: Religion
+- :wp_id: '54'
+  :name: Romance
+- :wp_id: '71'
+  :name: Romantic Suspense
+- :wp_id: '55'
+  :name: Science
+- :wp_id: '56'
+  :name: Science Fiction
+- :wp_id: '57'
+  :name: Screenplays
+- :wp_id: '77'
+  :name: Sea Stories
+- :wp_id: '58'
+  :name: Self Help
+- :wp_id: '1786'
+  :name: Sexuality
+- :wp_id: '59'
+  :name: Short Stories
+- :wp_id: '60'
+  :name: Spirituality
+- :wp_id: '61'
+  :name: Sports
+- :wp_id: '334'
+  :name: Sports/Running
+- :wp_id: '617'
+  :name: Steampunk
+- :wp_id: '820'
+  :name: Super Hero
+- :wp_id: '339'
+  :name: Supernatural
+- :wp_id: '1251'
+  :name: Suspense
+- :wp_id: '787'
+  :name: tbd
+- :wp_id: '62'
+  :name: Technology
+- :wp_id: '63'
+  :name: Thriller
+- :wp_id: '64'
+  :name: True Crime
+- :wp_id: '98'
+  :name: Urban Fantasy
+- :wp_id: '638'
+  :name: Western
+- :wp_id: '65'
+  :name: Women’s Contemporary Fiction
+- :wp_id: '1612'
+  :name: Women’s Fiction
+- :wp_id: '1248'
+  :name: Writing
+- :wp_id: '106'
+  :name: YA Fantasy
+- :wp_id: '95'
+  :name: Young Adult

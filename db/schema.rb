@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403002922) do
+ActiveRecord::Schema.define(version: 20150416003937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,7 +186,10 @@ ActiveRecord::Schema.define(version: 20150403002922) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "wp_id"
   end
+
+  add_index "genres", ["wp_id"], name: "index_genres_on_wp_id", unique: true, using: :btree
 
   create_table "hellosign_documents", force: true do |t|
     t.string   "name"
@@ -419,7 +422,7 @@ ActiveRecord::Schema.define(version: 20150403002922) do
     t.text     "description"
     t.text     "author_bio"
     t.text     "endorsements"
-    t.string   "one_line_blurb"
+    t.text     "one_line_blurb"
     t.float    "print_price"
     t.float    "ebook_price"
     t.string   "bisac_code_one"
