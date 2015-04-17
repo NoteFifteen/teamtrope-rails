@@ -4,9 +4,36 @@ class WordpressImportController < ApplicationController
   end
 
   def upload
+
+    case params[:type]
+    when 'projects'
+      import_projects
+    when 'users'
+      import_users
+    else
+    end
+  end
+
+  private
+
+  def import_users
+    require 'csv'
+    csv = CSV.parse(params[:upload_file].read, headers: :first_row)
+    csv.each do | import_user |
+      #puts "#{import_user['ID']},#{import_user['user_login']},#{import_user['user_email']},#{import_user["roles"]},#{import_user["Role(s)"]}\n"
+      #User.create!(uid: import_user['ID'], name: import_user['user_login'], email: import_user['user_email'])
+
+      user = User.new
+      user.roles = import_user["Role(s)"].downcase.split('::')
+
+      break
+    end
+  end
+
+  def import_projects
     require 'nokogiri'
     # parsing the uploaded xml file
-    doc = Nokogiri::XML((params.permit(:upload_file)[:upload_file]).read)
+    doc = Nokogiri::XML(params[:upload_file].read)
 
     # getting the list of items
     items = doc.xpath("//item")
@@ -48,8 +75,6 @@ class WordpressImportController < ApplicationController
       #break
     end
   end
-
-  private
 
   $wf_task_map = {
 

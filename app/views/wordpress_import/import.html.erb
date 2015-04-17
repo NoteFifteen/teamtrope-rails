@@ -1,5 +1,7 @@
 <h1>WordpressImport#import</h1>
 <%= form_tag({ action: :upload }, multipart: true) do %>
+  <%= select_tag(:type, options_for_select([['Projects', 'projects'],
+                                                  ['Users', 'users']]))%>
   <%= file_field_tag 'upload_file' %>
   <%= submit_tag "submit" %>
 <% end %>
