@@ -15,7 +15,8 @@ class WordpressImportController < ApplicationController
 
     # looping through the projects
     items.each_with_index do | item, index |
-      puts "#{index}\t#{item.xpath("./wp:post_id").text}\t#{item.xpath("./title").text}"
+      next if item.xpath('./wp:status').text == 'trash'
+      #puts "#{index}\t#{item.xpath("./wp:post_id").text}\t#{item.xpath("./title").text}"
 
       # create the project
       project = Project.new(title: item.xpath("./title").text, project_type_id: 1,  **prepare_project_fields(item))
@@ -26,25 +27,78 @@ class WordpressImportController < ApplicationController
       # build CoverConcept
       project.build_cover_concept(**prepare_cover_concept_fields(item))
 
-      #print 'production: '
-      #puts fetch_field_value(item,'book_pcr_step')
-      #print 'design: '
-      #puts fetch_field_value(item,'book_pcr_step_cover_design')
-      #print 'marketing: '
-      #puts fetch_field_value(item, 'book_pcr_step_mkt_info')
+      genres = deserialize_php_array(fetch_field_value(item, 'book_genre'))
+
+      genres.each do | genre |
+          project.book_genres.build(genre: Genre.where(wp_id: genre).first)
+      end
+
+
+      [ { 'Production' => 'book_pcr_step' },
+        { 'Design' => 'book_pcr_step_cover_design' },
+        { 'Marketing' => 'book_pcr_step_mkt_info' } ].each do | workflow |
+          workflow.each do | key, value |
+              puts "#{key}: #{fetch_field_value(item, value)}"
+              create_current_task project, item, value
+          end
+      end
 
 
       project.save
+      #break
     end
   end
 
   private
+
+  $wf_task_map = {
+
+    #production tasks
+    'New Manuscript' => 'Original Manuscript',
+    'Edit Complete Date' => 'Edit Cmoplete Date',
+    'Submit Edited' => 'Edited Manuscript',
+    'Submit Proofread' => 'Submit Proofread',
+    'Choose Style' => 'Choose Style',
+    'Upload Layout' => 'Upload Layout',
+    'Approve Layout' => 'Approve Layout',
+    'Final Page Count' => 'Page Count',
+    'Final Manuscript' => 'Final Manuscript',
+    'Publish Book' => 'Publish Book',
+    'Published' => 'Production Complete',
+
+    #Design Tasks
+    'Upload Cover Concept' => 'Cover Concept',
+    'Approve Cover' => 'Approve Cover Art',
+    'Upload Final Covers' => 'Final Covers',
+    'Cover Complete' => 'Design Complete',
+
+    #Marketing Tasks
+    'Submit PFS' => 'Submit PFS',
+    'PFS Complete' => 'Marketing Complete',
+  }
+
+  #TODO: log when we don't find a matching task.
+  def create_current_task(project, project_meta, key)
+    wp_task_name = fetch_field_value(project_meta, key)
+    return unless $wf_task_map.has_key? wp_task_name
+    task = Task.where(name: $wf_task_map[wp_task_name]).first
+    project.current_tasks.build(task: task) unless task.nil?
+  end
+
   def deserialize_php_array(serialized_data)
     results = Array.new
     serialized_data.scan(/i:([0-9])+;s:([0-9]+):\"(.+?)\";/).each do | match |
       results.push match[2]
     end
     results
+  end
+
+  def deserialize_php_array(serialized_data)
+    results = Array.new
+   serialized_data.scan(/i:([0-9])+;s:([0-9]+):\"(.+?)\";/).each do | match |
+      results.push match[2]
+    end
+    return results
   end
 
   def prepare_project_fields(project_meta)
@@ -128,22 +182,3 @@ class WordpressImportController < ApplicationController
 end
 
 # Project.where("projects.id NOT IN (?)", [1,2]).delete_all
-
-      # looping through the fields
-      #item.xpath("./wp:postmeta").each_with_index do | postmeta, j |
-      #  meta_key = postmeta.xpath("./wp:meta_key").text.strip
-      #  next if meta_key.start_with? "_"
-
-      #  meta_value = postmeta.xpath("./wp:meta_value").text.strip
-      #  data_string = ""
-
-      #  if meta_value =~ /a:[0-9]+:{i:([0-9]+);s:([0-9]+):\"(.*?)\";}/
-      #    data_string = "\t#{j}\t#{meta_key}\n"
-      #    deserialize_php_array(meta_value).each do | item |
-      #      data_string << "\t\t\t#{item}\n"
-      #    end
-      #  else
-      #    data_string = "\t#{j}\t#{meta_key}\t#{meta_value}"
-      #  end
-      #  puts data_string
-      #end
