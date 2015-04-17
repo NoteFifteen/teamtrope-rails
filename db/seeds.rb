@@ -1,7 +1,7 @@
 # We only require an admin user name, and a password for dev.
 if Rails.env == "development"
-	raise "You must specify an admin user name.\n\t ex: rake db:seed admin_user=justin.jeffress password=saferthaninafile \n\t results: user: { email: \"justin.jeffress@booktrope.com\", name: \"justin.jeffress\", roles_mask: 1 }" if !ENV["admin_user"]
-	raise "You must specify a password.\n\t ex: rake db:seed admin_user=justin.jeffress password=saferthaninafile \n\t results: all test users including admin will be created with ENV[\"password\"]" if !ENV["password"]
+  raise "You must specify an admin user name.\n\t ex: rake db:seed admin_user=justin.jeffress password=saferthaninafile \n\t results: user: { email: \"justin.jeffress@booktrope.com\", name: \"justin.jeffress\", roles_mask: 1 }" if !ENV["admin_user"]
+  raise "You must specify a password.\n\t ex: rake db:seed admin_user=justin.jeffress password=saferthaninafile \n\t results: all test users including admin will be created with ENV[\"password\"]" if !ENV["password"]
 end
 
 # seeding genres from seed-data/genres.yml

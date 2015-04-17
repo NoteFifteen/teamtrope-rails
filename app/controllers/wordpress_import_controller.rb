@@ -140,6 +140,14 @@ class WordpressImportController < ApplicationController
     results
   end
 
+  def deserialize_php_array(serialized_data)
+    results = Array.new
+   serialized_data.scan(/i:([0-9])+;s:([0-9]+):\"(.+?)\";/).each do | match |
+      results.push match[2]
+    end
+    return results
+  end
+
   def prepare_project_fields(project_meta)
     {
       childrens_book: fetch_field_value(project_meta, 'book_childrens_book'),
