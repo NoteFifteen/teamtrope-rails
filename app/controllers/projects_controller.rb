@@ -25,14 +25,14 @@ class ProjectsController < ApplicationController
       @project.create_workflow_tasks
   		redirect_to projects_path
     else
-      flash[:error] = 'Error creating project!'
+      flash[:danger] = 'Error creating project!'
   		render 'new'
   	end
   end
   
   def destroy
     @project.destroy
-    flash[:notice] = "Project has been destroyed."
+    flash[:info] = "Project has been destroyed."
     redirect_to projects_path
   end
     
@@ -108,7 +108,7 @@ class ProjectsController < ApplicationController
 			end
 			
 		
-			flash[:error] = msg
+			flash[:danger] = msg
 			render 'show'
 		end
 	
@@ -146,7 +146,7 @@ class ProjectsController < ApplicationController
 
       redirect_to @project
     else
-      flash[:error] = 'Error while removing a team member'
+      flash[:danger] = 'Error while removing a team member'
       render 'show'
     end
   end
@@ -220,7 +220,7 @@ class ProjectsController < ApplicationController
       update_current_task
       redirect_to @project
     else
-      flash[:error] = "Layout Upload failed"
+      flash[:danger] = "Layout Upload failed - Please verify you're using the appropriate file type."
       render 'show'
     end
   end
@@ -261,11 +261,11 @@ class ProjectsController < ApplicationController
         flash[:success] = 'Updated KDP Select'
         redirect_to @project
       else
-        flash[:error] = 'Error updating KDP enrollment record!'
+        flash[:danger] = 'Error updating KDP enrollment record!'
         render 'show'
       end
     else
-      flash[:error] = 'Could not find an enrollment record!'
+      flash[:danger] = 'Could not find an enrollment record!'
       render 'show'
     end
   end
@@ -278,7 +278,7 @@ class ProjectsController < ApplicationController
       update_current_task
       redirect_to @project
     else
-      flash[:error] = 'Error uploading Cover Concept'
+      flash[:danger] = 'Error uploading Cover Concept'
       render 'show'
     end
   end
@@ -366,7 +366,7 @@ class ProjectsController < ApplicationController
         flash[:success] = activity_text
       else
         # Some sort of failure updating the model.
-        flash[:error] = 'An error occurred during update'
+        flash[:danger] = 'An error occurred during update'
         render 'show'
       end
     end
@@ -386,7 +386,7 @@ class ProjectsController < ApplicationController
       update_current_task
       redirect_to @project
     else
-      flash[:error] = 'Error uploading Stock Cover Image'
+      flash[:danger] = 'Error uploading Stock Cover Image'
       render 'show'
     end
   end
@@ -617,7 +617,7 @@ class ProjectsController < ApplicationController
   def set_project
   	@project = Project.find(params[:id])
   	rescue ActiveRecord::RecordNotFound
-  		flash[:alert] = "The project you were looking for could not be found."
+  		flash[:warning] = "The project you were looking for could not be found."
   		redirect_to projects_path
   end
   
