@@ -220,6 +220,7 @@ class ProjectsController < ApplicationController
       update_current_task
       redirect_to @project
     else
+      flash[:error] = "Layout Upload failed"
       render 'show'
     end
   end
