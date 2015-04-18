@@ -6,11 +6,12 @@
   
   <script type="text/javascript" async="">
   	function toggleTable1() {
-  	var lTable = document.getElementById("Table1");
+  	var lTable = document.getElementById("ProjectListTable");
   	lTable.style.display = (lTable.style.display == "table") ? "none" : "table";}
   </script>
-  <table id="Table1" class="sortable">
-  	<tr>
+  <table id="ProjectListTable" class="projectListTable">
+    <thead>
+        <tr>
 			<th>Title</th>
 			<th>Days in Step</th>
 			<th>Author</th>
@@ -82,8 +83,9 @@
 			<th>Final ePub</th>
 			<th>Final Mobi</th>
 			<th>Production Exception?</th>
-		</tr>
-		
+        </tr>
+    </thead>
+    <tbody>
 		<% @projects.each do | project | %>
 			<tr>
 				<td class="book-title">
@@ -168,5 +170,11 @@
 				<td>Production Exception?</td>
 			</tr>
 		<% end %>
-	</table>
+    </tbody>
+  </table>
+  <script>
+  $("#ProjectListTable").DataTable({
+      "pageLength" : 50
+  });
+  </script>
 </div>

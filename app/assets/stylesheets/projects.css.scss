@@ -1,3 +1,24 @@
+/**
+ * Override the default styling to give us a nice dark gray background for the header for "The Grid"
+ */
+table.projectListTable thead th {
+  text-align: center;
+  background: #bbbbbb;
+}
+
+table.projectListTable thead th.sorting_asc {
+  background: #bbbbbb image-url("dataTables/sort_asc.png") no-repeat right center;
+}
+
+table.projectListTable thead th.sorting_desc {
+  background: #bbbbbb image-url('dataTables/sort_desc.png') no-repeat right center;
+}
+
+table.projectListTable thead th.sorting {
+  background: #bbbbbb image-url('dataTables/sort_both.png') no-repeat right center;
+}
+
+
 #edit_layout_style .error {
   padding:5px;
   margin:7px 2px;
