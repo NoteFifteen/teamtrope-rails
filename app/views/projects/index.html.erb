@@ -5,22 +5,24 @@
   <h2>Manuscript (Pre-Edit) (32)  <a id="tableSwitch" onclick="toggleTable1();" href="#" style="text-decoration:none;"><img src="https://teamtrope.com/wp-content/uploads/2014/02/expand_collapse_plus.gif"><img src="https://teamtrope.com/wp-content/uploads/2014/02/expand_collapse_minus.gif"></a></h2>
 
   <script type="text/javascript" async="">
-    function toggleTable1() {
-    var lTable = document.getElementById("Table1");
-    lTable.style.display = (lTable.style.display == "table") ? "none" : "table";}
+  	function toggleTable1() {
+  	var lTable = document.getElementById("ProjectListTable");
+  	lTable.style.display = (lTable.style.display == "table") ? "none" : "table";}
   </script>
-  <table id="Table1" class="sortable">
-    <tr>
-      <th>Title</th>
-      <th>Author</th>
-      <th>Genre</th>
-      <th>Editor</th>
-      <th>Proofreader</th>
-      <th>Project Manager</th>
-      <th>Marketing Manager</th>
-      <th>Cover Designer</th>
-      <th>Teamroom Link</th>
-    </tr>
+  <table id="ProjectListTable" class="projectListTable">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>Editor</th>
+        <th>Proofreader</th>
+        <th>Project Manager</th>
+        <th>Marketing Manager</th>
+        <th>Cover Designer</th>
+        <th>Teamroom Link</th>
+      </tr>
+    </thead>
 
     <% @projects.each do | project | %>
       <tr>
@@ -44,6 +46,11 @@
       </tr>
     <% end %>
   </table>
+  <script>
+  $("#ProjectListTable").DataTable({
+      "pageLength" : 50
+  });
+  </script>
   <br />
   <h2>Total: (<%= @projects.count %>)</h2>
 </div>
