@@ -13,6 +13,9 @@ gem 'sass-rails', '>= 3.2'
 # To get Bootsrap included
 gem 'bootstrap-sass', '~> 3.3.3'
 
+# The Chosen library for adding functionality to your select boxes
+gem 'chosen-rails'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
