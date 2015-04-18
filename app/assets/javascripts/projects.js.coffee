@@ -57,6 +57,21 @@ jQuery ->
     }
   });
 
+## upload layout form validations
+jQuery ->
+  $("#upload_layout_form").validate({
+    rules: {
+      'project[layout_attributes][layout_upload]': {
+        required: true,
+        accept: "application/pdf",
+      }
+    },
+    messages: {
+      'project[layout_attributes][layout_upload]': "You must upload a pdf file.",
+    }
+  })
+
+
 ## Custom validation rules for the Revenue Split partial
 jQuery ->
   $("#revenue_allocation_split").validate({

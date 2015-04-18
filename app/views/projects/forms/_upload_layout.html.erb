@@ -5,7 +5,7 @@
     <div class="col-md-8">
       <p>For Booktrope Production Team use Only. This is where the Booktrope Production Team will upload a proof of the final layout design.</p>
 
-      <%= simple_form_for @project, url: url_for(controller: "projects", action: "layout_upload", id: @project) do | f | %>
+      <%= simple_form_for @project, url: url_for(controller: "projects", action: "layout_upload", id: @project), html: { id: 'upload_layout_form' } do | f | %>
           <%= f.error_notification %>
           <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
           <%= f.simple_fields_for :layout, (f.object.layout.nil?) ? f.object.build_layout : f.object.layout do | l | %>
