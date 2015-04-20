@@ -58,15 +58,15 @@
             <tr>
               <th>Role</th>
               <th>Member</th>
-              <th>Suggested Percentage</th>
               <th>Percentage Allocated</th>
+              <th>Suggested Percentage</th>
             </tr>
             <% @project.team_allocations.each do | role | %>
                 <tr>
                   <td><%= role[:role_name] %></td>
                   <td><%= role[:member_name] %></td>
-                  <td><%= role[:suggested_percentage] %> %</td>
                   <td><%= role[:allocated_percentage] %> %</td>
+                  <td><%= role[:suggested_percentage] %> %</td>
                 </tr>
             <% end %>
           <tr>
