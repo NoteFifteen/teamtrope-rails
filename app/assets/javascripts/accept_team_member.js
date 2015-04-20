@@ -109,6 +109,10 @@ Teamtrope.BuildTeam.AcceptMember.prototype.updateMemberSelect = function () {
 
     // Add new list
     if(member_list.length > 0) {
+
+        // Prepend an empty option first so the placeholder will show
+        memberSelect.append($('<option/>'));
+
         $.each(member_list, function() {
             memberSelect.append($('<option/>', {
                 value: this.id,
@@ -117,7 +121,7 @@ Teamtrope.BuildTeam.AcceptMember.prototype.updateMemberSelect = function () {
         });
         memberSelect.attr('data-placeholder', 'Select a Member');
     } else {
-        memberSelect.attr('data-placeholder', 'None available');
+        memberSelect.attr('data-placeholder', 'Select a Role first');
     }
 
     // Trigger an update for Chosen
