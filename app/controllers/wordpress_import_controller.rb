@@ -23,6 +23,7 @@ class WordpressImportController < ApplicationController
     require 'csv'
     csv = CSV.parse(params[:upload_file].read, headers: :first_row)
     csv.each do | import_user |
+      next if import_user['roles'] == 'unapproved'
       #puts "#{import_user['ID']},#{import_user['user_login']},#{import_user['user_email']},#{import_user["roles"]},#{import_user["Role(s)"]}\n"
       #User.create!(uid: import_user['ID'], name: import_user['user_login'], email: import_user['user_email'])
 
@@ -138,14 +139,6 @@ class WordpressImportController < ApplicationController
       results.push match[2]
     end
     results
-  end
-
-  def deserialize_php_array(serialized_data)
-    results = Array.new
-   serialized_data.scan(/i:([0-9])+;s:([0-9]+):\"(.+?)\";/).each do | match |
-      results.push match[2]
-    end
-    return results
   end
 
   def prepare_project_fields(project_meta)
