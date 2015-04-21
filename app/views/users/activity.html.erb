@@ -16,7 +16,7 @@
 						<div class="bpfb_form_container">
 							<form action="https://teamtrope.com/activity/post/" method="post" id="whats-new-form" name="whats-new-form" role="complementary">
 								<div id="whats-new-avatar">
-									<%= link_to image_tag(@user.profile.avatar.url(:thumb), size: "50x50", class: "avatar user-#{@user.id}-avatar avatar-50 photo", alt: "Profile picture of #{@user.name}"), @user %>
+									<%= link_to image_tag(avatar_url(@user, :thumb, '50'), size: "50x50", class: "avatar user-#{@user.id}-avatar avatar-50 photo", alt: "Profile picture of #{@user.name}"), @user %>
 								</div>
 								<p class="activity-greeting">What's new, <%= @user.name%>?</p>
 								<div id="whats-new-content">

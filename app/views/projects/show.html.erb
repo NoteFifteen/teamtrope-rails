@@ -15,37 +15,44 @@
     
     <div class="pcss3t pcss3t-icons-left  pcss3t-height-auto pcss3t-theme-3-all-white">			
       <label>Team: </label>     
+      <label class='brown'>
+      	<% if @project.has_author? %>
+      		<%= link_to image_tag(avatar_url(@project.authors.first.member, :thumb, '60'), size: "60x60", class: "avatar photo"), @project.authors.first.member %>
+        <% else %>
+        Needs Author
+        <% end %>
+      </label>     
       <label class='green'>
       	<% if @project.has_book_manager? %>
-      		<%= link_to image_tag(@project.book_managers.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.book_managers.first.member %>
+      		<%= link_to image_tag(avatar_url(@project.book_managers.first.member, :thumb, '60'), size: "60x60", class: "avatar photo"), @project.book_managers.first.member %>
         <% else %>
         Needs Book Manager
         <% end %>
-      </label>     
+      </label>
       <label class='yellow'>
       <% if @project.has_project_manager? %>
-	      <%= link_to image_tag(@project.project_managers.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.project_managers.first.member %>
+	      <%= link_to image_tag(avatar_url(@project.project_managers.first.member, :thumb, '60'), size: "60x60", class: "avatar photo"), @project.project_managers.first.member %>
       <% else %>
       Needs Project Manager	
       <% end %>
       </label>      
       <label class='red'>
      	<% if @project.has_editor? %>
-     		<%= link_to image_tag(@project.editors.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.editors.first.member %>
+     		<%= link_to image_tag(avatar_url(@project.editors.first.member, :thumb, '60'), size: "60x60", class: "avatar photo"), @project.editors.first.member %>
       <% else %>
       Needs Editor
       <% end %>
       </label>  
-      <label class='red'>
+      <label class='white'>
      	<% if @project.has_proof_reader? %>
-     		<%= link_to image_tag(@project.proof_readers.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.proof_readers.first.member %>
+     		<%= link_to image_tag(avatar_url(@project.proof_readers.first.member, :thumb, '60'), size: "60x60", class: "avatar photo"), @project.proof_readers.first.member %>
       <% else %>
       Needs Proof Reader
       <% end %>
       </label>      
       <label class='blue'>
      	<% if @project.has_cover_designer? %>
-     		<%= link_to image_tag(@project.cover_designers.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.cover_designers.first.member %>
+     		<%= link_to image_tag(avatar_url(@project.cover_designers.first.member, :thumb, '60'), size: "60x60", class: "avatar photo"), @project.cover_designers.first.member %>
       <% else %>
       Needs Cover Designer
       <% end %>
