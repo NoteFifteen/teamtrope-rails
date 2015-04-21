@@ -7,20 +7,27 @@ module Constants
   DefaultSizeIn = { in: DefaultSize }
 
   DefaultContentTypeDocumentParams = [
-    :content_type => {
-      content_type: [ 'application/msword',
-          'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-        ]
-    },
-    :size => DefaultSizeIn
+  	:content_type => {
+  		content_type: [ 'application/msword',
+  				'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  			]
+  	},
+  	:size => DefaultSizeIn
   ]
 
-  DefaultContentTypeEpubParams = [
-    :content_type => {
-      content_type: "application/epub\+zip"
-    },
-    :size => DefaultSizeIn
-  ]
+	DefaultContentTypeEpubParams = [
+		:content_type => {
+			content_type: "application/epub\+zip"
+		},
+		:size => DefaultSizeIn
+	]
+
+	DefaultContentTypeMobiParams = [
+		:content_type => {
+			content_type: 'application/octet-stream'
+		},
+		:size => DefaultSizeIn
+	]
 
   DefaultContentTypeMobiParams = [
     :content_type => {
