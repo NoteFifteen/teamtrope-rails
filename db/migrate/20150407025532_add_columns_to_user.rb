@@ -5,6 +5,7 @@ class AddColumnsToUser < ActiveRecord::Migration
     add_column :users, :nickname, :string
     add_column :users, :website, :string
     add_column :users, :display_name, :string
+    add_column :users, :active, :boolean, default: true
 
     ## Database authenticatable
     add_column :users, :encrypted_password, :string, null: false, default: ''

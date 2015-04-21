@@ -4,7 +4,8 @@ class WordpressImportController < ApplicationController
   end
 
   def upload
-
+    # turning off callbacks so we don't send CTAs when we create TeamMemberships
+    ActiveRecord::Base.skip_callbacks = true
     case params[:type]
     when 'projects'
       import_projects
@@ -12,6 +13,7 @@ class WordpressImportController < ApplicationController
       import_users
     else
     end
+    ActiveRecord::Base.skip_callbacks = false
   end
 
   private
@@ -20,13 +22,20 @@ class WordpressImportController < ApplicationController
     require 'csv'
     csv = CSV.parse(params[:upload_file].read, headers: :first_row)
     csv.each do | import_user |
+      next if import_user['roles'] == 'unapproved'
       #puts "#{import_user['ID']},#{import_user['user_login']},#{import_user['user_email']},#{import_user["roles"]},#{import_user["Role(s)"]}\n"
       #User.create!(uid: import_user['ID'], name: import_user['user_login'], email: import_user['user_email'])
 
-      user = User.new
-      user.roles = import_user["Role(s)"].downcase.split('::')
+      user = User.where(uid: import_user['ID'],
+        name: import_user['display_name'],
+        email: import_user['user_email'],
+        provider: 'wordpress_hosted').first_or_create
 
-      break
+      user.roles = import_user["Role(s)"].downcase.gsub(/ /, '_').split('::')
+      user.active = false if import_user['roles'] == 'inactive'
+      user.build_profile if user.profile.nil?
+      user.save
+
     end
   end
 
@@ -54,7 +63,7 @@ class WordpressImportController < ApplicationController
       # build CoverConcept
       project.build_cover_concept(**prepare_cover_concept_fields(item))
 
-      genres = deserialize_php_array(fetch_field_value(item, 'book_genre'))
+      genres = fetch_field_value item, 'book_genre'
 
       genres.each do | genre |
           project.book_genres.build(genre: Genre.where(wp_id: genre).first)
@@ -70,6 +79,7 @@ class WordpressImportController < ApplicationController
           end
       end
 
+      create_team_memberships project, item
 
       project.save
       #break
@@ -77,7 +87,6 @@ class WordpressImportController < ApplicationController
   end
 
   $wf_task_map = {
-
     #production tasks
     'New Manuscript' => 'Original Manuscript',
     'Edit Complete Date' => 'Edit Cmoplete Date',
@@ -102,6 +111,17 @@ class WordpressImportController < ApplicationController
     'PFS Complete' => 'Marketing Complete',
   }
 
+  # pct_label is an override most role percents are key + '_pct' the pct_label
+  # is for overriding the few cases where it's not
+  $wp_rails_role_map = {
+    'book_author' => { percent: 33.0, role_name: 'Author'},
+    'book_marketing_manager' => { percent: 20.0, role_name: 'Book Manager', pct_label: 'book_manager_pct'},
+    'book_cover_designer' => { percent: 4.0, role_name: 'Cover Designer', pct_label: 'book_designer_pct'},
+    'book_editor' => { percent: 7.0, role_name: 'Editor'},
+    'book_project_manager' => { percent: 4.0, role_name: 'Project Manager'},
+    'book_proofreader' => { percent: 2.0, role_name: 'Proof Reader'},
+  }
+
   #TODO: log when we don't find a matching task.
   def create_current_task(project, project_meta, key)
     wp_task_name = fetch_field_value(project_meta, key)
@@ -116,14 +136,6 @@ class WordpressImportController < ApplicationController
       results.push match[2]
     end
     results
-  end
-
-  def deserialize_php_array(serialized_data)
-    results = Array.new
-   serialized_data.scan(/i:([0-9])+;s:([0-9]+):\"(.+?)\";/).each do | match |
-      results.push match[2]
-    end
-    return results
   end
 
   def prepare_project_fields(project_meta)
@@ -200,8 +212,47 @@ class WordpressImportController < ApplicationController
     }
   end
 
-  def fetch_field_value(item, key)
-    item.xpath("./wp:postmeta/wp:meta_key[text() = '#{key}']/following-sibling::wp:meta_value/text()").text
+  def create_team_memberships(project, item)
+    #looping through the team member hash
+    $wp_rails_role_map.each do | key, tm_hash |
+      wp_member_role = fetch_field_value item, key
+      # Most corresponding percents for roles from wp are role_name + _pct
+      # :pct_label is the override for the outliers
+      wp_member_role_pct = fetch_field_value item, (tm_hash.has_key? :pct_label)? tm_hash[:pct_label] : "#{key}_pct"
+
+      ttr_role = Role.where(name: tm_hash[:role_name]).first
+
+      unless ttr_role.nil?
+        # wp_member_role can either be an array or a string depending if there are multiple
+        # convert single entries to an array so we can loop through.
+        wp_member_role = [wp_member_role] unless wp_member_role.class == Array
+
+        wp_member_role.each do | member_id |
+          next if member_id.nil? || member_id.to_i < 1
+          member = User.where(uid: member_id).first
+          unless member.nil?
+            project.team_memberships.build(member: member, role: ttr_role, percentage: wp_member_role_pct.nil?? tm_hash[:percent] : wp_member_role_pct.to_f)
+          else
+            puts "role info (nil user) for: #{member_id}"
+          end
+        end
+          puts "role info: #{item.xpath("./wp:post_id").text}\t#{wp_member_role}\t#{wp_member_role_pct}\t#{item.xpath("./title").text}"
+      else
+          puts "PROBLEM: NIL**** #{tm_hash[:role_name]}"
+      end
+    end
+  end
+
+  # fetches the value given the key from a wordpress xml export.
+  # fields that are lists are often converted to a serialized php array.
+  # Deserialize will deserialze the array into an array of strings.
+  def fetch_field_value(item, key, deserialize = true)
+    value = item.xpath("./wp:postmeta/wp:meta_key[text() = '#{key}']/following-sibling::wp:meta_value/text()").text
+    # check if we need to deserialize array
+    if deserialize && value =~ /a:[0-9]+:{i:([0-9]+);s:([0-9]+):\"(.*?)\";}/
+      value = deserialize_php_array value
+    end
+    value
   end
 
 end

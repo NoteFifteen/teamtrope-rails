@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   	resources :profiles, shallow: true, only: [:edit,:update]
   end
 
+  get '/admin/reports/high_allocations', to: 'reports#high_allocations'
+
   get '/users/:id/activity/mentions',  to: 'users#mentions',  as: 'mentions'
   get '/users/:id/activity/favorites', to: 'users#favorites', as: 'favorites'
   get '/users/:id/activity/groups',    to: 'users#groups',    as: 'groups'

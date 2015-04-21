@@ -32,11 +32,17 @@ class User < ActiveRecord::Base
   default_scope -> { order('LOWER(name) ASC') }
 
   scope :with_role, ->(role) { where("roles_mask & #{2**ROLES.index(role.to_s)} > 0") }
+  scope :active_users, -> { where(active: true) }
+  scope :inactive_users, -> { where(active: false) }
+
 
   ROLES = %w[booktrope_staff moderator author book_manager cover_designer editor project_manager proof_reader volunteer observer illustrator]
 
+  def inactive?
+      !active
+  end
 
-def self.find_for_wordpress_oauth2(oauth, signed_in_user=nil)
+  def self.find_for_wordpress_oauth2(oauth, signed_in_user=nil)
 
     #if the user was already signed in / but they navigated through the authorization with wordpress
     if signed_in_user
@@ -91,17 +97,5 @@ def self.find_for_wordpress_oauth2(oauth, signed_in_user=nil)
   	roles.include? role.to_s
   end
 
-  def User.new_remember_token
-    SecureRandom.urlsafe_base64
-  end
-
-  def User.digest(token)
-    Digest::SHA1.hexdigest(token.to_s)
-  end
-
-  private
-    def create_remember_token
-      self.remember_token = User.digest(User.new_remember_token)
-    end
 
 end
