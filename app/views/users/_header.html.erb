@@ -1,0 +1,20 @@
+<div id="item-header" role="complementary">
+	<div id="item-header-avatar">
+		<%= link_to image_tag(
+                            avatar_url(@user, :medium, "150"),
+                                        size: "150x150",
+                                        class: "avatar user-#{@user.id}-avatar avatar- photo",
+                                        alt: "Profile picture of #{@user.name}"),
+																		@user %>
+	</div><!-- #item-header-avatar -->
+	
+	<div id="item-header-content">
+		<h2 class="user-nicename">@justin</h2>
+		<h2 class="user-nicename"><%= @user.email %></h2>
+		<span class="activity">active 18 seconds ago</span>
+		<div id="item-meta">
+			<div id="latest-update"></div>
+			<div id="item-buttons"></div><!-- #item-buttons -->
+		</div><!-- #item-meta -->
+	</div><!-- #item-header-content -->
+</div><!-- #item-header -->

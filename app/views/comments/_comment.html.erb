@@ -1,0 +1,39 @@
+<li id="comment-<%= comment.id %>" class="comment byuser comment-author-inazajac even thread-even depth-1">
+	<article id="div-comment-<%= comment.id %>" class="comment-body">
+		<footer class="comment-meta">
+			<div class="comment-author vcard">
+				<%= link_to image_tag(avatar_url(comment.user, :thumb, "34"), size: "34x34", class: "avatar"), comment.user %>
+				
+				<b class="fn">
+					<%= link_to comment.user.name, comment.user, class: "url", rel: "external nofollow" %>
+				</b>
+				<span class="says">says:</span>
+			</div><!-- .comment-author -->
+			
+			<div class="comment-metadata">
+				<a href="https://teamtrope.com/2014/11/amazon-inclusion-teamroom/comment-page-1/#comment-261">
+					<%= time_tag(comment.created_at) %>
+				</a>
+				<% if can? :edit, comment %>
+				<span class="edit-link">
+					<%= link_to "Edit", edit_comment_path(@post, comment), class: "comment-edit-link" %>
+				</span>
+				<% end %>
+				<% if can? :delete, comment %>
+				<span class="edit-link">
+				<%= link_to 'Delete', [ comment],
+               method: :delete,
+               class: "comment-edit-link",
+               data: { confirm: 'Are you sure you want to delete this comment?' } %>
+        </span>
+        <% end %>
+			</div><!-- .comment-metadata -->
+		</footer><!-- .comment-meta -->
+		
+		<div class="comment-content">
+			<%= comment.content %>
+		</div><!-- .comment-content -->	
+		
+		<div class="reply"></div><!-- .reply -->
+	</article><!-- .comment-body -->
+</li><!-- #comment-## -->		
