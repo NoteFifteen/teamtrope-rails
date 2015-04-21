@@ -456,7 +456,7 @@ class ProjectsController < ApplicationController
       update_current_task
       @project.create_activity :published_book, owner: current_user,
                                 parameters: { text: 'Submitted the Publish Book form', form_data: params[:project].to_s}
-      flash[:success] = 'Submitted Publish Book'
+      flash[:success] = 'Congratulations! Your book has been published'
       redirect_to @project
     else
       render 'show'
