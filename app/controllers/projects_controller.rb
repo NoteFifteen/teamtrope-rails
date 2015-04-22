@@ -1,13 +1,13 @@
 class ProjectsController < ApplicationController
-	before_action :signed_in_user #, only: [:show, :index, :destroy, :edit]
+  before_action :signed_in_user #, only: [:show, :index, :destroy, :edit]
   before_action :set_project, except: [:create, :new, :index]
 
   def index
-  	@projects = Project.all
+    @projects = Project.all.includes(:team_memberships => [:member, :role]).first 100
   end
 
   def new
-  	@project = Project.new
+    @project = Project.new
   end
 
   def edit
@@ -18,16 +18,16 @@ class ProjectsController < ApplicationController
     params[:project][:team_memberships_attributes]['0'][:percentage] = author_percentage
     params[:project][:final_title] = params[:project][:title]
 
-  	@project = Project.new(new_project_params)
-  	if @project.save
-  		flash[:success] = 'New Project Created!'
+    @project = Project.new(new_project_params)
+    if @project.save
+      flash[:success] = 'New Project Created!'
      # Need to create method to set the current tasks based on the workflow
       @project.create_workflow_tasks
-  		redirect_to projects_path
+      redirect_to projects_path
     else
       flash[:danger] = 'Error creating project!'
-  		render 'new'
-  	end
+      render 'new'
+    end
   end
 
   def destroy
@@ -37,20 +37,20 @@ class ProjectsController < ApplicationController
   end
 
   def update
-		if @project.update(update_project_params)
-			flash[:success] = "Updated"
-			redirect_to @project
-		else
-			if params[:submitted_from_action] && params[:submitted_from_action] == 'show'
-				render 'show'
-			else
-				render 'edit'
-			end
-		end
+    if @project.update(update_project_params)
+      flash[:success] = "Updated"
+      redirect_to @project
+    else
+      if params[:submitted_from_action] && params[:submitted_from_action] == 'show'
+        render 'show'
+      else
+        render 'edit'
+      end
+    end
   end
 
   def show
-		@activities = PublicActivity::Activity.order("created_at DESC").where(trackable_type: "Project", trackable_id: @project)
+    @activities = PublicActivity::Activity.order("created_at DESC").where(trackable_type: "Project", trackable_id: @project)
     @users = User.all
   end
 
@@ -60,18 +60,18 @@ class ProjectsController < ApplicationController
   # this prevents a crash when there is a temp file in params. Might want to come up with
   # a cleaner solution
 
-	def update_status
-		if @project.update(update_project_params)
-			@project.create_activity :update_status, owner: current_user,
+  def update_status
+    if @project.update(update_project_params)
+      @project.create_activity :update_status, owner: current_user,
                                parameters: { text: ' posted a status update', form_data: params[:project].to_s}
       update_current_task
 
-			flash[:success] = 'Posted Status Update'
-			redirect_to @project
-		else
-			render 'show'
-		end
-	end
+      flash[:success] = 'Posted Status Update'
+      redirect_to @project
+    else
+      render 'show'
+    end
+  end
 
   def accept_team_member
 
@@ -90,29 +90,29 @@ class ProjectsController < ApplicationController
     end
   end
 
-	def submit_form_1099
-		# This data is sensitive. We do not store it locally.
-		# instead we store it in box.
+  def submit_form_1099
+    # This data is sensitive. We do not store it locally.
+    # instead we store it in box.
 
-		#upload_1099_data returns true or Boxr::BoxrError
-		result = Booktrope::BoxrWrapper.upload_1099_data(params[:form_1099])
-		if result && result.class != Boxr::BoxrError
-			flash[:success] = 'Submitted 1099'
-			redirect_to @project
-		else
+    #upload_1099_data returns true or Boxr::BoxrError
+    result = Booktrope::BoxrWrapper.upload_1099_data(params[:form_1099])
+    if result && result.class != Boxr::BoxrError
+      flash[:success] = 'Submitted 1099'
+      redirect_to @project
+    else
 
-			if result.class == Boxr::BoxrError
-				msg = result.to_s
-			else
-				msg = "There was an error #{result.to_s}"
-			end
+      if result.class == Boxr::BoxrError
+        msg = result.to_s
+      else
+        msg = "There was an error #{result.to_s}"
+      end
 
 
-			flash[:danger] = msg
-			render 'show'
-		end
+      flash[:danger] = msg
+      render 'show'
+    end
 
-	end
+  end
 
   def remove_team_member
     # Parameters are spread around and need to be used on multiple objects
@@ -152,64 +152,64 @@ class ProjectsController < ApplicationController
   end
 
   def edit_complete_date
-  	if @project.update(update_project_params)
-  		@project.create_activity :submitted_edit_complete_date, owner: current_user, parameters: { text: " set the 'Edit Complete Date' to #{@project.edit_complete_date.strftime("%Y/%m/%d")}", form_data: params[:project].to_s}
-  		flash[:success] = "Edit Complete Date Set"
-			update_current_task
-  		redirect_to @project
-  	else
-  		render 'show'
-  	end
+    if @project.update(update_project_params)
+      @project.create_activity :submitted_edit_complete_date, owner: current_user, parameters: { text: " set the 'Edit Complete Date' to #{@project.edit_complete_date.strftime("%Y/%m/%d")}", form_data: params[:project].to_s}
+      flash[:success] = "Edit Complete Date Set"
+      update_current_task
+      redirect_to @project
+    else
+      render 'show'
+    end
   end
 
   # sets the revenue allocation per team_membership
   def revenue_allocation_split
-  	if @project.update(update_project_params)
+    if @project.update(update_project_params)
 
-  		@project.create_activity :revenue_allocation_split, owner: current_user, parameters: { text: " set the revenue allocation split", form_data: params[:project][:team_memberships_attributes].to_s}
-			update_current_task
-			Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, DateTime.parse("#{params[:effective_date][:year]}/#{params[:effective_date][:month]}/#{params[:effective_date][:day]}")
+      @project.create_activity :revenue_allocation_split, owner: current_user, parameters: { text: " set the revenue allocation split", form_data: params[:project][:team_memberships_attributes].to_s}
+      update_current_task
+      Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, DateTime.parse("#{params[:effective_date][:year]}/#{params[:effective_date][:month]}/#{params[:effective_date][:day]}")
 
-  		#TODO: Hellosign-rails integration
+      #TODO: Hellosign-rails integration
 
-	  	flash[:success] = "Revenue Allocation Split Set"
-	  	redirect_to @project
-	  else
-	  	render 'show'
-	  end
+      flash[:success] = "Revenue Allocation Split Set"
+      redirect_to @project
+    else
+      render 'show'
+    end
   end
 
   def original_manuscript
-  	if @project.update(update_project_params)
-  		@project.create_activity :submitted_original_manuscript, owner: current_user, parameters: {text: "Uploaded the Original Manuscript", form_data: params[:project].to_s}
-  		flash[:success] = "Original Manuscript Uploaded"
-  		update_current_task
-  		redirect_to @project
-  	else
-  		render 'show'
-  	end
+    if @project.update(update_project_params)
+      @project.create_activity :submitted_original_manuscript, owner: current_user, parameters: {text: "Uploaded the Original Manuscript", form_data: params[:project].to_s}
+      flash[:success] = "Original Manuscript Uploaded"
+      update_current_task
+      redirect_to @project
+    else
+      render 'show'
+    end
   end
 
   def edited_manuscript
-  	if @project.update(update_project_params)
-  		@project.create_activity :submitted_edited_manuscript, owner: current_user, parameters: {text: "Uploaded the Edited Manuscript", form_data: params[:project].to_s}
-  		update_current_task
-  		flash[:success] = "Edited Manuscript Uploaded"
-  		redirect_to @project
-  	else
-  		render 'show'
-  	end
+    if @project.update(update_project_params)
+      @project.create_activity :submitted_edited_manuscript, owner: current_user, parameters: {text: "Uploaded the Edited Manuscript", form_data: params[:project].to_s}
+      update_current_task
+      flash[:success] = "Edited Manuscript Uploaded"
+      redirect_to @project
+    else
+      render 'show'
+    end
   end
 
   def proofed_manuscript
-  	if @project.update(update_project_params)
-  		@project.create_activity :submitted_proofed_manuscript, owner: current_user, parameters: {text: "Uploaded the Proofed Manuscript", form_data: params[:project].to_s}
-  		update_current_task
-  		flash[:success] = "Proofed Manuscript Uploaded"
-  		redirect_to @project
-  	else
-  		render 'show'
-  	end
+    if @project.update(update_project_params)
+      @project.create_activity :submitted_proofed_manuscript, owner: current_user, parameters: {text: "Uploaded the Proofed Manuscript", form_data: params[:project].to_s}
+      update_current_task
+      flash[:success] = "Proofed Manuscript Uploaded"
+      redirect_to @project
+    else
+      render 'show'
+    end
   end
 
   def layout_upload
@@ -330,22 +330,22 @@ class ProjectsController < ApplicationController
     end
   end
 
-	def price_promotion
+  def price_promotion
 
-		if @project.update(update_project_params)
+    if @project.update(update_project_params)
 
-			@project.create_activity :submitted_price_promotion, owner: current_user,
+      @project.create_activity :submitted_price_promotion, owner: current_user,
                                parameters: {text: 'submitted a price promotion',
                                form_data: params[:project].to_s}
 
-			update_current_task
-			flash[:success] = 'Price Promotion Submitted.'
-			redirect_to @project
-		else
-			render 'show'
-		end
+      update_current_task
+      flash[:success] = 'Price Promotion Submitted.'
+      redirect_to @project
+    else
+      render 'show'
+    end
 
-	end
+  end
 
   def approve_cover_art
     # This is an attribute accessor used as a flag for deciding what to update below
@@ -428,87 +428,87 @@ class ProjectsController < ApplicationController
   end
 
   def submit_pfs
-  	if @project.update(update_project_params)
-  		update_current_task
+    if @project.update(update_project_params)
+      update_current_task
       @project.create_activity :submitted_pfs, owner: current_user,
                                 parameters: { text: 'Submitted the Publication Fact Sheet', form_data: params[:project].to_s}
       flash[:success] = 'Submitted Publication Fact Sheet'
       redirect_to @project
-  	else
-  		render 'show'
-  	end
+    else
+      render 'show'
+    end
   end
 
   def final_manuscript
-  	if @project.update(update_project_params)
-  		update_current_task
+    if @project.update(update_project_params)
+      update_current_task
       @project.create_activity :uploaded_final_manuscript, owner: current_user,
                                 parameters: { text: 'Uploaded Final Manuscript', form_data: params[:project].to_s}
       flash[:success] = 'Uploaded Final Manuscript'
       redirect_to @project
-  	else
-  		render 'show'
-  	end
+    else
+      render 'show'
+    end
   end
 
   def publish_book
-  	if @project.update(update_project_params)
-  		update_current_task
+    if @project.update(update_project_params)
+      update_current_task
       @project.create_activity :published_book, owner: current_user,
                                 parameters: { text: 'Submitted the Publish Book form', form_data: params[:project].to_s}
       flash[:success] = 'Congratulations! Your book has been published'
       redirect_to @project
-  	else
-  		render 'show'
-  	end
+    else
+      render 'show'
+    end
   end
 
   def marketing_release_date
-  	if @project.update(update_project_params)
-  		update_current_task
-  		@project.create_activity :marketing_release_date, owner: current_user,
-  															parameters: { text: 'Set Marketing Release Date', form_data: params[:project].to_s}
-  		flash[:success] = 'Marketing Release Date Set'
-  		redirect_to @project
-  	else
-  		render 'show'
-  	end
+    if @project.update(update_project_params)
+      update_current_task
+      @project.create_activity :marketing_release_date, owner: current_user,
+                                parameters: { text: 'Set Marketing Release Date', form_data: params[:project].to_s}
+      flash[:success] = 'Marketing Release Date Set'
+      redirect_to @project
+    else
+      render 'show'
+    end
   end
 
   def media_kit
-  	if @project.update(update_project_params)
-  		update_current_task
-  		@project.create_activity :media_kit, owner: current_user,
-  															parameters: { text: 'Uploaded Media Kit', form_data: params[:project].to_s}
-  		flash[:success] = 'Media Kit Uploaded.'
-  		redirect_to @project
-  	else
-  		render 'show'
-  	end
+    if @project.update(update_project_params)
+      update_current_task
+      @project.create_activity :media_kit, owner: current_user,
+                                parameters: { text: 'Uploaded Media Kit', form_data: params[:project].to_s}
+      flash[:success] = 'Media Kit Uploaded.'
+      redirect_to @project
+    else
+      render 'show'
+    end
   end
 
   def blog_tour
-  	if @project.update(update_project_params)
-  		update_current_task
-  		@project.create_activity :blog_tour, owner: current_user,
-  				parameters: { text: 'Scheduled a Blog Tour', form_data: params[:project].to_s}
-  		flash[:success] = 'Blog Tour Scheduled.'
-  		redirect_to @project
-  	else
-  		render 'show'
-  	end
+    if @project.update(update_project_params)
+      update_current_task
+      @project.create_activity :blog_tour, owner: current_user,
+          parameters: { text: 'Scheduled a Blog Tour', form_data: params[:project].to_s}
+      flash[:success] = 'Blog Tour Scheduled.'
+      redirect_to @project
+    else
+      render 'show'
+    end
   end
 
   def marketing_expense
-  	if @project.update(update_project_params)
-  		update_current_task
-  		@project.create_activity :marketing_expense, owner: current_user,
-  				parameters: { text: 'Submitted a Marketing Expense', form_data: params[:project].to_s}
-  		flash[:success] = 'Submitted Marketing Expense.'
-  		redirect_to @project
-  	else
-  		render 'show'
-  	end
+    if @project.update(update_project_params)
+      update_current_task
+      @project.create_activity :marketing_expense, owner: current_user,
+          parameters: { text: 'Submitted a Marketing Expense', form_data: params[:project].to_s}
+      flash[:success] = 'Submitted Marketing Expense.'
+      redirect_to @project
+    else
+      render 'show'
+    end
   end
 
   def download_original_manuscript
@@ -577,17 +577,17 @@ class ProjectsController < ApplicationController
 
   private
   def new_project_params
-  	params.require(:project).permit(:title, :final_title, :project_type_id, :genre_ids => [], :team_memberships_attributes => [:role_id, :member_id, :percentage])
+    params.require(:project).permit(:title, :final_title, :project_type_id, :genre_ids => [], :team_memberships_attributes => [:role_id, :member_id, :percentage])
   end
 
   def update_project_params
-  	params.require(:project).permit(:id, :final_title, :stock_image_request_link,
+    params.require(:project).permit(:id, :final_title, :stock_image_request_link,
       :previously_published, :prev_publisher_and_date, :proofed_word_count, :teamroom_link,
       :publication_date, :marketing_release_date, :special_text_treatment, :has_sub_chapters, :has_index,
       :non_standard_size, :has_internal_illustrations, :color_interior, :childrens_book,
       :edit_complete_date, :imprint_id,
-  		:genre_ids => [],
-  		:blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
+      :genre_ids => [],
+      :blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
       :cover_concept_attributes => [:id, :cover_concept, :cover_concept_notes, :cover_art_approval_date, :stock_cover_image, :image_request_list],
       :cover_template_attributes => [:ebook_front_cover, :createspace_cover, :lightning_source_cover, :alternative_cover],
       :final_manuscript_attributes => [:id, :pdf, :doc],
@@ -595,18 +595,18 @@ class ProjectsController < ApplicationController
       :layout_attributes => [:id, :layout_style_choice, :page_header_display_name, :use_pen_name_on_title, :pen_name,
                              :use_pen_name_for_copyright, :exact_name_on_copyright, :layout_upload, :layout_notes,
                              :layout_approved, :layout_approved_date, :layout_approval_issue_list, :final_page_count],
-			:manuscript_attributes => [:id, :original, :edited, :proofed],
-  		:marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information ],
-  		:media_kits_attributes => [:document],
-  		:price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion],
-  		:publication_fact_sheet_attributes => [ :author_name, :series_name, :series_number, :description,
-  					:author_bio, :endorsements, :one_line_blurb, :print_price, :ebook_price,
-  					:bisac_code_one, :bisac_code_two, :bisac_code_three, :search_terms, :age_range,
-  					:paperback_cover_type ],
-  		:published_file_attributes => [:publication_date, :mobi, :epub, :pdf],
-  		:status_updates_attributes => [:type, :status],
-  		:team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy]
-  		)
+      :manuscript_attributes => [:id, :original, :edited, :proofed],
+      :marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information ],
+      :media_kits_attributes => [:document],
+      :price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion],
+      :publication_fact_sheet_attributes => [ :author_name, :series_name, :series_number, :description,
+            :author_bio, :endorsements, :one_line_blurb, :print_price, :ebook_price,
+            :bisac_code_one, :bisac_code_two, :bisac_code_three, :search_terms, :age_range,
+            :paperback_cover_type ],
+      :published_file_attributes => [:publication_date, :mobi, :epub, :pdf],
+      :status_updates_attributes => [:type, :status],
+      :team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy]
+      )
   end
 
   def update_control_number_params
@@ -615,18 +615,18 @@ class ProjectsController < ApplicationController
   end
 
   def set_project
-  	@project = Project.find(params[:id])
-  	rescue ActiveRecord::RecordNotFound
-  		flash[:warning] = "The project you were looking for could not be found."
-  		redirect_to projects_path
+    @project = Project.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:danger] = "The project you were looking for could not be found."
+      redirect_to projects_path
   end
 
   def update_current_task
-  	current_task = @project.current_tasks.where(task_id: params[:submitted_task_id]).first
-  	unless current_task.nil? || current_task.task.next_task.nil?
-  		current_task.task_id = current_task.task.next_task.id
-  		current_task.save
-  	end
+    current_task = @project.current_tasks.where(task_id: params[:submitted_task_id]).first
+    unless current_task.nil? || current_task.task.next_task.nil?
+      current_task.task_id = current_task.task.next_task.id
+      current_task.save
+    end
   end
 
   def reject_current_task

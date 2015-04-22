@@ -76,8 +76,12 @@ gem 'pg',             '0.17.1'
 gem 'hellosign-ruby-sdk', :git => "https://github.com/ltlai/hellosign-ruby-sdk.git",
   :branch => 'parsed-errors'
 
-
 gem 'boxr'
+
+# login
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-wordpress_hosted', github: 'jwickard/omniauth-wordpress-oauth2-plugin'
 
 group :production do
   gem 'rails_12factor', '0.0.2'

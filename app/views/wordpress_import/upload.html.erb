@@ -1,0 +1,36 @@
+<% provide(:title, "Wordpress Import | Results") %>
+<div class="page" id="blog-page" role="main">
+  <h2>Wordpress Import Results</h2><br />
+  <%= link_to "import", admin_wordpress_import_import_path %>
+  <ul>
+    <% @import_meta.each do | key, value | %>
+      <li><%= key%>: <%= value %></li>
+    <% end %>
+  </ul>
+  <script type="text/javascript" async="">
+    function toggleTable1() {
+    var lTable = document.getElementById("ProjectListTable");
+    lTable.style.display = (lTable.style.display == "table") ? "none" : "table";}
+  </script>
+  <table id="ProjectListTable" class="projectListTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Type</th>
+        <th>Error Message</th>
+      </tr>
+    </thead>
+    <% @errors.each_with_index do | error, index | %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td><%= error[:type]%></td>
+      <td><%= error[:message] %></td>
+    </tr>
+    <% end %>
+  </table>
+  <script>
+  $("#ProjectListTable").DataTable({
+      "pageLength" : 50
+  });
+  </script>
+</div>

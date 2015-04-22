@@ -8,7 +8,7 @@ class CreatePublicationFactSheets < ActiveRecord::Migration
       t.text :description
       t.text :author_bio
       t.text :endorsements
-      t.string :one_line_blurb
+      t.text :one_line_blurb
       t.float :print_price
       t.float :ebook_price
       t.string :bisac_code_one

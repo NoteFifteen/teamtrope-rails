@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+
+  get 'wordpress_import/import'
+  post 'wordpress_import/upload'
+
+
   resources :marketing_expenses
 
   resources :publication_fact_sheets
@@ -8,7 +14,7 @@ Rails.application.routes.draw do
   match '/parse/get_queued_items',                 to: 'parse#get_queued_items',               via: 'get'
   match '/parse/add_book_to_price_change_queue',   to: 'parse#add_book_to_price_change_queue', via: 'get'
   match '/parse/get_sales_data_for_channel',       to: 'parse#get_sales_data_for_channel',     via: 'get'
-  
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -16,23 +22,27 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
    root 'static_pages#home'
 
-  resources :sessions, only: [:new, :create, :destroy]
   resources :users do
   	member do
   		get 'activity'
   	end
   	resources :profiles, shallow: true, only: [:edit,:update]
   end
-  
+
+  get '/admin/reports/high_allocations',     to: 'reports#high_allocations'
+  get 'admin/reports/missing_current_tasks', to: 'reports#missing_current_tasks'
+  match '/admin/wordpress_import/import',    to: 'wordpress_import#import', via: :get
+  post '/admin/wordpress_import/upload',     to: 'wordpress_import#upload', via: :post
+
   get '/users/:id/activity/mentions',  to: 'users#mentions',  as: 'mentions'
   get '/users/:id/activity/favorites', to: 'users#favorites', as: 'favorites'
   get '/users/:id/activity/groups',    to: 'users#groups',    as: 'groups'
-  
+
   get '/box/request_access', to: 'static_pages#box_request_access', as: 'box_request'
   get '/box/redirect',       to: 'static_pages#box_redirect',       as: 'box-redirect'
-  
+
   post 'hellosign' => 'hellosign#record_event'
-  
+
   resources :projects do
     resource :analytics, only: [:show]
   end
@@ -93,15 +103,12 @@ Rails.application.routes.draw do
   resources :posts do
   	resources :comments, shallow: true
   end
-  
+
   resources :tags, except: :index
   resources :statuses
-  
-  match 'signup',  to: 'users#new',        via: 'get'
-  match 'signin',  to: 'sessions#new',     via: 'get'
-  match 'signout', to: 'sessions#destroy', via: 'get'
+
   match 'visitors', to: 'static_pages#visitors', via: 'get'
-  
+
   resources :tabs
   resources :project_views
   resources :roles
@@ -118,9 +125,9 @@ Rails.application.routes.draw do
   resources :tasks
   resources :imprints
   resources :status_updates
-  resources :price_change_promotions  
-  
-   
+  resources :price_change_promotions
+
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
