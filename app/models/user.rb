@@ -51,7 +51,7 @@ def self.find_for_wordpress_oauth2(oauth, signed_in_user=nil)
       #find user by id and provider.
       user = User.find_by_provider_and_uid(oauth['provider'], oauth['uid'])
 
-      #if user isn't in our dabase yet, create it!
+      #if user isn't in our database yet, create it!
       if user.nil?
 
         user = User.find_by_email(oauth['info']['email'])
@@ -61,17 +61,26 @@ def self.find_for_wordpress_oauth2(oauth, signed_in_user=nil)
           user.update_attributes(uid: oauth['uid'], provider: oauth['provider'],
                   nickname: oauth['extra']['raw_info']['user_login'],
                   website: oauth['info']['urls']['Website'], display_name: oauth['extra']['raw_info']['display_name'])
+
+          # Attempt to update Avatar if one has not been configured here
+          if(! user.profile.avatar.present?)
+            user.profile.import_avatar_from_url(oauth['extra']['raw_info']['avatar_url'])
+          end
         else
           user = User.create!(email: oauth['info']['email'], uid: oauth['uid'], provider: oauth['provider'],
                               nickname: oauth['extra']['raw_info']['user_login'], website: oauth['info']['urls']['Website'],
                               display_name: oauth['extra']['raw_info']['display_name'])
+          # Attempt to import avatar
+          user.profile.import_avatar_from_url(oauth['extra']['raw_info']['avatar_url'])
         end
-
       end
 
+      # Attempt to update Avatar if one has not been configured here
+      if(! user.profile.avatar.present?)
+        user.profile.import_avatar_from_url(oauth['extra']['raw_info']['avatar_url'])
+      end
       user
     end
-
   end
 
   #we don't require a password for our wordpress authenticated users.
