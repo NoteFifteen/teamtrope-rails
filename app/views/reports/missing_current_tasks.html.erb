@@ -5,17 +5,19 @@
 
   <script type="text/javascript" async="">
     function toggleTable1() {
-    var lTable = document.getElementById("Table1");
+    var lTable = document.getElementById("ProjectListTable");
     lTable.style.display = (lTable.style.display == "table") ? "none" : "table";}
   </script>
-  <table id="Table1" class="sortable">
-    <tr>
-      <th>Title</th>
-      <th>Missing Tasks</th>
-      <th>Prod Workflow Step</th>
-      <th>Design Step</th>
-      <th>Marketing Step</th>
-    </tr>
+  <table id="ProjectListTable" class="projectListTable">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Missing Tasks</th>
+        <th>Prod Workflow Step</th>
+        <th>Design Step</th>
+        <th>Marketing Step</th>
+      </tr>
+    </thead>
   <% @current_tasks.each do | tm | %>
     <% next if tm.project.nil? %>
     <tr>
@@ -27,4 +29,9 @@
     </tr>
   <% end %>
   </table>
+  <script>
+  $("#ProjectListTable").DataTable({
+      "pageLength" : 50
+  });
+  </script>
 </div>

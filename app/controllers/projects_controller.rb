@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, except: [:create, :new, :index]
 
   def index
-    @projects = Project.all.includes(:team_memberships => [:member, :role]).first 10
+    @projects = Project.all.includes(:team_memberships => [:member, :role]).first 100
   end
 
   def new
