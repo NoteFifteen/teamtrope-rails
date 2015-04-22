@@ -6,6 +6,7 @@ class WordpressImportController < ApplicationController
   def upload
     # turning off callbacks so we don't send CTAs when we create TeamMemberships
     ActiveRecord::Base.skip_callbacks = true
+    @errors = []
     case params[:type]
     when 'projects'
       import_projects
@@ -22,7 +23,6 @@ class WordpressImportController < ApplicationController
     require 'csv'
     csv = CSV.parse(params[:upload_file].read, headers: :first_row)
     csv.each do | import_user |
-      next if import_user['roles'] == 'unapproved'
       #puts "#{import_user['ID']},#{import_user['user_login']},#{import_user['user_email']},#{import_user["roles"]},#{import_user["Role(s)"]}\n"
       #User.create!(uid: import_user['ID'], name: import_user['user_login'], email: import_user['user_email'])
 
@@ -32,7 +32,7 @@ class WordpressImportController < ApplicationController
         provider: 'wordpress_hosted').first_or_create
 
       user.roles = import_user["Role(s)"].downcase.gsub(/ /, '_').split('::')
-      user.active = false if import_user['roles'] == 'inactive'
+      user.active = false if import_user['roles'] == 'inactive' || import_user['roles'] == 'unapproved'
       user.build_profile if user.profile.nil?
       user.save
 
@@ -122,10 +122,12 @@ class WordpressImportController < ApplicationController
     'book_proofreader' => { percent: 2.0, role_name: 'Proof Reader'},
   }
 
-  #TODO: log when we don't find a matching task.
   def create_current_task(project, project_meta, key)
     wp_task_name = fetch_field_value(project_meta, key)
-    return unless $wf_task_map.has_key? wp_task_name
+    unless $wf_task_map.has_key? wp_task_name
+      @errors.push({type: "CurrentTask::NoMatchingTask", message: "wp task name: #{wp_task_name} project: #{project.title}"})
+      return
+    end
     task = Task.where(name: $wf_task_map[wp_task_name]).first
     project.current_tasks.build(task: task) unless task.nil?
   end
@@ -233,12 +235,12 @@ class WordpressImportController < ApplicationController
           unless member.nil?
             project.team_memberships.build(member: member, role: ttr_role, percentage: wp_member_role_pct.nil?? tm_hash[:percent] : wp_member_role_pct.to_f)
           else
-            puts "role info (nil user) for: #{member_id}"
+            @errors.push({ type: 'TeamMembership::MissingUser', message: "nil user #{member_id} project: #{project.title}role: #{ttr_role.name}"})
           end
         end
-          puts "role info: #{item.xpath("./wp:post_id").text}\t#{wp_member_role}\t#{wp_member_role_pct}\t#{item.xpath("./title").text}"
+        #@errors.push "role info: #{item.xpath("./wp:post_id").text}\t#{wp_member_role}\t#{wp_member_role_pct}\t#{item.xpath("./title").text}"
       else
-          puts "PROBLEM: NIL**** #{tm_hash[:role_name]}"
+        @errors.push( { type: 'TeamMembership::UnmappableRole', message: "Unmappable role: #{tm_hash[:role_name]} project: #{project.title}" })
       end
     end
   end

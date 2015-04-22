@@ -1,10 +1,6 @@
 Rails.application.routes.draw do
 
-	devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
-
-  get 'wordpress_import/import'
-  post 'wordpress_import/upload'
-
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   resources :marketing_expenses
 
@@ -29,7 +25,10 @@ Rails.application.routes.draw do
   	resources :profiles, shallow: true, only: [:edit,:update]
   end
 
-  get '/admin/reports/high_allocations', to: 'reports#high_allocations'
+  get '/admin/reports/high_allocations',     to: 'reports#high_allocations'
+  get 'admin/reports/missing_current_tasks', to: 'reports#missing_current_tasks'
+  match '/admin/wordpress_import/import',    to: 'wordpress_import#import', via: :get
+  post '/admin/wordpress_import/upload',     to: 'wordpress_import#upload', via: :post
 
   get '/users/:id/activity/mentions',  to: 'users#mentions',  as: 'mentions'
   get '/users/:id/activity/favorites', to: 'users#favorites', as: 'favorites'

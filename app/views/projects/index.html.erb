@@ -14,11 +14,6 @@
       <th>Title</th>
       <th>Author</th>
       <th>Genre</th>
-      <% if Rails.env.development? %>
-      <th>Prod Workflow Step</th>
-      <th>Design Step</th>
-      <th>Marketing Step</th>
-      <% end %>
       <th>Editor</th>
       <th>Proofreader</th>
       <th>Project Manager</th>
@@ -40,11 +35,6 @@
         </td>
         <td><%= (project.authors.try(:first).try(:member).nil?) ? 'N/A' : project.authors.first.member.name %></td>
         <td><%= project.genres.map(&:name).join(', ') %></td>
-        <% if Rails.env.development? %>
-        <td><%= project.current_task_for_workflow('Production').try(:task).try(:name) %></td>
-        <td><%= project.current_task_for_workflow('Design').try(:task).try(:name) %></td>
-        <td><%= project.current_task_for_workflow('Marketing').try(:task).try(:name) %></td>
-        <% end %>
         <td><%= (project.editors.try(:first).try(:member).nil?) ? 'N/A' : project.editors.first.member.name %></td>
         <td><%= (project.proof_readers.try(:first).try(:member).nil?) ? 'N/A' : project.proof_readers.first.member.name %></td>
         <td><%= (project.project_managers.try(:first).try(:member).nil?) ? 'N/A' : project.project_managers.first.member.name %></td>

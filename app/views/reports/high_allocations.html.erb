@@ -1,6 +1,6 @@
 <% provide(:title, "High Allocations") %>
 <div class="page" id="blog-page" role="main">
-  <h2>Projects with allocations above 70.0%</h2><br />
+  <h2>Projects with allocations above <%= @percent %>%</h2><br />
   <h3>Total: (<%= @team_memberships.map.count %>)</h3>
 
   <script type="text/javascript" async="">

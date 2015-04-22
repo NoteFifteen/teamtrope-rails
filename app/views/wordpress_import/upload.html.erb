@@ -1,1 +1,19 @@
-<%= link_to "import", wordpress_import_import_path %>
+<% provide(:title, "Wordpress Import | Results") %>
+<div class="page" id="blog-page" role="main">
+  <h2>Wordpress Import Results</h2><br />
+  <%= link_to "import", admin_wordpress_import_import_path %>
+  <table>
+    <tr>
+      <th>#</th>
+      <th>Type</th>
+      <th>Error Message</th>
+    </tr>
+    <% @errors.each_with_index do | error, index | %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td><%= error[:type]%></td>
+      <td><%= error[:message] %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>

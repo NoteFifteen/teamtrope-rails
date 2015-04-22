@@ -1,7 +1,22 @@
-<h1>WordpressImport#import</h1>
-<%= form_tag({ action: :upload }, multipart: true) do %>
-  <%= select_tag(:type, options_for_select([['Projects', 'projects'],
-                                                  ['Users', 'users']]))%>
-  <%= file_field_tag 'upload_file' %>
-  <%= submit_tag "submit" %>
-<% end %>
+<% provide(:title, "Wordpress Import") %>
+<div class="gf_browser_safari gform_wrapper" id="gform_wrapper_68">
+  <h1>Wordpress Import</h1>
+  <%= form_tag({ action: :upload }, multipart: true) do %>
+    <div class="gform_body">
+      <ul>
+        <li>
+          <%= label_tag "Data to import:" %>
+          <%= select_tag(:type, options_for_select([['Projects', 'projects'],
+                                                    ['Users', 'users']]))%>
+        </li>
+        <li>
+          <%= label_tag "Upload File" %>
+          <%= file_field_tag 'upload_file' %>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <%= submit_tag "submit" %>
+    </div>
+  <% end %>
+</div>

@@ -46,11 +46,18 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
 
 
-  scope :high_allocations, -> () {
+  scope :high_allocations, -> (percent) {
     TeamMembership.select("team_memberships.project_id, sum(percentage) as sum_percentage")
     .group("team_memberships.project_id")
-    .having("sum(percentage) > 70.0")
-    .includes(:project)
+    .having("sum(percentage) > ?", percent)
+    .includes(:project => :team_memberships)
+  }
+
+  scope :missing_current_tasks, -> () {
+    CurrentTask.select("current_tasks.project_id, count(project_id) as task_count")
+    .group("current_tasks.project_id")
+    .having("count(current_tasks.project_id) < 3")
+    .includes(:project => :current_tasks)
   }
 
   # Not an actual column, but used in the ProjectsController
