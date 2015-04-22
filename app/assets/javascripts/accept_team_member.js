@@ -140,10 +140,11 @@ Teamtrope.BuildTeam.AcceptMember.prototype.updateMemberSelect = function () {
 /**
  * Code for handling the Percentage allocation updates
  */
-Teamtrope.BuildTeam.AcceptMember.PercentageCalculator = function(percentage_input, percentage_indicator) {
+Teamtrope.BuildTeam.AcceptMember.PercentageCalculator = function(percentage_input, percentage_indicator, table_indicator) {
     this.team_members = {};
     this.percentage_input = percentage_input;
     this.percentage_indicator = percentage_indicator;
+    this.table_allocated_total_indicator = table_indicator;
 
     this.total_percentage = 0;
 };
@@ -154,18 +155,13 @@ Teamtrope.BuildTeam.AcceptMember.PercentageCalculator.prototype.addTeamMembers =
     }
 
     // Update the totals and trigger a progress bar update
-    this.calculateTotal(true, true);
+    this.calculateTotal(true);
 };
 
-Teamtrope.BuildTeam.AcceptMember.PercentageCalculator.prototype.calculateTotal = function (update_indicator, include_booktrope) {
+Teamtrope.BuildTeam.AcceptMember.PercentageCalculator.prototype.calculateTotal = function (update_indicator) {
     update_indicator = update_indicator || false;
-    include_booktrope = include_booktrope || false;
 
-    if(include_booktrope) {
-        var total_percentage = 30; // Booktrope gets 30%
-    } else {
-        var total_percentage = 0;
-    }
+    var total_percentage = 0;
 
     // Total the percentages from the team members
     if($.isPlainObject(this.team_members)) {
@@ -195,24 +191,26 @@ Teamtrope.BuildTeam.AcceptMember.PercentageCalculator.prototype.calculateTotal =
 
 Teamtrope.BuildTeam.AcceptMember.PercentageCalculator.prototype.updateIndicator = function () {
 
+    this.table_allocated_total_indicator.html(this.total_percentage.toFixed(1) + '%');
+
     this.percentage_indicator.toggleClass('progress-bar-success progress-bar-warning progress-bar-danger', false);
 
-    if(this.total_percentage > 100) {
+    if(this.total_percentage > 70) {
         this.percentage_indicator.css('width', '100%');
-        this.percentage_indicator.find('span').text('Over 100% Allocated!');
+        this.percentage_indicator.find('span').text('Over 70% Allocated!');
         this.percentage_indicator.toggleClass('progress-bar-danger');
-    } else if(this.total_percentage > 90) {
-        this.percentage_indicator.css('width', this.total_percentage + '%');
-        this.percentage_indicator.find('span').text(this.total_percentage + '% Allocated');
+    } else if(this.total_percentage > 60) {
+        this.percentage_indicator.css('width', (this.total_percentage + 30) + '%');
+        this.percentage_indicator.find('span').text(this.total_percentage.toFixed(1) + '% Allocated');
 
-        if(this.total_percentage === 100) {
+        if(this.total_percentage === 70) {
             this.percentage_indicator.toggleClass('progress-bar-success');
         } else {
             this.percentage_indicator.toggleClass('progress-bar-warning');
         }
     } else {
-        this.percentage_indicator.css('width', this.total_percentage + '%');
-        this.percentage_indicator.find('span').text(this.total_percentage + '% Allocated');
+        this.percentage_indicator.css('width', (this.total_percentage + 30) + '%');
+        this.percentage_indicator.find('span').text(this.total_percentage.toFixed(1) + '% Allocated');
     }
 };
 
@@ -225,7 +223,8 @@ $(document).ready(function() {
 
     percentageCalculator = percentageCalculator || new Teamtrope.BuildTeam.AcceptMember.PercentageCalculator(
         $('#accept_team_member_percentage_input'),
-        $('#accept_team_member_percentage_indicator')
+        $('#accept_team_member_percentage_indicator'),
+        $('#tableAllocatedTotal')
     );
 
     // Update the members in the select box
@@ -238,11 +237,12 @@ $(document).ready(function() {
         var role_name = $('#accept_team_member_roles').find('option:selected').text();
         var percentageInput = $('#accept_team_member_percentage_input');
         percentageInput.val(acceptForm.getSuggestedPercentageForRole(role_name));
+        percentageCalculator.calculateTotal(true);
     });
 
     // Bind the update of the percentage input to the calculation total and progress bar update
     $('#accept_team_member_percentage_input').bind('propertychange change click keyup input paste', event, function() {
-        percentageCalculator.calculateTotal(true, true);
+        percentageCalculator.calculateTotal(true);
     });
 
 });
