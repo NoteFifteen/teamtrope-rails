@@ -11,6 +11,7 @@ Teamtrope.BuildTeam.AcceptMember = function(role_select, member_select) {
     this.member_select = member_select;
     this.member_roles = [];
     this.team_members = {};
+    this.role_definitions = {};
 };
 
 Teamtrope.BuildTeam.AcceptMember.prototype.addTeamMembers = function (team_members) {
@@ -69,6 +70,14 @@ Teamtrope.BuildTeam.AcceptMember.prototype.addMembersToRole = function (role, me
             this.member_roles[role].push(members[i]);
         }
     }
+};
+
+Teamtrope.BuildTeam.AcceptMember.prototype.addRoleDefinition = function (role_name, suggested_percentage) {
+    this.role_definitions[role_name] = { name: role_name, suggested_percentage: suggested_percentage }
+};
+
+Teamtrope.BuildTeam.AcceptMember.prototype.getSuggestedPercentageForRole = function (role_name) {
+    return (this.role_definitions[role_name]) ? this.role_definitions[role_name].suggested_percentage : 0;
 };
 
 Teamtrope.BuildTeam.AcceptMember.prototype.getMembersForRole = function (role) {
@@ -225,6 +234,10 @@ $(document).ready(function() {
     // Bind the update to the list of team members based on the role change
     $('#accept_team_member_roles').change(function() {
         acceptForm.updateMemberSelect();
+
+        var role_name = $('#accept_team_member_roles').find('option:selected').text();
+        var percentageInput = $('#accept_team_member_percentage_input');
+        percentageInput.val(acceptForm.getSuggestedPercentageForRole(role_name));
     });
 
     // Bind the update of the percentage input to the calculation total and progress bar update

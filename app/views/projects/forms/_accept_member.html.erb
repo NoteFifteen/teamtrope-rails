@@ -123,9 +123,13 @@
     var maxPercent = parseFloat(<%= @project.project_type.team_total_percent %>);
     var remainingPercent = (maxPercent - parseFloat(percentageCalculator.calculateTotal()));
 
+    <% @project.team_allocations.each do |r| %>
+        acceptForm.addRoleDefinition('<%= r[:role_name] %>', '<%= r[:suggested_percentage] %>');
+    <% end %>
+
     jQuery.validator.addMethod('acceptMemberPercentageValidation', function(value, element) {
         return (this.optional(element) || parseFloat(value) <= remainingPercent);
-    }, jQuery.validator.format("You have exceed 100%. Please adjust the percents so they sum up accordingly."));
+    }, jQuery.validator.format("You have exceed 70%. Please adjust the percents so they sum up accordingly."));
 
     $("#new_team_membership").validate({
         ignore: [],
