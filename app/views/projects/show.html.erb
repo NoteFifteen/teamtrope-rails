@@ -70,7 +70,7 @@
 <%= form_content %>
 <% phase.tabs.includes(:task).each do | tab | %>
       <input type="radio" name="pcss3t0<%= phase.order %>" id="tab<%= tab.order+1 %>0<%= phase.order %>" class="tab-content-<%= tab.order+1 %>">
-      <label  <% if merged_array.include? tab.task.id %>for="tab<%=tab.order+1%>0<%=phase.order%>"<% else %> class="tab-inactive"<%end%>><%= tab.task.name %><i class="<%= tab.task.icon %>"></i></label>
+      <label  <% if merged_array.include? tab.task.id %>for="tab<%=tab.order+1%>0<%=phase.order%>"<% else %> class="tab-inactive"<%end%>><%= tab.task.tab_text %><i class="<%= tab.task.icon %>"></i></label>
 
 		<% if merged_array.include? tab.task.id %>
 		<% form_content << " <li class='tab-content tab-content-" %>
