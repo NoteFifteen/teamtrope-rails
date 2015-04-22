@@ -1,11 +1,13 @@
 class WordpressImportController < ApplicationController
-
+  before_action :signed_in_user
+  before_action :booktrope_staff
   def import
   end
 
   def upload
     # turning off callbacks so we don't send CTAs when we create TeamMemberships
     ActiveRecord::Base.skip_callbacks = true
+    @import_meta = {}
     @errors = []
     case params[:type]
     when 'projects'
@@ -22,8 +24,8 @@ class WordpressImportController < ApplicationController
   def import_users
     require 'csv'
     csv = CSV.parse(params[:upload_file].read, headers: :first_row)
+    total = 0
     csv.each do | import_user |
-      next if import_user['roles'] == 'unapproved'
       #puts "#{import_user['ID']},#{import_user['user_login']},#{import_user['user_email']},#{import_user["roles"]},#{import_user["Role(s)"]}\n"
       #User.create!(uid: import_user['ID'], name: import_user['user_login'], email: import_user['user_email'])
 
@@ -33,11 +35,17 @@ class WordpressImportController < ApplicationController
         provider: 'wordpress_hosted').first_or_create
 
       user.roles = import_user["Role(s)"].downcase.gsub(/ /, '_').split('::')
-      user.active = false if import_user['roles'] == 'inactive' || import_user['roles'] == 'unapproved'
+
+      if import_user['roles'] == 'inactive' || import_user['roles'] == 'unapproved'
+        @errors.push({type: (import_user['roles'] == 'inactive')? "User::Inactive" : "User:Unapproved" ,
+          message: "User: #{user.name} with id: #{user.uid} was set to inactive"})
+        user.active = false
+      end
       user.build_profile if user.profile.nil?
       user.save
-
+      total = total + 1
     end
+    @import_meta[:import_total] = total
   end
 
   def import_projects
@@ -48,9 +56,8 @@ class WordpressImportController < ApplicationController
     # getting the list of items
     items = doc.xpath("//item")
 
-    puts items.count
-
     # looping through the projects
+    total = 0
     items.each_with_index do | item, index |
       next if item.xpath('./wp:status').text == 'trash'
       #puts "#{index}\t#{item.xpath("./wp:post_id").text}\t#{item.xpath("./title").text}"
@@ -83,8 +90,10 @@ class WordpressImportController < ApplicationController
       create_team_memberships project, item
 
       project.save
+      total = total + 1
       #break
     end
+    @import_meta[:import_total] = total
   end
 
   $wf_task_map = {

@@ -10,8 +10,4 @@ class ReportsController < ApplicationController
     @current_tasks = Project.missing_current_tasks
   end
 
-  private
-  def booktrope_staff
-      redirect_to root_path if !current_user.role? :booktrope_staff
-  end
 end
