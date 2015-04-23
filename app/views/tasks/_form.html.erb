@@ -18,7 +18,7 @@
   <div class="field">
     <%= f.label :tab_text %><br>
     <%= f.text_field :tab_text %>
-  </div>  
+  </div>
   <div class="field">
     <%= f.label :icon %><br>
     <%= f.text_field :icon %>
@@ -42,22 +42,27 @@
   <div class="field">
     <%= f.label :rejected_task_id %><br>
     <%= f.collection_select :rejected_task_id, Task.all, :id, :name, include_blank: true %>
-  </div> 
+  </div>
   <div class="field">
-    <%= f.label :partial %><br> 
+    <%= f.label :partial %><br>
     <%= f.select("partial", load_partials, {include_blank: true} )%>
+  </div>
+
+  <div class="field">
+    <%= f.label :team_only %>&nbsp;
+    <%= f.check_box :team_only, {}, true, false %>
   </div>
 
   <h2>Performer Roles</h2>
   <div class="field">
-		<%= f.collection_check_boxes(:performer_ids, Role.all, :id, :name, {include_blank:  false}, { multiple: true } )%>	
+		<%= f.collection_check_boxes(:performer_ids, Role.all, :id, :name, {include_blank:  false}, { multiple: true } )%>
 	</div>
 
   <h2>Unlocked Tasks</h2>
   <div class="field">
-		<%#= f.collection_check_boxes(:unlocked_task_ids, Task.all, :id, :name, {include_blank:  false}, { multiple: true } )%>	
+		<%#= f.collection_check_boxes(:unlocked_task_ids, Task.all, :id, :name, {include_blank:  false}, { multiple: true } )%>
 	</div>
-  
+
   <div class="actions">
     <%= f.submit %>
   </div>

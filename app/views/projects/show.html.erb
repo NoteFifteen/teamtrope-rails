@@ -4,45 +4,45 @@
     <h1 class="entry-title"><%= @project.title %></h1><br />
     <% if can? :edit, @project %><%= link_to "Edit", edit_project_path(@project) %> | <% end %>
     <%= link_to "Back" , projects_path %>
-    
+
     <div>
 	    <% if @project.is_team_member? current_user %>
 	    	You are this team's <%= @project.team_roles(current_user).map{ | role | role.name.to_s }.join(", ") %>
 	    <% else %>
 	    	You are not a member of this team.
 	    <% end %>
-    </div>    
-    
-    <div class="pcss3t pcss3t-icons-left  pcss3t-height-auto pcss3t-theme-3-all-white">			
-      <label>Team: </label>     
+    </div>
+
+    <div class="pcss3t pcss3t-icons-left  pcss3t-height-auto pcss3t-theme-3-all-white">
+      <label>Team: </label>
       <label class='green'>
       	<% if @project.has_book_manager? %>
       		<%= link_to image_tag(@project.book_managers.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.book_managers.first.member %>
         <% else %>
         Needs Book Manager
         <% end %>
-      </label>     
+      </label>
       <label class='yellow'>
       <% if @project.has_project_manager? %>
 	      <%= link_to image_tag(@project.project_managers.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.project_managers.first.member %>
       <% else %>
-      Needs Project Manager	
+      Needs Project Manager
       <% end %>
-      </label>      
+      </label>
       <label class='red'>
      	<% if @project.has_editor? %>
      		<%= link_to image_tag(@project.editors.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.editors.first.member %>
       <% else %>
       Needs Editor
       <% end %>
-      </label>  
+      </label>
       <label class='red'>
      	<% if @project.has_proof_reader? %>
      		<%= link_to image_tag(@project.proof_readers.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.proof_readers.first.member %>
       <% else %>
       Needs Proof Reader
       <% end %>
-      </label>      
+      </label>
       <label class='blue'>
      	<% if @project.has_cover_designer? %>
      		<%= link_to image_tag(@project.cover_designers.first.member.profile.avatar.url(:thumb), size: "40x40", class: "avatar photo"), @project.cover_designers.first.member %>
@@ -50,9 +50,9 @@
       Needs Cover Designer
       <% end %>
       </label>
-    </div>   
-    <br/>    
-    <a href='https://teamtrope.com/groups/the-key-to-everything/'>Link to Teamroom</a> <span> Genre: 
+    </div>
+    <br/>
+    <a href='https://teamtrope.com/groups/the-key-to-everything/'>Link to Teamroom</a> <span> Genre:
     <%= @project.genres.map { |genre| genre.name }.join(", ") %>
     </span>
 		<% merged_array = [] %>
@@ -76,14 +76,14 @@
 		<% form_content << " <li class='tab-content tab-content-" %>
 		<% form_content << "#{tab.order+1}" %>
 		<% form_content << " typography'>" %>
-		<% if tab.task.performers.where(id: @project.team_roles(current_user)).count > 0 || current_user.role?(:booktrope_staff)%>
+		<% if !tab.task.team_only? || tab.task.performers.where(id: @project.team_roles(current_user)).count > 0 || current_user.role?(:booktrope_staff)%>
 			<% partial_path = "projects/forms/#{tab.task.partial}" unless tab.task.partial.nil? %>
 			<% form_content += render(partial: partial_path, locals: { current_tab: tab }) unless tab.task.partial.empty? %>
 		<% else %>
 			<% form_content << "<h1>Access Denied</h1>" %>
 			<% form_content << "You must be this project's: #{tab.task.performers.map { |role| role.name }.join(', ')} " %>
 		<% end %>
-		
+
 		<% form_content << "</li>" %>
 		<% end %>
 <% end %>
@@ -93,7 +93,7 @@
 	</div>
 	<!--/ rails tabs -->
 <% end %>
-	</div>	
+	</div>
 </div>
 
 <!-- TODO: Remove this when development of forms is complete and we have determined where

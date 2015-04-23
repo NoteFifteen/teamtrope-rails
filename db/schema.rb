@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150422175440) do
+ActiveRecord::Schema.define(version: 20150423002308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -537,6 +537,7 @@ ActiveRecord::Schema.define(version: 20150422175440) do
     t.integer  "days_to_complete"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "team_only",        default: true
   end
 
   add_index "tasks", ["next_id"], name: "index_tasks_on_next_id", using: :btree
