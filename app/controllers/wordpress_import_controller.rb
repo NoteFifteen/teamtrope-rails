@@ -51,7 +51,7 @@ class WordpressImportController < ApplicationController
   def import_projects
     require 'nokogiri'
     # parsing the uploaded xml file
-    doc = Nokogiri::XML(params[:upload_file].read)
+    doc = Nokogiri::XML(params[:upload_file])
 
     # getting the list of items
     items = doc.xpath("//item")
@@ -73,8 +73,12 @@ class WordpressImportController < ApplicationController
 
       genres = fetch_field_value item, 'book_genre'
 
-      genres.each do | genre |
-          project.book_genres.build(genre: Genre.where(wp_id: genre).first)
+      unless genres.class != Array
+        genres.each do | genre |
+            project.book_genres.build(genre: Genre.where(wp_id: genre).first)
+        end
+      else
+        @errors << { type: 'Genre::Missing', message: "Genre missing for #{project.title}" }
       end
 
 
@@ -82,7 +86,7 @@ class WordpressImportController < ApplicationController
         { 'Design' => 'book_pcr_step_cover_design' },
         { 'Marketing' => 'book_pcr_step_mkt_info' } ].each do | workflow |
           workflow.each do | key, value |
-              puts "#{key}: #{fetch_field_value(item, value)}"
+              #puts "#{key}: #{fetch_field_value(item, value)}"
               create_current_task project, item, value
           end
       end
