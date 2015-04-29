@@ -100,13 +100,6 @@ Rails.application.routes.draw do
   match '/projects/download_cover_concept/:id',          to: 'projects#download_cover_concept',          via: 'get', as: 'download_cover_concept'
   match '/projects/download_stock_cover_image/:id',      to: 'projects#download_stock_cover_image',      via: 'get', as: 'download_stock_cover_image'
 
-  resources :posts do
-  	resources :comments, shallow: true
-  end
-
-  resources :tags, except: :index
-  resources :statuses
-
   match 'visitors', to: 'static_pages#visitors', via: 'get'
 
   resources :tabs

@@ -1,7 +1,0 @@
-<% provide(:title, "Edit #{@post.title}") %>
-<h1>Edit Post</h1>
-<%= form_for @post, :html => { :multipart => true } do | f | %>
-	<%= render "shared/error_messages", object: f.object %>
-	<%= render "fields", f: f %>
-	<%= f.submit "Update Post" %>
-<% end %>

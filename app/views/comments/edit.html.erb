@@ -1,5 +1,0 @@
-<% provide(:title, "Edit Comment") %>
-<%= form_for([@post, @comment], html: { class: "comment-form"} ) do |f| %>
-	<%= render 'comments/fields', f: f %><br />
-	<p><%= f.submit "Update Comment" %></p>
-<% end %>			
