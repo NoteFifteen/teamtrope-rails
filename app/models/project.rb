@@ -47,17 +47,19 @@ class Project < ActiveRecord::Base
 
 
   scope :high_allocations, -> (percent) {
-    TeamMembership.select("team_memberships.project_id, sum(percentage) as sum_percentage")
-    .group("team_memberships.project_id")
-    .having("sum(percentage) > ?", percent)
-    .includes(:project => :team_memberships)
+    joins(:team_memberships)
+    .select("projects.*, sum(team_memberships.percentage) as sum_percentage")
+    .group("projects.id")
+    .having("sum(team_memberships.percentage) > ?", percent)
+    .includes(:team_memberships => [:member, :role])
   }
 
   scope :missing_current_tasks, -> () {
-    CurrentTask.select("current_tasks.project_id, count(project_id) as task_count")
-    .group("current_tasks.project_id")
-    .having("count(current_tasks.project_id) < 3")
-    .includes(:project => :current_tasks)
+    joins(:current_tasks)
+    .select("projects.*, count(projects.id) as task_count")
+    .group("projects.id")
+    .having("count(projects.id) < 3")
+    .includes(:current_tasks => :task)
   }
 
   # Not an actual column, but used in the ProjectsController
@@ -150,7 +152,7 @@ class Project < ActiveRecord::Base
 		}
 		Project.class_eval %Q{
 			def #{role.downcase.gsub(/ /, "_").pluralize}
-				team_memberships.where(role_id: Role.where(name: "#{role}"))
+				team_memberships.includes(:member, :role).where(role_id: Role.where(name: "#{role}"))
 			end
 		}
 	end
