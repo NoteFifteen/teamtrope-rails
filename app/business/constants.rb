@@ -29,13 +29,6 @@ module Constants
     :size => DefaultSizeIn
   ]
 
-  DefaultContentTypeMobiParams = [
-    :content_type => {
-      content_type: 'application/octet-stream'
-    },
-    :size => DefaultSizeIn
-  ]
-
   DefaultContentTypeImageParams = [
     :content_type => { content_type: ['image/jpeg', 'image/pjpeg'] },
     :file_name => { :matches => [/jpe?g\Z/] },
@@ -57,5 +50,16 @@ module Constants
       :size => { in: size }
     ]
   end
+
+  ProjectsIndexFilters = {
+    original_manuscript: 'Original Manuscript',
+    submit_proofread: 'Proofread Complete',
+    choose_style: 'Choose Style',
+    upload_layout: 'Layout Upload',
+    page_count: 'Page Count',
+    final_manuscript: 'Final Manuscript',
+    publish_book: 'Publish Book',
+    published: 'Production Complete'
+  }
 
 end
