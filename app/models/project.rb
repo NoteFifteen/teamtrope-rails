@@ -72,21 +72,6 @@ class Project < ActiveRecord::Base
     .where("current_tasks.task_id = ?", Task.where(name: task_name).first.try(:id))
   }
 
-  # scope that returns projects that are not in manuscript development
-  # can be chained with other scopes for example:
-  # Project.not_in_development.with_task('Original Manuscript')
-  # returns all projects with task Original Manuscript where development is false
-  scope :not_manuscript_development, -> () {
-    where(development: false)
-  }
-
-  # scope that returns projects that are in manuscript development
-  scope :manuscript_development, -> () {
-    order(title: :asc)
-    .includes(:team_memberships => [:member, :role])
-    .where(development: true)
-  }
-
   # Not an actual column, but used in the ProjectsController
   attr_accessor :cover_art_approval_decision
 
