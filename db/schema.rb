@@ -381,7 +381,6 @@ ActiveRecord::Schema.define(version: 20150501185140) do
     t.datetime "updated_at"
     t.integer  "project_type_id"
     t.integer  "imprint_id"
-    t.boolean  "development"
   end
 
   add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree
