@@ -1,23 +1,23 @@
 <h1>Our Team</h1>
 <div id="members-dir-list" class="members dir-list">
-	<ul id="members-list" class="item-list" role="main">
-		<% @project.team_members_with_roles.each do | member_with_roles | %>
-		<li>
-			<div class="item-avatar">
-			<%= link_to image_tag(member_with_roles[:member].profile.avatar.url(:medium),
-											size: "180x180",
-											class: "avatar user-#{member_with_roles[:member].id}-avatar avatar- photo",
-											alt: "Profile picture of #{member_with_roles[:member].name}"),
-											member_with_roles[:member] %>
+  <ul id="members-list" class="item-list" role="main">
+    <% @project.team_members_with_roles.each do | member_with_roles | %>
+    <li>
+      <div class="item-avatar">
+      <%= link_to image_tag(member_with_roles[:member].profile.avatar.url(:medium),
+                      size: "180x180",
+                      class: "avatar user-#{member_with_roles[:member].id}-avatar avatar- photo",
+                      alt: "Profile picture of #{member_with_roles[:member].name}"),
+                      "#" %>
       </div>
       <div class="item">
-      	<div class="item-title">
-      		<%= link_to member_with_roles[:member].name, member_with_roles[:member] %><br />
-      		<%= member_with_roles[:roles] %><br />
-      	</div>
-      	<div class="item-meta"></div>
-    	</div>
-  	</li>          		
-		<% end %>
-	</ul>
+        <div class="item-title">
+          <%= link_to member_with_roles[:member].name, member_with_roles[:member] %><br />
+          <%= member_with_roles[:roles] %><br />
+        </div>
+        <div class="item-meta"></div>
+      </div>
+    </li>
+    <% end %>
+  </ul>
 </div>
