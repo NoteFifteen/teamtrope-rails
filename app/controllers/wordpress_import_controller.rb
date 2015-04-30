@@ -139,7 +139,13 @@ class WordpressImportController < ApplicationController
   def create_current_task(project, project_meta, key)
     wp_task_name = fetch_field_value(project_meta, key)
     unless $wf_task_map.has_key? wp_task_name
-      @errors.push({type: "CurrentTask::NoMatchingTask", message: "wp task name: #{wp_task_name} project: #{project.title}"})
+      if wp_task_name == 'Manuscript Development'
+        project.development = true
+        task = Task.where(name: 'Original Manuscript').first
+        project.current_tasks.build(task: task) unless task.nil?
+      else
+        @errors.push({type: "CurrentTask::NoMatchingTask", message: "wp task name: #{wp_task_name} project: #{project.title}"})
+      end
       return
     end
     task = Task.where(name: $wf_task_map[wp_task_name]).first
@@ -272,5 +278,3 @@ class WordpressImportController < ApplicationController
   end
 
 end
-
-# Project.where("projects.id NOT IN (?)", [1,2]).delete_all
