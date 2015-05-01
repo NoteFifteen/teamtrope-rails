@@ -31,6 +31,7 @@ class WordpressImportController < ApplicationController
 
       user = User.where(uid: import_user['ID'],
         name: import_user['display_name'],
+        nickname: import_user['user_nicename'],
         email: import_user['user_email'],
         provider: 'wordpress_hosted').first_or_create
 

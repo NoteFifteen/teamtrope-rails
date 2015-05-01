@@ -8,11 +8,11 @@
                       size: "180x180",
                       class: "avatar user-#{member_with_roles[:member].id}-avatar avatar- photo",
                       alt: "Profile picture of #{member_with_roles[:member].name}"),
-                      "#" %>
+                      member_with_roles[:member].profile_page %>
       </div>
       <div class="item">
         <div class="item-title">
-          <%= link_to member_with_roles[:member].name, "#" %><br />
+          <%= link_to member_with_roles[:member].name, member_with_roles[:member].profile_page %><br />
           <%= member_with_roles[:roles] %><br />
         </div>
         <div class="item-meta"></div>

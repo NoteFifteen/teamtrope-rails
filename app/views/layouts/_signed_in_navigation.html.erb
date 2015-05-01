@@ -42,7 +42,7 @@
               <li id="menu-item-1942" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1942">
                 <a href="#">Howdy, <%= current_user.name %>&nbsp;&nbsp;<%= image_tag current_user.profile.avatar.url(:thumb), size: "26x26" %></a>
                 <ul class="sub-menu">
-                  <li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to image_tag(current_user.profile.avatar.url(:thumb), size: "64x64", class: "avatar"), "#" %></li>
+                  <li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to image_tag(current_user.profile.avatar.url(:thumb), size: "64x64", class: "avatar"), current_user.profile_page %></li>
                   <li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
                 </ul>
               </li>
