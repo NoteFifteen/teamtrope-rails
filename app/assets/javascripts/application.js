@@ -23,4 +23,5 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require chosen-jquery
+//= require cocoon
 //= require_tree .

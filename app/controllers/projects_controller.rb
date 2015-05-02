@@ -429,6 +429,17 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def artwork_rights_request
+    if @project.update(update_project_params)
+      flash[:success] = 'Updated Artwork Rights Requests'
+      redirect_to @project
+    else
+      flash[:danger] = 'An error occurred while attempting to update the Artwork Rights Requests'
+      render 'show'
+    end
+
+  end
+
   def submit_pfs
     if @project.update(update_project_params)
       update_current_task
@@ -589,6 +600,7 @@ class ProjectsController < ApplicationController
       :non_standard_size, :has_internal_illustrations, :color_interior, :childrens_book,
       :edit_complete_date, :imprint_id,
       :genre_ids => [],
+      :artwork_rights_requests_attributes => [:id, :role_type, :full_name, :email, :_destroy],
       :blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
       :cover_concept_attributes => [:id, :cover_concept, :cover_concept_notes, :cover_art_approval_date, :stock_cover_image, :image_request_list],
       :cover_template_attributes => [:ebook_front_cover, :createspace_cover, :lightning_source_cover, :alternative_cover],
