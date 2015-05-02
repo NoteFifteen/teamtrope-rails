@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   match '/projects/add_stock_cover_image/:id',    to: 'projects#add_stock_cover_image',    via: 'patch'
   match '/projects/approve_cover_art/:id',        to: 'projects#approve_cover_art',        via: 'patch'
   match '/projects/approve_layout/:id',           to: 'projects#approve_layout',           via: 'patch'
+  match '/projects/artwork_rights_request/:id',   to: 'projects#artwork_rights_request',    via: 'patch'
   match '/projects/blog_tour/:id',                to: 'projects#blog_tour',                via: 'patch'
   match '/projects/cover_concept_upload/:id',     to: 'projects#cover_concept_upload',     via: 'patch'
   # Post is defined for this path since creates and updates are used interchangeably.

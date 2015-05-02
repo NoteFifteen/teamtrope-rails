@@ -26,6 +26,7 @@ class Project < ActiveRecord::Base
   has_many :roles, through: :team_memberships, source: :role
   has_many :status_updates, dependent: :destroy
   has_many :team_memberships, inverse_of: :project
+  has_many :artwork_rights_requests, dependent: :destroy
 
   #TODO: we might not need to allow destroy via the project form for associations that
   # are only written by form. (media_kits, price_change_promotions, published_file, status_update)
@@ -44,7 +45,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :published_file, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :status_updates, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
-
+  accepts_nested_attributes_for :artwork_rights_requests, reject_if: :all_blank, allow_destroy: true
 
   scope :high_allocations, -> (percent) {
     TeamMembership.select("team_memberships.project_id, sum(percentage) as sum_percentage")

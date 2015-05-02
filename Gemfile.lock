@@ -85,6 +85,7 @@ GEM
       activesupport (>= 3.0)
     cocaine (0.5.5)
       climate_control (>= 0.0.3, < 1.0)
+    cocoon (1.2.6)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -263,6 +264,7 @@ DEPENDENCIES
   boxr
   cancancan (~> 1.10)
   chosen-rails
+  cocoon
   coffee-rails (~> 4.0.0)
   devise
   figaro
