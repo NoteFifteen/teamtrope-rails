@@ -17,13 +17,9 @@
                   <% if current_user.role? :booktrope_staff %>
                   <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to "Admin", '#' %>
                     <ul class="sub-menu">
-                      <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to "Manuscript Development", projects_path(show: :manuscript_development) %></li>
-                      <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><a href="https://teamtrope.com/status/14-00/">In Design &#8211; Team</a></li>
-                      <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><a href="https://teamtrope.com/status/14-01/">In Design &#8211; Booktrope</a></li>
-                      <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><a href="https://teamtrope.com/status/13-01/">In Layout &#8211; Booktrope</a></li>
-                      <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><a href="https://teamtrope.com/status/13-00/">In Layout &#8211; Team</a></li>
-                      <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><a href="https://teamtrope.com/status/15-00/">Pre-publication</a></li>
-                      <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><a href="https://teamtrope.com/status/95-00/">Published</a></li>
+                      <% Constants::AdminProjectsIndexFilters.each do | key, value | %>
+                      <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to value, projects_path(show: key) %></li>
+                      <% end %>
                     </ul>
                   </li>
                   <% end %>
