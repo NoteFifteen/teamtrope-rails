@@ -3,49 +3,44 @@
           <a class="screen-reader-text skip-link" href="#content">Skip to content</a>
           <div class="menu-main-container">
             <ul id="menu-main" class="nav-menu">
-              <li id="menu-item-79" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-79"><%= link_to "Home", root_path%></li>
-              <li id="menu-item-29" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-29"><%= link_to "Members", users_path %></li>
-              <li id="menu-item-264" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-264"><a href="https://teamtrope.com/groups/?tree">Teamrooms</a></li>
-              <li id="menu-item-813" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-813"><a href="/projects/">Projects</a>
+              <li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to "Home", 'https://teamtrope.com'%></li>
+              <li class="menu-item menu-item-type-post_type menu-item-object-page"><%= link_to "Members", 'https://teamtrope.com/members/' %></li>
+              <li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://teamtrope.com/groups/?tree">Teamrooms</a></li>
+              <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><%= link_to 'Projects(The Grid)', projects_path %>
                 <ul class="sub-menu">
-                  <li id="menu-item-1338" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1338"><%= link_to "The Grid", projects_path %> </li>
-                  <li id="menu-item-510" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-510"><a href="http://teamtrope.com/projects/">By Status</a>
+
+                  <li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to "* Help *", 'https://teamtrope.com/project-status-and-grid-explanation/'%></li>
+                  <% Constants::ProjectsIndexFilters.each do | key, value | %>
+                  <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to value, projects_path(show: key) %></li>
+                  <% end %>
+
+                  <% if current_user.role? :booktrope_staff %>
+                  <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to "Admin", '#' %>
                     <ul class="sub-menu">
-                      <li id="menu-item-25047" class="menu-item menu-item-type-taxonomy menu-item-object-status menu-item-25047"><a href="https://teamtrope.com/status/99-01/">Manuscript Development</a></li>
-                      <li id="menu-item-512" class="menu-item menu-item-type-taxonomy menu-item-object-status menu-item-512"><a href="https://teamtrope.com/status/00-02/">Manuscript (Pre-Edit)</a></li>
-                      <li id="menu-item-511" class="menu-item menu-item-type-taxonomy menu-item-object-status menu-item-511"><a href="https://teamtrope.com/status/05-00/">In Editing</a></li>
-                      <li id="menu-item-612" class="menu-item menu-item-type-taxonomy menu-item-object-status menu-item-612"><a href="https://teamtrope.com/status/10-00/">In Proofreading</a></li>
-                      <li id="menu-item-25552" class="menu-item menu-item-type-taxonomy menu-item-object-status menu-item-25552"><a href="https://teamtrope.com/status/14-00/">In Design &#8211; Team</a></li>
-                      <li id="menu-item-24987" class="menu-item menu-item-type-taxonomy menu-item-object-status menu-item-24987"><a href="https://teamtrope.com/status/14-01/">In Design &#8211; Booktrope</a></li>
-                      <li id="menu-item-25553" class="menu-item menu-item-type-taxonomy menu-item-object-status menu-item-25553"><a href="https://teamtrope.com/status/13-01/">In Layout &#8211; Booktrope</a></li>
-                      <li id="menu-item-25554" class="menu-item menu-item-type-taxonomy menu-item-object-status menu-item-25554"><a href="https://teamtrope.com/status/13-00/">In Layout &#8211; Team</a></li>
-                      <li id="menu-item-513" class="menu-item menu-item-type-taxonomy menu-item-object-status menu-item-513"><a href="https://teamtrope.com/status/15-00/">Pre-publication</a></li>
-                      <li id="menu-item-849" class="menu-item menu-item-type-taxonomy menu-item-object-status menu-item-849"><a href="https://teamtrope.com/status/95-00/">Published</a></li>
+                      <% Constants::AdminProjectsIndexFilters.each do | key, value | %>
+                      <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to value, projects_path(show: key) %></li>
+                      <% end %>
                     </ul>
                   </li>
+                  <% end %>
                 </ul>
               </li>
               <li id="menu-item-3035" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3035"><a href="#">Groups</a>
                 <ul class="sub-menu">
-                  <li id="menu-item-3037" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3037"><a href="https://teamtrope.com/groups/authors/">Authors</a></li>
-                  <li id="menu-item-3038" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3038"><a href="https://teamtrope.com/groups/editors/">Editors</a></li>
-                  <li id="menu-item-3039" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3039"><a href="https://teamtrope.com/groups/designers/">Designers</a></li>
-                  <li id="menu-item-3040" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3040"><a href="https://teamtrope.com/groups/book-managers/">Book Managers</a></li>
-                  <li id="menu-item-3036" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3036"><a href="https://teamtrope.com/groups/founder-topics/">Founders</a></li>
-                </ul>
-              </li>
-              <li id="menu-item-3456" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3456"><a href="#">Training</a>
-                <ul class="sub-menu">
-                  <li id="menu-item-3455" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3455"><a href="https://teamtrope.com/groups/booktrope-marketing-and-systems/">Marketing Training</a></li>
+                  <li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://teamtrope.com/groups/authors/">Authors</a></li>
+                  <li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://teamtrope.com/groups/editors/">Editors</a></li>
+                  <li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://teamtrope.com/groups/designers/">Designers</a></li>
+                  <li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://teamtrope.com/groups/book-managers/">Book Managers</a></li>
+                  <li class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://teamtrope.com/groups/founder-topics/">Founders</a></li>
                 </ul>
               </li>
               <li id="menu-item-1800" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1800"><a href="https://teamtrope.com/groups/booktrope-policy-procedures/docs/">Help!</a></li>
               <li id="menu-item-1942" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1942">
-              	<a href="#">Howdy, <%= current_user.name %>&nbsp;&nbsp;<%= image_tag current_user.profile.avatar.url(:thumb), size: "26x26" %></a>
-              	<ul class="sub-menu">
-                	<li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to image_tag(current_user.profile.avatar.url(:thumb), size: "64x64", class: "avatar"), current_user %></li>
-                	<li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
-              	</ul>
+                <a href="#">Howdy, <%= current_user.name %>&nbsp;&nbsp;<%= image_tag current_user.profile.avatar.url(:thumb), size: "26x26" %></a>
+                <ul class="sub-menu">
+                  <li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to image_tag(current_user.profile.avatar.url(:thumb), size: "64x64", class: "avatar"), current_user.profile_page %></li>
+                  <li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+                </ul>
               </li>
             </ul>
           </div>

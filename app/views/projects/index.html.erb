@@ -1,9 +1,7 @@
 <% provide(:title, "The Grid") %>
 <div class="page" id="blog-page" role="main">
-  <h2>The Grid - All Book Projects</h2><br />
+  <h2><%= @grid_title %> (<%= @projects.count %>)</h2>
   <%= link_to "New", new_project_path %><br /><br />
-  <h2>Manuscript (Pre-Edit) (32)  <a id="tableSwitch" onclick="toggleTable1();" href="#" style="text-decoration:none;"><img src="https://teamtrope.com/wp-content/uploads/2014/02/expand_collapse_plus.gif"><img src="https://teamtrope.com/wp-content/uploads/2014/02/expand_collapse_minus.gif"></a></h2>
-
   <script type="text/javascript" async="">
   	function toggleTable1() {
   	var lTable = document.getElementById("ProjectListTable");
@@ -46,11 +44,11 @@
       </tr>
     <% end %>
   </table>
+  <%= will_paginate @projects %>
   <script>
   $("#ProjectListTable").DataTable({
       "pageLength" : 50
   });
   </script>
   <br />
-  <h2>Total: (<%= @projects.count %>)</h2>
 </div>

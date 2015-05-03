@@ -7,10 +7,7 @@
 			</header><!-- .entry-header -->
 			<div class="entry-content">
 				<div id="buddypress">
-					<%= render "users/header" %>
-					
-					<%= render "users/navigation" %>
-									
+
 					<div id="item-body" role="main">
 						<div class="item-list-tabs no-ajax" id="subnav" role="navigation">
 							<ul>
@@ -24,11 +21,10 @@
 								<% end %>
 								<li id="change-avatar-personal-li">
 									<!--<a id="change-avatar" href="https://teamtrope.com/members/justin/profile/change-avatar/">Change Avatar</a>-->
-									<%= link_to "Change Avatar", edit_profile_path(current_user.profile.id) %>
 								</li>
 							</ul>
 						</div><!-- .item-list-tabs -->
-						
+
 						<div class="profile" role="main">
 							<div class="bp-widget base">
 								<h4>Base</h4>
@@ -37,7 +33,7 @@
 										<tr class="field_1 field_name field_type_textbox">
 											<td class="label">Name</td>
 											<td class="data">
-												<p><% 
+												<p><%
 												#TODO: update this link to point to the member search.
 												 %>
 												<%= link_to @user.name, "#", rel: "nofollow" %>
@@ -52,7 +48,7 @@
 				</div><!-- #buddypress -->
 			</div><!-- .entry-content -->
 		</article><!-- #post-## -->
-		
+
 	</div><!-- #content -->
 </div>
 <%= render "layouts/sidebar" %>

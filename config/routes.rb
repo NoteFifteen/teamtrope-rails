@@ -20,23 +20,12 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'static_pages#home'
-
-  resources :users do
-  	member do
-  		get 'activity'
-  	end
-  	resources :profiles, shallow: true, only: [:edit,:update]
-  end
+  root 'static_pages#home'
 
   get '/admin/reports/high_allocations',     to: 'reports#high_allocations'
   get 'admin/reports/missing_current_tasks', to: 'reports#missing_current_tasks'
   match '/admin/wordpress_import/import',    to: 'wordpress_import#import', via: :get
   post '/admin/wordpress_import/upload',     to: 'wordpress_import#upload', via: :post
-
-  get '/users/:id/activity/mentions',  to: 'users#mentions',  as: 'mentions'
-  get '/users/:id/activity/favorites', to: 'users#favorites', as: 'favorites'
-  get '/users/:id/activity/groups',    to: 'users#groups',    as: 'groups'
 
   get '/box/request_access', to: 'static_pages#box_request_access', as: 'box_request'
   get '/box/redirect',       to: 'static_pages#box_redirect',       as: 'box-redirect'
@@ -100,13 +89,6 @@ Rails.application.routes.draw do
 
   match '/projects/download_cover_concept/:id',          to: 'projects#download_cover_concept',          via: 'get', as: 'download_cover_concept'
   match '/projects/download_stock_cover_image/:id',      to: 'projects#download_stock_cover_image',      via: 'get', as: 'download_stock_cover_image'
-
-  resources :posts do
-  	resources :comments, shallow: true
-  end
-
-  resources :tags, except: :index
-  resources :statuses
 
   match 'visitors', to: 'static_pages#visitors', via: 'get'
 

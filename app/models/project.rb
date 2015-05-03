@@ -1,9 +1,9 @@
 class Project < ActiveRecord::Base
 
-	include PublicActivity::Model
+  include PublicActivity::Model
 
-	belongs_to :project_type
-	belongs_to :imprint
+  belongs_to :project_type
+  belongs_to :imprint
 
   has_many :audit_team_membership_removals
   has_many :blog_tours, dependent: :destroy
@@ -13,7 +13,7 @@ class Project < ActiveRecord::Base
   has_one  :cover_template, dependent: :destroy
   has_many :current_tasks, dependent: :destroy
   has_one  :final_manuscript, dependent: :destroy
-	has_many :genres, through: :book_genres, source: :genre
+  has_many :genres, through: :book_genres, source: :genre
   has_one  :kdp_select_enrollment, dependent: :destroy
   has_one  :layout, dependent: :destroy
   has_many :marketing_expenses, dependent: :destroy
@@ -47,29 +47,41 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :artwork_rights_requests, reject_if: :all_blank, allow_destroy: true
 
+  # scope that returns projects with an allocation higher than percent
   scope :high_allocations, -> (percent) {
-    TeamMembership.select("team_memberships.project_id, sum(percentage) as sum_percentage")
-    .group("team_memberships.project_id")
-    .having("sum(percentage) > ?", percent)
-    .includes(:project => :team_memberships)
+    joins(:team_memberships)
+    .select("projects.*, sum(team_memberships.percentage) as sum_percentage")
+    .group("projects.id")
+    .having("sum(team_memberships.percentage) > ?", percent)
+    .includes(:team_memberships => [:member, :role])
   }
 
+  # scope that returns projects that do not have enough current tasks (must have 3)
   scope :missing_current_tasks, -> () {
-    CurrentTask.select("current_tasks.project_id, count(project_id) as task_count")
-    .group("current_tasks.project_id")
-    .having("count(current_tasks.project_id) < 3")
-    .includes(:project => :current_tasks)
+    joins(:current_tasks)
+    .select("projects.*, count(projects.id) as task_count")
+    .group("projects.id")
+    .having("count(projects.id) < 3")
+    .includes(:current_tasks => :task)
+  }
+
+  # scope that returns projects whose current task are task_name
+  scope :with_task, -> (task_name) {
+    joins(:current_tasks)
+    .includes(:team_memberships => [:member, :role])
+    .order(title: :asc)
+    .where("current_tasks.task_id = ?", Task.where(name: task_name).first.try(:id))
   }
 
   # Not an actual column, but used in the ProjectsController
   attr_accessor :cover_art_approval_decision
 
-	# mainly used for debugging purposes.
-	# Returns the current_task for a particular workflow
-	def current_task_for_workflow(workflow)
-		current_tasks.joins(:task).includes(:task).where("tasks.workflow_id = ? ",
-							Workflow.where(name: workflow).first).first
-	end
+  # mainly used for debugging purposes.
+  # Returns the current_task for a particular workflow
+  def current_task_for_workflow(workflow)
+    current_tasks.joins(:task).includes(:task).where("tasks.workflow_id = ? ",
+              Workflow.where(name: workflow).first).first
+  end
 
   # Necessary to set up the initial records for current_tasks for the workflow
   # based on the project type.
@@ -81,11 +93,11 @@ class Project < ActiveRecord::Base
   end
 
   def team_complete?
-		required_roles = project_type.required_roles.ids
-		team_members = team_memberships.map { |member| member.role_id }
+    required_roles = project_type.required_roles.ids
+    team_members = team_memberships.map { |member| member.role_id }
 
-		required_roles.all? {| required_role | team_members.include? required_role }
-	end
+    required_roles.all? {| required_role | team_members.include? required_role }
+  end
 
   def available_roles
     required_roles = project_type.required_roles.ids
@@ -95,26 +107,22 @@ class Project < ActiveRecord::Base
     project_type.roles.where(id: available)
   end
 
-	def is_team_member?(user)
-		members.ids.include?(user.id)
-	end
+  def is_team_member?(user)
+    members.ids.include?(user.id)
+  end
 
-	def is_my_editor?(user)
-		team_memberships.where(member_id: user.id, role_id: Role.where(name: "Editor")).count > 0
-	end
+  def team_roles(user)
+    team_memberships.where(member_id: user.id).map { | membership | membership.role }
+  end
 
-	def team_roles(user)
-		team_memberships.where(member_id: user.id).map { | membership | membership.role }
-	end
-
-	def team_members_with_roles
-		team_memberships.select("roles.name").joins(:role).includes(:role,
-		:member).order("roles.name").group_by(&:member_id).map do | key, memberships |
-				{ :member => memberships.first.member, :roles => memberships.map {|membership|
-				membership.role.name }.join(", ")
-				}
-		end
-	end
+  def team_members_with_roles
+    team_memberships.select("roles.name").joins(:role).includes(:role,
+    :member).order("roles.name").group_by(&:member_id).map do | key, memberships |
+        { :member => memberships.first.member, :roles => memberships.map {|membership|
+        membership.role.name }.join(", ")
+        }
+    end
+  end
 
   def team_allocations
     team = []
@@ -144,20 +152,20 @@ class Project < ActiveRecord::Base
   end
 
   def self.provide_methods_for(role)
-		Project.class_eval %Q{
-			def has_#{role.downcase.gsub(/ /, "_")}?
-				team_memberships.where(role_id: Role.where(name: "#{role}")).count > 0
-			end
-		}
-		Project.class_eval %Q{
-			def #{role.downcase.gsub(/ /, "_").pluralize}
-				team_memberships.where(role_id: Role.where(name: "#{role}"))
-			end
-		}
-	end
+    Project.class_eval %Q{
+      def has_#{role.downcase.gsub(/ /, "_")}?
+        team_memberships.where(role_id: Role.where(name: "#{role}")).count > 0
+      end
+    }
+    Project.class_eval %Q{
+      def #{role.downcase.gsub(/ /, "_").pluralize}
+        team_memberships.includes(:member, :role).where(role_id: Role.where(name: "#{role}"))
+      end
+    }
+  end
 
-	Role.all.map{ |role| role.name  }.each do | role |
-		provide_methods_for(role)
-	end
+  Role.all.map{ |role| role.name  }.each do | role |
+    provide_methods_for(role)
+  end
 
 end

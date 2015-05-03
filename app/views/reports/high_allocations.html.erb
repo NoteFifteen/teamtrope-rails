@@ -1,7 +1,7 @@
 <% provide(:title, "High Allocations") %>
 <div class="page" id="blog-page" role="main">
   <h2>Projects with allocations above <%= @percent %>%</h2><br />
-  <h3>Total: (<%= @team_memberships.map.count %>)</h3>
+  <h3>Total: (<%= @projects.map.count %>)</h3>
 
   <script type="text/javascript" async="">
     function toggleTable1() {
@@ -21,17 +21,17 @@
        <th>Cover Designer(s)</th>
       </tr>
     </thead>
-  <% @team_memberships.each do | tm | %>
-    <% next if tm.project.nil? %>
+  <% @projects.each do | project | %>
+    <% next if project.nil? %>
     <tr>
-      <td><%= link_to tm.project.title, tm.project %></td>
-      <td><%= tm.sum_percentage %></td>
-      <td><%= (tm.project.authors.try(:first).try(:member).nil?) ? 'N/A' : tm.project.authors.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
-      <td><%= (tm.project.editors.try(:first).try(:member).nil?) ? 'N/A' : tm.project.editors.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
-      <td><%= (tm.project.proof_readers.try(:first).try(:member).nil?) ? 'N/A' : tm.project.proof_readers.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
-      <td><%= (tm.project.project_managers.try(:first).try(:member).nil?) ? 'N/A' : tm.project.project_managers.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
-      <td><%= (tm.project.book_managers.try(:first).try(:member).nil?) ? 'N/A' : tm.project.book_managers.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
-      <td><%= (tm.project.cover_designers.try(:first).try(:member).nil?) ? 'N/A' : tm.project.cover_designers.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
+      <td><%= link_to   project.title,   project %></td>
+      <td><%= project.sum_percentage %></td>
+      <td><%= (project.authors.try(:first).try(:member).nil?) ? 'N/A' : project.authors.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
+      <td><%= (project.editors.try(:first).try(:member).nil?) ? 'N/A' : project.editors.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
+      <td><%= (project.proof_readers.try(:first).try(:member).nil?) ? 'N/A' : project.proof_readers.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
+      <td><%= (project.project_managers.try(:first).try(:member).nil?) ? 'N/A' : project.project_managers.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
+      <td><%= (project.book_managers.try(:first).try(:member).nil?) ? 'N/A' : project.book_managers.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
+      <td><%= (project.cover_designers.try(:first).try(:member).nil?) ? 'N/A' : project.cover_designers.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
     </tr>
   <% end %>
   </table>

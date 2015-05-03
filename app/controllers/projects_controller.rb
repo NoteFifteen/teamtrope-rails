@@ -2,8 +2,10 @@ class ProjectsController < ApplicationController
   before_action :signed_in_user #, only: [:show, :index, :destroy, :edit]
   before_action :set_project, except: [:create, :new, :index]
 
+  include ProjectsHelper
+
   def index
-    @projects = Project.all.includes(:team_memberships => [:member, :role]).first 100
+    get_projects_for_index(params[:show])
   end
 
   def new
