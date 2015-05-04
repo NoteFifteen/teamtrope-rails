@@ -1,0 +1,42 @@
+<!-- Artwork Rights Request -->
+<div class="container">
+
+  <%= simple_form_for(@project, url: url_for(:controller => 'projects', :action => 'artwork_rights_request', id: @project.id), html: { id: 'artwork_rights_request_form' })  do |f| %>
+      <%= f.error_notification %>
+      <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
+      <div class="row">
+        <div class="col-md-10">
+          <h1>Artwork Rights Request</h1>
+
+          <p>Please add any Photographers, Artists, or Models which rights releases are needed for in the table below:</p>
+          <br>
+          <div class="row">
+            <div class="col-md-2 psuedo_table_heading">
+              <span>Type</span>
+            </div>
+            <div class="col-md-3 psuedo_table_heading">
+              <span>Full Legal Name</span>
+            </div>
+            <div class="col-md-4 psuedo_table_heading">
+              <span>Email Address</span>
+            </div>
+            <div class="col-md-2 psuedo_table_heading">
+              <span>&nbsp;</span>
+            </div>
+          </div>
+          <%= f.simple_fields_for :artwork_rights_requests, (f.object.artwork_rights_requests.nil?) ? f.object.artwork_rights_requests.build : f.object.artwork_rights_requests do | rights | %>
+            <%= render 'projects/forms/artwork_rights_fields', :f => rights %>
+          <% end %>
+          <div class="links">
+            <%= link_to_add_association 'Add additional request', f, :artwork_rights_requests,
+                                        partial: 'projects/forms/artwork_rights_fields',
+                                        :class => 'btn btn-primary btn-fix'
+            %>
+          </div>
+        </div>
+      </div>
+      <br>
+      <%= f.submit 'Submit' %>
+  <% end %>
+</div>

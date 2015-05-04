@@ -53,7 +53,7 @@ table.projectListTable thead th.sorting {
 }
 
 /* Override pcss3t & typography styles to fix funny fonts */
-.container h1,h2,h3 {
+.container h1,h2,h3,h4,h5 {
   font-family: inherit !important;
 }
 
@@ -78,4 +78,30 @@ input.validationError {
 
 #image_request_list_table td {
   vertical-align: middle;
+}
+
+.psuedo_table_heading {
+  background: #dfdfdf;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif!important;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px;
+  border: 1px solid  #dddddd;
+  height: 40px;
+}
+
+.psuedo_table_row {
+  background: white;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif!important;
+  font-size: 16px;
+  padding: 8px;
+  border: 1px solid  #dddddd;
+  height: 56px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+a.btn-fix {
+  color: white !important;
+  text-decoration: none !important;
 }

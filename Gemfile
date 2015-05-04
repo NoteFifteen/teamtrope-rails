@@ -67,6 +67,9 @@ gem 'figaro'
 
 gem 'simple_form'
 
+# Makes it easier to handle nested forms - https://github.com/nathanvda/cocoon
+gem 'cocoon'
+
 gem 'public_activity', git: 'https://github.com/pokonski/public_activity.git'
 
 gem 'cancancan', '~> 1.10'

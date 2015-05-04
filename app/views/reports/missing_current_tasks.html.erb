@@ -1,7 +1,7 @@
 <% provide(:title, "High Allocations") %>
 <div class="page" id="blog-page" role="main">
   <h2>Projects Lacking Tasks</h2><br />
-  <h3>Total: (<%= @current_tasks.map.count %>)</h3>
+  <h3>Total: (<%= @projects.map.count %>)</h3>
 
   <script type="text/javascript" async="">
     function toggleTable1() {
@@ -18,14 +18,14 @@
         <th>Marketing Step</th>
       </tr>
     </thead>
-  <% @current_tasks.each do | tm | %>
-    <% next if tm.project.nil? %>
+  <% @projects.each do | project | %>
+    <% next if project.nil? %>
     <tr>
-      <td><%= link_to tm.project.title, tm.project %></td>
-      <td><%=  3 - tm.task_count %></td>
-      <td><%= tm.project.current_task_for_workflow('Production').try(:task).try(:name) %></td>
-      <td><%= tm.project.current_task_for_workflow('Design').try(:task).try(:name) %></td>
-      <td><%= tm.project.current_task_for_workflow('Marketing').try(:task).try(:name) %></td>
+      <td><%= link_to project.title, project %></td>
+      <td><%=  3 - project.task_count %></td>
+      <td><%= project.current_task_for_workflow('Production').try(:task).try(:name) %></td>
+      <td><%= project.current_task_for_workflow('Design').try(:task).try(:name) %></td>
+      <td><%= project.current_task_for_workflow('Marketing').try(:task).try(:name) %></td>
     </tr>
   <% end %>
   </table>

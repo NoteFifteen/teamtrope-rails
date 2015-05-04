@@ -3,7 +3,7 @@
           <a class="screen-reader-text skip-link" href="#content">Skip to content</a>
           <div class="menu-main-container">
             <ul id="menu-main" class="nav-menu">
-              <li id="menu-item-1942" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1942"><%= link_to "Sign in", new_user_session_path %></li>
+              <li id="menu-item-1942" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1942"><%= link_to "Sign in", user_omniauth_authorize_path(:wordpress_hosted) %></li>
             </ul>
           </div>
         </nav>
