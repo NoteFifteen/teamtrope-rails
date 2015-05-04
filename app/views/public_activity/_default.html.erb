@@ -1,4 +1,4 @@
-<%= link_to image_tag(activity.owner.profile.avatar(:thumb), size: "40x40"), activity.owner %> 
-<%= link_to activity.owner.name, activity.owner %> 
+<%= link_to image_tag(activity.owner.profile.avatar(:thumb), size: "40x40"), activity.owner.profile_page %>
+<%= link_to activity.owner.name, activity.owner.profile_page %>
 <%= activity.parameters[:text] %> on <%= activity.created_at.strftime("%Y/%m/%d %H:%M:%S") %>
 <br />
