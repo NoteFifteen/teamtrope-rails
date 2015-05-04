@@ -11,6 +11,7 @@ class WordpressImportController < ApplicationController
     @errors = []
     case params[:type]
     when 'projects'
+      @save_attachments = params[:save_attachments]
       import_projects
     when 'users'
       import_users
@@ -64,13 +65,28 @@ class WordpressImportController < ApplicationController
       #puts "#{index}\t#{item.xpath("./wp:post_id").text}\t#{item.xpath("./title").text}"
 
       # create the project
-      project = Project.new(title: item.xpath("./title").text, project_type_id: 1,  **prepare_project_fields(item))
+      project = Project.new(title: item.xpath("./title").text,
+        project_type_id: 1,
+        wp_id: item.xpath("./wp:post_id").text,
+        **prepare_project_fields(item))
+      # build Manuscript
+      project.build_manuscript(**prepare_manuscript_fields(item))
       # build ControlNumber
       project.build_control_number(**prepare_control_number_fields(item))
       # build PublicationFactSheet
       project.build_publication_fact_sheet(**prepare_publication_fact_sheet_fields(item))
-      # build CoverConcept
-      project.build_cover_concept(**prepare_cover_concept_fields(item))
+
+      # don't save attachments if the save attachments checkbox is not checked.
+      if @save_attachments
+        # build CoverConcept
+        project.build_cover_concept(**prepare_cover_concept_fields(item))
+        # build CoverTemplate
+        project.build_cover_template(**prepare_cover_template_fields(item))
+        # build FinalManuscript
+        project.build_final_manuscript(**prepare_final_manuscript_fields(item))
+        # build PublishedFile
+        project.build_published_file(**prepare_published_file_fields(item))
+      end
 
       genres = fetch_field_value item, 'book_genre'
 
@@ -94,7 +110,7 @@ class WordpressImportController < ApplicationController
 
       create_team_memberships project, item
 
-      project.save
+      project.save!
       total = total + 1
       #break
     end
@@ -197,9 +213,9 @@ class WordpressImportController < ApplicationController
   def prepare_cover_concept_fields(project_meta)
     {
       cover_art_approval_date: fetch_field_value(project_meta, 'book_cover_art_approval_date'),
-      #cover_concept: book_cover_concept,
+      cover_concept: prepare_attachment(project_meta, 'book_cover_concept'),
       cover_concept_notes: fetch_field_value(project_meta, 'book_cover_concept_notes'),
-      #stock_cover_image: fetch_field_value(project_meta, 'book_stock_cover_image'),
+      stock_cover_image: prepare_attachment(project_meta, 'book_stock_cover_image'),
     }
   end
 
@@ -229,11 +245,55 @@ class WordpressImportController < ApplicationController
       layout_approved_date: fetch_field_value(project_meta, 'book_layout_approved_date'),
       layout_notes: fetch_field_value(project_meta, 'book_layout_notes'),
       layout_style_choice: fetch_field_value(project_meta, 'book_layout_style_choice'),
-      #layout_upload: book_layout_upload
+      layout_upload: prepare_attachment(project_meta, 'book_layout_upload'),
       pen_name: fetch_field_value(project_meta, 'book_pen_name'),
       use_pen_name_for_copyright: fetch_field_value(project_meta, 'book_use_pen_name_for_copyright'),
       use_pen_name_on_title: fetch_field_value(project_meta, 'book_use_pen_name_on_title'),
     }
+  end
+
+  # attachments
+  def prepare_manuscript_fields(project_meta)
+    {
+      original: prepare_attachment(project_meta, 'book_manuscript_original'),
+      edited: prepare_attachment(project_meta, 'book_manuscript_edited'),
+      proofed: prepare_attachment(project_meta, 'book_manuscript_proofed'),
+    }
+  end
+
+  def prepare_cover_template_fields(project_meta)
+    {
+      alternative_cover: prepare_attachment(project_meta, 'book_alternative_cover_template'),
+      createspace_cover: prepare_attachment(project_meta, 'book_createspace_cover'),
+      ebook_front_cover: prepare_attachment(project_meta, 'book_ebook_front_cover'),
+      lightning_source_cover: prepare_attachment(project_meta, 'book_lightning_source_cover')
+    }
+  end
+
+  def prepare_final_manuscript_fields(project_meta)
+    {
+      doc: prepare_attachment(project_meta, 'book_final_doc_file'),
+      pdf: prepare_attachment(project_meta, 'book_final_manuscript_pdf'),
+    }
+  end
+
+  def prepare_published_file_fields(project_meta)
+    {
+      epub: prepare_attachment(project_meta, 'book_final_epub'),
+      mobi: prepare_attachment(project_meta, 'book_final_mobi'),
+      pdf: prepare_attachment(project_meta, 'book_final_pdf')
+    }
+  end
+
+  def prepare_attachment(project_meta, field_name)
+    return nil unless @save_attachments
+    url = fetch_field_value(project_meta, field_name)
+    puts url
+    if !url.empty?
+      URI.parse(url)
+    else
+      nil
+    end
   end
 
   def create_team_memberships(project, item)
