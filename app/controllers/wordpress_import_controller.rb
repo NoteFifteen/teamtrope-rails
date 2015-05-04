@@ -103,10 +103,13 @@ class WordpressImportController < ApplicationController
 
   $wf_task_map = {
     #production tasks
+    'Manuscript Development' => 'Manuscript Development',
     'New Manuscript' => 'Original Manuscript',
-    'Edit Complete Date' => 'Edit Cmoplete Date',
+    'new manuscript' => 'Original Manuscript',
+    'Edit Complete Date' => 'Edited Manuscript',
+    'In Editing' => 'Edited Manuscript',
     'Submit Edited' => 'Edited Manuscript',
-    'Submit Proofread' => 'Submit Proofread',
+    'Submit Proofread' => 'Proofread Complete',
     'Choose Style' => 'Choose Style',
     'Upload Layout' => 'Upload Layout',
     'Approve Layout' => 'Approve Layout',
@@ -117,11 +120,15 @@ class WordpressImportController < ApplicationController
 
     #Design Tasks
     'Upload Cover Concept' => 'Cover Concept',
+    'Upload cover concept' => 'Cover Concept',
+    'Submit Cover Concept' => 'Cover Concept',
     'Approve Cover' => 'Approve Cover Art',
     'Upload Final Covers' => 'Final Covers',
     'Cover Complete' => 'Design Complete',
 
     #Marketing Tasks
+    'Blurb Submit' => 'Submit Blurb',
+    'Approve Blurb' => 'Approve Blurb',
     'Submit PFS' => 'Submit PFS',
     'PFS Complete' => 'Marketing Complete',
   }

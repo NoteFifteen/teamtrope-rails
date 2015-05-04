@@ -54,7 +54,7 @@ module Constants
   AdminProjectsIndexFilters = {
     manuscript_development: 'Manuscript Development',
     choose_style: 'Choose Style',
-    upload_layout: 'Layout Upload',
+    upload_layout: 'Upload Layout',
     page_count: 'Page Count',
     final_manuscript: 'Final Manuscript',
     publish_book: 'Publish Book',
