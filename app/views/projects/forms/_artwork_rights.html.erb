@@ -25,7 +25,10 @@
               <span>&nbsp;</span>
             </div>
           </div>
-          <%= f.simple_fields_for :artwork_rights_requests, (f.object.artwork_rights_requests.nil?) ? f.object.artwork_rights_requests.build : f.object.artwork_rights_requests do | rights | %>
+          <%= f.simple_fields_for :artwork_rights_requests,
+          (f.object.artwork_rights_requests.count <= 0 ) ?
+            f.object.artwork_rights_requests.build :
+            f.object.artwork_rights_requests do | rights | %>
             <%= render 'projects/forms/artwork_rights_fields', :f => rights %>
           <% end %>
           <div class="links">
