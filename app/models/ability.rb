@@ -30,13 +30,9 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
     user ||= User.new
     if user.role? :booktrope_staff
-    	can :manage, :all
+        can :manage, :all
     else
-    	can :read, :all
-    	can :create, Comment
-    	can :update, Comment do | comment |
-    		comment.try(:user) == user
-    	end
+        can :read, :all
     end
   end
 end
