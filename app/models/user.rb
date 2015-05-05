@@ -73,6 +73,7 @@ class User < ActiveRecord::Base
           user = User.create!(email: oauth['info']['email'], uid: oauth['uid'], provider: oauth['provider'],
                               nickname: oauth['extra']['raw_info']['user_login'], website: oauth['info']['urls']['Website'],
                               display_name: oauth['extra']['raw_info']['display_name'])
+          user.create_profile!
         end
 
       end
