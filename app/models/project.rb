@@ -2,6 +2,10 @@ class Project < ActiveRecord::Base
 
   include PublicActivity::Model
 
+  # friendly_id
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+
   belongs_to :project_type
   belongs_to :imprint
 

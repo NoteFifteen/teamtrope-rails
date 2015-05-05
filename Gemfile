@@ -86,6 +86,9 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-wordpress_hosted', github: 'jwickard/omniauth-wordpress-oauth2-plugin'
 
+# permalinks
+gem 'friendly_id', '~> 5.1.0'
+
 group :production do
   gem 'rails_12factor', '0.0.2'
 end

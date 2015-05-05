@@ -629,7 +629,7 @@ class ProjectsController < ApplicationController
   end
 
   def set_project
-    @project = Project.find(params[:id])
+    @project = Project.friendly.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       flash[:danger] = "The project you were looking for could not be found."
       redirect_to projects_path
