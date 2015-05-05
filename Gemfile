@@ -89,6 +89,9 @@ gem 'omniauth-wordpress_hosted', github: 'jwickard/omniauth-wordpress-oauth2-plu
 # permalinks
 gem 'friendly_id', '~> 5.1.0'
 
+#use unicorn for webserver
+gem 'unicorn'
+
 group :production do
   gem 'rails_12factor', '0.0.2'
 end
