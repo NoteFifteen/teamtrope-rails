@@ -99,7 +99,7 @@ Teamtrope.BuildTeam.AcceptMember.prototype.updateMemberSelect = function () {
         case 'Editor':
             member_list = this.getMembersForRole('editors');
             break;
-        case 'Proof Reader':
+        case 'Proofreader':
             member_list = this.getMembersForRole('proofreaders');
             break;
         case 'Project Manager':
