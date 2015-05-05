@@ -1,24 +1,24 @@
 <h1>Media Kit</h1>
 <div class="gf_browser_safari gform_wrapper">
-	<%= simple_form_for @project,
-											url: url_for(controller: 'projects', action: 'media_kit',  id: @project),
-											html: { id: 'media_kit' } do | f | %>
-		<%= f.error_notification %>
-		<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
-		<div>
-			<ul>				
-				<%= f.simple_fields_for :media_kits, f.object.media_kits.build  do | media_kit | %>
-				<li>
-					<%= media_kit.input :document, label: 'Media Kit', required: true  %>
-					<div>.doc, .docx, or .pdf only
-						If you have more than one book published by Booktrope and would like to be considered for a blog tour or other marketing service around your book release, please upload your media kit here.
-					</div>					
-				</li>
-				<% end %>
-			</ul>
-		</div>
-		<div>
-			<%= f.submit "submit" %>
-		</div>
-	<% end %>
+  <%= simple_form_for @project,
+                      url: url_for(controller: 'projects', action: 'media_kit',  id: @project),
+                      html: { id: 'media_kit' } do | f | %>
+    <%= f.error_notification %>
+    <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+    <div>
+      <ul>
+        <%= f.simple_fields_for :media_kits, f.object.media_kits.build  do | media_kit | %>
+        <li>
+          <%= media_kit.input :document, label: 'Media Kit', required: true  %>
+          <div>.doc, .docx, or .pdf only
+            If you have more than one book published by Booktrope and would like to be considered for a blog tour or other marketing service around your book release, please upload your media kit here.
+          </div>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+    <div>
+      <%= f.submit "submit" %>
+    </div>
+  <% end %>
 </div>
