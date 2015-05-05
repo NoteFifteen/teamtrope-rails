@@ -431,6 +431,8 @@ class ProjectsController < ApplicationController
 
   def artwork_rights_request
     if @project.update(update_project_params)
+      @project.create_activity :artwork_rights_request, owner: current_user,
+                               parameters: { text: 'Updated the Artwork Rights Requests', form_data: params[:project].to_s}
       flash[:success] = 'Updated Artwork Rights Requests'
       redirect_to @project
     else

@@ -1,11 +1,11 @@
 <div class="row nested-fields">
-  <div class="col-md-2 psuedo_table_row">
+  <div class="col-md-3 psuedo_table_row">
     <%= f.input :role_type, collection: ArtworkRightsRequest::ArtistTypes, prompt: 'Select a role',  label: false, input_html: { class: 'form-control' } %>
   </div>
   <div class="col-md-3 psuedo_table_row">
     <%= f.input :full_name, label: false %>
   </div>
-  <div class="col-md-4 psuedo_table_row">
+  <div class="col-md-3 psuedo_table_row">
     <%= f.input :email, label: false, input_html: { maxlength: 30 } %>
   </div>
   <div class="col-md-2 psuedo_table_row">
