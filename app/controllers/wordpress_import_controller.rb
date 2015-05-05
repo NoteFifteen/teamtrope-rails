@@ -36,7 +36,9 @@ class WordpressImportController < ApplicationController
         email: import_user['user_email'],
         provider: 'wordpress_hosted').first_or_create
 
-      user.roles = import_user["Role(s)"].downcase.gsub(/ /, '_').split('::')
+      roles = import_user["Role(s)"].downcase.gsub(/ /, '_').split('::')
+      roles << 'project_manager' if roles.include? "book_manager"
+      user.roles = roles
 
       if import_user['roles'] == 'inactive' || import_user['roles'] == 'unapproved'
         @errors.push({type: (import_user['roles'] == 'inactive')? "User::Inactive" : "User:Unapproved" ,
