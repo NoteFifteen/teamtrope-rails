@@ -135,7 +135,7 @@
     acceptForm.addMembersToRole('cover_designers', <%= User.with_role('cover_designer').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
     acceptForm.addMembersToRole('editors', <%= User.with_role('editor').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
     acceptForm.addMembersToRole('project_managers', <%= User.with_role('project_manager').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
-    acceptForm.addMembersToRole('proof_readers', <%= User.with_role('proof_reader').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
+    acceptForm.addMembersToRole('proofreaders', <%= User.with_role('proofreader').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
 
     // The acceptForm reformats the members in an easier to digest format
     percentageCalculator.addTeamMembers(acceptForm.getTeamMembers());

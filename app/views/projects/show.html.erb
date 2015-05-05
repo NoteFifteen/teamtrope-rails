@@ -44,10 +44,10 @@
       <% end %>
       </label>
       <label class='white'>
-      <% if @project.has_proof_reader? %>
-        <%= link_to image_tag(avatar_url(@project.proof_readers.first.member, :thumb, '60'), size: "60x60", class: "avatar photo"), @project.proof_readers.first.member.profile_page %>
+      <% if @project.has_proofreader? %>
+        <%= link_to image_tag(avatar_url(@project.proofreaders.first.member, :thumb, '60'), size: "60x60", class: "avatar photo"), @project.proofreaders.first.member.profile_page %>
       <% else %>
-      Needs Proof Reader
+      Needs Proofreader
       <% end %>
       </label>
       <label class='blue'>

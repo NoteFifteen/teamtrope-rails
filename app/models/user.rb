@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   scope :inactive_users, -> { where(active: false) }
 
 
-  ROLES = %w[booktrope_staff moderator author book_manager cover_designer editor project_manager proof_reader volunteer observer illustrator]
+  ROLES = %w[booktrope_staff moderator author book_manager cover_designer editor project_manager proofreader volunteer observer illustrator]
 
   def inactive?
       !active
@@ -75,7 +75,8 @@ class User < ActiveRecord::Base
             user.profile.import_avatar_from_url(oauth['extra']['raw_info']['avatar_url'])
           end
         else
-          user = User.create!(email: oauth['info']['email'], uid: oauth['uid'], provider: oauth['provider'],
+          user = User.create!(name: oauth['extra']['raw_info']['display_name'],
+                              email: oauth['info']['email'], uid: oauth['uid'], provider: oauth['provider'],
                               nickname: oauth['extra']['raw_info']['user_login'], website: oauth['info']['urls']['Website'],
                               display_name: oauth['extra']['raw_info']['display_name'])
           user.create_profile!

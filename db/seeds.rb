@@ -25,7 +25,7 @@ Role.create!([
   {name: "Cover Designer", contract_description: 'The Cover Designer role contract text'},
   {name: "Editor", contract_description: 'The Editor role contract text'},
   {name: "Project Manager", contract_description: 'The Projct Manager role contract text'},
-  {name: "Proof Reader", contract_description: 'The Proof Reader role contract text'},
+  {name: "Proofreader", contract_description: 'The Proofreader role contract text'},
 ])
 
 workflows = {
@@ -41,7 +41,7 @@ workflows.each do | key, wf |
 end
 
 project_types = [
-  { project_type: {name: "Standard Project", team_total_percent: 70.0}, workflows: [:production, :marketing, :design], required_roles: { "Author" => { suggested_percent: 33.0 }, "Book Manager" => { suggested_percent: 20.0 }, "Cover Designer" => { suggested_percent: 4.0 }, "Editor" => { suggested_percent: 7.0 }, "Project Manager" => { suggested_percent: 4.0 }, "Proof Reader" => { suggested_percent: 2.0 } } }
+  { project_type: {name: "Standard Project", team_total_percent: 70.0}, workflows: [:production, :marketing, :design], required_roles: { "Author" => { suggested_percent: 33.0 }, "Book Manager" => { suggested_percent: 20.0 }, "Cover Designer" => { suggested_percent: 4.0 }, "Editor" => { suggested_percent: 7.0 }, "Project Manager" => { suggested_percent: 4.0 }, "Proofreader" => { suggested_percent: 2.0 } } }
 ]
 
 # creating project types
@@ -225,14 +225,14 @@ if Rails.env == "development"
     {email: "#{ENV["admin_user"]}+michael.crichton@booktrope.com",    name: "Michael Crichton",    password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 36},  # Author + Editor
     {email: "#{ENV["admin_user"]}+issac.asimov@booktrope.com",        name: "Issac Asimov",        password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 32},  # Editor
     {email: "#{ENV["admin_user"]}+arthur.c.clark@booktrope.com",      name: "Arthur C. Clark",     password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 52},  # Book Manager + Project Manager
-    {email: "#{ENV["admin_user"]}+j.r.r.tolkien@booktrope.com",       name: "J.R.R. Tolkien",      password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 136}, # Book Manager + Proof Reader
+    {email: "#{ENV["admin_user"]}+j.r.r.tolkien@booktrope.com",       name: "J.R.R. Tolkien",      password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 136}, # Book Manager + Proofreader
     {email: "#{ENV["admin_user"]}+chuck.palahniuk@booktrope.com",     name: "Chuck Palahniuk",     password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 20},  # Author + Cover Designer
     {email: "#{ENV["admin_user"]}+kurt.vonnegut@booktrope.com",       name: "Kurt Vonnegut",       password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 580}, # Author + Project Manager + Observer
     {email: "#{ENV["admin_user"]}+mark.twain@booktrope.com",          name: "Mark Twain",          password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 40},  # Editor + Book Manager
-    {email: "#{ENV["admin_user"]}+charles.dickens@booktrope.com",     name: "Charles Dickens",     password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 164}, # Author + Editor + Proof Reader
-    {email: "#{ENV["admin_user"]}+william.shakespeare@booktrope.com", name: "William Shakespeare", password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 160}, # Editor + Proof Reader
+    {email: "#{ENV["admin_user"]}+charles.dickens@booktrope.com",     name: "Charles Dickens",     password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 164}, # Author + Editor + Proofreader
+    {email: "#{ENV["admin_user"]}+william.shakespeare@booktrope.com", name: "William Shakespeare", password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 160}, # Editor + Proofreader
     {email: "#{ENV["admin_user"]}+jack.kerouac@booktrope.com",        name: "Jack Kerouac",        password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 48},  # Editor + Cover Designer
-    {email: "#{ENV["admin_user"]}+truman.capote@booktrope.com",       name: "Truman Capote",       password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 192}, # Project Manager + Proof Reader
+    {email: "#{ENV["admin_user"]}+truman.capote@booktrope.com",       name: "Truman Capote",       password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 192}, # Project Manager + Proofreader
   ]
   users.each do | u |
     user = User.create!(u)

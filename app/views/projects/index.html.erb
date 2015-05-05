@@ -36,7 +36,7 @@
         <td><%= (project.authors.try(:first).try(:member).nil?) ? 'N/A' : project.authors.first.member.name %></td>
         <td><%= project.genres.map(&:name).join(', ') %></td>
         <td><%= (project.editors.try(:first).try(:member).nil?) ? 'N/A' : project.editors.first.member.name %></td>
-        <td><%= (project.proof_readers.try(:first).try(:member).nil?) ? 'N/A' : project.proof_readers.first.member.name %></td>
+        <td><%= (project.proofreaders.try(:first).try(:member).nil?) ? 'N/A' : project.proofreaders.first.member.name %></td>
         <td><%= (project.project_managers.try(:first).try(:member).nil?) ? 'N/A' : project.project_managers.first.member.name %></td>
         <td><%= (project.book_managers.try(:first).try(:member).nil?) ? 'N/A' : project.book_managers.first.member.name %></td>
         <td><%= (project.cover_designers.try(:first).try(:member).nil?) ? 'N/A' : project.cover_designers.first.member.name %></td>

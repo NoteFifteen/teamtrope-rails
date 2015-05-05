@@ -43,7 +43,7 @@ Teamtrope.BuildTeam.AcceptMember.prototype.getTeamMembers = function () {
 Teamtrope.BuildTeam.AcceptMember.prototype.addMembersToRole = function (role, members) {
     var author = this.getTeamMember('author');
     var editor = this.getTeamMember('editor');
-    var proof_reader = this.getTeamMember('proof_reader');
+    var proofreader = this.getTeamMember('proofreader');
 
     if ($.isArray(members) && members.length > 0) {
         this.member_roles[role] = [];
@@ -51,7 +51,7 @@ Teamtrope.BuildTeam.AcceptMember.prototype.addMembersToRole = function (role, me
         for(i = 0; i < members.length; i++) {
 
             // Proof Readers cannot be the current Author or Editor
-            if(role === 'proof_readers') {
+            if(role === 'proofreaders') {
                 if(typeof author !== "undefined" && members[i].id === author.id) {
                     continue;
                 }
@@ -62,7 +62,7 @@ Teamtrope.BuildTeam.AcceptMember.prototype.addMembersToRole = function (role, me
 
             // Editors cannot be the current Proof Reader
             if(role === 'editors') {
-                if(typeof proof_reader !== "undefined" && members[i].id === proof_reader.id) {
+                if(typeof proofreader !== "undefined" && members[i].id === proofreader.id) {
                     continue;
                 }
             }
@@ -100,7 +100,7 @@ Teamtrope.BuildTeam.AcceptMember.prototype.updateMemberSelect = function () {
             member_list = this.getMembersForRole('editors');
             break;
         case 'Proof Reader':
-            member_list = this.getMembersForRole('proof_readers');
+            member_list = this.getMembersForRole('proofreaders');
             break;
         case 'Project Manager':
             member_list = this.getMembersForRole('project_managers');

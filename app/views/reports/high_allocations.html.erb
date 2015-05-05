@@ -28,7 +28,7 @@
       <td><%= project.sum_percentage %></td>
       <td><%= (project.authors.try(:first).try(:member).nil?) ? 'N/A' : project.authors.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
       <td><%= (project.editors.try(:first).try(:member).nil?) ? 'N/A' : project.editors.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
-      <td><%= (project.proof_readers.try(:first).try(:member).nil?) ? 'N/A' : project.proof_readers.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
+      <td><%= (project.proofreaders.try(:first).try(:member).nil?) ? 'N/A' : project.proofreaders.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
       <td><%= (project.project_managers.try(:first).try(:member).nil?) ? 'N/A' : project.project_managers.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
       <td><%= (project.book_managers.try(:first).try(:member).nil?) ? 'N/A' : project.book_managers.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
       <td><%= (project.cover_designers.try(:first).try(:member).nil?) ? 'N/A' : project.cover_designers.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
