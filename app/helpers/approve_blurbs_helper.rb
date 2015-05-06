@@ -1,0 +1,2 @@
+module ApproveBlurbsHelper
+end

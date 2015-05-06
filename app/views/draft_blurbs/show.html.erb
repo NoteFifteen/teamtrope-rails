@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @draft_blurb.project %>
+</p>
+
+<p>
+  <strong>Draft blurb:</strong>
+  <%= @draft_blurb.draft_blurb %>
+</p>
+
+<%= link_to 'Edit', edit_draft_blurb_path(@draft_blurb) %> |
+<%= link_to 'Back', draft_blurbs_path %>

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @approve_blurb.project %>
+</p>
+
+<p>
+  <strong>Blurb notes:</strong>
+  <%= @approve_blurb.blurb_notes %>
+</p>
+
+<p>
+  <strong>Blurb approval decision:</strong>
+  <%= @approve_blurb.blurb_approval_decision %>
+</p>
+
+<p>
+  <strong>Blurb approval date:</strong>
+  <%= @approve_blurb.blurb_approval_date %>
+</p>
+
+<%= link_to 'Edit', edit_approve_blurb_path(@approve_blurb) %> |
+<%= link_to 'Back', approve_blurbs_path %>

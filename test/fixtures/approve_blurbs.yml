@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project_id: 
+  blurb_notes: MyText
+  blurb_approval_decision: MyString
+  blurb_approval_date: 2015-05-05 22:44:16
+
+two:
+  project_id: 
+  blurb_notes: MyText
+  blurb_approval_decision: MyString
+  blurb_approval_date: 2015-05-05 22:44:16

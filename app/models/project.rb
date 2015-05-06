@@ -9,6 +9,7 @@ class Project < ActiveRecord::Base
   belongs_to :project_type
   belongs_to :imprint
 
+  has_one  :approve_blurb, dependent: :destroy
   has_many :audit_team_membership_removals
   has_many :blog_tours, dependent: :destroy
   has_many :book_genres, foreign_key: :project_id, dependent: :destroy
@@ -16,6 +17,7 @@ class Project < ActiveRecord::Base
   has_one  :cover_concept, dependent: :destroy
   has_one  :cover_template, dependent: :destroy
   has_many :current_tasks, dependent: :destroy
+  has_one  :draft_blurb, dependent: :destroy
   has_one  :final_manuscript, dependent: :destroy
   has_many :genres, through: :book_genres, source: :genre
   has_one  :kdp_select_enrollment, dependent: :destroy
@@ -34,10 +36,12 @@ class Project < ActiveRecord::Base
 
   #TODO: we might not need to allow destroy via the project form for associations that
   # are only written by form. (media_kits, price_change_promotions, published_file, status_update)
+  accepts_nested_attributes_for :approve_blurb, reject_if: :all_blank, allow_destroy: false
   accepts_nested_attributes_for :audit_team_membership_removals, reject_if: :all_blank, allow_destroy: false
   accepts_nested_attributes_for :blog_tours, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :cover_template, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :cover_concept, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :draft_blurb, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :final_manuscript, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :kdp_select_enrollment, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :layout, reject_if: :all_blank, allow_destroy: false
@@ -76,6 +80,9 @@ class Project < ActiveRecord::Base
     .order(title: :asc)
     .where("current_tasks.task_id = ?", Task.where(name: task_name).first.try(:id))
   }
+
+  # Not an actual column, but used in the ProjectsController
+  attr_accessor :blurb_approval_decision
 
   # Not an actual column, but used in the ProjectsController
   attr_accessor :cover_art_approval_decision

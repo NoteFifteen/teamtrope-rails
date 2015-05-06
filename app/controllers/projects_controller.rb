@@ -348,6 +348,42 @@ class ProjectsController < ApplicationController
 
   end
 
+  def approve_blurb
+    # This is an attribute accessor used as a flag for deciding what to update below
+    approved = (params[:project][:approve_blurb_attributes][:blurb_approval_decision] == 'true')
+
+    if @project.update(update_project_params)
+      if approved
+        # Set the approval date & wipe notes
+        @project.approve_blurb.touch(:blurb_approval_date)
+        # @project.approve_blurb.update_attribute(:blurb_notes, nil)
+        update_current_task
+        activity_text = 'Approved the Blurb'
+        flash[:success] = activity_text
+      else
+      # Not approved, revert to previous step
+        if @project.approve_blurb.update_attribute(:blurb_notes, params[:project][:blurb_notes])
+          reject_current_task
+          activity_text = 'Rejected the Blurb'
+          flash[:success] = activity_text
+        else
+          # Some sort of failure updating the model.
+          flash[:danger] = 'An error occurred during update'
+          render 'show'
+        end
+      end
+    else
+      render 'show'
+    end
+
+
+    if ! activity_text.nil?
+      @project.create_activity :approved_blurb, owner: current_user,
+                               parameters: { text: activity_text, form_data: params[:project].to_s }
+      redirect_to @project
+    end
+  end
+
   def approve_cover_art
     # This is an attribute accessor used as a flag for deciding what to update below
     approved = (params[:project][:cover_art_approval_decision] == 'true')
@@ -439,6 +475,18 @@ class ProjectsController < ApplicationController
       render 'show'
     end
 
+  end
+
+  def submit_blurb
+    if @project.update(update_project_params)
+      update_current_task
+      @project.create_activity :submitted_blurb, owner: current_user,
+                                parameters: { text: 'Submitted the Draft Blurb', form_data: params[:project].to_s}
+      flash[:success] = 'Submitted Draft Blurb'
+      redirect_to @project
+    else
+      render 'show'
+    end
   end
 
   def submit_pfs
@@ -605,6 +653,8 @@ class ProjectsController < ApplicationController
       :blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
       :cover_concept_attributes => [:id, :cover_concept, :cover_concept_notes, :cover_art_approval_date, :stock_cover_image, :image_request_list],
       :cover_template_attributes => [:ebook_front_cover, :createspace_cover, :lightning_source_cover, :alternative_cover],
+      :draft_blurb_attributes => [:id, :draft_blurb],
+      :approve_blurb_attributes => [:id, :blurb_approval_decision, :blurb_approval_date, :blurb_notes],
       :final_manuscript_attributes => [:id, :pdf, :doc],
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
       :layout_attributes => [:id, :layout_style_choice, :page_header_display_name, :use_pen_name_on_title, :pen_name,

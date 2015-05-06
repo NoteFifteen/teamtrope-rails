@@ -4,7 +4,6 @@
     <h1>Approve Cover Art</h1>
     <div class="row">
       <div class="col-md-6">
-        <p>Note: This form to be submitted by Booktrope Management ONLY.</p>
         <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'approve_cover_art',
                                                    id: @project), html: { id: 'approve_cover_art' } do | f | %>
             <%= f.error_notification %>

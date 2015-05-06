@@ -1,0 +1,29 @@
+<h1>Blurb Submit</h1>
+
+<div class="gf_browser_safari gform_wrapper">
+	<%= simple_form_for @project,
+				url: url_for(controller: 'projects', action: 'submit_blurb', id: @project),
+				html: { id: 'submit_blurb' } do | f | %>
+	<div>
+		<%= f.error_notification %>
+		<ul>
+			<%= f.simple_fields_for :draft_blurb, (f.object.draft_blurb.nil?)? f.object.build_draft_blurb : 
+				f.object.draft_blurb do | draft_blurb | %>
+			<li>
+				<div>Enter the blurb for your book. </div>
+				<div>
+					<%= draft_blurb.input :draft_blurb,
+									label: 'Blurb',
+									required: true,
+									as: :text,
+									input_html: { class: %q[textarea medium], rows: 10, cols: 50 } %>
+				</div>
+			</li>
+			<% end %>		
+	    </ul>
+  	</div>
+  	<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+  	<%= f.submit "Submit" %>
+	<% end %>
+</div>
+

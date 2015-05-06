@@ -1,0 +1,31 @@
+<h1>Listing approve_blurbs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Blurb notes</th>
+      <th>Blurb approval decision</th>
+      <th>Blurb approval date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @approve_blurbs.each do |approve_blurb| %>
+      <tr>
+        <td><%= approve_blurb.project %></td>
+        <td><%= approve_blurb.blurb_notes %></td>
+        <td><%= approve_blurb.blurb_approval_decision %></td>
+        <td><%= approve_blurb.blurb_approval_date %></td>
+        <td><%= link_to 'Show', approve_blurb %></td>
+        <td><%= link_to 'Edit', edit_approve_blurb_path(approve_blurb) %></td>
+        <td><%= link_to 'Destroy', approve_blurb, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Approve blurb', new_approve_blurb_path %>

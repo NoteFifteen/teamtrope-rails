@@ -1,0 +1,37 @@
+
+<!-- Blurb Approve -->
+<div class="container">
+    <h1>Approve Blurb</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <%= simple_form_for @project, 
+                  url: url_for(controller: 'projects', action: 'approve_blurb', id: @project), 
+                  html: { id: 'approve_blurb' } do | f | %>
+        <%= f.error_notification %>
+
+        <%= f.simple_fields_for :approve_blurb, (f.object.approve_blurb.nil?)? f.object.build_approve_blurb : 
+            f.object.approve_blurb do | approve_blurb | %>
+
+
+            <label>Is Blurb Approved? *</label>
+            <%= approve_blurb.collection_radio_buttons :blurb_approval_decision,
+                                           [[true, 'Yes'],
+                                            [false, 'No']],
+                                           :first, :last,
+                                           :item_wrapper_tag => 'div',
+                                           :item_wrapper_class => 'radio'
+            %>
+            <div id="blurb_notes_box" style="">
+              <%= approve_blurb.input :blurb_notes, as: :text,
+                          label: 'Blurb Notes',
+                          input_html: { rows: 10, cols: 50, id: 'blurb_notes', value:  '' }
+              %>
+            </div>
+            <% end %>
+            <br/>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+            <%= f.submit 'Submit' %>
+        <% end %>
+      </div>
+    </div>
+</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504205726) do
+ActiveRecord::Schema.define(version: 20150506054416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,17 @@ ActiveRecord::Schema.define(version: 20150504205726) do
   add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
   add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
+
+  create_table "approve_blurbs", force: true do |t|
+    t.integer  "project_id"
+    t.text     "blurb_notes"
+    t.string   "blurb_approval_decision"
+    t.date     "blurb_approval_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "approve_blurbs", ["project_id"], name: "index_approve_blurbs_on_project_id", using: :btree
 
   create_table "artwork_rights_requests", force: true do |t|
     t.integer  "project_id"
@@ -162,6 +173,15 @@ ActiveRecord::Schema.define(version: 20150504205726) do
   add_index "current_tasks", ["project_id", "task_id"], name: "index_current_tasks_on_project_id_and_task_id", unique: true, using: :btree
   add_index "current_tasks", ["project_id"], name: "index_current_tasks_on_project_id", using: :btree
   add_index "current_tasks", ["task_id"], name: "index_current_tasks_on_task_id", using: :btree
+
+  create_table "draft_blurbs", force: true do |t|
+    t.integer  "project_id"
+    t.text     "draft_blurb"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "draft_blurbs", ["project_id"], name: "index_draft_blurbs_on_project_id", using: :btree
 
   create_table "final_manuscripts", force: true do |t|
     t.integer  "project_id"

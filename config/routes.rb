@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :approve_blurbs
+
+  resources :draft_blurbs
+
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   get 'wordpress_import/import'
@@ -37,9 +41,10 @@ Rails.application.routes.draw do
 
   match '/projects/accept_team_member/:id',       to: 'projects#accept_team_member',       via: [:patch, :post]
   match '/projects/add_stock_cover_image/:id',    to: 'projects#add_stock_cover_image',    via: 'patch'
+  match '/projects/approve_blurb/:id',            to: 'projects#approve_blurb',            via: 'patch'
   match '/projects/approve_cover_art/:id',        to: 'projects#approve_cover_art',        via: 'patch'
   match '/projects/approve_layout/:id',           to: 'projects#approve_layout',           via: 'patch'
-  match '/projects/artwork_rights_request/:id',   to: 'projects#artwork_rights_request',    via: 'patch'
+  match '/projects/artwork_rights_request/:id',   to: 'projects#artwork_rights_request',   via: 'patch'
   match '/projects/blog_tour/:id',                to: 'projects#blog_tour',                via: 'patch'
   match '/projects/cover_concept_upload/:id',     to: 'projects#cover_concept_upload',     via: 'patch'
   # Post is defined for this path since creates and updates are used interchangeably.
@@ -61,6 +66,7 @@ Rails.application.routes.draw do
   match '/projects/remove_team_member/:id',       to: 'projects#remove_team_member',       via: 'patch'
   match '/projects/revenue_allocation_split/:id', to: 'projects#revenue_allocation_split', via: 'patch'
   match '/projects/request_images/:id',           to: 'projects#request_images',           via: 'patch'
+  match '/projects/submit_blurb/:id',             to: 'projects#submit_blurb',             via: 'patch'
   match '/projects/submit_form_1099/:id',         to: 'projects#submit_form_1099',         via: 'patch'
   match '/projects/submit_submit_pfs/:id',        to: 'projects#submit_pfs',               via: 'patch'
   match '/projects/update_final_page_count/:id',  to: 'projects#update_final_page_count',  via: 'patch'
