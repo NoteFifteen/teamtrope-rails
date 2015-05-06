@@ -44,10 +44,20 @@
       </tr>
     <% end %>
   </table>
-  <%= will_paginate @projects %>
+  <% if (@projects.count > 500) %>
+    <%= will_paginate @projects %>
+  <% end %>
   <script>
   $("#ProjectListTable").DataTable({
-      "pageLength" : 50
+
+      <% if (@projects.count < 500) %>
+        "pageLength" : 100
+      <% else %>
+        "ordering": false,
+        "lengthChange" : false,
+        "searching" : false,
+        "paging" : false
+      <% end %>
   });
   </script>
   <br />

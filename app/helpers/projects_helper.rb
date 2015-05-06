@@ -6,11 +6,12 @@ module ProjectsHelper
     @grid_title = "The Grid"
     unless filter_by.nil? || !filters.has_key?(filter_by.to_sym)
       @grid_title = filters[filter_by.to_sym]
-      @projects = Project.with_task(@grid_title).page(params[:page])
+      @projects = Project.with_task(@grid_title)
+      @projects = @projects.page(params[:page]) if @projects.count > 500
     else
       @projects = Project.order(title: :asc)
         .includes(:team_memberships => [:member, :role])
-        .page(params[:page])
+      @projects = @projects.page(params[:page]) if @projects.count > 500
     end
   end
 end
