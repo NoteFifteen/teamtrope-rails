@@ -1,10 +1,19 @@
 <h4>Cover Concept Notes</h4>
-Cover Concept Notes: <%= @project.cover_concept.try(:cover_concept_notes) %><br/>
+Cover Concept Notes: <pre><%= @project.cover_concept.try(:cover_concept_notes) %></pre><br/>
 
 <h4>Cover Concept</h4>
 <% if ! @project.cover_concept %>
     N/A<br/>
 <% else %>
-    Cover Concept: <%= link_to "DOWNLOAD", download_cover_concept_path(@project) if cover_concept.cover_concept? %><br/>
-    Stock Cover Image: <%= link_to "DOWNLOAD", download_stock_cover_image_path(@project) if cover_concept.stock_cover_image? %><br/>
+    <div>
+      Cover Concept: <%= link_to "DOWNLOAD", download_cover_concept_path(@project) if cover_concept.cover_concept? %><br/>
+    </div>
+    <%= image_tag download_cover_concept_path(@project), class: 'alignright', width: "340px" if cover_concept.try(:cover_concept?) %>
+
+    <div style="clear: right;">
+        Stock Cover Image: <%= link_to "DOWNLOAD", download_stock_cover_image_path(@project) if cover_concept.stock_cover_image? %><br/>
+    </div>
+    <%= image_tag download_stock_cover_image_path(@project), class: 'alignright', width: "340px" if cover_concept.try(:stock_cover_image?) %>
+
 <% end %>
+<br>
