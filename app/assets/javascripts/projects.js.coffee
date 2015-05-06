@@ -82,168 +82,168 @@ jQuery ->
       }
     }
   });
-  
+
 ## Revenue Split Partial javascript - Sums the revenue split and displays it so the user
 ## can easily tell if they have exceeded the threshold or not.
-jQuery(document).ready () ->				
-	$(".percentage").bind("propertychange change click keyup input paste", (event) =>
-		total = 0
-		$(".percentage").each (index, obj) =>
-			total += parseFloat($(obj).val())
-		$("#split_threshold").html(total)
-	)
-	
-	$(".percentage").first().trigger("change")  
+jQuery(document).ready () ->
+  $(".percentage").bind("propertychange change click keyup input paste", (event) =>
+    total = 0
+    $(".percentage").each (index, obj) =>
+      total += parseFloat($(obj).val())
+    $("#split_threshold").html(total)
+  )
+
+  $(".percentage").first().trigger("change")
 
 
 ## price change promotion form event handlers
 jQuery ->
-	selector = "input[name=project\\[price_change_promotions_attributes\\]\\[0\\]\\[type\\]]"
-	
-	field = $(selector + ":radio")
-	field_value = $(selector + ":checked")
-	
-	$(field).change (event) =>
-		if field.is(':checked')
-			field_value = $(selector + ":checked")
-			
-			switch field_value.val()
-				when "temporary_force_free"
-					$(".start_date").slideDown()
-					$(".end_date").slideDown()
-					$(".price_promotion").slideUp()
-					$(".price_after_promotion").slideDown()
-					$(".temp_price_promotion").slideUp()
-				when "temporary_price_drop"
-					$(".start_date").slideDown()
-					$(".end_date").slideDown()
-					$(".price_promotion").slideDown()
-					$(".price_after_promotion").slideDown()
-					$(".temp_price_promotion").slideDown()
-				when "permanent_force_free"
-					$(".start_date").slideDown()
-					$(".end_date").slideUp()
-					$(".price_promotion").slideUp()
-					$(".price_after_promotion").slideUp()
-					$(".temp_price_promotion").slideUp()
-				when "permanent_price_drop"
-					$(".start_date").slideDown()
-					$(".end_date").slideUp()
-					$(".price_promotion").slideDown()
-					$(".price_after_promotion").slideUp()
-					$(".temp_price_promotion").slideUp()
+  selector = "input[name=project\\[price_change_promotions_attributes\\]\\[0\\]\\[type\\]]"
+
+  field = $(selector + ":radio")
+  field_value = $(selector + ":checked")
+
+  $(field).change (event) =>
+    if field.is(':checked')
+      field_value = $(selector + ":checked")
+
+      switch field_value.val()
+        when "temporary_force_free"
+          $(".start_date").slideDown()
+          $(".end_date").slideDown()
+          $(".price_promotion").slideUp()
+          $(".price_after_promotion").slideDown()
+          $(".temp_price_promotion").slideUp()
+        when "temporary_price_drop"
+          $(".start_date").slideDown()
+          $(".end_date").slideDown()
+          $(".price_promotion").slideDown()
+          $(".price_after_promotion").slideDown()
+          $(".temp_price_promotion").slideDown()
+        when "permanent_force_free"
+          $(".start_date").slideDown()
+          $(".end_date").slideUp()
+          $(".price_promotion").slideUp()
+          $(".price_after_promotion").slideUp()
+          $(".temp_price_promotion").slideUp()
+        when "permanent_price_drop"
+          $(".start_date").slideDown()
+          $(".end_date").slideUp()
+          $(".price_promotion").slideDown()
+          $(".price_after_promotion").slideUp()
+          $(".temp_price_promotion").slideUp()
 
 ## price change promotion form validators
 jQuery ->
-	$("#price_promotion_form").validate({
-		rules: {
-			'project[price_change_promotions_attributes][0][type]': {
-				required: true
-			},
-			'project[price_change_promotions_attributes][0][start_date]': {
-				required: true
-			},
-			'project[price_change_promotions_attributes][0][end_date]': {
-				required: true
-			},
-			'project[price_change_promotions_attributes][0][price_promotion]': {
-				required: true
-			},
-			'project[price_change_promotions_attributes][0][price_after_promotion]': {
-				required: true
-			}
-		}
-	})
+  $("#price_promotion_form").validate({
+    rules: {
+      'project[price_change_promotions_attributes][0][type]': {
+        required: true
+      },
+      'project[price_change_promotions_attributes][0][start_date]': {
+        required: true
+      },
+      'project[price_change_promotions_attributes][0][end_date]': {
+        required: true
+      },
+      'project[price_change_promotions_attributes][0][price_promotion]': {
+        required: true
+      },
+      'project[price_change_promotions_attributes][0][price_after_promotion]': {
+        required: true
+      }
+    }
+  })
 
 ## status update form validations
 jQuery ->
-	$("#status_update").validate({
-		rules: {
-			'project[status_updates_attributes][0][type]': {
-				required: true
-			},
-			'project[status_updates_attributes][0][status]': {
-				required: true
-			}
-		}
-	})
+  $("#status_update").validate({
+    rules: {
+      'project[status_updates_attributes][0][type]': {
+        required: true
+      },
+      'project[status_updates_attributes][0][status]': {
+        required: true
+      }
+    }
+  })
 
 ## final manuscript form validations
 jQuery ->
-	$("#final_manuscript").validate({
-		rules: {
-			'project[final_manuscript_attributes][pdf]': {
-				required: true,
-				accept: "application/pdf",
-			},
-			'project[final_manuscript_attributes][doc]': {
-				required: true,
-				accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
-			}
-		},
-		messages: {
-			'project[final_manuscript_attributes][pdf]': "You must upload a pdf file.",
-			'project[final_manuscript_attributes][doc]': "You must upload either a doc or docx file."
-		}
-	})
-	
+  $("#final_manuscript").validate({
+    rules: {
+      'project[final_manuscript_attributes][pdf]': {
+        required: true,
+        accept: "application/pdf",
+      },
+      'project[final_manuscript_attributes][doc]': {
+        required: true,
+        accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
+      }
+    },
+    messages: {
+      'project[final_manuscript_attributes][pdf]': "You must upload a pdf file.",
+      'project[final_manuscript_attributes][doc]': "You must upload either a doc or docx file."
+    }
+  })
+
 ## Media Kit Form validations
 jQuery ->
-	$("#media_kit").validate({
-		rules: {
-			'project[media_kits_attributes][0][document]': {
-				required: true,
-				accept: "application/(pdf|msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)",
-			}
-		},
-		messages: {
-			'project[media_kits_attributes][0][document]': "You must upload either a pdf, doc, or docx file."
-		}
-	})
-	
-jQuery ->
-	$("#publish_book").validate({
-		rules: {
-			'project[published_file_attributes][mobi]': {
-				required: true,
-				#accept: "application/octet-stream"
-			},
-			'project[published_file_attributes][epub]': {
-				required: true,
-				#accept: "application/(epub\+zip|octet-stream)"
-				extension: '.epub'
-			},
-			'project[published_file_attributes][pdf]': {
-				required: true,
-				accept: "application/pdf"
-			}
-		},
-		messages: {
-			'project[published_file_attributes][mobi]': 'You must upload a mobi file.'
-			'project[published_file_attributes][epub]': 'You must upload an epub file.'
-			'project[published_file_attributes][pdf]':  'You must upload a pdf.'
-		}
-	})
+  $("#media_kit").validate({
+    rules: {
+      'project[media_kits_attributes][0][document]': {
+        required: true,
+        accept: "application/(pdf|msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)",
+      }
+    },
+    messages: {
+      'project[media_kits_attributes][0][document]': "You must upload either a pdf, doc, or docx file."
+    }
+  })
 
-	
+jQuery ->
+  $("#publish_book").validate({
+    rules: {
+      'project[published_file_attributes][mobi]': {
+        required: true,
+        #accept: "application/octet-stream"
+      },
+      'project[published_file_attributes][epub]': {
+        required: true,
+        #accept: "application/(epub\+zip|octet-stream)"
+        extension: '.epub'
+      },
+      'project[published_file_attributes][pdf]': {
+        required: true,
+        accept: "application/pdf"
+      }
+    },
+    messages: {
+      'project[published_file_attributes][mobi]': 'You must upload a mobi file.'
+      'project[published_file_attributes][epub]': 'You must upload an epub file.'
+      'project[published_file_attributes][pdf]':  'You must upload a pdf.'
+    }
+  })
+
+
 ## Blog Tour Form validations
 jQuery.validator.addMethod("blogTourCostValidator", (value, element, params) ->
-	return value < 100
+  return value < 100
 , jQuery.validator.format("Cost must not exceed $100.")
 )
 
 jQuery ->
-	$("#blog_tour").validate({
-		rules: {
-			'project[blog_tours_attributes][0][cost]': {
-				required: true,
-				blogTourCostValidator: "#project_blog_tour_cost"
-			}
-		}
-	})
+  $("#blog_tour").validate({
+    rules: {
+      'project[blog_tours_attributes][0][cost]': {
+        required: true,
+        blogTourCostValidator: "#project_blog_tour_cost"
+      }
+    }
+  })
 
 ## per task 205 https://booktrope.acunote.com/projects/47888/tasks/205
-## previously published was removed from the submit proofed form, but I left the jquery 
+## previously published was removed from the submit proofed form, but I left the jquery
 ## that shows and hides the related fields since the fields are going to be moved to another
 ## form.
 jQuery ->
@@ -265,194 +265,198 @@ jQuery ->
          ##$('.optional input').val('').prop("checked", false)
 
 jQuery ->
-	field = $("input[name=does_contain_images]:radio")
-	field_value = $("input[name=does_contain_images]:checked")
-	
-	$(field).change (event) =>
-		if field.is(':checked')
-			field_value = $("input[name=does_contain_images]:checked")
-			
-			if field_value.val() == '1'
-				$('.does_contain_images_1').slideDown()
-				$('.does_contain_images_2').slideUp()
-			else if field_value.val() == '2'
-				$('.does_contain_images_2').slideDown()
-				$('.does_contain_images_1').slideUp()
-			else
-				$('.does_contain_images_1').slideUp()
-				$('.does_contain_images_2').slideUp()
+  field = $("input[name=does_contain_images]:radio")
+  field_value = $("input[name=does_contain_images]:checked")
+
+  $(field).change (event) =>
+    if field.is(':checked')
+      field_value = $("input[name=does_contain_images]:checked")
+
+      if field_value.val() == '1'
+        $('.does_contain_images_1').slideDown()
+        $('.does_contain_images_2').slideUp()
+      else if field_value.val() == '2'
+        $('.does_contain_images_2').slideDown()
+        $('.does_contain_images_1').slideUp()
+      else
+        $('.does_contain_images_1').slideUp()
+        $('.does_contain_images_2').slideUp()
 
 
-## checklist custom validator				
+## checklist custom validator
 jQuery.validator.addMethod("checklistValidator", (value, element, params) ->
-	is_user_ready_to_upload = true
-	$(params[0]).each (index, obj) ->
-		if ! obj.checked
-			is_user_ready_to_upload = false
-	return is_user_ready_to_upload
+  is_user_ready_to_upload = true
+  $(params[0]).each (index, obj) ->
+    if ! obj.checked
+      is_user_ready_to_upload = false
+  return is_user_ready_to_upload
 , jQuery.validator.format("You must sign off that you have completed all steps in order to submit the form.")
 )
 
 ## upload_cover_templates
 jQuery ->
-	$("#upload_cover_templates").validate({
-		rules: {
-			checklist_0: {
-				checklistValidator: [".upload_cover_checklist"]
-			},
-			'project[cover_template_attributes][ebook_front_cover]': {
-				required: true,
-				accept: "image/p?jpeg"
-			},
-			'project[cover_template_attributes][createspace_cover]': {
-				required: true,
-				accept: "application/pdf"
-			},
-			'project[cover_template_attributes][lightning_source_cover]': {
-				required: true,
-				accept: "application/pdf"
-			}
-			'project[cover_template_attributes][alternative_cover]': {
-				accept: "application/pdf"
-			}
-		}
-	})
-	
+  $("#upload_cover_templates").validate({
+    rules: {
+      checklist_0: {
+        checklistValidator: [".upload_cover_checklist"]
+      },
+      'project[cover_template_attributes][ebook_front_cover]': {
+        required: true,
+        accept: "image/p?jpeg"
+      },
+      'project[cover_template_attributes][createspace_cover]': {
+        required: true,
+        accept: "application/pdf"
+      },
+      'project[cover_template_attributes][lightning_source_cover]': {
+        required: true,
+        accept: "application/pdf"
+      }
+      'project[cover_template_attributes][alternative_cover]': {
+        accept: "application/pdf"
+      }
+    }
+  })
+
 jQuery ->
-	$("#publication_fact_sheet").validate({
-		rules: {
-			'project[publication_fact_sheet_attributes][age_range]': {
-				required: true
-			},
-			'project[publication_fact_sheet_attributes][paperback_cover_type]': {
-				required: true
-			}
-		}
-	})
-	
+  $("#publication_fact_sheet").validate({
+    rules: {
+      'project[publication_fact_sheet_attributes][age_range]': {
+        required: true
+      },
+      'project[publication_fact_sheet_attributes][paperback_cover_type]': {
+        required: true
+      }
+    }
+  })
+
 jQuery ->
-	$("#original_manuscript").validate({
-		rules: {
-			'project[manuscript_attributes][original]': {
-				required: true
-				accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
-			}
-		},
-		messages: {
-			'project[manuscript_attributes][original]': 'You must upload either a doc or docx file.'
-		}		
-	})
-	
+  $("#original_manuscript").validate({
+    rules: {
+      'project[manuscript_attributes][original]': {
+        required: true
+        accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
+      }
+    },
+    messages: {
+      'project[manuscript_attributes][original]': 'You must upload either a doc or docx file.'
+    }
+  })
+
 jQuery ->
-	$("#submit_edited_manuscript").validate({
-		rules: {
-			'project[manuscript_attributes][edited]': {
-				accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
-			}
-		},
-		messages: {
-			'project[manuscript_attributes][edited]': 'You must upload either a doc or docx file.'
-		}
-	})
-	
+  $("#submit_edited_manuscript").validate({
+    rules: {
+      'project[manuscript_attributes][edited]': {
+        accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
+      }
+    },
+    messages: {
+      'project[manuscript_attributes][edited]': 'You must upload either a doc or docx file.'
+    }
+  })
+
 jQuery ->
-	$("#marketing_expense").validate({
-		rules: {
-		}
-	})
+  $("#marketing_expense").validate({
+    rules: {
+    }
+  })
 
 ## submit proofread
 jQuery ->
-	$("#submit_proofread").validate({
-		rules:{
-			checklist_0: { 		
-				checklistValidator: [".proofread_manuscript_checklist"] 
-			},
-			'project[has_sub_chapters]': {
-				required: true
-			},
-			does_contain_images: {
-				required: true
-			},
-			teamtrope_link: {
-				required: {
-					depends: (element) =>
-						return $("input[name=does_contain_images]:checked").val() == '1';
-				}
-			},
-			dropbox_link: {
-				required: {
-					depends: (element) =>
-						return $("input[name=does_contain_images]:checked").val() == '2';
-				}
-			},
-			'project[manuscript_attributes][proofed]': {
-				required: true
-				accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
-			}
-		}
-	})
+  $("#submit_proofread").validate({
+    rules:{
+      checklist_0: {
+        checklistValidator: [".proofread_manuscript_checklist"]
+      },
+      'project[has_sub_chapters]': {
+        required: true
+      },
+      does_contain_images: {
+        required: true
+      },
+      teamtrope_link: {
+        required: {
+          depends: (element) =>
+            return $("input[name=does_contain_images]:checked").val() == '1';
+        }
+      },
+      dropbox_link: {
+        required: {
+          depends: (element) =>
+            return $("input[name=does_contain_images]:checked").val() == '2';
+        }
+      },
+      'project[manuscript_attributes][proofed]': {
+        required: true
+        accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
+      },
+      'project[proofed_word_count]': {
+        required: true,
+        pattern: /^\d+(?:,\d+)*$/
+      },
+    }
+  })
 
 jQuery ->
-	field = $("input[name=form_1099\\[tax_id\\]]:radio")
-	field_value = $("input[name=form_1099\\[tax_id\\]]:checked")
-	
-	$(field).change (event) =>
-		if field.is(':checked')
-			field_value = $("input[name=form_1099\\[tax_id\\]]:checked")
-			
-			if field_value.val() == 'ssn'
-				$('#social_security_number_wrapper').slideDown()
-				$('#business_tax_id_wrapper').slideUp()
-			else 
-				$('#social_security_number_wrapper').slideUp()
-				$('#business_tax_id_wrapper').slideDown()
-				
-jQuery -> 
+  field = $("input[name=form_1099\\[tax_id\\]]:radio")
+  field_value = $("input[name=form_1099\\[tax_id\\]]:checked")
+
+  $(field).change (event) =>
+    if field.is(':checked')
+      field_value = $("input[name=form_1099\\[tax_id\\]]:checked")
+
+      if field_value.val() == 'ssn'
+        $('#social_security_number_wrapper').slideDown()
+        $('#business_tax_id_wrapper').slideUp()
+      else
+        $('#social_security_number_wrapper').slideUp()
+        $('#business_tax_id_wrapper').slideDown()
+
+jQuery ->
   $("#form_1099").validate({
-  	rules: {
-  		'form_1099[first_time]': {
-  			required: true
-  		},
-  		'form_1099[first_name]': {
-  			required: true
-  		},
-  		'form_1099[last_name]': {
-  			required: true
-  		},
-  		'form_1099[phone]': {
-  			required: true
-  		}
-  		'form_1099[email]': {
-  			required: true
-  		},
-  		'form_1099[address]': {
-  			required: true
-  		},
-  		'form_1099[city]': {
-  			required: true
-  		},
-  		'form_1099[state]': {
-  			required: true
-  		},
-  		'form_1099[zip]': {
-  			required: true
-  		},
-  		'form_1099[bank_name]': {
-  			required: true
-  		},
-  		'form_1099[account_type]': {
-  			required: true
-  		},
-  		'form_1099[routing_number]': {
-  			required: true
-  		},
-  		'form_1099[account_number]': {
-  			required: true
-  		}
-  	}
+    rules: {
+      'form_1099[first_time]': {
+        required: true
+      },
+      'form_1099[first_name]': {
+        required: true
+      },
+      'form_1099[last_name]': {
+        required: true
+      },
+      'form_1099[phone]': {
+        required: true
+      }
+      'form_1099[email]': {
+        required: true
+      },
+      'form_1099[address]': {
+        required: true
+      },
+      'form_1099[city]': {
+        required: true
+      },
+      'form_1099[state]': {
+        required: true
+      },
+      'form_1099[zip]': {
+        required: true
+      },
+      'form_1099[bank_name]': {
+        required: true
+      },
+      'form_1099[account_type]': {
+        required: true
+      },
+      'form_1099[routing_number]': {
+        required: true
+      },
+      'form_1099[account_number]': {
+        required: true
+      }
+    }
   });
-  
+
 ## This is for the Approve Cover Art partial, and handles the optional inputs for
 ## the notes if they do not approve the Cover Art.
 jQuery(document).ready () ->

@@ -7,7 +7,7 @@ class CreateProjects < ActiveRecord::Migration
       t.boolean :previously_published
       t.string :prev_publisher_and_date
       t.text :cover_concept_notes
-      t.float :proofed_word_count
+      t.integer :proofed_word_count
       t.string :teamroom_link
       t.datetime :publication_date
       t.datetime :marketing_release_date
@@ -27,16 +27,16 @@ class CreateProjects < ActiveRecord::Migration
       t.boolean :non_standard_size
       t.boolean :has_internal_illustrations
       t.boolean :color_interior
-      t.boolean :childrens_book    
+      t.boolean :childrens_book
       t.datetime :edit_complete_date
-      
+
       #pdfs
       t.attachment :layout_upload
-      
+
       #images
       t.attachment :cover_concept
       t.attachment :stock_cover_image
-          
+
 
       t.timestamps
     end

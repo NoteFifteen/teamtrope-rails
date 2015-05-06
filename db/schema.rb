@@ -363,7 +363,7 @@ ActiveRecord::Schema.define(version: 20150504205726) do
     t.string   "stock_image_request_link"
     t.boolean  "previously_published"
     t.string   "prev_publisher_and_date"
-    t.float    "proofed_word_count"
+    t.integer  "proofed_word_count"
     t.string   "teamroom_link"
     t.datetime "publication_date"
     t.datetime "marketing_release_date"
@@ -558,13 +558,11 @@ ActiveRecord::Schema.define(version: 20150504205726) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.string   "slug"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
   add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree
 
   create_table "workflows", force: true do |t|
