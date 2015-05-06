@@ -9,6 +9,6 @@ class CoverConcept < ActiveRecord::Base
                        *Constants::DefaultContentTypeImageParams
 
   validates_attachment :stock_cover_image,
-                       *Constants::DefaultContentTypeImageParams
+                       *Constants::ContentTypesStockCoverImageParams
 
 end

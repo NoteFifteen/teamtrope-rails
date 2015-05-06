@@ -188,6 +188,20 @@ jQuery ->
     }
   })
 
+## Stock Cover Image form validations
+jQuery ->
+  $('#add_stock_cover_image').validate({
+    rules: {
+      'project[cover_concept_attributes][stock_cover_image]': {
+        required: true,
+        accept: "application\/zip|image\/p?jpeg"
+      }
+    },
+    messages: {
+      'project[cover_concept_attributes][stock_cover_image]': "You must upload either a jpg or zip file."
+    }
+  })
+
 ## Media Kit Form validations
 jQuery ->
   $("#media_kit").validate({

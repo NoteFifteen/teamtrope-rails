@@ -387,7 +387,7 @@ class ProjectsController < ApplicationController
       update_current_task
       redirect_to @project
     else
-      flash[:danger] = 'Error uploading Stock Cover Image'
+      flash[:danger] = 'Error uploading Stock Cover Image.  Are you sure your file was in .jpg or .zip format?'
       render 'show'
     end
   end

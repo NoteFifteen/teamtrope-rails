@@ -31,7 +31,7 @@ module Constants
 
   DefaultContentTypeImageParams = [
     :content_type => { content_type: ['image/jpeg', 'image/pjpeg'] },
-    :file_name => { :matches => [/jpe?g\Z/] },
+    :file_name => { :matches => [/jpe?g\Z/i] },
     :size => DefaultSizeIn
   ]
 
@@ -40,6 +40,22 @@ module Constants
       content_type: 'application/pdf'
     },
     :size => DefaultSizeIn
+  ]
+
+  # For a pure zip file
+  DefaultContentTypeZipParams = [
+      :content_type => {
+          content_type: 'application/zip'
+      },
+      :file_name => { :matches => [/zip$/i] },
+      :size => DefaultSizeIn
+  ]
+
+  # Custom params for Stock Cover Image(s) since they're allowed to upload a zip file
+  ContentTypesStockCoverImageParams = [
+      :content_type => { content_type: ['application/zip', 'image/jpeg', 'image/pjpeg'] },
+      :file_name => { :matches => [/jpe?g$|zip$/i] },
+      :size => DefaultSizeIn
   ]
 
   def Constants.attachment_validation_params(*content_type, size: DefaultSize)

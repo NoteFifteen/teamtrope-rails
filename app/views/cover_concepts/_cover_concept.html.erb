@@ -1,3 +1,24 @@
+<h4>Stock Image Request</h4>
+Image Request(s): <br/>
+<% if(@project.cover_concept.image_request_list.count > 0) %>
+    <table cellspacing="0" border="0" height="100%" cellpadding="3" cellspacing="3" width="80%">
+      <thead>
+      <tr>
+        <th style="text-align: left; background-color: #555555; color: white; line-height: 18px;">Subject</th>
+        <th style="text-align: left;  background-color: #555555; color: white; line-height: 18px;">Link</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @project.cover_concept.image_request_list.each do |img| %>
+          <tr bgcolor="<%= cycle('#ffffff', '#a3a9af') -%>">
+            <td style="text-align: left; overflow: auto; font-family: Arial, Helvetica, sans-serif; line-height: 18px;"> <%= img['subject']  %></td>
+            <td style="text-align: left; overflow: auto; font-family: Arial, Helvetica, sans-serif; line-height: 18px;"> <%= img['link'] %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% end %>
+
 <h4>Cover Concept Notes</h4>
 Cover Concept Notes:
 <% if(! @project.cover_concept.cover_concept_notes.nil?) %>
@@ -18,7 +39,9 @@ Cover Concept Notes:
     <div style="clear: right;">
         Stock Cover Image: <%= link_to "DOWNLOAD", download_stock_cover_image_path(@project) if cover_concept.stock_cover_image? %><br/>
     </div>
-    <%= image_tag download_stock_cover_image_path(@project), class: 'alignright', width: "340px" if cover_concept.try(:stock_cover_image?) %>
+    <% if(['image/jpeg', 'image/pjpeg'].include? cover_concept.try(:stock_cover_image_content_type)) %>
+        <%= image_tag download_stock_cover_image_path(@project), class: 'alignright', width: "340px" if cover_concept.try(:stock_cover_image?) %>
+    <% end %>
 
 <% end %>
 <br>

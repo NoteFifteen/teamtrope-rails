@@ -4,14 +4,15 @@
   <h1>Add Image</h1>
   <div class="row">
     <div class="col-md-6">
-      <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'add_stock_cover_image', id: @project) do | f | %>
+      <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'add_stock_cover_image', id: @project),
+                          html: { id: "add_stock_cover_image" } do | f | %>
         <%= f.error_notification %>
         <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
 
         <%= f.simple_fields_for :cover_concept, (f.object.cover_concept.nil?) ? f.object.build_cover_concept : f.object.cover_concept do | cc | %>
             <%= cc.input :stock_cover_image, label: 'Stock Cover Image *', as: :file, required: true %>
         <% end %>
-        <p>Please select an image file (jpg).</p>
+        <p>Please select an image file to upload. (A .jpg or collection of .jpg files in .zip).</p>
         <br/>
         <%= f.submit "Submit" %>
       <% end %>
