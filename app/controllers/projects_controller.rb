@@ -639,7 +639,7 @@ class ProjectsController < ApplicationController
 
   private
   def new_project_params
-    params.require(:project).permit(:title, :final_title, :project_type_id, :teamroom_link, :genre_ids => [], :team_memberships_attributes => [:role_id, :member_id, :percentage])
+    params.require(:project).permit(:title, :final_title, :project_type_id, :teamroom_link, :synopsis, :genre_ids => [], :team_memberships_attributes => [:role_id, :member_id, :percentage])
   end
 
   def update_project_params

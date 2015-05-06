@@ -1,21 +1,30 @@
 <% provide(:title, "New Project") %>
 <div class="container">
-  <h1>New Project</h1>
-  <% if ! current_user.role?(:author) && ! current_user.role?(:booktrope_staff) %>
-      <h2>Sorry, you cannot create a new project unless you are either an Author or Booktrope Staff</h2>
-  <% else %>
       <div class="col-md-8">
+        <h1>New Project</h1>
+        <% if
+           # ! current_user.role?(:author) &&
+           ! current_user.role?(:booktrope_staff) %>
+            <h2>Sorry, you cannot create a new project unless you are Booktrope Staff</h2>
+        <% else %>
+
+        <p>Authors, we have made it even easier to get your next project going. Use this project sign up form to tell us
+          about your new book, collection or anthology you want to have published.  Note: We will provide a place to
+          upload your original manuscript in the project once it is set up.</p>
+
+        <p>For more information about this form, <%= link_to 'click here', 'http://teamtrope.com/new-project-sign-up/' %>.</p>
+
         <%= simple_form_for @project, html: { id: 'new_project_form' } do | f | %>
 
-          <div>
-            <label>Title:<br/>
+          <div class="input_field">
+            <label>Title:<span class="required">*</span><br/>
               <%= f.input :title, label: false, :input_html => { type: 'text', size: '40' } %>
             </label>
           </div>
 
-          <div>
+          <div class="input_field">
             <%= f.simple_fields_for :team_memberships, f.object.team_memberships.build do | member | %>
-              <label>Author:<br/>
+              <label>Author:<span class="required">*</span><br/>
                 <% if current_user.role?(:booktrope_staff) %>
                   <%= member.input :member_id,
                         label: false,
@@ -40,14 +49,21 @@
             <% end %>
           </div>
 
-          <div>
-            <label>Genres:<br/>
+          <div class="input_field">
+            <label>Genres:<span class="required">*</span><br/>
               <%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: true } ) %><br /><br />
             </label>
           </div>
 
-          <div>
-            <label>Project Type:<br/>
+          <div class="input_field">
+            <label>Synopsis:<span class="required">*</span><br/>
+              <%= f.input :synopsis, as: :text, label: false, input_html: { rows: 8, cols: 70 } %>
+            </label>
+            <p class="input_description">If you don't have a full synopsis, don't worry - a couple of sentences about the book will suffice.</p>
+          </div>
+
+          <div class="input_field">
+            <label>Project Type:<span class="required">*</span><br/>
               <%= f.input :project_type_id,
                      label: false,
                      collection: ProjectType.all,
@@ -59,13 +75,12 @@
             </label>
           </div>
 
-            <div>
-              <label>Teamroom Link:<br/>
-                <%= f.input :teamroom_link, label: false, :input_html => { type: 'text', size: '40' } %>
-              </label>
-            </div>
-
-          <br/>
+          <div class="input_field">
+            <label>Teamroom Link:<span class="required">*</span><br/>
+              <%= f.input :teamroom_link, label: false, :input_html => { type: 'text', size: '40' } %>
+            </label>
+            <p class="input_description">Include the full url with 'http://'.</p>
+          </div>
 
         <%= f.submit 'Create Project' %>
       <% end %>
@@ -84,10 +99,12 @@
     // For some reason, running this on document ready doesn't work, and validate has to
     // be able to bind to the element so it must be executed after the page has rendered.
     $("#new_project_form").validate({
+        ignore: [],
         rules: {
             'project[title]': { required: true },
             'project[team_memberships_attributes][0][member_id]': { required: true },
             'project[genre_ids][]': { required: true },
+            'project[synopsis]': { required: true },
             'project[project_type_id]': { required: true },
             'project[teamroom_link]': { required: true, url: true }
         },
@@ -95,6 +112,7 @@
             'project[title]': 'Please enter a working title for this project.',
             'project[team_memberships_attributes][0][member_id]': 'Please select an Author.',
             'project[genre_ids][]': 'Please select one or more genres.',
+            'project[synopsis]': 'Please provide a brief synopsis for this project.',
             'project[project_type_id]': 'Please select a Project Type.',
             'project[teamroom_link]': 'A Teamroom link is required and must contain a valid URL.'
         }

@@ -18,6 +18,22 @@ table.projectListTable thead th.sorting {
   background: #bbbbbb image-url('dataTables/sort_both.png') no-repeat right center;
 }
 
+/**
+ * New Project
+ */
+
+.input_description {
+  margin-top: 2px;
+}
+
+.input_field {
+  margin-bottom: 20px;
+}
+
+.input_field label div {
+  margin-bottom: 0px !important;
+}
+
 
 #edit_layout_style .error {
   padding:5px;
