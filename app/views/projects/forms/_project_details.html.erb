@@ -5,7 +5,7 @@
 <% end %>
 <br/>
 
-<% unless @project.synopsis? %>
+<% if @project.synopsis? %>
 Original Synopsis:<br/>
 <div class='entry'>
   <%= @project.synopsis.html_safe %>
