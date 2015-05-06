@@ -5,7 +5,7 @@
       <h2>Sorry, you cannot create a new project unless you are either an Author or Booktrope Staff</h2>
   <% else %>
       <div class="col-md-8">
-        <%= simple_form_for @project do | f | %>
+        <%= simple_form_for @project, html: { id: 'new_project_form' } do | f | %>
 
           <div>
             <label>Title:<br/>
@@ -58,21 +58,45 @@
               %>
             </label>
           </div>
+
+            <div>
+              <label>Teamroom Link:<br/>
+                <%= f.input :teamroom_link, label: false, :input_html => { type: 'text', size: '40' } %>
+              </label>
+            </div>
+
           <br/>
 
         <%= f.submit 'Create Project' %>
       <% end %>
         <br/>
       </div>
+  <% end %>
+</div>
 
-      <% if current_user.role?(:booktrope_staff) %>
-        <script>
-          $(document).ready(function() {
-              $("#new_project_authors_list").chosen({width: '200px;'})
-          });
-        </script>
-      <% end %>
-
+<script>
+    <% if current_user.role?(:booktrope_staff) %>
+    $(document).ready(function() {
+        $("#new_project_authors_list").chosen({width: '200px;'})
+    });
   <% end %>
 
-</div>
+    // For some reason, running this on document ready doesn't work, and validate has to
+    // be able to bind to the element so it must be executed after the page has rendered.
+    $("#new_project_form").validate({
+        rules: {
+            'project[title]': { required: true },
+            'project[team_memberships_attributes][0][member_id]': { required: true },
+            'project[genre_ids][]': { required: true },
+            'project[project_type_id]': { required: true },
+            'project[teamroom_link]': { required: true, url: true }
+        },
+        messages: {
+            'project[title]': 'Please enter a working title for this project.',
+            'project[team_memberships_attributes][0][member_id]': 'Please select an Author.',
+            'project[genre_ids][]': 'Please select one or more genres.',
+            'project[project_type_id]': 'Please select a Project Type.',
+            'project[teamroom_link]': 'A Teamroom link is required and must contain a valid URL.'
+        }
+    });
+</script>
