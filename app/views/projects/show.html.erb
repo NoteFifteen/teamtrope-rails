@@ -59,7 +59,7 @@
       </label>
     </div>
     <br/>
-    <%= link_to "Link to Teamroom", @project.teamroom_link %><span> Genre:
+    <%= link_to "Link to Teamroom", @project.teamroom_link if @project.teamroom_link? %><span> Genre:
     <%= @project.genres.map { |genre| genre.name }.join(", ") %>
     </span>
     <% merged_array = [] %>
