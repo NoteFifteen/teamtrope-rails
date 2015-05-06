@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
       flash[:success] = 'New Project Created!'
      # Need to create method to set the current tasks based on the workflow
       @project.create_workflow_tasks
-      redirect_to projects_path
+      redirect_to @project
     else
       flash[:danger] = 'Error creating project!'
       render 'new'

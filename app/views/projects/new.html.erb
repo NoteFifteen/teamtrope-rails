@@ -28,6 +28,9 @@
                         :include_blank => 'Select an Author..',
                         required: true
                   %>
+                  <script>
+                      $("#new_project_authors_list").chosen({width: '200px;'});
+                  </script>
                 <% else %>
                   <span><em><%= current_user.name %></em></span>
                   <%= member.input :member_id, as: :hidden, :input_html => { :value => current_user.id } %>
