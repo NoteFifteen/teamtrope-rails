@@ -59,7 +59,7 @@
       </label>
     </div>
     <br/>
-    <a href='https://teamtrope.com/groups/the-key-to-everything/'>Link to Teamroom</a> <span> Genre:
+    <%= link_to "Link to Teamroom", @project.teamroom_link %><span> Genre:
     <%= @project.genres.map { |genre| genre.name }.join(", ") %>
     </span>
     <% merged_array = [] %>
