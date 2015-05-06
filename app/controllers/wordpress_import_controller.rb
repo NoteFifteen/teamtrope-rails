@@ -159,7 +159,7 @@ class WordpressImportController < ApplicationController
     'book_cover_designer' => { percent: 4.0, role_name: 'Cover Designer', pct_label: 'book_designer_pct'},
     'book_editor' => { percent: 7.0, role_name: 'Editor'},
     'book_project_manager' => { percent: 4.0, role_name: 'Project Manager'},
-    'book_proofreader' => { percent: 2.0, role_name: 'Proof Reader'},
+    'book_proofreader' => { percent: 2.0, role_name: 'Proofreader'},
   }
 
   def create_current_task(project, project_meta, key)
