@@ -76,8 +76,6 @@ class ProjectsController < ApplicationController
   end
 
   def accept_team_member
-
-
     if @project.update(update_project_params)
       @project.create_activity :accept_team_member, owner: current_user,
                                parameters: { text: ' added new team member', form_data: params[:project].to_s}
@@ -88,6 +86,7 @@ class ProjectsController < ApplicationController
       flash[:success] = 'Accepted a Team Member'
       redirect_to @project
     else
+      flash[:danger] = 'There was a problem adding a member to the team.  Please go to the Accept Member tab and review the errors.'
       render 'show'
     end
   end

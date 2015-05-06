@@ -1,7 +1,8 @@
+
 <!-- Accept Team Member -->
 <div class="container">
 
-  <%= simple_form_for(@project, url: url_for(:controller => 'projects', :action => 'accept_team_member', id: @project.id))  do |f| %>
+  <%= simple_form_for(@project, url: url_for(:controller => 'projects', :action => 'accept_team_member', id: @project.id), html: { id: 'new_team_membership' } ) do |f| %>
       <%= f.error_notification %>
       <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
 
@@ -154,16 +155,20 @@
     $("#new_team_membership").validate({
         ignore: [],
         rules: {
-            'team_membership[role_id]': {
+            'project[team_memberships_attributes][0][role_id]': {
                 required: true
             },
-            'team_membership[member_id]': {
+            'project[team_memberships_attributes][0][member_id]': {
                 required: true
             },
-            'team_membership[percentage]': {
+            'project[team_memberships_attributes][0][percentage]': {
                 required: true,
                 acceptMemberPercentageValidation: ''
             }
+        },
+        messages: {
+            'project[team_memberships_attributes][0][role_id]': 'You must select a role.',
+            'project[team_memberships_attributes][0][member_id]': 'You must select a member.'
         }
     });
 
