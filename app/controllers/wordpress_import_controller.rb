@@ -70,6 +70,7 @@ class WordpressImportController < ApplicationController
       project = Project.new(title: item.xpath("./title").text,
         project_type_id: 1,
         wp_id: item.xpath("./wp:post_id").text,
+        synopsis: item.xpath("./content:encoded").text,
         **prepare_project_fields(item))
       # build Manuscript
       project.build_manuscript(**prepare_manuscript_fields(item))

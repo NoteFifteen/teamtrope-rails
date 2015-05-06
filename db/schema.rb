@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150506054416) do
+ActiveRecord::Schema.define(version: 20150506055628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -403,6 +403,7 @@ ActiveRecord::Schema.define(version: 20150506054416) do
     t.integer  "imprint_id"
     t.integer  "wp_id"
     t.string   "slug"
+    t.text     "synopsis"
   end
 
   add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree
