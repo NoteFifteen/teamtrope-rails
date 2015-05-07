@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :document_import_queues
+
   resources :approve_blurbs
 
   resources :draft_blurbs

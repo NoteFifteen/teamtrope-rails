@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  wp_id: 1
+  attachment_id: 1
+  fieldname: MyString
+  url: MyString
+  status: 1
+  dyno_id: MyString
+  error: MyString
+
+two:
+  wp_id: 1
+  attachment_id: 1
+  fieldname: MyString
+  url: MyString
+  status: 1
+  dyno_id: MyString
+  error: MyString
