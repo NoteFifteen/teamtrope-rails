@@ -22,17 +22,41 @@ class Profile < ActiveRecord::Base
 	end
 
 	def import_avatar_from_url url
-    # Skip Gravatar URL's
-    # We can check Gravatar to see if it's a valid account by passing "?d=404" and checking
-    # the response headers for a 200 response.  We may want to either use the Gravatar URL
-    # or import the image if it's valid and not just a placeholder.
+    # We will store a Gravatar URL but only if the user is registered with Gravatar
+    # and an actual image exists for them.
 		if(url =~ /gravatar.com/)
-      return false
+      require "net/https"
+      require "uri"
+
+      base_url = url.match(/(https:\/\/secure.gravatar.com\/avatar\/\w*)/).captures
+      avatar_url = base_url[0]
+      url = avatar_url + "?d=404"
+
+      uri = URI.parse(url)
+      http = Net::HTTP.new(uri.host, uri.port)
+
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+      request = Net::HTTP::Get.new(uri.request_uri)
+      response = http.request(request)
+
+      # If we get a 200 response back from Gravatar, store the URL
+      if response.code == '200'
+        self.avatar_url = avatar_url
+        self.save
+      end
+
+      return
     end
 
+    # Store a reference to the URL so we can check to see if it's changed in the future
+    self.avatar_url = url
     self.avatar = download_remote_image(url)
     self.save
   end
+
+  private
 
   # Stolen from http://stackoverflow.com/questions/1666753/saving-files-using-paperclip-without-upload
   def download_remote_image (image_url)

@@ -1,0 +1,17 @@
+<%= simple_form_for(@document_import_queue) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :wp_id %>
+    <%= f.input :attachment_id %>
+    <%= f.input :fieldname %>
+    <%= f.input :url %>
+    <%= f.input :status %>
+    <%= f.input :dyno_id %>
+    <%= f.input :error %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

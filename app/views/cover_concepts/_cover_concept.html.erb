@@ -1,6 +1,7 @@
 <h4>Stock Image Request</h4>
 Image Request(s): <br/>
-<% if(@project.cover_concept.image_request_list.count > 0) %>
+<% if(!@project.cover_concept.image_request_list.nil? &&
+       @project.cover_concept.image_request_list.count > 0) %>
     <table cellspacing="0" border="0" height="100%" cellpadding="3" cellspacing="3" width="80%">
       <thead>
       <tr>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150506055628) do
+ActiveRecord::Schema.define(version: 20150507020847) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -187,6 +187,18 @@ ActiveRecord::Schema.define(version: 20150506055628) do
   add_index "current_tasks", ["project_id", "task_id"], name: "index_current_tasks_on_project_id_and_task_id", unique: true, using: :btree
   add_index "current_tasks", ["project_id"], name: "index_current_tasks_on_project_id", using: :btree
   add_index "current_tasks", ["task_id"], name: "index_current_tasks_on_task_id", using: :btree
+
+  create_table "document_import_queues", force: true do |t|
+    t.integer  "wp_id"
+    t.integer  "attachment_id"
+    t.string   "fieldname"
+    t.string   "url"
+    t.integer  "status"
+    t.string   "dyno_id"
+    t.string   "error"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "draft_blurbs", force: true do |t|
     t.integer  "project_id"
@@ -388,6 +400,7 @@ ActiveRecord::Schema.define(version: 20150506055628) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.string   "avatar_url"
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
@@ -443,6 +456,8 @@ ActiveRecord::Schema.define(version: 20150506055628) do
     t.integer  "wp_id"
     t.string   "slug"
     t.text     "synopsis"
+    t.boolean  "lock",                       default: false
+    t.boolean  "done",                       default: false
   end
 
   add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree
