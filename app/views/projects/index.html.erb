@@ -18,6 +18,7 @@
         <th>Project Manager</th>
         <th>Marketing Manager</th>
         <th>Cover Designer</th>
+        <th>Imprint</th>
         <th>Teamroom Link</th>
       </tr>
     </thead>
@@ -33,13 +34,14 @@
           | <%= link_to "Delete", project_path(project), method: :delete, data: {confirm: "Are you sure you want to delete this project?"}%><br />
           <% end %>
         </td>
-        <td><%= (project.authors.try(:first).try(:member).nil?) ? 'N/A' : project.authors.first.member.name %></td>
+        <td><%= (project.authors.try(:first).try(:member).nil?) ? '-' : project.authors.first.member.name %></td>
         <td><%= project.genres.map(&:name).join(', ') %></td>
-        <td><%= (project.editors.try(:first).try(:member).nil?) ? 'N/A' : project.editors.first.member.name %></td>
-        <td><%= (project.proofreaders.try(:first).try(:member).nil?) ? 'N/A' : project.proofreaders.first.member.name %></td>
-        <td><%= (project.project_managers.try(:first).try(:member).nil?) ? 'N/A' : project.project_managers.first.member.name %></td>
-        <td><%= (project.book_managers.try(:first).try(:member).nil?) ? 'N/A' : project.book_managers.first.member.name %></td>
-        <td><%= (project.cover_designers.try(:first).try(:member).nil?) ? 'N/A' : project.cover_designers.first.member.name %></td>
+        <td><%= (project.editors.try(:first).try(:member).nil?) ? '-' : project.editors.first.member.name %></td>
+        <td><%= (project.proofreaders.try(:first).try(:member).nil?) ? '-' : project.proofreaders.first.member.name %></td>
+        <td><%= (project.project_managers.try(:first).try(:member).nil?) ? '-' : project.project_managers.first.member.name %></td>
+        <td><%= (project.book_managers.try(:first).try(:member).nil?) ? '-' : project.book_managers.first.member.name %></td>
+        <td><%= (project.cover_designers.try(:first).try(:member).nil?) ? '-' : project.cover_designers.first.member.name %></td>
+        <td><%= (project.try(:control_number).try(:imprint).nil?) ? '-' : project.control_number.imprint %></td>
         <td><% if !project.teamroom_link.try(:empty?) %><a href="<%= project.teamroom_link %>">Teamroom Link</a><% else %><% end %></td>
       </tr>
     <% end %>
