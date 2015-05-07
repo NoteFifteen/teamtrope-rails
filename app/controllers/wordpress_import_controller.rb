@@ -78,6 +78,8 @@ class WordpressImportController < ApplicationController
       project.build_control_number(**prepare_control_number_fields(item))
       # build PublicationFactSheet
       project.build_publication_fact_sheet(**prepare_publication_fact_sheet_fields(item))
+      # build Layout
+      project.build_layout(**prepare_layout_fields(item))
 
       # don't save attachments if the save attachments checkbox is not checked.
       if @save_attachments
