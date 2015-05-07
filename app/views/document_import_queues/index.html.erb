@@ -1,0 +1,47 @@
+<h1>Document Import Queue</h1>
+
+  <script type="text/javascript" async="">
+    function toggleTable1() {
+    var lTable = document.getElementById("queueTable");
+    lTable.style.display = (lTable.style.display == "table") ? "none" : "table";}
+  </script>
+  <table id="queueTable" class="projectListTable">
+  <thead>
+    <tr>
+      <th>Wp</th>
+      <th>Attachment</th>
+      <th>Fieldname</th>
+      <th>Status</th>
+      <th>Dyno</th>
+      <th>Error</th>
+      <th>Url</th>
+      <!-- <th colspan="3"></th> -->
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @document_import_queues.each do |document_import_queue| %>
+      <tr>
+        <td><%= document_import_queue.wp_id %></td>
+        <td><%= document_import_queue.attachment_id %></td>
+        <td><%= document_import_queue.fieldname %></td>
+        <td><%= document_import_queue.status %></td>
+        <td><%= document_import_queue.dyno_id %></td>
+        <td><%= document_import_queue.error %></td>
+        <td><%= document_import_queue.url %></td>
+<!--     <td><%#= link_to 'Show', document_import_queue %></td>
+        <td><%#= link_to 'Edit', edit_document_import_queue_path(document_import_queue) %></td>
+        <td><%#= link_to 'Destroy', document_import_queue, method: :delete, data: { confirm: 'Are you sure?' } %></td> -->
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  <script>
+  $("#queueTable").DataTable({
+      "pageLength" : 50
+  });
+  </script>
+
+<br>
+
+<%= link_to 'New Document import queue', new_document_import_queue_path %>

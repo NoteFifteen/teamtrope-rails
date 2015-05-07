@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150507013028) do
+ActiveRecord::Schema.define(version: 20150507020847) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,20 +104,6 @@ ActiveRecord::Schema.define(version: 20150507013028) do
 
   add_index "box_credentials", ["anti_forgery_token"], name: "index_box_credentials_on_anti_forgery_token", unique: true, using: :btree
 
-  create_table "comments", force: true do |t|
-    t.text     "content"
-    t.integer  "user_id"
-    t.integer  "post_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "comments", ["post_id", "created_at"], name: "index_comments_on_post_id_and_created_at", using: :btree
-  add_index "comments", ["post_id", "user_id", "created_at"], name: "index_comments_on_post_id_and_user_id_and_created_at", unique: true, using: :btree
-  add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
-  add_index "comments", ["user_id", "created_at"], name: "index_comments_on_user_id_and_created_at", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
-
   create_table "control_numbers", force: true do |t|
     t.integer  "project_id"
     t.string   "imprint"
@@ -187,6 +173,18 @@ ActiveRecord::Schema.define(version: 20150507013028) do
   add_index "current_tasks", ["project_id", "task_id"], name: "index_current_tasks_on_project_id_and_task_id", unique: true, using: :btree
   add_index "current_tasks", ["project_id"], name: "index_current_tasks_on_project_id", using: :btree
   add_index "current_tasks", ["task_id"], name: "index_current_tasks_on_task_id", using: :btree
+
+  create_table "document_import_queues", force: true do |t|
+    t.integer  "wp_id"
+    t.integer  "attachment_id"
+    t.string   "fieldname"
+    t.string   "url"
+    t.integer  "status"
+    t.string   "dyno_id"
+    t.string   "error"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "draft_blurbs", force: true do |t|
     t.integer  "project_id"
@@ -342,31 +340,6 @@ ActiveRecord::Schema.define(version: 20150507013028) do
 
   add_index "phases", ["project_view_id"], name: "index_phases_on_project_view_id", using: :btree
 
-  create_table "post_tags", force: true do |t|
-    t.integer  "post_id"
-    t.integer  "tag_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "post_tags", ["post_id", "tag_id"], name: "index_post_tags_on_post_id_and_tag_id", unique: true, using: :btree
-
-  create_table "posts", force: true do |t|
-    t.string   "title"
-    t.datetime "post_date"
-    t.integer  "author_id"
-    t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "featured_image_file_name"
-    t.string   "featured_image_content_type"
-    t.integer  "featured_image_file_size"
-    t.datetime "featured_image_updated_at"
-  end
-
-  add_index "posts", ["post_date", "title", "author_id"], name: "index_posts_on_post_date_and_title_and_author_id", using: :btree
-  add_index "posts", ["post_date", "title"], name: "index_posts_on_post_date_and_title", using: :btree
-
   create_table "price_change_promotions", force: true do |t|
     t.datetime "start_date"
     t.datetime "end_date"
@@ -423,7 +396,7 @@ ActiveRecord::Schema.define(version: 20150507013028) do
     t.string   "stock_image_request_link"
     t.boolean  "previously_published"
     t.string   "prev_publisher_and_date"
-    t.float    "proofed_word_count"
+    t.integer  "proofed_word_count"
     t.string   "teamroom_link"
     t.datetime "publication_date"
     t.datetime "marketing_release_date"
@@ -444,6 +417,8 @@ ActiveRecord::Schema.define(version: 20150507013028) do
     t.integer  "wp_id"
     t.string   "slug"
     t.text     "synopsis"
+    t.boolean  "lock",                       default: false
+    t.boolean  "done",                       default: false
   end
 
   add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree
@@ -533,15 +508,6 @@ ActiveRecord::Schema.define(version: 20150507013028) do
 
   add_index "tabs", ["phase_id"], name: "index_tabs_on_phase_id", using: :btree
   add_index "tabs", ["task_id"], name: "index_tabs_on_task_id", using: :btree
-
-  create_table "tags", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tags", ["id", "name"], name: "index_tags_on_id_and_name", using: :btree
-  add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
 
   create_table "task_performers", force: true do |t|
     t.integer  "task_id"

@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Wp:</strong>
+  <%= @document_import_queue.wp_id %>
+</p>
+
+<p>
+  <strong>Attachment:</strong>
+  <%= @document_import_queue.attachment_id %>
+</p>
+
+<p>
+  <strong>Fieldname:</strong>
+  <%= @document_import_queue.fieldname %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @document_import_queue.url %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @document_import_queue.status %>
+</p>
+
+<p>
+  <strong>Dyno:</strong>
+  <%= @document_import_queue.dyno_id %>
+</p>
+
+<p>
+  <strong>Error:</strong>
+  <%= @document_import_queue.error %>
+</p>
+
+<%= link_to 'Edit', edit_document_import_queue_path(@document_import_queue) %> |
+<%= link_to 'Back', document_import_queues_path %>
