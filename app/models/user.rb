@@ -81,7 +81,6 @@ class User < ActiveRecord::Base
       if(! user.profile.avatar.present? ||
           (! user.profile.avatar_url.nil? && user.profile.avatar_url != oauth['extra']['raw_info']['avatar_url']))
         user.profile.import_avatar_from_url(oauth['extra']['raw_info']['avatar_url'])
-        user.profile.update_attribute(:avatar_url, oauth['extra']['raw_info']['avatar_url'])
       end
 
       user
@@ -104,6 +103,5 @@ class User < ActiveRecord::Base
   def role?(role)
     roles.include? role.to_s
   end
-
 
 end
