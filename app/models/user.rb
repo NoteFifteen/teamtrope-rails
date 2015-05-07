@@ -45,8 +45,6 @@ class User < ActiveRecord::Base
   end
 
   def self.find_for_wordpress_oauth2(oauth, signed_in_user=nil)
-
-
     #if the user was already signed in / but they navigated through the authorization with wordpress
     if signed_in_user
       #update / synch any information you want from the authentication service.
@@ -70,25 +68,22 @@ class User < ActiveRecord::Base
                   nickname: oauth['extra']['raw_info']['user_login'],
                   website: oauth['info']['urls']['Website'], display_name: oauth['extra']['raw_info']['display_name'])
 
-          # Attempt to update Avatar if one has not been configured here
-          if(! user.profile.avatar.present?)
-            user.profile.import_avatar_from_url(oauth['extra']['raw_info']['avatar_url'])
-          end
         else
           user = User.create!(name: oauth['extra']['raw_info']['display_name'],
                               email: oauth['info']['email'], uid: oauth['uid'], provider: oauth['provider'],
                               nickname: oauth['extra']['raw_info']['user_login'], website: oauth['info']['urls']['Website'],
                               display_name: oauth['extra']['raw_info']['display_name'])
           user.create_profile!
-          # Attempt to import avatar
-          user.profile.import_avatar_from_url(oauth['extra']['raw_info']['avatar_url'])
         end
       end
 
       # Attempt to update Avatar if one has not been configured here
-      if(! user.profile.avatar.present?)
+      if(! user.profile.avatar.present? ||
+          (! user.profile.avatar_url.nil? && user.profile.avatar_url != oauth['extra']['raw_info']['avatar_url']))
         user.profile.import_avatar_from_url(oauth['extra']['raw_info']['avatar_url'])
+        user.profile.update_attribute(:avatar_url, oauth['extra']['raw_info']['avatar_url'])
       end
+
       user
     end
   end
