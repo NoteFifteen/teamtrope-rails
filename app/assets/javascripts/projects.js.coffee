@@ -221,17 +221,14 @@ jQuery ->
     rules: {
       'project[published_file_attributes][mobi]': {
         required: true,
-        #accept: "application/octet-stream",
         extension: '.mobi'
       },
       'project[published_file_attributes][epub]': {
         required: true,
-        #accept: "application/(epub\+zip|octet-stream)",
         extension: '.epub'
       },
       'project[published_file_attributes][pdf]': {
         required: true,
-        #accept: "application/pdf"
         extension: '.pdf'
       }
     },
