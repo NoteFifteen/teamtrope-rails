@@ -18,7 +18,9 @@ namespace :teamtrope do
   desc "Imports Documents into teamtrope rails"
   task doc_import: :environment do
 
-    limit = ENV["limit"]
+    is_limited = !ENV["limit"].nil?
+    limit = ENV["limit"].to_i
+
     require "net/https"
     require "uri"
     done = false
@@ -118,7 +120,8 @@ namespace :teamtrope do
             diq.save
           end
         end
-        done = true if (!limit.nil? && count >= limit)
+        puts "saved: #{count}"
+        done = true if (is_limited && count >= limit)
       else
         done = true
       end
