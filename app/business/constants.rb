@@ -17,14 +17,14 @@ module Constants
 
   DefaultContentTypeEpubParams = [
     :content_type => {
-      content_type: ['application/epub\+zip', 'application/octet-stream']
+      content_type: ['application/epub\+zip', 'application/octet-stream', 'text/plain']
     },
     :size => DefaultSizeIn
   ]
 
   DefaultContentTypeMobiParams = [
     :content_type => {
-      content_type: 'application/octet-stream'
+      content_type: ['application/octet-stream', 'text/plain']
     },
     :size => DefaultSizeIn
   ]
