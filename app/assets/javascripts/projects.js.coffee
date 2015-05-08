@@ -340,6 +340,10 @@ jQuery ->
       },
       'project[publication_fact_sheet_attributes][paperback_cover_type]': {
         required: true
+      },
+      'project[publication_fact_sheet_attributes][one_line_blurb]':{
+        required: true,
+        maxlength: 300
       }
     }
   })
