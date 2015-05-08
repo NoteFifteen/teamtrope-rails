@@ -8,8 +8,9 @@
   <table id="queueTable" class="projectListTable">
   <thead>
     <tr>
-      <th>Wp</th>
-      <th>Attachment</th>
+      <th>Project</th>
+      <th>Wp ID</th>
+      <th>Attachment ID</th>
       <th>Fieldname</th>
       <th>Status</th>
       <th>Dyno</th>
@@ -22,6 +23,8 @@
   <tbody>
     <% @document_import_queues.each do |document_import_queue| %>
       <tr>
+        <% project = Project.where(wp_id: document_import_queue.wp_id).first %>
+        <td><%= link_to project.title, project unless project.nil? %></td>
         <td><%= document_import_queue.wp_id %></td>
         <td><%= document_import_queue.attachment_id %></td>
         <td><%= document_import_queue.fieldname %></td>
