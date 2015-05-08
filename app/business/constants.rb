@@ -68,8 +68,7 @@ module Constants
   end
 
   AdminProjectsIndexFilters = {
-    manuscript_development: 'Manuscript Development',
-    choose_style: 'Choose Style',
+    manuscript_development: 'Man Dev',
     upload_layout: 'Upload Layout',
     page_count: 'Page Count',
     final_manuscript: 'Final Manuscript',
@@ -82,12 +81,14 @@ module Constants
 
   ProjectsIndexFilters = {
     original_manuscript: 'Original Manuscript',
-    edited_manuscript: 'Edited Manuscript',
-    submit_proofread: 'Proofread Complete',
-    published: 'Production Complete',
+    submit_blurb: 'Submit Blurb',
+    submit_publication_fact_sheet: 'Publication Fact Sheet',
     submit_cover_concept: 'Cover Concept',
+    edited_manuscript: 'In Editing',
+    submit_proofread: 'In Proofreading',
+    choose_style: 'Choose Style',
     upload_final_covers: 'Final Covers',
-    submit_blurb: 'Submit Blurb'
+    published: 'Published'
   }
 
 end
