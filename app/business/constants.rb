@@ -9,7 +9,9 @@ module Constants
   DefaultContentTypeDocumentParams = [
     :content_type => {
       content_type: [ 'application/msword',
-          'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+          'application/pdf',
+          'text/plain'
         ]
     },
     :size => DefaultSizeIn
