@@ -1,7 +1,7 @@
 class AnalyticsController < ApplicationController
 
   def show
-    @project = Project.find(params[:project_id])
+    @project = Project.friendly.find(params[:project_id])
 
     # Test with ASIN B00GJ1XZSS
     if @project.control_number.try(:asin)
