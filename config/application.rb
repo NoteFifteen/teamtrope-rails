@@ -23,5 +23,9 @@ module Teamtrope
     # Override secrets.yml with application.yml
     config.secret_key_base = Figaro.env.secret_key_base
 
+    # Enable garbage collection stats for NewRelic
+    # Use this for MRI 1.9.2 or higher
+    GC::Profiler.enable
+
   end
 end
