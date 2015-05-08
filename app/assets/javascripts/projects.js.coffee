@@ -228,7 +228,7 @@ jQuery ->
         extension: '.epub'
       },
       'project[published_file_attributes][pdf]': {
-        required: true,
+        required: false,
         extension: '.pdf'
       }
     },
