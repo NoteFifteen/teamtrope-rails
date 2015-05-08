@@ -242,7 +242,7 @@ jQuery ->
 
 ## Blog Tour Form validations
 jQuery.validator.addMethod("blogTourCostValidator", (value, element, params) ->
-  return value < 100
+  return value <= 100
 , jQuery.validator.format("Cost must not exceed $100.")
 )
 
