@@ -94,6 +94,9 @@ gem 'unicorn'
 
 group :production do
   gem 'rails_12factor', '0.0.2'
+
+  # Enable newrelic for monitoring
+  gem 'newrelic_rpm'
 end
 
 group :development do
