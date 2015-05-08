@@ -118,7 +118,7 @@ namespace :teamtrope do
             diq.save
           end
         end
-        done = true || (!limit.nil? && count >= limit)
+        done = true if (!limit.nil? && count >= limit)
       else
         done = true
       end
