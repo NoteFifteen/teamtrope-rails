@@ -1,0 +1,29 @@
+<h1>Listing man_devs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Man dev decision</th>
+      <th>Man dev end date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @man_devs.each do |man_dev| %>
+      <tr>
+        <td><%= man_dev.project %></td>
+        <td><%= man_dev.man_dev_decision %></td>
+        <td><%= man_dev.man_dev_end_date %></td>
+        <td><%= link_to 'Show', man_dev %></td>
+        <td><%= link_to 'Edit', edit_man_dev_path(man_dev) %></td>
+        <td><%= link_to 'Destroy', man_dev, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Man dev', new_man_dev_path %>

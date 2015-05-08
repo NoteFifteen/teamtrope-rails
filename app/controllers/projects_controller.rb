@@ -348,6 +348,33 @@ class ProjectsController < ApplicationController
 
   end
 
+  def man_dev
+    # This is an attribute accessor used as a flag for deciding what to update below
+    approved = (params[:project][:man_dev_attributes][:man_dev_decision] == 'true')
+
+    if @project.update(update_project_params)
+      if approved
+        # Set the approval date & wipe notes
+        update_current_task
+        activity_text = 'Manuscript Develoment Complete'
+        flash[:success] = activity_text
+      else
+      # Not approved, revert to previous step
+        reject_current_task
+        activity_text = 'Manuscript Still In Development'
+        flash[:success] = activity_text
+      end
+    else
+      render 'show'
+    end
+
+    if ! activity_text.nil?
+      @project.create_activity :approved_blurb, owner: current_user,
+                               parameters: { text: activity_text, form_data: params[:project].to_s }
+      redirect_to @project
+    end
+  end
+
   def approve_blurb
     # This is an attribute accessor used as a flag for deciding what to update below
     approved = (params[:project][:approve_blurb_attributes][:blurb_approval_decision] == 'true')

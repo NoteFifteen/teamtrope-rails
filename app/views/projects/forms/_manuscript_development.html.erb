@@ -1,1 +1,27 @@
-  
+<!-- Manuscript Development -->
+<div class="container">
+    <h1>Manuscript Development</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <%= simple_form_for @project, 
+                  url: url_for(controller: 'projects', action: 'man_dev', id: @project), 
+                  html: { id: 'man_dev' } do | f | %>
+        <%= f.error_notification %>
+        <%= f.simple_fields_for :man_dev, (f.object.approve_blurb.nil?)? f.object.build_man_dev : 
+            f.object.man_dev do | man_dev | %>
+            <label>Is Manuscript Complete? *</label>
+            <%= man_dev.collection_radio_buttons :man_dev_decision,
+                                           [[true, 'Yes'],
+                                            [false, 'No']],
+                                           :first, :last,
+                                           :item_wrapper_tag => 'div',
+                                           :item_wrapper_class => 'radio'
+            %>
+            <% end %>
+            <br/>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+            <%= f.submit 'Submit' %>
+        <% end %>
+      </div>
+    </div>
+</div>

@@ -22,6 +22,7 @@ class Project < ActiveRecord::Base
   has_many :genres, through: :book_genres, source: :genre
   has_one  :kdp_select_enrollment, dependent: :destroy
   has_one  :layout, dependent: :destroy
+  has_one  :man_dev, dependent: :destroy
   has_many :marketing_expenses, dependent: :destroy
   has_one  :manuscript, dependent: :destroy
   has_many :media_kits, dependent: :destroy
@@ -45,6 +46,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :final_manuscript, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :kdp_select_enrollment, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :layout, reject_if: :all_blank, allow_destroy: false
+  accepts_nested_attributes_for :man_dev, reject_if: :all_blank, allow_destroy: false
   accepts_nested_attributes_for :media_kits, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :marketing_expenses, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :manuscript, reject_if: :all_blank, allow_destroy: true
@@ -86,6 +88,9 @@ class Project < ActiveRecord::Base
 
   # Not an actual column, but used in the ProjectsController
   attr_accessor :cover_art_approval_decision
+
+  # Not an actual column, but used in the ProjectsController
+  attr_accessor :man_dev_decision
 
   # mainly used for debugging purposes.
   # Returns the current_task for a particular workflow

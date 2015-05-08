@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @man_dev.project %>
+</p>
+
+<p>
+  <strong>Man dev decision:</strong>
+  <%= @man_dev.man_dev_decision %>
+</p>
+
+<p>
+  <strong>Man dev end date:</strong>
+  <%= @man_dev.man_dev_end_date %>
+</p>
+
+<%= link_to 'Edit', edit_man_dev_path(@man_dev) %> |
+<%= link_to 'Back', man_devs_path %>

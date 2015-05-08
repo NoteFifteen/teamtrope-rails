@@ -1,0 +1,2 @@
+module ManDevsHelper
+end

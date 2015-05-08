@@ -1,0 +1,13 @@
+<%= simple_form_for(@man_dev) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :project %>
+    <%= f.input :man_dev_decision %>
+    <%= f.input :man_dev_end_date %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

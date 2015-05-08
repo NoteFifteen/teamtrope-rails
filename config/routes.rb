@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :man_devs
+
   resources :document_import_queues
 
   resources :approve_blurbs
@@ -58,6 +60,7 @@ Rails.application.routes.draw do
   match '/projects/kdp_select/:id',               to: 'projects#kdp_select',               via: 'patch'
   match '/projects/kdp_update/:id',               to: 'projects#kdp_update',               via: 'patch'
   match '/projects/layout_upload/:id',            to: 'projects#layout_upload',            via: 'patch'
+  match '/projects/man_dev/:id',                  to: 'projects#man_dev',                  via: 'patch'
   match '/projects/marketing_expense/:id',        to: 'projects#marketing_expense',        via: 'patch'
   match '/projects/marketing_release_date/:id',   to: 'projects#marketing_release_date',   via: 'patch'
   match '/projects/media_kit/:id',                to: 'projects#media_kit',                via: 'patch'
