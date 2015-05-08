@@ -7,7 +7,7 @@
                   url: url_for(controller: 'projects', action: 'man_dev', id: @project), 
                   html: { id: 'man_dev' } do | f | %>
         <%= f.error_notification %>
-        <%= f.simple_fields_for :man_dev, (f.object.approve_blurb.nil?)? f.object.build_man_dev : 
+        <%= f.simple_fields_for :man_dev, (f.object.man_dev.nil?)? f.object.build_man_dev :
             f.object.man_dev do | man_dev | %>
             <label>Is Manuscript Complete? *</label>
             <%= man_dev.collection_radio_buttons :man_dev_decision,
