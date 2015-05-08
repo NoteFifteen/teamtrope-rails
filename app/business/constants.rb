@@ -32,7 +32,7 @@ module Constants
   ]
 
   DefaultContentTypeImageParams = [
-    :content_type => { content_type: ['image/jpeg', 'image/pjpeg'] },
+    :content_type => { content_type: ['image/jpeg', 'image/pjpeg', 'application/pdf'] },
     :file_name => { :matches => [/jpe?g\Z/i] },
     :size => DefaultSizeIn
   ]

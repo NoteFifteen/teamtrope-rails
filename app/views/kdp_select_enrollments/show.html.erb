@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= link_to @kdp_select_enrollment.project.title, @kdp_select_enrollment.project unless @kdp_select_enrollment.project.nil? %>
+</p>
+
+<p>
+  <strong>Member:</strong>
+  <%= link_to @kdp_select_enrollment.member.name, @kdp_select_enrollment.member.name %>
+</p>
+
+<p>
+  <strong>Enrollment date:</strong>
+  <%= @kdp_select_enrollment.enrollment_date %>
+</p>
+
+<p>
+  <strong>Update type:</strong>
+  <%= @kdp_select_enrollment.update_type %>
+</p>
+
+<p>
+  <strong>Update data:</strong>
+  <%= @kdp_select_enrollment.update_data %>
+</p>
+
+<%= link_to 'Edit', edit_kdp_select_enrollment_path(@kdp_select_enrollment) %> |
+<%= link_to 'Back', kdp_select_enrollments_path %>

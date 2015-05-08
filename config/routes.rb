@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :kdp_select_enrollments
+
   resources :man_devs
 
   resources :document_import_queues
