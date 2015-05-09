@@ -210,7 +210,7 @@ class ProjectMailer < ActionMailer::Base
   end
 
 
-  # Marketing Release Date 
+  # Marketing Release Date
   def marketing_release_date(project, current_user, release_date)
     @project = project
     @current_user = current_user
@@ -470,7 +470,10 @@ class ProjectMailer < ActionMailer::Base
     tokens = {}
 
     # All types use these values
-    tokens.store('Promotion Type', PriceChangePromotion::PROMOTION_TYPES[promo.type_mask][1])
+
+    # converting Array of Arrays into a hash per stackoverflow
+    # http://stackoverflow.com/questions/39567/what-is-the-best-way-to-convert-an-array-to-a-hash-in-ruby
+    tokens.store('Promotion Type', Hash[*PriceChangePromotion::PROMOTION_TYPES.flatten(1)][promo.type.first])
     tokens.store('Start Date', promo.start_date)
 
     case promo.type.first
@@ -493,7 +496,7 @@ class ProjectMailer < ActionMailer::Base
         tokens.store('Promotion Price', '$' + promo.price_promotion.to_s)
     end
 
-    user_subject = "Blog Tour from #{current_user.name} for #{project.title}"
+    user_subject = "New Free/Price Promo from #{current_user.name} for #{project.title}"
     admin_subject = "New " + user_subject
 
     send_email_message('price_promotion', tokens, get_project_recipient_list(@project), user_subject)

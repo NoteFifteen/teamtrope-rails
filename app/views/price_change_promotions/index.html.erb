@@ -22,7 +22,7 @@
         <td><%= price_change_promotion.end_date %></td>
         <td><%= price_change_promotion.price_promotion %></td>
         <td><%= price_change_promotion.price_after_promotion %></td>
-        <td><%= price_change_promotion.type.humanize %></td>
+        <td><%= price_change_promotion.type.map(&:humanize).join(",") %></td>
         <td><%= price_change_promotion.sites %></td>
         <td><%= price_change_promotion.parse_ids %></td>
         <td><%= link_to price_change_promotion.project.title, price_change_promotion.project %></td>
