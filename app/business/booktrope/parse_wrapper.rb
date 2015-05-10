@@ -187,10 +187,13 @@ module Booktrope
 
       case control_number.parse_id
         when String
-          book = prepare_book(control_number.parse_id)
+          # In order to edit an existing record on parse we must load it
+          # so we pass true to prepare_book to fetch the record out of parse.
+          book = prepare_book(control_number.parse_id, true)
         else
           book = Parse::Object.new("Book")
       end
+
 
       # Iterate through the Model's attributes and send
       # over the ones that are populated.
