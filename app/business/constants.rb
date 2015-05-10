@@ -70,6 +70,7 @@ module Constants
   end
 
   AdminProjectsIndexFilters = {
+    all: '',
     manuscript_development: 'Manuscript Development',
     upload_layout: 'Upload Layout',
     approve_cover: 'Approve Cover',

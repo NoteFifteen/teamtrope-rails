@@ -10,6 +10,7 @@
                 <ul class="sub-menu">
 
                   <li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to "* Help *", 'https://teamtrope.com/project-status-and-grid-explanation/'%></li>
+                  <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to "My Books", projects_path %></li>
                   <% Constants::ProjectsIndexFilters.each do | key, value | %>
                   <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to key.to_s.humanize.gsub(/_/," "), projects_path(show: key) %></li>
                   <% end %>
