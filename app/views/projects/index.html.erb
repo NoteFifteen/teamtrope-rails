@@ -46,16 +46,13 @@
       </tr>
     <% end %>
   </table>
-  <% if (!params[:show].nil? && params[:show] == "all" && @projects.count > 2000) ||
-    (!params[:show].try(:empty?) && params[:show] != "all" && @projects.count > 500) %>
+  <% if(@projects.count > 500) %>
     <%= will_paginate @projects %>
-  <% else %>
-    <%= use_datatable_pagination = true %>
   <% end %>
   <script>
   $("#ProjectListTable").DataTable({
 
-      <% if use_datatable_pagination %>
+      <% if(@projects.count < 500) %>
         "pageLength" : 100
       <% else %>
         "ordering": false,
