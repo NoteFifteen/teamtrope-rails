@@ -29,6 +29,17 @@ class PriceChangePromotion < ActiveRecord::Base
   }
 
   before_save {
+    unless self.end_date.nil?
+      if self.start_date.year == self.end_date.year &&
+        self.start_date.month == self.end_date.month &&
+        self.start_date.day == self.end_date.day
+        self.end_date = self.end_date + 1.day
+      end
+    end
+    true
+  }
+
+  before_save {
 
     if ! project.control_number.nil?
 

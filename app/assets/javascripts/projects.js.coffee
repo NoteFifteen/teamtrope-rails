@@ -141,10 +141,10 @@ jQuery ->
         required: true
       },
       'project[price_change_promotions_attributes][0][start_date]': {
-        required: true
+        required: false
       },
       'project[price_change_promotions_attributes][0][end_date]': {
-        required: true
+        required: false
       },
       'project[price_change_promotions_attributes][0][price_promotion]': {
         required: true
