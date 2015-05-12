@@ -9,5 +9,7 @@
 Original Synopsis:<br/>
 <div class='entry'>
   <%= @project.synopsis.html_safe %>
+
 </div><!-- end of entry -->
 <% end %>
+<%= render @project.manuscript unless @project.manuscript.nil? %>
