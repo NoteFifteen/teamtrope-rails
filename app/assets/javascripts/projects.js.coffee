@@ -105,6 +105,7 @@ jQuery ->
 
   $(field).change (event) =>
     if field.is(':checked')
+      $(".submit_button").slideDown()
       field_value = $(selector + ":checked")
 
       switch field_value.val()
