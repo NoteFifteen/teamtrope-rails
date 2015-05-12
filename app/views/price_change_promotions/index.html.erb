@@ -1,16 +1,17 @@
-<h1>Listing price_change_promotions</h1>
+<h1>Price Change Promotions</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Start date</th>
-      <th>End date</th>
-      <th>Price promotion</th>
-      <th>Price after promotion</th>
-      <th>Type</th>
-      <th>Sites</th>
-      <th>Parse IDs</th>
       <th>Project</th>
+      <th>Type</th>
+      <th>Start Date</th>
+      <th>Price promotion</th>
+      <th>End Date</th>
+      <th>Price after promotion</th>
+      <th>Sites</th>
+      <th>Start Date Parse ID(s)</th>
+      <th>End Date Parse ID(s)</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,14 +19,15 @@
   <tbody>
     <% @price_change_promotions.each do |price_change_promotion| %>
       <tr>
-        <td><%= price_change_promotion.start_date %></td>
-        <td><%= price_change_promotion.end_date %></td>
-        <td><%= price_change_promotion.price_promotion %></td>
-        <td><%= price_change_promotion.price_after_promotion %></td>
-        <td><%= price_change_promotion.type.map(&:humanize).join(",") %></td>
-        <td><%= price_change_promotion.sites %></td>
-        <td><%= price_change_promotion.parse_ids %></td>
         <td><%= link_to price_change_promotion.project.title, price_change_promotion.project %></td>
+        <td><%= price_change_promotion.type.map(&:humanize).join(",") %></td>
+        <td><nobr><%= price_change_promotion.start_date %></nobr></td>
+        <td><%= price_change_promotion.price_promotion %></td>
+        <td><nobr><%= price_change_promotion.end_date %></nobr></td>
+        <td><%= price_change_promotion.price_after_promotion %></td>
+        <td><%= price_change_promotion.sites.map(&:humanize).join(", ") %></td>
+        <td><%= price_change_promotion.parse_ids["start_ids"].gsub(/,/, ",<br />").html_safe unless price_change_promotion.parse_ids.nil? || price_change_promotion.parse_ids["start_ids"].nil? %></td>
+        <td><%= price_change_promotion.parse_ids["end_ids"].gsub(/,/, ", <br />").html_safe unless price_change_promotion.parse_ids.nil? || price_change_promotion.parse_ids["end_ids"].nil? %></td>
         <td><%= link_to 'Show', price_change_promotion %></td>
         <td><%= link_to 'Edit', edit_price_change_promotion_path(price_change_promotion) %></td>
         <td><%= link_to 'Destroy', price_change_promotion, method: :delete, data: { confirm: 'Are you sure?' } %></td>

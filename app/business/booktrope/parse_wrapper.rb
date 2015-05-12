@@ -139,6 +139,7 @@ module Booktrope
         ParseWrapper.request do
           queue_entry = Parse::Query.new(PriceChangeQueue).eq("objectId", parse_key).get.first
 
+          queue_entry["title"] = book["title"]
           queue_entry["price"] = price.to_f
           queue_entry["status"] = 0
           queue_entry["changeDate"] = Parse::Date.new(date)

@@ -1,22 +1,44 @@
 <%= simple_form_for(@price_change_promotion) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="gf_browser_safari gform_wrapper">
+    <% if  params[:action] == "new" %>
+
+      <%= f.association :project,
+            include_blank: 'Select a Project',
+            label: "Project: ",
+            input_html: {
+            class: 'chosen-select',
+            id: 'projects'
+            }
+      %>
+
+      <label>Type</label>
+      <%= f.collection_radio_buttons :type,PriceChangePromotion::PROMOTION_TYPES, :first, :last,
+              collection_wrapper_tag: 'ul',
+              item_wrapper_tag: 'li' %>
+
+    <% end %>
     <%= f.input :start_date, as: :date %>
-		<%= hidden_field_tag "price_change_promotion[start_date(4i)]", "8" %>
-		<%= hidden_field_tag "price_change_promotion[start_date(5i)]", "0" %>
-		<%= hidden_field_tag "price_change_promotion[start_date(6i)]", "0" %>    
+    <%= hidden_field_tag "price_change_promotion[start_date(4i)]", "8" %>
+    <%= hidden_field_tag "price_change_promotion[start_date(5i)]", "0" %>
+    <%= hidden_field_tag "price_change_promotion[start_date(6i)]", "0" %>
+    <%= f.input :price_promotion, label: "Promotional Price" %>
     <%= f.input :end_date, as: :date %>
-		<%= hidden_field_tag "price_change_promotion[end_date(4i)]", "7" %>
-		<%= hidden_field_tag "price_change_promotion[end_date(5i)]", "59" %>
-		<%= hidden_field_tag "price_change_promotion[end_date(6i)]", "59" %>	    
-    
-    <%= f.input :price_promotion %>
-    <%= f.input :price_after_promotion %>
-    <%= f.input :type_mask %>
-    <%= f.input :sites %>
-    <%= f.association :project %>
-  </div>
+    <%= hidden_field_tag "price_change_promotion[end_date(4i)]", "7" %>
+    <%= hidden_field_tag "price_change_promotion[end_date(5i)]", "59" %>
+    <%= hidden_field_tag "price_change_promotion[end_date(6i)]", "59" %>
+    <%= f.input :price_after_promotion, label: "Price After Promotion" %>
+
+<!--     <% if params[:action] == "new" %>
+    <label>Sites:</label>
+    <%= f.collection_check_boxes :sites, PriceChangePromotion::SITES,
+        :first, :last,
+        collection_wrapper_tag: 'ul',
+        item_wrapper_tag: 'li'
+    %>
+    <% end %>
+ -->  </div>
 
   <div class="form-actions">
     <%= f.button :submit %>

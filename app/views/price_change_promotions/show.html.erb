@@ -1,4 +1,9 @@
-<p id="notice"><%= notice %></p>
+<h1>Price Change Promotion for: <%= @price_change_promotion.project.title %></h1>
+
+<p>
+  <strong>Project:</strong>
+  <%= link_to @price_change_promotion.project.title, @price_change_promotion.project %>
+</p>
 
 <p>
   <strong>Start date:</strong>
@@ -21,25 +26,28 @@
 </p>
 
 <p>
-  <strong>Type mask:</strong>
-  <%= @price_change_promotion.type_mask %>
+  <strong>Type</strong>
+  <%= @price_change_promotion.type.map(&:humanize).join(",") %>
 </p>
 
 <p>
   <strong>Sites:</strong>
-  <%= @price_change_promotion.sites %>
+  <%= @price_change_promotion.sites.join(", ") %>
 </p>
 
 <p>
-  <strong>Project:</strong>
-  <%= @price_change_promotion.project %>
-</p>
+  <strong>Parse ID(s)</strong><br />
 
-<p>
-	<% @price_change_promotion.parse_ids.each do | key, value | %>
-		<%= key %>
-		
-	<% end %>
+  <% unless @price_change_promotion.parse_ids.nil? %>
+    <% @price_change_promotion.parse_ids.each do | key, value | %>
+      <strong><%= key.humanize %></strong>
+      <ul>
+        <% value.split(",").each do | parse_id | %>
+          <li><%= parse_id %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_price_change_promotion_path(@price_change_promotion) %> |

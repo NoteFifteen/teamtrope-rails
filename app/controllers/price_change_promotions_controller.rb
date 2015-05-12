@@ -1,4 +1,6 @@
 class PriceChangePromotionsController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_price_change_promotion, only: [:show, :edit, :update, :destroy]
 
   # GET /price_change_promotions
@@ -69,6 +71,6 @@ class PriceChangePromotionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def price_change_promotion_params
-      params.require(:price_change_promotion).permit(:start_date, :end_date, :price_promotion, :price_after_promotion, :type_mask, :sites, :project_id)
+      params.require(:price_change_promotion).permit(:start_date, :end_date, :price_promotion, :price_after_promotion, :type, :sites, :project_id)
     end
 end
