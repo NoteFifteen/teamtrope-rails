@@ -6,7 +6,8 @@ module ProjectsHelper
     @grid_title = "The Grid"
     unless filter_by.nil? || !filters.has_key?(filter_by.to_sym)
       if filter_by.to_sym == :all
-        @projects = Project.page(params[:page]) if Project.count > 500
+        #@projects = Project.page(params[:page]) if Project.count > 500
+        @projects = nil
         @projects ||= Project.all
       else
         @grid_title =  filter_by.to_s.humanize.gsub(/_/," ")

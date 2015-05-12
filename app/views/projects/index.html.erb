@@ -47,7 +47,7 @@
     <% end %>
   </table>
   <% if(@projects.count > 500) %>
-    <%= will_paginate @projects %>
+    <%#= will_paginate @projects %>
   <% end %>
   <script>
   $("#ProjectListTable").DataTable({

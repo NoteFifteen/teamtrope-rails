@@ -1,0 +1,54 @@
+<% provide(:title, "The Grid") %>
+<div class="page" id="blog-page" role="main">
+  <h2>The Grid (<%= @project_grid_table_rows.count %>)</h2>
+  <%= link_to "New", new_project_path %><br /><br />
+  <script type="text/javascript" async="">
+    function toggleTable1() {
+    var lTable = document.getElementById("projectGridTable");
+    lTable.style.display = (lTable.style.display == "table") ? "none" : "table";}
+  </script>
+  <table id="projectGridTable" class="projectGridTable">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>Editor</th>
+        <th>Proofreader</th>
+        <th>Project Manager</th>
+        <th>Marketing Manager</th>
+        <th>Cover Designer</th>
+        <th>Imprint</th>
+        <th>Production</th>
+        <th>Design</th>
+        <th>Marketing</th>
+        <th>Teamroom Link</th>
+      </tr>
+    </thead>
+
+    <% @project_grid_table_rows.each do | row | %>
+    <tr>
+      <td><%= link_to row.title, row.project %></td>
+      <td><%= row.author %></td>
+      <td><%= row.genre %></td>
+      <td><%= row.editor %></td>
+      <td><%= row.proofreader %></td>
+      <td><%= row.project_manager %></td>
+      <td><%= row.book_manager %></td>
+      <td><%= row.cover_designer %></td>
+      <td><%= row.imprint %></td>
+      <td><%= row.production_task_name %></td>
+      <td><%= row.design_task_name %></td>
+      <td><%= row.marketing_task_name %></td>
+      <td><%= link_to "Teamroom Link", row.teamroom_link %></td>
+    </tr>
+    <% end %>
+
+  </table>
+  <script>
+  $("#projectGridTable").DataTable({
+        "pageLength" : 100
+  });
+  </script>
+  <br />
+</div>

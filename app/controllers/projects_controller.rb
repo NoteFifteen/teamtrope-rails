@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
 
   before_action :signed_in_user #, only: [:show, :index, :destroy, :edit]
-  before_action :set_project, except: [:create, :new, :index]
+  before_action :set_project, except: [:create, :new, :index, :grid_view]
 
   include ProjectsHelper
 
@@ -57,6 +57,9 @@ class ProjectsController < ApplicationController
     @users = User.all
   end
 
+  def grid_view
+    @project_grid_table_rows = ProjectGridTableRow.includes(:project).all.order(title: :asc)
+  end
 
   # form actions
   # TODO: form_data is now saved using to_s instead of passing the params array.
