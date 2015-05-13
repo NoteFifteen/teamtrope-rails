@@ -1,8 +1,9 @@
+<p><b>Approved by: <%= @current_user.name %></b></p>
 <p><b>Layout Approval Date: <%= @project.layout.layout_approved_date %></b></p>
 
 <% if(@project.layout.layout_approved == 'approved_revisions') %>
-
     <%= render 'layout_approval_list_table' %>
-
+<% else %>
+    <p>Layout approved with no changes requested.</p>
 <% end %>
 <br>
