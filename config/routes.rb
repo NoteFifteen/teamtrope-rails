@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :print_corners
+
   resources :kdp_select_enrollments
 
   resources :man_devs
@@ -70,6 +72,7 @@ Rails.application.routes.draw do
   match '/projects/media_kit/:id',                to: 'projects#media_kit',                via: 'patch'
   match '/projects/original_manuscript/:id',      to: 'projects#original_manuscript',      via: 'patch'
   match '/projects/price_promotion/:id',          to: 'projects#price_promotion',          via: 'patch'
+  match '/projects/print_corner_request/:id',     to: 'projects#print_corner_request',     via: 'patch'
   match '/projects/proofed_manuscript/:id',       to: 'projects#proofed_manuscript',       via: 'patch'
   match '/projects/publish_book/:id',             to: 'projects#publish_book',             via: 'patch'
   match '/projects/remove_team_member/:id',       to: 'projects#remove_team_member',       via: 'patch'

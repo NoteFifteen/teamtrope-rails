@@ -1,0 +1,63 @@
+<h1>Listing print_corners</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>User</th>
+      <th>Order type</th>
+      <th>First order</th>
+      <th>Additional order</th>
+      <th>Over 125</th>
+      <th>Billing acceptance</th>
+      <th>Quantity</th>
+      <th>Has author profile</th>
+      <th>Has marketing plan</th>
+      <th>Shipping recipient</th>
+      <th>Shipping address street 1</th>
+      <th>Shipping address street 2</th>
+      <th>Shipping address city</th>
+      <th>Shipping address state</th>
+      <th>Shipping address zip</th>
+      <th>Marketing plan link</th>
+      <th>Marketing copy message</th>
+      <th>Contact phone</th>
+      <th>Expedite instructions</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @print_corners.each do |print_corner| %>
+      <tr>
+        <td><%= print_corner.project %></td>
+        <td><%= print_corner.user %></td>
+        <td><%= print_corner.order_type %></td>
+        <td><%= print_corner.first_order %></td>
+        <td><%= print_corner.additional_order %></td>
+        <td><%= print_corner.over_125 %></td>
+        <td><%= print_corner.billing_acceptance %></td>
+        <td><%= print_corner.quantity %></td>
+        <td><%= print_corner.has_author_profile %></td>
+        <td><%= print_corner.has_marketing_plan %></td>
+        <td><%= print_corner.shipping_recipient %></td>
+        <td><%= print_corner.shipping_address_street_1 %></td>
+        <td><%= print_corner.shipping_address_street_2 %></td>
+        <td><%= print_corner.shipping_address_city %></td>
+        <td><%= print_corner.shipping_address_state %></td>
+        <td><%= print_corner.shipping_address_zip %></td>
+        <td><%= print_corner.marketing_plan_link %></td>
+        <td><%= print_corner.marketing_copy_message %></td>
+        <td><%= print_corner.contact_phone %></td>
+        <td><%= print_corner.expedite_instructions %></td>
+        <td><%= link_to 'Show', print_corner %></td>
+        <td><%= link_to 'Edit', edit_print_corner_path(print_corner) %></td>
+        <td><%= link_to 'Destroy', print_corner, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Print corner', new_print_corner_path %>

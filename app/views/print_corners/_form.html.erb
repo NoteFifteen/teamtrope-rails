@@ -1,0 +1,30 @@
+<%= simple_form_for(@print_corner) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :project %>
+    <%= f.association :user %>
+    <%= f.input :order_type %>
+    <%= f.input :first_order %>
+    <%= f.input :additional_order %>
+    <%= f.input :over_125 %>
+    <%= f.input :billing_acceptance %>
+    <%= f.input :quantity %>
+    <%= f.input :has_author_profile %>
+    <%= f.input :has_marketing_plan %>
+    <%= f.input :shipping_recipient %>
+    <%= f.input :shipping_address_street_1 %>
+    <%= f.input :shipping_address_street_2 %>
+    <%= f.input :shipping_address_city %>
+    <%= f.input :shipping_address_state %>
+    <%= f.input :shipping_address_zip %>
+    <%= f.input :marketing_plan_link %>
+    <%= f.input :marketing_copy_message %>
+    <%= f.input :contact_phone %>
+    <%= f.input :expedite_instructions %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
