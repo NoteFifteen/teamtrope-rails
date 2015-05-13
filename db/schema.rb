@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150508135349) do
+ActiveRecord::Schema.define(version: 20150511215212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,20 @@ ActiveRecord::Schema.define(version: 20150508135349) do
   end
 
   add_index "box_credentials", ["anti_forgery_token"], name: "index_box_credentials_on_anti_forgery_token", unique: true, using: :btree
+
+  create_table "comments", force: true do |t|
+    t.text     "content"
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["post_id", "created_at"], name: "index_comments_on_post_id_and_created_at", using: :btree
+  add_index "comments", ["post_id", "user_id", "created_at"], name: "index_comments_on_post_id_and_user_id_and_created_at", unique: true, using: :btree
+  add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
+  add_index "comments", ["user_id", "created_at"], name: "index_comments_on_user_id_and_created_at", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "control_numbers", force: true do |t|
     t.integer  "project_id"
@@ -350,6 +364,31 @@ ActiveRecord::Schema.define(version: 20150508135349) do
 
   add_index "phases", ["project_view_id"], name: "index_phases_on_project_view_id", using: :btree
 
+  create_table "post_tags", force: true do |t|
+    t.integer  "post_id"
+    t.integer  "tag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "post_tags", ["post_id", "tag_id"], name: "index_post_tags_on_post_id_and_tag_id", unique: true, using: :btree
+
+  create_table "posts", force: true do |t|
+    t.string   "title"
+    t.datetime "post_date"
+    t.integer  "author_id"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "featured_image_file_name"
+    t.string   "featured_image_content_type"
+    t.integer  "featured_image_file_size"
+    t.datetime "featured_image_updated_at"
+  end
+
+  add_index "posts", ["post_date", "title", "author_id"], name: "index_posts_on_post_date_and_title_and_author_id", using: :btree
+  add_index "posts", ["post_date", "title"], name: "index_posts_on_post_date_and_title", using: :btree
+
   create_table "price_change_promotions", force: true do |t|
     t.datetime "start_date"
     t.datetime "end_date"
@@ -364,6 +403,35 @@ ActiveRecord::Schema.define(version: 20150508135349) do
   end
 
   add_index "price_change_promotions", ["project_id"], name: "index_price_change_promotions_on_project_id", using: :btree
+
+  create_table "print_corners", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.string   "order_type"
+    t.boolean  "first_order"
+    t.boolean  "additional_order"
+    t.boolean  "over_125"
+    t.boolean  "billing_acceptance"
+    t.integer  "quantity"
+    t.boolean  "has_author_profile"
+    t.boolean  "has_marketing_plan"
+    t.string   "shipping_recipient"
+    t.string   "shipping_address_street_1"
+    t.string   "shipping_address_street_2"
+    t.string   "shipping_address_city"
+    t.string   "shipping_address_state"
+    t.integer  "shipping_address_zip"
+    t.string   "shipping_address_country"
+    t.string   "marketing_plan_link"
+    t.text     "marketing_copy_message"
+    t.string   "contact_phone"
+    t.text     "expedite_instructions"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "print_corners", ["project_id"], name: "index_print_corners_on_project_id", using: :btree
+  add_index "print_corners", ["user_id"], name: "index_print_corners_on_user_id", using: :btree
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"
@@ -518,6 +586,15 @@ ActiveRecord::Schema.define(version: 20150508135349) do
 
   add_index "tabs", ["phase_id"], name: "index_tabs_on_phase_id", using: :btree
   add_index "tabs", ["task_id"], name: "index_tabs_on_task_id", using: :btree
+
+  create_table "tags", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tags", ["id", "name"], name: "index_tags_on_id_and_name", using: :btree
+  add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
 
   create_table "task_performers", force: true do |t|
     t.integer  "task_id"

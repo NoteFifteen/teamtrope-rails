@@ -55,6 +55,7 @@ class ProjectsController < ApplicationController
   def show
     @activities = PublicActivity::Activity.order("created_at DESC").where(trackable_type: "Project", trackable_id: @project)
     @users = User.all
+    @current_user = current_user
   end
 
 
@@ -650,6 +651,20 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def print_corner_request
+    if @project.update(update_project_params)
+      update_current_task
+      @project.create_activity :marketing_expense, owner: current_user,
+                               parameters: { text: 'Submitted a Print Copy Request', form_data: params[:project].to_s}
+      flash[:success] = 'Submitted Print Copy Request.'
+      redirect_to @project
+      ProjectMailer.print_corner_request(@project, current_user)
+    else
+      flash[:danger] = 'There was a problem adding your Print Copy request.  Please review.'
+      render 'show'
+    end
+  end
+
   def download_original_manuscript
     redirect_to @project.manuscript.original.expiring_url(*Constants::DefaultLinkExpiration)
   end
@@ -747,7 +762,10 @@ class ProjectsController < ApplicationController
             :paperback_cover_type ],
       :published_file_attributes => [:publication_date, :mobi, :epub, :pdf],
       :status_updates_attributes => [:type, :status],
-      :team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy]
+      :team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy],
+      :print_corners_attributes => [:id, :user_id, :order_type, :first_order, :additional_order, :over_125, :billing_acceptance, :quantity, :has_author_profile, :has_marketing_plan,
+                         :shipping_recipient, :shipping_address_street_1, :shipping_address_street_2, :shipping_address_city, :shipping_address_state, :shipping_address_zip,
+                         :shipping_address_country, :marketing_plan_link, :marketing_copy_message, :contact_phone, :expedite_instructions ]
       )
   end
 

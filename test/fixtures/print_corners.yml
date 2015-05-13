@@ -1,0 +1,45 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project_id: 
+  user_id: 
+  order_type: MyString
+  first_order: false
+  additional_order: false
+  over_125: false
+  billing_acceptance: false
+  quantity: 1
+  has_author_profile: false
+  has_marketing_plan: false
+  shipping_recipient: MyString
+  shipping_address_street_1: MyString
+  shipping_address_street_2: MyString
+  shipping_address_city: MyString
+  shipping_address_state: MyString
+  shipping_address_zip: 1
+  marketing_plan_link: MyString
+  marketing_copy_message: MyText
+  contact_phone: MyString
+  expedite_instructions: MyText
+
+two:
+  project_id: 
+  user_id: 
+  order_type: MyString
+  first_order: false
+  additional_order: false
+  over_125: false
+  billing_acceptance: false
+  quantity: 1
+  has_author_profile: false
+  has_marketing_plan: false
+  shipping_recipient: MyString
+  shipping_address_street_1: MyString
+  shipping_address_street_2: MyString
+  shipping_address_city: MyString
+  shipping_address_state: MyString
+  shipping_address_zip: 1
+  marketing_plan_link: MyString
+  marketing_copy_message: MyText
+  contact_phone: MyString
+  expedite_instructions: MyText
