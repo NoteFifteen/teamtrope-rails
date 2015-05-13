@@ -1,0 +1,65 @@
+<h1>Listing Published Files</h1>
+
+<table id="published_files_table">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Updated</th>
+      <th>.mobi</th>
+      <th>.epub</th>
+      <th>.pdf</th>
+      <th>Publication Date</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @published_files.each do |published_file| %>
+      <tr>
+        <td><%= link_to published_file.project.title, project_path(published_file.project) %></td>
+
+        <td><%= published_file.updated_at %></td>
+
+        <% if ! published_file.mobi_file_name.nil? %>
+            <td><%= link_to published_file.try(:mobi_file_name), url_for(controller: 'projects', action: 'download_published_file_mobi', id: published_file.project, only_path: false) %></td>
+        <% else %>
+            <td> - </td>
+        <% end %>
+
+        <% if ! published_file.epub_file_name.nil? %>
+            <td><%= link_to published_file.try(:epub_file_name), url_for(controller: 'projects', action: 'download_published_file_epub', id: published_file.project, only_path: false) %></td>
+        <% else %>
+            <td> - </td>
+        <% end %>
+
+        <% if ! published_file.pdf_file_name.nil? %>
+            <td><%= link_to published_file.try(:pdf_file_name), url_for(controller: 'projects', action: 'download_published_file_pdf', id: published_file.project, only_path: false) %></td>
+        <% else %>
+            <td> - </td>
+        <% end %>
+
+        <td><%= published_file.publication_date %></td>
+
+        <td><%= link_to 'Show', published_file %></td>
+        <td><%= link_to 'Edit', edit_published_file_path(published_file) %></td>
+        <!--
+        <td><%=
+            # link_to 'Destroy', published_file, method: :delete, data: { confirm: 'Are you sure?' }
+        %></td>
+        -->
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%=
+    # Disabled because they should add through the project for now
+#    link_to 'New Published file', new_published_file_path
+%>
+
+<script>
+  $("#published_files_table").DataTable({ "pageLength" : 100 });
+</script>

@@ -124,6 +124,7 @@ Rails.application.routes.draw do
   resources :imprints
   resources :status_updates
   resources :price_change_promotions
+  resources :published_files
 
 
   # Example of regular route:
