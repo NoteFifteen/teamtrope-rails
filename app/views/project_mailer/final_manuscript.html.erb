@@ -1,1 +1,4 @@
 <p><%= @current_user.name %> has uploaded the final manuscript files for <%= @project.title %>.</p>
+
+<p>Download PDF: <%= link_to(@project.final_manuscript.pdf_file_name, url_for(controller: 'projects', action: 'download_final_manuscript_pdf', id: @project, only_path: false)) %></p>
+<p>Download Doc: <%= link_to(@project.final_manuscript.doc_file_name, url_for(controller: 'projects', action: 'download_final_manuscript_doc', id: @project, only_path: false)) %></p>
