@@ -1,0 +1,55 @@
+<h2>Showing Publication Files for <%= @published_file.project.title %></h2>
+
+<div>Project: <%= link_to @published_file.project.title, project_path(@published_file.project) %></div>
+<div>Publication Date: <%= @published_file.publication_date %></div>
+
+<table>
+  <thead>
+  <tr>
+    <th>Type</th>
+    <th>Name</th>
+    <th>Size</th>
+    <th>Updated</th>
+  </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>.mobi</td>
+        <% if ! @published_file.mobi_file_name.nil? %>
+            <td><%= link_to @published_file.mobi_file_name, url_for(controller: 'projects', action: 'download_published_file_mobi', id: @published_file.project, only_path: false) %></td>
+        <% else %>
+            <td> - </td>
+        <% end %>
+        <td><%= (! @published_file.mobi_file_size.nil?) ? @published_file.mobi_file_size : '-' %></td>
+        <td><%= (! @published_file.mobi_updated_at.nil?) ? @published_file.mobi_updated_at : '-' %></td>
+      </tr>
+
+      <tr>
+        <td>.epub</td>
+        <% if ! @published_file.epub_file_name.nil? %>
+            <td><%= link_to @published_file.epub_file_name, url_for(controller: 'projects', action: 'download_published_file_epub', id: @published_file.project, only_path: false) %></td>
+        <% else %>
+            <td> - </td>
+        <% end %>
+        <td><%= (! @published_file.epub_file_size.nil?) ? @published_file.epub_file_size : '-' %></td>
+        <td><%= (! @published_file.epub_updated_at.nil?) ? @published_file.epub_updated_at : '-' %></td>
+      </tr>
+
+      <tr>
+        <td>.pdf</td>
+        <% if ! @published_file.pdf_file_name.nil? %>
+            <td><%= link_to @published_file.pdf_file_name, url_for(controller: 'projects', action: 'download_published_file_pdf', id: @published_file.project, only_path: false) %></td>
+        <% else %>
+            <td> - </td>
+        <% end %>
+        <td><%= (! @published_file.pdf_file_size.nil?) ? @published_file.pdf_file_size : '-' %></td>
+        <td><%= (! @published_file.pdf_updated_at.nil?) ? @published_file.pdf_updated_at : '-' %></td>
+      </tr>
+
+
+  </tbody>
+</table>
+
+
+<%= link_to 'Edit', edit_published_file_path(@published_file) %> |
+<%= link_to 'Back', published_files_path %>
