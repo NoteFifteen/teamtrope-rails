@@ -212,7 +212,7 @@ module Booktrope
           when 'paperback_isbn'
             book["paperbackIsbn"] = value
             book["createspaceIsbn"] = value.gsub(/-/, '')
-            book["lightningSource"] = value.gsub(/-/, '').to_i
+            book["lightningSource"] = value.gsub(/-/, '')
           when 'epub_isbn'
             book["epubIsbn"] = value
             book["epubIsbnItunes"] = value.gsub(/-/, '')
