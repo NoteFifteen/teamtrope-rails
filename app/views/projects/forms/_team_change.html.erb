@@ -1,11 +1,17 @@
-<h1>Remove Team Member Request</h1>
+<!-- Remove Team Member Request -->
+<script>
+    var team_memberships = <%= @project.members_available_for_removal.to_json.html_safe %>;
+</script>
 
-<div class="row">
-  <div class="col-md-6">
-    <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'remove_team_member', id: @project.id),
-                         html: { id: "remove_team_member" } do |f| %>
-      <%= f.error_notification %>
-      <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+<div class="container">
+  <h1>Remove Team Member Request</h1>
+
+  <div class="row">
+    <div class="col-md-6">
+      <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'remove_team_member', id: @project.id),
+                             html: { id: "remove_team_member" } do |f| %>
+        <%= f.error_notification %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
 
         <%= f.simple_fields_for :audit_team_membership_removals, f.object.audit_team_membership_removals.build do | builder | %>
 
@@ -48,11 +54,8 @@
             </div>
         <% end %>
 
-      <%= f.submit 'Submit' %>
-    <% end %>
+        <%= f.submit 'Submit' %>
+      <% end %>
+    </div>
   </div>
 </div>
-
-<script>
-    var team_memberships = <%= @project.members_available_for_removal.to_json.html_safe %>;
-</script>

@@ -77,7 +77,7 @@ $(document).ready(function() {
         }
     });
 
-// Validator for the "Other" input box
+    // Validator for the "Other" input box
     $.validator.addMethod("otherReasonValid", function(value) {
         var checked =  $('#project_audit_team_membership_removals_attributes_0_reason_other').is(':checked');
 
@@ -89,4 +89,3 @@ $(document).ready(function() {
     }, 'Please enter a reason when selecting "Other".');
 
 });
-
