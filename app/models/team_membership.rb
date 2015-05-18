@@ -20,10 +20,8 @@ class TeamMembership < ActiveRecord::Base
       ['quality_of_work', 'Quality of work is not sufficient'],
       ['personality', 'Personality Differences'],
       ['leaving','Leaving Booktrope due to outside circumstances'],
-      ['other','<input id="team_removal_reason_otsher_input" name="team_removal_reason_other_input" type="text" value="Other">'.html_safe]
+      ['other','<input id="team_removal_reason_other_input" name="team_removal_reason_other_input" type="text" value="Other">'.html_safe]
   ]
-
-  private
 
   # The Removal Reasons in an array of arrays of reasons in ['key' => 'val'] format.  We have a key, we need the value.
   def get_removal_reason(key)
