@@ -28,7 +28,7 @@
 
     <% @projects.each do | row | %>
     <tr>
-      <td><nobr><%= link_to row.title, row.project %></nobr>
+      <td class="book-title"><%= link_to row.title, row.project %>
       <% if can? :edit, row.project %>
       | <%= link_to "Edit", edit_project_path(row.project)  %>
       <% end%>
