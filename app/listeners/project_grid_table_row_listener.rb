@@ -4,11 +4,16 @@ class ProjectGridTableRowListener
   # updates the ProjectGridTableRow entry's role column after adding or removing a member of role_id
   def modify_team_member(project, role_id)
 
+    role_name = Role.find(role_id).name.downcase.gsub(/ /, "_")
+
+    # These are not roles in the PGTR
+    return if %w( advisor agent ).include?(role_name)
+
     # getting the project_grid_table_row
     pgtr = project.project_grid_table_row
 
-    # setting the role column to a comma dilimited list fo member names for that role
-    pgtr[Role.find(role_id).name.downcase.gsub(/ /, "_")] = project.team_memberships
+    # setting the role column to a comma delimited list for member names for that role
+    pgtr[role_name] = project.team_memberships
     .where(role: role_id)
     .map(&:member)
     .map(&:name).join(", ")

@@ -124,6 +124,9 @@ class Project < ActiveRecord::Base
     available = required_roles - team_members
 
     project_type.roles.where(id: available)
+
+    project_type.roles.all
+
   end
 
   def is_team_member?(user)
@@ -143,26 +146,39 @@ class Project < ActiveRecord::Base
     end
   end
 
+  # Returns a list of all roles and each member in those roles (there may be multiples) if they've been assigned
   def team_allocations
     team = []
     project_type.required_roles.each do |rr|
 
-      role = self.send(rr.role.normalized_name.pluralize).first
-      member_name = (role.nil?) ? '' : role.member.name
-      member_percentage = (role.nil?) ? 0 : self.send(rr.role.normalized_name.pluralize).first.percentage
+      role = self.send(rr.role.normalized_name.pluralize)
 
-      team << { :role_name => rr.role.name,
-                :member_name => member_name,
-                :suggested_percentage => rr.suggested_percent,
-                :allocated_percentage => member_percentage
-             }
+      # We're excluding the optional roles here, so they don't show in the table if they haven't been added.
+      if role.count == 0 && ! %w( Advisor Agent ).include?(rr.role.name)
+        team << { :role_name => rr.role.name,
+                  :member_name => '',
+                  :suggested_percentage => rr.suggested_percent,
+                  :allocated_percentage => 0
+        }
+      else
+        role.each do |mr|
+
+          team << { :role_name => mr.role.name,
+                    :member_name => mr.member.name,
+                    :suggested_percentage => rr.suggested_percent,
+                    :allocated_percentage => mr.percentage
+          }
+        end
+      end
+
+
     end
     return team
   end
 
   def members_available_for_removal
     team_memberships.reject{|s| s.new_record? }
-                    .reject{|s| s.role.normalized_name == 'author' }
+                    .reject{|s| s.role.normalized_name == 'author' unless self.authors.count > 1}
                     .map { |member| {
                       membership_id: member.id,
                       member_name: member.member.name + ' (' + member.role.name + ')'

@@ -28,6 +28,8 @@ Role.create!([
   {name: "Editor", contract_description: 'The Editor role contract text'},
   {name: "Project Manager", contract_description: 'The Projct Manager role contract text'},
   {name: "Proofreader", contract_description: 'The Proofreader role contract text'},
+  {name: "Agent", contract_description: 'The Proofreader role contract text'},
+  {name: "Advisor", contract_description: 'The Proofreader role contract text'},
 ])
 
 workflows = {
@@ -43,7 +45,7 @@ workflows.each do | key, wf |
 end
 
 project_types = [
-  { project_type: {name: "Standard Project", team_total_percent: 70.0}, workflows: [:production, :marketing, :design], required_roles: { "Author" => { suggested_percent: 33.0 }, "Book Manager" => { suggested_percent: 20.0 }, "Cover Designer" => { suggested_percent: 4.0 }, "Editor" => { suggested_percent: 7.0 }, "Project Manager" => { suggested_percent: 4.0 }, "Proofreader" => { suggested_percent: 2.0 } } }
+  { project_type: {name: "Standard Project", team_total_percent: 70.0}, workflows: [:production, :marketing, :design], required_roles: { "Author" => { suggested_percent: 33.0 }, "Book Manager" => { suggested_percent: 20.0 }, "Cover Designer" => { suggested_percent: 4.0 }, "Editor" => { suggested_percent: 7.0 }, "Project Manager" => { suggested_percent: 4.0 }, "Proofreader" => { suggested_percent: 2.0 }, "Agent" => { suggested_percent: 0.0 }, "Advisor" => { suggested_percent: 0.0 } } }
 ]
 
 # creating project types
@@ -244,5 +246,7 @@ if Rails.env == "development"
   users.each do | u |
     user = User.create!(u)
     user.create_profile
+    user.uid = user.id
+    user.save
   end
 end

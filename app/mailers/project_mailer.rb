@@ -84,7 +84,7 @@ class ProjectMailer < ActionMailer::Base
     }
 
     user_subject = "Accept Team Member from #{@current_user.name} for #{@project.title}"
-    admin_subject = "New "" + user_subject"
+    admin_subject = "New " + user_subject
 
     send_email_message('accept_team_member', tokens, get_project_recipient_list(@project), user_subject)
     send_email_message('accept_team_member_admin', tokens, admin_1099_received_list, admin_subject)

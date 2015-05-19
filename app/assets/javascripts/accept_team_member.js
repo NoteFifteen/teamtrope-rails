@@ -20,18 +20,23 @@ Teamtrope.BuildTeam.AcceptMember.prototype.addTeamMembers = function (team_membe
 
         $.each(team_members, function() {
             if(this.role && this.role !== 'undefined') {
-                list[this.role] = {
+
+                if(! $.isArray(list[this.role])) {
+                    list[this.role] = [];
+                }
+
+                list[this.role].push({
                     id: this.id,
                     name: this.name,
                     role: this.role,
                     percentage: this.percentage
-                }
+                });
             }
         });
     }
 };
 
-Teamtrope.BuildTeam.AcceptMember.prototype.getTeamMember = function (role) {
+Teamtrope.BuildTeam.AcceptMember.prototype.getTeamMembersInRole = function (role) {
     return this.team_members[role];
 };
 
@@ -40,29 +45,48 @@ Teamtrope.BuildTeam.AcceptMember.prototype.getTeamMembers = function () {
     return ($.isPlainObject(list)) ? list : {};
 };
 
+/**
+ * Produce the lists of available members for a role, filtering out members
+ * that should not be able to participate.
+ */
 Teamtrope.BuildTeam.AcceptMember.prototype.addMembersToRole = function (role, members) {
-    var author = this.getTeamMember('author');
-    var editor = this.getTeamMember('editor');
-    var proofreader = this.getTeamMember('proofreader');
+    var authors = this.getTeamMembersInRole('author');
+    var editors = this.getTeamMembersInRole('editor');
+    var proofreaders = this.getTeamMembersInRole('proofreader');
+
+    var existing_authors = [];
+    $.merge(existing_authors, this.getIdsFromMemberList(authors));
+
+    // Proof Readers cannot be the current Author or Editor and we want to exclude any existing Proof Readers.
+    var excluded_from_proofreaders = [];
+    $.merge(excluded_from_proofreaders, this.getIdsFromMemberList(authors));
+    $.merge(excluded_from_proofreaders, this.getIdsFromMemberList(editors));
+    $.merge(excluded_from_proofreaders, this.getIdsFromMemberList(proofreaders));
+
+    // Editors cannot be the current Proof Reader and we want to exclude any existing Editors.
+    var excluded_from_editors = [];
+    $.merge(excluded_from_editors, this.getIdsFromMemberList(proofreaders));
+    $.merge(excluded_from_editors, this.getIdsFromMemberList(editors));
 
     if ($.isArray(members) && members.length > 0) {
         this.member_roles[role] = [];
 
         for(i = 0; i < members.length; i++) {
 
-            // Proof Readers cannot be the current Author or Editor
-            if(role === 'proofreaders') {
-                if(typeof author !== "undefined" && members[i].id === author.id) {
-                    continue;
-                }
-                if(typeof editor !== "undefined" && members[i].id === editor.id) {
+            if(role === 'authors') {
+                if($.inArray(members[i].id, existing_authors) !== -1) {
                     continue;
                 }
             }
 
-            // Editors cannot be the current Proof Reader
+            if(role === 'proofreaders') {
+                if($.inArray(members[i].id, excluded_from_proofreaders) !== -1) {
+                    continue;
+                }
+            }
+
             if(role === 'editors') {
-                if(typeof proofreader !== "undefined" && members[i].id === proofreader.id) {
+                if($.inArray(members[i].id, excluded_from_editors) !== -1) {
                     continue;
                 }
             }
@@ -70,6 +94,19 @@ Teamtrope.BuildTeam.AcceptMember.prototype.addMembersToRole = function (role, me
             this.member_roles[role].push(members[i]);
         }
     }
+
+    return this.member_roles;
+};
+
+Teamtrope.BuildTeam.AcceptMember.prototype.getIdsFromMemberList = function (members) {
+    var ids = [];
+    if ($.isArray(members) && members.length > 0) {
+        for (i = 0; i < members.length; i++) {
+            ids.push(members[i].id);
+        }
+    }
+
+    return ids;
 };
 
 Teamtrope.BuildTeam.AcceptMember.prototype.addRoleDefinition = function (role_name, suggested_percentage) {
@@ -86,26 +123,9 @@ Teamtrope.BuildTeam.AcceptMember.prototype.getMembersForRole = function (role) {
 };
 
 Teamtrope.BuildTeam.AcceptMember.prototype.updateMemberSelect = function () {
-    var selected_role = $(this.role_select).find('option:selected').text();
-    var member_list = [];
-
-    switch(selected_role) {
-        case 'Book Manager':
-            member_list = this.getMembersForRole('book_managers');
-            break;
-        case 'Cover Designer':
-            member_list = this.getMembersForRole('cover_designers');
-            break;
-        case 'Editor':
-            member_list = this.getMembersForRole('editors');
-            break;
-        case 'Proofreader':
-            member_list = this.getMembersForRole('proofreaders');
-            break;
-        case 'Project Manager':
-            member_list = this.getMembersForRole('project_managers');
-            break;
-    }
+    // Normalize the name & pluralize in a very simple fashion
+    var selected_role = this.normalizeName($(this.role_select).find('option:selected').text()) + "s";
+    var member_list = this.getMembersForRole(selected_role);
 
     // Necessary for scope inside the anonymous function that appends
     // options to the list
@@ -137,6 +157,10 @@ Teamtrope.BuildTeam.AcceptMember.prototype.updateMemberSelect = function () {
     memberSelect.trigger("chosen:updated");
 };
 
+Teamtrope.BuildTeam.AcceptMember.prototype.normalizeName = function (name) {
+    return name.replace(/ /g,"_").toLowerCase();
+};
+
 /**
  * Code for handling the Percentage allocation updates
  */
@@ -165,11 +189,12 @@ Teamtrope.BuildTeam.AcceptMember.PercentageCalculator.prototype.calculateTotal =
 
     // Total the percentages from the team members
     if($.isPlainObject(this.team_members)) {
-        $.each(this.team_members, function (key, val) {
-            //alert(val.name);
-            if (val.percentage && (!isNaN(parseFloat(val.percentage)))) {
-                total_percentage += val.percentage;
-            }
+        $.each(this.team_members, function (role_type, role_members) {
+            $.each(role_members, function (member) {
+                if (this.percentage && (!isNaN(parseFloat(this.percentage)))) {
+                    total_percentage += this.percentage;
+                }
+            });
         });
     }
 

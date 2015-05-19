@@ -14,6 +14,7 @@ namespace :teamtrope do
 
       # adding each role
       roles.each do | key, value |
+        next if %w( advisor agent ).include?(key.to_s)
         pgtr[key] = project.team_memberships.includes(:member).where(role_id: value).map(&:member).map(&:name).join(", ")
       end
       # adding the genres
