@@ -82,16 +82,16 @@ module Constants
 
 
   ProjectsIndexFilters = {
-    all: { task_name: 'All', workflow_name: '' },
     original_manuscript: { task_name: 'Original Manuscript', workflow_name: 'production' },
     submit_blurb: { task_name: 'Submit Blurb', workflow_name: 'marketing' },
     cover_concept: { task_name: 'Cover Concept', workflow_name: 'design' },
-    in_editing: { task_name: 'Edited Manuscript', workflow_name: 'production' },
-    in_proofreading: { task_name: 'Proofread Complete', workflow_name: 'production' },
+    in_editing: { task_name: 'In Editing', workflow_name: 'production' },
+    in_proofreading: { task_name: 'In Proofreading', workflow_name: 'production' },
     choose_style: { task_name: 'Choose Style', workflow_name: 'design' },
     final_covers: { task_name: 'Final Covers', workflow_name: 'design' },
     submit_pfs: { task_name: 'Submit PFS', workflow_name: 'marketing' },
-    published: { task_name: 'Production Complete', workflow_name: 'production'}
+    published: { task_name: 'Published', workflow_name: 'production'},
+    all: { task_name: 'All Projects', workflow_name: '' }
   }
 
 end
