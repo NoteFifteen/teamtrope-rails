@@ -365,6 +365,35 @@ ActiveRecord::Schema.define(version: 20150512061855) do
 
   add_index "price_change_promotions", ["project_id"], name: "index_price_change_promotions_on_project_id", using: :btree
 
+  create_table "print_corners", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.string   "order_type"
+    t.boolean  "first_order"
+    t.boolean  "additional_order"
+    t.boolean  "over_125"
+    t.boolean  "billing_acceptance"
+    t.integer  "quantity"
+    t.boolean  "has_author_profile"
+    t.boolean  "has_marketing_plan"
+    t.string   "shipping_recipient"
+    t.string   "shipping_address_street_1"
+    t.string   "shipping_address_street_2"
+    t.string   "shipping_address_city"
+    t.string   "shipping_address_state"
+    t.integer  "shipping_address_zip"
+    t.string   "shipping_address_country"
+    t.string   "marketing_plan_link"
+    t.text     "marketing_copy_message"
+    t.string   "contact_phone"
+    t.text     "expedite_instructions"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "print_corners", ["project_id"], name: "index_print_corners_on_project_id", using: :btree
+  add_index "print_corners", ["user_id"], name: "index_print_corners_on_user_id", using: :btree
+
   create_table "profiles", force: true do |t|
     t.integer  "user_id"
     t.string   "avatar_file_name"

@@ -16,7 +16,7 @@ Imprint.create!([
   {name: "Vox Dei"},
   {name: "Forsaken"},
   {name: "Updrift"},
-  {name: "Uprush"},  
+  {name: "Uprush"},
   {name: "Edge"}
 ])
 
@@ -103,7 +103,7 @@ tasks =  {
   :update =>                        { task: { workflow_id: nil,          next_id: nil,   rejected_task_id: nil,   partial: "update",                   name: "Update",                    icon: "icon-lightbulb",   tab_text: "Update",                    intro_video: "" ,  days_to_complete: nil }, unlocked: [], performers: ['Author', 'Book Manager', 'Project Manager']},
   :control_numbers =>               { task: { workflow_id: nil,          next_id: nil,   rejected_task_id: nil,   partial: "control_numbers",          name: "Control Numbers",           icon: "icon-cogs",        tab_text: "Ctrl No.",                  intro_video: "" ,  days_to_complete: nil }, unlocked: []},
   :activity =>                      { task: { workflow_id: nil,          next_id: nil,   rejected_task_id: nil,   partial: "activity",                 name: "Activity",                  icon: "fa-check-circle",  tab_text: "Activity",                  intro_video: "",   days_to_complete: nil }, unlocked: [], performers: ['*']},
-  
+
   :request_image =>                 { task: { workflow_id: nil,          next_id: nil,   rejected_task_id: nil,   partial: "request_image",            name: "Request Image",             icon: "icon-adjust",      tab_text: "Request Image",             intro_video: "" ,  days_to_complete: nil }, unlocked: [], performers: ['Cover Designer', 'Project Manager']},
   :add_image =>                     { task: { workflow_id: nil,          next_id: nil,   rejected_task_id: nil,   partial: "add_image",                name: "Add Image",                 icon: "icon-adjust",      tab_text: "Add Image",                 intro_video: "" ,  days_to_complete: nil }, unlocked: [], performers: []},
 
@@ -201,9 +201,13 @@ if Rails.env == "development"
   ])
 
   Project.all.each do | project |
+    pgtr = project.build_project_grid_table_row(title: project.title)
     project.project_type.workflows.each do | workflow |
       ct = project.current_tasks.create(task_id: workflow.root.id)
+      pgtr[workflow.name.downcase.gsub(/ /, "_") + "_task_id"] = workflow.root.id
+      pgtr[workflow.name.downcase.gsub(/ /, "_") + "_task_name"] = workflow.root.name
     end
+    pgtr.save
   end
 
   # turning off callbacks so we don't send CTAs when we create test TeamMemberships
