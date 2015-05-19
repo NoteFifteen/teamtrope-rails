@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, except: [:create, :new, :index, :grid_view]
 
   include ProjectsHelper
+  include Wisper::Publisher
 
   def index
     get_projects_for_index(params[:show])
@@ -26,6 +27,7 @@ class ProjectsController < ApplicationController
       flash[:success] = 'New Project Created!'
      # Need to create method to set the current tasks based on the workflow
       @project.create_workflow_tasks
+      publish(:create_project, @project)
       redirect_to @project
     else
       flash[:danger] = 'Error creating project!'
@@ -41,6 +43,7 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update(update_project_params)
+      publish(:modify_project, @project)
       flash[:success] = "Updated"
       redirect_to @project
     else
@@ -84,6 +87,8 @@ class ProjectsController < ApplicationController
     if @project.update(update_project_params)
       @project.create_activity :accept_team_member, owner: current_user,
                                parameters: { text: ' added new team member', form_data: params[:project].to_s}
+
+      publish(:modify_team_member, @project, params[:project][:team_memberships_attributes]['0'][:role_id])
       update_current_task
       Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, DateTime.parse("#{params[:effective_date][:year]}/#{params[:effective_date][:month]}/#{params[:effective_date][:day]}")
 
@@ -145,7 +150,11 @@ class ProjectsController < ApplicationController
       # Have to do this before we destroy team membership so we can show the Member Name & Role in the Notification
       ProjectMailer.remove_team_member(@project, current_user, params)
 
+
       team_membership.destroy
+
+      # publish that we destroyed the membership after we destroy it so they don't appear in the grid
+      publish(:modify_team_member, @project, audit.role_id)
 
       # Schedule update in parse for the 1st of next month or today if it's the 1st
       Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, (DateTime.now.day == 1) ? DateTime.now : DateTime.now.next_month.at_beginning_of_month
@@ -308,6 +317,9 @@ class ProjectsController < ApplicationController
     @control_number ||= @project.build_control_number
 
     if @control_number.update(update_control_number_params)
+
+      publish(:modify_imprint, @project)
+
       # Update the record in Parse
       Booktrope::ParseWrapper.update_project_control_numbers @control_number
 
@@ -771,6 +783,7 @@ class ProjectsController < ApplicationController
     unless current_task.nil? || current_task.task.next_task.nil?
       current_task.task_id = current_task.task.next_task.id
       current_task.save
+      publish(:update_task, @project, current_task.task)
     end
   end
 
@@ -779,6 +792,7 @@ class ProjectsController < ApplicationController
     unless current_task.nil? || current_task.task.rejected_task.nil?
       current_task.task_id = current_task.task.rejected_task.id
       current_task.save
+      publish(:update_task, @project, current_task.task)
     end
   end
 

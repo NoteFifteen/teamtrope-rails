@@ -81,6 +81,8 @@ gem 'hellosign-ruby-sdk', :git => "https://github.com/ltlai/hellosign-ruby-sdk.g
 
 gem 'boxr'
 
+gem 'wisper'
+
 # login
 gem 'devise'
 gem 'omniauth'
