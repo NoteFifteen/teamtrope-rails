@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150511215212) do
+ActiveRecord::Schema.define(version: 20150512061855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -443,6 +443,36 @@ ActiveRecord::Schema.define(version: 20150511215212) do
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
+
+  create_table "project_grid_table_rows", force: true do |t|
+    t.integer  "project_id"
+    t.string   "title"
+    t.string   "genre"
+    t.string   "author"
+    t.string   "editor"
+    t.string   "proofreader"
+    t.string   "project_manager"
+    t.string   "book_manager"
+    t.string   "cover_designer"
+    t.string   "imprint"
+    t.string   "teamroom_link"
+    t.integer  "production_task_id"
+    t.string   "production_task_name"
+    t.integer  "marketing_task_id"
+    t.string   "marketing_task_name"
+    t.integer  "design_task_id"
+    t.string   "design_task_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "project_grid_table_rows", ["design_task_id"], name: "index_project_grid_table_rows_on_design_task_id", using: :btree
+  add_index "project_grid_table_rows", ["design_task_name"], name: "index_project_grid_table_rows_on_design_task_name", using: :btree
+  add_index "project_grid_table_rows", ["marketing_task_id"], name: "index_project_grid_table_rows_on_marketing_task_id", using: :btree
+  add_index "project_grid_table_rows", ["marketing_task_name"], name: "index_project_grid_table_rows_on_marketing_task_name", using: :btree
+  add_index "project_grid_table_rows", ["production_task_id"], name: "index_project_grid_table_rows_on_production_task_id", using: :btree
+  add_index "project_grid_table_rows", ["project_id"], name: "index_project_grid_table_rows_on_project_id", using: :btree
+  add_index "project_grid_table_rows", ["title"], name: "index_project_grid_table_rows_on_title", using: :btree
 
   create_table "project_type_workflows", force: true do |t|
     t.integer  "workflow_id"

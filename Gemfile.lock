@@ -255,6 +255,7 @@ GEM
     warden (1.2.3)
       rack (>= 1.0)
     will_paginate (3.0.7)
+    wisper (1.6.0)
 
 PLATFORMS
   ruby
@@ -299,3 +300,4 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unicorn
   will_paginate (= 3.0.7)
+  wisper

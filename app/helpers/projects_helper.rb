@@ -6,19 +6,16 @@ module ProjectsHelper
     @grid_title = "The Grid"
     unless filter_by.nil? || !filters.has_key?(filter_by.to_sym)
       if filter_by.to_sym == :all
-        @projects = Project.page(params[:page]) if Project.count > 500
-        @projects ||= Project.all
+        @projects = ProjectGridTableRow.includes(:project).all
       else
         @grid_title =  filter_by.to_s.humanize.gsub(/_/," ")
-        @projects = Project.with_task(filters[filter_by.to_sym])
-        @projects = @projects.page(params[:page]) if @projects.count > 500
+        pgtr_meta_hash = filters[filter_by.to_sym]
+        @projects = ProjectGridTableRow.includes(:project).where("#{pgtr_meta_hash[:workflow_name]}_task_name = ?", pgtr_meta_hash[:task_name])
       end
     else
       @grid_title = "My Books"
       # We only want the book to show up once in the list so we use distinct.
-      @projects = current_user.projects.order(title: :asc).distinct
-        .includes(:team_memberships => [:member, :role])
-      @projects = @projects.page(params[:page]) if @projects.count > 500
+      @projects = ProjectGridTableRow.where(project_id: current_user.projects.ids).distinct
     end
   end
 end

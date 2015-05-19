@@ -47,6 +47,8 @@ Rails.application.routes.draw do
     resource :analytics, only: [:show]
   end
 
+  get '/projects_grid_view', to: 'projects#grid_view'
+
   match '/projects/accept_team_member/:id',       to: 'projects#accept_team_member',       via: [:patch, :post]
   match '/projects/add_stock_cover_image/:id',    to: 'projects#add_stock_cover_image',    via: 'patch'
   match '/projects/approve_blurb/:id',            to: 'projects#approve_blurb',            via: 'patch'

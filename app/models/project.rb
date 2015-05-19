@@ -28,6 +28,7 @@ class Project < ActiveRecord::Base
   has_many :media_kits, dependent: :destroy
   has_many :members, through: :team_memberships, source: :member
   has_many :price_change_promotions, dependent: :destroy
+  has_one  :project_grid_table_row, dependent: :destroy
   has_one  :publication_fact_sheet, dependent: :destroy
   has_one  :published_file, dependent: :destroy
   has_many :roles, through: :team_memberships, source: :role

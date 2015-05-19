@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project_id: 
+  title: MyString
+  genre: MyString
+  author: MyString
+  editor: MyString
+  proofreader: MyString
+  project_manager: MyString
+  book_manager: MyString
+  cover_designer: MyString
+  imprint: MyString
+  teamroom_link: MyString
+  production_status_id: 1
+  production_status_name: MyString
+  marketing_status_id: 1
+  marketing_status_name: MyString
+  design_status_id: 1
+  design_status_name: MyString
+
+two:
+  project_id: 
+  title: MyString
+  genre: MyString
+  author: MyString
+  editor: MyString
+  proofreader: MyString
+  project_manager: MyString
+  book_manager: MyString
+  cover_designer: MyString
+  imprint: MyString
+  teamroom_link: MyString
+  production_status_id: 1
+  production_status_name: MyString
+  marketing_status_id: 1
+  marketing_status_name: MyString
+  design_status_id: 1
+  design_status_name: MyString

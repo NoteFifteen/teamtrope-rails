@@ -71,27 +71,27 @@ module Constants
   end
 
   AdminProjectsIndexFilters = {
-    all: '',
-    manuscript_development: 'Manuscript Development',
-    upload_layout: 'Upload Layout',
-    approve_cover: 'Approve Cover',
-    approve_blurb: 'Approve Blurb',
-    page_count: 'Page Count',
-    final_manuscript: 'Final Manuscript',
-    publish_book: 'Publish Book'
+    manuscript_development: { task_name: 'Manuscript Development', workflow_name: 'production' },
+    upload_layout: { task_name: 'Upload Layout', workflow_name: 'design' },
+    approve_cover: { task_name: 'Approve Cover', workflow_name: 'marketing' },
+    approve_blurb: { task_name: 'Approve Blurb', workflow_name: 'marketing' },
+    page_count: { task_name: 'Page Count', workflow_name: 'production' },
+    final_manuscript: { task_name: 'Final Manuscript', workflow_name: 'production' },
+    publish_book: { task_name: 'Publish Book', workflow_name: 'production' }
   }
 
 
   ProjectsIndexFilters = {
-    original_manuscript: 'Original Manuscript',
-    submit_blurb: 'Submit Blurb',
-    cover_concept: 'Cover Concept',
-    in_editing: 'Edited Manuscript',
-    in_proofreading: 'Proofread Complete',
-    choose_style: 'Choose Style',
-    final_covers: 'Final Covers',
-    submit_pfs: 'Submit PFS',
-    published: 'Production Complete'
+    all: '',
+    original_manuscript: { task_name: 'Original Manuscript', workflow_name: 'production' },
+    submit_blurb: { task_name: 'Submit Blurb', workflow_name: 'marketing' },
+    cover_concept: { task_name: 'Cover Concept', workflow_name: 'design' },
+    in_editing: { task_name: 'Edited Manuscript', workflow_name: 'production' },
+    in_proofreading: { task_name: 'Proofread Complete', workflow_name: 'production' },
+    choose_style: { task_name: 'Choose Style', workflow_name: 'design' },
+    final_covers: { task_name: 'Final Covers', workflow_name: 'design' },
+    submit_pfs: { task_name: 'Submit PFS', workflow_name: 'marketing' },
+    published: { task_name: 'Production Complete', workflow_name: 'production'}
   }
 
 end

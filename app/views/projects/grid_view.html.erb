@@ -1,6 +1,6 @@
 <% provide(:title, "The Grid") %>
 <div class="page" id="blog-page" role="main">
-  <h2><%= @grid_title %> (<%= @projects.count %>)</h2>
+  <h2>The Grid (<%= @project_grid_table_rows.count %>)</h2>
   <%= link_to "New", new_project_path %><br /><br />
   <script type="text/javascript" async="">
     function toggleTable1() {
@@ -26,16 +26,9 @@
       </tr>
     </thead>
 
-    <% @projects.each do | row | %>
+    <% @project_grid_table_rows.each do | row | %>
     <tr>
-      <td><nobr><%= link_to row.title, row.project %></nobr>
-      <% if can? :edit, row.project %>
-      | <%= link_to "Edit", edit_project_path(row.project)  %>
-      <% end%>
-      <% if can? :delete, row.project %>
-      | <%= link_to "Delete", project_path(row.project), method: :delete, data: {confirm: "Are you sure you want to delete this project?"}%><br />
-      <% end %>
-      </td>
+      <td><%= link_to row.title, row.project %></td>
       <td><%= row.author %></td>
       <td><%= row.genre %></td>
       <td><%= row.editor %></td>
@@ -47,7 +40,7 @@
       <td><%= row.production_task_name %></td>
       <td><%= row.design_task_name %></td>
       <td><%= row.marketing_task_name %></td>
-      <td><%= link_to "Teamroom Link", row.teamroom_link if row.teamroom_link? %></td>
+      <td><%= link_to "Teamroom Link", row.teamroom_link %></td>
     </tr>
     <% end %>
 
