@@ -70,28 +70,31 @@ module Constants
     ]
   end
 
+  # only change the task_name if the task name in the database has been changed.
+  # use the label to override what appears in the dropdown navigation.
   AdminProjectsIndexFilters = {
-    manuscript_development: { task_name: 'Manuscript Development', workflow_name: 'production' },
-    upload_layout: { task_name: 'Upload Layout', workflow_name: 'design' },
-    approve_cover: { task_name: 'Approve Cover', workflow_name: 'marketing' },
-    approve_blurb: { task_name: 'Approve Blurb', workflow_name: 'marketing' },
-    page_count: { task_name: 'Page Count', workflow_name: 'production' },
-    final_manuscript: { task_name: 'Final Manuscript', workflow_name: 'production' },
-    publish_book: { task_name: 'Publish Book', workflow_name: 'production' }
+    manuscript_development: { label: '', task_name: 'Manuscript Development', workflow_name: 'production' },
+    upload_layout: { label: '', task_name: 'Upload Layout', workflow_name: 'design' },
+    approve_cover: { label: '', task_name: 'Approve Cover', workflow_name: 'marketing' },
+    approve_blurb: { label: '', task_name: 'Approve Blurb', workflow_name: 'marketing' },
+    page_count: { label: '', task_name: 'Page Count', workflow_name: 'production' },
+    final_manuscript: { label: '', task_name: 'Final Manuscript', workflow_name: 'production' },
+    publish_book: { label: '', task_name: 'Publish Book', workflow_name: 'production' }
   }
 
-
+  # only change the task_name if the task name in the database has been changed.
+  # use the label to override what appears in the dropdown navigation.
   ProjectsIndexFilters = {
-    original_manuscript: { task_name: 'Original Manuscript', workflow_name: 'production' },
-    submit_blurb: { task_name: 'Submit Blurb', workflow_name: 'marketing' },
-    cover_concept: { task_name: 'Cover Concept', workflow_name: 'design' },
-    in_editing: { task_name: 'In Editing', workflow_name: 'production' },
-    in_proofreading: { task_name: 'In Proofreading', workflow_name: 'production' },
-    choose_style: { task_name: 'Choose Style', workflow_name: 'design' },
-    final_covers: { task_name: 'Final Covers', workflow_name: 'design' },
-    submit_pfs: { task_name: 'Submit PFS', workflow_name: 'marketing' },
-    published: { task_name: 'Published', workflow_name: 'production'},
-    all: { task_name: 'All Projects', workflow_name: '' }
+    original_manuscript: { label: '', task_name: 'Original Manuscript', workflow_name: 'production' },
+    submit_blurb: { label: '', task_name: 'Submit Blurb', workflow_name: 'marketing' },
+    cover_concept: { label: '', task_name: 'Cover Concept', workflow_name: 'design' },
+    in_editing: { label: 'In Editing', task_name: 'Edited Manuscript', workflow_name: 'production' },
+    in_proofreading: { label: 'In Proofreading', task_name: 'Proofread Complete', workflow_name: 'production' },
+    choose_style: { label: '', task_name: 'Choose Style', workflow_name: 'design' },
+    final_covers: { label: '', task_name: 'Final Covers', workflow_name: 'design' },
+    submit_pfs: { label: '', task_name: 'Submit PFS', workflow_name: 'marketing' },
+    published: { label: 'Published', task_name: 'Production Complete', workflow_name: 'production'},
+    all: { label: 'All Projects', task_name: '', workflow_name: '' }
   }
 
 end

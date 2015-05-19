@@ -8,7 +8,8 @@ module ProjectsHelper
       if filter_by.to_sym == :all
         @projects = ProjectGridTableRow.includes(:project).all
       else
-        @grid_title =  filters[filter_by.to_sym][:task_name]
+        @grid_title =  filters[filter_by.to_sym][:label]
+        @grid_title =  filters[filter_by.to_sym][:task_name] if @grid_title.empty?
         pgtr_meta_hash = filters[filter_by.to_sym]
         @projects = ProjectGridTableRow.includes(:project).where("#{pgtr_meta_hash[:workflow_name]}_task_name = ?", pgtr_meta_hash[:task_name])
       end
