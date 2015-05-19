@@ -82,7 +82,7 @@ module Constants
 
 
   ProjectsIndexFilters = {
-    all: '',
+    all: { task_name: 'All', workflow_name: '' },
     original_manuscript: { task_name: 'Original Manuscript', workflow_name: 'production' },
     submit_blurb: { task_name: 'Submit Blurb', workflow_name: 'marketing' },
     cover_concept: { task_name: 'Cover Concept', workflow_name: 'design' },

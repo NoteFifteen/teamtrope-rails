@@ -12,14 +12,14 @@
                   <li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to "* Help *", 'https://teamtrope.com/project-status-and-grid-explanation/'%></li>
                   <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to "My Books", projects_path %></li>
                   <% Constants::ProjectsIndexFilters.each do | key, value | %>
-                  <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to key.to_s.humanize.gsub(/_/," "), projects_path(show: key) %></li>
+                  <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to value[:task_name], projects_path(show: key) %></li>
                   <% end %>
 
                   <% if current_user.role? :booktrope_staff %>
                   <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to "Admin", '#' %>
                     <ul class="sub-menu">
                       <% Constants::AdminProjectsIndexFilters.each do | key, value | %>
-                      <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to key.to_s.humanize.gsub(/_/," "), projects_path(show: key) %></li>
+                      <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to value[:task_name], projects_path(show: key) %></li>
                       <% end %>
                     </ul>
                   </li>
