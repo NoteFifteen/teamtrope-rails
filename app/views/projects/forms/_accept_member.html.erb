@@ -56,49 +56,7 @@
         </div>
 
         <div class="col-md-6">
-          <table class="table">
-            <thead>
-                <tr>
-                  <th>Role</th>
-                  <th>Member</th>
-                  <th>Percentage Allocated</th>
-                  <th>Suggested Percentage</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% @project.team_allocations.each do | role | %>
-                    <tr>
-                      <td><%= role[:role_name] %></td>
-                      <td><%= role[:member_name] %></td>
-                      <td><%= role[:allocated_percentage] %> %</td>
-                      <td><%= role[:suggested_percentage] %> %</td>
-                    </tr>
-                <% end %>
-            </tbody>
-            <tfoot>
-                <tr>
-                  <td colspan="2"><strong>Total</strong></td>
-                  <td id="tableAllocatedTotal">
-                    0%
-                  </td>
-                  <td id="tableSuggestedTotal">
-                    <% total = 0
-                       @project.team_allocations.map { |r| total += r[:suggested_percentage] }
-                    %>
-                    <%= total %>%
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="4">
-                    <div class="progress">
-                      <div id="accept_team_member_percentage_indicator" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="30" aria-valuemax="100" style="width: 70%;">
-                        <span>% Allocated</span>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-            </tfoot>
-          </table>
+          <%= render 'projects/forms/project_member_allocation_table' %>
         </div>
     </div>
 
@@ -132,11 +90,17 @@
     }.to_json.html_safe %>);
 
     // Add our list of available members for the various roles
-    acceptForm.addMembersToRole('book_managers', <%= User.with_role('book_manager').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
-    acceptForm.addMembersToRole('cover_designers', <%= User.with_role('cover_designer').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
-    acceptForm.addMembersToRole('editors', <%= User.with_role('editor').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
-    acceptForm.addMembersToRole('project_managers', <%= User.with_role('project_manager').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
-    acceptForm.addMembersToRole('proofreaders', <%= User.with_role('proofreader').map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>);
+    <% @project.project_type.required_roles.each do |r| %>
+
+      acceptForm.addMembersToRole('<%= r.role.normalized_name.pluralize %>',
+              <% if %w( advisor agent ).include?(r.role.normalized_name) %>
+                <%= User.active_users.map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>
+              <% else %>
+                <%= User.with_role( r.role.normalized_name ).map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>
+              <% end %>
+      );
+
+    <% end %>
 
     // The acceptForm reformats the members in an easier to digest format
     percentageCalculator.addTeamMembers(acceptForm.getTeamMembers());

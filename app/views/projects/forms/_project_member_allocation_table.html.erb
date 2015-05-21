@@ -1,0 +1,43 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th>Role</th>
+    <th>Member</th>
+    <th>Percentage Allocated</th>
+    <th>Suggested Percentage</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @project.team_allocations.each do | role | %>
+      <tr>
+        <td><%= role[:role_name] %></td>
+        <td><%= role[:member_name] %></td>
+        <td><%= role[:allocated_percentage] %> %</td>
+        <td><%= role[:suggested_percentage] %> %</td>
+      </tr>
+  <% end %>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="2"><strong>Total</strong></td>
+    <td id="tableAllocatedTotal">
+      0%
+    </td>
+    <td id="tableSuggestedTotal">
+      <% total = 0
+         @project.team_allocations.map { |r| total += r[:suggested_percentage] }
+      %>
+      <%= total %>%
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      <div class="progress">
+        <div id="accept_team_member_percentage_indicator" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="30" aria-valuemax="100" style="width: 70%;">
+          <span>% Allocated</span>
+        </div>
+      </div>
+    </td>
+  </tr>
+  </tfoot>
+</table>

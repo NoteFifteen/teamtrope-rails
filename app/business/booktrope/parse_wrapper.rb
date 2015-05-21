@@ -68,8 +68,11 @@ module Booktrope
       project.team_memberships.includes(:role).each do | tm |
         field_name = tm.role.name.gsub(/ /, "")
         field_name = field_name[0].downcase + field_name[1, field_name.length]
-        fields[field_name + 'Id']  = tm.member_id
-        fields[field_name + 'Pct'] = tm.percentage
+
+        fields[field_name.pluralize] = [] unless ! fields[field_name.pluralize].nil?
+
+        # We're passing the OldTrope ID for the ID so it matches with what we've been sending previously
+        fields[field_name.pluralize].push( { 'Id'=> tm.member.uid, 'Pct' => tm.percentage } )
       end
 
       fields["submittedEffectiveDate"] = Parse::Date.new(submitted_date)
@@ -88,9 +91,7 @@ module Booktrope
 
       fields["effectiveDate"] = Parse::Date.new(fields["effectiveDate"])
 
-
       ParseWrapper.add_team_revenue_allocation(fields)
-
     end
 
     def ParseWrapper.add_team_revenue_allocation(fields)

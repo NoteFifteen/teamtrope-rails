@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   scope :inactive_users, -> { where(active: false) }
 
 
-  ROLES = %w[booktrope_staff moderator author book_manager cover_designer editor project_manager proofreader volunteer observer illustrator]
+  ROLES = %w[booktrope_staff moderator author book_manager cover_designer editor project_manager proofreader volunteer observer illustrator agent investor]
 
   def inactive?
       !active

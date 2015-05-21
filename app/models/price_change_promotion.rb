@@ -21,13 +21,8 @@ class PriceChangePromotion < ActiveRecord::Base
 
   SITES_LIST = SITES.to_h.keys
 
-  before_save {
-    self.start_date = adjust_date_for_dst start_date
-    self.end_date =  adjust_date_for_dst end_date
-
-    true
-  }
-
+  # compensate for price change promotions that start and end on the same day
+  # by incrementing the end date by 1.day
   before_save {
     unless self.end_date.nil?
       if self.start_date.year == self.end_date.year &&
@@ -36,6 +31,14 @@ class PriceChangePromotion < ActiveRecord::Base
         self.end_date = self.end_date + 1.day
       end
     end
+    true
+  }
+
+  # adjust for dst
+  before_save {
+    self.start_date = adjust_date_for_dst start_date
+    self.end_date =  adjust_date_for_dst end_date
+
     true
   }
 
@@ -122,7 +125,9 @@ class PriceChangePromotion < ActiveRecord::Base
 
   private
     def adjust_date_for_dst(date)
-      if date.to_time.dst?
+      # the timezone is utc which never goes on dst so we need to set the zone
+      # to the appropriate time zone first and then check if it's dst.
+      if date.in_time_zone('Pacific Time (US & Canada)').dst?
         return date - 1.hour
       end
       date

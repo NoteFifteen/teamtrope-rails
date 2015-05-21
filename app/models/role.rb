@@ -5,7 +5,7 @@ class Role < ActiveRecord::Base
 	has_many :task_performers, foreign_key: :role_id, dependent: :destroy
 	has_many :tasks,     through: :task_performers, source: :task	
 
-  has_many :required_roles
+  has_many :required_roles, dependent: :destroy
   has_many :project_types, through: :required_roles, source: :role
 
 	default_scope -> { order("name asc") }
