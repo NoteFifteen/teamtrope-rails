@@ -235,7 +235,7 @@ class ProjectsController < ApplicationController
       To do this:
         1) Refresh the  project page (see link below),
         2) Open the Choose Style tab in the Design Layout phase of the project.
-        3) Submit this form. And that's it!"
+        3) Submit Choose Style form. And that's it!"
       ProjectMailer.proofed_manuscript(@project, current_user, params)
       redirect_to @project
     else
