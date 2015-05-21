@@ -135,6 +135,11 @@ jQuery ->
           $(".temp_price_promotion").slideUp()
 
 ## price change promotion form validators
+## Blog Tour Form validations
+jQuery.validator.addMethod("priceAfterPromotionValidator", (value, element, params) ->
+  return value > 0
+, jQuery.validator.format("Price After Promotion must be greater than 0.")
+)
 jQuery ->
   $("#price_promotion_form").validate({
     rules: {
@@ -151,7 +156,8 @@ jQuery ->
         required: true
       },
       'project[price_change_promotions_attributes][0][price_after_promotion]': {
-        required: true
+        required: true,
+        priceAfterPromotionValidator: "#price_promotion_form"
       }
     }
   })
