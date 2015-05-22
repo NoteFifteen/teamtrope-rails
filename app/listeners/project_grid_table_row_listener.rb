@@ -54,6 +54,9 @@ class ProjectGridTableRowListener
 
     roles = Hash[*Role.all.map{ | role | [role.name.downcase.gsub(/ /, "_").to_sym, role.id] }.flatten]
 
+    # These are not roles in the PGTR
+    roles.delete_if {|name, id| name == :advisor || name == :agent }
+
     # adding each role
     roles.each do | key, value |
       pgtr[key] = project.team_memberships.includes(:member).where(role_id: value).map(&:member).map(&:name).join(", ")
