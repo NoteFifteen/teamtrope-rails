@@ -47,6 +47,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     resource :analytics, only: [:show]
+    resource :final_manuscript
   end
 
   get '/projects_grid_view', to: 'projects#grid_view'

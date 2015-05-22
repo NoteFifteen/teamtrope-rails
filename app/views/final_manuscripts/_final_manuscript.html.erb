@@ -1,3 +1,4 @@
 <h4>Final Files</h4>
-<strong>Final PDF:</strong> <%= link_to "DOWNLOAD", download_final_manuscript_pdf_path(@project) %><br/>
-<strong>Final Doc File:</strong> <%= link_to "DOWNLOAD", download_final_manuscript_doc_path(@project) %><br/>
+
+<strong>Final PDF:</strong> <%= (! @project.final_manuscript.pdf_file_name.nil?) ? link_to("DOWNLOAD", download_final_manuscript_pdf_path(@project)) : 'N/A'  %><br>
+<strong>Final Doc File:</strong> <%= (! @project.final_manuscript.doc_file_name.nil?) ? link_to("DOWNLOAD", download_final_manuscript_doc_path(@project)) : 'N/A' %><br>

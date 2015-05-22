@@ -585,17 +585,12 @@ class ProjectsController < ApplicationController
   end
 
   def final_manuscript
-    if @project.update(update_project_params)
-      update_current_task
-      @project.create_activity :uploaded_final_manuscript, owner: current_user,
-                                parameters: { text: 'Uploaded Final Manuscript', form_data: params[:project].to_s}
-      flash[:success] = 'Uploaded Final Manuscript'
-      ProjectMailer.final_manuscript(@project, current_user)
-      redirect_to @project
-    else
-      flash[:danger] = 'There was a problem uploading the Final Manuscript.  Please review.'
-      render 'show'
-    end
+    update_current_task
+    @project.create_activity :uploaded_final_manuscript, owner: current_user,
+                              parameters: { text: 'Uploaded Final Manuscript', form_data: params[:project].to_s}
+    flash[:success] = 'Uploaded Final Manuscript'
+    ProjectMailer.final_manuscript(@project, current_user)
+    redirect_to @project
   end
 
   def publish_book

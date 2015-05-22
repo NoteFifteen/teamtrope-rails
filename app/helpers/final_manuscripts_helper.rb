@@ -1,0 +1,2 @@
+module FinalManuscriptsHelper
+end

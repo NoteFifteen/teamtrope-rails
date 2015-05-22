@@ -1,38 +1,60 @@
-<h1>Final Manuscript</h1>
-<div class="gf_browser_safari gform_wrapper">
-	<%= simple_form_for @project,
-				url: url_for(controller: 'projects', action: 'final_manuscript', id: @project),
-				html: {id: "final_manuscript"} do | f | 
-				%>
-        <%= f.error_notification %>
-        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>				
-		<div>
-			<span>Booktrope Staff Only</span>
-		</div>
-		<div><!--gform_body-->
-			<ul>
-				<%= f.simple_fields_for :final_manuscript, 
-							((f.object.final_manuscript.nil?)? 
-									f.object.build_final_manuscript : 
-									f.object.final_manuscript) do | final_manuscript | %>
-				<li>
-					<div>
-						<%= final_manuscript.input :pdf,
-									label: 'Final PDF' ,
-									as: :file, required: true %>
-					</div>
-				</li>
-				
-				<li>
-					<div>
-						<%= final_manuscript.input :doc, 
-									label: 'Final Word Doc',
-									as: :file, required: true %>
-					</div>
-				</li>
-				<% end %>
-			</ul>
-			<%= f.submit "Submit" %>
-		</div>
-	<% end %>
+
+<!-- Final Manuscript -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Final Manuscript</h1>
+        <span>Booktrope Staff Only</span>
+
+        <br>
+
+        <div>
+          <label>Final .PDF <span class="required">*</span></label>
+          <%= s3_uploader_form callback_url: project_final_manuscript_url(@project),
+                   id: "final_manuscript_pdf_s3_uploader",
+                   acl: "private",
+                   callback_param: "final_manuscript_pdf[direct_upload_url]",
+                   expiration: 24.hours.from_now.utc.iso8601,
+                   max_file_size: 100.megabytes do %>
+                  <%= file_field_tag :file, multiple: false %>
+          <% end %>
+          <div id="final_manuscript_pdf_uploads_container"></div>
+          <script id="template-upload" type="text/x-tmpl">
+            <div id="upload_{%=o.unique_id%}" class="upload">
+              <h5>{%=o.name%}</h5>
+              <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+            </div>
+          </script>
+        </div>
+        <br>
+        <div>
+          <label>Final .DOC</label>
+          <%= s3_uploader_form callback_url: project_final_manuscript_url(@project),
+                   id: "final_manuscript_doc_s3_uploader",
+                   acl: "private",
+                   callback_param: "final_manuscript_doc[direct_upload_url]",
+                   expiration: 24.hours.from_now.utc.iso8601,
+                   max_file_size: 100.megabytes do %>
+                  <%= file_field_tag :file, multiple: false %>
+          <% end %>
+          <div id="final_manuscript_doc_uploads_container"></div>
+          <script id="template-upload" type="text/x-tmpl">
+            <div id="upload_{%=o.unique_id%}" class="upload">
+              <h5>{%=o.name%}</h5>
+              <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+            </div>
+          </script>
+        </div>
+
+        <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'final_manuscript', id: @project),
+            html: {id: "final_manuscript"} do | f |
+        %>
+            <%= f.error_notification %>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
+          <%= f.submit "Submit", disabled: '', class: 'btn disabled', id: 'final_manuscript_submit_button' %>
+        <% end %>
+
+      </div>
+    </div>
 </div>

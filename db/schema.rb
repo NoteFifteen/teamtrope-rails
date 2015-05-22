@@ -207,6 +207,10 @@ ActiveRecord::Schema.define(version: 20150523011518) do
     t.datetime "pdf_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "doc_direct_upload_url"
+    t.boolean  "doc_processed",         default: false
+    t.string   "pdf_direct_upload_url"
+    t.boolean  "pdf_processed",         default: false
   end
 
   add_index "final_manuscripts", ["project_id"], name: "index_final_manuscripts_on_project_id", using: :btree
