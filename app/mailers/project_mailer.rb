@@ -663,17 +663,17 @@ class ProjectMailer < ActionMailer::Base
 
   # The proofed manuscript has been uploaded
   def admin_proofed_manuscript_list
-    %w( victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com )
+    %w( vanyad@bootkrope.com victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com )
   end
 
   # The layout style has been selected
   def admin_edit_layout_style_list
-    %w( victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com )
+    %w( vanyad@bootkrope.com victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com )
   end
 
   # The layout has been approved
   def admin_layout_approved_list
-    %w( victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com )
+    %w( vanyad@bootkrope.com victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com )
   end
 
   # The Cover Concept has been uploaded
@@ -683,11 +683,11 @@ class ProjectMailer < ActionMailer::Base
 
   # The cover art has been approved
   def admin_approve_cover_art_list
-    %w( victoria@booktrope.com adam.bodendieck@booktrope.com katherine@booktrope.com jennifer.gilbert@booktrope.com )
+    %w( vanyad@bootkrope.com victoria@booktrope.com adam.bodendieck@booktrope.com katherine@booktrope.com jennifer.gilbert@booktrope.com )
   end
 
   def admin_upload_cover_templates_list
-    %w( adam.bodendieck@booktrope.com victoria@booktrope.com kate.burkett@booktrope.com )
+    %w( vanyad@bootkrope.com adam.bodendieck@booktrope.com victoria@booktrope.com kate.burkett@booktrope.com )
   end
 
   def admin_artwork_rights_request_list
@@ -703,11 +703,11 @@ class ProjectMailer < ActionMailer::Base
   end
 
   def admin_publication_fact_sheet_list
-    %w( adam.bodendieck@booktrope.com victoria@booktrope.com kate.burkett@booktrope.com )
+    %w( vanyad@bootkrope.com adam.bodendieck@booktrope.com victoria@booktrope.com kate.burkett@booktrope.com )
   end
 
   def admin_final_manuscript_list
-    %w( andy@booktrope.com jesse@booktrope.com adam.bodendieck@booktrope.com victoria@booktrope.com )
+    %w( vanyad@bootkrope.com andy@booktrope.com jesse@booktrope.com adam.bodendieck@booktrope.com victoria@booktrope.com )
   end
 
   def admin_publish_book_list
