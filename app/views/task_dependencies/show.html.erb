@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Main task:</strong>
+  <%= @task_dependency.try(:main_task).try(:name) %>
+</p>
+
+<p>
+  <strong>Dependent task:</strong>
+  <%= @task_dependency.try(:dependent_task).try(:name) %>
+</p>
+
+<%= link_to 'Edit', edit_task_dependency_path(@task_dependency) %> |
+<%= link_to 'Back', task_dependencies_path %>

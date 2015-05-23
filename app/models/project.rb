@@ -186,6 +186,18 @@ class Project < ActiveRecord::Base
      }
   end
 
+  def remaining_task_ids
+    remaining_tasks = []
+    current_tasks.each do | ct |
+      task = ct.task
+      while(task.next_id != nil)
+        remaining_tasks << task.id
+        task = task.next_task
+      end
+    end
+    remaining_tasks.uniq
+  end
+
   def self.provide_methods_for(role)
     Project.class_eval %Q{
       def has_#{role.downcase.gsub(/ /, "_")}?

@@ -62,6 +62,7 @@
     <%= link_to "Link to Teamroom", @project.teamroom_link if @project.teamroom_link? %><span> Genre:
     <%= @project.genres.map { |genre| genre.name }.join(", ") %>
     </span>
+    <% remaining_tasks = @project.remaining_task_ids %>
     <% merged_array = [] %>
     <% @project.current_tasks.each do | current_task | %>
       <% merged_array.push current_task.task_id %>
@@ -83,9 +84,17 @@
     <% form_content << " <li class='tab-content tab-content-" %>
     <% form_content << "#{tab.order+1}" %>
     <% form_content << " typography'>" %>
-    <% if !tab.task.team_only? || tab.task.performers.where(id: @project.team_roles(current_user)).count > 0 || current_user.role?(:booktrope_staff)%>
+    <% if (!tab.task.team_only? || tab.task.performers.where(id: @project.team_roles(current_user)).count > 0 || current_user.role?(:booktrope_staff)) && tab.task.dependent_task_ids.find_all{ | t | remaining_tasks.include? t}.count <= 0  %>
       <% partial_path = "projects/forms/#{tab.task.partial}" unless tab.task.partial.nil? %>
       <% form_content += render(partial: partial_path, locals: { current_tab: tab }) unless tab.task.partial.nil? || tab.task.partial.empty? %>
+    <% elsif tab.task.dependent_task_ids.find_all{ | t | remaining_tasks.include? t}.count > 0  %>
+      <% form_content << "<h1>This task is not yet unlocked</h1>" %>
+      <% form_content << "This task is dependent on" %>
+      <% form_content << "<ul>" %>
+      <% tab.task.dependent_tasks.each do | dt | %>
+      <% form_content <<  "<li>#{!remaining_tasks.include? dt.id} #{dt.name}</li>" %>
+      <% end %>
+      <% form_content << "</ul>" %>
     <% else %>
       <% form_content << "<h1>Access Denied</h1>" %>
       <% form_content << "You must be this project's: #{tab.task.performers.map { |role| role.name }.join(', ')} " %>

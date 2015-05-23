@@ -1,0 +1,26 @@
+<%= simple_form_for(@task_dependency) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="gf_browser_safari gform_wrapper">
+    <%= f.association :main_task,
+        include_blank: 'Select a Task',
+        label: "Main Task: ",
+        input_html: {
+          class: 'chosen-select',
+          id: 'main_task'
+        }
+    %>
+
+    <%= f.association :dependent_task,
+        include_blank: 'Select a Task',
+        label: "Dependent Task: ",
+        input_html: {
+          class: 'chosen-select',
+          id: 'dependent_task'
+        }
+    %>
+  </div>
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

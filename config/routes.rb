@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :task_dependencies
+
   resources :print_corners
 
   resources :kdp_select_enrollments
