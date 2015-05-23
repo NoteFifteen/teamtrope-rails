@@ -325,8 +325,9 @@ class ProjectsController < ApplicationController
 
       publish(:modify_imprint, @project)
 
+
       # Update the record in Parse
-      Booktrope::ParseWrapper.update_project_control_numbers @control_number
+      ParseWorker.create(object_id: @control_number.id, operation: :control_number)
 
       # Record activity here
       @project.create_activity :updated_control_numbers, owner: current_user,
@@ -366,6 +367,7 @@ class ProjectsController < ApplicationController
       flash[:success] = 'Approved the Layout'
       ProjectMailer.layout_approval(@project, current_user)
       redirect_to @project
+
     else
       render 'show'
     end
@@ -380,6 +382,11 @@ class ProjectsController < ApplicationController
                                form_data: params[:project].to_s}
 
       update_current_task
+
+      if !@project.control_number.nil?
+        ParseWorker.create(object_id: @project.price_change_promotions.order(id: :desc).first.id, operation: :price_change_promotion)
+      end
+
       ProjectMailer.price_promotion(@project, current_user)
       flash[:success] = 'Price Promotion Submitted.'
       redirect_to @project

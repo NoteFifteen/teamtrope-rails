@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
+  mount Resque::Server, at: "/resque"
+
   get 'wordpress_import/import'
   post 'wordpress_import/upload'
 

@@ -30,6 +30,7 @@ class PriceChangePromotionsController < ApplicationController
 
     respond_to do |format|
       if @price_change_promotion.save
+        ParseWorker.create(object_id: @price_change_promotion.id, operation: :price_change_promotion)
         format.html { redirect_to @price_change_promotion, notice: 'Price change promotion was successfully created.' }
         format.json { render :show, status: :created, location: @price_change_promotion }
       else
@@ -44,6 +45,7 @@ class PriceChangePromotionsController < ApplicationController
   def update
     respond_to do |format|
       if @price_change_promotion.update(price_change_promotion_params)
+        ParseWorker.create(object_id: @price_change_promotion.id, operation: :price_change_promotion)
         format.html { redirect_to @price_change_promotion, notice: 'Price change promotion was successfully updated.' }
         format.json { render :show, status: :ok, location: @price_change_promotion }
       else
