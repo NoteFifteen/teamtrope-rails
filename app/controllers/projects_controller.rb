@@ -91,7 +91,13 @@ class ProjectsController < ApplicationController
 
       publish(:modify_team_member, @project, params[:project][:team_memberships_attributes]['0'][:role_id])
       update_current_task
-      Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, DateTime.parse("#{params[:effective_date][:year]}/#{params[:effective_date][:month]}/#{params[:effective_date][:day]}")
+
+      ParseWorker.create(object_id: @project.id,
+        current_user: current_user.id,
+        effective_date:
+          "#{params[:effective_date][:year]}/#{params[:effective_date][:month]}/#{params[:effective_date][:day]}",
+        operation: :team_revenue_allocation
+      )
 
       ProjectMailer.accepted_team_member(@project, current_user, params)
       flash[:success] = 'Accepted a Team Member'
@@ -158,7 +164,13 @@ class ProjectsController < ApplicationController
       publish(:modify_team_member, @project, audit.role_id)
 
       # Schedule update in parse for the 1st of next month or today if it's the 1st
-      Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, (DateTime.now.day == 1) ? DateTime.now : DateTime.now.next_month.at_beginning_of_month
+      ParseWorker.create(object_id: @project.id,
+        current_user: current_user.id,
+        effective_date:
+          ((DateTime.now.day == 1) ? DateTime.now : DateTime.now.next_month.at_beginning_of_month).to_s,
+        operation: :team_revenue_allocation
+      )
+
 
       @project.create_activity :removed_team_member,
                                owner: current_user, parameters: { text: ' Removed team member', form_data: audit_params.to_s}
@@ -190,7 +202,13 @@ class ProjectsController < ApplicationController
       @project.create_activity :revenue_allocation_split, owner: current_user, parameters: { text: " set the revenue allocation split", form_data: params[:project][:team_memberships_attributes].to_s}
       update_current_task
       ProjectMailer.rev_allocation_change(@project, current_user, effective_date)
-      Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, DateTime.parse(effective_date)
+
+      ParseWorker.create(object_id: @project.id,
+        current_user: current_user.id,
+        effective_date:
+          ((DateTime.now.day == 1) ? DateTime.now : DateTime.now.next_month.at_beginning_of_month).to_s,
+        operation: :team_revenue_allocation
+      )
 
       #TODO: Hellosign-rails integration
 
@@ -231,7 +249,7 @@ class ProjectsController < ApplicationController
     if @project.update(update_project_params)
       @project.create_activity :submitted_proofed_manuscript, owner: current_user, parameters: {text: "Uploaded the Proofed Manuscript", form_data: params[:project].to_s}
       update_current_task
-      flash[:success] = "Proofed Manuscript Uploaded. WAIT! Before you celebrate, you are still on the clock for the project and we won't be working on your book until you complete the next step. 
+      flash[:success] = "Proofed Manuscript Uploaded. WAIT! Before you celebrate, you are still on the clock for the project and we won't be working on your book until you complete the next step.
       To do this:
         1) Refresh the  project page (see link below),
         2) Open the Choose Style tab in the Design Layout phase of the project.
