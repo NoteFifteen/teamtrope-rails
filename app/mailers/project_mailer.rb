@@ -547,6 +547,8 @@ class ProjectMailer < ActionMailer::Base
       tokens.store('Expedite Instructions', ('<pre>' + pc.expedite_instructions + '</pre>').html_safe)
     end
 
+    tokens.store('Submitted By', email_address_link(current_user).html_safe)
+
     user_subject = "Print Corner from #{current_user.name} for #{project.title}"
     admin_subject = "New " + user_subject
 
@@ -555,6 +557,11 @@ class ProjectMailer < ActionMailer::Base
   end
 
   private
+
+  # Generates a link for an email address for a User
+  def email_address_link user
+    "<a href=\"mailto:#{user.email}\">#{user.name} <#{user.email}></a>"
+  end
 
   # Generic email send pattern that just passes a simple hash table
   def send_email_message (template_name, message_tokens, recipient_list, subject)
