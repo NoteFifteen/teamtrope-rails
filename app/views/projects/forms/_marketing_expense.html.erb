@@ -4,110 +4,110 @@
 <script type="text/javascript">
 //TODO: figure our how we handle others
 /*
-	$(document).ready(function() {
-		$("#project_marketing_expenses_attributes_0_expense_type").change(function(){
-			select_value = $("#project_marketing_expenses_attributes_0_expense_type option:selected");
-				if(select_value.val() == "Other - Please Describe below")
-				{
-					$(".other_expense_type").slideDown();
-				}
-				else
-				{
-					$(".other_expense_type").slideUp();
-				}
-		});
-	});
+  $(document).ready(function() {
+    $("#project_marketing_expenses_attributes_0_expense_type").change(function(){
+      select_value = $("#project_marketing_expenses_attributes_0_expense_type option:selected");
+        if(select_value.val() == "Other - Please Describe below")
+        {
+          $(".other_expense_type").slideDown();
+        }
+        else
+        {
+          $(".other_expense_type").slideUp();
+        }
+    });
+  });
 */
 </script>
 
-	<%= simple_form_for @project,
-				url: url_for(controller: 'projects', action: 'marketing_expense', id: @project),
-				html: { id: "marketing_expense" } do | f | %>
-		<div><!-- gform_heading -->
-			<span><!-- gform_description -->Booktrope will use this form to record pre-approved marketing promotion expenses (blog tours, newsletter ads, etc) that are to be allocated across the team per the Creative Team Agreement.</span>
-		</div>
-		<div><!-- gform_body -->
-			<ul>
-			
-			<%= f.simple_fields_for :marketing_expenses, f.object.marketing_expenses.build do | marketing_expense | %>
-				<li>
-					<%= marketing_expense.input :invoice_due_date, 
-								label: 'Invoice Due Date',
-								required: true,
-								start_year: Date.today.year %>
-					<div><!-- gfield_description -->The date the invoice is paid.</div>
-				</li>
-				
-				<li>
-					<%= marketing_expense.input :start_date,
-								label: 'Date Marketing Activity Starts',
-								required: true,
-								start_year: Date.today.year %>
-					<div><!-- gfield_description -->Date the marketing activity is scheduled to occur.  (Example, date the newsletter ad is scheduled, date the blog tour will start.)</div>					
-				</li>
-				
-				<li>
-					<%= marketing_expense.input :end_date,
-								label: 'Date Marketing Activity Ends',
-								required: true,
-								start_year: Date.today.year %>
-				</li>
-				
-				<li>
-					<%= marketing_expense.input :expense_type,
-								label: 'Type of Marketing Activity',
-								collection: MarketingExpense::EXPENSE_TYPES,
-								include_blank: true,
-								required: true,
-								html: {id: "expense_type_select"} %>
-				</li>
-				
-				<li>
-					<%= marketing_expense.input :service_provider,
-								label: 'Marketing Service Provider',
-								collection: MarketingExpense::SERVICE_PROVIDERS,
-								include_blank: true,
-								required: true %>
-				</li>
-				
-				<li>
-					<%= marketing_expense.input :cost, 
-								label: 'Cost of Marketing Activity (Expense)',
-								required: true %>
-				</li>
-				
-				<li>
-					<%= marketing_expense.input :other_information,
-								input_html: { rows: 10, cols: 20 } %>
-				</li>
-			<% end %>
-			
-			
-			<!--
-			TODO: determine how we handle the others.
-			
-			If we decide to keep these fields we should probably interlace them between the dropdowns that
-			make them appear for a better user experience.
-			
-				<li id="field_72_5" class="other_expense_type" style="display: none;">
-					<label class="gfield_label" for="input_72_5">Describe "Other" Marketing Activity<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<input name="input_5" id="input_72_5" type="text" value="" class="medium" tabindex="6">
-					</div>
-				</li>
-				
-				<li id="field_72_8" class="other_service_provider" style="display: none;">
-					<label class="gfield_label" for="input_72_8">Describe "Other" Service Provider<span class="gfield_required">*</span></label>
-					<div class="ginput_container">
-						<input name="input_8" id="input_72_8" type="text" value="" class="medium" tabindex="8">
-					</div>
-				</li>
-			-->
-				
-			</ul>
-		</div>
-		<div>
-			<%= f.submit 'submit' %>
-		</div>
-	<% end %>
+  <%= simple_form_for @project,
+        url: url_for(controller: 'projects', action: 'marketing_expense', id: @project),
+        html: { id: "marketing_expense" } do | f | %>
+    <div><!-- gform_heading -->
+      <span><!-- gform_description -->Booktrope will use this form to record pre-approved marketing promotion expenses (blog tours, newsletter ads, etc) that are to be allocated across the team per the Creative Team Agreement.</span>
+    </div>
+    <div><!-- gform_body -->
+      <ul>
+
+      <%= f.simple_fields_for :marketing_expenses, f.object.marketing_expenses.build do | marketing_expense | %>
+        <li>
+          <%= marketing_expense.input :invoice_due_date,
+                label: 'Invoice Due Date',
+                required: true,
+                start_year: Date.today.year %>
+          <div><!-- gfield_description -->The date the invoice is paid.</div>
+        </li>
+
+        <li>
+          <%= marketing_expense.input :start_date,
+                label: 'Date Marketing Activity Starts',
+                required: true,
+                start_year: Date.today.year %>
+          <div><!-- gfield_description -->Date the marketing activity is scheduled to occur.  (Example, date the newsletter ad is scheduled, date the blog tour will start.)</div>
+        </li>
+
+        <li>
+          <%= marketing_expense.input :end_date,
+                label: 'Date Marketing Activity Ends',
+                required: true,
+                start_year: Date.today.year %>
+        </li>
+
+        <li>
+          <%= marketing_expense.input :expense_type,
+                label: 'Type of Marketing Activity',
+                collection: MarketingExpense::EXPENSE_TYPES,
+                include_blank: true,
+                required: true,
+                html: {id: "expense_type_select"} %>
+        </li>
+
+        <li>
+          <%= marketing_expense.input :service_provider,
+                label: 'Marketing Service Provider',
+                collection: MarketingExpense::SERVICE_PROVIDERS,
+                include_blank: true,
+                required: true %>
+        </li>
+
+        <li>
+          <%= marketing_expense.input :cost,
+                label: 'Cost of Marketing Activity (Expense)',
+                required: true %>
+        </li>
+
+        <li>
+          <%= marketing_expense.input :other_information,
+                input_html: { rows: 10, cols: 20 } %>
+        </li>
+      <% end %>
+
+
+      <!--
+      TODO: determine how we handle the others.
+
+      If we decide to keep these fields we should probably interlace them between the dropdowns that
+      make them appear for a better user experience.
+
+        <li id="field_72_5" class="other_expense_type" style="display: none;">
+          <label class="gfield_label" for="input_72_5">Describe "Other" Marketing Activity<span class="gfield_required">*</span></label>
+          <div class="ginput_container">
+            <input name="input_5" id="input_72_5" type="text" value="" class="medium" tabindex="6">
+          </div>
+        </li>
+
+        <li id="field_72_8" class="other_service_provider" style="display: none;">
+          <label class="gfield_label" for="input_72_8">Describe "Other" Service Provider<span class="gfield_required">*</span></label>
+          <div class="ginput_container">
+            <input name="input_8" id="input_72_8" type="text" value="" class="medium" tabindex="8">
+          </div>
+        </li>
+      -->
+
+      </ul>
+    </div>
+    <div>
+      <%= f.submit 'submit' %>
+    </div>
+  <% end %>
 </div>

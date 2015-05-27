@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :production_expenses
+
   resources :task_dependencies
 
   resources :print_corners
@@ -74,6 +76,7 @@ Rails.application.routes.draw do
   match '/projects/marketing_release_date/:id',   to: 'projects#marketing_release_date',   via: 'patch'
   match '/projects/media_kit/:id',                to: 'projects#media_kit',                via: 'patch'
   match '/projects/original_manuscript/:id',      to: 'projects#original_manuscript',      via: 'patch'
+  match '/projects/production_expense/:id',       to: 'projects#production_expense',       via: 'patch'
   match '/projects/price_promotion/:id',          to: 'projects#price_promotion',          via: 'patch'
   match '/projects/print_corner_request/:id',     to: 'projects#print_corner_request',     via: 'patch'
   match '/projects/proofed_manuscript/:id',       to: 'projects#proofed_manuscript',       via: 'patch'

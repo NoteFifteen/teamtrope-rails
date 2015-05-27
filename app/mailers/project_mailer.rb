@@ -405,6 +405,34 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('publication_fact_sheet_admin', tokens, admin_publication_fact_sheet_list, admin_subject)
   end
 
+  def production_expense(project, production_expense, current_user)
+    @project = project
+    tokens = {
+      'Total quantity ordered' => production_expense[:total_quantity_ordered],
+      'Total cost of order' => '$' + production_expense[:total_cost].to_s,
+      'Quantity treated as complimentary' => production_expense[:complimentary_quantity],
+      'Value of complimentary copies' => '$' + production_expense[:complimentary_cost].to_s,
+      'Quantity treated as author advance' => production_expense[:author_advance_quantity],
+      'Value treated as author advance' => '$' + production_expense[:author_advance_cost].to_s,
+      'Quantity treated as purchased copies' => production_expense[:purchased_quantity],
+      'Total cost of purchased copies' => '$' + production_expense[:purchased_cost].to_s,
+      'Value of purchased copies to invoice via Paypal' => production_expense[:paypal_invoice_amount],
+      'Explanation of how value of purchased copies was calculated' => ('<pre>' + production_expense[:calculation_explanation] + '</pre>').html_safe,
+      'Quantity for marketing purposes' => production_expense[:marketing_quantity],
+      'Addtional costs' => ProductionExpense::ADDITIONAL_COSTS.to_h[production_expense.additional_costs.join],
+      'Total of additional costs to be allocated to teams' => '$' + production_expense[:additional_team_cost].to_s,
+      'Total of additional costts to be absorbed by Booktrope' => '$' + production_expense[:additional_booktrope_cost].to_s,
+      'Date costs should be allocated against revenue' => production_expense[:effective_date]
+    }
+
+    user_subject = "Production Expense from #{current_user.name} for #{project.title}"
+    admin_subject = "New " + user_subject
+
+    send_email_message('production_expense', tokens, get_project_recipient_list(@project), user_subject)
+    send_email_message('production_expense_admin', tokens, admin_production_expense_list, admin_subject)
+
+  end
+
   def final_manuscript(project, current_user)
     @project = project
     @current_user = current_user
@@ -734,6 +762,10 @@ class ProjectMailer < ActionMailer::Base
   end
 
   def admin_print_corner_list
+    %w( adam.bodendieck@booktrope.com )
+  end
+
+  def admin_production_expense_list
     %w( adam.bodendieck@booktrope.com )
   end
 

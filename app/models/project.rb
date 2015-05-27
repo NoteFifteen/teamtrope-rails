@@ -36,6 +36,7 @@ class Project < ActiveRecord::Base
   has_many :team_memberships, inverse_of: :project
   has_many :artwork_rights_requests, dependent: :destroy
   has_many :print_corners, dependent: :destroy
+  has_many :production_expenses, dependent: :destroy
 
   #TODO: we might not need to allow destroy via the project form for associations that
   # are only written by form. (media_kits, price_change_promotions, published_file, status_update)
@@ -59,6 +60,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :artwork_rights_requests, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :print_corners, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :production_expenses, reject_if: :all_blank, allow_destroy: true
 
   # scope that returns projects with an allocation higher than percent
   scope :high_allocations, -> (percent) {

@@ -1,0 +1,82 @@
+<p>
+  <strong>Project:</strong>
+  <%= link_to @production_expense.project.title, @production_expense.project %>
+</p>
+
+<p>
+  <strong>Total quantity ordered:</strong>
+  <%= @production_expense.total_quantity_ordered %>
+</p>
+
+<p>
+  <strong>Total cost:</strong>
+  <%= @production_expense.total_cost %>
+</p>
+
+<p>
+  <strong>Complimentary quantity:</strong>
+  <%= @production_expense.complimentary_quantity %>
+</p>
+
+<p>
+  <strong>Complimentary cost:</strong>
+  <%= @production_expense.complimentary_cost %>
+</p>
+
+<p>
+  <strong>Author advance quantity:</strong>
+  <%= @production_expense.author_advance_quantity %>
+</p>
+
+<p>
+  <strong>Author advance cost:</strong>
+  <%= @production_expense.author_advance_cost %>
+</p>
+
+<p>
+  <strong>Purchased quantity:</strong>
+  <%= @production_expense.purchased_quantity %>
+</p>
+
+<p>
+  <strong>Purchased cost:</strong>
+  <%= @production_expense.purchased_cost %>
+</p>
+
+<p>
+  <strong>Paypal invoice amount:</strong>
+  <%= @production_expense.paypal_invoice_amount %>
+</p>
+
+<p>
+  <strong>Calculation explanation:</strong>
+  <%= @production_expense.calculation_explanation %>
+</p>
+
+<p>
+  <strong>Marketing quantity:</strong>
+  <%= @production_expense.marketing_quantity %>
+</p>
+
+<p>
+  <strong>Additional cost mask:</strong>
+  <%= @production_expense.additional_cost_mask %>
+</p>
+
+<p>
+  <strong>Additional team cost:</strong>
+  <%= @production_expense.additional_team_cost %>
+</p>
+
+<p>
+  <strong>Additional booktrope cost:</strong>
+  <%= @production_expense.additional_booktrope_cost %>
+</p>
+
+<p>
+  <strong>Effective date:</strong>
+  <%= @production_expense.effective_date %>
+</p>
+
+<%= link_to 'Edit', edit_production_expense_path(@production_expense) %> |
+<%= link_to 'Back', production_expenses_path %>

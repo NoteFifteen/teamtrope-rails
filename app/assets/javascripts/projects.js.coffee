@@ -495,3 +495,34 @@ jQuery(document).ready () ->
       }
     }
   });
+
+## production_expense Form validations
+jQuery.validator.addMethod("complimentaryCopyValidator", (value, element, params) ->
+  return value <= 10 && value >= 0
+, jQuery.validator.format("Complimentary orders must be 0 or less than or equal to 10")
+)
+
+## Custom validation rules for production_expense
+jQuery ->
+  $("#production_expense").validate({
+    rules: {
+      'project[production_expenses_attributes][0][complimentary_quantity]': {
+        required: true,
+        complimentaryCopyValidator: ''
+      }
+    }
+  });
+
+jQuery(document).ready () ->
+  $(".complimentary").bind("propertychange change click keyup input paste", (event) =>
+    total = $("#complimentary_quantity").val() / $("#total_quantity_ordered").val() * $("#total_cost").val()
+    $("#complimentary_cost").val(total.toFixed(2)))
+
+  $(".complimentary").first().trigger("change")
+
+  $(".advance").bind("propertychange change click keyup input paste", (event) =>
+    total = $("#advance_quantity").val() / $("#total_quantity_ordered").val() * $("#total_cost").val()
+    $("#total_author_advance_cost").val(total.toFixed(2)))
+
+  $(".advance").first().trigger("change")
+

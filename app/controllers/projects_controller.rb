@@ -231,7 +231,7 @@ class ProjectsController < ApplicationController
     if @project.update(update_project_params)
       @project.create_activity :submitted_proofed_manuscript, owner: current_user, parameters: {text: "Uploaded the Proofed Manuscript", form_data: params[:project].to_s}
       update_current_task
-      flash[:success] = "Proofed Manuscript Uploaded. WAIT! Before you celebrate, you are still on the clock for the project and we won't be working on your book until you complete the next step. 
+      flash[:success] = "Proofed Manuscript Uploaded. WAIT! Before you celebrate, you are still on the clock for the project and we won't be working on your book until you complete the next step.
       To do this:
         1) Refresh the  project page (see link below),
         2) Open the Choose Style tab in the Design Layout phase of the project.
@@ -653,6 +653,22 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def production_expense
+    if @project.update(update_project_params)
+      update_current_task
+      @project.create_activity :production_expense, owner: current_user,
+        parameters: { text: 'Submitted a Production Expense', form_data: params[:project].to_s}
+      flash[:success] = 'Submitted Production Expense'
+      # getting the most recently created production expense
+      # TODO: investigate a better way to look up the most recently created nested many to many relation
+      production_expense = @project.production_expenses.order(created_at: :desc).where("created_at = updated_at").first
+      ProjectMailer.production_expense(@project, production_expense, current_user)
+      redirect_to @project
+    else
+      render 'show'
+    end
+  end
+
   def marketing_expense
     if @project.update(update_project_params)
       update_current_task
@@ -770,6 +786,7 @@ class ProjectsController < ApplicationController
       :marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information ],
       :media_kits_attributes => [:document],
       :price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion, :sites => []],
+      :production_expenses_attributes => [:additional_booktrope_cost, :additional_costs, :additional_team_cost, :author_advance_cost, :author_advance_quantity, :calculation_explanation, :complimentary_cost, :complimentary_quantity, :effective_date, :marketing_quantity, :paypal_invoice_amount, :purchased_cost, :purchased_quantity, :total_cost, :total_quantity_ordered],
       :publication_fact_sheet_attributes => [ :author_name, :series_name, :series_number, :description,
             :author_bio, :endorsements, :one_line_blurb, :print_price, :ebook_price,
             :bisac_code_one, :bisac_code_two, :bisac_code_three, :search_terms, :age_range,

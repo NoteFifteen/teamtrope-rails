@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project_id: 
+  total_quantity_ordered: 1
+  total_cost: 1.5
+  complimentary_quantity: 1
+  complimentary_cost: 1.5
+  author_advance_quantity: 1
+  author_advance_cost: 1.5
+  purchased_quantity: 1
+  purchased_cost: 1.5
+  paypal_invoice_amount: 1.5
+  calculation_explanation: MyText
+  marketing_quantity: 1
+  additional_cost_mask: 1
+  additional_team_cost: 1.5
+  additional_booktrope_cost: 1.5
+  effective_date: 2015-05-26
+
+two:
+  project_id: 
+  total_quantity_ordered: 1
+  total_cost: 1.5
+  complimentary_quantity: 1
+  complimentary_cost: 1.5
+  author_advance_quantity: 1
+  author_advance_cost: 1.5
+  purchased_quantity: 1
+  purchased_cost: 1.5
+  paypal_invoice_amount: 1.5
+  calculation_explanation: MyText
+  marketing_quantity: 1
+  additional_cost_mask: 1
+  additional_team_cost: 1.5
+  additional_booktrope_cost: 1.5
+  effective_date: 2015-05-26

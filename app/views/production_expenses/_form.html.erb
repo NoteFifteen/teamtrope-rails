@@ -1,0 +1,26 @@
+<%= simple_form_for(@production_expense) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :project %>
+    <%= f.input :total_quantity_ordered %>
+    <%= f.input :total_cost %>
+    <%= f.input :complimentary_quantity %>
+    <%= f.input :complimentary_cost %>
+    <%= f.input :author_advance_quantity %>
+    <%= f.input :author_advance_cost %>
+    <%= f.input :purchased_quantity %>
+    <%= f.input :purchased_cost %>
+    <%= f.input :paypal_invoice_amount %>
+    <%= f.input :calculation_explanation %>
+    <%= f.input :marketing_quantity %>
+    <%= f.input :additional_cost_mask %>
+    <%= f.input :additional_team_cost %>
+    <%= f.input :additional_booktrope_cost %>
+    <%= f.input :effective_date %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
