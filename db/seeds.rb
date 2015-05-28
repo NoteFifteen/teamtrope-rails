@@ -51,7 +51,7 @@ project_types = [
 # creating project types
 project_types.each do | pt |
 
-  project_type = ProjectType.create!(pt[:project_type])
+  project_type = ProjectType.where(pt[:project_type]).first_or_create
   pt[:id] = project_type.id
   project_type.create_project_view
   pt[:workflows].each do | wf |

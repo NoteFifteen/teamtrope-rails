@@ -36,7 +36,7 @@ class AddAgentAndAdvisorToRequiredRoles < ActiveRecord::Migration
   end
 
   def get_project_type
-    ProjectType.where(:name => 'Standard Project').first
+    ProjectType.where(name: "Standard Project", team_total_percent: 70.0).first_or_create
   end
 
 end
