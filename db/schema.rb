@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150528203926) do
+ActiveRecord::Schema.define(version: 20150529173442) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,12 +128,16 @@ ActiveRecord::Schema.define(version: 20150528203926) do
     t.string   "cover_concept_content_type"
     t.integer  "cover_concept_file_size"
     t.datetime "cover_concept_updated_at"
+    t.string   "cover_concept_image_direct_upload_url"
+    t.boolean  "cover_concept_image_processed",         default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "stock_cover_image_file_name"
     t.string   "stock_cover_image_content_type"
     t.integer  "stock_cover_image_file_size"
     t.datetime "stock_cover_image_updated_at"
+    t.string   "stock_cover_image_direct_upload_url"
+    t.boolean  "stock_cover_image_processed",           default: false
     t.json     "image_request_list"
   end
 

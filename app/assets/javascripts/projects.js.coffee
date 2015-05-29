@@ -175,40 +175,6 @@ jQuery ->
     }
   })
 
-## final manuscript form validations
-jQuery ->
-  $("#final_manuscript").validate({
-    rules: {
-      'project[final_manuscript_attributes][pdf]': {
-        required: true,
-        #accept: "application/pdf",
-        extension: '.pdf'
-      },
-      'project[final_manuscript_attributes][doc]': {
-        required: true,
-        accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
-      }
-    },
-    messages: {
-      'project[final_manuscript_attributes][pdf]': "You must upload a pdf file.",
-      'project[final_manuscript_attributes][doc]': "You must upload either a doc or docx file."
-    }
-  })
-
-## Stock Cover Image form validations
-jQuery ->
-  $('#add_stock_cover_image').validate({
-    rules: {
-      'project[cover_concept_attributes][stock_cover_image]': {
-        required: true,
-        accept: "application\/zip|image\/p?jpeg"
-      }
-    },
-    messages: {
-      'project[cover_concept_attributes][stock_cover_image]': "You must upload either a jpg or zip file."
-    }
-  })
-
 ## Media Kit Form validations
 jQuery ->
   $("#media_kit").validate({

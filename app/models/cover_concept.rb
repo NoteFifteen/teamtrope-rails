@@ -1,4 +1,6 @@
 class CoverConcept < ActiveRecord::Base
+  include PaperclipS3UploadProcessing
+
   belongs_to :project
 
   has_attached_file :cover_concept, :s3_permissions => 'authenticated-read'
@@ -10,5 +12,69 @@ class CoverConcept < ActiveRecord::Base
 
   validates_attachment :stock_cover_image,
                        *Constants::ContentTypesStockCoverImageParams
+
+  before_save :set_upload_attributes
+  after_save :transfer_and_cleanup
+
+  # The following methods are to unescape the direct upload url path
+  def cover_concept_image_direct_upload_url=(escaped_url)
+    write_attribute(:cover_concept_image_direct_upload_url, self.unescape_url(escaped_url))
+  end
+
+  def stock_cover_image_direct_upload_url=(escaped_url)
+    write_attribute(:stock_cover_image_direct_upload_url, self.unescape_url(escaped_url))
+  end
+
+  protected
+
+  # Final upload processing step
+  def transfer_and_cleanup
+    transfer_and_cleanup_with_block do |type|
+      if type == :cover_concept
+        self.update_column(:cover_concept_image_processed, true)
+      end
+
+      if type == :stock_cover_image
+        self.update_column(:stock_cover_image_processed, true)
+      end
+    end
+  end
+
+  def set_upload_attributes
+    set_upload_attributes_with_block do |type, direct_upload_url_data, direct_upload_head|
+      case(type)
+        when :cover_concept
+          self.cover_concept_file_name     = direct_upload_url_data[:filename]
+          self.cover_concept_file_size     = direct_upload_head.content_length
+          self.cover_concept_content_type  = direct_upload_head.content_type
+          self.cover_concept_updated_at    = direct_upload_head.last_modified
+
+        when :stock_cover_image
+          self.stock_cover_image_file_name     = direct_upload_url_data[:filename]
+          self.stock_cover_image_file_size     = direct_upload_head.content_length
+          self.stock_cover_image_content_type  = direct_upload_head.content_type
+          self.stock_cover_image_updated_at    = direct_upload_head.last_modified
+      end
+    end
+  end
+
+  def get_direct_upload_url
+    if cover_concept_image_direct_upload_url_changed?
+      return DIRECT_UPLOAD_URL_FORMAT.match(cover_concept_image_direct_upload_url)
+    end
+
+    if stock_cover_image_direct_upload_url_changed?
+      return DIRECT_UPLOAD_URL_FORMAT.match(stock_cover_image_direct_upload_url)
+    end
+  end
+
+  def get_uploaded_type
+    if cover_concept_image_direct_upload_url_changed?
+      return :cover_concept
+    end
+    if stock_cover_image_direct_upload_url_changed?
+      return :stock_cover_image
+    end
+  end
 
 end

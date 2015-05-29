@@ -57,8 +57,8 @@ module Constants
 
   # Custom params for Stock Cover Image(s) since they're allowed to upload a zip file
   ContentTypesStockCoverImageParams = [
-      :content_type => { content_type: ['application/zip', 'image/jpeg', 'image/pjpeg'] },
-      :file_name => { :matches => [/jpe?g$|zip$/i] },
+      :content_type => { content_type: ['application/zip', 'image/jpeg', 'image/pjpeg', 'image/png'] },
+      :file_name => { :matches => [/jpe?g$|png|zip$/i] },
       :size => DefaultSizeIn
   ]
 

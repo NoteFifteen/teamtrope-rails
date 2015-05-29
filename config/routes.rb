@@ -51,6 +51,7 @@ Rails.application.routes.draw do
     resource :analytics, only: [:show]
     resource :final_manuscript
     resource :published_file
+    resource :cover_concepts
   end
 
   get '/projects_grid_view', to: 'projects#grid_view'

@@ -304,15 +304,18 @@ class ProjectsController < ApplicationController
   end
 
   def cover_concept_upload
-    if @project.update(update_project_params)
+    @cover_concept = CoverConcept.find_or_initialize_by(project_id: @project.id)
+
+    # Validate the file has been uploaded before moving forward
+    if ! @cover_concept.cover_concept.nil?
       @project.create_activity :uploaded_cover_concept, owner: current_user,
                                parameters: {text: 'Uploaded the Cover Concept', form_data: params[:project].to_s}
-      flash[:success] = 'Cover Concept Uploaded'
+      flash[:success] = 'Cover Concept Uploaded!'
       update_current_task
       ProjectMailer.cover_concept_upload(@project, current_user)
       redirect_to @project
     else
-      flash[:danger] = 'Error uploading Cover Concept'
+      flash[:danger] = 'Error uploading Cover Concept.  Please try your upload again.'
       render 'show'
     end
   end
@@ -488,10 +491,13 @@ class ProjectsController < ApplicationController
   end
 
   def add_stock_cover_image
-    if @project.update(update_project_params)
+    @cover_concept = CoverConcept.find_or_initialize_by(project_id: @project.id)
+
+    # Validate the file has been uploaded before moving forward
+    if ! @cover_concept.stock_cover_image.nil?
       @project.create_activity :stock_cover_image_uploaded, owner: current_user,
                                parameters: {text: 'Uploaded the Stock Cover Image', form_data: params[:project].to_s}
-      flash[:success] = 'Stock Cover Image Uploaded'
+      flash[:success] = 'Stock Cover Image Uploaded!'
       update_current_task
       ProjectMailer.add_stock_cover_image(@project, current_user)
       redirect_to @project
@@ -776,7 +782,7 @@ class ProjectsController < ApplicationController
       :genre_ids => [],
       :artwork_rights_requests_attributes => [:id, :role_type, :full_name, :email, :_destroy],
       :blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
-      :cover_concept_attributes => [:id, :cover_concept, :cover_concept_notes, :cover_art_approval_date, :stock_cover_image, :image_request_list],
+      :cover_concept_attributes => [:id, :cover_concept_notes, :cover_art_approval_date, :image_request_list],
       :cover_template_attributes => [:ebook_front_cover, :createspace_cover, :lightning_source_cover, :alternative_cover],
       :draft_blurb_attributes => [:id, :draft_blurb],
       :approve_blurb_attributes => [:id, :blurb_approval_decision, :blurb_approval_date, :blurb_notes],

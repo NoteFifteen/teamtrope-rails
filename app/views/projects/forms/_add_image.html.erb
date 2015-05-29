@@ -4,17 +4,37 @@
   <h1>Add Image</h1>
   <div class="row">
     <div class="col-md-6">
+
+      <div>
+        <label>Stock Cover Image (.jpg, .png, or .zip) <span class="required">*</span></label>
+        <%= s3_uploader_form callback_url: project_cover_concepts_url(@project),
+                             id: "stock_cover_image_s3_uploader",
+                             acl: "private",
+                             callback_param: "stock_cover_image[direct_upload_url]",
+                             expiration: 24.hours.from_now.utc.iso8601,
+                             max_file_size: 100.megabytes do %>
+            <%= file_field_tag :file, multiple: false %>
+        <% end %>
+        <div id="stock_cover_image_uploads_container"></div>
+        <script id="template-upload" type="text/x-tmpl">
+                  <div id="upload_{%=o.unique_id%}" class="upload">
+                    <h5>{%=o.name%}</h5>
+                    <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+                  </div>
+          </script>
+        <span>Please select an image file to upload. (A .jpg, .png, or collection of either type of file in .zip format.).</span>
+      </div>
+
       <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'add_stock_cover_image', id: @project),
                           html: { id: "add_stock_cover_image" } do | f | %>
         <%= f.error_notification %>
         <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
 
-        <%= f.simple_fields_for :cover_concept, (f.object.cover_concept.nil?) ? f.object.build_cover_concept : f.object.cover_concept do | cc | %>
-            <%= cc.input :stock_cover_image, label: 'Stock Cover Image *', as: :file, required: true %>
-        <% end %>
-        <p>Please select an image file to upload. (A .jpg or collection of .jpg files in .zip).</p>
         <br/>
-        <%= f.submit "Submit" %>
+
+        <div>
+          <%= f.submit "Submit", disabled: '', class: 'btn disabled', id: 'stock_cover_image_submit_button' %>
+        </div>
       <% end %>
     </div>
   </div>

@@ -40,7 +40,7 @@ Cover Concept Notes:
     <div style="clear: right;">
         Stock Cover Image: <%= link_to "DOWNLOAD", download_stock_cover_image_path(@project) if cover_concept.stock_cover_image? %><br/>
     </div>
-    <% if(['image/jpeg', 'image/pjpeg'].include? cover_concept.try(:stock_cover_image_content_type)) %>
+    <% if(['image/jpeg', 'image/pjpeg', 'image/png'].include? cover_concept.try(:stock_cover_image_content_type)) %>
         <%= image_tag download_stock_cover_image_path(@project), class: 'alignright', width: "340px" if cover_concept.try(:stock_cover_image?) %>
     <% end %>
 
