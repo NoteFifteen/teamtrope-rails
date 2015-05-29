@@ -26,9 +26,10 @@ module Constants
   ]
 
   DefaultContentTypeMobiParams = [
-    :content_type => {
-      content_type: ['application/octet-stream', 'text/plain']
-    },
+    # :content_type => {
+    #   content_type: ['application/octet-stream', 'text/plain']
+    # },
+    :file_name => { :matches => [/mobi$/i] },
     :size => DefaultSizeIn
   ]
 

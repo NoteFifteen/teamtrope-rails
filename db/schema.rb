@@ -201,16 +201,16 @@ ActiveRecord::Schema.define(version: 20150528203926) do
     t.string   "doc_content_type"
     t.integer  "doc_file_size"
     t.datetime "doc_updated_at"
+    t.string   "doc_direct_upload_url"
+    t.boolean  "doc_processed",         default: false
     t.string   "pdf_file_name"
     t.string   "pdf_content_type"
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "doc_direct_upload_url"
-    t.boolean  "doc_processed",         default: false
     t.string   "pdf_direct_upload_url"
     t.boolean  "pdf_processed",         default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "final_manuscripts", ["project_id"], name: "index_final_manuscripts_on_project_id", using: :btree
@@ -551,14 +551,20 @@ ActiveRecord::Schema.define(version: 20150528203926) do
     t.string   "mobi_content_type"
     t.integer  "mobi_file_size"
     t.datetime "mobi_updated_at"
+    t.string   "mobi_direct_upload_url"
+    t.boolean  "mobi_processed",         default: false
     t.string   "epub_file_name"
     t.string   "epub_content_type"
     t.integer  "epub_file_size"
     t.datetime "epub_updated_at"
+    t.string   "epub_direct_upload_url"
+    t.boolean  "epub_processed",         default: false
     t.string   "pdf_file_name"
     t.string   "pdf_content_type"
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
+    t.string   "pdf_direct_upload_url"
+    t.boolean  "pdf_processed",          default: false
     t.date     "publication_date"
     t.datetime "created_at"
     t.datetime "updated_at"

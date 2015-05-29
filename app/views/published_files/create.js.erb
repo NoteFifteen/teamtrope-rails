@@ -1,0 +1,21 @@
+console.log(<%=@last_errors%>);
+<% if @published_file.persisted? %>
+$('#upload_<%=params[:unique_id]%>').hide();
+
+<% if ! @updated_file.nil? %>
+$('#published_file_<%=@updated_file%>_s3_uploader').html('<span><%=params[:filename] %> was successfully uploaded.</span>');
+
+// Add the new book type
+if(published_books_uploaded_types) {
+    console.log('Adding <%=@updated_file%> to uploaded types list.');
+    published_books_uploaded_types.push('<%=@updated_file%>');
+    requiredPublishBooksUnlockSubmit();
+} else {
+    console.error('published_books_uploaded_types is undefined!  Cannot track uploaded book.')
+}
+
+<% end %>
+
+<% else %>
+$('#upload_<%=params[:unique_id]%> div.progress').removeClass('active progress-striped').addClass('progress-danger');
+<% end %>

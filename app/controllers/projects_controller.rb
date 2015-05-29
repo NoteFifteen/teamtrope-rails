@@ -594,7 +594,11 @@ class ProjectsController < ApplicationController
   end
 
   def publish_book
-    if @project.update(update_project_params)
+    @published_file = PublishedFile.find_or_initialize_by(project_id: @project.id)
+
+    publication_date = DateTime.parse("#{params[:project][:published_file_attributes]['publication_date(1i)']}/#{params[:project][:published_file_attributes]['publication_date(2i)']}/#{params[:project][:published_file_attributes]['publication_date(3i)']}").strftime("%Y/%m/%d")
+
+    if @published_file.update(publication_date: publication_date)
       update_current_task
       @project.create_activity :published_book, owner: current_user,
                                 parameters: { text: 'Submitted the Publish Book form', form_data: params[:project].to_s}
@@ -602,7 +606,6 @@ class ProjectsController < ApplicationController
       ProjectMailer.publish_book(@project, current_user)
       redirect_to @project
     else
-      # flash[:danger] = @project.errors.full_messages.to_s
       flash[:danger] = 'There was an error publishing the book.  Please review.'
       render 'show'
     end
@@ -791,7 +794,7 @@ class ProjectsController < ApplicationController
             :author_bio, :endorsements, :one_line_blurb, :print_price, :ebook_price,
             :bisac_code_one, :bisac_code_two, :bisac_code_three, :search_terms, :age_range,
             :paperback_cover_type ],
-      :published_file_attributes => [:publication_date, :mobi, :epub, :pdf],
+      :published_file_attributes => [:publication_date],
       :status_updates_attributes => [:type, :status],
       :team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy],
       :print_corners_attributes => [:id, :user_id, :order_type, :first_order, :additional_order, :over_125, :billing_acceptance, :quantity, :has_author_profile, :has_marketing_plan,

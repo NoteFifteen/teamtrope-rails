@@ -23,9 +23,12 @@ class PublishedFilesController < ApplicationController
   def edit
   end
 
+  # This is the default generated create method which was not used since we prefer that published files be added
+  # directly from within the Project.
+  #
   # POST /published_files
   # POST /published_files.json
-  def create
+  def create_default
     @published_file = PublishedFile.new(published_file_params)
 
     respond_to do |format|
@@ -37,6 +40,49 @@ class PublishedFilesController < ApplicationController
         format.json { render json: @published_file.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # This controller method is hit remotely via AJAX from a Project view.
+  def create
+    @project = Project.friendly.find(params[:project_id])
+
+    # All examples (and code, really) seem to prefer a controller per file, whereas the PublishedFile model
+    # is for a single set of three documents, so we have to do some janky stuff here to make it work.
+    @published_file = PublishedFile.find_or_initialize_by(project_id: @project.id)
+    @updated_file = nil
+    update_hash = {}
+
+    if ! params[:published_file_mobi].nil?
+      update_hash[:mobi_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
+
+      # Sometimes these files are not provided with the content-type
+      update_hash[:mobi_content_type] = (params[:filetype].nil?) ? 'application/octet-stream' : params[:filetype]
+
+      update_hash[:mobi_file_size] = params[:filesize] unless params[:filesize].nil? || params[:filesize] == ''
+      update_hash[:mobi_direct_upload_url] = params[:published_file_mobi]['direct_upload_url'] unless params[:published_file_mobi]['direct_upload_url'].nil?
+      @updated_file = 'mobi'
+    end
+
+    if ! params[:published_file_epub].nil?
+      update_hash[:epub_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
+      update_hash[:epub_content_type] = params[:filetype] unless params[:filetype].nil? || params[:filetype] == ''
+      update_hash[:epub_file_size] = params[:filesize] unless params[:filesize].nil? || params[:filesize] == ''
+      update_hash[:epub_direct_upload_url] = params[:published_file_epub]['direct_upload_url'] unless params[:published_file_epub]['direct_upload_url'].nil?
+      @updated_file = 'epub'
+    end
+
+    if ! params[:published_file_pdf].nil?
+      update_hash[:pdf_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
+      update_hash[:pdf_content_type] = params[:filetype] unless params[:filetype].nil? || params[:filetype] == ''
+      update_hash[:pdf_file_size] = params[:filesize] unless params[:filesize].nil? || params[:filesize] == ''
+      update_hash[:pdf_direct_upload_url] = params[:published_file_pdf]['direct_upload_url'] unless params[:published_file_pdf]['direct_upload_url'].nil?
+      @updated_file = 'pdf'
+    end
+
+    @published_file.update(update_hash)
+    @published_file.save
+    @last_errors = @published_file.errors.full_messages
+    return
   end
 
   # PATCH/PUT /published_files/1

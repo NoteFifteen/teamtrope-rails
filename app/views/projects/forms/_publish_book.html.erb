@@ -1,40 +1,91 @@
-
 <!-- Publish Book -->
 <div class="container">
   <h1>Publish Book</h1>
+
   <div class="row">
     <div class="col-md-8">
-    <%= simple_form_for @project,
-                        url: url_for(controller: 'projects', action: 'publish_book', id: @project),
-                        html: { id: "publish_book" } do | f | %>
-      <%= f.error_notification %>
-      <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
       <div>
-        <ul>
-          <%= f.simple_fields_for :published_file, ((f.object.published_file.nil?) ? f.object.build_published_file : f.object.published_file) do | published_file | %>
-            <li>
-              <%= published_file.input :publication_date, label: "Publication Date", start_year: Date.today.year, :wrapper => :vertical_form %>
-              <label>Enter the Booktrope official publication date for the book.</label>
-            </li>
+        <label>.mobi File <span class="required">*</span></label>
+        <%= s3_uploader_form callback_url: project_published_file_url(@project),
+                             id: "published_file_mobi_s3_uploader",
+                             acl: "private",
+                             callback_param: "published_file_mobi[direct_upload_url]",
+                             expiration: 24.hours.from_now.utc.iso8601,
+                             max_file_size: 100.megabytes do %>
+            <%= file_field_tag :file, multiple: false %>
+        <% end %>
+        <div id="published_file_mobi_uploads_container"></div>
+        <script id="template-upload" type="text/x-tmpl">
+              <div id="upload_{%=o.unique_id%}" class="upload">
+                <h5>{%=o.name%}</h5>
+                <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+              </div>
 
-            <li>
-              <%= published_file.input :mobi, label: '.mobi File', required: true %>
-            </li>
-
-            <li>
-              <%= published_file.input :epub, label: '.epub File', required: true %>
-            </li>
-
-            <li>
-              <%= published_file.input :pdf, label: '.pdf File', required: false %>
-            </li>
-          <% end %>
-        </ul>
+        </script>
       </div>
+
+      <br>
+
       <div>
-      <%= f.submit "submit" %>
-    </div>
-    <% end %>
+        <label>.epub File <span class="required">*</span></label>
+        <%= s3_uploader_form callback_url: project_published_file_url(@project),
+                             id: "published_file_epub_s3_uploader",
+                             acl: "private",
+                             callback_param: "published_file_epub[direct_upload_url]",
+                             expiration: 24.hours.from_now.utc.iso8601,
+                             max_file_size: 100.megabytes do %>
+            <%= file_field_tag :file, multiple: false %>
+        <% end %>
+        <div id="published_file_epub_uploads_container"></div>
+        <script id="template-upload" type="text/x-tmpl">
+              <div id="upload_{%=o.unique_id%}" class="upload">
+                <h5>{%=o.name%}</h5>
+                <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+              </div>
+
+        </script>
+      </div>
+
+      <br>
+
+      <div>
+        <label>.pdf File</label>
+        <%= s3_uploader_form callback_url: project_published_file_url(@project),
+                             id: "published_file_pdf_s3_uploader",
+                             acl: "private",
+                             callback_param: "published_file_pdf[direct_upload_url]",
+                             expiration: 24.hours.from_now.utc.iso8601,
+                             max_file_size: 100.megabytes do %>
+            <%= file_field_tag :file, multiple: false %>
+        <% end %>
+        <div id="published_file_pdf_uploads_container"></div>
+        <script id="template-upload" type="text/x-tmpl">
+                  <div id="upload_{%=o.unique_id%}" class="upload">
+                    <h5>{%=o.name%}</h5>
+                    <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+                  </div>
+
+        </script>
+      </div>
+      <br>
+      <%= simple_form_for @project,
+                          url: url_for(controller: 'projects', action: 'publish_book', id: @project),
+                          html: {id: "publish_book"} do |f| %>
+          <%= f.error_notification %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+          <%= f.simple_fields_for :published_file, ((f.object.published_file.nil?) ? f.object.build_published_file : f.object.published_file) do |published_file| %>
+              <div>
+                <%= published_file.input :publication_date, label: "Publication Date", start_year: Date.today.year, :wrapper => :vertical_form %>
+                <span>Enter the Booktrope official publication date for the book.</span>
+              </div>
+
+          <% end %>
+          <br>
+
+          <div>
+            <%= f.submit "Submit", disabled: '', class: 'btn disabled', id: 'published_file_submit_button' %>
+          </div>
+      <% end %>
     </div>
   </div>
 </div>

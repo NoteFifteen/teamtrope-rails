@@ -1,4 +1,5 @@
 class FinalManuscriptsController < ApplicationController
+  before_action :signed_in_user
 
   def create
     @project = Project.friendly.find(params[:project_id])
