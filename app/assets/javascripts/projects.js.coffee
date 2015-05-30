@@ -286,21 +286,6 @@ jQuery ->
     rules: {
       checklist_0: {
         checklistValidator: [".upload_cover_checklist"]
-      },
-      'project[cover_template_attributes][ebook_front_cover]': {
-        required: true,
-        accept: "image/p?jpeg"
-      },
-      'project[cover_template_attributes][createspace_cover]': {
-        required: true,
-        accept: "application/pdf"
-      },
-      'project[cover_template_attributes][lightning_source_cover]': {
-        required: true,
-        accept: "application/pdf"
-      }
-      'project[cover_template_attributes][alternative_cover]': {
-        accept: "application/pdf"
       }
     }
   })

@@ -1,0 +1,14 @@
+<%= simple_form_for(@cover_template) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :alternative_cover %>
+    <%= f.input :createspace_cover %>
+    <%= f.input :ebook_front_cover %>
+    <%= f.input :lightning_source_cover %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

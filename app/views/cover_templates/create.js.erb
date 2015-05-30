@@ -1,0 +1,19 @@
+console.log(<%=@last_errors%>);
+<% if @cover_template.persisted? %>
+$('#upload_<%=params[:unique_id]%>').hide();
+
+  <% unless @updated_file.nil? %>
+$('#cover_template_<%=@updated_file%>_s3_uploader').html('<span><%=params[:filename]%> was successfully uploaded.</span><br /><br />');
+
+    // add the cover template
+    if(cover_template_uploaded_files) {
+      console.log('Adding <%=@updated_file%> to uploaded types list');
+      cover_template_uploaded_files.push('<%=@updated_file%>');
+      requiredCoverTemplateFilesUnlockSubmit();
+    } else {
+      console.error('cover_template_uploaded_files is undefined!  Cannot track uploaded book.');
+    }
+  <% end %>
+<% else %>
+  $('#upload_<%=params[:unique_id]%> div.progress').removeClass('active progress-striped').addClass('progress-danger');
+<% end %>

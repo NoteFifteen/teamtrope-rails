@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   resources :production_expenses
 
   resources :task_dependencies
@@ -52,6 +53,7 @@ Rails.application.routes.draw do
     resource :final_manuscript
     resource :published_file
     resource :cover_concepts
+    resource :cover_template
   end
 
   get '/projects_grid_view', to: 'projects#grid_view'
@@ -135,6 +137,7 @@ Rails.application.routes.draw do
   resources :status_updates
   resources :price_change_promotions
   resources :published_files
+  resources :cover_templates
 
 
   # Example of regular route:

@@ -1,0 +1,60 @@
+<h1>Cover Templates</h1>
+
+<table id="cover_template_table">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Updated</th>
+      <th>ebook Front Cover</th>
+      <th>Createspace Cover</th>
+      <th>Lightning Source Cover</th>
+      <th>Alternative Cover</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cover_templates.each do |cover_template| %>
+      <tr>
+        <td><%= link_to cover_template.project.title, cover_template.project %></td>
+
+        <td><%= cover_template.updated_at %></td>
+
+        <% unless cover_template.ebook_front_cover.nil? %>
+        <td><%= link_to cover_template.try(:ebook_front_cover_file_name), url_for(controller: 'projects', action: 'download_ebook_front_cover', id: cover_template.project, only_path: false) %></td>
+        <% else %>
+        <td> - </td>
+        <% end %>
+
+        <% unless cover_template.createspace_cover.nil? %>
+        <td><%= link_to cover_template.try(:createspace_cover_file_name), url_for(controller: 'projects', action: 'download_createspace_cover', id: cover_template.project, only_path: false) %></td>
+        <% else %>
+        <td> - </td>
+        <% end %>
+
+        <% unless cover_template.lightning_source_cover.nil? %>
+        <td><%= link_to cover_template.try(:lightning_source_cover_file_name), url_for(controller: 'projects', action: 'download_lightning_source_cover', id: cover_template.project, only_path: false) %></td>
+        <% else %>
+        <td> - </td>
+        <% end %>
+
+        <% unless cover_template.alternative_cover_file_name.nil? %>
+        <td><%= link_to cover_template.try(:alternative_cover_file_name), url_for(controller: 'projects', action: 'download_alternate_cover', id: cover_template.project, only_path: false) %></td>
+        <% else %>
+        <td> - </td>
+        <% end %>
+
+        <td><%= link_to 'Show', cover_template %></td>
+        <td><%= link_to 'Edit', edit_cover_template_path(cover_template) %></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<script>
+  $("#cover_template_table").DataTable({ "pageLength" : 100 });
+</script>

@@ -1,0 +1,63 @@
+<h2>Showing Cover Templates for <%= @cover_template.project.title %></h2>
+
+<div>Project: <%= link_to @cover_template.project.title, project_path(@cover_template.project) %></div>
+
+<table>
+  <thead>
+    <th>Cover</th>
+    <th>Name</th>
+    <th>Size</th>
+    <th>Updated</th>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td>ebook</td>
+      <% if ! @cover_template.ebook_front_cover_file_name.nil? %>
+         <td><%= link_to @cover_template.ebook_front_cover_file_name, url_for(controller: 'projects', action: 'download_published_file_mobi', id: @cover_template.project, only_path: false) %></td>
+      <% else %>
+         <td> - </td>
+      <% end %>
+      <td><%= (! @cover_template.ebook_front_cover_file_size.nil?)  ? @cover_template.ebook_front_cover_file_size  : '-' %></td>
+      <td><%= (! @cover_template.ebook_front_cover_updated_at.nil?) ? @cover_template.ebook_front_cover_updated_at : '-' %></td>
+    </tr>
+
+    <tr>
+      <td>Createspace</td>
+      <% if ! @cover_template.createspace_cover_file_name.nil? %>
+         <td><%= link_to @cover_template.createspace_cover_file_name, url_for(controller: 'projects', action: 'download_published_file_mobi', id: @cover_template.project, only_path: false) %></td>
+      <% else %>
+         <td> - </td>
+      <% end %>
+      <td><%= (! @cover_template.createspace_cover_file_size.nil?)  ? @cover_template.createspace_cover_file_size  : '-' %></td>
+      <td><%= (! @cover_template.createspace_cover_updated_at.nil?) ? @cover_template.createspace_cover_updated_at : '-' %></td>
+    </tr>
+
+    <tr>
+      <td>Lightning Source</td>
+      <% if ! @cover_template.lightning_source_cover_file_name.nil? %>
+         <td><%= link_to @cover_template.lightning_source_cover_file_name, url_for(controller: 'projects', action: 'download_published_file_mobi', id: @cover_template.project, only_path: false) %></td>
+      <% else %>
+         <td> - </td>
+      <% end %>
+      <td><%= (! @cover_template.lightning_source_cover_file_size.nil?)  ? @cover_template.lightning_source_cover_file_size  : '-' %></td>
+      <td><%= (! @cover_template.lightning_source_cover_updated_at.nil?) ? @cover_template.lightning_source_cover_updated_at : '-' %></td>
+    </tr>
+
+    <tr>
+      <td>Alternate</td>
+      <% if ! @cover_template.alternative_cover_file_name.nil? %>
+         <td><%= link_to @cover_template.alternative_cover_file_name, url_for(controller: 'projects', action: 'download_published_file_mobi', id: @cover_template.project, only_path: false) %></td>
+      <% else %>
+         <td> - </td>
+      <% end %>
+      <td><%= (! @cover_template.alternative_cover_file_size.nil?)  ? @cover_template.alternative_cover_file_size  : '-' %></td>
+      <td><%= (! @cover_template.alternative_cover_updated_at.nil?) ? @cover_template.alternative_cover_updated_at : '-' %></td>
+    </tr>
+
+  </tbody>
+</table>
+
+
+<%= link_to 'Edit', edit_cover_template_path(@cover_template) %> |
+<%= link_to 'Back', cover_templates_path %>

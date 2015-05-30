@@ -745,7 +745,7 @@ class ProjectsController < ApplicationController
   end
 
   def download_alternate_cover
-    redirect_to @project.cover_template.alternate_cover.expiring_url(*Constants::DefaultLinkExpiration)
+    redirect_to @project.cover_template.alternative_cover.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
   def download_createspace_cover
@@ -783,7 +783,7 @@ class ProjectsController < ApplicationController
       :artwork_rights_requests_attributes => [:id, :role_type, :full_name, :email, :_destroy],
       :blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
       :cover_concept_attributes => [:id, :cover_concept_notes, :cover_art_approval_date, :image_request_list],
-      :cover_template_attributes => [:ebook_front_cover, :createspace_cover, :lightning_source_cover, :alternative_cover],
+      :cover_template_attributes => [:id],
       :draft_blurb_attributes => [:id, :draft_blurb],
       :approve_blurb_attributes => [:id, :blurb_approval_decision, :blurb_approval_date, :blurb_notes],
       :final_manuscript_attributes => [:id, :pdf, :doc],

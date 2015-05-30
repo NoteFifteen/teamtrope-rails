@@ -1,72 +1,133 @@
-
 <!-- Upload Cover Templates -->
 <div class="container">
   <h1>Upload Cover Templates</h1>
   <div class="col-md-8">
-	<%= simple_form_for @project,
-				url: url_for(controller: 'projects', action: 'upload_cover_templates', id: @project),
-				html: { id: "upload_cover_templates" } do | f | %>
-		<%= f.error_notification %>
-		<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>	
-		<div>
-			<h5>Please upload the cover templates.</h5>
-		</div>
-		<div>		
-			<ul class="cover_template_list">
-			<%= f.simple_fields_for :cover_template, 
-				(f.object.cover_template.nil?)? f.object.build_cover_template : 
-				f.object.cover_template do | cover_template | %>
-				
-				<li class="cover_template_list">
-					<%= cover_template.input :ebook_front_cover, label: 'Front Cover File', required: true %>
-					<div><!-- gfield_description -->Final Front cover jpeg only
-						<p></p> 
-						This will be used as your ebook cover and for display on vendor sites such as Amazon and BN.com
-					</div>					
-				</li>
-			
-				<li class="cover_template_list">
-					<%= cover_template.input :createspace_cover, label: 'CreateSpace Cover Template File', required: true %>
-					<div><!-- gfield_description -->.pdf only</div>
-				</li>	
-				
-				<li class="cover_template_list">
-					<%= cover_template.input :lightning_source_cover, label: 'Lightning Source Cover Template File', required: true %>
-					<div><!-- gfield_description -->Please save the cover file for lightning source in the form [isbn_number_without_dashes]-cvr.pdf on your local computer before uploading here. Example: 1234567890123-cvr.pdf.</div>
-				</li>	
-				
-				<li class="cover_template_list">
-					<%= cover_template.input :alternative_cover, label: 'Alternate Template File' %>
-					<div><!-- gfield_description -->This field is not typically used; do not upload anything here unless you have specifically discussed with Booktrope management. </div>					
-				</li>
-				
-				<li class="cover_template_list">
-					<%= label_tag "Book Manager and Author Sign Off on following:" %>
-					<div>
-						<ul class="cover_template_sign_off">
-							<%
-								[
-									'Author bio is correct?',
-									'Book blurb on back is final?',
-									'ISBN bar code matches ISBN on title page of laid out document?',
-									'Author name and title are correct on front cover?'
-								].each_with_index do | check_box, index |
-							%>
-								<li class="cover_template_sign_off">
-									<%= check_box_tag "checklist_#{index}", index, false, class: "upload_cover_checklist required" %>
-									<%= label_tag "checklist_#{index}",check_box, class: "required" %>
-								</li>
-							<% end %>
-						</ul>
-					</div>
-				</li>
-			<% end %>
-			</ul>
-		</div>
-        <br>
-		<div>
-			<%= f.submit "submit" %>
-		</div>
-	<% end %>
+    <h5>Please upload the cover templates.</h5>
+
+    <ul class="cover_template_list">
+      <li class="cover_template_list">
+
+        <label>Front Cover File <span class="required">*</span></label>
+        <%= s3_uploader_form callback_url: project_cover_template_url(@project),
+                              id: "cover_template_ebook_front_cover_s3_uploader",
+                              acl: 'private',
+                              callback_param: 'cover_template_ebook_front_cover[direct_upload_url]',
+                              expiration: 24.hours.from_now.utc.iso8601,
+                            max_file_size: 100.megabytes do %>
+          <%= file_field_tag :file, multiple: false %>
+        <% end %>
+        <div id="cover_template_ebook_front_cover_uploads_container"></div>
+        <script id="template-upload" type="text/x-tmpl">
+          <div id="upload_{%=o.unique_id%}" class="upload">
+            <h5>{%=o.name%}</h5>
+            <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+          </div>
+        </script>
+        <div><!-- gfield_description -->
+          Final Front cover jpeg only<br /><br />
+          This will be used as your ebook cover and for display on vendor sites such as Amazon and BN.com
+        </div>
+      </li>
+
+      <li class="cover_template_list">
+        <label>CreateSpace Cover Template File<span class="required">*</span></label>
+        <%= s3_uploader_form callback_url: project_cover_template_url(@project),
+                              id: "cover_template_createspace_cover_s3_uploader",
+                              acl: 'private',
+                              callback_param: 'cover_template_createspace_cover[direct_upload_url]',
+                              expiration: 24.hours.from_now.utc.iso8601,
+                              max_file_size: 100.megabytes do %>
+          <%= file_field_tag :file, multiple: false %>
+        <% end %>
+        <div id="cover_template_createspace_cover_uploads_container"></div>
+        <script id="template-upload" type="text/x-tmpl">
+          <div id="upload_{%=o.unique_id%}" class="upload">
+            <h5>{%=o.name%}</h5>
+            <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+          </div>
+        </script>
+      </li>
+
+      <li class="cover_template_list">
+        <label>Lightning Source Cover Template File<span class="required">*</span></label>
+        <%= s3_uploader_form callback_url: project_cover_template_url(@project),
+                              id: "cover_template_lightning_source_cover_s3_uploader",
+                              acl: 'private',
+                              callback_param: 'cover_template_lightning_source_cover[direct_upload_url]',
+                              expiration: 24.hours.from_now.utc.iso8601,
+                              max_file_size: 100.megabytes do %>
+          <%= file_field_tag :file, multiple: false %>
+        <% end %>
+        <div id="cover_template_lightning_source_cover_uploads_container"></div>
+        <script id="template-upload" type="text/x-tmpl">
+          <div id="upload_{%=o.unique_id%}" class="upload">
+            <h5>{%=o.name%}</h5>
+            <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+          </div>
+        </script>
+        <div><!-- gfield_description -->Please save the cover file for lightning source in the form [isbn_number_without_dashes]-cvr.pdf on your local computer before uploading here. Example: 1234567890123-cvr.pdf.</div>
+      </li>
+
+      <li class="cover_template_list">
+        <label>Alternative Template File</label>
+        <%= s3_uploader_form callback_url: project_cover_template_url(@project),
+                              id: "cover_template_alternative_cover_s3_uploader",
+                              acl: 'private',
+                              callback_param: 'cover_template_alternative_cover[direct_upload_url]',
+                              expiration: 24.hours.from_now.utc.iso8601,
+                              max_file_size: 100.megabytes do %>
+          <%= file_field_tag :file, multiple: false %>
+        <% end %>
+        <div id="cover_template_alternative_cover_uploads_container"></div>
+        <script id="template-upload" type="text/x-tmpl">
+          <div id="upload_{%=o.unique_id%}" class="upload">
+            <h5>{%=o.name%}</h5>
+            <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+          </div>
+        </script>
+        <div><!-- gfield_description -->This field is not typically used; do not upload anything here unless you have specifically discussed with Booktrope management. </div>
+      </li>
+    </ul>
+
+    <%= simple_form_for @project,
+        url: url_for(controller: 'projects', action: 'upload_cover_templates', id: @project),
+        html: { id: "upload_cover_templates" } do | f | %>
+    <%= f.error_notification %>
+    <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
+    <div>
+      <ul class="cover_template_list">
+      <%= f.simple_fields_for :cover_template,
+        (f.object.cover_template.nil?)? f.object.build_cover_template :
+        f.object.cover_template do | cover_template | %>
+
+        <li class="cover_template_list">
+          <label>Book Manager and Author Sign Off on following<span class="required">*</span></label>
+          <div>
+            <ul class="cover_template_sign_off">
+              <%
+                [
+                  'Author bio is correct?',
+                  'Book blurb on back is final?',
+                  'ISBN bar code matches ISBN on title page of laid out document?',
+                  'Author name and title are correct on front cover?'
+                ].each_with_index do | check_box, index |
+              %>
+              <li class="cover_template_sign_off">
+                <%= check_box_tag "checklist_#{index}", index, false, class: "upload_cover_checklist " %>
+                <%= label_tag "checklist_#{index}",check_box, class: "" %>
+              </li>
+              <% end %>
+            </ul>
+          </div>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+    <br />
+    <div>
+      <%= f.submit "submit", disabled: '', class: 'btn disabled', id: 'cover_template_submit_button'  %>
+    </div>
+  <% end %>
   </div>
 </div>
