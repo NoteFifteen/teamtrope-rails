@@ -202,7 +202,10 @@ class ProjectsController < ApplicationController
   end
 
   def original_manuscript
-    if @project.update(update_project_params)
+    @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
+
+    # Validate the file has been uploaded before moving forward
+    if ! @manuscript.original.nil?
       @project.create_activity :submitted_original_manuscript, owner: current_user, parameters: {text: "Uploaded the Original Manuscript", form_data: params[:project].to_s}
       flash[:success] = "Original Manuscript Uploaded"
       update_current_task
@@ -215,7 +218,9 @@ class ProjectsController < ApplicationController
   end
 
   def edited_manuscript
-    if @project.update(update_project_params)
+    @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
+
+    if ! @manuscript.edited.nil? && @project.update(update_project_params)
       @project.create_activity :submitted_edited_manuscript, owner: current_user, parameters: {text: "Uploaded the Edited Manuscript", form_data: params[:project].to_s}
       update_current_task
       flash[:success] = "Edited Manuscript Uploaded"
@@ -228,7 +233,9 @@ class ProjectsController < ApplicationController
   end
 
   def proofed_manuscript
-    if @project.update(update_project_params)
+    @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
+
+    if ! @manuscript.proofed.nil? && @project.update(update_project_params)
       @project.create_activity :submitted_proofed_manuscript, owner: current_user, parameters: {text: "Uploaded the Proofed Manuscript", form_data: params[:project].to_s}
       update_current_task
       flash[:success] = "Proofed Manuscript Uploaded. WAIT! Before you celebrate, you are still on the clock for the project and we won't be working on your book until you complete the next step.

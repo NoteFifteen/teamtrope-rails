@@ -1,5 +1,9 @@
 <p>Thank you for submitting your final manuscript.</p>
 
+<% if( ! @project.manuscript.edited_file_name.nil? ) %>
+    <p>Download: <%= link_to(@project.manuscript.edited_file_name, url_for(controller: 'projects', action: 'download_edited_manuscript', id: @project, only_path: false)) %></p>
+<% end %>
+
 <div>
   - Booktrope
 </div>

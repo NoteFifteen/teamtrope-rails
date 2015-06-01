@@ -116,24 +116,36 @@
                         <%= f.input :proofed_word_count, label: 'Manuscript Word Count', required: true %>
                         <div>In Word: Go to File, Properties, click on the Statistics tab and enter the "Words:" count value. This will help us estimate and schedule your layout resource efficiently.</div>
                     </li>
-
-                    <%= f.simple_fields_for :manuscript,
-                                ((f.object.manuscript.nil?)?
-                                     f.object.build_manuscript : f.object.manuscript) do | manuscript | %>
-                    <li>
-                        <%= manuscript.input :proofed,
-                                    label: "Final Manuscript:",
-                                    as: :file, required: true %>
-                        <div>.doc or .docx file only</div>
-                    </li>
-                    <% end %>
-
                 </ul>
             </div>
             <br>
             <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
-            <%= f.submit "Submit" %>
+            <%= f.submit "Submit", id: 'submit_proofed_manuscript_hidden', style: 'display: none;' %>
         <% end %>
+
+      <div>
+        <label>Final Manuscript <span class='required'>*</span></label>
+        <%= s3_uploader_form callback_url: project_manuscript_url(@project),
+                             id: 'proofed_manuscript_s3_uploader',
+                             acl: 'private',
+                             callback_param: 'proofed_manuscript[direct_upload_url]',
+                             expiration: 24.hours.from_now.utc.iso8601,
+                             max_file_size: 100.megabytes do %>
+            <%= file_field_tag :file, multiple: false %>
+        <% end %>
+        <div id='proofed_manuscript_uploads_container'></div>
+        <script id='template-upload' type='text/x-tmpl'>
+                  <div id='upload_{%=o.unique_id%}' class='upload'>
+                    <h5>{%=o.name%}</h5>
+                    <div class='progress progress-striped active'><div class='bar' style='width: 0%'></div></div>
+                  </div>
+
+        </script>
+        <span>.doc & .docx files only!</span>
+      </div>
+
+      <button class="btn disabled" disabled id="submit_proofred_manuscript_fake" onclick="submitProofreadManuscriptForm();" >Submit</button>
+
     </div>
   </div>
 </div>

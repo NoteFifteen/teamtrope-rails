@@ -1,5 +1,9 @@
 <p>Thank you for adding the original manuscript. The project now needs you to commit to an edit complete date.</p>
 
+<% if( ! @project.manuscript.original_file_name.nil? ) %>
+    <p>Download: <%= link_to(@project.manuscript.original_file_name, url_for(controller: 'projects', action: 'download_original_manuscript', id: @project, only_path: false)) %></p>
+<% end %>
+
 <div>
 Happy 'troping!<br>
 

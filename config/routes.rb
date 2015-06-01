@@ -50,10 +50,11 @@ Rails.application.routes.draw do
 
   resources :projects do
     resource :analytics, only: [:show]
-    resource :final_manuscript
-    resource :published_file
     resource :cover_concepts
     resource :cover_template
+    resource :final_manuscript
+    resource :manuscript
+    resource :published_file
   end
 
   get '/projects_grid_view', to: 'projects#grid_view'
