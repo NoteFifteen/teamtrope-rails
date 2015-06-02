@@ -575,7 +575,7 @@ class ProjectMailer < ActionMailer::Base
       tokens.store('Expedite Instructions', ('<pre>' + pc.expedite_instructions + '</pre>').html_safe)
     end
 
-    tokens.store('Submitted By', email_address_link(current_user).html_safe)
+    tokens.store('Email', email_address_link(current_user).html_safe)
 
     user_subject = "Print Corner from #{current_user.name} for #{project.title}"
     admin_subject = "New " + user_subject
