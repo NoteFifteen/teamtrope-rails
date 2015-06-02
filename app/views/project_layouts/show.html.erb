@@ -1,0 +1,80 @@
+<h2>Showing Layout for <%= @project_layout.project.title %></h2>
+
+<p>
+  <strong>Project:</strong>
+  <%= link_to @project_layout.project.title, @project_layout.project %>
+</p>
+
+<p>
+  <strong>Exact name on copyright:</strong>
+  <%= @project_layout.exact_name_on_copyright %>
+</p>
+
+<p>
+  <strong>Final page count:</strong>
+  <%= @project_layout.final_page_count %>
+</p>
+
+<p>
+  <strong>Layout approval issue list:</strong>
+  <%= @project_layout.layout_approval_issue_list %>
+</p>
+
+<p>
+  <strong>Layout approved:</strong>
+  <%= @project_layout.layout_approved %>
+</p>
+
+<p>
+  <strong>Layout approved date:</strong>
+  <%= @project_layout.layout_approved_date %>
+</p>
+
+<p>
+  <strong>Layout notes:</strong>
+  <%= @project_layout.layout_notes %>
+</p>
+
+<p>
+  <strong>Page header display name:</strong>
+  <%= @project_layout.page_header_display_name %>
+</p>
+
+<p>
+  <strong>Pen name:</strong>
+  <%= @project_layout.pen_name %>
+</p>
+
+<p>
+  <strong>User pen name for copyright:</strong>
+  <%= @project_layout.use_pen_name_for_copyright %>
+</p>
+
+<p>
+  <strong>Use pen name on title:</strong>
+  <%= @project_layout.use_pen_name_on_title %>
+</p>
+
+<p>
+  <strong></strong>
+  <table>
+    <thead>
+      <th>Layout</th>
+      <th>Size</th>
+      <th>Updated</th>
+    </thead>
+    <tbody>
+      <tr>
+      <% if ! @project_layout.layout_upload.nil? %>
+         <td><%= link_to @project_layout.layout_upload_file_name, url_for(controller: 'projects', action: 'download_layout', id: @project_layout.project, only_path: false) %></td>
+      <% else %>
+         <td> - </td>
+      <% end %>
+        <td><%= !@project_layout.layout_upload_file_size?? '-' : @project_layout.layout_upload_file_size %></td>
+        <td><%= !@project_layout.layout_upload_updated_at?? '-' : @project_layout.layout_upload_updated_at %></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+<%= link_to 'Back', project_layouts_path %>

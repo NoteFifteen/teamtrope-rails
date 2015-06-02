@@ -1,0 +1,11 @@
+<% if @layout.persisted? %>
+  $('#upload_<%=params[:unique_id]%>').hide();
+  <% if ! @uploaded_file.nil? %>
+    $('#layout_<%=@uploaded_file%>_s3_uploader').html('<span><%= params[:filename] %> was successfully uploaded.</span>');
+    <% if @uploaded_file == 'layout_upload' %>
+      $('#layout_upload_submit_button').removeAttr('disabled').removeClass('disabled');
+    <% end %>
+  <%end %>
+<% else %>
+  $('#upload_<%=params[:unique_id]%> div.progress').removeClass('active progress-striped').addClass('progress-danger')
+<% end %>

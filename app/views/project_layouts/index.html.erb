@@ -1,0 +1,50 @@
+<h1>Project Layouts</h1>
+
+<table id="project_layout_table">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Layout File</th>
+      <th>Exact name on copyright</th>
+      <th>Final page count</th>
+      <th>Layout approval issue list</th>
+      <th>Layout approved</th>
+      <th>Layout approved date</th>
+      <th>Layout notes</th>
+      <th>Page header display name</th>
+      <th>Pen name</th>
+      <th>User pen name for copyright</th>
+      <th>Use pen name on title</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @project_layouts.each do |project_layout| %>
+      <tr>
+        <td class="book-title"><%= link_to project_layout.project.title, project_layout.project %></td>
+      <% if ! project_layout.layout_upload.nil? %>
+         <td><%= link_to project_layout.layout_upload_file_name, url_for(controller: 'projects', action: 'download_layout', id: project_layout.project, only_path: false) %></td>
+      <% else %>
+         <td> - </td>
+      <% end %>
+        <td><%= project_layout.exact_name_on_copyright %></td>
+        <td><%= project_layout.final_page_count %></td>
+        <td><%= project_layout.layout_approval_issue_list %></td>
+        <td><%= project_layout.layout_approved %></td>
+        <td><%= project_layout.layout_approved_date %></td>
+        <td><%= project_layout.layout_notes %></td>
+        <td><%= project_layout.page_header_display_name %></td>
+        <td><%= project_layout.pen_name %></td>
+        <td><%= project_layout.use_pen_name_for_copyright %></td>
+        <td><%= project_layout.use_pen_name_on_title %></td>
+        <td><%= link_to 'Show', project_layout_path(project_layout) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<script>
+  $("#project_layout_table").DataTable({ "pageLength" : 100 });
+</script>

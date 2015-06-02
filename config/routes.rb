@@ -54,6 +54,7 @@ Rails.application.routes.draw do
     resource :cover_template
     resource :final_manuscript
     resource :manuscript
+    resource :project_layout
     resource :published_file
   end
 
@@ -130,6 +131,7 @@ Rails.application.routes.draw do
   resources :genres
   resources :phases
   resources :required_roles
+  resources :project_layouts, except: [:edit, :destroy]
   resources :project_type_workflows
   resources :project_types
   resources :workflows

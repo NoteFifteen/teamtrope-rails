@@ -1,0 +1,20 @@
+<%= simple_form_for(edit_project_layout_path(@project_layout)) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :exact_name_on_copyright %>
+    <%= f.input :final_page_count %>
+    <%= f.input :layout_approval_issue_list %>
+    <%= f.input :layout_approved %>
+    <%= f.input :layout_approved_date %>
+    <%= f.input :layout_notes %>
+    <%= f.input :page_header_display_name %>
+    <%= f.input :pen_name %>
+    <%= f.input :use_pen_name_for_copyright %>
+    <%= f.input :use_pen_name_on_title %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
