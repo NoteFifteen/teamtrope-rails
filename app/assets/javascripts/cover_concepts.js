@@ -37,7 +37,7 @@ $(function() {
             remove_completed_progress_bar: false,
             progress_bar_target: $('#stock_cover_image_uploads_container'),
             before_add: function (file) {
-                if (/(application\/zip|image\/(png|jpe?g))$/i.test(file.type)) {
+                if (/(application\/zip|image\/(png|jpe?g))$/i.test(file.type)  || (/(png|jp?g|zip)$/i.test(file.name))) {
                     return true;
                 } else {
                     alert('File type must be .jpg, .png, or .zip');
