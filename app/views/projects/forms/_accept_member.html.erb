@@ -96,7 +96,7 @@
               <% if %w( advisor agent ).include?(r.role.normalized_name) %>
                 <%= User.active_users.map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>
               <% else %>
-                <%= User.with_role( r.role.normalized_name ).map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>
+                <%= User.with_role( r.role.normalized_name ).where('id not in (?)', @project.send( r.role.normalized_name.pluralize).map {|role| role.member_id }).map { |user| { id: user.id, name: user.name } }.to_json.html_safe %>
               <% end %>
       );
 
