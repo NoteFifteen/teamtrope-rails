@@ -57,24 +57,29 @@ class User < ActiveRecord::Base
       #find user by id and provider.
       user = User.find_by_provider_and_uid(oauth['provider'], oauth['uid'])
 
-      #if user isn't in our database yet, create it!
+      # Try a lookup by email address
       if user.nil?
-
         user = User.find_by_email(oauth['info']['email'])
+      end
 
-        # user already exists so update it with meta from wp.
-        if user
-          user.update_attributes(uid: oauth['uid'], provider: oauth['provider'],
-                  nickname: oauth['extra']['raw_info']['user_login'],
-                  website: oauth['info']['urls']['Website'], display_name: oauth['extra']['raw_info']['display_name'])
+      # user already exists so update it with meta from wp.
+      if user
+        user.update_attributes(
+            uid: oauth['uid'],
+            provider: oauth['provider'],
+            nickname: oauth['extra']['raw_info']['user_login'],
+            website: oauth['info']['urls']['Website'],
+            display_name: oauth['extra']['raw_info']['display_name'],
+            email: oauth['info']['email']
+        )
 
-        else
-          user = User.create!(name: oauth['extra']['raw_info']['display_name'],
-                              email: oauth['info']['email'], uid: oauth['uid'], provider: oauth['provider'],
-                              nickname: oauth['extra']['raw_info']['user_login'], website: oauth['info']['urls']['Website'],
-                              display_name: oauth['extra']['raw_info']['display_name'])
-          user.create_profile!
-        end
+      else
+        #if user isn't in our database yet, create it!
+        user = User.create!(name: oauth['extra']['raw_info']['display_name'],
+                            email: oauth['info']['email'], uid: oauth['uid'], provider: oauth['provider'],
+                            nickname: oauth['extra']['raw_info']['user_login'], website: oauth['info']['urls']['Website'],
+                            display_name: oauth['extra']['raw_info']['display_name'])
+        user.create_profile!
       end
 
       # Attempt to update Avatar if one has not been configured here
