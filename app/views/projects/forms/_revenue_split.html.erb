@@ -1,42 +1,80 @@
-<h1>Revenue Split</h1>
-<script>
-  var maxPercent = <%= @project.project_type.team_total_percent %>;
-  var total = 0;
 
-  jQuery.validator.addMethod("revenueSplitValidation", function(value, element, params)
-  {
-    total = 0;
-        $(params[0]).each(function() {
-            total += parseFloat($(this).val());
-        });
+<!-- Revenue Split -->
+<div class="container">
+  <script>
+      var maxPercent = <%= @project.project_type.team_total_percent %>;
+      var total = 0;
 
-        return this.optional(element) || total <= parseFloat(value);
-  }, jQuery.validator.format("You have exceed " + maxPercent + "% Please adjust the percents so they sum up accordingly."));
+      jQuery.validator.addMethod("revenueSplitValidation", function(value, element, params)
+      {
+          total = 0;
+          $(params[0]).each(function() {
+              total += parseFloat($(this).val());
+          });
 
-</script>
-<div>
-  <%= simple_form_for @project,
-   url: url_for(:controller => 'projects', :action => 'revenue_allocation_split',
-                      id: @project), html: { id: "revenue_allocation_split" } do | f| %>
+          return this.optional(element) || total <= parseFloat(value);
+      }, jQuery.validator.format("You have exceed " + maxPercent + "% Please adjust the percents so they sum up accordingly."));
 
-    <%= f.simple_fields_for :team_memberships do | builder | %>
-            <% next if builder.object.new_record? %>
-
-            <%= builder.object.member.name %>
-      <%= builder.input :id, as: :hidden %>
-      <%= builder.input :percentage, label: builder.object.role.name + " Percentage ", input_html: { class: "percentage" }  %><br />
-    <% end %>
+  </script>
+  <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'revenue_allocation_split',
+                                             id: @project), html: { id: "revenue_allocation_split" } do | f| %>
 
     <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
-
     <%= hidden_field_tag :fullAmount, @project.project_type.team_total_percent %><br />
 
-    <span><strong>Total:</strong> <span id="split_threshold">0</span> <font color="#ff0000">Must not exceed <%= @project.project_type.team_total_percent %>%</font></span><br /><br />
+    <div class="row">
+      <div class="col-md-8">
+        <h1>Revenue Split</h1>
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Role</th>
+              <th>Member</th>
+              <th>Percentage Allocated</th>
+              <th>Suggested Percentage</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%= f.simple_fields_for :team_memberships do | builder | %>
+                <% next if builder.object.new_record? %>
+                <tr>
+                  <td><%= builder.object.role.name %></td>
+                  <td><%= builder.object.member.name %> <%= builder.input :id, as: :hidden %></td>
 
-    <%= select_date (Date.today.day == 1)? Date.today : Date.today + 1.month, prefix: :effective_date, start_year: Date.today.year, discard_day: true %><br /><br />
-    <div>The date you would like this allocation agreement to take effect.</div><br />
-    <%= f.submit 'submit' %>
+                  <td width="140">
+                    <div class="input-group">
+                      <%= builder.input :percentage, label: false, input_html: {class: "percentage form-control"} %>
+                      <span class="input-group-addon" id="basic-addon1">%</span>
+                    </div>
+                  </td>
+
+                  <td  width="140"><%= builder.object.role.required_roles.first.suggested_percent %> %</td>
+                </tr>
+            <% end %>
+            </tbody>
+            <tfoot>
+            <tr>
+              <td colspan="2"><strong>Total (Must not exceed 70%)</strong></td>
+              <td id="split_threshold">
+                0 %
+              </td>
+              <td>
+                <% total = 0
+                   @project.team_allocations.map { |r| total += r[:suggested_percentage] }
+                %>
+                <%= total %>%
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <%= select_date (Date.today.day == 1)? Date.today : Date.today + 1.month, prefix: :effective_date, start_year: Date.today.year, discard_day: true %><br /><br />
+      <div>The date you would like this allocation agreement to take effect.</div><br />
+      <%= f.submit 'submit' %>
+    </div>
   <% end %>
+  </div>
 </div>
-
-

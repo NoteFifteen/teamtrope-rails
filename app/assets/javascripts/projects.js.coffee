@@ -89,8 +89,17 @@ jQuery(document).ready () ->
   $(".percentage").bind("propertychange change click keyup input paste", (event) =>
     total = 0
     $(".percentage").each (index, obj) =>
-      total += parseFloat($(obj).val())
-    $("#split_threshold").html(total)
+      field_val = parseFloat($(obj).val())
+      field_val = if isNaN(field_val) then 0 else field_val
+      total += field_val
+
+    $("#split_threshold").html(total + " %")
+
+    if(maxPercent && total > maxPercent)
+      $("#split_threshold").addClass('alert-danger')
+    else
+      $("#split_threshold").removeClass('alert-danger')
+
   )
 
   $(".percentage").first().trigger("change")
