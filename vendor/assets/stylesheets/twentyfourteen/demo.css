@@ -1,0 +1,52 @@
+@import url(http://fonts.googleapis.com/css?family=Gabriela);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+html, body, div, h1, h2, h3, p, pre {
+	margin: 0;
+	padding: 0;
+	color: #333;
+}
+html, body {
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+	font-size: 15px;
+	background: #fff;
+	line-height: 1.55;
+}
+h1 {
+	padding: 40px 0 20px;
+	font: 40px/60px Gabriela, Georgia, serif;
+	text-align: center;
+	text-shadow: 3px 3px rgba(0,0,0,0.1);
+}
+p {
+	margin-bottom: 10px;
+	text-align: left;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+	font-size: 15px;
+}
+a {
+	text-decoration: underline;
+	color: #1889e6;
+}
+a:hover {
+	text-decoration: none;
+}
+
+.page {
+	position: relative;
+	margin: 0 auto;
+}
+
+div.padder {
+	padding: 0 20px 40px;
+}
+
+/* Sortable tables */
+table.sortable thead {
+    cursor: pointer;
+}
+
+div.post table.sortable th 
+{
+	border-top:3px solid #b2b2b2;
+}

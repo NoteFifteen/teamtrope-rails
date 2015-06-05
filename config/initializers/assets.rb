@@ -17,3 +17,5 @@ Rails.application.config.assets.precompile += %w( jquery-validate/jquery.validat
 # http://harvesthq.github.io/chosen/
 Rails.application.config.assets.precompile += %w( chosen/chosen.jquery.js chosen/chosen.css)
 
+# Assets copied over from oldtrope
+Rails.application.config.assets.precompile += %w( twentyfourteen/style.css twentyfourteen/demo.css twentyfourteen/pcss3t.css twentyfourteen/ie.css twentyfourteen/html5.js )
