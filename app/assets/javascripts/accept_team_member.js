@@ -3,7 +3,9 @@
  * used in a namespaced format.
  */
 
-var Teamtrope = Teamtrope || {};
+if(! Teamtrope) {
+    var Teamtrope = {};
+}
 
 Teamtrope.BuildTeam = {};
 Teamtrope.BuildTeam.AcceptMember = function(role_select, member_select) {
@@ -241,33 +243,20 @@ Teamtrope.BuildTeam.AcceptMember.PercentageCalculator.prototype.updateIndicator 
 
 // Initial setup for the Accept Team Member form
 $(document).ready(function() {
-    acceptForm = acceptForm || new Teamtrope.BuildTeam.AcceptMember(
-                                    $('#accept_team_member_roles'),
-                                    $('#accept_team_member_users')
-                                );
-
-    percentageCalculator = percentageCalculator || new Teamtrope.BuildTeam.AcceptMember.PercentageCalculator(
-        $('#accept_team_member_percentage_input'),
-        $('#accept_team_member_percentage_indicator'),
-        $('#tableAllocatedTotal')
-    );
-
-    // Update the members in the select box
-    acceptForm.updateMemberSelect();
 
     // Bind the update to the list of team members based on the role change
     $('#accept_team_member_roles').change(function() {
-        acceptForm.updateMemberSelect();
+        Teamtrope.acceptForm.updateMemberSelect();
 
         var role_name = $('#accept_team_member_roles').find('option:selected').text();
         var percentageInput = $('#accept_team_member_percentage_input');
-        percentageInput.val(acceptForm.getSuggestedPercentageForRole(role_name));
-        percentageCalculator.calculateTotal(true);
+        percentageInput.val(Teamtrope.acceptForm.getSuggestedPercentageForRole(role_name));
+        Teamtrope.percentageCalculator.calculateTotal(true);
     });
 
     // Bind the update of the percentage input to the calculation total and progress bar update
-    $('#accept_team_member_percentage_input').bind('propertychange change click keyup input paste', event, function() {
-        percentageCalculator.calculateTotal(true);
+    $('#accept_team_member_percentage_input').bind('propertychange change click keyup input paste', function() {
+        Teamtrope.percentageCalculator.calculateTotal(true);
     });
 
 });

@@ -3,7 +3,9 @@
  */
 
 // An attempt at namespacing to avoid a bunch of global functions
-var Teamtrope = Teamtrope || {};
+if(! Teamtrope) {
+    var Teamtrope = {};
+}
 
 Teamtrope.Cover = {};
 Teamtrope.Cover.ImageRequestList = function(table) {

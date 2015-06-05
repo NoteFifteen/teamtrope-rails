@@ -1,6 +1,6 @@
 <!-- Remove Team Member Request -->
 <script>
-    var team_memberships = <%= @project.members_available_for_removal.to_json.html_safe %>;
+    Teamtrope.team_memberships = <%= @project.members_available_for_removal.to_json.html_safe %>;
 </script>
 
 <div class="container">

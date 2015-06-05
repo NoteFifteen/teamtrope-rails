@@ -3,8 +3,9 @@
  * used in a namespaced format.
  */
 
-var Teamtrope = Teamtrope || {};
-
+if(! Teamtrope) {
+    var Teamtrope = {};
+}
 Teamtrope.KdpSelectUpdate = function(){};
 
 // Function to handle Submit

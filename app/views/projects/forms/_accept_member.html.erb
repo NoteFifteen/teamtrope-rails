@@ -68,23 +68,28 @@
     $("#accept_team_member_users").chosen({width: '200px;'});
 
     // Set up our JS framework for this form
-    var acceptForm = new Teamtrope.BuildTeam.AcceptMember(
-            $('#accept_team_member_roles'),
-            $('#accept_team_member_users'),
-            $('#accept_team_member_percentage_input'),
-            $('#accept_team_member_percentage_indicator')
-    );
+    if(! Teamtrope.acceptForm) {
+        Teamtrope.acceptForm = new Teamtrope.BuildTeam.AcceptMember(
+                $('#accept_team_member_roles'),
+                $('#accept_team_member_users'),
+                $('#accept_team_member_percentage_input'),
+                $('#accept_team_member_percentage_indicator')
+        );
+    }
 
-    var percentageCalculator = percentageCalculator || new Teamtrope.BuildTeam.AcceptMember.PercentageCalculator(
-            $('#accept_team_member_percentage_input'),
-            $('#accept_team_member_percentage_indicator'),
-            $('#tableAllocatedTotal')
-    );
+    if(! Teamtrope.percentageCalculator) {
+        Teamtrope.percentageCalculator = new Teamtrope.BuildTeam.AcceptMember.PercentageCalculator(
+                        $('#accept_team_member_percentage_input'),
+                        $('#accept_team_member_percentage_indicator'),
+                        $('#tableAllocatedTotal')
+                );
+    }
 
-
+    // Update the members in the select box
+    Teamtrope.acceptForm.updateMemberSelect();
 
     // Add team members first so we can filter them out of the list of available members
-    acceptForm.addTeamMembers(<%= @project.team_memberships.map { |member|
+    Teamtrope.acceptForm.addTeamMembers(<%= @project.team_memberships.map { |member|
         next if member.new_record?
         { role: member.role.normalized_name, id: member.member_id, name: member.member.name, percentage: member.percentage }
     }.to_json.html_safe %>);
@@ -92,7 +97,7 @@
     // Add our list of available members for the various roles
     <% @project.project_type.required_roles.each do |r| %>
 
-      acceptForm.addMembersToRole('<%= r.role.normalized_name.pluralize %>',
+      Teamtrope.acceptForm.addMembersToRole('<%= r.role.normalized_name.pluralize %>',
               <% if %w( advisor agent ).include?(r.role.normalized_name) %>
                 <%= User.active_users_excluding_project(r.role, @project).to_json.html_safe %>
               <% else %>
@@ -102,14 +107,14 @@
 
     <% end %>
 
-    // The acceptForm reformats the members in an easier to digest format
-    percentageCalculator.addTeamMembers(acceptForm.getTeamMembers());
+    // The Teamtrope.acceptForm reformats the members in an easier to digest format
+    Teamtrope.percentageCalculator.addTeamMembers(Teamtrope.acceptForm.getTeamMembers());
 
     var maxPercent = parseFloat(<%= @project.project_type.team_total_percent %>);
-    var remainingPercent = (maxPercent - parseFloat(percentageCalculator.calculateTotal()));
+    var remainingPercent = (maxPercent - parseFloat(Teamtrope.percentageCalculator.calculateTotal()));
 
     <% @project.team_allocations.each do |r| %>
-        acceptForm.addRoleDefinition('<%= r[:role_name] %>', '<%= r[:suggested_percentage] %>');
+        Teamtrope.acceptForm.addRoleDefinition('<%= r[:role_name] %>', '<%= r[:suggested_percentage] %>');
     <% end %>
 
     jQuery.validator.addMethod('acceptMemberPercentageValidation', function(value, element) {

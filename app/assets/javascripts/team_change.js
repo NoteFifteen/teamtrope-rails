@@ -1,6 +1,9 @@
 /**
  * Javascript functions for useability and form validation for the Team Change form.
  */
+if(! Teamtrope) {
+    var Teamtrope = {};
+}
 $(document).ready(function() {
 
     /**
@@ -8,11 +11,13 @@ $(document).ready(function() {
      */
     var team_select = $('#remove_team_member_users');
 
-    team_memberships = team_memberships || '';
+    if(! Teamtrope.team_memberships) {
+        Teamtrope.team_memberships = '';
+    }
 
     // Populate based on JSON membership list
-    if(team_memberships.length > 0) {
-        $.each(team_memberships, function() {
+    if(Teamtrope.team_memberships.length > 0) {
+        $.each(Teamtrope.team_memberships, function() {
             if(this.membership_id && this.membership_id !== 'undefined') {
                 team_select.append($('<option/>', {
                         value: this.membership_id,
