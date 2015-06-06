@@ -542,7 +542,12 @@ class ProjectsController < ApplicationController
   end
 
   def upload_cover_templates
-    if @project.update(update_project_params)
+    @cover_template = CoverTemplate.find_or_initialize_by(project_id: @project.id)
+
+    # Validate the file has been uploaded before moving forward
+    if ! @cover_template.ebook_front_cover.nil? &&
+       ! @cover_template.createspace_cover.nil? &&
+       ! @cover_template.lightning_source_cover.nil?
       update_current_task
       @project.create_activity :uploaded_cover_templates, owner: current_user,
                                 parameters: { text: 'Uploaded Cover Templates', form_data: params[:project].to_s}
