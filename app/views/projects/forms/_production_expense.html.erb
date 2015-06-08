@@ -18,7 +18,7 @@
         </li>
         <li>
           <%= production_expense.input :total_cost,
-                label: "Total cost of order (per LSI, BN or vendor",
+                label: "Total cost of order (per LSI, BN or vendor)",
                 input_html: {class: 'complimentary', id: 'total_cost'} %>
         </li>
         <li>
@@ -45,11 +45,16 @@
           <div class="instruction">=# of advance copies / Total copies ordered * Total cost of LSI order</div>
         </li>
         <li>
-          <%= production_expense.input :purchased_quantity, label: "Quantity treated as Purchased Copies" %>
+          <%= production_expense.input :purchased_quantity,
+                label: "Quantity treated as Purchased Copies",
+                input_html: { id:'total_purchased_quantity' } %>
           <div class="instruction">This may include author purchased copies, team member purchased copies or 3rd party orders</div>
         </li>
         <li>
-          <%= production_expense.input :purchased_cost, label: "Total cost of Purchased copies" %>
+          <%= production_expense.input :purchased_cost,
+                label: "Total cost of Purchased copies",
+                input_html: {class: 'purchased', id: "total_purchased_cost"}
+           %>
           <div class="instruction">This is the actual cost of the order (including S&amp;H) from LSI</div>
         </li>
         <li>
@@ -64,7 +69,15 @@
           <div class="instruction">Example, 100 books at cost, 50 books at 50% off list</div>
         </li>
         <li>
-          <%= production_expense.input :marketing_quantity, label: "Quantity used for marketing purposes" %>
+          <%= production_expense.input :marketing_quantity,
+                label: "Quantity used for marketing purposes",
+                input_html: { class: "marketing", id: "marketing_quantity" } %>
+        </li>
+        <li>
+          <%= production_expense.input :marketing_cost,
+                label: "Total Cost of Marketing Copies",
+                input_html: { id: 'total_marketing_cost'} %>
+          <div class="instruction">=# of marketing copies / Total copies ordered * Total cost of LSI order</div>
         </li>
         <li>
           <label>Additional costs</label>

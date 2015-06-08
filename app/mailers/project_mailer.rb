@@ -419,6 +419,7 @@ class ProjectMailer < ActionMailer::Base
       'Value of purchased copies to invoice via Paypal' => production_expense[:paypal_invoice_amount],
       'Explanation of how value of purchased copies was calculated' => ('<pre>' + production_expense[:calculation_explanation] + '</pre>').html_safe,
       'Quantity for marketing purposes' => production_expense[:marketing_quantity],
+      'Total Cost of Marketing Copies' => '$' + production_expense[:marketing_cost].to_s,
       'Addtional costs' => ProductionExpense::ADDITIONAL_COSTS.to_h[production_expense.additional_costs.join],
       'Total of additional costs to be allocated to teams' => '$' + production_expense[:additional_team_cost].to_s,
       'Total of additional costts to be absorbed by Booktrope' => '$' + production_expense[:additional_booktrope_cost].to_s,

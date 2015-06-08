@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150529220333) do
+ActiveRecord::Schema.define(version: 20150608211315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -292,6 +292,8 @@ ActiveRecord::Schema.define(version: 20150529220333) do
     t.integer  "final_page_count"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "layout_upload_direct_upload_url"
+    t.string   "layout_upload_processed"
   end
 
   add_index "layouts", ["project_id"], name: "index_layouts_on_project_id", using: :btree
@@ -435,6 +437,7 @@ ActiveRecord::Schema.define(version: 20150529220333) do
     t.date     "effective_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "marketing_cost"
   end
 
   add_index "production_expenses", ["project_id"], name: "index_production_expenses_on_project_id", using: :btree

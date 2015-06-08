@@ -442,7 +442,6 @@ jQuery ->
   $("#production_expense").validate({
     rules: {
       'project[production_expenses_attributes][0][complimentary_quantity]': {
-        required: true,
         complimentaryCopyValidator: ''
       }
     }
@@ -460,4 +459,16 @@ jQuery(document).ready () ->
     $("#total_author_advance_cost").val(total.toFixed(2)))
 
   $(".advance").first().trigger("change")
+
+  $(".purchased").bind("propertychange change click keyup input paste", (event) =>
+    total = $("#total_cost").val() / $("#total_quantity_ordered").val() * $("#total_purchased_quantity").val()
+    $("#total_purchased_cost").val(total.toFixed(2)))
+
+  $(".purchased").first().trigger("change")
+
+  $(".marketing").bind("propertychange change click keyup input paste", (event) =>
+    total = $("#marketing_quantity").val() / $("#total_quantity_ordered").val() * $("#total_cost").val()
+    $("#total_marketing_cost").val(total.toFixed(2)))
+
+  $(".marketing").first().trigger("change")
 
