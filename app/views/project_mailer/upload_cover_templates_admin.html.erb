@@ -1,0 +1,23 @@
+<p>The Front Cover templates have been uploaded to Teamtrope.</p>
+
+<%= render 'table_hash' %>
+
+<p>The following covers were uploaded </p>
+
+<% if( @project.cover_template.ebook_front_cover? ) %>
+<p>Download ebook Front Cover: <%= link_to(@project.cover_template.ebook_front_cover_file_name, url_for(controller: 'projects', action: 'download_ebook_front_cover', id: @project, only_path: false)) %></p>
+<% end %>
+
+<% if( @project.cover_template.createspace_cover? ) %>
+<p>Download Createspace Cover: <%= link_to(@project.cover_template.createspace_cover_file_name, url_for(controller: 'projects', action: 'download_createspace_cover', id: @project, only_path: false)) %></p>
+<% end %>
+
+<% if( @project.cover_template.lightning_source_cover? ) %>
+<p>Download Lightning Source Cover: <%= link_to(@project.cover_template.lightning_source_cover_file_name, url_for(controller: 'projects', action: 'download_lightning_source_cover', id: @project, only_path: false)) %></p>
+<% end %>
+
+<% if( @project.cover_template.alternative_cover? ) %>
+<p>Download Alternate Cover: <%= link_to(@project.cover_template.alternative_cover_file_name, url_for(controller: 'projects', action: 'download_alternate_cover', id: @project, only_path: false)) %></p>
+<% end %>
+
+<p>You may also find the uploaded files on the Project page under the Assets tab.</p>

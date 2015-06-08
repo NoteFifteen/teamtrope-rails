@@ -340,7 +340,7 @@ class ProjectMailer < ActionMailer::Base
     admin_subject = "New " + user_subject
 
     send_email_message('upload_cover_templates', tokens, get_project_recipient_list(@project), user_subject)
-    send_email_message('upload_cover_templates', tokens, admin_upload_cover_templates_list, admin_subject)
+    send_email_message('upload_cover_templates_admin', tokens, admin_upload_cover_templates_list, admin_subject)
   end
 
   def artwork_rights_request(project, current_user)
