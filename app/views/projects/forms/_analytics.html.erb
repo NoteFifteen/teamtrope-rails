@@ -1,14 +1,14 @@
 <h1>Rankings and Analytics</h1>
 <div class="results" id="results"></div>
 <script type='text/javascript'>
-//$.post("/parse/get_amazon_sales_rank.json", {"parse": {"book":"pe2oMCIf9b"}}, 
+//$.post("/parse/get_amazon_sales_rank.json", {"parse": {"book":"pe2oMCIf9b"}},
 //	function(data){$('div#results').text(data[0].asin);}
 //	);
 
 	<% # TODO: Refactor views/projects/show to pass the tab id as a local when calling render partial %>
 	$("input[id=tab500]").change(function (event) {
         $.ajax({
-            url: '<%= project_analytics_path(@project) %>',
+            url: '<%= project_analytics_path(@project, channel: "amazon") %>',
             type: 'GET',
             success: function(analytics) {
 
@@ -88,7 +88,71 @@
             }
         });
 
-	});
+        $.ajax({
+            url: '<%= project_analytics_path(@project, channel: "apple") %>',
+            type: 'GET',
+            success: function (analytics) {
+                if(analytics.no_data)
+                {
+                    $('#apple-daily-sales-container').html('<span>There is no apple ranking data available for this project.</span>');
+                }
+                else
+                {
+                    new Highcharts.Chart(
+                    {
+                        chart:     { zoomType: 'xy', renderTo: "apple-daily-sales-container"},
+                        title:     { text: analytics.sales.title },
+                        subtitle:  { text: 'Daily Apple Sales' },
+                        xAxis:    [{ type: 'datetime', dateTimeLabelFormats: { month: '%e. %b',year: '%b' } }],
+                        yAxis:     { title: { text: 'Sales Estimate' }, min: 0 },
+                        tooltip:   { shared: true },
+                        series:   [{
+                            name: 'Sales',
+                            color: '#E6583E',
+                            type: 'column',
+                            data: $.parseJSON(analytics.sales.data)
+                        }]
+                    });
+                }
+
+            }
+        });
+
+
+
+        $.ajax({
+            url: '<%= project_analytics_path(@project, channel: "nook") %>',
+            type: 'GET',
+            success: function (analytics) {
+                if(analytics.no_data)
+                {
+                    $('#nook-daily-sales-container').html('<span>There is no nook ranking data available for this project.</span>');
+                }
+                else
+                {
+                    new Highcharts.Chart(
+                    {
+                        chart:     { zoomType: 'xy', renderTo: "nook-daily-sales-container"},
+                        title:     { text: analytics.sales.title },
+                        subtitle:  { text: 'Daily Nook Sales' },
+                        xAxis:    [{ type: 'datetime', dateTimeLabelFormats: { month: '%e. %b',year: '%b' } }],
+                        yAxis:     { title: { text: 'Sales Estimate' }, min: 0 },
+                        tooltip:   { shared: true },
+                        series:   [{
+                            name: 'Sales',
+                            color: '#F0D818',
+                            type: 'column',
+                            data: $.parseJSON(analytics.sales.data)
+                        }]
+                    });
+                }
+
+            }
+        });
+
+    });
 </script>
-<div id="daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 <div id="price-ranking-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
+<div id="daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
+<div id="apple-daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
+<div id="nook-daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
