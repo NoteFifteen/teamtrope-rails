@@ -114,11 +114,11 @@
                         }]
                     });
                 }
-
+            },
+            error: function() {
+                $("#apple-daily-sales-container").html('<span>An error occurred retrieving the apple sales data</span>');
             }
         });
-
-
 
         $.ajax({
             url: '<%= project_analytics_path(@project, channel: "nook") %>',
@@ -146,7 +146,9 @@
                         }]
                     });
                 }
-
+            },
+            error: function() {
+                $("#nook-daily-sales-container").html('<span>An error occurred retrieving the nook sales data</span>');
             }
         });
 
