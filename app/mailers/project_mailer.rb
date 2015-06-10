@@ -723,7 +723,7 @@ class ProjectMailer < ActionMailer::Base
   end
 
   def admin_upload_cover_templates_list
-    %w( vanyad@booktrope.com adam.bodendieck@booktrope.com victoria@booktrope.com kate.burkett@booktrope.com )
+    %w( vanyad@booktrope.com adam.bodendieck@booktrope.com victoria@booktrope.com kate.burkett@booktrope.com shari.ryan@booktrope.com )
   end
 
   def admin_artwork_rights_request_list
