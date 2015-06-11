@@ -23,10 +23,24 @@ Special Text Treatment: <br/>
 Word Count: N/A<br/>
 Previously Published?: No<br/>
 
-<h4>Latest Blurb</h4>
-<%= @project.try(:draft_blurb).try(:draft_blurb) %><br/>
-Updated: <%= @project.try(:draft_blurb).try(:updated_at).try(:strftime, "%Y-%m-%d") %><br/>
+<% if ! @project.try(:draft_blurb).nil? %>
+    <h4>Latest Blurb</h4>
+    <% if ! @project.try(:approve_blurb).try(:blurb_approval_date).nil? && @project.try(:approve_blurb).try(:blurb_approval_decision) == 'true' %>
+        Approved: <b>Yes</b><br>
+    <% else %>
+        Approved: <b>No</b><br>
+    <% end %>
 
+    Blurb Text:<br>
+    <pre style="width: 800px; height: 300px; overflow: auto;"><%= @project.try(:draft_blurb).try(:draft_blurb) %><br/></pre>
+
+    <% if ! @project.try(:approve_blurb).try(:blurb_notes).nil? && @project.try(:approve_blurb).try(:blurb_approval_date).nil? %>
+        Blurb Reviewer's Notes:<br>
+        <pre style="width: 800px; height: 50px; overflow: auto;"><%= @project.try(:approve_blurb).try(:blurb_notes) %></pre>
+    <% end %>
+
+    Last Updated: <%= @project.try(:approve_blurb).try(:updated_at).try(:strftime, "%Y-%m-%d") %><br/>
+<% end %>
 
 <%= render @project.manuscript unless @project.manuscript.nil? %>
 
