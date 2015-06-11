@@ -1,20 +1,21 @@
-<h1>Listing approve_blurbs</h1>
+<h1>Listing Approve Blurbs</h1>
 
-<table>
+<table id="approve_blurbs_table">
   <thead>
     <tr>
       <th>Project</th>
-      <th>Blurb notes</th>
-      <th>Blurb approval decision</th>
-      <th>Blurb approval date</th>
-      <th colspan="3"></th>
+      <th>Blurb Notes</th>
+      <th>Blurb Approval Decision</th>
+      <th>Blurb Approval Date</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
-
   <tbody>
     <% @approve_blurbs.each do |approve_blurb| %>
       <tr>
-        <td><%= approve_blurb.project %></td>
+        <td><%= link_to approve_blurb.project.title, approve_blurb.project %></td>
         <td><%= approve_blurb.blurb_notes %></td>
         <td><%= approve_blurb.blurb_approval_decision %></td>
         <td><%= approve_blurb.blurb_approval_date %></td>
@@ -25,6 +26,11 @@
     <% end %>
   </tbody>
 </table>
+
+<script type="text/javascript">
+  $('#approve_blurbs_table').DataTable({"pageLength": 100});
+
+</script>
 
 <br>
 
