@@ -7,6 +7,7 @@
       <th>Blurb Notes</th>
       <th>Blurb Approval Decision</th>
       <th>Blurb Approval Date</th>
+      <th>Blurb Last Updated</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
@@ -19,6 +20,7 @@
         <td><%= approve_blurb.blurb_notes %></td>
         <td><%= approve_blurb.blurb_approval_decision %></td>
         <td><%= approve_blurb.blurb_approval_date %></td>
+        <td><%= approve_blurb.updated_at %></td>
         <td><%= link_to 'Show', approve_blurb %></td>
         <td><%= link_to 'Edit', edit_approve_blurb_path(approve_blurb) %></td>
         <td><%= link_to 'Destroy', approve_blurb, method: :delete, data: { confirm: 'Are you sure?' } %></td>
