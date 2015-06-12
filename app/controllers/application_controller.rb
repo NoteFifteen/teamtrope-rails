@@ -21,7 +21,8 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     return session[:previous_url] if session[:previous_url] &&
-             session[:previous_url] != '/visitors'
+             session[:previous_url] != '/visitors' &&
+             !session[:previous_url].starts_with?('/users/auth/wordpress_hosted/callback?')
     root_path
   end
 end
