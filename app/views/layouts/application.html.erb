@@ -26,7 +26,6 @@
 
   <%= stylesheet_link_tag('twentyfourteen/demo.css') %>
   <%= stylesheet_link_tag('twentyfourteen/pcss3t.css') %>
-
   <%= stylesheet_link_tag('genericons/genericons.css', media: 'all') %>
 
 <!--  <link rel='stylesheet' id='bp-admin-bar-css'  href='https://teamtrope.com/wp-content/plugins/buddypress/bp-core/css/admin-bar.min.css?ver=2.0.1' type='text/css' media='all' /> -->
@@ -739,6 +738,9 @@ margin: 0;
 <body class="single single-projects postid-6187 logged-in no-customize-support custom-background group-blog masthead-fixed singular no-js" >
   <div id="page" class="hfeed site">
     <%= render 'layouts/header' %>
+    <!-- Execute this after the nav header is defined -->
+    <%= javascript_include_tag('twentyfourteen/functions.js') %>
+
     <div id="main" class="site-main">
       <div class="page">
         <div class='padder'>
