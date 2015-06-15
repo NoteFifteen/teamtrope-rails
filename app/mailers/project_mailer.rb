@@ -694,7 +694,7 @@ class ProjectMailer < ActionMailer::Base
 
   # Images have been requested
   def admin_request_images_list
-    %w( andy@booktrope.com adam.bodendieck@booktrope.com )
+    %w( andy@booktrope.com shari.ryan@booktrope.com adam.bodendieck@booktrope.com )
   end
 
   # The proofed manuscript has been uploaded
