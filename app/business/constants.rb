@@ -1,7 +1,7 @@
 module Constants
 
   # Number of seconds a download link is good for after being issued
-  DefaultLinkExpiration = 10
+  DefaultLinkExpiration = 300
 
   DefaultSize = 0..120.megabytes
   DefaultSizeIn = { in: DefaultSize }
