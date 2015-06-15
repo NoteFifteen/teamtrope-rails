@@ -578,8 +578,8 @@ class ProjectsController < ApplicationController
     if @project.update(update_project_params)
       update_current_task
       @project.create_activity :submitted_blurb, owner: current_user,
-                                parameters: { text: 'Submitted the Draft Blurb', form_data: params[:project].to_s}
-      flash[:success] = 'Submitted Draft Blurb'
+                                parameters: { text: 'Submitted the Blurb', form_data: params[:project].to_s}
+      flash[:success] = 'Submitted Blurb'
       ProjectMailer.submit_blurb(@project, current_user)
       redirect_to @project
     else
