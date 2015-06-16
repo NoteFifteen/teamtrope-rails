@@ -1,4 +1,7 @@
 <h1>Free/Price Promo</h1>
+
+<% if @project.try(:control_number).try(:parse_id) %>
+
 <div class="gf_browser_safari gform_wrapper">
   <%= simple_form_for @project,
         url: url_for(controller: 'projects', action: 'price_promotion', id: @project),
@@ -63,3 +66,17 @@
     </div>
   <% end %>
 </div>
+  <% else %>
+  <script type="text/javascript">
+    $(function() {
+      $("#promo_control_number_link").click(function(e) {
+        $("#tab700").prop('checked', true)
+      });
+    });
+
+  </script>
+  <p>
+    Oops, in order to request a price change we need to know its control numbers.<br />
+    Please add the control numbers to the project by submitting the <a id="promo_control_number_link" href="#" >Ctrl No. tab</a>.<br />
+  </p>
+  <% end %>
