@@ -76,7 +76,12 @@
 
   </script>
   <p>
+    <% if current_user.role? :booktrope_staff %>
     Oops, in order to request a price change we need to know its control numbers.<br />
     Please add the control numbers to the project by submitting the <a id="promo_control_number_link" href="#" >Ctrl No. tab</a>.<br />
+    <% else %>
+    Oops, in order to request a price change we need to know its control numbers.<br />
+    Please request the Booktrope staff responsible for control numbers to update your project.
+    <% end %>
   </p>
   <% end %>
