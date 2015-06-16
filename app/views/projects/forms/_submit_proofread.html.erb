@@ -15,8 +15,7 @@
             <div>
                 <ul>
                     <li>
-                        <label >Are you ready to upload your proofread manuscript for layout?<span>*</span></label>
-
+                        <h4>Are you ready to upload your proofread manuscript for layout?<span>*</span></h4>
                         <div>
                             <ul>
                             <%
@@ -41,7 +40,32 @@
                     </li>
 
                     <li>
-                        <label>Scene Changes</label>
+                  <li>
+                    <h4>Has this title been published previously?<span class="required">*</span></h4>
+                    <div>
+                      <!-- The choice here should conditionally unlock fields below -->
+                      <%= f.collection_radio_buttons :previously_published,
+                                                     [[true, 'Yes'], [false, 'No']], :first, :last,
+                                                     :collection_wrapper_tag => 'ul',
+                                                     :item_wrapper_tag => 'li'
+                      %>
+                    </div>
+                  </li>
+
+                  <li class='previously_published_true'>
+                    <%= f.input :previously_published_title, label: 'What was the title?', input_html: { class: 'optional'} %>
+                  </li>
+
+                  <li class='previously_published_true'>
+                    <%= f.input :prev_publisher_and_date, label: 'What was the year it was published?', input_html: { class: 'optional'} %>
+                  </li>
+
+                  <li class='previously_published_true'>
+                    <%= f.input :previously_published_publisher, label: 'Who was the publisher?', input_html: { class: 'optional'} %>
+                  </li>
+
+                    <li>
+                        <h4>Scene Changes</h4>
                         <div>
                             <%= check_box_tag 'scene_changes' %> <%= label_tag 'scene_changes', 'All narrative breaks/scene changes are indicated with three asterisks (***).' %>
                         </div>
@@ -52,12 +76,12 @@
                     </li>
 
                     <li>
-                        <label>Does your book contain sub-chapters?<span>*</span></label>
+                        <h4>Does your book contain sub-chapters?<span>*</span></h4>
                         <%= f.collection_radio_buttons :has_sub_chapters, [[false, 'No'],[true, 'Yes, and all sub-section headers are indicated by increments of increasing font size']], :first, :last, :collection_wrapper_tag => 'ul', :item_wrapper_tag => 'li' %>
                     </li>
 
                     <li>
-                        <label>Does your manuscript contain images?<span>*</span></label>
+                        <h4>Does your manuscript contain images?<span>*</span></h4>
                         <div>
                             <ul class="gfield_checkbox">
                             <%
@@ -78,23 +102,30 @@
                     </li>
 
                     <li class="does_contain_images_1" style="display: none;">
-                        <label>Link to Images in Docs Section of Teamroom<span>*</span></label>
+                        <h4>Link to Images in Docs Section of Teamroom<span>*</span></h4>
                         <div>
                             <%= text_field_tag "teamtrope_link" %>
                         </div>
                     </li>
 
                     <li class="does_contain_images_2" style="display: none;">
-                        <label>Link to Dropbox file containing images<span>*</span></label>
+                        <h4>Link to Dropbox file containing images<span>*</span></h4>
                         <div>
                             <%= text_field_tag "dropbox_link" %>
                         </div>
                     </li>
-
                     <li>
+                        <h4 >Imprint<span class="required">*</span></h4>
+                        <%= f.collection_radio_buttons :imprint_id, Imprint.all, :id, :name,
+                                                       :checked => 1,
+                                                       :collection_wrapper_tag => 'ul', :item_wrapper_tag => 'li' %>
+                        <div>IMPORTANT: If you have not discussed being part of a specific imprint with the imprint's Managing Director or Booktrope Management, please select "Booktrope Editions." </div>
+                    </li>
+                    <li>
+                      <h4>I have sections of text needing special treatment (optional)</h4>
                         <div>
                         <%= f.input :special_text_treatment,
-                                    label: 'I have sections of text needing special treatment (optional)',
+                                    label: false,
                                     as: :text,
                                     input_html: { class: %q[textarea medium], rows: 10, cols: 50 }
                             %>
@@ -113,7 +144,21 @@
                     </li>
 
                     <li>
-                        <%= f.input :proofed_word_count, label: 'Manuscript Word Count', required: true %>
+                      <h4>Additional Credits</h4>
+                        <div>
+                        <%= f.input :credit_request,
+                                    label: false,
+                                    as: :text,
+                                    input_html: { class: %q[textarea medium], rows: 5, cols: 30 }
+                            %>
+                        </div>
+
+                        <p>If you enlisted a photographer or cover model other than the cover designer, please list name and role so that they can be credited on the copyright page. This does NOT apply to stock photos.</p>
+                    </li>
+
+                    <li>
+                      <h4>Manuscript Word Count <span class="required">*</span></h4>
+                        <%= f.input :proofed_word_count, label: false, required: true %>
                         <div>In Word: Go to File, Properties, click on the Statistics tab and enter the "Words:" count value. This will help us estimate and schedule your layout resource efficiently.</div>
                     </li>
                 </ul>
@@ -124,7 +169,7 @@
         <% end %>
 
       <div>
-        <label>Final Manuscript <span class='required'>*</span></label>
+        <h4>Final Manuscript <span class='required'>*</span></h4>
         <%= s3_uploader_form callback_url: project_manuscript_url(@project),
                              id: 'proofed_manuscript_s3_uploader',
                              acl: 'private',

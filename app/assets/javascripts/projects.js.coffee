@@ -258,7 +258,7 @@ jQuery ->
          $('.previously_published_true').slideDown()
        else
          $('.previously_published_true').slideUp()
-         ##$('.optional input').val('').prop("checked", false)
+         $('.optional input').val('').prop("checked", false)
 
 jQuery ->
   field = $("input[name=does_contain_images]:radio")
@@ -331,6 +331,31 @@ jQuery ->
       'project[has_sub_chapters]': {
         required: true
       },
+      'project[previously_published]': {
+        required: true
+      },
+
+      'project[previously_published_title]': {
+        required: {
+          depends: (element) =>
+            return ($("input[name=project\\[previously_published\\]]:checked").val() == "true");
+        }
+      },
+
+      'project[previously_published_year]': {
+        required: {
+          depends: (element) =>
+            return ($("input[name=project\\[previously_published\\]]:checked").val() == "true");
+        }
+      },
+
+      'project[previously_published_publisher]': {
+        required: {
+          depends: (element) =>
+            return ($("input[name=project\\[previously_published\\]]:checked").val() == "true");
+        }
+      },
+
       does_contain_images: {
         required: true
       },

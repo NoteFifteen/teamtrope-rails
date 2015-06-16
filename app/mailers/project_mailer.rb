@@ -189,6 +189,19 @@ class ProjectMailer < ActionMailer::Base
       'Does your manuscript contain images?' => (params['does_contain_images'] != '0') ? 'Yes' : 'No'
     }
 
+    if(@project.previously_published == true)
+      tokens.store('Previously Published', 'Yes')
+      tokens.store('Previously Published Title', @project.previously_published_title)
+      tokens.store('Previously Published Year', @project.previously_published_year)
+      tokens.store('Previous Publisher', @project.previously_published_publisher)
+    else
+      tokens.store('Previously Published', 'No')
+    end
+
+    if(!@project.try(:credit_request).nil?)
+      tokens.store('Additional Credits Requested', ("<pre>" + @project.credit_request + "</pre>").html_safe )
+    end
+
     if(params[:dropbox_link] != '')
       tokens.store('Images have been uploaded to Dropbox Folder', params['dropbox_link'])
     end

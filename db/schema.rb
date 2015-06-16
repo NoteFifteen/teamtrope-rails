@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150608211315) do
+ActiveRecord::Schema.define(version: 20150615232351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -512,7 +512,6 @@ ActiveRecord::Schema.define(version: 20150608211315) do
   create_table "projects", force: true do |t|
     t.string   "stock_image_request_link"
     t.boolean  "previously_published"
-    t.string   "prev_publisher_and_date"
     t.integer  "proofed_word_count"
     t.string   "teamroom_link"
     t.datetime "publication_date"
@@ -534,8 +533,12 @@ ActiveRecord::Schema.define(version: 20150608211315) do
     t.integer  "wp_id"
     t.string   "slug"
     t.text     "synopsis"
-    t.boolean  "lock",                       default: false
-    t.boolean  "done",                       default: false
+    t.boolean  "lock",                           default: false
+    t.boolean  "done",                           default: false
+    t.string   "previously_published_title"
+    t.integer  "previously_published_year"
+    t.string   "previously_published_publisher"
+    t.text     "credit_request"
   end
 
   add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree
