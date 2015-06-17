@@ -194,7 +194,7 @@ class WordpressImportController < ApplicationController
       has_sub_chapters: fetch_field_value(project_meta, 'book_has_sub-chapters'),
       marketing_release_date: fetch_field_value(project_meta, 'book_marketing_release_date'),
       non_standard_size: fetch_field_value(project_meta, 'book_non-standard_size'),
-      prev_publisher_and_date: fetch_field_value(project_meta, 'book_prev_publisher_published'),
+      # prev_publisher_and_date: fetch_field_value(project_meta, 'book_prev_publisher_published'),
       previously_published: fetch_field_value(project_meta, 'book_previously_published'),
       proofed_word_count: fetch_field_value(project_meta, 'book_proofed_word_count'),
       publication_date: fetch_field_value(project_meta, 'book_publication_date'),
