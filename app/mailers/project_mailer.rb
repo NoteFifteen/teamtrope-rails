@@ -167,7 +167,7 @@ class ProjectMailer < ActionMailer::Base
     admin_subject = "New Submit Edited Manuscript from #{current_user.name} for {project.title}"
 
     send_email_message('submit_edited_manuscript', {}, get_project_recipient_list(@project), user_subject)
-    send_email_message('submit_edited_manuscript_admin', {}, admin_original_manuscript_list, admin_subject)
+    send_email_message('submit_edited_manuscript_admin', {}, admin_edited_manuscript_list, admin_subject)
   end
 
   # Manuscript submitted by Proof-Reader
