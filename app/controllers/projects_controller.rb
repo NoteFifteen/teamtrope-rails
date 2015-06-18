@@ -792,7 +792,7 @@ class ProjectsController < ApplicationController
   end
 
   def update_project_params
-    params.require(:project).permit(:id, :final_title, :synopsis, :stock_image_request_link,
+    params.require(:project).permit(:id, :final_title, :title, :synopsis, :stock_image_request_link,
       :previously_published, :previously_published_title, :previously_published_year, :previously_published_publisher,
       :credit_request, :proofed_word_count, :teamroom_link,
       :publication_date, :marketing_release_date, :special_text_treatment, :has_sub_chapters, :has_index,
