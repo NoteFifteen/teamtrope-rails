@@ -2,6 +2,6 @@
 <%= image_tag download_ebook_front_cover_path(@project), class: 'alignright', width: "340px" unless ! cover_template.ebook_front_cover?%>
 
 eBook Front Cover: <%= (cover_template.ebook_front_cover?) ? (link_to "DOWNLOAD", download_ebook_front_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
-CreateSpace Front Cover: <%= (cover_template.createspace_cover?) ? (link_to "DOWNLOAD", download_createspace_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
-Lightning Source Front Cover: <%= (cover_template.lightning_source_cover?) ? (link_to "DOWNLOAD", download_lightning_source_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
+CreateSpace Full Cover: <%= (cover_template.createspace_cover?) ? (link_to "DOWNLOAD", download_createspace_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
+Lightning Source Full Cover: <%= (cover_template.lightning_source_cover?) ? (link_to "DOWNLOAD", download_lightning_source_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
 Alternate Cover: <%= (cover_template.alternative_cover?) ? (link_to "DOWNLOAD", download_alternate_cover_path(@project), :target => "_blank") : 'N/A' %><br/><br/>
