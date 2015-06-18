@@ -8,23 +8,26 @@
             <h2>Sorry, you cannot create a new project unless you are Booktrope Staff</h2>
         <% else %>
 
-        <p>Authors, we have made it even easier to get your next project going. Use this project sign up form to tell us
-          about your new book, collection or anthology you want to have published.  Note: We will provide a place to
-          upload your original manuscript in the project once it is set up.</p>
-
-        <p>For more information about this form, <%= link_to 'click here', 'http://teamtrope.com/new-project-sign-up/' %>.</p>
+        <p>We are so glad you wish to publish another title with Booktrope. This is an honor we take seriously. Because
+        we have a responsibility to our creative teams, we need to ensure any titles we publish have a great chance for
+        commercial appeal. As such there are certain genres we are unable to publish such as screenplays, workbooks,
+        most poetry, and young children’s picture books.  If the title you are submitting is a dramatic change from
+        what we have already published for you or includes something mentioned in the previous sentence, please contact
+        <a href="//teamtrope.com/members/jennifergilbert/">@JenniferGilbert</a> to discuss prior to setting up the project.</p>
+        <p>Please note: While we would not wish to do so, Booktrope reserves the right to remove any project that does
+        not follow this request.</p>
 
         <%= simple_form_for @project, html: { id: 'new_project_form' } do | f | %>
 
           <div class="input_field">
-            <label>Title:<span class="required">*</span><br/>
+            <label>Title:&nbsp;<span class="required">*</span><br/>
               <%= f.input :title, label: false, :input_html => { type: 'text', size: '40' } %>
             </label>
           </div>
 
           <div class="input_field">
             <%= f.simple_fields_for :team_memberships, f.object.team_memberships.build do | member | %>
-              <label>Author:<span class="required">*</span><br/>
+              <label>Author:&nbsp;<span class="required">*</span><br/>
                 <% if current_user.role?(:booktrope_staff) %>
                   <%= member.input :member_id,
                         label: false,
@@ -50,20 +53,65 @@
           </div>
 
           <div class="input_field">
-            <label>Genres:<span class="required">*</span><br/>
-              <%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: true } ) %><br /><br />
-            </label>
+            <label>How long is the book? (approximate # of pages)</label><br>
+            <div class="col-xs-2">
+                <%= f.input :page_count, label: false, :input_html => { type: 'text', size: '10' } %>
+            </div>
           </div>
 
           <div class="input_field">
-            <label>Synopsis:<span class="required">*</span><br/>
+            <label>Does your book have any pictures or illustrations other than what you envision for the cover? &nbsp;<span class="required">*</span></label>
+            <%= f.collection_radio_buttons :has_internal_illustrations,
+                                           [[true, 'Yes'], [false, 'No']], :first, :last,
+                                           :collection_wrapper_tag => 'ul',
+                                           :collection_wrapper_class => 'collection_radio_buttons',
+                                           :item_wrapper_tag => 'li'
+            %>
+          </div>
+
+          <div class="input_field">
+            <label>Has this title been published previously?&nbsp;<span class="required">*</span></label>
+            <%= f.collection_radio_buttons :previously_published,
+                                           [[true, 'Yes'], [false, 'No']], :first, :last,
+                                           :collection_wrapper_tag => 'ul',
+                                           :collection_wrapper_class => 'collection_radio_buttons',
+                                           :item_wrapper_tag => 'li'
+            %>
+          </div>
+
+          <div class="input_field">
+            <label>Any special treatment?  (i.e. ebook only)</label>
+            <%= f.input :special_text_treatment,
+                        label: false,
+                        as: :text,
+                        input_html: { class: %q[textarea small], rows: 10, cols: 50 }
+            %>
+          </div>
+
+          <div class="input_field">
+            <label>Genres:&nbsp;<span class="required">*</span></label><br/>
+            <%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: true } ) %>
+            <p class="input_description">Note: You may select more than one genre.</p>
+          </div>
+
+          <div class="input_field">
+            <label >Imprint&nbsp;<span class="required">*</span></label><br/>
+            <%= f.collection_radio_buttons :imprint_id, Imprint.all, :id, :name,
+                                           :checked => 1,
+                                           :collection_wrapper_class => 'collection_radio_buttons',
+                                           :collection_wrapper_tag => 'ul', :item_wrapper_tag => 'li' %>
+            <p class="input_description">IMPORTANT: If you have not discussed being part of a specific imprint with the imprint's Managing Director or Booktrope Management, please select "Booktrope Editions." </div>
+          </div>
+
+          <div class="input_field">
+            <label>Synopsis:&nbsp;<span class="required">*</span><br/>
               <%= f.input :synopsis, as: :text, label: false, input_html: { rows: 8, cols: 70 } %>
             </label>
             <p class="input_description">If you don't have a full synopsis, don't worry - a couple of sentences about the book will suffice.</p>
           </div>
 
           <div class="input_field">
-            <label>Project Type:<span class="required">*</span><br/>
+            <label>Project Type:&nbsp;<span class="required">*</span><br/>
               <%= f.input :project_type_id,
                      label: false,
                      collection: ProjectType.all,
@@ -76,7 +124,7 @@
           </div>
 
           <div class="input_field">
-            <label>Teamroom Link:<span class="required">*</span><br/>
+            <label>Teamroom Link:&nbsp;<span class="required">*</span><br/>
               <%= f.input :teamroom_link, label: false, :input_html => { type: 'text', size: '40' } %>
             </label>
             <p class="input_description">Include the full url with 'http://'.</p>
@@ -101,17 +149,21 @@
     $("#new_project_form").validate({
         ignore: [],
         rules: {
+            'project[synopsis]': { required: true, minlength: 10 },
+            'project[teamroom_link]': { required: true, url: true, minlength: 10 },
             'project[title]': { required: true },
             'project[team_memberships_attributes][0][member_id]': { required: true },
             'project[genre_ids][]': { required: true },
-            'project[synopsis]': { required: true },
-            'project[project_type_id]': { required: true },
-            'project[teamroom_link]': { required: true, url: true }
+            'project[has_internal_illustrations]': { required: true },
+            'project[previously_published]': { required: true },
+            'project[project_type_id]': { required: true }
         },
         messages: {
             'project[title]': 'Please enter a working title for this project.',
             'project[team_memberships_attributes][0][member_id]': 'Please select an Author.',
             'project[genre_ids][]': 'Please select one or more genres.',
+            'project[has_internal_illustrations]': 'Please answer Yes or No.',
+            'project[previously_published]': 'Please answer Yes or No.',
             'project[synopsis]': 'Please provide a brief synopsis for this project.',
             'project[project_type_id]': 'Please select a Project Type.',
             'project[teamroom_link]': 'A Teamroom link is required and must contain a valid URL.'

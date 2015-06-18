@@ -244,15 +244,15 @@ jQuery ->
 ## form.
 jQuery ->
 
-  field = $("input[name=project\\[previously_published\\]]:radio")
-  field_value = $("input[name=project\\[previously_published\\]]:checked")
+  field = $("#submit_proofread input[name=project\\[previously_published\\]]:radio")
+  field_value = $("#submit_proofread input[name=project\\[previously_published\\]]:checked")
 
   if ! field.is(':checked') || field_value.val() == 'false'
     $('.previously_published_true').hide()
 
   $(field).change (event) =>
      if field.is(':checked')
-       field_value = $("input[name=project\\[previously_published\\]]:checked")
+       field_value = $("#submit_proofread input[name=project\\[previously_published\\]]:checked")
 
        if field_value.val() == 'true'
          $('.previously_published_true').slideDown()

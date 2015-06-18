@@ -11,11 +11,31 @@ class ProjectMailer < ActionMailer::Base
   def project_created (project, current_user)
     @project = project
     @current_user = current_user
+
+    genres = []
+    @project.genres.all.each { |g| genres.push( g.name ) }
+
     tokens = {
         'Title' => @project.title,
         'Author' => (@project.authors.try(:first).try(:member).nil?) ? 'N/A' : @project.authors.first.member.name,
-        'Genre'  => (@project.genres.try(:first).try(:name).nil?) ? 'N/A' : @project.genres.first.name
+        'Genre(s)' => genres.join(', '),
+        'Imprint' => (@project.try(:imprint).try(:name).nil?) ? 'N/A' : @project.try(:imprint).try(:name),
+        'Length' => (@project.try(:page_count).nil?) ? 'N/A' : @project.try(:page_count),
+        'Has Pictures or Illustrations' => (@project.try(:has_internal_illustrations) == true) ? 'Yes' : 'No',
+        'Previously published' => (@project.try(:previously_published) == true) ? 'Yes' : 'No'
     }
+
+    if(! @project.special_text_treatment.nil?)
+      tokens.store('Special Treatment', ("<pre>" + @project.special_text_treatment + "</pre>").html_safe )
+    end
+
+    if(! @project.synopsis.nil?)
+      tokens.store('Synopsis', ("<pre>" + @project.synopsis + "</pre>").html_safe )
+    end
+
+    tokens.store('Submitted By', email_address_link(current_user).html_safe)
+    tokens.store('Submitted Date', @project.created_at.strftime("%Y/%m/%d"))
+
     # Admin From: jennifer.gilbert@booktrope.com - Do we need this?
     admin_subject = "New Project submitted: #{project.title}"
     user_subject = "#{@project.title} project request received"

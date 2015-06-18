@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150615232351) do
+ActiveRecord::Schema.define(version: 20150618180916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -539,6 +539,7 @@ ActiveRecord::Schema.define(version: 20150615232351) do
     t.integer  "previously_published_year"
     t.string   "previously_published_publisher"
     t.text     "credit_request"
+    t.integer  "page_count"
   end
 
   add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree

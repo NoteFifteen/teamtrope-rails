@@ -24,10 +24,11 @@ class ProjectsController < ApplicationController
 
     @project = Project.new(new_project_params)
     if @project.save
-      flash[:success] = 'New Project Created!'
+      flash[:success] = 'Welcome to your new Project!'
      # Need to create method to set the current tasks based on the workflow
       @project.create_workflow_tasks
       publish(:create_project, @project)
+      ProjectMailer.project_created(@project, current_user)
       redirect_to @project
     else
       flash[:danger] = 'Error creating project!'
@@ -782,7 +783,11 @@ class ProjectsController < ApplicationController
 
   private
   def new_project_params
-    params.require(:project).permit(:title, :final_title, :project_type_id, :teamroom_link, :synopsis, :genre_ids => [], :team_memberships_attributes => [:role_id, :member_id, :percentage])
+    params.require(:project).permit(:title, :final_title, :project_type_id, :teamroom_link, :synopsis,
+                                    :page_count, :has_internal_illustrations, :previously_published,
+                                    :special_text_treatment, :imprint_id,
+                                    :genre_ids => [], :team_memberships_attributes => [:role_id, :member_id, :percentage]
+    )
   end
 
   def update_project_params
