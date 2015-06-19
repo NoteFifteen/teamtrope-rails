@@ -51,9 +51,14 @@
 
             <%= f.error_notification %>
             <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
-
-            <p><strong>Author:</strong> <%= @project.authors.first.member.name %> </p>
-            <p><strong>Book Title:</strong> <%= @project.final_title %> </p>
+            <div>
+              <%
+                 authors = []
+                 @project.authors.each{ |a| authors.push(a.member.name) }
+              %>
+              <span><strong>Author(s):</strong> <%= authors.join(', ') %> </span><br>
+              <span><strong>Book Title:</strong> <%= @project.final_title %> </span>
+            </div>
 
             <div>
               <%= f.simple_fields_for :kdp_select_enrollment, ((f.object.kdp_select_enrollment.nil?) ? f.object.build_kdp_select_enrollment : f.object.kdp_select_enrollment) do | builder | %>

@@ -618,6 +618,24 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('print_corner_admin', tokens, admin_print_corner_list, admin_subject)
   end
 
+  def kdp_select_enrollment(project, current_user)
+    @project = project
+    authors = []
+    @project.authors.each{ |a| authors.push(a.member.name) }
+
+    tokens = {
+        'Title' => @project.final_title,
+        'Author(s)' => authors.join(', '),
+        'Enrollment Date' => @project.kdp_select_enrollment.enrollment_date,
+        'Submitted by' => current_user.name,
+    }
+
+    user_subject = "KDP Select Enrollment Submitted for #{project.title}"
+
+    send_email_message('kdp_select_enrollment', tokens, get_project_recipient_list(@project), user_subject)
+    send_email_message('kdp_select_enrollment', tokens, admin_kdp_select_enrollment_list, user_subject)
+  end
+
   private
 
   # Generates a link for an email address for a User
@@ -801,6 +819,10 @@ class ProjectMailer < ActionMailer::Base
 
   def admin_production_expense_list
     %w( adam.bodendieck@booktrope.com )
+  end
+
+  def admin_kdp_select_enrollment_list
+    %w( adam.bodendieck@booktrope.com Pennie.dade@booktrope.com )
   end
 
   # Set the campaign header for MailGun tracking

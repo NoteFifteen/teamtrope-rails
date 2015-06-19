@@ -272,6 +272,7 @@ class ProjectsController < ApplicationController
       @project.create_activity :kdp_select_enrolled, owner: current_user,
                                parameters: { text: 'Enrolled in KDP Select', form_data: params[:project].to_s}
       flash[:success] = 'Enrolled in KDP Select'
+      ProjectMailer.kdp_select_enrollment(@project, current_user)
       redirect_to @project
     else
       render 'show'
