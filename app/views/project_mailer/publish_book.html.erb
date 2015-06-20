@@ -1,1 +1,14 @@
 <p><%= @current_user.name %> has just published <%= @project.title %> with a publication date of <%= @project.try(:published_file).try(:publication_date) %>.</p>
+
+
+<% if( @project.published_file.mobi? ) %>
+<p>Download mobi: <%= link_to(@project.published_file.mobi_file_name, url_for(controller: 'projects', action: 'download_published_file_mobi', id: @project, only_path: false)) %></p>
+<% end %>
+
+<% if( @project.published_file.epub? ) %>
+<p>Download epub: <%= link_to(@project.published_file.epub_file_name, url_for(controller: 'projects', action: 'download_published_file_epub', id: @project, only_path: false)) %></p>
+<% end %>
+
+<% if( @project.published_file.pdf? ) %>
+<p>Download pdf: <%= link_to(@project.published_file.pdf_file_name, url_for(controller: 'projects', action: 'download_published_file_pdf', id: @project, only_path: false)) %></p>
+<% end %>

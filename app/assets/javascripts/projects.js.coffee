@@ -316,6 +316,26 @@ jQuery ->
   })
 
 jQuery ->
+  field = $("#project_marketing_expenses_attributes_0_expense_type")
+
+  $(field).bind("change", (event) =>
+    if field.val() == "Other - Please Describe below"
+      $("#other_expense_type_li").show()
+    else
+      $("#other_expense_type_li").hide()
+  )
+
+jQuery ->
+  field = $("#project_marketing_expenses_attributes_0_service_provider")
+
+  $(field).bind("change", (event) =>
+    if field.val() == "Other - Please specify below"
+      $("#other_service_provider_li").show()
+    else
+      $("#other_service_provider_li").hide()
+  )
+
+jQuery ->
   $("#marketing_expense").validate({
     rules: {
     }

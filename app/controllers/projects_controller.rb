@@ -698,7 +698,13 @@ class ProjectsController < ApplicationController
       @project.create_activity :marketing_expense, owner: current_user,
           parameters: { text: 'Submitted a Marketing Expense', form_data: params[:project].to_s}
       flash[:success] = 'Submitted Marketing Expense.'
+
+      # getting the most recently created marketing expense
+      # TODO: investigate a better way to look up the most recently created nested many to many relation
+      marketing_expense = @project.marketing_expenses.order(created_at: :desc).where("created_at = updated_at").first
+      ProjectMailer.marketing_expense(@project, marketing_expense, current_user)
       redirect_to @project
+
     else
       render 'show'
     end
@@ -811,7 +817,7 @@ class ProjectsController < ApplicationController
                              :use_pen_name_for_copyright, :exact_name_on_copyright, :layout_upload, :layout_notes,
                              :layout_approved, :layout_approved_date, :layout_approval_issue_list, :final_page_count],
       :manuscript_attributes => [:id, :original, :edited, :proofed],
-      :marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information ],
+      :marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information , :other_type, :other_service_provider],
       :media_kits_attributes => [:document],
       :price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion, :sites => []],
       :production_expenses_attributes => [:additional_booktrope_cost, :additional_costs, :additional_team_cost, :author_advance_cost, :author_advance_quantity, :calculation_explanation, :complimentary_cost, :complimentary_quantity, :effective_date, :marketing_quantity, :marketing_cost, :paypal_invoice_amount, :purchased_cost, :purchased_quantity, :total_cost, :total_quantity_ordered],

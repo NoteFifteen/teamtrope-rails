@@ -62,12 +62,27 @@
                 html: {id: "expense_type_select"} %>
         </li>
 
+        <li id="other_expense_type_li" style="display: none;">
+          <%= marketing_expense.input :other_type,
+              label: "Describe \"Other\" Marketing Activity",
+              required: true,
+              html: {id: "other_type"}
+          %>
+        </li>
+
         <li>
           <%= marketing_expense.input :service_provider,
                 label: 'Marketing Service Provider',
                 collection: MarketingExpense::SERVICE_PROVIDERS,
                 include_blank: true,
                 required: true %>
+        </li>
+
+        <li id="other_service_provider_li" style="display: none;">
+          <%= marketing_expense.input :other_service_provider,
+                label: 'Describe "Other" Service Provider',
+                required: true,
+                html: { id: 'other_service_provider'}%>
         </li>
 
         <li>
