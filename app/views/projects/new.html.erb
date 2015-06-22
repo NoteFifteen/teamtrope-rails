@@ -3,7 +3,7 @@
       <div class="col-md-8">
         <h1>New Project</h1>
         <% if
-           # ! current_user.role?(:author) &&
+           ! current_user.role?(:author) &&
            ! current_user.role?(:booktrope_staff) %>
             <h2>Sorry, you cannot create a new project unless you are Booktrope Staff</h2>
         <% else %>
@@ -90,8 +90,7 @@
 
           <div class="input_field">
             <label>Genres:&nbsp;<span class="required">*</span></label><br/>
-            <%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: true } ) %>
-            <p class="input_description">Note: You may select more than one genre.</p>
+            <%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: false } ) %>
           </div>
 
           <div class="input_field">
