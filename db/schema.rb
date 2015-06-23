@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150619005450) do
+ActiveRecord::Schema.define(version: 20150622221936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -294,6 +294,8 @@ ActiveRecord::Schema.define(version: 20150619005450) do
     t.datetime "updated_at"
     t.string   "layout_upload_direct_upload_url"
     t.string   "layout_upload_processed"
+    t.float    "trim_size_w"
+    t.float    "trim_size_h"
   end
 
   add_index "layouts", ["project_id"], name: "index_layouts_on_project_id", using: :btree

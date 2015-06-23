@@ -12,6 +12,7 @@
 
         <%= f.simple_fields_for :layout, (f.object.layout.nil?) ? f.object.build_layout : f.object.layout do | l | %>
           <%= l.input :final_page_count, label: 'Page Count *' %>
+          <%= l.input :trim_size, collection:  Layout::TrimSizes, include_blank: true %>
         <% end %>
         <%= f.submit %>
     <% end %>

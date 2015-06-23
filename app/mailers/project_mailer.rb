@@ -322,8 +322,10 @@ class ProjectMailer < ActionMailer::Base
     admin_subject = "New " + user_subject
 
     tokens = {
+      "ISBN" => (@project.control_number.paperback_isbn.nil? || @project.control_number.paperback_isbn.try(:empty?))?  "None Provided" : @project.control_number.paperback_isbn,
       "Imprint" => @project.control_number.imprint.nil?? "None Provided" : @project.control_number.imprint,
-      "Paperback Price" => "$ #{@project.publication_fact_sheet.print_price}"
+      "Paperback Price" => "$ #{@project.publication_fact_sheet.print_price}",
+      "Trim Size" => "#{@project.layout.trim_size_w} x #{@project.layout.trim_size_h}"
     }
 
     send_email_message('final_page_count', tokens, get_project_recipient_list(@project, roles: [:author, :book_manager, :cover_designer, :project_manager]), user_subject)
@@ -515,7 +517,6 @@ class ProjectMailer < ActionMailer::Base
   def publish_book(project, current_user)
     @project = project
     @current_user = current_user
-
     user_subject = "Publish Book from #{current_user.name} for #{project.title}"
     admin_subject = "New " + user_subject
 
@@ -849,7 +850,7 @@ class ProjectMailer < ActionMailer::Base
   end
 
   def admin_publish_book_list
-    %w( andy@booktrope.com jesse@booktrope.com adam.bodendieck@booktrope.com )
+    %w( andy@booktrope.com jesse@booktrope.com adam.bodendieck@booktrope.com john.hawkins@booktrope.com emily.duncan@booktrope.com )
   end
 
   def admin_media_kit_list

@@ -14,8 +14,27 @@ class Layout < ActiveRecord::Base
   # Available options for the layout style -> Left Side Page Header Display - Name.  Stored in page_header_display_name
   PageHeaderDisplayNameChoices = [['Full Name'], ['Last Name Only']]
 
+  TrimSizes = [['5.5 x 8.5', '5.5,8.5'], ['5 x 8', '5.0,8.0']]
+
   before_create :set_upload_attributes
   after_save :transfer_and_cleanup
+
+
+  def trim_size
+    if trim_size_w && trim_size_h
+      "#{trim_size_w},#{trim_size_h}"
+    else
+      ""
+    end
+  end
+
+  def trim_size=(size)
+    unless size.nil? || !size.include?(",")
+      trim = size.split(",")
+      self.trim_size_w = trim[0].to_f
+      self.trim_size_h = trim[1].to_f
+    end
+  end
 
   # The following methods are to unescape the direct upload url path
   def layout_upload_direct_upload_url=(escaped_url)
