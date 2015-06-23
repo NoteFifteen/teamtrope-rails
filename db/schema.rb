@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150622221936) do
+ActiveRecord::Schema.define(version: 20150623001714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,17 +128,17 @@ ActiveRecord::Schema.define(version: 20150622221936) do
     t.string   "cover_concept_content_type"
     t.integer  "cover_concept_file_size"
     t.datetime "cover_concept_updated_at"
+    t.string   "cover_concept_image_direct_upload_url"
+    t.boolean  "cover_concept_image_processed",         default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "stock_cover_image_file_name"
     t.string   "stock_cover_image_content_type"
     t.integer  "stock_cover_image_file_size"
     t.datetime "stock_cover_image_updated_at"
-    t.json     "image_request_list"
-    t.string   "cover_concept_image_direct_upload_url"
-    t.boolean  "cover_concept_image_processed",         default: false
     t.string   "stock_cover_image_direct_upload_url"
     t.boolean  "stock_cover_image_processed",           default: false
+    t.json     "image_request_list"
   end
 
   add_index "cover_concepts", ["project_id"], name: "index_cover_concepts_on_project_id", using: :btree
@@ -213,16 +213,16 @@ ActiveRecord::Schema.define(version: 20150622221936) do
     t.string   "doc_content_type"
     t.integer  "doc_file_size"
     t.datetime "doc_updated_at"
+    t.string   "doc_direct_upload_url"
+    t.boolean  "doc_processed",         default: false
     t.string   "pdf_file_name"
     t.string   "pdf_content_type"
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "doc_direct_upload_url"
-    t.boolean  "doc_processed",         default: false
     t.string   "pdf_direct_upload_url"
     t.boolean  "pdf_processed",         default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "final_manuscripts", ["project_id"], name: "index_final_manuscripts_on_project_id", using: :btree
@@ -580,23 +580,23 @@ ActiveRecord::Schema.define(version: 20150622221936) do
     t.string   "mobi_content_type"
     t.integer  "mobi_file_size"
     t.datetime "mobi_updated_at"
+    t.string   "mobi_direct_upload_url"
+    t.boolean  "mobi_processed",         default: false
     t.string   "epub_file_name"
     t.string   "epub_content_type"
     t.integer  "epub_file_size"
     t.datetime "epub_updated_at"
+    t.string   "epub_direct_upload_url"
+    t.boolean  "epub_processed",         default: false
     t.string   "pdf_file_name"
     t.string   "pdf_content_type"
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
+    t.string   "pdf_direct_upload_url"
+    t.boolean  "pdf_processed",          default: false
     t.date     "publication_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "mobi_direct_upload_url"
-    t.boolean  "mobi_processed",         default: false
-    t.string   "epub_direct_upload_url"
-    t.boolean  "epub_processed",         default: false
-    t.string   "pdf_direct_upload_url"
-    t.boolean  "pdf_processed",          default: false
   end
 
   add_index "published_files", ["project_id"], name: "index_published_files_on_project_id", using: :btree
@@ -739,6 +739,7 @@ ActiveRecord::Schema.define(version: 20150622221936) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["nickname"], name: "index_users_on_nickname", using: :btree
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["uid"], name: "index_users_on_uid", unique: true, using: :btree

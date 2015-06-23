@@ -7,7 +7,7 @@ class ProjectsController < ApplicationController
   include Wisper::Publisher
 
   def index
-    get_projects_for_index(params[:show])
+    get_projects_for_index(params)
   end
 
   def new

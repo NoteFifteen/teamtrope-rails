@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
         user.update_attributes(
             uid: oauth['uid'],
             provider: oauth['provider'],
-            nickname: oauth['extra']['raw_info']['user_login'],
+            nickname: oauth['extra']['raw_info']['user_nicename'],
             website: oauth['info']['urls']['Website'],
             display_name: oauth['extra']['raw_info']['display_name'],
             email: oauth['info']['email']
@@ -103,7 +103,7 @@ class User < ActiveRecord::Base
         #if user isn't in our database yet, create it!
         user = User.create!(name: oauth['extra']['raw_info']['display_name'],
                             email: oauth['info']['email'], uid: oauth['uid'], provider: oauth['provider'],
-                            nickname: oauth['extra']['raw_info']['user_login'], website: oauth['info']['urls']['Website'],
+                            nickname: oauth['extra']['raw_info']['user_nicename'], website: oauth['info']['urls']['Website'],
                             display_name: oauth['extra']['raw_info']['display_name'])
         user.create_profile!
       end
