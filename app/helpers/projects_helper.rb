@@ -2,21 +2,17 @@ module ProjectsHelper
 
   # Handle the various methods for showing 'The Grid' including various filters
   def get_projects_for_index(filters)
-    if filters.nil? || filters.empty?
-      get_my_projects
+    if filters.has_key?(:show)
+      get_by_show_filter(filters[:show])
     else
-      if filters.has_key?(:show)
-        get_by_show_filter(filters[:show])
-      else
-        if filters.has_key?(:author) && ! filters[:author].nil?
-          get_by_author_nickname(filters[:author])
-        end
+      if filters.has_key?(:author) && ! filters[:author].nil?
+        get_by_author_nickname(filters[:author])
       end
+    end
 
-      # Safe fall-back if we can't find anything
-      if @projects.nil?
-        get_my_projects
-      end
+    # Safe fall-back if we can't find anything
+    if @projects.nil?
+      get_all_projects
     end
   end
 
@@ -29,6 +25,8 @@ module ProjectsHelper
     unless filter_by.nil? || !filters.has_key?(filter_by.to_sym)
       if filter_by.to_sym == :all
         @projects = ProjectGridTableRow.includes(:project).all
+      elsif filter_by.to_sym == :my_books
+        get_my_projects
       else
         @grid_title =  filters[filter_by.to_sym][:label]
         @grid_title =  filters[filter_by.to_sym][:task_name] if @grid_title.empty?
@@ -61,6 +59,10 @@ module ProjectsHelper
     @grid_title = "My Books"
     # We only want the book to show up once in the list so we use distinct.
     @projects = ProjectGridTableRow.where(project_id: current_user.projects.ids).distinct
+  end
+
+  def get_all_projects
+    get_by_show_filter('all')
   end
 
 end

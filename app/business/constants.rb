@@ -86,6 +86,7 @@ module Constants
   # only change the task_name if the task name in the database has been changed.
   # use the label to override what appears in the dropdown navigation.
   ProjectsIndexFilters = {
+    my_books: { label: 'My Books', task_name: '', workflow_name: '' },
     original_manuscript: { label: '', task_name: 'Original Manuscript', workflow_name: 'production' },
     submit_blurb: { label: '', task_name: 'Submit Blurb', workflow_name: 'marketing' },
     cover_concept: { label: '', task_name: 'Cover Concept', workflow_name: 'design' },
