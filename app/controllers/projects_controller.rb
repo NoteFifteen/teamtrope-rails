@@ -330,15 +330,11 @@ class ProjectsController < ApplicationController
   end
 
   def edit_control_numbers
-    @control_number = @project.control_number
-    @control_number ||= @project.build_control_number
-
-    if @control_number.update(update_control_number_params)
-
+    if @project.update(update_project_params)
       publish(:modify_imprint, @project)
 
       # Update the record in Parse
-      Booktrope::ParseWrapper.update_project_control_numbers @control_number
+      Booktrope::ParseWrapper.update_project_control_numbers @project.control_number
 
       # Record activity here
       @project.create_activity :updated_control_numbers, owner: current_user,
@@ -807,6 +803,8 @@ class ProjectsController < ApplicationController
       :genre_ids => [],
       :artwork_rights_requests_attributes => [:id, :role_type, :full_name, :email, :_destroy],
       :blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
+      :control_number_attributes => [:id, :ebook_library_price, :asin, :apple_id, :epub_isbn, :hardback_isbn,
+                                     :paperback_isbn, :parse_id],
       :cover_concept_attributes => [:id, :cover_concept_notes, :cover_art_approval_date, :image_request_list],
       :cover_template_attributes => [:id],
       :draft_blurb_attributes => [:id, :draft_blurb],
@@ -832,11 +830,6 @@ class ProjectsController < ApplicationController
                          :shipping_recipient, :shipping_address_street_1, :shipping_address_street_2, :shipping_address_city, :shipping_address_state, :shipping_address_zip,
                          :shipping_address_country, :marketing_plan_link, :marketing_copy_message, :contact_phone, :expedite_instructions ]
       )
-  end
-
-  def update_control_number_params
-    params.require(:control_number).permit(:id, :imprint, :ebook_library_price, :asin, :apple_id, :epub_isbn,
-                                           :hardback_isbn, :paperback_isbn, :parse_id)
   end
 
   def set_project

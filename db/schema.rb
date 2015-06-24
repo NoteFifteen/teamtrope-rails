@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150623231658) do
+ActiveRecord::Schema.define(version: 20150624220554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,7 +106,6 @@ ActiveRecord::Schema.define(version: 20150623231658) do
 
   create_table "control_numbers", force: true do |t|
     t.integer  "project_id"
-    t.string   "imprint"
     t.float    "ebook_library_price"
     t.string   "asin"
     t.string   "apple_id"

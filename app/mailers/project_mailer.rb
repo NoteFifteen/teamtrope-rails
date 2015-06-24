@@ -323,7 +323,7 @@ class ProjectMailer < ActionMailer::Base
 
     tokens = {
       "ISBN" => (@project.control_number.nil? || @project.control_number.paperback_isbn.nil? || @project.control_number.paperback_isbn.try(:empty?))?  "None Provided" : @project.control_number.paperback_isbn,
-      "Imprint" => @project.control_number.nil? || @project.control_number.imprint.nil?? "None Provided" : @project.control_number.imprint,
+      "Imprint" => @project.imprint.nil?? "None Provided" : @project.imprint.name,
       "Paperback Price" => "$ #{ @project.publication_fact_sheet.print_price}",
       "Trim Size" => "#{@project.layout.trim_size_w} x #{@project.layout.trim_size_h}"
     }

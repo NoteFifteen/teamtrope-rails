@@ -32,9 +32,9 @@ class ProjectGridTableRowListener
   end
 
   def modify_imprint(project)
-    unless project.control_number.imprint.nil?
+    unless project.imprint.nil?
       pgtr = project.project_grid_table_row
-      pgtr.imprint = project.control_number.imprint
+      pgtr.imprint = project.imprint.name
       pgtr.save
     end
   end

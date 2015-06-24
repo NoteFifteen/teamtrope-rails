@@ -1,51 +1,63 @@
-<h1>Control Numbers</h1>
-<div>
-  <%= simple_form_for @project.control_number.nil? ? @project.build_control_number : @project.control_number,
-                      url: url_for(:controller => 'projects', :action => 'edit_control_numbers',
-                      id: @project), method: :post do |f| %>
-      <%= f.error_notification %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
 
-      <!-- @todo: Replace CSS class names with whatever we're using for the theme -->
-      <div class='form_body'>
-        <ul class='form_fields'>
-          <li class='field'>
-            <%= f.input :imprint, priority: ['Booktrope'], collection: ['Booktrope', 'Vox Dei', 'Entice', 'Edge', 'Updrift', 'Uprush', 'Gravity', 'Forsaken'],
-                        as: :radio_buttons,
-                        label: 'Imprint'
-            %>
-          </li>
+            <h1>Control Numbers</h1>
 
-          <li class='field'>
-            <%= f.input :ebook_library_price, label: 'eBook Library Price' %>
-          </li>
+            <%= simple_form_for @project,
+                url: url_for(controller: 'projects', action: 'edit_control_numbers', id: @project),
+                html: { id: 'control_numbers' } do | project | %>
+                <%= project.error_notification %>
+                <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
 
-          <li class='field'>
-            <%= f.input :asin, label: 'ASIN' %>
-          </li>
+                <!-- @todo: Replace CSS class names with whatever we're using for the theme -->
 
-          <li class='field'>
-            <%= f.input :apple_id, label: 'Apple Id' %>
-          </li>
+                <ul class='form_fields'>
 
-          <li class='field'>
-            <%= f.input :epub_isbn, label: 'epub ISBN' %>
-          </li>
+                    <li class="field">
+                        <label >Imprint&nbsp;<span class="required">*</span></label><br/>
+                        <%= project.collection_radio_buttons :imprint_id, Imprint.all, :id, :name,
+                            :checked => 1,
+                            :collection_wrapper_class => 'collection_radio_buttons',
+                            :collection_wrapper_tag => 'ul', :item_wrapper_tag => 'li' %>
+                        <p class="input_description">IMPORTANT: If you have not discussed being part of a specific imprint with the imprint's Managing Director or Booktrope Management, please select "Booktrope Editions." </li>
+                    </li>
 
-          <li class='field'>
-            <%= f.input :hardback_isbn, label: 'Hardback ISBN' %>
-          </li>
+                    <%= project.simple_fields_for :control_number, (project.object.control_number.nil?)? project.object.build_control_number :
+                        project.object.control_number do | control_number | %>
 
-          <li class='field'>
-            <%= f.input :paperback_isbn, label: 'Paperback ISBN' %>
-          </li>
+                        <li class='field'>
+                            <%= control_number.input :ebook_library_price, label: 'eBook Library Price' %>
+                        </li>
 
-          <li class='field'>
-            <%= f.input :parse_id, label: 'Parse ID' %>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <%= f.submit 'submit' %>
-      </div>
-  <% end %>
+                        <li class='field'>
+                            <%= control_number.input :asin, label: 'ASIN' %>
+                        </li>
+
+                        <li class='field'>
+                            <%= control_number.input :apple_id, label: 'Apple Id' %>
+                        </li>
+
+                        <li class='field'>
+                            <%= control_number.input :epub_isbn, label: 'epub ISBN' %>
+                        </li>
+
+                        <li class='field'>
+                            <%= control_number.input :hardback_isbn, label: 'Hardback ISBN' %>
+                        </li>
+
+                        <li class='field'>
+                            <%= control_number.input :paperback_isbn, label: 'Paperback ISBN' %>
+                        </li>
+
+                        <li class='field'>
+                            <%= control_number.input :parse_id, label: 'Parse ID' %>
+                        </li>
+                    <% end %>
+                </ul>
+
+                <%= project.submit 'submit' %>
+            <% end %>
+        </div>
+    </div>
 </div>
