@@ -4,15 +4,34 @@
   <h1>Final Page Count</h1>
   <div class="col-md-8">
 
-    <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'update_final_page_count', id: @project.id) do |f| %>
+    <%= simple_form_for @project,
+          url: url_for(:controller => 'projects', :action => 'update_final_page_count',
+          id: @project.id),
+          html: { id: "final_page_count" } do |f| %>
         <%= f.error_notification %>
         <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
 
         <p>For Booktrope Production Team use Only. This is where the Booktrope Production Team indicates the final page count.</p>
 
+
         <%= f.simple_fields_for :layout, (f.object.layout.nil?) ? f.object.build_layout : f.object.layout do | l | %>
           <%= l.input :final_page_count, label: 'Page Count *' %>
-          <%= l.input :trim_size, collection:  Layout::TrimSizes, include_blank: true %>
+
+          <%= f.simple_fields_for :publication_fact_sheet,
+                (f.object.publication_fact_sheet.nil?)? f.object.build_publication_fact_sheet :
+                f.object.publication_fact_sheet do | pfs | %>
+
+            <%= pfs.input :print_price, label: 'Print Price *'%>
+
+          <% end %>
+
+          <%= l.input :trim_size, collection:  Layout::TrimSizes, include_blank: true, label: 'Trim size *' %>
+
+          <div id="update_final_page_count_other_trim" style="display: none;">
+            <%= l.input :trim_size_w, label: "Width" %>
+            <%= l.input :trim_size_h, label: "Height" %>
+          </div>
+
         <% end %>
         <%= f.submit %>
     <% end %>

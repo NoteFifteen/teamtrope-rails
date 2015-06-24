@@ -14,7 +14,7 @@ class Layout < ActiveRecord::Base
   # Available options for the layout style -> Left Side Page Header Display - Name.  Stored in page_header_display_name
   PageHeaderDisplayNameChoices = [['Full Name'], ['Last Name Only']]
 
-  TrimSizes = [['5.5 x 8.5', '5.5,8.5'], ['5 x 8', '5.0,8.0']]
+  TrimSizes = [['5.25 x 8', '5.25,8.0'],['5.5 x 8.5', '5.5,8.5'], ['5 x 8', '5.0,8.0'], ['6 x 9','6.0,9.0'], ['Other', 'other']]
 
   before_create :set_upload_attributes
   after_save :transfer_and_cleanup

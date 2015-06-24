@@ -316,6 +316,38 @@ jQuery ->
   })
 
 jQuery ->
+  field = $("#project_layout_attributes_trim_size")
+
+  $(field).bind("change", (event) =>
+    if field.val() == "other"
+      $("#update_final_page_count_other_trim").show()
+      $("#project_layout_attributes_trim_size_w").val('')
+      $("#project_layout_attributes_trim_size_h").val('')
+    else
+      $("#update_final_page_count_other_trim").hide()
+      trim_size = field.val()
+      dimensions = trim_size.split(',')
+      $("#project_layout_attributes_trim_size_w").val(dimensions[0])
+      $("#project_layout_attributes_trim_size_h").val(dimensions[1])
+  )
+
+
+jQuery ->
+  $("#final_page_count").validate({
+    rules:{
+      'project[publication_fact_sheet_attributes][print_price]': {
+        required: true
+      },
+      'project[layout_attributes][final_page_count]': {
+        required: true
+      },
+      'project[layout_attributes][trim_size]': {
+        required: true
+      }
+    }
+  })
+
+jQuery ->
   field = $("#project_marketing_expenses_attributes_0_expense_type")
 
   $(field).bind("change", (event) =>
