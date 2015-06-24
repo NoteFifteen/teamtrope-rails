@@ -41,5 +41,12 @@ namespace :teamtrope do
     end
   end
 
+  desc "Updates the Cover Preview where one may not already exist"
+  task update_cover_previews: :environment do
+    CoverTemplate.where('ebook_front_cover_file_name IS NOT NULL AND cover_preview_file_name IS NULL').each do |cover_template|
+      cover_template.cover_preview = cover_template.ebook_front_cover
+      cover_template.save
+    end
+  end
 
 end

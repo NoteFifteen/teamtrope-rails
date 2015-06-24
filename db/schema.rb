@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150623001714) do
+ActiveRecord::Schema.define(version: 20150623231658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,6 +171,10 @@ ActiveRecord::Schema.define(version: 20150623001714) do
     t.string   "ebook_front_cover_processed"
     t.string   "lightning_source_cover_direct_upload_url"
     t.string   "lightning_source_cover_processed"
+    t.string   "cover_preview_file_name"
+    t.string   "cover_preview_content_type"
+    t.integer  "cover_preview_file_size"
+    t.datetime "cover_preview_updated_at"
   end
 
   add_index "cover_templates", ["project_id"], name: "index_cover_templates_on_project_id", using: :btree

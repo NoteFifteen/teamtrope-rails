@@ -11,6 +11,7 @@
     <thead>
       <tr>
         <th>Book Title</th>
+        <th>Cover</th>
         <th>Author</th>
         <th>Genre</th>
         <th>Editor</th>
@@ -36,6 +37,7 @@
       | <%= link_to "Delete", project_path(row.project), method: :delete, data: {confirm: "Are you sure you want to delete this project?"}%><br />
       <% end %>
       </td>
+      <td><%= image_tag(row.project.cover_template.cover_preview.url(:thumb), size: "120x120") if row.project.try(:cover_template).try(:cover_preview?) %></td>
       <td><%= row.author?? row.author : "-" %></td>
       <td><%= row.genre?? row.genre : "-" %></td>
       <td><%= row.editor?? row.editor : "-" %></td>

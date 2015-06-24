@@ -8,6 +8,18 @@ class CoverTemplate < ActiveRecord::Base
   has_attached_file :ebook_front_cover, :s3_permissions => 'authenticated-read'
   has_attached_file :lightning_source_cover, :s3_permissions => 'authenticated-read'
 
+  has_attached_file :cover_preview,
+        :styles => { :large => "600x600>", :medium => "300x300>", :thumb => "120x120>"},
+        :convert_options => { :large => "-quality 100", :medium => '-quality 100', :thumb => '-quality 100' },
+        # :default_url => "/images/:style/missing.gif",
+        :processors => [:cropper]
+
+  attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
+
+  def cropping?
+    !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
+  end
+
   validates_attachment :alternative_cover,
     *Constants::DefaultContentTypePdfParams
 
