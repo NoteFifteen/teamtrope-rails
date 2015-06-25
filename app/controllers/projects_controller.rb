@@ -368,7 +368,7 @@ class ProjectsController < ApplicationController
 
     if @project.update(update_project_params)
       update_current_task
-      activity_text = (:approved_layout == 'approved_revisions') ? 'Approved the layout' : 'Approved the layout with changes'
+      activity_text = (:approved_layout == 'approved_revisions') ? 'Approved the layout with changes' : 'Approved the layout'
       @project.create_activity :approved_layout, owner: current_user,
                                parameters: { text: activity_text, form_data: params[:project].to_s }
       flash[:success] = 'Approved the Layout'
