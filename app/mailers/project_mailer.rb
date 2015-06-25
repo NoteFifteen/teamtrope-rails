@@ -49,26 +49,6 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('project_created_admin', tokens, admin_project_created_list, admin_subject)
   end
 
-  # Fired during Status Updates - Conditional logic sends an admin email if they have questions
-  def project_status_update(project, current_user)
-    @project = project
-    @current_user = current_user
-
-    tokens = {
-        'Type' => @project.status_updates.try(:last).try(:type),
-        'Status' => @project.status_updates.try(:last).try(:status)
-    }
-
-    # Admins get an email if there's a question as part of the update
-    if(@project.status_updates.try(:last).try(:type) == 'question')
-      admin_subject = "New Update Project Status from #{@current_user.name} for #{@project.title}"
-      send_email_message('project_status_update_admin', tokens, admin_status_update_list, admin_subject)
-    end
-
-    user_subject = "Update Project Status from #{@current_user.name} for #{@project.title}"
-    send_email_message('project_status_update', tokens, get_project_recipient_list(@project, roles: [:none]), user_subject)
-  end
-
   # Control numbers have been updated
   def edit_control_numbers(project, current_user)
     @project = project
@@ -748,11 +728,6 @@ class ProjectMailer < ActionMailer::Base
   # The original manuscript has been uploaded
   def admin_original_manuscript_list
     %w( jesse@booktrope.com )
-  end
-
-  # Used for Status Updates to Admin
-  def admin_status_update_list
-    %w( andy@booktrope.com )
   end
 
   # Used for Control Number updates

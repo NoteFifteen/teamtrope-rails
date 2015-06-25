@@ -71,20 +71,6 @@ class ProjectsController < ApplicationController
   # this prevents a crash when there is a temp file in params. Might want to come up with
   # a cleaner solution
 
-  def update_status
-    if @project.update(update_project_params)
-      @project.create_activity :update_status, owner: current_user,
-                               parameters: { text: ' posted a status update', form_data: params[:project].to_s}
-      update_current_task
-      ProjectMailer.project_status_update(@project, current_user)
-
-      flash[:success] = 'Posted Status Update'
-      redirect_to @project
-    else
-      render 'show'
-    end
-  end
-
   def accept_team_member
     if @project.update(update_project_params)
       @project.create_activity :accept_team_member, owner: current_user,
