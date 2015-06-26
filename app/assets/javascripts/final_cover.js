@@ -3,28 +3,36 @@ var cover_template_uploaded_files = [];
 
 function requiredCoverTemplateFilesUnlockSubmit() {
   var has_ebook = false;
-  var has_createspace = false;
-  var has_lightning_source = false;
 
   $(cover_template_uploaded_files).each(function(id, value) {
     if(value == 'ebook_front_cover') {
       has_ebook = true;
     }
-    if(value == 'createspace_cover') {
-      has_createspace = true;
-    }
-    if(value == 'lightning_source_cover') {
-      has_lightning_source = true;
-    }
   });
 
-  if(has_ebook && has_createspace && has_lightning_source) {
+  if(has_ebook) {
     $('#cover_template_submit_button').removeAttr('disabled').removeClass('disabled');
     return true;
   }
 
   return false;
 }
+
+// Add a form validator
+$('#cover_template_ebook_front_cover_s3_uploader').validate({
+    rules: {
+        'checklist_0': { required: true },
+        'checklist_1': { required: true },
+        'checklist_2': { required: true },
+        'checklist_3': { required: true }
+    },
+    messages: {
+        'checklist_0': 'All checklist items must be signed off before proceeding',
+        'checklist_1': 'All checklist items must be signed off before proceeding',
+        'checklist_2': 'All checklist items must be signed off before proceeding',
+        'checklist_3': 'All checklist items must be signed off before proceeding'
+    }
+});
 
 $(function() {
     // ebook front cover
