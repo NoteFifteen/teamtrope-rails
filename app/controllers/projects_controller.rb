@@ -455,7 +455,10 @@ class ProjectsController < ApplicationController
     if approved
       # Set the approval date & wipe notes
       @project.cover_concept.touch(:cover_art_approval_date)
-      @project.cover_concept.update_attribute(:cover_concept_notes, nil)
+
+      notes = params[:project][:cover_concept_notes].nil?? nil : params[:project][:cover_concept_notes]
+      @project.cover_concept.update_attribute(:cover_concept_notes, notes)
+
       update_current_task
       activity_text = 'Approved the Cover Art'
       flash[:success] = activity_text
