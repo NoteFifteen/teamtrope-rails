@@ -114,6 +114,14 @@ class User < ActiveRecord::Base
         user.profile.import_avatar_from_url(oauth['extra']['raw_info']['avatar_url'])
       end
 
+      # Update the roles based on what's currently in OldTrope
+      if (! oauth['extra']['raw_info']['roles'].nil?)
+        roles = JSON.parse(oauth['extra']['raw_info']['roles']).map{|r| r.downcase.gsub(/ /, '_')}
+        roles << 'project_manager' if roles.include? "book_manager"
+        user.roles = roles
+        user.save
+      end
+
       user
     end
   end
