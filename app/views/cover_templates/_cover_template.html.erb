@@ -1,7 +1,28 @@
 <h4>Cover Files</h4>
-<%= image_tag download_ebook_front_cover_path(@project), class: 'alignright', width: "340px" unless ! cover_template.ebook_front_cover?%>
+<% if ! @project.try(:cover_template).nil? %>
 
-eBook Front Cover: <%= (cover_template.ebook_front_cover?) ? (link_to "DOWNLOAD", download_ebook_front_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
-CreateSpace Full Cover: <%= (cover_template.createspace_cover?) ? (link_to "DOWNLOAD", download_createspace_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
-Lightning Source Full Cover: <%= (cover_template.lightning_source_cover?) ? (link_to "DOWNLOAD", download_lightning_source_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
-Alternate Cover: <%= (cover_template.alternative_cover?) ? (link_to "DOWNLOAD", download_alternate_cover_path(@project), :target => "_blank") : 'N/A' %><br/><br/>
+    <%= image_tag download_ebook_front_cover_path(@project), class: 'alignright', width: "340px" unless ! cover_template.ebook_front_cover?%>
+
+    <% if ! @project.try(:cover_template).try(:final_cover_approval_date).nil? && @project.try(:cover_template).try(:final_cover_approved) == true %>
+        Approved: <b>Yes</b><br>
+        Approved on <%= @project.try(:cover_template).try(:final_cover_approval_date) %><br>
+    <% else %>
+        <% if @project.try(:cover_template).try(:final_cover_approved).nil? %>
+            Approved: <b>Waiting for Review</b><br>
+        <% elsif @project.try(:cover_template).try(:final_cover_approved) == false %>
+            Approved: <b>No</b><br>
+        <% end %>
+    <% end %>
+    <br>
+    <% if(! @project.cover_template.final_cover_notes.nil? && @project.cover_template.final_cover_notes != '') %>
+        Final Cover Notes:<br>
+        <pre style="width: 800px; height: 300px; overflow: auto;"><%= @project.cover_template.try(:final_cover_notes) %></pre><br/>
+    <% end %>
+
+    eBook Front Cover: <%= (cover_template.ebook_front_cover?) ? (link_to "DOWNLOAD", download_ebook_front_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
+    CreateSpace Full Cover: <%= (cover_template.createspace_cover?) ? (link_to "DOWNLOAD", download_createspace_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
+    Lightning Source Full Cover: <%= (cover_template.lightning_source_cover?) ? (link_to "DOWNLOAD", download_lightning_source_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
+    Alternate Cover: <%= (cover_template.alternative_cover?) ? (link_to "DOWNLOAD", download_alternate_cover_path(@project), :target => "_blank") : 'N/A' %><br/><br/>
+
+    Last Updated: <%= @project.try(:cover_template).try(:updated_at).try(:strftime, "%Y-%m-%d") %><br/>
+<% end %>

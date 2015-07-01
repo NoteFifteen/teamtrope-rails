@@ -41,7 +41,7 @@
         </td>
         <td>
         	<% task.unlocked_tasks.each_with_index do | unlocked_task, index | %>
-        		<%= unlocked_task.unlocked_task.name %>
+        		<%= unlocked_task.unlocked_task.try(:name) %>
         		<%= "," if !index != 0 && index != task.unlocked_tasks.count-1 %>
         	<% end %>
         </td>

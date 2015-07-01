@@ -375,6 +375,18 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('upload_cover_templates_admin', tokens, admin_upload_cover_templates_list, admin_subject)
   end
 
+  def approve_final_cover(project, current_user, approved)
+    @project = project
+    @current_user = current_user
+    @approved = approved
+
+    user_subject = "Upload Cover Concept from #{current_user.name} for #{project.title}"
+    admin_subject = "New " + user_subject
+
+    send_email_message('final_cover_approval', {}, get_project_recipient_list(@project, roles: [:author, :book_manager, :cover_designer, :project_manager]), user_subject)
+    send_email_message('final_cover_approval_admin', {}, admin_final_cover_approval_list, admin_subject)
+  end
+
   def artwork_rights_request(project, current_user)
     @project = project
     @current_user = current_user
@@ -801,7 +813,12 @@ class ProjectMailer < ActionMailer::Base
   end
 
   def admin_upload_cover_templates_list
-    %w( vanyad@booktrope.com adam.bodendieck@booktrope.com victoria@booktrope.com kate.burkett@booktrope.com shari.ryan@booktrope.com )
+    %w( shari.ryan@booktrope.com )
+  end
+
+  # The Final Cover approved
+  def admin_final_cover_approval_list
+    %w( vanyad@booktrope.com adam.bodendieck@booktrope.com victoria@booktrope.com kate.burkett@booktrope.com )
   end
 
   def admin_artwork_rights_request_list

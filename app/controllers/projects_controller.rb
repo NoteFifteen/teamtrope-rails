@@ -535,6 +535,9 @@ class ProjectsController < ApplicationController
     if ! @cover_template.ebook_front_cover.nil? &&
        ! @cover_template.createspace_cover.nil? &&
        ! @cover_template.lightning_source_cover.nil?
+
+      @cover_template.update_attribute(:final_cover_approved, nil)
+
       update_current_task
       @project.create_activity :uploaded_cover_templates, owner: current_user,
                                 parameters: { text: 'Uploaded Cover Templates', form_data: params[:project].to_s}
@@ -544,6 +547,43 @@ class ProjectsController < ApplicationController
     else
       flash[:danger] = 'There was an error uploading the Cover Templates.  Please Review.'
       render 'show'
+    end
+  end
+
+  def approve_final_cover
+    # This is an attribute accessor used as a flag for deciding what to update below
+    approved = (params[:project][:cover_template_attributes][:final_cover_approved] == 'true')
+    @project.cover_template.update_attribute(:final_cover_approved, approved)
+
+    if approved
+      # Set the approval date & wipe notes
+      @project.cover_template.touch(:final_cover_approval_date)
+
+      notes = params[:project][:cover_template_attributes][:final_cover_notes].nil?? nil : params[:project][:cover_template_attributes][:final_cover_notes]
+      @project.cover_template.update_attribute(:final_cover_notes, notes)
+
+      update_current_task
+      activity_text = 'Approved the Final Cover'
+      flash[:success] = activity_text
+    else
+      # Not approved, revert to previous step
+      if @project.cover_template.update_attribute(:final_cover_notes, params[:project][:cover_template_attributes][:final_cover_notes])
+        reject_current_task
+        activity_text = 'Rejected the Final Cover'
+        flash[:success] = activity_text
+      else
+        # Some sort of failure updating the model.
+        flash[:danger] = 'An error occurred during update'
+        render 'show'
+      end
+    end
+
+    if ! activity_text.nil?
+      @project.create_activity :approved_final_cover, owner: current_user,
+                               parameters: { text: activity_text, form_data: params[:project].to_s }
+
+      ProjectMailer.approve_final_cover(@project, current_user, approved)
+      redirect_to @project
     end
   end
 
@@ -795,7 +835,7 @@ class ProjectsController < ApplicationController
       :control_number_attributes => [:id, :ebook_library_price, :asin, :apple_id, :epub_isbn, :hardback_isbn,
                                      :paperback_isbn, :parse_id],
       :cover_concept_attributes => [:id, :cover_concept_notes, :cover_art_approval_date, :image_request_list],
-      :cover_template_attributes => [:id],
+      :cover_template_attributes => [:id, :final_cover_approved, :final_cover_approval_date, :final_cover_notes],
       :draft_blurb_attributes => [:id, :draft_blurb],
       :approve_blurb_attributes => [:id, :blurb_approval_decision, :blurb_approval_date, :blurb_notes],
       :final_manuscript_attributes => [:id, :pdf, :doc],

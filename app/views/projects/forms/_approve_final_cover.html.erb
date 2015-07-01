@@ -1,0 +1,38 @@
+
+<!-- Approve Final Cover -->
+<div class="container">
+  <h1>Approve Final Cover</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'approve_final_cover',
+                                                 id: @project), html: { id: 'approve_final_cover' } do | f | %>
+          <%= f.error_notification %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
+          <%= f.simple_fields_for :cover_template,
+                                  (f.object.cover_template.nil?)? f.object.build_cover_template :
+                                          f.object.cover_template do | cover_template | %>
+
+              <label>Is Final Cover Approved? *</label>
+              <%= cover_template.collection_radio_buttons :final_cover_approved,
+                                             [[true, 'Yes'],
+                                              [false, 'No']],
+                                             :first, :last,
+                                             :item_wrapper_tag => 'div',
+                                             :item_wrapper_class => 'radio'
+
+              %>
+
+              <div id="final_cover_notes_box">
+                <%= cover_template.input :final_cover_notes, as: :text,
+                            label: 'Final Cover Notes',
+                            input_html: { rows: 10, cols: 50, id: 'final_cover_notes', value:  '' }
+                %>
+              </div>
+              <% end %>
+          <br/>
+          <%= f.submit 'Submit' %>
+      <% end %>
+    </div>
+  </div>
+</div>

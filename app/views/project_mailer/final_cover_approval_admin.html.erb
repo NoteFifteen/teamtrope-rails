@@ -1,0 +1,12 @@
+<% if @approved %>
+    <p>The Final Cover for this project was approved on <%= @project.cover_template.final_cover_approval_date %>.</p>
+<% else %>
+    <p>The Final Cover for this project was not approved with the suggested changes as follows: </p>
+<% end %>
+<% # Since they can now specify notes regardless of accepting or rejecting the cover, we always show unless no notes %>
+<% unless @project.cover_template.final_cover_notes.nil? || @project.cover_template.final_cover_notes == "" %>
+    <pre style="border: 2px solid black; padding: 10px; overflow: auto;">
+      <%= @project.cover_template.final_cover_notes %>
+    </pre>
+<% end %>
+<br>
