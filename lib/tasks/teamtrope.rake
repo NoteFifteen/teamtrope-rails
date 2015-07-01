@@ -33,8 +33,7 @@ namespace :teamtrope do
       pgtr.title = project.title
 
       # adding the imprint
-      pgtr.imprint = project.control_number.imprint unless project.control_number.nil?
-
+      pgtr.imprint = project.imprint.name unless project.imprint.nil?
 
       #saving the entry
       pgtr.save
