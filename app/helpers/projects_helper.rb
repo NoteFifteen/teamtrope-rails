@@ -47,7 +47,7 @@ module ProjectsHelper
       #@todo May be worth refactoring in the future, though difficult due to the dependent relationships
       @projects = ProjectGridTableRow.find_by_sql(["SELECT * FROM project_grid_table_rows
                                                     JOIN projects ON projects.id = project_grid_table_rows.project_id
-                                                    JOIN team_memberships ON team_memberships.project_id = project_grid_table_rows.id
+                                                    JOIN team_memberships ON team_memberships.project_id = project_grid_table_rows.project_id
                                                     JOIN roles ON roles.id = team_memberships.role_id
                                                     JOIN users ON users.id = team_memberships.member_id
                                                     WHERE roles.name = 'Author' AND users.nickname  = ?", author_name])
