@@ -764,12 +764,12 @@ class ProjectMailer < ActionMailer::Base
 
   # The marketing release date has been set
   def admin_marketing_release_date_list
-    %w( adam.bodendieck@booktrope.com )
+    %w( adam.bodendieck@booktrope.com andy@booktrope.com )
   end
 
   # A new stock cover image has been uploaded
   def admin_add_stock_cover_image_list
-    %w( adam.bodendieck@booktrope.com )
+    %w( shari.ryan@booktrope.com adam.bodendieck@booktrope.com )
   end
 
   # The layout has been uploaded
@@ -789,17 +789,17 @@ class ProjectMailer < ActionMailer::Base
 
   # The proofed manuscript has been uploaded
   def admin_proofed_manuscript_list
-    %w( vanyad@booktrope.com victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com )
+    %w( vanyad@booktrope.com victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com andy@booktrope.com )
   end
 
   # The layout style has been selected
   def admin_edit_layout_style_list
-    %w( vanyad@booktrope.com victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com )
+    %w( vanyad@booktrope.com victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com andy@booktrope.com )
   end
 
   # The layout has been approved
   def admin_layout_approved_list
-    %w( vanyad@booktrope.com victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com )
+    %w( vanyad@booktrope.com victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com andy@booktrope.com )
   end
 
   # The Cover Concept has been uploaded
@@ -813,12 +813,12 @@ class ProjectMailer < ActionMailer::Base
   end
 
   def admin_upload_cover_templates_list
-    %w( shari.ryan@booktrope.com )
+    %w( shari.ryan@booktrope.com vanyad@booktrope.com adam.bodendieck@booktrope.com victoria@booktrope.com kate.burkett@booktrope.com andy@booktrope.com )
   end
 
   # The Final Cover approved
   def admin_final_cover_approval_list
-    %w( vanyad@booktrope.com adam.bodendieck@booktrope.com victoria@booktrope.com kate.burkett@booktrope.com )
+    %w( vanyad@booktrope.com adam.bodendieck@booktrope.com victoria@booktrope.com kate.burkett@booktrope.com andy@booktrope.com )
   end
 
   def admin_artwork_rights_request_list
@@ -838,7 +838,7 @@ class ProjectMailer < ActionMailer::Base
   end
 
   def admin_final_manuscript_list
-    %w( adam.bodendieck@booktrope.com )
+    %w( adam.bodendieck@booktrope.com andy@booktrope.com )
   end
 
   def admin_publish_book_list
@@ -858,7 +858,7 @@ class ProjectMailer < ActionMailer::Base
   end
 
   def admin_print_corner_list
-    %w( adam.bodendieck@booktrope.com )
+    %w( adam.bodendieck@booktrope.com andy@booktrope.com )
   end
 
   def admin_marketing_expense_list
@@ -866,11 +866,11 @@ class ProjectMailer < ActionMailer::Base
   end
 
   def admin_production_expense_list
-    %w( adam.bodendieck@booktrope.com evie.hutton@booktrope.com )
+    %w( adam.bodendieck@booktrope.com evie.hutton@booktrope.com andy@booktrope.com )
   end
 
   def admin_kdp_select_enrollment_list
-    %w( adam.bodendieck@booktrope.com Pennie.dade@booktrope.com )
+    %w( adam.bodendieck@booktrope.com Pennie.dade@booktrope.com andy@booktrope.com )
   end
 
   # Set the campaign header for MailGun tracking
