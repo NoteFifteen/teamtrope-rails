@@ -17,7 +17,6 @@
                     <li class="field">
                         <label >Imprint&nbsp;<span class="required">*</span></label><br/>
                         <%= project.collection_radio_buttons :imprint_id, Imprint.all, :id, :name,
-                            :checked => 1,
                             :collection_wrapper_class => 'collection_radio_buttons',
                             :collection_wrapper_tag => 'ul', :item_wrapper_tag => 'li' %>
                         <p class="input_description">IMPORTANT: If you have not discussed being part of a specific imprint with the imprint's Managing Director or Booktrope Management, please select "Booktrope Editions." </li>

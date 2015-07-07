@@ -70,7 +70,7 @@ Rails.application.routes.draw do
   match '/projects/blog_tour/:id',                to: 'projects#blog_tour',                via: 'patch'
   match '/projects/cover_concept_upload/:id',     to: 'projects#cover_concept_upload',     via: 'patch'
   # Post is defined for this path since creates and updates are used interchangeably.
-  match '/projects/edit_control_numbers/:id',     to: 'projects#edit_control_numbers',     via: 'post'
+  match '/projects/edit_control_numbers/:id',     to: 'projects#edit_control_numbers',     via: [:patch, :post]
   match '/projects/edit_complete_date/:id',       to: 'projects#edit_complete_date',       via: 'patch'
   match '/projects/edit_layout_style/:id',        to: 'projects#edit_layout_style',        via: 'patch'
   match '/projects/edited_manuscript/:id',        to: 'projects#edited_manuscript',        via: 'patch'

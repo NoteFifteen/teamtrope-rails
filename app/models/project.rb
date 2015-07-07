@@ -42,6 +42,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :approve_blurb, reject_if: :all_blank, allow_destroy: false
   accepts_nested_attributes_for :audit_team_membership_removals, reject_if: :all_blank, allow_destroy: false
   accepts_nested_attributes_for :blog_tours, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :control_number, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :cover_template, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :cover_concept, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :draft_blurb, reject_if: :all_blank, allow_destroy: true
