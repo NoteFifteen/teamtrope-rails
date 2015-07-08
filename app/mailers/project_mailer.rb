@@ -381,7 +381,7 @@ class ProjectMailer < ActionMailer::Base
     @current_user = current_user
     @approved = approved
 
-    user_subject = "Upload Cover Concept from #{current_user.name} for #{project.title}"
+    user_subject = "Final Cover Approval from #{current_user.name} for #{project.title}"
     admin_subject = "New " + user_subject
 
     send_email_message('final_cover_approval', {}, get_project_recipient_list(@project, roles: [:author, :book_manager, :cover_designer, :project_manager]), user_subject)
@@ -819,7 +819,7 @@ class ProjectMailer < ActionMailer::Base
 
   # The Final Cover approved
   def admin_final_cover_approval_list
-    %w( vanyad@booktrope.com adam.bodendieck@booktrope.com victoria@booktrope.com kate.burkett@booktrope.com andy@booktrope.com )
+    %w(  adam.bodendieck@booktrope.com shari.ryan@booktrope.com andy@booktrope.com )
   end
 
   def admin_artwork_rights_request_list
