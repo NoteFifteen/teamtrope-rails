@@ -198,7 +198,8 @@ class ProjectMailer < ActionMailer::Base
       'I have looked over and approved the delivered proofreading and the content. Nothing more will be added or removed from this document, and no further changes will be made.' => '&#10004;'.html_safe,
       'All narrative breaks/scene changes are indicated with three asterisks (***).' => (params['scene_changes'].nil?) ? 'No' : 'Yes',
       'Does your book contain sub-chapters?' => (params[:project]['has_sub_chapters'] == 'true') ? 'Yes, and all sub-section headers are indicated by increments of increasing font sizes' : 'No',
-      'Does your manuscript contain images?' => (params['does_contain_images'] != '0') ? 'Yes' : 'No'
+      'Does your manuscript contain images?' => (params['does_contain_images'] != '0') ? 'Yes' : 'No',
+      'Imprint' => (! @project.imprint.nil?) ? @project.try(:imprint).try(:name) : 'N/A'
     }
 
     if(@project.previously_published == true)
