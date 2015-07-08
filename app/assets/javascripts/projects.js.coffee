@@ -430,6 +430,8 @@ jQuery ->
     }
   })
 
+
+# For the 1099 Form
 jQuery ->
   $("#form_1099").validate({
     rules: {
@@ -474,6 +476,21 @@ jQuery ->
       }
     }
   });
+
+jQuery ->
+  field = $("input[name=form_1099\\[tax_id\\]]:radio")
+
+  $(field).change (event) =>
+    if field.is(':checked')
+      field_value = $("input[name=form_1099\\[tax_id\\]]:checked")
+
+    if field_value.val() == 'ssn'
+        $('#social_security_number_wrapper').slideDown()
+        $('#business_tax_id_wrapper').slideUp()
+      else if field_value.val() == 'eid'
+        $('#business_tax_id_wrapper').slideDown()
+        $('#social_security_number_wrapper').slideUp()
+
 
 ## This is for the Approve Cover Art partial, and handles the optional inputs for
 ## the notes if they do not approve the Cover Art.
