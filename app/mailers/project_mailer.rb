@@ -725,7 +725,7 @@ class ProjectMailer < ActionMailer::Base
 
   # Used for Project Created updates to Admin
   def admin_project_created_list
-    %w( jesse@booktrope.com andy@booktrope.com )
+    %w( jesse@booktrope.com pennie.dade@booktrope.com andy@booktrope.com )
   end
 
   # Notify for a member removal request
