@@ -192,7 +192,6 @@ class WordpressImportController < ApplicationController
       has_index: fetch_field_value(project_meta, 'book_has_index'),
       has_internal_illustrations: fetch_field_value(project_meta, 'book_has_internal_illustrations'),
       has_sub_chapters: fetch_field_value(project_meta, 'book_has_sub-chapters'),
-      marketing_release_date: fetch_field_value(project_meta, 'book_marketing_release_date'),
       non_standard_size: fetch_field_value(project_meta, 'book_non-standard_size'),
       # prev_publisher_and_date: fetch_field_value(project_meta, 'book_prev_publisher_published'),
       previously_published: fetch_field_value(project_meta, 'book_previously_published'),

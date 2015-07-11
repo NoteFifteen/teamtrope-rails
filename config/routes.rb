@@ -80,7 +80,6 @@ Rails.application.routes.draw do
   match '/projects/layout_upload/:id',            to: 'projects#layout_upload',            via: 'patch'
   match '/projects/man_dev/:id',                  to: 'projects#man_dev',                  via: 'patch'
   match '/projects/marketing_expense/:id',        to: 'projects#marketing_expense',        via: 'patch'
-  match '/projects/marketing_release_date/:id',   to: 'projects#marketing_release_date',   via: 'patch'
   match '/projects/media_kit/:id',                to: 'projects#media_kit',                via: 'patch'
   match '/projects/original_manuscript/:id',      to: 'projects#original_manuscript',      via: 'patch'
   match '/projects/production_expense/:id',       to: 'projects#production_expense',       via: 'patch'

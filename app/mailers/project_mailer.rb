@@ -227,26 +227,16 @@ class ProjectMailer < ActionMailer::Base
       tokens.store('Sections requiring special treatment:', ("<pre>" +params[:project]['special_text_treatment'] + "</pre>").html_safe )
     end
 
+    if(! @project.target_market_launch_date.nil?)
+      tokens.store('Target Market Launch Date', @project.target_market_launch_date)
+    end
+
     tokens.store('Manuscript Word Count:', params[:project]['proofed_word_count'])
 
     subject = "New Submit Final Proofed Document from #{current_user.name} for #{project.title} (#{params[:project]['proofed_word_count']} words)"
 
     send_email_message('proofed_manuscript', tokens, get_project_recipient_list(@project, roles: [:project_manager, :author]), subject)
     send_email_message('proofed_manuscript_admin', tokens, admin_proofed_manuscript_list, subject)
-  end
-
-
-  # Marketing Release Date
-  def marketing_release_date(project, current_user, release_date)
-    @project = project
-    @current_user = current_user
-    @marketing_release_date = release_date
-
-    user_subject = "Release Date from #{current_user.name} for #{project.title}"
-    admin_subject = "New " + user_subject
-
-    send_email_message('marketing_release_date', {}, get_project_recipient_list(@project, roles: [:author, :book_manager, :project_manager]), user_subject)
-    send_email_message('marketing_release_date_admin', {}, admin_marketing_release_date_list, admin_subject)
   end
 
   def edit_layout_style(project, current_user)
@@ -761,11 +751,6 @@ class ProjectMailer < ActionMailer::Base
   # Notifications for when a user uploads an edited manuscript
   def admin_edited_manuscript_list
     %w( jesse@booktrope.com adam.bodendieck@booktrope.com jennifer.gilbert@booktrope.com )
-  end
-
-  # The marketing release date has been set
-  def admin_marketing_release_date_list
-    %w( adam.bodendieck@booktrope.com andy@booktrope.com )
   end
 
   # A new stock cover image has been uploaded

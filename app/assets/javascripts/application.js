@@ -25,4 +25,5 @@
 //= require bootstrap-sprockets
 //= require chosen-jquery
 //= require cocoon
+//= require jquery.ui.datepicker
 //= require_tree .

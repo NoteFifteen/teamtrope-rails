@@ -161,6 +161,41 @@
                         <%= f.input :proofed_word_count, label: false, required: true %>
                         <div>In Word: Go to File, Properties, click on the Statistics tab and enter the "Words:" count value. This will help us estimate and schedule your layout resource efficiently.</div>
                     </li>
+
+                    <li>
+                      <h4>Target Marketing Launch Date</h4>
+
+                      <b>Do you have a Marketing Launch Date scheduled?</b>
+                      <ul>
+                        <li>
+                            <%= radio_button_tag 'have_target_market_date', 'yes', false %> Yes &nbsp;
+                            <%=
+                                f.input( :target_market_launch_date_display,
+                                         as: :fake,
+                                         label: false,
+                                         wrapper: false,
+                                         input_html: { id: 'target_market_launch_date_display'},
+                                         placeholder: 'MM/DD/YYYY'
+                                         ) %><br>
+                            <%= f.input_field(:target_market_launch_date, as: :string, :style => 'display: none;') %>
+                            <span>(Please be sure to discuss this with your marketing manager prior to submitting.)<br></span>
+                        </li>
+                        <li>
+                            <%= radio_button_tag 'have_target_market_date', 'no', false %> No - We do not have a specific date in mind.
+                        </li>
+                      </ul>
+                      <br>
+                      <div class="row">
+                        <div class="col-md-6">
+                          Please note: Layout takes approximately 3-4 weeks. The date you select should be NO SOONER than
+                          5 weeks from today's date to include time for approval, final covers, and the Publication Fact
+                          Sheet.<br><br>
+                          To view a sample production timeline, please click <%= link_to 'here', 'https://teamtrope.com/docs/sample-timeline-production-through-publication/', :target => '_blank' %>.
+                          For more information on the difference between publication date and marketing launch date,
+                          please click <%= link_to 'here', 'https://teamtrope.com/2014/03/book-release-date-versus-marketing-launch-date/', :target => '_blank' %>.
+                        </div>
+                      </div>
+                    </li>
                 </ul>
             </div>
             <br>
@@ -190,7 +225,21 @@
       </div>
 
       <button class="btn disabled" disabled id="submit_proofred_manuscript_fake" onclick="submitProofreadManuscriptForm();" >Submit</button>
+      <script>
+          $(function() {
+              // This attaches the datepicker to a "fake" input field with the MM/DD/YYYY format that users
+              // are familiar with, but updates a real hidden input field with the date format yyyy-mm-dd
+              // format that Rails wants.
+              $('#target_market_launch_date_display').datepicker({altField: '#project_target_market_launch_date', altFormat: 'yy-mm-dd'});
+          });
 
+          $('#submit_proofread').submit(function() {
+              // Reset the value in case they plug something in and then change their minds
+              if($('input[name=have_target_market_date]:checked').val() == 'no') {
+                  $('#project_target_market_launch_date').val('');
+              }
+          });
+      </script>
     </div>
   </div>
 </div>

@@ -222,7 +222,7 @@ class ProjectsController < ApplicationController
   def proofed_manuscript
     @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
 
-    if ! @manuscript.proofed.nil? && @project.update(update_project_params)
+    if @project.update(update_project_params)
       @project.create_activity :submitted_proofed_manuscript, owner: current_user, parameters: {text: "Uploaded the Proofed Manuscript", form_data: params[:project].to_s}
       update_current_task
       flash[:success] = "Proofed Manuscript Uploaded. WAIT! Before you celebrate, you are still on the clock for the project and we won't be working on your book until you complete the next step.
@@ -656,23 +656,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def marketing_release_date
-    if @project.update(update_project_params)
-      update_current_task
-      @project.create_activity :marketing_release_date, owner: current_user,
-                                parameters: { text: 'Set Marketing Release Date', form_data: params[:project].to_s}
-      flash[:success] = 'Marketing Release Date Set'
-
-      release_date = @project.marketing_release_date.strftime("%Y/%m/%d")
-
-      ProjectMailer.marketing_release_date(@project, current_user, release_date)
-      redirect_to @project
-    else
-      flash[:danger] = 'There was an error setting the Marketing Release Date.  Please review.'
-      render 'show'
-    end
-  end
-
   def media_kit
     if @project.update(update_project_params)
       update_current_task
@@ -826,7 +809,7 @@ class ProjectsController < ApplicationController
     params.require(:project).permit(:id, :final_title, :title, :synopsis, :stock_image_request_link,
       :previously_published, :previously_published_title, :previously_published_year, :previously_published_publisher,
       :credit_request, :proofed_word_count, :teamroom_link,
-      :publication_date, :marketing_release_date, :special_text_treatment, :has_sub_chapters, :has_index,
+      :publication_date, :target_market_launch_date, :special_text_treatment, :has_sub_chapters, :has_index,
       :non_standard_size, :has_internal_illustrations, :color_interior, :childrens_book,
       :edit_complete_date, :imprint_id,
       :genre_ids => [],

@@ -199,8 +199,8 @@ end
 if Rails.env == "development"
   # creating projects
   Project.create!([
-    {stock_image_request_link: "", previously_published: nil, proofed_word_count: nil, teamroom_link: "", publication_date: nil, marketing_release_date: nil, title: "Between Boyfriends by Sárka-Jonae Miller", final_title: "Between Boyfriends", special_text_treatment: "", has_sub_chapters: nil, has_index: nil, non_standard_size: nil, has_internal_illustrations: nil, color_interior: nil, childrens_book: nil, edit_complete_date: nil, project_type_id: 1},
-    {stock_image_request_link: "", previously_published: nil, proofed_word_count: nil, teamroom_link: "", publication_date: nil, marketing_release_date: nil, title: "Atolovus by David Covenant",               final_title: "Atolovus",           special_text_treatment: "", has_sub_chapters: nil, has_index: nil, non_standard_size: nil, has_internal_illustrations: nil, color_interior: nil, childrens_book: nil, edit_complete_date: nil, project_type_id: 1}
+    {stock_image_request_link: "", previously_published: nil, proofed_word_count: nil, teamroom_link: "", publication_date: nil, title: "Between Boyfriends by Sárka-Jonae Miller", final_title: "Between Boyfriends", special_text_treatment: "", has_sub_chapters: nil, has_index: nil, non_standard_size: nil, has_internal_illustrations: nil, color_interior: nil, childrens_book: nil, edit_complete_date: nil, project_type_id: 1},
+    {stock_image_request_link: "", previously_published: nil, proofed_word_count: nil, teamroom_link: "", publication_date: nil, title: "Atolovus by David Covenant",               final_title: "Atolovus",           special_text_treatment: "", has_sub_chapters: nil, has_index: nil, non_standard_size: nil, has_internal_illustrations: nil, color_interior: nil, childrens_book: nil, edit_complete_date: nil, project_type_id: 1}
   ])
 
   Project.all.each do | project |

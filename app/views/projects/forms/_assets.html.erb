@@ -44,9 +44,6 @@ Previously Published?: No<br/>
 
 <%= render @project.manuscript unless @project.manuscript.nil? %>
 
-<h4>Marketing Release Date</h4>
-Marketing Release Date: <%= @project.marketing_release_date.try(:strftime, "%Y-%m-%d") %><br/>
-
 <%= render @project.media_kits unless @project.media_kits.nil? %>
 
 <h4>Edit Complete Date</h4>

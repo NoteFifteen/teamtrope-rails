@@ -426,10 +426,19 @@ jQuery ->
       'project[manuscript_attributes][proofed]': {
         required: true
         accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
+      },
+
+      'have_target_market_date' : {
+        required: true
+      },
+      'target_market_launch_date_display': {
+        required: {
+          depends: (element) =>
+            return $('input[name=have_target_market_date]:checked').val() == 'yes';
+        }
       }
     }
   })
-
 
 # For the 1099 Form
 jQuery ->

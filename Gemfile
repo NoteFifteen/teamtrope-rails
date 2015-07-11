@@ -29,6 +29,10 @@ gem 'jquery-rails'
 # Plugin for jQuery that gives you some advanced tables
 gem 'jquery-datatables-rails', '~> 3.2.0'
 
+# Grab jQueryUI so we can use some components like the datepicker
+gem 'jquery-ui-sass-rails'
+# gem 'jquery-ui-rails'
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 gem 'jquery-turbolinks'
