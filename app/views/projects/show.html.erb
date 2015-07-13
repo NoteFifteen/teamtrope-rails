@@ -92,7 +92,9 @@
       <% form_content << "This task is dependent on" %>
       <% form_content << "<ul>" %>
       <% tab.task.dependent_tasks.each do | dt | %>
-      <% form_content <<  "<li>#{!remaining_tasks.include? dt.id} #{dt.name}</li>" %>
+      <% icon = (!remaining_tasks.include? dt.id)? "fa-check-square-o" : "fa-square-o" %>
+      <% task_name = (!remaining_tasks.include? dt.id)? "<span style=\"text-decoration:line-through;\">#{dt.name}</span>" : dt.name %>
+      <% form_content <<  "<li><i class=\"fa #{icon}\"></i> #{task_name}</li>" %>
       <% end %>
       <% form_content << "</ul>" %>
     <% else %>
