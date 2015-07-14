@@ -38,7 +38,7 @@ module ProjectsHelper
 
   # Search using the author's Nickname (@name in OldTrope)
   def get_by_author_nickname(author_name)
-    user = User.find_by_nickname(author_name)
+    user = User.where('LOWER(nickname) = LOWER(?)', author_name).first
     if(user.nil?)
       get_my_projects
     else
@@ -50,7 +50,7 @@ module ProjectsHelper
                                                     JOIN team_memberships ON team_memberships.project_id = project_grid_table_rows.project_id
                                                     JOIN roles ON roles.id = team_memberships.role_id
                                                     JOIN users ON users.id = team_memberships.member_id
-                                                    WHERE roles.name = 'Author' AND users.nickname  = ?", author_name])
+                                                    WHERE roles.name = 'Author' AND LOWER(users.nickname) = LOWER(?)", author_name])
     end
   end
 
