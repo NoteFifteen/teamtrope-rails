@@ -374,6 +374,22 @@ jQuery ->
   })
 
 ## submit proofread
+
+## target marketing launch date custom validator -- Must be 3 weeks in the future or more
+jQuery.validator.addMethod("targetMarketLaunchDateValidator", (value, element, params) ->
+  inputDate = Date.parse(value);
+
+  if (isNaN(inputDate))
+    return false
+
+  # Three weeks in the future is the minimum
+  threeWeeks = new Date();
+  threeWeeks.setDate(threeWeeks.getDate() + 21);
+
+  return (threeWeeks <= inputDate)
+, jQuery.validator.format("You must select a date at least three weeks in the future.")
+)
+
 jQuery ->
   $("#submit_proofread").validate({
     rules:{
@@ -435,7 +451,8 @@ jQuery ->
         required: {
           depends: (element) =>
             return $('input[name=have_target_market_date]:checked').val() == 'yes';
-        }
+        },
+        targetMarketLaunchDateValidator: true
       }
     }
   })

@@ -174,7 +174,9 @@
                                          as: :fake,
                                          label: false,
                                          wrapper: false,
-                                         input_html: { id: 'target_market_launch_date_display'},
+                                         input_html: {
+                                                 id: 'target_market_launch_date_display',
+                                         },
                                          placeholder: 'MM/DD/YYYY'
                                          ) %><br>
                             <%= f.input_field(:target_market_launch_date, as: :string, :style => 'display: none;') %>
@@ -188,7 +190,7 @@
                       <div class="row">
                         <div class="col-md-6">
                           Please note: Layout takes approximately 3-4 weeks. The date you select should be NO SOONER than
-                          5 weeks from today's date to include time for approval, final covers, and the Publication Fact
+                          3 weeks from today's date to include time for approval, final covers, and the Publication Fact
                           Sheet.<br><br>
                           To view a sample production timeline, please click <%= link_to 'here', 'https://teamtrope.com/docs/sample-timeline-production-through-publication/', :target => '_blank' %>.
                           For more information on the difference between publication date and marketing launch date,
@@ -230,7 +232,15 @@
               // This attaches the datepicker to a "fake" input field with the MM/DD/YYYY format that users
               // are familiar with, but updates a real hidden input field with the date format yyyy-mm-dd
               // format that Rails wants.
-              $('#target_market_launch_date_display').datepicker({altField: '#project_target_market_launch_date', altFormat: 'yy-mm-dd'});
+              $('#target_market_launch_date_display').datepicker({
+                  altField: '#project_target_market_launch_date',
+                  altFormat: 'yy-mm-dd',
+                  minDate: '+3w'
+              });
+
+              $('#target_market_launch_date_display').blur(function() {
+                  $('#submit_proofread').validate();
+              });
           });
 
           $('#submit_proofread').submit(function() {
