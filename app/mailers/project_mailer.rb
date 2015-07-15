@@ -720,7 +720,7 @@ class ProjectMailer < ActionMailer::Base
 
   # Notify for a member removal request
   def admin_remove_member_request_list
-    %w( jesse@booktrope.com andy@booktrope.com )
+    %w( jesse@booktrope.com andy@booktrope.com evie.hutton@booktrope.com )
   end
 
   # Used when a new team member is added
