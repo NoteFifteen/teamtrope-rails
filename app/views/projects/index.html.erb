@@ -21,8 +21,11 @@
         <th>Cover Designer</th>
         <th>Imprint</th>
         <th>Production</th>
+        <th>Production Last Update</th>
         <th>Design</th>
+        <th>Design Last Update</th>
         <th>Marketing</th>
+        <th>Marketing Last Update</th>
         <th>Teamroom Link</th>
       </tr>
     </thead>
@@ -47,8 +50,11 @@
       <td><%= row.cover_designer?? row.cover_designer : "-" %></td>
       <td><%= row.imprint?? row.imprint : "-" %></td>
       <td><%= row.production_task_name?? row.production_task_name : "-" %></td>
+      <td><%= row.production_task_name?? row.production_task_last_update.strftime("%m/%d/%Y") : "-" %></td>
       <td><%= row.design_task_name?? row.design_task_name : "-" %></td>
+      <td><%= row.design_task_name?? row.design_task_last_update.strftime("%m/%d/%Y") : "-" %></td>
       <td><%= row.marketing_task_name?? row.marketing_task_name : "-" %></td>
+      <td><%= row.marketing_task_name?? row.marketing_task_last_update.strftime("%m/%d/%Y") : "-" %></td>
       <td><%= row.teamroom_link?? link_to("Teamroom Link", row.teamroom_link) : '-' %></td>
     </tr>
     <% end %>

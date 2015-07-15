@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150708230456) do
+ActiveRecord::Schema.define(version: 20150714223923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -478,10 +478,13 @@ ActiveRecord::Schema.define(version: 20150708230456) do
     t.string   "teamroom_link"
     t.integer  "production_task_id"
     t.string   "production_task_name"
+    t.datetime "production_task_last_update"
     t.integer  "marketing_task_id"
     t.string   "marketing_task_name"
+    t.datetime "marketing_task_last_update"
     t.integer  "design_task_id"
     t.string   "design_task_name"
+    t.datetime "design_task_last_update"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
