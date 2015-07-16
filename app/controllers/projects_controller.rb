@@ -465,6 +465,10 @@ class ProjectsController < ApplicationController
     else
     # Not approved, revert to previous step
       if @project.cover_concept.update_attribute(:cover_concept_notes, params[:project][:cover_concept_notes])
+        @project.cover_concept.unapproved_cover_concept = @project.cover_concept.cover_concept
+        @project.cover_concept.cover_concept = nil
+        @project.cover_concept.save
+
         reject_current_task
         activity_text = 'Rejected the Cover Art'
         flash[:success] = activity_text
@@ -790,6 +794,10 @@ class ProjectsController < ApplicationController
 
   def download_cover_concept
     redirect_to @project.cover_concept.cover_concept.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_unapproved_cover_concept
+    redirect_to @project.cover_concept.unapproved_cover_concept.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
   def download_stock_cover_image

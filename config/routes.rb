@@ -116,6 +116,7 @@ Rails.application.routes.draw do
   match '/projects/download_lightning_source_cover/:id', to: 'projects#download_lightning_source_cover', via: 'get', as: 'download_lightning_source_cover'
 
   match '/projects/download_cover_concept/:id',          to: 'projects#download_cover_concept',          via: 'get', as: 'download_cover_concept'
+  match '/projects/download_unapproved_cover_concept/:id',   to: 'projects#download_unapproved_cover_concept',  via: 'get', as: 'download_unapproved_cover_concept'
   match '/projects/download_stock_cover_image/:id',      to: 'projects#download_stock_cover_image',      via: 'get', as: 'download_stock_cover_image'
 
   match 'visitors', to: 'static_pages#visitors', via: 'get'

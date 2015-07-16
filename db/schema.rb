@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714223923) do
+ActiveRecord::Schema.define(version: 20150715195320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,10 @@ ActiveRecord::Schema.define(version: 20150714223923) do
     t.boolean  "cover_concept_image_processed",         default: false
     t.string   "stock_cover_image_direct_upload_url"
     t.boolean  "stock_cover_image_processed",           default: false
+    t.string   "unapproved_cover_concept_file_name"
+    t.string   "unapproved_cover_concept_content_type"
+    t.integer  "unapproved_cover_concept_file_size"
+    t.datetime "unapproved_cover_concept_updated_at"
   end
 
   add_index "cover_concepts", ["project_id"], name: "index_cover_concepts_on_project_id", using: :btree
