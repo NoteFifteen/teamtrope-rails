@@ -373,6 +373,19 @@ jQuery ->
     }
   })
 
+## Check Imprint
+jQuery ->
+  $("#check_imprint").validate({
+    rules:{
+      'project[imprint_id]': {
+        required: true
+      },
+      'project[control_number_attributes][paperback_isbn]': {
+        required: true
+      }
+    }
+  })
+
 ## submit proofread
 
 ## target marketing launch date custom validator -- Must be 3 weeks in the future or more

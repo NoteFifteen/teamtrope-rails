@@ -315,6 +315,22 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def check_imprint
+    if @project.update_attributes(update_project_params)
+      publish(:modify_imprint, @project)
+
+      Booktrope::ParseWrapper.update_project_control_numbers @project.control_number
+      @project.create_activity :check_imprint, owner: current_user,
+                              parameters: {text: "Set the Imprint and Paperback ISBN", form_data: params[:project].to_s}
+      flash[:success] = "Set the Imprint and Paperback ISBN"
+      update_current_task
+      ProjectMailer.check_imprint(@project, current_user)
+    else
+      render 'show'
+    end
+    redirect_to @project
+  end
+
   def edit_control_numbers
     if @project.update(update_project_params)
       publish(:modify_imprint, @project)

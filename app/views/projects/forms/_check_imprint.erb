@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+
+            <h1>Control Numbers</h1>
+
+            <%= simple_form_for @project,
+                url: url_for(controller: 'projects', action: 'check_imprint', id: @project),
+                html: { id: 'check_imprint' } do | project | %>
+                <%= project.error_notification %>
+                <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
+                <ul class='form_fields'>
+                    <li class="field">
+                        <label >Imprint&nbsp;<span class="required">*</span></label><br/>
+                        <%= project.collection_radio_buttons :imprint_id, Imprint.all, :id, :name,
+                            :collection_wrapper_class => 'collection_radio_buttons',
+                            :collection_wrapper_tag => 'ul', :item_wrapper_tag => 'li' %>
+                        <p class="input_description">IMPORTANT: If you have not discussed being part of a specific imprint with the imprint's Managing Director or Booktrope Management, please select "Booktrope Editions." </li>
+                    </li>
+                    <%= project.simple_fields_for :control_number, (project.object.control_number.nil?)? project.object.build_control_number :
+                        project.object.control_number do | control_number | %>
+                    <li class='field'>
+                      <label>Paperback ISBN<span class="required">*</span></label>
+                      <%= control_number.input :paperback_isbn, label: false %>
+                    </li>
+                    <li class='field'>
+                      <%= control_number.input :parse_id, label: "Parse ID" %>
+                    </li>
+                    <% end %>
+                </ul>
+
+                <%= project.submit 'submit' %>
+            <% end %>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,6 @@
 class ProjectViewsController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_project_view, only: [:show, :edit, :update, :destroy]
 
   # GET /project_views
@@ -71,8 +73,8 @@ class ProjectViewsController < ApplicationController
     def new_project_view_params
       params.require(:project_view).permit(:project_type_id, phases_attributes: [:name, :order, :color, :color_value, :icon, tabs_attributes: [:task_id, :phase_id, :order]])
     end
-    
+
     def edit_project_view_params
       params.require(:project_view).permit(:project_type_id, phases_attributes: [:name, :order, :color, :color_value, :icon, :id, :_destroy, tabs_attributes: [:task_id, :phase_id, :order, :id, :_destroy]])
-    end    
+    end
 end

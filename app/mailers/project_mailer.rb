@@ -49,13 +49,29 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('project_created_admin', tokens, admin_project_created_list, admin_subject)
   end
 
+  def check_imprint(project, current_user)
+    @project = project
+    @current_user = current_user
+
+    tokens = {
+      'Imprint' => project.try(:imprint).try(:name),
+      'Paperback ISBN' => project.control_number.try(:paperback_isbn)
+    }
+
+    admin_subject = "Imprint and Paperback ISBN from #{@current_user.name} for #{@project.title}"
+
+    # The layout of email is the same as edit_control_numbers so we simply pass the subset of tokens that
+    # this form collects.
+    send_email_message('edit_control_numbers', tokens, admin_edit_control_numbers_list, admin_subject)
+  end
+
   # Control numbers have been updated
   def edit_control_numbers(project, current_user)
     @project = project
     @current_user = current_user
 
     tokens = {
-        'Imprint' => project.control_number.try(:imprint),
+        'Imprint' => project.try(:imprint).try(:name),
         'eBook Library Price' => project.control_number.try(:ebook_library_price),
         'ASIN'  => project.control_number.try(:asin),
         'AppleID' => project.control_number.try(:apple_id),
@@ -65,8 +81,6 @@ class ProjectMailer < ActionMailer::Base
     }
 
     admin_subject = "New Control Numbers from #{@current_user.name} for #{@project.title}"
-    user_subject = "Control Numbers from  #{@current_user.name} for #{@project.title}"
-
     send_email_message('edit_control_numbers', tokens, admin_edit_control_numbers_list, admin_subject)
   end
 

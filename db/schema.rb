@@ -11,12 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150715195320) do
+ActiveRecord::Schema.define(version: 20150716211834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
-  enable_extension "pg_stat_statements"
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -179,9 +178,6 @@ ActiveRecord::Schema.define(version: 20150715195320) do
     t.string   "cover_preview_content_type"
     t.integer  "cover_preview_file_size"
     t.datetime "cover_preview_updated_at"
-    t.boolean  "final_cover_approved"
-    t.date     "final_cover_approval_date"
-    t.text     "final_cover_notes"
   end
 
   add_index "cover_templates", ["project_id"], name: "index_cover_templates_on_project_id", using: :btree
@@ -482,15 +478,15 @@ ActiveRecord::Schema.define(version: 20150715195320) do
     t.string   "teamroom_link"
     t.integer  "production_task_id"
     t.string   "production_task_name"
-    t.datetime "production_task_last_update"
     t.integer  "marketing_task_id"
     t.string   "marketing_task_name"
-    t.datetime "marketing_task_last_update"
     t.integer  "design_task_id"
     t.string   "design_task_name"
-    t.datetime "design_task_last_update"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "production_task_last_update"
+    t.datetime "marketing_task_last_update"
+    t.datetime "design_task_last_update"
   end
 
   add_index "project_grid_table_rows", ["design_task_id"], name: "index_project_grid_table_rows_on_design_task_id", using: :btree
