@@ -23,7 +23,7 @@ Teamtrope.KdpSelectUpdate.prototype.handleSubmit = function () {
             var update_data = this.getFreeBookPromoValues();
             break;
         case 'remove_from_kdp':
-            var update_data = ''; // Record something here?
+            var update_data = null;
             break;
         default:
             return false;
