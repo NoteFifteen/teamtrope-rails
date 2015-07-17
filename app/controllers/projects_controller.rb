@@ -820,6 +820,28 @@ class ProjectsController < ApplicationController
     redirect_to @project.cover_concept.stock_cover_image.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
+  # Booktrope Staff only function to allow them to revert to the previous workflow step
+  def rollback_current_task
+    current_task = @project.current_tasks.where(task_id: params[:current_workflow_task_id]).first
+    unless current_task.nil?
+      previous_task = Task.find_by_next_id(params[:current_workflow_task_id])
+
+      activity_text = "Rolled back from #{current_task.task.name} to #{previous_task.name}"
+
+      current_task.task = previous_task
+      current_task.save
+
+      @project.create_activity :rollback_current_task,
+                               owner: current_user,
+                               parameters: {
+                                   text: activity_text,
+                                   form_data: params[:project].to_s
+                               }
+
+    end
+    redirect_to @project
+  end
+
   private
   def new_project_params
     params.require(:project).permit(:title, :final_title, :project_type_id, :teamroom_link, :synopsis,

@@ -1,8 +1,25 @@
 <h5>Workflow Step</h5>
 
+<table id="project_details_workflow_steps">
 <% @project.current_tasks.includes(:task => :workflow).order("workflows.name asc").each do | ct | %>
-  <strong><%= ct.task.workflow.name %>:</strong> <%= ct.task.name %><br/>
+    <tr>
+      <td><%= ct.task.workflow.name %>:</td>
+      <td><%= ct.task.name %></td>
+      <td>Last Updated on <%= ct.updated_at.strftime("%m/%d/%Y") unless ct.updated_at.nil? %></td>
+      <% if current_user.role?(:booktrope_staff) %>
+        <% if ! Task.find_by_next_id(ct.task.id).nil? %>
+          <td>
+            <%= simple_form_for(@project, url: url_for(:controller => 'projects', :action => 'rollback_current_task', id: @project.id),
+                                html: { id: 'rollback_' + ct.task.workflow.name.downcase.gsub(/ /, "_") } ) do |f| %>
+              <%= hidden_field_tag :current_workflow_task_id, ct.task.id %>
+              <button class="btn btn-warning btn-xs" type="submit">Go Back</button>
+            <% end %>
+          </td>
+        <% end %>
+      <% end %>
+    </tr>
 <% end %>
+</table>
 <br/>
 
 <% if @project.synopsis? %>

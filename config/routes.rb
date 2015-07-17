@@ -91,6 +91,7 @@ Rails.application.routes.draw do
   match '/projects/remove_team_member/:id',       to: 'projects#remove_team_member',       via: 'patch'
   match '/projects/revenue_allocation_split/:id', to: 'projects#revenue_allocation_split', via: 'patch'
   match '/projects/request_images/:id',           to: 'projects#request_images',           via: 'patch'
+  match '/projects/rollback_current_task/:id',    to: 'projects#rollback_current_task',    via: 'patch'
   match '/projects/submit_blurb/:id',             to: 'projects#submit_blurb',             via: 'patch'
   match '/projects/submit_form_1099/:id',         to: 'projects#submit_form_1099',         via: 'patch'
   match '/projects/submit_submit_pfs/:id',        to: 'projects#submit_pfs',               via: 'patch'
