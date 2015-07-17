@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20150716211834) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "pg_stat_statements"
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -178,6 +179,9 @@ ActiveRecord::Schema.define(version: 20150716211834) do
     t.string   "cover_preview_content_type"
     t.integer  "cover_preview_file_size"
     t.datetime "cover_preview_updated_at"
+    t.boolean  "final_cover_approved"
+    t.date     "final_cover_approval_date"
+    t.text     "final_cover_notes"
   end
 
   add_index "cover_templates", ["project_id"], name: "index_cover_templates_on_project_id", using: :btree
