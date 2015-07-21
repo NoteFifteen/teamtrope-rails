@@ -14,7 +14,7 @@
     <tr>
       <td>ebook</td>
       <% if ! @cover_template.ebook_front_cover_file_name.nil? %>
-         <td><%= link_to @cover_template.ebook_front_cover_file_name, url_for(controller: 'projects', action: 'download_published_file_mobi', id: @cover_template.project, only_path: false) %></td>
+         <td><%= link_to @cover_template.ebook_front_cover_file_name, url_for(controller: 'projects', action: 'download_ebook_front_cover', id: @cover_template.project, only_path: false) %></td>
       <% else %>
          <td> - </td>
       <% end %>
@@ -25,7 +25,7 @@
     <tr>
       <td>Createspace</td>
       <% if ! @cover_template.createspace_cover_file_name.nil? %>
-         <td><%= link_to @cover_template.createspace_cover_file_name, url_for(controller: 'projects', action: 'download_published_file_mobi', id: @cover_template.project, only_path: false) %></td>
+         <td><%= link_to @cover_template.createspace_cover_file_name, url_for(controller: 'projects', action: 'download_createspace_cover', id: @cover_template.project, only_path: false) %></td>
       <% else %>
          <td> - </td>
       <% end %>
@@ -36,7 +36,7 @@
     <tr>
       <td>Lightning Source</td>
       <% if ! @cover_template.lightning_source_cover_file_name.nil? %>
-         <td><%= link_to @cover_template.lightning_source_cover_file_name, url_for(controller: 'projects', action: 'download_published_file_mobi', id: @cover_template.project, only_path: false) %></td>
+         <td><%= link_to @cover_template.lightning_source_cover_file_name, url_for(controller: 'projects', action: 'download_lightning_source_cover', id: @cover_template.project, only_path: false) %></td>
       <% else %>
          <td> - </td>
       <% end %>
@@ -47,7 +47,7 @@
     <tr>
       <td>Alternate</td>
       <% if ! @cover_template.alternative_cover_file_name.nil? %>
-         <td><%= link_to @cover_template.alternative_cover_file_name, url_for(controller: 'projects', action: 'download_published_file_mobi', id: @cover_template.project, only_path: false) %></td>
+         <td><%= link_to @cover_template.alternative_cover_file_name, url_for(controller: 'projects', action: 'download_alternate_cover', id: @cover_template.project, only_path: false) %></td>
       <% else %>
          <td> - </td>
       <% end %>

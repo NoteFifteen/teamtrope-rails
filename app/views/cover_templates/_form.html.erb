@@ -1,12 +1,34 @@
+<%
+# amazon s3 uploads
+[
+  {
+    label: "Front Cover File", required: true, callback_url: project_cover_template_url(@project),
+    form_id: "cover_template_ebook_front_cover_s3_uploader", callback_param: "cover_template_ebook_front_cover[direct_upload_url]",
+    container_id: "cover_template_ebook_front_cover_uploads_container", object: @cover_template, column_name: "ebook_front_cover"
+  },
+  {
+    label: "CreateSpace Cover Template File", required: true, callback_url: project_cover_template_url(@project),
+    form_id: "cover_template_createspace_cover_s3_uploader", callback_param: "cover_template_ebook_front_cover[direct_upload_url]",
+    container_id: "cover_template_createspace_cover_uploads_container", object: @cover_template, column_name: "createspace_cover"
+  },
+  {
+    label: "Lightning Source Cover Template File", required: false, callback_url: project_cover_template_url(@project),
+    form_id: "cover_template_lightning_source_cover_s3_uploader", callback_param: "cover_template_lightning_source_cover[direct_upload_url]",
+    container_id: "cover_template_lightning_source_cover_uploads_container", object: @cover_template, column_name: "lightning_source_cover"
+  },
+  {
+    label: "Alternative Template File", required: false, callback_url: project_cover_template_url(@project),
+    form_id: "cover_template_alternative_cover_s3_uploader", callback_param: "cover_template_alternative_cover[direct_upload_url]",
+    container_id: "cover_template_alternative_cover_uploads_container", object: @cover_template, column_name: "alternative_cover"
+  },
+].each do | s3_upload_hash | %>
+
+<%= render partial: "shared/amazon_s3_upload", locals: s3_upload_hash %>
+
+<% end %>
+
 <%= simple_form_for(@cover_template) do |f| %>
   <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :alternative_cover %>
-    <%= f.input :createspace_cover %>
-    <%= f.input :ebook_front_cover %>
-    <%= f.input :lightning_source_cover %>
-  </div>
 
   <div class="form-actions">
     <%= f.button :submit %>

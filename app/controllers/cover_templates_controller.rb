@@ -2,7 +2,7 @@ class CoverTemplatesController < ApplicationController
   before_action :signed_in_user
   before_action :booktrope_staff, except: :create
   before_action :set_cover_template, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /cover_templates
   # GET /cover_templates.json
@@ -96,6 +96,10 @@ class CoverTemplatesController < ApplicationController
   private
     def set_cover_template
       @cover_template = CoverTemplate.find(params[:id])
+    end
+
+    def set_project
+      @project = @cover_template.project
     end
 
     def cover_template_params
