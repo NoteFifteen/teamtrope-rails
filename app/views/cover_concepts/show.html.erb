@@ -1,0 +1,54 @@
+<h2>Showing Cover Concepts for <%= @project.title %></h2>
+
+<div>Project: <%= link_to @cover_concept.project.title, project_path(@cover_concept.project) %></div>
+
+<table>
+  <thead>
+    <th>Cover</th>
+    <th>Name</th>
+    <th>Size</th>
+    <th>Updated</th>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td>Cover Concept</td>
+      <% if ! @cover_concept.cover_concept_file_name.nil? %>
+         <td><%= link_to @cover_concept.cover_concept_file_name, url_for(controller: 'projects', action: 'download_cover_concept', id: @cover_concept.project, only_path: false) %></td>
+      <% else %>
+         <td> - </td>
+      <% end %>
+      <td><%= (! @cover_concept.cover_concept_file_size.nil?)  ? @cover_concept.cover_concept_file_size  : '-' %></td>
+      <td><%= (! @cover_concept.cover_concept_updated_at.nil?) ? @cover_concept.cover_concept_updated_at : '-' %></td>
+    </tr>
+
+    <tr>
+      <td>Unapproved Cover Concept</td>
+      <% if ! @cover_concept.unapproved_cover_concept_file_name.nil? %>
+         <td><%= link_to @cover_concept.unapproved_cover_concept_file_name, url_for(controller: 'projects', action: 'download_unapproved_cover_concept', id: @cover_concept.project, only_path: false) %></td>
+      <% else %>
+         <td> - </td>
+      <% end %>
+      <td><%= (! @cover_concept.unapproved_cover_concept_file_size.nil?)  ? @cover_concept.unapproved_cover_concept_file_size  : '-' %></td>
+      <td><%= (! @cover_concept.unapproved_cover_concept_updated_at.nil?) ? @cover_concept.unapproved_cover_concept_updated_at : '-' %></td>
+    </tr>
+
+    <tr>
+      <td>Stock Cover Image</td>
+      <% if ! @cover_concept.stock_cover_image_file_name.nil? %>
+         <td><%= link_to @cover_concept.stock_cover_image_file_name, url_for(controller: 'projects', action: 'download_stock_cover_image', id: @cover_concept.project, only_path: false) %></td>
+      <% else %>
+         <td> - </td>
+      <% end %>
+      <td><%= (! @cover_concept.stock_cover_image_file_size.nil?)  ? @cover_concept.stock_cover_image_file_size  : '-' %></td>
+      <td><%= (! @cover_concept.stock_cover_image_updated_at.nil?) ? @cover_concept.stock_cover_image_updated_at : '-' %></td>
+    </tr>
+
+
+  </tbody>
+</table>
+
+
+
+<%= link_to 'Edit', edit_cover_concept_path(@cover_concept) %> |
+<%= link_to 'Back', cover_concepts_path %>
