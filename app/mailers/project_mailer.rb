@@ -668,6 +668,45 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('kdp_select_enrollment', tokens, admin_kdp_select_enrollment_list, user_subject)
   end
 
+  def kdp_select_update(project, current_user)
+    @project = project
+    authors = []
+    @project.authors.each{ |a| authors.push(a.member.name) }
+    kdp = @project.kdp_select_enrollment
+
+    tokens = {
+        'Title' => @project.final_title,
+        'Author(s)' => authors.join(', '),
+        'Submitted by' => current_user.name,
+        'Update Requested' => kdp.update_type.gsub(/_/, ' ').split.map(&:capitalize).join(' ')
+    }
+
+    if kdp.update_type == 'free_book_promo'
+      if ! kdp.update_data['number_date_ranges'].nil?
+        max = kdp.update_data['date_ranges'].count
+        for date_number in 1..max do
+          dates = kdp.update_data['date_ranges'][date_number -1]
+          tokens.store(
+             "Date Range #{date_number}",
+             "#{dates['start_date']} to #{dates['end_date']}"
+          )
+        end
+      end
+    elsif kdp.update_type == 'countdown_deal'
+      if ! kdp.update_data.nil? && kdp.update_data.count > 0
+        kdp.update_data.each do |key,val|
+          tokens.store(key.gsub(/_/, ' ').capitalize, val)
+        end
+      end
+    end
+
+    user_subject = "KDP Select Update from #{current_user.name} for #{project.title}"
+    admin_subject = "New " + user_subject
+
+    send_email_message('kdp_select_update', tokens, get_project_recipient_list(@project, roles: [:none]), user_subject)
+    send_email_message('kdp_select_update', tokens, admin_kdp_select_update_list, user_subject)
+  end
+
   private
 
   # Generates a link for an email address for a User
@@ -871,6 +910,10 @@ class ProjectMailer < ActionMailer::Base
 
   def admin_kdp_select_enrollment_list
     %w( adam.bodendieck@booktrope.com Pennie.dade@booktrope.com andy@booktrope.com )
+  end
+
+  def admin_kdp_select_update_list
+    %w( kate.burkett@booktrope.com Pennie.dade@booktrope.com ksears@booktrope.com andy@booktrope.com )
   end
 
   # Set the campaign header for MailGun tracking

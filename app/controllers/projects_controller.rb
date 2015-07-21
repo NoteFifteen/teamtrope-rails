@@ -286,6 +286,8 @@ class ProjectsController < ApplicationController
       if kdp_select.update(kdp_params)
         @project.create_activity :kdp_select_updated, owner: current_user,
                                  parameters: { text: 'Updated KDP Select', form_data: kdp_update_attributes.to_s}
+
+        ProjectMailer.kdp_select_update(@project, current_user)
         flash[:success] = 'Updated KDP Select'
         redirect_to @project
       else
