@@ -1,5 +1,19 @@
 class CoverConceptsController < ApplicationController
   before_action :signed_in_user
+  before_action :booktrope_staff
+  before_action :set_cover_concept, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
+
+  # GET /cover_concepts
+  # GET /cover_concepts.json
+  def index
+    @cover_concepts = CoverConcept.all
+  end
+
+  # GET /cover_concepts/1
+  # GET /cover_concepts/1.json
+  def show
+  end
 
   # This controller method is hit remotely via AJAX from a Project view.
   def create
@@ -34,5 +48,14 @@ class CoverConceptsController < ApplicationController
     @last_errors = @cover_concept.errors.full_messages
     return
   end
+
+  private
+    def set_cover_concept
+      @cover_concept = CoverConcept.find(params[:id])
+    end
+
+    def set_project
+      @project = @cover_concept.project
+    end
 
 end

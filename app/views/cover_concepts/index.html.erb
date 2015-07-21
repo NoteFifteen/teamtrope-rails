@@ -1,0 +1,53 @@
+<h1>Cover Concepts</h1>
+
+<table id="cover_concept_table">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Updated</th>
+      <th>Cover Concept</th>
+      <th>Unapproved Cover Concept</th>
+      <th>Stock Cover Image</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cover_concepts.each do |cover_concept| %>
+      <tr>
+
+        <td><%= link_to cover_concept.project.title, cover_concept.project %></td>
+        <td><%= cover_concept.updated_at %></td>
+
+        <% unless cover_concept.cover_concept_file_name.nil? %>
+        <td><%= link_to cover_concept.try(:cover_concept_file_name), url_for(controller: 'projects', action: 'download_cover_concept', id: cover_concept.project, only_path: false) %></td>
+        <% else %>
+        <td> - </td>
+        <% end %>
+
+        <% unless cover_concept.unapproved_cover_concept_file_name.nil? %>
+        <td><%= link_to cover_concept.try(:unapproved_cover_concept_file_name), url_for(controller: 'projects', action: 'download_unapproved_cover_concept', id: cover_concept.project, only_path: false) %></td>
+        <% else %>
+        <td> - </td>
+        <% end %>
+
+        <% unless cover_concept.stock_cover_image_file_name.nil? %>
+        <td><%= link_to cover_concept.try(:stock_cover_image_file_name), url_for(controller: 'projects', action: 'download_stock_cover_image', id: cover_concept.project, only_path: false) %></td>
+        <% else %>
+        <td> - </td>
+        <% end %>
+
+        <td><%= link_to 'Show', cover_concept %></td>
+        <td><%= link_to 'Edit', edit_cover_concept_path(cover_concept) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<script>
+  $("#cover_concept_table").DataTable({ "pageLength" : 100 });
+</script>
+
