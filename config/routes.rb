@@ -1,30 +1,9 @@
 Rails.application.routes.draw do
 
-
-  resources :production_expenses
-
-  resources :task_dependencies
-
-  resources :print_corners
-
-  resources :kdp_select_enrollments
-
-  resources :man_devs
-
-  resources :document_import_queues
-
-  resources :approve_blurbs
-
-  resources :draft_blurbs
-
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   get 'wordpress_import/import'
   post 'wordpress_import/upload'
-
-  resources :marketing_expenses
-
-  resources :publication_fact_sheets
 
   match '/parse/get_amazon_sales_rank',            to: 'parse#get_amazon_sales_rank',          via: 'get'
   match '/parse/get_queued_items',                 to: 'parse#get_queued_items',               via: 'get'
@@ -124,25 +103,42 @@ Rails.application.routes.draw do
 
   match 'visitors', to: 'static_pages#visitors', via: 'get'
 
-  resources :tabs
-  resources :project_views
-  resources :roles
-  resources :task_prerequisite_fields
+
+  resources :approve_blurbs
   resources :blog_tours
+  resources :cover_templates
   resources :current_tasks
-  resources :unlocked_tasks
+  resources :document_import_queues
+  resources :draft_blurbs
   resources :genres
+  resources :imprints
+  resources :kdp_select_enrollments
+  resources :man_devs
+  resources :marketing_expenses
   resources :phases
-  resources :required_roles
+  resources :publication_fact_sheets
+  resources :published_files
+  resources :price_change_promotions
+  resources :print_corners
+  resources :production_expenses
   resources :project_layouts, except: [:edit, :destroy]
   resources :project_type_workflows
   resources :project_types
-  resources :workflows
+  resources :project_views
+  resources :required_roles
+  resources :roles
+  resources :tabs
   resources :tasks
-  resources :imprints
-  resources :price_change_promotions
+  resources :task_dependencies
+  resources :task_prerequisite_fields
+  resources :unlocked_tasks
+  resources :workflows
+
+  resources :cover_concepts
+  resources :final_manuscripts
+  resources :manuscripts
+  resources :project_layouts
   resources :published_files
-  resources :cover_templates
 
 
   # Example of regular route:

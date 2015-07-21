@@ -1,0 +1,22 @@
+<div>
+  <label><%= label %><% if required %><span class="required">*</span><% end %></label>
+  <%= s3_uploader_form callback_url: callback_url,
+                       id: form_id,
+                       acl: "private",
+                       callback_param: callback_param,
+                       expiration: 24.hours.from_now.utc.iso8601,
+                       max_file_size: 100.megabytes do %>
+  <div>
+    <p>Existing filename: <%= (object.send(column_name+"?")) ? object.send(column_name+"_file_name") : 'N/A' %></p>
+  </div>
+      <%= file_field_tag :file, multiple: false %>
+  <% end %>
+  <div id="<%= container_id%>"></div>
+  <script id="template-upload" type="text/x-tmpl">
+        <div id="upload_{%=o.unique_id%}" class="upload">
+          <h5>{%=o.name%}</h5>
+          <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+        </div>
+
+  </script>
+</div>

@@ -2,6 +2,7 @@ class PublishedFilesController < ApplicationController
   before_action :signed_in_user
   before_action :booktrope_staff
   before_action :set_published_file, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /published_files
   # GET /published_files.json
@@ -90,6 +91,9 @@ class PublishedFilesController < ApplicationController
   def update
     respond_to do |format|
       if @published_file.update(published_file_params)
+        @project.create_activity :published_book, owner: current_user,
+                                  parameters: { text: 'Submitted the Publish Book form', form_data: params[:published_file].to_s}
+
         format.html { redirect_to @published_file, notice: 'Published file was successfully updated.' }
         format.json { render :show, status: :ok, location: @published_file }
       else
@@ -113,6 +117,10 @@ class PublishedFilesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_published_file
       @published_file = PublishedFile.find(params[:id])
+    end
+
+    def set_project
+      @project = PublishedFile.find(params[:id]).project
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
