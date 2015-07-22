@@ -1,5 +1,15 @@
 class FinalManuscriptsController < ApplicationController
   before_action :signed_in_user
+  before_action :booktrope_staff, except: :create
+  before_action :set_final_manuscript, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @final_manuscripts = FinalManuscript.all
+  end
+
+  def show
+  end
 
   def create
     @project = Project.friendly.find(params[:project_id])
@@ -32,5 +42,14 @@ class FinalManuscriptsController < ApplicationController
     @final_manuscript.save
 
   end
+
+  private
+    def set_final_manuscript
+      @final_manuscript = FinalManuscript.find(params[:id])
+    end
+
+    def set_project
+      @project = FinalManuscript.find(params[:id]).project
+    end
 
 end
