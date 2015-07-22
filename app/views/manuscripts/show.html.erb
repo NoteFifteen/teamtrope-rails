@@ -1,4 +1,53 @@
-<p id="notice"><%= notice %></p>
+<h2>Showing Manuscript files for <%= @project.title %></h2>
+
+<div>Project: <%= link_to @project.title, project_path(@project) %></div>
+
+<table>
+  <thead>
+    <th>Manuscript</th>
+    <th>Name</th>
+    <th>Size</th>
+    <th>Updated</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Original</td>
+      <td>
+        <% if !@manuscript.original_file_name.nil? %>
+          <%= link_to @manuscript.try(:original_file_name), url_for(controller: 'projects', action: 'download_original_manuscript', id: @manuscript.project, only_path: false) %>
+        <% else %>
+          -
+        <% end %>
+      </td>
+      <td><%= (! @manuscript.original_file_size.nil?)  ? @manuscript.original_file_size  : '-' %></td>
+      <td><%= (! @manuscript.original_updated_at.nil?) ? @manuscript.original_updated_at : '-' %></td>
+    </tr>
+    <tr>
+      <td>Edited</td>
+      <td>
+      <% if !@manuscript.edited_file_name.nil? %>
+        <%= link_to @manuscript.try(:edited_file_name), url_for(controller: 'projects', action: 'download_edited_manuscript', id: @manuscript.project, only_path: false) %>
+      <% else %>
+        -
+      <% end %>
+      </td>
+      <td><%= (! @manuscript.edited_file_size.nil?)  ? @manuscript.edited_file_size  : '-' %></td>
+      <td><%= (! @manuscript.edited_updated_at.nil?) ? @manuscript.edited_updated_at : '-' %></td>
+    </tr>
+    <tr>
+      <td>Proofed</td>
+      <td>
+      <% if !@manuscript.proofed_file_name.nil? %>
+        <%= link_to @manuscript.try(:proofed_file_name), url_for(controller: 'projects', action: 'download_proofed_manuscript', id: @manuscript.project, only_path: false) %>
+      <% else %>
+        -
+      <% end %>
+      </td>
+      <td><%= (! @manuscript.proofed_file_size.nil?)  ? @manuscript.proofed_file_size  : '-' %></td>
+      <td><%= (! @manuscript.proofed_updated_at.nil?) ? @manuscript.proofed_updated_at : '-' %></td>
+    </tr>
+  </tbody>
+</table>
 
 <%= link_to 'Edit', edit_manuscript_path(@manuscript) %> |
 <%= link_to 'Back', manuscripts_path %>

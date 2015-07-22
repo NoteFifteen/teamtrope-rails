@@ -1,18 +1,46 @@
-<h1>Listing manuscripts</h1>
+<h1>Manuscripts</h1>
 
-<table>
+<table id="manuscripts_table">
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th>Project</th>
+      <th>Update</th>
+      <th>Original</th>
+      <th>Edited</th>
+      <th>Proofed</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
   <tbody>
     <% @manuscripts.each do |manuscript| %>
       <tr>
+        <td><%= link_to manuscript.project.title, manuscript.project %></td>
+        <td><%= manuscript.updated_at %></td>
+        <td>
+          <% unless manuscript.original_file_name.nil? %>
+            <%= link_to manuscript.original_file_name, url_for(controller: 'projects', action: 'download_original_manuscript', id: manuscript.project, only_path: false) %>
+          <% else %>
+          -
+          <% end %>
+        </td>
+        <td>
+          <% unless manuscript.edited_file_name.nil? %>
+            <%= link_to manuscript.edited_file_name, url_for(controller: 'projects', action: 'download_edited_manuscript', id: manuscript.project, only_path: false) %>
+          <% else %>
+          -
+          <% end %>
+        </td>
+        <td>
+          <% unless manuscript.proofed_file_name.nil? %>
+            <%= link_to manuscript.proofed_file_name, url_for(controller: 'projects', action: 'download_proofed_manuscript', id: manuscript.project, only_path: false) %>
+          <% else %>
+          -
+          <% end %>
+        </td>
         <td><%= link_to 'Show', manuscript %></td>
         <td><%= link_to 'Edit', edit_manuscript_path(manuscript) %></td>
-        <td><%= link_to 'Destroy', manuscript, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -20,4 +48,6 @@
 
 <br>
 
-<%= link_to 'New Manuscript', new_manuscript_path %>
+<script>
+  $("#manuscripts_table").DataTable({ "pageLength" : 100 });
+</script>

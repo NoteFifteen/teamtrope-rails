@@ -1,5 +1,15 @@
 class ManuscriptsController < ApplicationController
   before_action :signed_in_user
+  before_action :booktrope_staff, except: :create
+  before_action :set_manuscript, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @manuscripts = Manuscript.all
+  end
+
+  def show
+  end
 
   # This controller method is hit remotely via AJAX from a Project view.
   def create
@@ -43,5 +53,14 @@ class ManuscriptsController < ApplicationController
     @last_errors = @manuscript.errors.full_messages
     return
   end
+
+  private
+    def set_manuscript
+      @manuscript = Manuscript.find(params[:id])
+    end
+
+    def set_project
+      @project = Manuscript.find(params[:id]).project
+    end
 
 end
