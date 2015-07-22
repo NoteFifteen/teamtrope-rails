@@ -24,6 +24,12 @@
       <li>
         Paperback ISBN: <%= @project.control_number.paperback_isbn %>
       </li>
+
+      <% if current_user.role?(:booktrope_staff) %>
+          <li>
+            Parse ID: <%= @project.control_number.parse_id %>
+          </li>
+      <% end %>
     </ul>
 <% end %>
 
