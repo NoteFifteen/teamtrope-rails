@@ -1,0 +1,41 @@
+<h2>Showing Final Manuscript files for <%= @project.title %></h2>
+
+<div>Project: <%= link_to @project.title, project_path(@project) %></div>
+
+<table>
+  <thead>
+    <th>Manuscript</th>
+    <th>Name</th>
+    <th>Size</th>
+    <th>Updated</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PDF</td>
+      <td>
+        <% if !@final_manuscript.pdf_file_name.nil? %>
+          <%= link_to @final_manuscript.try(:pdf_file_name), url_for(controller: 'projects', action: 'download_final_manuscript_pdf', id: @final_manuscript.project, only_path: false) %>
+        <% else %>
+          -
+        <% end %>
+      </td>
+      <td><%= (! @final_manuscript.pdf_file_size.nil?)  ? @final_manuscript.pdf_file_size  : '-' %></td>
+      <td><%= (! @final_manuscript.pdf_updated_at.nil?) ? @final_manuscript.pdf_updated_at : '-' %></td>
+    </tr>
+    <tr>
+      <td>DOC</td>
+      <td>
+      <% if !@final_manuscript.doc_file_name.nil? %>
+        <%= link_to @final_manuscript.try(:doc_file_name), url_for(controller: 'projects', action: 'download_final_manuscript_doc', id: @final_manuscript.project, only_path: false) %>
+      <% else %>
+        -
+      <% end %>
+      </td>
+      <td><%= (! @final_manuscript.doc_file_size.nil?)  ? @final_manuscript.doc_file_size  : '-' %></td>
+      <td><%= (! @final_manuscript.doc_updated_at.nil?) ? @final_manuscript.doc_updated_at : '-' %></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= link_to 'Edit', edit_final_manuscript_path(@final_manuscript) %> |
+<%= link_to 'Back', final_manuscripts_path %>

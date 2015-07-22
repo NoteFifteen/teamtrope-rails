@@ -1,0 +1,45 @@
+<h1>Final Manuscripts</h1>
+
+<table id="final_manuscript_table">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Updated</th>
+      <th>PDF</th>
+      <th>DOC</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @final_manuscripts.each do |final_manuscript| %>
+      <tr>
+        <td><%= link_to final_manuscript.project.title, final_manuscript.project %></td>
+        <td><%= final_manuscript.updated_at %></td>
+        <td>
+          <% unless final_manuscript.pdf_file_name.nil? %>
+            <%= link_to final_manuscript.try(:pdf_file_name), url_for(controller: 'projects', action: 'download_final_manuscript_pdf', id: final_manuscript.project, only_path: false) %>
+          <% else %>
+          -
+          <% end %>
+        </td>
+        <td>
+          <% unless final_manuscript.doc_file_name.nil? %>
+            <%= link_to final_manuscript.try(:doc_file_name), url_for(controller: 'projects', action: 'download_final_manuscript_doc', id: final_manuscript.project, only_path: false) %>
+          <% else %>
+          -
+          <% end %>
+        </td>
+        <td><%= link_to 'Show', final_manuscript %></td>
+        <td><%= link_to 'Edit', edit_final_manuscript_path(final_manuscript) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<script>
+  $("#final_manuscript_table").DataTable({ "pageLength" : 100 });
+</script>
