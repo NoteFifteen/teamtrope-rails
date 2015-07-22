@@ -1,3 +1,32 @@
+<% if ! @project.control_number.nil? %>
+    <h4>Control Numbers</h4>
+    <ul>
+      <li>
+        eBook Library Price: <%= @project.control_number.ebook_library_price %>
+      </li>
+
+      <li>
+        ASIN: <%= @project.control_number.asin %>
+      </li>
+
+      <li>
+        Apple Id: <%= @project.control_number.apple_id %>
+      </li>
+
+      <li>
+        epub ISBN: <%= @project.control_number.epub_isbn %>
+      </li>
+
+      <li>
+        Hardback ISBN: <%= @project.control_number.hardback_isbn %>
+      </li>
+
+      <li>
+        Paperback ISBN: <%= @project.control_number.paperback_isbn %>
+      </li>
+    </ul>
+<% end %>
+
 <h4>Published Files</h4>
 <%= image_tag download_ebook_front_cover_path(@project), class: 'alignright', width: "340px" if @project.try(:cover_template).try(:ebook_front_cover?) %>
 
