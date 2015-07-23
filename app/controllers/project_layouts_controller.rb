@@ -1,7 +1,8 @@
 class ProjectLayoutsController < ApplicationController
   before_action :signed_in_user
-  before_action :booktrope_staff
+  before_action :booktrope_staff, except: :create
   before_action :set_project_layout, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
 
@@ -62,6 +63,10 @@ class ProjectLayoutsController < ApplicationController
   private
     def set_project_layout
       @project_layout = Layout.find(params[:id])
+    end
+
+    def set_project
+      @project = Layout.find(params[:id]).project
     end
 
     def project_layout_params
