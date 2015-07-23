@@ -121,7 +121,7 @@ Rails.application.routes.draw do
   resources :price_change_promotions
   resources :print_corners
   resources :production_expenses
-  resources :project_layouts, except: [:edit, :destroy]
+  resources :project_layouts, except: :destroy
   resources :project_type_workflows
   resources :project_types
   resources :project_views
@@ -137,7 +137,6 @@ Rails.application.routes.draw do
   resources :cover_concepts
   resources :final_manuscripts
   resources :manuscripts
-  resources :project_layouts
   resources :published_files
 
 
