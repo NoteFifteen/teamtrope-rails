@@ -794,8 +794,8 @@ class ProjectsController < ApplicationController
     redirect_to @project.published_file.pdf.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
-  def download_media_kits
-    redirect_to @project.media_kits.document.expiring_url(*Constants::DefaultLinkExpiration)
+  def download_media_kit
+    redirect_to @project.media_kit.document.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
   def download_layout
