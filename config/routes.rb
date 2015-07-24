@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     resource :cover_template
     resource :final_manuscript
     resource :manuscript
+    resource :media_kit
     resource :project_layout
     resource :published_file
   end
