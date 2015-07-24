@@ -1,0 +1,37 @@
+<h1>Media Kits</h1>
+
+<table id="media_kit_table">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Updated</th>
+      <th>PDF</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @media_kits.each do |media_kit| %>
+      <tr>
+        <td><%= link_to media_kit.project.title, media_kit.project %></td>
+        <td><%= media_kit.project.updated_at %></td>
+        <td>
+          <% unless media_kit.document_file_name.nil? %>
+            <%= link_to media_kit.try(:document_file_name), url_for(controller: 'projects', action: 'download_media_kit', id: media_kit.project, media_kit: media_kit, only_path: false) %>
+          <% else %>
+          -
+          <% end %>
+        </td>
+        <td><%= link_to 'Show', media_kit %></td>
+        <td><%= link_to 'Edit', edit_media_kit_path(media_kit) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<script>
+  $("#media_kit_table").DataTable({ "pageLength" : 100 });
+</script>
