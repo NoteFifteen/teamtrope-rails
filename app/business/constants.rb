@@ -3,6 +3,9 @@ module Constants
   # Number of seconds a download link is good for after being issued
   DefaultLinkExpiration = 300
 
+  # Number of seconds (31 days) a download ink is good for
+  LinkExpirationOneMonth = 25920000
+
   DefaultSize = 0..120.megabytes
   DefaultSizeIn = { in: DefaultSize }
 
