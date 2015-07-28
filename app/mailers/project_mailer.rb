@@ -803,7 +803,7 @@ class ProjectMailer < ActionMailer::Base
 
   # Notifications for when a user uploads an edited manuscript
   def admin_edited_manuscript_list
-    %w( jesse@booktrope.com adam.bodendieck@booktrope.com jennifer.gilbert@booktrope.com )
+    %w( jesse@booktrope.com adam.bodendieck@booktrope.com )
   end
 
   # A new stock cover image has been uploaded
