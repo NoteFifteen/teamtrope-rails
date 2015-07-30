@@ -1,6 +1,6 @@
-<h1>Listing blog_tours</h1>
+<h1>Blog Tours</h1>
 
-<table>
+<table id="blog_tours_table">
   <thead>
     <tr>
       <th>Project</th>
@@ -10,15 +10,17 @@
       <th>Number of stops</th>
       <th>Start date</th>
       <th>End date</th>
-      <th colspan="3"></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
   <tbody>
     <% @blog_tours.each do |blog_tour| %>
       <tr>
-        <td><%= blog_tour.project %></td>
-        <td><%= blog_tour.cost %></td>
+        <td class="book-title"><%= link_to blog_tour.project.title, blog_tour.project %></td>
+        <td>$<%= blog_tour.cost %></td>
         <td><%= blog_tour.tour_type %></td>
         <td><%= blog_tour.blog_tour_service %></td>
         <td><%= blog_tour.number_of_stops %></td>
@@ -34,4 +36,6 @@
 
 <br>
 
-<%= link_to 'New Blog tour', new_blog_tour_path %>
+<script>
+  $("#blog_tours_table").DataTable({ "pageLength" : 100 });
+</script>
