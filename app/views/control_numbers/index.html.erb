@@ -1,0 +1,39 @@
+<h1>Control Numbers</h1>
+
+<table id="control_numbers_table">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>ASIN</th>
+      <th>Apple ID</th>
+      <th>Epub ISBN</th>
+      <th>Hardback ISBN</th>
+      <th>Paperback ISBN</th>
+      <th>Parse ID</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @control_numbers.each do |control_number| %>
+      <tr>
+        <td class="title"><%= link_to control_number.project.title, control_number.project %></td>
+        <td><%= control_number.asin %></td>
+        <td><%= control_number.apple_id %></td>
+        <td><%= control_number.epub_isbn %></td>
+        <td><%= control_number.hardback_isbn %></td>
+        <td><%= control_number.paperback_isbn %></td>
+        <td><%= control_number.parse_id %></td>
+        <td><%= link_to 'Show', control_number %></td>
+        <td><%= link_to 'Edit', edit_control_number_path(control_number) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<script>
+  $("#control_numbers_table").DataTable({ 'pageLength': '100'});
+</script>

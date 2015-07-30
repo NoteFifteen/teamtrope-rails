@@ -1,0 +1,10 @@
+<h1>Editing Control Number for <br /><%= link_to @control_number.project.title, @control_number.project %></h1>
+
+<div class="row">
+  <div class="col-md-8">
+    <%= render 'form' %>
+  </div>
+</div>
+
+<%= link_to 'Show', @control_number %> |
+<%= link_to 'Back', control_numbers_path %>
