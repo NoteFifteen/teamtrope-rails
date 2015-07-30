@@ -1,8 +1,6 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Project:</strong>
-  <%= @marketing_expense.project %>
+  <%= link_to @marketing_expense.project.title, @marketing_expense.project %>
 </p>
 
 <p>
@@ -21,12 +19,12 @@
 </p>
 
 <p>
-  <strong>Type mask:</strong>
+  <strong>Type:</strong>
   <%= @marketing_expense.expense_type.join(',') %>
 </p>
 
 <p>
-  <strong>Service provider mask:</strong>
+  <strong>Service provider:</strong>
   <%= @marketing_expense.service_provider.join(',') %>
 </p>
 
