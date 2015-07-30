@@ -1,5 +1,8 @@
 class ProductionExpensesController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_production_expense, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
 
@@ -28,6 +31,12 @@ class ProductionExpensesController < ApplicationController
 
   def update
     @production_expense.update(production_expense_params)
+
+    @project.create_activity :edited_production_expense, owner: current_user,
+      parameters: { text: 'Edited', production_expense: @production_expense, form_data: params[:production_expense].to_s }
+
+    ProjectMailer.production_expense(@project, @production_expense, current_user)
+
     respond_with(@production_expense)
   end
 
@@ -39,6 +48,10 @@ class ProductionExpensesController < ApplicationController
   private
     def set_production_expense
       @production_expense = ProductionExpense.find(params[:id])
+    end
+
+    def set_project
+      @project = @production_expense.project
     end
 
     def production_expense_params
