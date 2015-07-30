@@ -18,7 +18,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    author_percentage = RequiredRole.joins(:project_type, :role).where("project_types.id = ? AND roles.name = ?", params[:project][:project_type_id], 'Author').first.suggested_percent
+    author_percentage = RequiredRole.joins(:project_type, :role).where('project_types.id = ? AND roles.name = ?', params[:project][:project_type_id], 'Author').first.suggested_percent
     params[:project][:team_memberships_attributes]['0'][:percentage] = author_percentage
     params[:project][:final_title] = params[:project][:title]
 
@@ -38,14 +38,14 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project.destroy
-    flash[:info] = "Project has been destroyed."
+    flash[:info] = 'Project has been destroyed.'
     redirect_to projects_path
   end
 
   def update
     if @project.update(update_project_params)
       publish(:modify_project, @project)
-      flash[:success] = "Updated"
+      flash[:success] = 'Updated Project'
       redirect_to @project
     else
       if params[:submitted_from_action] && params[:submitted_from_action] == 'show'
@@ -57,7 +57,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @activities = PublicActivity::Activity.order("created_at DESC").where(trackable_type: "Project", trackable_id: @project)
+    @activities = PublicActivity::Activity.order('created_at DESC').where(trackable_type: 'Project', trackable_id: @project)
     @users = User.all
     @current_user = current_user
   end
@@ -104,7 +104,7 @@ class ProjectsController < ApplicationController
       if result.class == Boxr::BoxrError
         msg = result.to_s
       else
-        msg = "There was an error #{result.to_s}"
+        msg = "There was an error saving the 1099 form: #{result.to_s}"
       end
 
       flash[:danger] = msg
@@ -138,7 +138,6 @@ class ProjectsController < ApplicationController
       # Have to do this before we destroy team membership so we can show the Member Name & Role in the Notification
       ProjectMailer.remove_team_member(@project, current_user, params)
 
-
       team_membership.destroy
 
       # publish that we destroyed the membership after we destroy it so they don't appear in the grid
@@ -153,18 +152,19 @@ class ProjectsController < ApplicationController
 
       redirect_to @project
     else
-      flash[:danger] = 'Error while removing a team member'
+      flash[:danger] = 'An error was encountered while removing a team member, please review.'
       render 'show'
     end
   end
 
   def edit_complete_date
     if @project.update(update_project_params)
-      @project.create_activity :submitted_edit_complete_date, owner: current_user, parameters: { text: " set the 'Edit Complete Date' to #{@project.edit_complete_date.strftime("%Y/%m/%d")}", form_data: params[:project].to_s}
-      flash[:success] = "Edit Complete Date Set"
+      @project.create_activity :submitted_edit_complete_date, owner: current_user, parameters: { text: " set the 'Edit Complete Date' to #{@project.edit_complete_date.strftime('%Y/%m/%d')}", form_data: params[:project].to_s}
+      flash[:success] = 'Edit Complete Date Set'
       update_current_task
       redirect_to @project
     else
+      flash[:danger] = 'An error occurred while setting the Edit Complete Date, please review.'
       render 'show'
     end
   end
@@ -174,16 +174,17 @@ class ProjectsController < ApplicationController
     if @project.update(update_project_params)
       effective_date = "#{params[:effective_date][:year]}/#{params[:effective_date][:month]}/#{params[:effective_date][:day]}"
 
-      @project.create_activity :revenue_allocation_split, owner: current_user, parameters: { text: " set the revenue allocation split", form_data: params[:project][:team_memberships_attributes].to_s}
+      @project.create_activity :revenue_allocation_split, owner: current_user, parameters: { text: ' set the revenue allocation split', form_data: params[:project][:team_memberships_attributes].to_s}
       update_current_task
       ProjectMailer.rev_allocation_change(@project, current_user, effective_date)
       Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, DateTime.parse(effective_date)
 
       #TODO: Hellosign-rails integration
 
-      flash[:success] = "Revenue Allocation Split Set"
+      flash[:success] = 'Revenue Allocation Split Set'
       redirect_to @project
     else
+      flash[:danger] = 'There was an error saving the Revenue Allocation Split, please review.'
       render 'show'
     end
   end
@@ -193,13 +194,13 @@ class ProjectsController < ApplicationController
 
     # Validate the file has been uploaded before moving forward
     if ! @manuscript.original.nil?
-      @project.create_activity :submitted_original_manuscript, owner: current_user, parameters: {text: "Uploaded the Original Manuscript", form_data: params[:project].to_s}
-      flash[:success] = "Original Manuscript Uploaded"
+      @project.create_activity :submitted_original_manuscript, owner: current_user, parameters: {text: 'Uploaded the Original Manuscript', form_data: params[:project].to_s}
+      flash[:success] = 'Original Manuscript Uploaded'
       update_current_task
       ProjectMailer.original_manuscript_uploaded(@project, current_user)
       redirect_to @project
     else
-      flash[:danger] = "There was a problem Uploading your Original Manuscript, please review."
+      flash[:danger] = 'There was a problem Uploading your Original Manuscript, please review.'
       render 'show'
     end
   end
@@ -208,13 +209,13 @@ class ProjectsController < ApplicationController
     @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
 
     if ! @manuscript.edited.nil? && @project.update(update_project_params)
-      @project.create_activity :submitted_edited_manuscript, owner: current_user, parameters: {text: "Uploaded the Edited Manuscript", form_data: params[:project].to_s}
+      @project.create_activity :submitted_edited_manuscript, owner: current_user, parameters: {text: 'Uploaded the Edited Manuscript', form_data: params[:project].to_s}
       update_current_task
-      flash[:success] = "Edited Manuscript Uploaded"
+      flash[:success] = 'Edited Manuscript Uploaded'
       ProjectMailer.submit_edited_manuscript(@project, current_user)
       redirect_to @project
     else
-      flash[:danger] = "There was a problem Uploading your Edited Manuscript, please review."
+      flash[:danger] = 'There was a problem Uploading your Edited Manuscript, please review.'
       render 'show'
     end
   end
@@ -223,7 +224,7 @@ class ProjectsController < ApplicationController
     @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
 
     if @project.update(update_project_params)
-      @project.create_activity :submitted_proofed_manuscript, owner: current_user, parameters: {text: "Uploaded the Proofed Manuscript", form_data: params[:project].to_s}
+      @project.create_activity :submitted_proofed_manuscript, owner: current_user, parameters: {text: 'Uploaded the Proofed Manuscript', form_data: params[:project].to_s}
       update_current_task
       flash[:success] = "Proofed Manuscript Uploaded. WAIT! Before you celebrate, you are still on the clock for the project and we won't be working on your book until you complete the next step.
       To do this:
@@ -233,7 +234,7 @@ class ProjectsController < ApplicationController
       ProjectMailer.proofed_manuscript(@project, current_user, params)
       redirect_to @project
     else
-      flash[:danger] = "There was a problem Uploading your Proofed Manuscript, please review."
+      flash[:danger] = 'There was a problem Uploading your Proofed Manuscript, please review.'
       render 'show'
     end
   end
@@ -241,8 +242,8 @@ class ProjectsController < ApplicationController
   def layout_upload
     if @project.update(update_project_params)
       @project.create_activity :uploaded_layout, owner: current_user,
-                               parameters: {text: "Uploaded the Layout", form_data: params[:project].to_s}
-      flash[:success] = "Layout Uploaded"
+                               parameters: {text: 'Uploaded the Layout', form_data: params[:project].to_s}
+      flash[:success] = 'Layout Uploaded'
       update_current_task
       ProjectMailer.layout_upload(@project, current_user)
       redirect_to @project
@@ -261,6 +262,7 @@ class ProjectsController < ApplicationController
       ProjectMailer.kdp_select_enrollment(@project, current_user)
       redirect_to @project
     else
+      flash[:danger] = 'There was an error enrolling in KDP Select, please review.'
       render 'show'
     end
   end
@@ -288,7 +290,7 @@ class ProjectsController < ApplicationController
                                  parameters: { text: 'Updated KDP Select', form_data: kdp_update_attributes.to_s}
 
         ProjectMailer.kdp_select_update(@project, current_user)
-        flash[:success] = 'Updated KDP Select'
+        flash[:success] = 'Updated KDP Select Enrollment'
         redirect_to @project
       else
         flash[:danger] = 'Error updating KDP enrollment record!'
@@ -323,11 +325,12 @@ class ProjectsController < ApplicationController
 
       Booktrope::ParseWrapper.update_project_control_numbers @project.control_number
       @project.create_activity :check_imprint, owner: current_user,
-                              parameters: {text: "Set the Imprint and Paperback ISBN", form_data: params[:project].to_s}
-      flash[:success] = "Set the Imprint and Paperback ISBN"
+                              parameters: {text: 'Set the Imprint and Paperback ISBN', form_data: params[:project].to_s}
+      flash[:success] = 'Set the Imprint and Paperback ISBN'
       update_current_task
       ProjectMailer.check_imprint(@project, current_user)
     else
+      flash[:danger] = 'Error setting the Imprint and Paperback ISBN, please review.'
       render 'show'
     end
     redirect_to @project
@@ -342,10 +345,11 @@ class ProjectsController < ApplicationController
 
       # Record activity here
       @project.create_activity :updated_control_numbers, owner: current_user,
-                               parameters: {text: "Updated the Control Numbers", form_data: params[:project].to_s}
-      flash[:success] = "Updated the Control Numbers"
+                               parameters: {text: 'Updated the Control Numbers', form_data: params[:project].to_s}
+      flash[:success] = 'Updated the Control Numbers'
       ProjectMailer.edit_control_numbers(@project, current_user)
     else
+      flash[:danger] = 'Error updating the Control Numbers, please review.'
       render 'show'
     end
 
@@ -379,6 +383,7 @@ class ProjectsController < ApplicationController
       ProjectMailer.layout_approval(@project, current_user)
       redirect_to @project
     else
+      flash[:danger] = 'There was an error approving the Layout.  Please review.'
       render 'show'
     end
   end
@@ -419,6 +424,7 @@ class ProjectsController < ApplicationController
         flash[:success] = activity_text
       end
     else
+      flash[:danger] = 'There was an error updating the Manuscript Development status.  Please review.'
       render 'show'
     end
 
@@ -454,6 +460,7 @@ class ProjectsController < ApplicationController
         end
       end
     else
+      flash[:danger] = 'There was an error approving the blurb.  Please review.'
       render 'show'
     end
 
@@ -492,7 +499,7 @@ class ProjectsController < ApplicationController
         flash[:success] = activity_text
       else
         # Some sort of failure updating the model.
-        flash[:danger] = 'An error occurred during update'
+        flash[:danger] = 'An error occurred approving the Cover Art.  Please review.'
         render 'show'
       end
     end
@@ -532,6 +539,7 @@ class ProjectsController < ApplicationController
       ProjectMailer.request_images(@project, current_user)
       redirect_to @project
     else
+      flash[:danger] = 'There was an error saving the requested images.  Please review.'
       render 'show'
     end
   end
@@ -595,7 +603,7 @@ class ProjectsController < ApplicationController
         flash[:success] = activity_text
       else
         # Some sort of failure updating the model.
-        flash[:danger] = 'An error occurred during update'
+        flash[:danger] = 'An error occurred during the Final Cover update, please review.'
         render 'show'
       end
     end
@@ -714,10 +722,11 @@ class ProjectsController < ApplicationController
       flash[:success] = 'Submitted Production Expense'
       # getting the most recently created production expense
       # TODO: investigate a better way to look up the most recently created nested many to many relation
-      production_expense = @project.production_expenses.order(created_at: :desc).where("created_at = updated_at").first
+      production_expense = @project.production_expenses.order(created_at: :desc).where('created_at = updated_at').first
       ProjectMailer.production_expense(@project, production_expense, current_user)
       redirect_to @project
     else
+      flash[:danger] = 'There was an error submitting the Production Expense.  Please review.'
       render 'show'
     end
   end
@@ -731,11 +740,11 @@ class ProjectsController < ApplicationController
 
       # getting the most recently created marketing expense
       # TODO: investigate a better way to look up the most recently created nested many to many relation
-      marketing_expense = @project.marketing_expenses.order(created_at: :desc).where("created_at = updated_at").first
+      marketing_expense = @project.marketing_expenses.order(created_at: :desc).where('created_at = updated_at').first
       ProjectMailer.marketing_expense(@project, marketing_expense, current_user)
       redirect_to @project
-
     else
+      flash[:danger] = 'There was an error submitting the Marketing Expense.  Please review.'
       render 'show'
     end
   end
@@ -895,7 +904,7 @@ class ProjectsController < ApplicationController
   def set_project
     @project = Project.friendly.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      flash[:danger] = "The project you were looking for could not be found."
+      flash[:danger] = 'The project you were looking for could not be found.'
       redirect_to projects_path
   end
 
