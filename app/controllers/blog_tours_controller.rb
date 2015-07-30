@@ -46,7 +46,7 @@ class BlogToursController < ApplicationController
       if @blog_tour.update(blog_tour_params)
 
         @blog_tour.project.create_activity :edited_blog_tour, owner: current_user,
-          parameters: { text: 'Editted ', blog_tour: @blog_tour.id, form_data: params[:project].to_s}
+          parameters: { text: 'Edited ', blog_tour: @blog_tour.id, form_data: params[:blog_tour].to_s}
 
         format.html { redirect_to @blog_tour, notice: 'Blog tour was successfully updated.' }
         format.json { render :show, status: :ok, location: @blog_tour }
