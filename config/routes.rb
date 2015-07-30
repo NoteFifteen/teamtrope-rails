@@ -107,6 +107,7 @@ Rails.application.routes.draw do
 
   resources :approve_blurbs
   resources :blog_tours
+  resources :control_numbers
   resources :cover_templates
   resources :current_tasks
   resources :document_import_queues
