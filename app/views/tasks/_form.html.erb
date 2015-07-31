@@ -1,69 +1,17 @@
-<%= form_for(@task) do |f| %>
-  <% if @task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
-
-      <ul>
-      <% @task.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :tab_text %><br>
-    <%= f.text_field :tab_text %>
-  </div>
-  <div class="field">
-    <%= f.label :icon %><br>
-    <%= f.text_field :icon %>
-  </div>
-  <div class="field">
-    <%= f.label :intro_video %><br>
-    <%= f.text_field :intro_video %>
-  </div>
-  <div class="field">
-    <%= f.label :days_to_complete %><br>
-    <%= f.text_field :days_to_complete %>
-  </div>
-  <div class="field">
-    <%= f.label :workflow_id %><br>
-    <%= f.collection_select :workflow_id, Workflow.all, :id, :name, include_blank: true %>
-  </div>
-  <div class="field">
-    <%= f.label :next_id %><br>
-    <%= f.collection_select :next_id, Task.all, :id, :name, include_blank: true %>
-  </div>
-  <div class="field">
-    <%= f.label :rejected_task_id %><br>
-    <%= f.collection_select :rejected_task_id, Task.all, :id, :name, include_blank: true %>
-  </div>
-  <div class="field">
-    <%= f.label :partial %><br>
-    <%= f.select("partial", load_partials, {include_blank: true} )%>
-  </div>
-
-  <div class="field">
-    <%= f.label :team_only %>&nbsp;
-    <%= f.check_box :team_only, {}, true, false %>
-  </div>
-
-  <h2>Performer Roles</h2>
-  <div class="field">
-		<%= f.collection_check_boxes(:performer_ids, Role.all, :id, :name, {include_blank:  false}, { multiple: true } )%>
-	</div>
-
-  <h2>Unlocked Tasks</h2>
-  <div class="field">
-		<%#= f.collection_check_boxes(:unlocked_task_ids, Task.all, :id, :name, {include_blank:  false}, { multiple: true } )%>
-	</div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<%= simple_form_for @task do | f |  %>
+  <%= f.input :name %>
+  <%= f.input :tab_text %>
+  <%= f.input :icon %>
+  <%= f.input :intro_video %>
+  <%= f.input :days_to_complete %>
+  <%= f.association :workflow %>
+  <%= f.association :next_task %>
+  <%= f.association :rejected_task %>
+  <%= f.collection_select :partial, load_partials, :last, :first, include_blank: true %>
+  <%= f.input :team_only %>
+  <h4>Performers</h4>
+  <%= f.association :performers, as: :check_boxes, label: false  %>
+  <h4>Unlocked Tasks</h4>
+  <%= f.association :unlocked, collection: Task.all.order("name"), label: false, as: :check_boxes %>
+  <%= f.submit %>
 <% end %>

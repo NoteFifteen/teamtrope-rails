@@ -1,13 +1,15 @@
 <h1>Tasks</h1>
 
-<table>
+<table id="tasks_table">
   <thead>
     <tr>
       <th>Workflow</th>
       <th>Task Id</th>
       <th>Name</th>
-      <th>Next</th>
-      <th>Rejected task</th>
+      <th>Next Task ID</th>
+      <th>Next Task</th>
+      <th>Rejected Task ID</th>
+      <th>Rejected Task</th>
       <th>Partial</th>
       <th>Icon</th>
       <th>Tab text</th>
@@ -16,44 +18,66 @@
       <th>Performer Roles</th>
       <th>Unlocked Tasks</th>
       <th>Team Only?</th>
-      <th colspan="3"></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
-        <td><%= task.workflow.name unless task.workflow.nil? %></td>
+        <td>
+          <% unless task.workflow.nil? %>
+            <%= link_to task.workflow.name, task.workflow %>
+          <% else %>
+            -
+          <% end %>
+        </td>
         <td><%= task.id %></td>
-        <td><%= task.name %></td>
-        <td><%= task.next_id %></td>
-        <td><%= task.rejected_task_id %></td>
+        <td><%= link_to task.name, task %></td>
+        <td><%= (task.next_task.nil?)? "-" : task.next_id %></td>
+        <td>
+          <% unless task.next_task.nil? %>
+            <%= link_to task.next_task.name, task.next_task %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td><%= (task.rejected_task.nil?)? "-" : task.rejected_task_id %></td>
+        <td>
+          <% unless task.rejected_task.nil? %>
+            <%= link_to task.rejected_task.name, task.rejected_task %>
+          <% else %>
+            -
+          <% end %>
+        </td>
         <td><%= task.partial %></td>
         <td><%= task.icon %></td>
         <td><%= task.tab_text %></td>
         <td><%= task.intro_video %></td>
         <td><%= task.days_to_complete %></td>
         <td>
-        	<% task.performers.each_with_index do | performer, index | %>
-        		<%= performer.name %>
-        		<%= "," if !index != 0 && index != task.performers.count-1 %>
-        	<% end %>
+          <% task.performers.each_with_index do | performer, index | %>
+            <%= performer.name %>
+            <%= "," if !index != 0 && index != task.performers.count-1 %>
+          <% end %>
         </td>
-        <td>
-        	<% task.unlocked_tasks.each_with_index do | unlocked_task, index | %>
-        		<%= unlocked_task.unlocked_task.try(:name) %>
-        		<%= "," if !index != 0 && index != task.unlocked_tasks.count-1 %>
-        	<% end %>
+        <td class="book-title" >
+          <% task.unlocked_tasks.each_with_index do | unlocked_task, index | %>
+            <%= unlocked_task.unlocked_task.try(:name) %>
+            <%= "," if !index != 0 && index != task.unlocked_tasks.count-1 %>
+          <% end %>
         </td>
         <td><%= task.team_only? %></td>
         <td><%= link_to 'Show', task %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
+<script>
+  $("#tasks_table").DataTable({ 'pageLength': '100'});
+</script>
 <%= link_to 'New Task', new_task_path %>
