@@ -695,7 +695,11 @@ class ProjectsController < ApplicationController
   end
 
   def media_kit
-    if @project.update(update_project_params)
+
+    @media_kit = MediaKit.find_or_initialize_by(project_id: @project.id)
+
+    # Validate the file has been uploaded before moving forward
+    if !@media_kit.document.nil?
       update_current_task
       @project.create_activity :media_kit, owner: current_user,
                                 parameters: { text: 'Uploaded Media Kit', form_data: params[:project].to_s}
