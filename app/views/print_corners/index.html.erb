@@ -1,6 +1,6 @@
-<h1>Listing print_corners</h1>
+<h1>Print Corners</h1>
 
-<table>
+<table id="print_corners_table">
   <thead>
     <tr>
       <th>Project</th>
@@ -23,15 +23,16 @@
       <th>Marketing copy message</th>
       <th>Contact phone</th>
       <th>Expedite instructions</th>
-      <th colspan="3"></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
   <tbody>
     <% @print_corners.each do |print_corner| %>
       <tr>
-        <td><%= print_corner.project %></td>
-        <td><%= print_corner.user %></td>
+        <td class="book-title"><%= link_to print_corner.project.title, print_corner.project  %></td>
+        <td><%= link_to print_corner.user.nickname, print_corner.user.profile_page %></td>
         <td><%= print_corner.order_type %></td>
         <td><%= print_corner.first_order %></td>
         <td><%= print_corner.additional_order %></td>
@@ -52,7 +53,6 @@
         <td><%= print_corner.expedite_instructions %></td>
         <td><%= link_to 'Show', print_corner %></td>
         <td><%= link_to 'Edit', edit_print_corner_path(print_corner) %></td>
-        <td><%= link_to 'Destroy', print_corner, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -60,4 +60,6 @@
 
 <br>
 
-<%= link_to 'New Print corner', new_print_corner_path %>
+<script>
+  $("#print_corners_table").DataTable({ 'pageLength': '100'});
+</script>
