@@ -1,0 +1,36 @@
+<h1>Task Performers</h1>
+
+<table id="task_performers_table">
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Role</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @task_performers.each do |task_performer| %>
+      <tr>
+        <td><%= link_to task_performer.task.name, task_performer.task %></td>
+        <td>
+          <% unless task_performer.role.nil? %>
+            <%= link_to task_performer.role.name, task_performer.role %>
+          <% end %>
+        </td>
+        <td><%= link_to 'Show', task_performer %></td>
+        <td><%= link_to 'Edit', edit_task_performer_path(task_performer) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<script>
+  $("#task_performers_table").DataTable({ 'pageLength': '100'});
+</script>
+
+
+<%= link_to 'New Task performer', new_task_performer_path %>
