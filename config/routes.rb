@@ -132,6 +132,7 @@ Rails.application.routes.draw do
   resources :tabs
   resources :tasks
   resources :task_dependencies
+  resources :task_performers
   resources :task_prerequisite_fields
   resources :unlocked_tasks
   resources :workflows
