@@ -89,8 +89,10 @@
           </div>
 
           <div class="input_field">
-            <label>Genres:&nbsp;<span class="required">*</span></label><br/>
-            <%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: false } ) %>
+            <%= f.simple_fields_for :book_genres, f.object.book_genres.build do | genre | %>
+                <label>Genres:&nbsp;<span class="required">*</span></label><br/>
+                <%= genre.collection_select(:genre_id, Genre.all, :id, :name, { prompt: true, include_hidden: false }, { multiple: false } ) %>
+            <% end %>
           </div>
 
           <div class="input_field">
@@ -152,7 +154,7 @@
             'project[teamroom_link]': { required: true, url: true, minlength: 10 },
             'project[title]': { required: true },
             'project[team_memberships_attributes][0][member_id]': { required: true },
-            'project[genre_ids][]': { required: true },
+            'project[book_genres_attributes][0][genre_id]': { required: true },
             'project[has_internal_illustrations]': { required: true },
             'project[previously_published]': { required: true },
             'project[project_type_id]': { required: true }
@@ -160,7 +162,7 @@
         messages: {
             'project[title]': 'Please enter a working title for this project.',
             'project[team_memberships_attributes][0][member_id]': 'Please select an Author.',
-            'project[genre_ids][]': 'Please select one or more genres.',
+            'project[book_genres_attributes][0][genre_id]': 'Please select a genre.',
             'project[has_internal_illustrations]': 'Please answer Yes or No.',
             'project[previously_published]': 'Please answer Yes or No.',
             'project[synopsis]': 'Please provide a brief synopsis for this project.',
