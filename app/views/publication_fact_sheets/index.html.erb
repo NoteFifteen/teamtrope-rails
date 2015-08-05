@@ -1,6 +1,6 @@
-<h1>Listing publication_fact_sheets</h1>
+<h1>Publication Fact Sheets</h1>
 
-<table>
+<table id="publication_fact_sheets_table">
   <thead>
     <tr>
       <th>Project</th>
@@ -19,14 +19,15 @@
       <th>Search terms</th>
       <th>Age range</th>
       <th>Paperback cover type</th>
-      <th colspan="3"></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
   <tbody>
     <% @publication_fact_sheets.each do |publication_fact_sheet| %>
       <tr>
-        <td><%= publication_fact_sheet.project %></td>
+        <td class="book-title"><%= link_to publication_fact_sheet.project.title, publication_fact_sheet.project %></td>
         <td><%= publication_fact_sheet.author_name %></td>
         <td><%= publication_fact_sheet.series_name %></td>
         <td><%= publication_fact_sheet.series_number %></td>
@@ -40,11 +41,10 @@
         <td><%= publication_fact_sheet.bisac_code_two %></td>
         <td><%= publication_fact_sheet.bisac_code_three %></td>
         <td><%= publication_fact_sheet.search_terms %></td>
-        <td><%= publication_fact_sheet.age_range %></td>
+        <td><%= Hash[PublicationFactSheet::AGE_RANGES][publication_fact_sheet.age_range] %></td>
         <td><%= publication_fact_sheet.paperback_cover_type %></td>
         <td><%= link_to 'Show', publication_fact_sheet %></td>
         <td><%= link_to 'Edit', edit_publication_fact_sheet_path(publication_fact_sheet) %></td>
-        <td><%= link_to 'Destroy', publication_fact_sheet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -52,4 +52,7 @@
 
 <br>
 
-<%= link_to 'New Publication fact sheet', new_publication_fact_sheet_path %>
+<script>
+  $("#publication_fact_sheets_table").DataTable({ 'pageLength': '100'});
+</script>
+
