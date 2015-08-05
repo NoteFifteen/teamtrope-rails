@@ -1,0 +1,10 @@
+<h1>Editing Artwork Rights Request for <br /><%= link_to @project.title, @project %></h1>
+
+<div class="row">
+  <div class="col-md-8">
+    <%= render 'form' %>
+  </div>
+</div>
+
+<%= link_to 'Show', @artwork_rights_request %> |
+<%= link_to 'Back', artwork_rights_requests_path %>
