@@ -110,8 +110,9 @@ group :production do
 end
 
 group :development do
-	# Use sqlite3 as the database for Active Record
-	gem 'sqlite3'
   gem 'rails-erd'
   gem 'seed_dump'
+
+  # Temporarily include to help debug staging
+  gem 'newrelic_rpm'
 end
