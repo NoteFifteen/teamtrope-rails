@@ -849,7 +849,7 @@ class ProjectsController < ApplicationController
     params.require(:project).permit(:title, :final_title, :project_type_id, :teamroom_link, :synopsis,
                                     :page_count, :has_internal_illustrations, :previously_published,
                                     :special_text_treatment, :imprint_id,
-                                    :genre_ids => [], :team_memberships_attributes => [:role_id, :member_id, :percentage]
+                                    :book_genres_attributes => [:genre_id], :team_memberships_attributes => [:role_id, :member_id, :percentage]
     )
   end
 
