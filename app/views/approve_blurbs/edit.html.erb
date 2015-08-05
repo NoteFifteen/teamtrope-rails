@@ -1,6 +1,10 @@
-<h1>Editing approve_blurb</h1>
+<h1>Editing Approve Blurb for <br /><%= link_to @project.title, @project %></h1>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="col-md-8">
+    <%= render 'form' %>
+  </div>
+</div>
 
 <%= link_to 'Show', @approve_blurb %> |
 <%= link_to 'Back', approve_blurbs_path %>

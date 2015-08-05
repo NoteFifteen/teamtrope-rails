@@ -1,18 +1,8 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Project:</strong>
-  <%= link_to @approve_blurb.project.title, @approve_blurb.project %>
-</p>
-
-<p>
-  <strong>Blurb notes:</strong>
-  <%= @approve_blurb.blurb_notes %>
-</p>
+<h1>Approve Blurb for <br /> <%= link_to @project.title, @project  %></h1>
 
 <p>
   <strong>Blurb approval decision:</strong>
-  <%= @approve_blurb.blurb_approval_decision %>
+  <%= @approve_blurb.blurb_approval_decision?? "Approved" : "Rejected" %>
 </p>
 
 <p>
@@ -20,5 +10,12 @@
   <%= @approve_blurb.blurb_approval_date %>
 </p>
 
-<%= link_to 'Edit', edit_approve_blurb_path(@approve_blurb) %> |
-<%= link_to 'Back', approve_blurbs_path %>
+<p>
+  <strong>Blurb notes:</strong>
+  <%= @approve_blurb.blurb_notes %>
+</p>
+
+<% if current_user.role? :booktrope_staff %>
+  <%= link_to 'Edit', edit_approve_blurb_path(@approve_blurb) %> |
+  <%= link_to 'Back', approve_blurbs_path %>
+<% end %>
