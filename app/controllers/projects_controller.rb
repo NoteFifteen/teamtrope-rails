@@ -763,7 +763,7 @@ class ProjectsController < ApplicationController
   def print_corner_request
     if @project.update(update_project_params)
       update_current_task
-      @project.create_activity :marketing_expense, owner: current_user,
+      @project.create_activity :print_corner_request, owner: current_user,
                                parameters: { text: 'Submitted a Print Copy Request', form_data: params[:project].to_s}
       flash[:success] = 'Submitted Print Copy Request.'
       redirect_to @project
