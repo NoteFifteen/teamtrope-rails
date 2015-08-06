@@ -1,14 +1,11 @@
-<p id="notice"><%= notice %></p>
+<h1>Draft Blurb  for <br /><%= link_to @project.title, @project %></h1>
 
-<p>
-  <strong>Project:</strong>
-  <%= @draft_blurb.project %>
-</p>
 
-<p>
-  <strong>Draft blurb:</strong>
-  <%= @draft_blurb.draft_blurb %>
-</p>
+<strong>Draft blurb:</strong>
+<pre><%= @draft_blurb.draft_blurb %></pre>
 
-<%= link_to 'Edit', edit_draft_blurb_path(@draft_blurb) %> |
-<%= link_to 'Back', draft_blurbs_path %>
+
+<% if current_user.role? :booktrope_staff %>
+  <%= link_to 'Edit', edit_draft_blurb_path(@draft_blurb) %> |
+  <%= link_to 'Back', draft_blurbs_path %>
+<% end %>

@@ -1,6 +1,10 @@
-<h1>Editing draft_blurb</h1>
+<h1>Editing Draft blurb for <br /><%= link_to @project.title, @project %></h1>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="col-md-8">
+    <%= render 'form' %>
+  </div>
+</div>
 
 <%= link_to 'Show', @draft_blurb %> |
 <%= link_to 'Back', draft_blurbs_path %>

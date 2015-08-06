@@ -1,22 +1,22 @@
-<h1>Listing draft_blurbs</h1>
+<h1>Draft Blurbs</h1>
 
-<table>
+<table id="draft_blurbs_table">
   <thead>
     <tr>
       <th>Project</th>
       <th>Draft blurb</th>
-      <th colspan="3"></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
   <tbody>
     <% @draft_blurbs.each do |draft_blurb| %>
       <tr>
-        <td><%= draft_blurb.project %></td>
+        <td class="book-title"><%= link_to draft_blurb.project.title, draft_blurb.project  %></td>
         <td><%= draft_blurb.draft_blurb %></td>
         <td><%= link_to 'Show', draft_blurb %></td>
         <td><%= link_to 'Edit', edit_draft_blurb_path(draft_blurb) %></td>
-        <td><%= link_to 'Destroy', draft_blurb, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -24,4 +24,6 @@
 
 <br>
 
-<%= link_to 'New Draft blurb', new_draft_blurb_path %>
+<script>
+  $("#draft_blurbs_table").DataTable({ 'pageLength': '100'});
+</script>
