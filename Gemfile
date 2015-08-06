@@ -48,9 +48,6 @@ gem 'spring',        group: :development
 # gem 'bcrypt', '~> 3.1.7'
 gem 'bcrypt-ruby', '3.1.2'
 
-# Use unicorn as the app server
-# gem 'unicorn'
-
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -99,9 +96,6 @@ gem 'friendly_id', '~> 5.1.0'
 #use unicorn for webserver
 gem 'unicorn'
 
-# Used for disabling/rewriting email addresses in non-production environments
-gem "sanitize_email"
-
 group :production do
   gem 'rails_12factor', '0.0.2'
 
@@ -113,6 +107,16 @@ group :development do
   gem 'rails-erd'
   gem 'seed_dump'
 
-  # Temporarily include to help debug staging
+  # Used for disabling/rewriting email addresses in non-production environments
+  gem "sanitize_email"
+end
+
+group :staging do
+  gem 'rails_12factor', '0.0.2'
+
+  # Enable newrelic for monitoring
   gem 'newrelic_rpm'
+
+  # Used for disabling/rewriting email addresses in non-production environments
+  gem "sanitize_email"
 end
