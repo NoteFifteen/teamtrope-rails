@@ -1,0 +1,28 @@
+<h1>Former Team Member for <br /><%= link_to @audit_team_membership_removal.project.title, @audit_team_membership_removal.project %></h1>
+
+<p>
+  <strong>Removed Member:</strong>
+  <%= link_to @audit_team_membership_removal.member.name, @audit_team_membership_removal.member.profile_page %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @audit_team_membership_removal.notes %>
+</p>
+
+<p>
+  <strong>Notified member:</strong>
+  <%= @audit_team_membership_removal.notified_member %>
+</p>
+
+<p>
+  <strong>Percentage:</strong>
+  <%= @audit_team_membership_removal.percentage %>
+</p>
+
+<p>
+  <strong>Reason:</strong>
+  <%= @audit_team_membership_removal.reason %>
+</p>
+
+<%= link_to 'Back', audit_team_membership_removals_path %>
