@@ -1,0 +1,6 @@
+<%= link_to image_tag(activity.owner.profile.avatar(:thumb), size: "40x40"), activity.owner.profile_page unless activity.owner.nil? || activity.owner.profile.nil? %>
+<%= link_to activity.owner.name, activity.owner.profile_page unless activity.owner.nil? || activity.owner.profile.nil? %>
+<%= "#{activity.parameters[:text]} #{link_to("KPD Select Enrollment", KdpSelectEnrollment.find(activity.parameters[:object_id]))}".html_safe %>
+on <%= activity.created_at.strftime("%Y/%m/%d %H:%M:%S") %>
+<br />
+
