@@ -96,27 +96,16 @@ gem 'friendly_id', '~> 5.1.0'
 #use unicorn for webserver
 gem 'unicorn'
 
-group :production do
-  gem 'rails_12factor', '0.0.2'
+# Used for disabling/rewriting email addresses in non-production environments
+gem 'sanitize_email', group: [:development, :staging]
 
-  # Enable newrelic for monitoring
-  gem 'newrelic_rpm'
-end
+# Use for both Prod & Staging
+gem 'rails_12factor', '0.0.2', group: [:staging, :production]
+gem 'newrelic_rpm', group: [:staging, :production]
 
+# Exclusive for Development
 group :development do
   gem 'rails-erd'
   gem 'seed_dump'
-
-  # Used for disabling/rewriting email addresses in non-production environments
-  gem "sanitize_email"
 end
 
-group :staging do
-  gem 'rails_12factor', '0.0.2'
-
-  # Enable newrelic for monitoring
-  gem 'newrelic_rpm'
-
-  # Used for disabling/rewriting email addresses in non-production environments
-  gem "sanitize_email"
-end
