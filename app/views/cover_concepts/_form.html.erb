@@ -4,12 +4,14 @@
   {
     label: "Cover Concept Image (.jpg)", required: true, callback_url: project_cover_concepts_url(@project),
     form_id: "cover_concept_image_s3_uploader", callback_param: "cover_concept_image[direct_upload_url]",
-    container_id: "cover_concept_image_uploads_container", object: @cover_concept, column_name: "cover_concept"
+    container_id: "cover_concept_image_uploads_container", object: @cover_concept, column_name: "cover_concept",
+    controller_action: 'download_cover_concept'
   },
   {
     label: "Stock Cover Image (.jpg, .png, or .zip)", required: true, callback_url: project_cover_concepts_url(@project),
     form_id: "stock_cover_image_s3_uploader", callback_param: "stock_cover_image[direct_upload_url]",
-    container_id: "stock_cover_image_uploads_container", object: @cover_concept, column_name: "stock_cover_image"
+    container_id: "stock_cover_image_uploads_container", object: @cover_concept, column_name: "stock_cover_image",
+    controller_action: 'download_stock_cover_image'
   }
 ].each do | s3_upload_hash | %>
 
@@ -22,6 +24,8 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
+    <%= hidden_field_tag :updated_cover_concept_image %>
+    <%= hidden_field_tag :updated_stock_cover_image %>
   </div>
 
   <div class="form-actions">

@@ -4,17 +4,21 @@
   {
     label: "Original Manuscript", required: true, callback_url: project_manuscript_url(@project),
     form_id: "original_manuscript_s3_uploader", callback_param: "original_manuscript[direct_upload_url]",
-    container_id: "original_manuscript_uploads_container", object: @manuscript, column_name: "original"
+    container_id: "original_manuscript_uploads_container", object: @manuscript, column_name: "original",
+    controller_action: 'download_original_manuscript'
   },
   {
-    label: "Stock Cover Image (.jpg, .png, or .zip)", required: true, callback_url: project_manuscript_url(@project),
+    label: "Edited Manuscript", required: true, callback_url: project_manuscript_url(@project),
     form_id: "edited_manuscript_s3_uploader", callback_param: "edited_manuscript[direct_upload_url]",
-    container_id: "edited_manuscript_uploads_container", object: @manuscript, column_name: "edited"
+    container_id: "edited_manuscript_uploads_container", object: @manuscript, column_name: "edited",
+    controller_action: 'download_edited_manuscript'
   },
   {
-    label: "Stock Cover Image (.jpg, .png, or .zip)", required: true, callback_url: project_manuscript_url(@project),
+    label: "Proofed Manuscript", required: true, callback_url: project_manuscript_url(@project),
     form_id: "proofed_manuscript_s3_uploader", callback_param: "proofed_manuscript[direct_upload_url]",
-    container_id: "proofed_manuscript_uploads_container", object: @manuscript, column_name: "proofed"
+    container_id: "proofed_manuscript_uploads_container", object: @manuscript, column_name: "proofed",
+    controller_action: 'download_proofed_manuscript'
+
   }
 ].each do | s3_upload_hash | %>
 
