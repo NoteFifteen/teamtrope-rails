@@ -44,7 +44,7 @@
 
 	
 	<h2>Genres</h2>
-	<%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: true } ) %><br /><br />	
-	
+	<%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: false } ) %><br /><br />
+
 	<%= f.submit %>
 <% end %>

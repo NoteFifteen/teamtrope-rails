@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150716211834) do
+ActiveRecord::Schema.define(version: 20150806214146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,11 @@ ActiveRecord::Schema.define(version: 20150716211834) do
     t.datetime "updated_at"
   end
 
+  add_index "control_numbers", ["apple_id"], name: "index_control_numbers_on_apple_id", using: :btree
+  add_index "control_numbers", ["asin"], name: "index_control_numbers_on_asin", using: :btree
+  add_index "control_numbers", ["epub_isbn"], name: "index_control_numbers_on_epub_isbn", using: :btree
+  add_index "control_numbers", ["hardback_isbn"], name: "index_control_numbers_on_hardback_isbn", using: :btree
+  add_index "control_numbers", ["paperback_isbn"], name: "index_control_numbers_on_paperback_isbn", using: :btree
   add_index "control_numbers", ["project_id"], name: "index_control_numbers_on_project_id", using: :btree
 
   create_table "cover_concepts", force: true do |t|
@@ -614,6 +619,27 @@ ActiveRecord::Schema.define(version: 20150716211834) do
   end
 
   add_index "published_files", ["project_id"], name: "index_published_files_on_project_id", using: :btree
+
+  create_table "report_data_test", id: false, force: true do |t|
+    t.string  "source_table",         limit: 30,               null: false
+    t.date    "start_date"
+    t.date    "end_date"
+    t.integer "quantity",                        default: 0
+    t.float   "revenue_multi",                   default: 0.0
+    t.string  "currency",             limit: 5,  default: ""
+    t.string  "country",              limit: 50, default: ""
+    t.string  "bn_id",                limit: 20, default: ""
+    t.string  "epub_isbn",            limit: 13, default: ""
+    t.string  "paperback_isbn",       limit: 13, default: ""
+    t.string  "apple_id",             limit: 20, default: ""
+    t.string  "asin",                 limit: 20, default: ""
+    t.string  "kdp_royalty_type",     limit: 50
+    t.string  "kdp_transaction_type", limit: 50
+    t.float   "list_price",                      default: 0.0
+    t.string  "hardback_isbn",        limit: 13, default: ""
+    t.float   "unit_revenue",                    default: 0.0
+    t.float   "revenue",                         default: 0.0
+  end
 
   create_table "required_roles", force: true do |t|
     t.integer  "role_id"

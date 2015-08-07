@@ -186,3 +186,14 @@ a.btn-fix {
 #project_details_workflow_steps tr:nth-child(odd) {
   background-color: #ffffff;
 }
+
+.radio-inline+.radio-inline {
+  margin: 0px !important;
+  vertical-align: top;
+}
+
+.radio-inline {
+  margin: 0px !important;
+  vertical-align: top;
+  width: 150px;
+}
