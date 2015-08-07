@@ -4,7 +4,8 @@
 s3_upload_hash = {
     label: "Layout Upload (.pdf)", required: false, callback_url: project_project_layout_url(@project),
     form_id: "layout_layout_upload_s3_uploader", callback_param: "layout_layout_upload[direct_upload_url]",
-    container_id: "layout_layout_upload_container", object: @project_layout, column_name: "layout_upload"
+    container_id: "layout_layout_upload_container", object: @project_layout, column_name: "layout_upload",
+    controller_action: 'download_layout'
   }
 %>
 <%= render partial: "shared/amazon_s3_upload", locals: s3_upload_hash %>

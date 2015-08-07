@@ -8,7 +8,8 @@
           {
             label: "Media Kit (.pdf)", required: true, callback_url: project_media_kit_url(@project),
             form_id: "media_kit_document_s3_uploader", callback_param: "media_kit_document[direct_upload_url]",
-            container_id: "media_kit_document_uploads_container", object: @project.media_kit, column_name: "document"
+            container_id: "media_kit_document_uploads_container", object: @project.media_kit, column_name: "document",
+            controller_action: 'download_media_kit'
           }
         ].each do | s3_upload_hash | %>
 
