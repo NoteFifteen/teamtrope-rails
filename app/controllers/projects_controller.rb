@@ -656,6 +656,7 @@ class ProjectsController < ApplicationController
     @project.book_genres.destroy_all
 
     if @project.update(update_project_params)
+      publish(:modify_project, @project)
       @project.create_activity :updated_genre, owner: current_user,
                                parameters: { text: 'Updated the genre', form_data: params[:project].to_s}
       flash[:success] = 'Updated the genre to ' + @project.genres.map(&:name).join(", ")
