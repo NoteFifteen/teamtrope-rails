@@ -97,7 +97,7 @@ gem 'friendly_id', '~> 5.1.0'
 gem 'unicorn'
 
 # Used for disabling/rewriting email addresses in non-production environments
-gem 'sanitize_email', group: [:development, :staging]
+gem 'sanitize_email'
 
 # Use for both Prod & Staging
 gem 'rails_12factor', '0.0.2', group: [:staging, :production]
