@@ -3,6 +3,8 @@ class AddUpdateGenreTask < ActiveRecord::Migration
     # Find the Phase
     phase = Phase.find_by_name('Marketing Prep')
 
+    return if phase.nil?
+
     # Now locate the last tab for the phase to get the task
     last_tab = Tab.where(:phase_id => phase.id).last
 

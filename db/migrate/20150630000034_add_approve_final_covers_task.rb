@@ -1,10 +1,18 @@
 class AddApproveFinalCoversTask < ActiveRecord::Migration
 
   def up
+
+    # Add the approval flag & notes fields
+    add_column :cover_templates, :final_cover_approved, :boolean
+    add_column :cover_templates, :final_cover_approval_date, :date
+    add_column :cover_templates, :final_cover_notes, :text
+
     # Add new task - Set the next task to id from Final Covers
     # Update next task for Final Covers to new task id
 
     final_covers = Task.find_by_name('Final Covers')
+
+    return if final_covers.nil?
 
     new_task = Task.new
     new_task.name = 'Approve Final Covers'
@@ -21,35 +29,6 @@ class AddApproveFinalCoversTask < ActiveRecord::Migration
     final_covers.unlocked_tasks.each do |task|
       new_task.unlocked_tasks.create!(unlocked_task: task.unlocked_task) unless task.unlocked_task.name == 'Final Covers'
     end
-
-    # Copy the task performers from final covers
-    final_covers.task_performers.each do |performer|
-      new_task.task_performers.create!(role_id: performer.role_id)
-    end
-
-    # Set our new task as the next task
-    final_covers.next_task = new_task
-    final_covers.save
-
-    # Add tab with new order
-    last_tab = Tab.find_by_task_id(final_covers.id)
-    new_tab = Tab.new
-    new_tab.task_id = new_task.id
-    new_tab.phase_id = last_tab.phase_id
-    new_tab.order = last_tab.order + 1
-    new_tab.save
-
-    # Move Artwork Rights to the end
-    artwork_rights_task = Task.find_by_name('Artwork Rights Request')
-    artwork_rights_tab = Tab.find_by_task_id(artwork_rights_task.id)
-    artwork_rights_tab.order = artwork_rights_tab.order + 1
-    artwork_rights_tab.save
-
-    # Add the approval flag & notes fields
-    add_column :cover_templates, :final_cover_approved, :boolean
-    add_column :cover_templates, :final_cover_approval_date, :date
-    add_column :cover_templates, :final_cover_notes, :text
-
   end
 
   def down
@@ -60,7 +39,6 @@ class AddApproveFinalCoversTask < ActiveRecord::Migration
     final_covers = Task.find_by_name('Final Covers')
     final_covers.next_task = approve_covers.next_task
     final_covers.save
-
 
     # Find the related tab
     tab = Tab.find_by_task_id(approve_covers.id)
