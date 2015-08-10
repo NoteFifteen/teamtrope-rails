@@ -96,6 +96,7 @@ Rails.application.routes.draw do
   match '/projects/submit_form_1099/:id',         to: 'projects#submit_form_1099',         via: 'patch'
   match '/projects/submit_submit_pfs/:id',        to: 'projects#submit_pfs',               via: 'patch'
   match '/projects/update_final_page_count/:id',  to: 'projects#update_final_page_count',  via: 'patch'
+  match '/projects/update_genre/:id',             to: 'projects#update_genre',             via: 'patch'
   match '/projects/upload_cover_templates/:id',   to: 'projects#upload_cover_templates',   via: 'patch'
 
   match '/projects/download_original_manuscript/:id',  to: 'projects#download_original_manuscript', via: 'get', as: 'download_original_manuscript'

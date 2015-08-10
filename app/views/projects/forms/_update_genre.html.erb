@@ -1,0 +1,26 @@
+
+<!-- Update Genre -->
+<div class="container">
+  <h1>Update Genre</h1>
+  <div class="row">
+    <div class="col-md-10">
+      <div>
+      <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'update_genre', id: @project),
+                          html: { id: "update_genre" } do | f | %>
+          <%= f.error_notification %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+
+            <div class="input_field">
+              <%= f.simple_fields_for :book_genres, f.object.book_genres.build do | genre | %>
+                  <label>Genre:&nbsp;<span class="required">*</span></label><br/>
+                  <%= genre.input(:genre_id, collection: Genre.all, as: :radio_buttons, label: false, :item_wrapper_class => 'radio-inline', checked: @project.book_genres.first.genre_id ) %>
+              <% end %>
+            </div>
+            <br/>
+          <div>
+            <%= f.submit "Submit", class: 'btn', id: 'update_genre_submit_button' %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

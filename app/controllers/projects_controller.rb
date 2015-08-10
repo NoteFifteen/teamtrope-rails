@@ -423,7 +423,7 @@ class ProjectsController < ApplicationController
     end
 
     if ! activity_text.nil?
-      @project.create_activity :approved_blurb, owner: current_user,
+      @project.create_activity :manuscript_dev_update, owner: current_user,
                                parameters: { text: activity_text, form_data: params[:project].to_s }
       redirect_to @project
     end
@@ -651,6 +651,22 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def update_genre
+    # Only necessary due to the one-to-many relationship originally set up.
+    @project.book_genres.destroy_all
+
+    if @project.update(update_project_params)
+      publish(:modify_project, @project)
+      @project.create_activity :updated_genre, owner: current_user,
+                               parameters: { text: 'Updated the genre', form_data: params[:project].to_s}
+      flash[:success] = 'Updated the genre to ' + @project.genres.map(&:name).join(", ")
+      redirect_to @project
+    else
+      flash[:danger] = 'There was a problem updating the genre, please review.'
+      render 'show'
+    end
+  end
+
   def final_manuscript
     update_current_task
     @project.create_activity :uploaded_final_manuscript, owner: current_user,
@@ -863,6 +879,7 @@ class ProjectsController < ApplicationController
       :genre_ids => [],
       :artwork_rights_requests_attributes => [:id, :role_type, :full_name, :email, :_destroy],
       :blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
+      :book_genres_attributes => [:genre_id],
       :control_number_attributes => [:id, :ebook_library_price, :asin, :apple_id, :epub_isbn, :hardback_isbn,
                                      :paperback_isbn, :parse_id],
       :cover_concept_attributes => [:id, :cover_concept_notes, :cover_art_approval_date, :image_request_list],
