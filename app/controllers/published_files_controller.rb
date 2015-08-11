@@ -91,8 +91,27 @@ class PublishedFilesController < ApplicationController
   def update
     respond_to do |format|
       if @published_file.update(published_file_params)
-        @project.create_activity :published_book, owner: current_user,
-                                  parameters: { text: 'Submitted the Publish Book form', form_data: params[:published_file].to_s}
+
+        activity_text = nil
+        updated = []
+
+        # setting the update text based on what was actually updated..
+        [ {key: :updated_epub, tag: 'ePub'},
+          {key: :updated_mobi,  tag: 'mobi'},
+          {key: :updated_pdf,   tag: 'pdf'}
+        ].each do | item |
+          if !params[item[:key]].nil? && params[item[:key]] == 'yes'
+            updated.push item[:tag]
+          end
+        end
+
+        activity_text = "Uploaded new versions of : #{activity_text} #{updated.join(', ')} for " if updated.size > 0
+        activity_text ||= 'Edited the '
+
+        @project.create_activity :edited_published_book, owner: current_user,
+                                    parameters: { text: activity_text, object_id: @published_file.id, form_data: params[:published_file].to_s}
+
+        ProjectMailer.publish_book(@project, current_user)
 
         format.html { redirect_to @published_file, notice: 'Published file was successfully updated.' }
         format.json { render :show, status: :ok, location: @published_file }
@@ -125,6 +144,6 @@ class PublishedFilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def published_file_params
-      params.require(:published_file).permit(:publication_date, :mobi, :epub, :pdf)
+      params.require(:published_file).permit(:publication_date)
     end
 end
