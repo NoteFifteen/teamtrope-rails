@@ -72,15 +72,32 @@ class CoverTemplatesController < ApplicationController
   # PATCH/PUT /cover_templates/1
   # PATCH/PUT /cover_templates/1.json
   def update
-    respond_to do |format|
-      if @cover_template.update(cover_tempate_params)
-        format.html { redirect_to @cover_template, notice: 'Cover template was successfully updated.' }
-        format.json { render :show, status: :ok, location: @cover_tempate }
-      else
-        format.html { render :edit }
-        format.json { render json: @cover_tempate.errors, status: :unprocessable_entity }
+
+    activity_text = nil
+    updated = []
+    should_send_email = false
+
+    # setting the update text.
+    [ {key: :updated_ebook_front_cover,      tag: 'eBook'},
+      {key: :updated_createspace_cover,      tag: 'Createspace'},
+      {key: :updated_lightning_source_cover, tag: 'Lightning Source'},
+      {key: :updated_alternative_cover,      tag: 'Alternative'}
+    ].each do | item |
+      if !params[item[:key]].nil? && params[item[:key]] == 'yes'
+        updated.push item[:tag]
       end
     end
+
+    activity_text = "Edited the following covers: #{activity_text} #{updated.join(', ')}" if updated.size > 0
+
+    unless activity_text.nil?
+      @project.create_activity :edited_cover_templates, owner: current_user,
+                              parameters: { text: activity_text, object_id: @cover_template.id, form_data: ''}
+
+      ProjectMailer.upload_cover_templates(@project, current_user, params)
+    end
+
+    redirect_to @cover_template
   end
 
   # DELETE /cover_templates/1
@@ -100,9 +117,5 @@ class CoverTemplatesController < ApplicationController
 
     def set_project
       @project = @cover_template.project
-    end
-
-    def cover_template_params
-      params.require(:cover_template).permit(:alternative_cover, :createspace_cover, :ebook_front_cover, :lightning_source)
     end
 end
