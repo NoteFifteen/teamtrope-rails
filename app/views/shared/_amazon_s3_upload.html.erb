@@ -11,7 +11,7 @@
     <p>Existing file: <%= (object.send(column_name+"?")) ? link_to(object.send(column_name+"_file_name"),
           url_for(
                 controller: 'projects',
-                action: 'download_media_kit',
+                action: controller_action,
                 id: object.send('project_id'),
                 only_path: false)) : 'N/A' %></p>
     <% end %>

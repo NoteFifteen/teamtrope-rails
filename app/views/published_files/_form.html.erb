@@ -4,17 +4,20 @@
   {
     label: ".mobi File", required: true, callback_url: project_published_file_url(@project),
     form_id: "published_file_mobi_s3_uploader", callback_param: "published_file_mobi[direct_upload_url]",
-    container_id: "published_file_mobi_uploads_container", object: @published_file, column_name: "mobi"
+    container_id: "published_file_mobi_uploads_container", object: @published_file, column_name: "mobi",
+    controller_action: 'download_published_file_mobi'
   },
   {
     label: ".epub File", required: true, callback_url: project_published_file_url(@project),
     form_id: "published_file_epub_s3_uploader", callback_param: "published_file_epub[direct_upload_url]",
-    container_id: "published_file_epub_uploads_container", object: @published_file, column_name: "epub"
+    container_id: "published_file_epub_uploads_container", object: @published_file, column_name: "epub",
+    controller_action: 'download_published_file_epub'
   },
   {
     label: ".pdf File", required: false, callback_url: project_published_file_url(@project),
     form_id: "published_file_pdf_s3_uploader", callback_param: "published_file_pdf[direct_upload_url]",
-    container_id: "published_file_pdf_uploads_container", object: @published_file, column_name: "pdf"
+    container_id: "published_file_pdf_uploads_container", object: @published_file, column_name: "pdf",
+    controller_action: 'download_published_file_pdf'
   }
 ].each do | s3_upload_hash | %>
 
