@@ -388,7 +388,7 @@ class ProjectsController < ApplicationController
     if @project.update(update_project_params)
 
       @project.create_activity :submitted_price_promotion, owner: current_user,
-                               parameters: {text: 'submitted a price promotion',
+                               parameters: {text: 'Submitted a price promotion',
                                form_data: params[:project].to_s}
 
       update_current_task
