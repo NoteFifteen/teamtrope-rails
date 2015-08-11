@@ -75,7 +75,6 @@ class CoverTemplatesController < ApplicationController
 
     activity_text = nil
     updated = []
-    should_send_email = false
 
     # setting the update text.
     [ {key: :updated_ebook_front_cover,      tag: 'eBook'},
