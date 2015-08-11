@@ -14,6 +14,18 @@ if(published_books_uploaded_types) {
     console.error('published_books_uploaded_types is undefined!  Cannot track uploaded book.')
 }
 
+  <% if @updated_file == 'mobi' %>
+    $('#updated_mobi').val('yes');
+  <% end %>
+
+  <% if @updated_file == 'epub' %>
+    $('#updated_epub').val('yes');
+  <% end %>
+
+  <% if @updated_file == 'pdf' %>
+    $('#updated_pdf').val('yes');
+  <% end %>
+
 <% end %>
 
 <% else %>

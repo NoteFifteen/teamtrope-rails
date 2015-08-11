@@ -27,11 +27,16 @@
 <br />
 <%= simple_form_for @published_file, html: {id: "publish_book"} do | f | %>
     <%= f.error_notification %>
-    <div>
-          <%= f.input :publication_date, label: "Publication Date", start_year: Date.today.year, :wrapper => :vertical_form %>
-          <label>Enter the Booktrope official publication date for the book.</label>
+    <div class='form_inputs'>
+      <%= f.input :publication_date, label: "Publication Date", start_year: Date.today.year, :wrapper => :vertical_form %>
+      <label>Enter the Booktrope official publication date for the book.</label>
+
+      <%= hidden_field_tag :updated_mobi, 'no' %>
+      <%= hidden_field_tag :updated_epub, 'no' %>
+      <%= hidden_field_tag :updated_pdf, 'no' %>
+
     </div>
-    <div>
+    <div class='form-actions'>
       <%= f.submit "submit" %>
     </div>
 <% end %>
