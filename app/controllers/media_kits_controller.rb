@@ -45,7 +45,16 @@ class MediaKitsController < ApplicationController
   end
 
   def update
-    @media_kit.update(media_kit_params)
+    if @media_kit.update(media_kit_params)
+      @project.create_activity :edited_media_kit, owner: current_user,
+                                parameters: { text: 'Edited', form_data: params[:media_kit].to_s}
+
+      ProjectMailer.media_kit(@project, current_user)
+    else
+    end
+
+
+
     respond_with(@media_kit)
   end
 
