@@ -7,6 +7,14 @@ $('#final_manuscript_<%=@updated_file%>_s3_uploader').html('<span><%=params[:fil
     <% if @updated_file == 'pdf' %>
         $('#final_manuscript_submit_button').removeAttr('disabled').removeClass('disabled');
     <% end %>
+
+    <% if @updated_file == 'pdf' %>
+      $('#updated_pdf').val('yes');
+    <% end %>
+
+    <% if @updated_file == 'doc' %>
+      $('#updated_doc').val('yes');
+    <% end %>
 <% end %>
 
 <% else %>
