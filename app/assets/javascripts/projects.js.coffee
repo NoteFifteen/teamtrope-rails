@@ -386,6 +386,28 @@ jQuery ->
     }
   })
 
+## Control Numbers
+jQuery.validator.addMethod('isbnFormatValidator', (value, element, params) ->
+  value = value.replace(/-/g, '')
+  return ((value.length == 13 && ! isNaN(value)) || value == '')
+, jQuery.validator.format('ISBN must be in the format XXX-X-XXXXX-XXX-X or XXXXXXXXXXXXX')
+)
+
+jQuery ->
+  $('#control_numbers').validate({
+    rules: {
+      'project[control_number_attributes][epub_isbn]': {
+        isbnFormatValidator: true
+      },
+      'project[control_number_attributes][hardback_isbn]': {
+        isbnFormatValidator: true
+      },
+      'project[control_number_attributes][paperback_isbn]': {
+        isbnFormatValidator: true
+      },
+    }
+  })
+
 ## submit proofread
 
 ## target marketing launch date custom validator -- Must be 5 weeks in the future or more

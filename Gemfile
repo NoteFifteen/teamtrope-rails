@@ -65,6 +65,9 @@ gem "s3_direct_upload"
 
 gem 'will_paginate', '3.0.7'
 
+# For exchanging currency rates
+gem "exchange", "~> 1.2.0"
+
 gem 'figaro'
 
 gem 'simple_form'

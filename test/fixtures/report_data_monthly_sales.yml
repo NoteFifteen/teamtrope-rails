@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  report_data_file_id: 
+  report_data_source_id: 
+  project_id: 
+  is_valid: false
+  year: 
+  month: 
+  quantity: 
+  revenue: 1.5
+
+two:
+  report_data_file_id: 
+  report_data_source_id: 
+  project_id: 
+  is_valid: false
+  year: 
+  month: 
+  quantity: 
+  revenue: 1.5
