@@ -1,6 +1,6 @@
 class PublishedFilesController < ApplicationController
   before_action :signed_in_user
-  before_action :booktrope_staff
+  before_action :booktrope_staff, except: [:create, :show]
   before_action :set_published_file, only: [:show, :edit, :update, :destroy]
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 

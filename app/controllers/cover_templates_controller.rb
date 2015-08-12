@@ -1,6 +1,6 @@
 class CoverTemplatesController < ApplicationController
   before_action :signed_in_user
-  before_action :booktrope_staff, except: :create
+  before_action :booktrope_staff, except: [:create, :show]
   before_action :set_cover_template, only: [:show, :edit, :update, :destroy]
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 

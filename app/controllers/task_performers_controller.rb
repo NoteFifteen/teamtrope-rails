@@ -1,4 +1,6 @@
 class TaskPerformersController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_task_performer, only: [:show, :edit, :update, :destroy]
 
   respond_to :html

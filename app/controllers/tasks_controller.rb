@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   # GET /tasks

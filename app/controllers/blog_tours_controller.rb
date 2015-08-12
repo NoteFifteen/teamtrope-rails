@@ -1,6 +1,6 @@
 class BlogToursController < ApplicationController
   before_action :signed_in_user
-  before_action :booktrope_staff
+  before_action :booktrope_staff, except: :show
   before_action :set_blog_tour, only: [:show, :edit, :update, :destroy]
 
   # GET /blog_tours
