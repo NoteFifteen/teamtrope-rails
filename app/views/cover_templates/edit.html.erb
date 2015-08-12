@@ -1,6 +1,10 @@
-<h1>Editing cover_template</h1>
+<h1>Editing Cover Template for <%= @cover_template.project.title %></h1>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="col-md-8">
+    <%= render 'form' %>
+  </div>
+</div>
 
 <%= link_to 'Show', @cover_template %> |
 <%= link_to 'Back', cover_templates_path %>

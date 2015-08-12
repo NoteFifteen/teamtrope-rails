@@ -1,14 +1,1 @@
-<%= simple_form_for(@kdp_select_enrollment) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.association :project %>
-    <%= f.association :member %>
-    <%= f.input :enrollment_date %>
-    <%= f.input :update_type %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+<%= render partial: "projects/forms/kdp_select_update", locals: { current_tab: nil, form_submit_url: kdp_select_enrollment_path } %>

@@ -1,7 +1,8 @@
 class PublishedFilesController < ApplicationController
   before_action :signed_in_user
-  before_action :booktrope_staff
+  before_action :booktrope_staff, except: [:create, :show]
   before_action :set_published_file, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /published_files
   # GET /published_files.json
@@ -90,6 +91,28 @@ class PublishedFilesController < ApplicationController
   def update
     respond_to do |format|
       if @published_file.update(published_file_params)
+
+        activity_text = nil
+        updated = []
+
+        # setting the update text based on what was actually updated..
+        [ {key: :updated_epub, tag: 'ePub'},
+          {key: :updated_mobi,  tag: 'mobi'},
+          {key: :updated_pdf,   tag: 'pdf'}
+        ].each do | item |
+          if !params[item[:key]].nil? && params[item[:key]] == 'yes'
+            updated.push item[:tag]
+          end
+        end
+
+        activity_text = "Uploaded new versions of : #{activity_text} #{updated.join(', ')} for " if updated.size > 0
+        activity_text ||= 'Edited the '
+
+        @project.create_activity :edited_published_book, owner: current_user,
+                                    parameters: { text: activity_text, object_id: @published_file.id, form_data: params[:published_file].to_s}
+
+        ProjectMailer.publish_book(@project, current_user)
+
         format.html { redirect_to @published_file, notice: 'Published file was successfully updated.' }
         format.json { render :show, status: :ok, location: @published_file }
       else
@@ -115,8 +138,12 @@ class PublishedFilesController < ApplicationController
       @published_file = PublishedFile.find(params[:id])
     end
 
+    def set_project
+      @project = PublishedFile.find(params[:id]).project
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def published_file_params
-      params.require(:published_file).permit(:publication_date, :mobi, :epub, :pdf)
+      params.require(:published_file).permit(:publication_date)
     end
 end

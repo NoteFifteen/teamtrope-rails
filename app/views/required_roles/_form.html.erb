@@ -1,30 +1,8 @@
-<%= form_for(@required_role) do |f| %>
-  <% if @required_role.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@required_role.errors.count, "error") %> prohibited this required_role from being saved:</h2>
+<%= simple_form_for(@required_role) do | f | %>
+  <%= f.error_notification %>
 
-      <ul>
-      <% @required_role.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :project_type_id %><br>
-    <%= f.collection_select(:project_type_id, ProjectType.all, :id, :name, include_blank: true) %>
-  </div>
-  <div class="field">
-    <%= f.label :role_id %><br>
-    <%= f.collection_select(:role_id, Role.all, :id, :name, include_blank: true) %>
-  </div>
-  <div class="field">
-    <%= f.label :suggested_percent %><br>
-    <%= f.text_field :suggested_percent %>
-  </div>
-  <br /><br />
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.association :role %>
+  <%= f.association :project_type %>
+  <%= f.input :suggested_percent %>
+  <%= f.submit %>
 <% end %>

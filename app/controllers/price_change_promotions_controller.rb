@@ -1,7 +1,8 @@
 class PriceChangePromotionsController < ApplicationController
   before_action :signed_in_user
-  before_action :booktrope_staff
+  before_action :booktrope_staff, except: :show
   before_action :set_price_change_promotion, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /price_change_promotions
   # GET /price_change_promotions.json
@@ -45,6 +46,13 @@ class PriceChangePromotionsController < ApplicationController
     respond_to do |format|
       if @price_change_promotion.update(price_change_promotion_params)
         format.html { redirect_to @price_change_promotion, notice: 'Price change promotion was successfully updated.' }
+
+        @project.create_activity :edited_price_promotion, owner: current_user,
+                               parameters: {text: 'Edited', object_id: @price_change_promotion.id,
+                               form_data: params[:project].to_s}
+
+        ProjectMailer.price_promotion(@project, current_user)
+
         format.json { render :show, status: :ok, location: @price_change_promotion }
       else
         format.html { render :edit }
@@ -67,6 +75,10 @@ class PriceChangePromotionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_price_change_promotion
       @price_change_promotion = PriceChangePromotion.find(params[:id])
+    end
+
+    def set_project
+      @project = @price_change_promotion.project
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

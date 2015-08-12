@@ -1,0 +1,22 @@
+<h1>Artwork Rights Request for <br /><%= link_to @project.title, @project %></h1>
+
+<p>
+  <strong>Full name:</strong>
+  <%= @artwork_rights_request.full_name %>
+</p>
+
+<p>
+  <strong>Role type:</strong>
+  <%= @artwork_rights_request.role_type %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @artwork_rights_request.email %>
+</p>
+
+
+<% if current_user.role? :booktrope_staff %>
+  <%= link_to 'Edit', edit_artwork_rights_request_path(@artwork_rights_request) %> |
+  <%= link_to 'Back', artwork_rights_requests_path %>
+<% end %>

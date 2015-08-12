@@ -1,0 +1,33 @@
+<h1>Artwork Rights Requests</h1>
+
+<table id= "artwork_rights_requests_table">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Email</th>
+      <th>Full Name</th>
+      <th>Role Type</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @artwork_rights_requests.each do |artwork_rights_request| %>
+      <tr>
+        <td><%= link_to artwork_rights_request.project.title, artwork_rights_request.project %></td>
+        <td><%= artwork_rights_request.email %></td>
+        <td><%= artwork_rights_request.full_name %></td>
+        <td><%= artwork_rights_request.role_type %></td>
+        <td><%= link_to 'Show', artwork_rights_request %></td>
+        <td><%= link_to 'Edit', edit_artwork_rights_request_path(artwork_rights_request) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<script>
+  $("#artwork_rights_requests_table").DataTable({ 'pageLength': '100'});
+</script>

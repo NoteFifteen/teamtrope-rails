@@ -1,9 +1,4 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Project:</strong>
-  <%= link_to @kdp_select_enrollment.project.title, @kdp_select_enrollment.project unless @kdp_select_enrollment.project.nil? %>
-</p>
+<h1>KDP Enrollment for <br /><%= link_to @project.title, @project %></h1>
 
 <p>
   <strong>Member:</strong>
@@ -15,15 +10,55 @@
   <%= @kdp_select_enrollment.enrollment_date %>
 </p>
 
+<% unless @kdp_select_enrollment.update_type.nil? %>
 <p>
   <strong>Update type:</strong>
-  <%= @kdp_select_enrollment.update_type %>
+  <%= Hash[KdpSelectEnrollment::UpdateTypes][@kdp_select_enrollment.update_type] %>
 </p>
 
 <p>
-  <strong>Update data:</strong>
-  <%= @kdp_select_enrollment.update_data %>
-</p>
+  <% data = @kdp_select_enrollment.update_data %>
+  <% case @kdp_select_enrollment.update_type %>
+  <% when "free_book_promo" %>
+  <table>
+    <tr>
+      <th>&nbsp;</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+    </tr>
+    <% data["date_ranges"].each_with_index do | range, index | %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td><%= range["start_date"] %></td>
+      <td><%= range["end_date"] %></td>
+    </tr>
+    <% end %>
+  </table>
+  <% when  "countdown_deal" %>
+  <table>
+    <tr>
+      <th>Start Date</th>
+      <th>Start Time</th>
+      <th>Number of Days</th>
+      <th>Number of Price Increments</th>
+      <th>Starting Promo Price</th>
+    </tr>
+    <tr>
+      <td><%= data["start_date"] %></td>
+      <td><%= data["start_time"] %></td>
+      <td><%= data["number_of_days"] %></td>
+      <td><%= data["number_of_price_increments"] %></td>
+      <td><%= data["starting_promo_price"] %></td>
+    </tr>
+  </table>
+  <% else %>
+  This book will removed from KDP Select after <%= @kdp_select_enrollment.enrollment_date + 90.days %>
+  <% end %>
 
-<%= link_to 'Edit', edit_kdp_select_enrollment_path(@kdp_select_enrollment) %> |
-<%= link_to 'Back', kdp_select_enrollments_path %>
+</p>
+<% end %>
+
+<% if current_user.role? :booktrope_staff %>
+  <%= link_to 'Edit', edit_kdp_select_enrollment_path(@kdp_select_enrollment) %> |
+  <%= link_to 'Back', kdp_select_enrollments_path %>
+<% end %>

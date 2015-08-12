@@ -1,11 +1,13 @@
 <h1>Task Dependencies</h1>
 
-<table>
+<table id="task_dependencies_table">
   <thead>
     <tr>
       <th>Main Task</th>
       <th>Dependent Task</th>
-      <th colspan="3"></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
@@ -23,5 +25,10 @@
 </table>
 
 <br>
+
+<script>
+  $("#task_dependencies_table").DataTable({ 'pageLength': '100'});
+</script>
+
 
 <%= link_to 'New Task dependency', new_task_dependency_path %>

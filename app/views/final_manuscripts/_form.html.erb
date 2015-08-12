@@ -1,0 +1,33 @@
+<%
+# amazon s3 uploads
+[
+  {
+    label: "PDF", required: false, callback_url: project_final_manuscript_url(@project),
+    form_id: "final_manuscript_pdf_s3_uploader", callback_param: "final_manuscript_pdf[direct_upload_url]",
+    container_id: "final_manuscript_pdf_uploads_container", object: @final_manuscript, column_name: "pdf",
+    controller_action: 'download_final_manuscript_pdf'
+  },
+  {
+    label: "DOC (.doc, .docx)", required: false, callback_url: project_final_manuscript_url(@project),
+    form_id: "final_manuscript_doc_s3_uploader", callback_param: "final_manuscript_doc[direct_upload_url]",
+    container_id: "final_manuscript_doc_uploads_container", object: @final_manuscript, column_name: "doc",
+    controller_action: 'download_final_manuscript_doc'
+  }
+].each do | s3_upload_hash | %>
+
+<%= render partial: "shared/amazon_s3_upload", locals: s3_upload_hash %>
+
+<% end %>
+
+<%= simple_form_for(@final_manuscript) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= hidden_field_tag :updated_pdf, 'no' %>
+    <%= hidden_field_tag :updated_doc, 'no' %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

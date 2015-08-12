@@ -142,7 +142,7 @@ module Booktrope
 
           queue_entry["title"] = book["title"]
           queue_entry["price"] = price.to_f
-          queue_entry["status"] = 0
+
           queue_entry["changeDate"] = Parse::Date.new(date)
           queue_entry["isEnd"] = options[:is_end]
 

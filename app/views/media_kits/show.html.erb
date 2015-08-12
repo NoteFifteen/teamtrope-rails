@@ -1,0 +1,25 @@
+<h2>Showing Media Kit for <%= @project.title %></h2>
+
+<div>Project: <%= link_to @project.title, project_path(@project) %></div>
+
+<table>
+  <thead>
+    <th>Name</th>
+    <th>Size</th>
+    <th>Updated</th>
+  </thead>
+  <tbody>
+  <td>
+    <% if !@media_kit.document_file_name.nil? %>
+      <%= link_to @media_kit.try(:document_file_name), url_for(controller: 'projects', action: 'download_media_kit', id: @media_kit.project, only_path: false) %>
+    <% else %>
+      -
+    <% end %>
+  </td>
+  <td><%= (! @media_kit.document_file_size.nil?)  ? @media_kit.document_file_size  : '-' %></td>
+  <td><%= (! @media_kit.document_updated_at.nil?) ? @media_kit.document_updated_at : '-' %></td>
+  </tbody>
+</table>
+
+<%= link_to 'Edit', edit_media_kit_path(@media_kit) %> |
+<%= link_to 'Back', media_kits_path %>

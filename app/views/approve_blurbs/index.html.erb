@@ -1,4 +1,4 @@
-<h1>Listing Approve Blurbs</h1>
+<h1>Approve Blurbs</h1>
 
 <table id="approve_blurbs_table">
   <thead>
@@ -10,7 +10,6 @@
       <th>Blurb Last Updated</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
-      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -18,12 +17,11 @@
       <tr>
         <td><%= link_to approve_blurb.project.title, approve_blurb.project %></td>
         <td><%= approve_blurb.blurb_notes %></td>
-        <td><%= approve_blurb.blurb_approval_decision %></td>
+        <td><%= approve_blurb.blurb_approval_decision?? "Approved" : "Rejected" %></td>
         <td><%= approve_blurb.blurb_approval_date %></td>
         <td><%= approve_blurb.updated_at %></td>
         <td><%= link_to 'Show', approve_blurb %></td>
         <td><%= link_to 'Edit', edit_approve_blurb_path(approve_blurb) %></td>
-        <td><%= link_to 'Destroy', approve_blurb, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -35,5 +33,3 @@
 </script>
 
 <br>
-
-<%= link_to 'New Approve blurb', new_approve_blurb_path %>

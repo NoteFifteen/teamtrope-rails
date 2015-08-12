@@ -35,6 +35,7 @@
   <%= @price_change_promotion.sites.join(", ") %>
 </p>
 
+<% if current_user.role? :booktrope_staff %>
 <p>
   <strong>Parse ID(s)</strong><br />
 
@@ -49,6 +50,9 @@
     <% end %>
   <% end %>
 </p>
+<% end %>
 
-<%= link_to 'Edit', edit_price_change_promotion_path(@price_change_promotion) %> |
-<%= link_to 'Back', price_change_promotions_path %>
+<% if can? :edit, @price_change_promotion %>
+  <%= link_to 'Edit', edit_price_change_promotion_path(@price_change_promotion) %> |
+  <%= link_to 'Back', price_change_promotions_path %>
+<% end %>

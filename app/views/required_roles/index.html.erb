@@ -1,12 +1,13 @@
 <h1>Required Roles</h1>
 
-<table>
+<table id="required_roles_table">
   <thead>
     <tr>
       <th>Role</th>
       <th>Project type</th>
       <th>Suggested percent</th>
-      <th colspan="3"></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
@@ -18,12 +19,16 @@
         <td><%= required_role.suggested_percent %></td>
         <td><%= link_to 'Show', required_role %></td>
         <td><%= link_to 'Edit', edit_required_role_path(required_role) %></td>
-        <td><%= link_to 'Destroy', required_role, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
+
+<script>
+  $("#required_roles_table").DataTable({ 'pageLength': '100'});
+</script>
+
 
 <%= link_to 'New Required role', new_required_role_path %>

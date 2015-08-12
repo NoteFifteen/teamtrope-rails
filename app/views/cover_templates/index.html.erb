@@ -17,7 +17,7 @@
   <tbody>
     <% @cover_templates.each do |cover_template| %>
       <tr>
-        <td><%= link_to cover_template.project.title, cover_template.project %></td>
+        <td class='book-title'><%= link_to cover_template.project.title, cover_template.project %></td>
 
         <td><%= cover_template.updated_at %></td>
 
@@ -46,7 +46,7 @@
         <% end %>
 
         <td><%= link_to 'Show', cover_template %></td>
-        <td><%= link_to 'Edit', edit_cover_template_path(cover_template) %></td>
+        <td><% if can? :edit, cover_template %><%= link_to 'Edit', edit_cover_template_path(cover_template) %><% end %></td>
 
       </tr>
     <% end %>

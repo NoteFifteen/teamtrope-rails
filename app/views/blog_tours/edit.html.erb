@@ -1,6 +1,10 @@
-<h1>Editing blog_tour</h1>
+<h1>Editing Blog Tour for <br /><%= link_to @blog_tour.project.title, @blog_tour.project %></h1>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="col-md-8">
+    <%= render 'form' %>
+  </div>
+</div>
 
 <%= link_to 'Show', @blog_tour %> |
 <%= link_to 'Back', blog_tours_path %>

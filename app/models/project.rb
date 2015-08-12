@@ -25,7 +25,7 @@ class Project < ActiveRecord::Base
   has_one  :man_dev, dependent: :destroy
   has_many :marketing_expenses, dependent: :destroy
   has_one  :manuscript, dependent: :destroy
-  has_many :media_kits, dependent: :destroy
+  has_one  :media_kit, dependent: :destroy
   has_many :members, through: :team_memberships, source: :member
   has_many :price_change_promotions, dependent: :destroy
   has_one  :project_grid_table_row, dependent: :destroy
@@ -51,7 +51,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :kdp_select_enrollment, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :layout, reject_if: :all_blank, allow_destroy: false
   accepts_nested_attributes_for :man_dev, reject_if: :all_blank, allow_destroy: false
-  accepts_nested_attributes_for :media_kits, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :media_kit, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :marketing_expenses, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :manuscript, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :price_change_promotions, reject_if: :all_blank, allow_destroy: true

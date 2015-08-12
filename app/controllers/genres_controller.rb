@@ -1,4 +1,6 @@
 class GenresController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_genre, only: [:show, :edit, :update, :destroy]
 
   # GET /genres

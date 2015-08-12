@@ -1,8 +1,13 @@
-<p id="notice"><%= notice %></p>
+<h2>Showing Blog Tour for <%= link_to @blog_tour.project.title, @blog_tour.project %></h2>
 
 <p>
-  <strong>Project:</strong>
-  <%= @blog_tour.project %>
+  <strong>Start date:</strong>
+  <%= @blog_tour.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @blog_tour.end_date %>
 </p>
 
 <p>
@@ -23,16 +28,6 @@
 <p>
   <strong>Number of stops:</strong>
   <%= @blog_tour.number_of_stops %>
-</p>
-
-<p>
-  <strong>Start date:</strong>
-  <%= @blog_tour.start_date %>
-</p>
-
-<p>
-  <strong>End date:</strong>
-  <%= @blog_tour.end_date %>
 </p>
 
 <%= link_to 'Edit', edit_blog_tour_path(@blog_tour) %> |

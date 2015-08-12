@@ -1,4 +1,6 @@
 class BlogToursController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff, except: :show
   before_action :set_blog_tour, only: [:show, :edit, :update, :destroy]
 
   # GET /blog_tours
@@ -42,6 +44,12 @@ class BlogToursController < ApplicationController
   def update
     respond_to do |format|
       if @blog_tour.update(blog_tour_params)
+
+        @blog_tour.project.create_activity :edited_blog_tour, owner: current_user,
+          parameters: { text: 'Edited ', blog_tour: @blog_tour.id, form_data: params[:blog_tour].to_s}
+
+        ProjectMailer.blog_tour(@blog_tour.project, current_user)
+
         format.html { redirect_to @blog_tour, notice: 'Blog tour was successfully updated.' }
         format.json { render :show, status: :ok, location: @blog_tour }
       else

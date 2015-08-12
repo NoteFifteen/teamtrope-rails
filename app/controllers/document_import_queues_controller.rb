@@ -1,4 +1,6 @@
 class DocumentImportQueuesController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_document_import_queue, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
