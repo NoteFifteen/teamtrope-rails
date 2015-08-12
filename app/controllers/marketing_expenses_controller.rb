@@ -47,7 +47,7 @@ class MarketingExpensesController < ApplicationController
       if @marketing_expense.update(marketing_expense_params)
 
         @project.create_activity :edited_marketing_expense, owner: current_user,
-              parameters: { text: 'Edited ', marketing_expense: @marketing_expense.id, form_data: params[:marketing_expense].to_s }
+              parameters: { text: 'Edited ', object_id: @marketing_expense.id, form_data: params[:marketing_expense].to_s }
 
         ProjectMailer.marketing_expense(@project, @marketing_expense, current_user)
 
