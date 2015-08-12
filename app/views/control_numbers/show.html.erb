@@ -30,5 +30,7 @@
   <%= @control_number.parse_id %>
 </p>
 
-<%= link_to 'Edit', edit_control_number_path(@control_number) %> |
-<%= link_to 'Back', control_numbers_path %>
+<% if can? :edit, @controller_action %>
+  <%= link_to 'Edit', edit_control_number_path(@control_number) %> |
+  <%= link_to 'Back', control_numbers_path %>
+<% end %>

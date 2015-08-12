@@ -1,4 +1,6 @@
 class RolesController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_role, only: [:show, :edit, :update, :destroy]
 
   # GET /roles

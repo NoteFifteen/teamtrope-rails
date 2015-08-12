@@ -125,7 +125,6 @@ Rails.application.routes.draw do
   resources :price_change_promotions
   resources :print_corners
   resources :production_expenses
-  resources :project_layouts, except: :destroy
   resources :project_type_workflows
   resources :project_types
   resources :project_views

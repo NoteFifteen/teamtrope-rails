@@ -1,6 +1,6 @@
 class ArtworkRightsRequestsController < ApplicationController
   before_action :signed_in_user
-  before_action :booktrope_staff
+  before_action :booktrope_staff, except: :show
   before_action :set_artwork_rights_request, only: [:show, :edit, :update, :destroy]
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
