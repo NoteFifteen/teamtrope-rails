@@ -15,7 +15,7 @@
             <div>
                 <ul>
                     <li>
-                        <h4>Are you ready to upload your proofread manuscript for layout?<span>*</span></h4>
+                        <h4>Are you ready to upload your proofread manuscript for layout?<span class="required">*</span></h4>
                         <div>
                             <ul>
                             <%
@@ -76,12 +76,12 @@
                     </li>
 
                     <li>
-                        <h4>Does your book contain sub-chapters?<span>*</span></h4>
+                        <h4>Does your book contain sub-chapters?<span class="required">*</span></h4>
                         <%= f.collection_radio_buttons :has_sub_chapters, [[false, 'No'],[true, 'Yes, and all sub-section headers are indicated by increments of increasing font size']], :first, :last, :collection_wrapper_tag => 'ul', :item_wrapper_tag => 'li' %>
                     </li>
 
                     <li>
-                        <h4>Does your manuscript contain images?<span>*</span></h4>
+                        <h4>Does your manuscript contain images?<span class="required">*</span></h4>
                         <div>
                             <ul class="gfield_checkbox">
                             <%
@@ -163,7 +163,7 @@
                     </li>
 
                     <li>
-                      <h4>Target Marketing Launch Date</h4>
+                      <h4>Target Marketing Launch Date <span class='required'>*</span></h4>
 
                       <b>Do you have a Marketing Launch Date scheduled?</b>
                       <ul>
@@ -235,7 +235,7 @@
               $('#target_market_launch_date_display').datepicker({
                   altField: '#project_target_market_launch_date',
                   altFormat: 'yy-mm-dd',
-                  minDate: '+3w'
+                  minDate: '+5w'
               });
 
               $('#target_market_launch_date_display').blur(function() {
