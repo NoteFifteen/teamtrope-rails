@@ -1,6 +1,6 @@
 class ManuscriptsController < ApplicationController
   before_action :signed_in_user
-  before_action :booktrope_staff, except: :create
+  before_action :booktrope_staff, except: [:create, :show]
   before_action :set_manuscript, only: [:show, :edit, :update, :destroy]
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
@@ -52,6 +52,37 @@ class ManuscriptsController < ApplicationController
     @manuscript.save
     @last_errors = @manuscript.errors.full_messages
     return
+  end
+
+  def update
+    activity_text = nil
+    updated = []
+    upload_mask = 0 # mask for determining which file was updated and requires a notification email.
+    # setting the update text.
+    [ {key: :updated_original_manuscript, tag: 'Original'},
+      {key: :updated_edited_manuscript,   tag: 'Edited'},
+      {key: :updated_proofed_manuscript,  tag: 'Proofed'}
+    ].each_with_index do | item, index |
+      if !params[item[:key]].nil? && params[item[:key]] == 'yes'
+        updated.push item[:tag]
+        upload_mask |= 2**index
+      end
+    end
+
+    activity_text = "Uploaded a new version of: #{activity_text} #{updated.join(', ')} for " if updated.size > 0
+
+    unless activity_text.nil?
+      @project.create_activity :edited_manuscripts, owner: current_user,
+                             parameters: { text: activity_text, object_id: @manuscript.id, form_data: ''}
+    end
+
+    # sending alert emails based on the upload mask
+    ProjectMailer.original_manuscript_uploaded(@project, current_user) if upload_mask & 1 == 1
+    ProjectMailer.submit_edited_manuscript(@project, current_user) if upload_mask & 2 == 2
+    ProjectMailer.proofed_manuscript(@project, current_user, params) if upload_mask & 4 == 4
+
+
+    redirect_to @manuscript
   end
 
   private

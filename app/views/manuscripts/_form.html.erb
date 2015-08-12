@@ -31,6 +31,9 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
+    <%= hidden_field_tag :updated_original_manuscript, 'no' %>
+    <%= hidden_field_tag :updated_edited_manuscript, 'no' %>
+    <%= hidden_field_tag :updated_proofed_manuscript, 'no' %>
   </div>
 
   <div class="form-actions">
