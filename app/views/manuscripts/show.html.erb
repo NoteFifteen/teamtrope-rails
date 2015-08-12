@@ -49,5 +49,7 @@
   </tbody>
 </table>
 
-<%= link_to 'Edit', edit_manuscript_path(@manuscript) %> |
-<%= link_to 'Back', manuscripts_path %>
+<% if can? :edit, @Manuscript %>
+  <%= link_to 'Edit', edit_manuscript_path(@manuscript) %> |
+  <%= link_to 'Back', manuscripts_path %>
+<% end %>

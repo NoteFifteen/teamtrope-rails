@@ -40,7 +40,7 @@
           <% end %>
         </td>
         <td><%= link_to 'Show', manuscript %></td>
-        <td><%= link_to 'Edit', edit_manuscript_path(manuscript) %></td>
+        <td><% if can? :edit, manuscript %><%= link_to 'Edit', edit_manuscript_path(manuscript) %><% end %></td>
       </tr>
     <% end %>
   </tbody>
