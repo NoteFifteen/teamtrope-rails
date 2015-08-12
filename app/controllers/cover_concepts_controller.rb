@@ -1,6 +1,6 @@
 class CoverConceptsController < ApplicationController
   before_action :signed_in_user
-  before_action :booktrope_staff
+  before_action :booktrope_staff, except: [:create, :show]
   before_action :set_cover_concept, only: [:show, :edit, :update, :destroy]
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
@@ -47,6 +47,37 @@ class CoverConceptsController < ApplicationController
     @cover_concept.save
     @last_errors = @cover_concept.errors.full_messages
     return
+  end
+
+  def update
+
+    activity_text = nil
+    send_cover_concept_email = false
+    send_stock_image_email = false
+    if !params[:updated_cover_concept_image].nil? && params[:updated_cover_concept_image] == "yes"
+      activity_text = "Updated Cover Concept Image"
+      send_cover_concept_email = true
+    end
+
+    if !params[:updated_stock_cover_image].nil? && params[:updated_stock_cover_image] == "yes"
+      if activity_text.nil?
+        activity_text = "Updated Stock Cover Image"
+      else
+        activity_text = "#{activity_text} and Stock Cover Image"
+      end
+      send_stock_image_email = true
+    end
+
+    unless activity_text.nil?
+      @project.create_activity :submitted_price_promotion, owner: current_user,
+                               parameters: {text: activity_text,
+                               form_data: params[:project].to_s}
+    end
+
+    ProjectMailer.cover_concept_upload(@project, current_user) if send_cover_concept_email
+    ProjectMailer.add_stock_cover_image(@project, current_user) if send_stock_image_email
+
+    redirect_to @cover_concept
   end
 
   private

@@ -1,12 +1,13 @@
 <h1>Tabs</h1>
 
-<table>
+<table id="tabs_table">
   <thead>
     <tr>
       <th>Task</th>
       <th>Phase</th>
       <th>Order</th>
-      <th colspan="3"></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
@@ -18,12 +19,15 @@
         <td><%= tab.order %></td>
         <td><%= link_to 'Show', tab %></td>
         <td><%= link_to 'Edit', edit_tab_path(tab) %></td>
-        <td><%= link_to 'Destroy', tab, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
+
+<script>
+  $("#tabs_table").DataTable({ 'pageLength': '100'});
+</script>
 
 <%= link_to 'New Tab', new_tab_path %>

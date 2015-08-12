@@ -1,25 +1,7 @@
-<%= form_for(@unlocked_task) do |f| %>
-  <% if @unlocked_task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@unlocked_task.errors.count, "error") %> prohibited this unlocked_task from being saved:</h2>
+<%= simple_form_for @unlocked_task do | f | %>
+  <%= f.error_notification %>
 
-      <ul>
-      <% @unlocked_task.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :task_id %><br>
-    <%= f.collection_select :task_id, Task.all, :id, :name %>
-  </div>
-  <div class="field">
-    <%= f.label :unlocked_task_id %><br>
-    <%= f.collection_select :unlocked_task_id, Task.all, :id, :name %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.association :task %>
+  <%= f.association :unlocked_task %>
+  <%= f.submit %>
 <% end %>

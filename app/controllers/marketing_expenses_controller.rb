@@ -1,5 +1,8 @@
 class MarketingExpensesController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_marketing_expense, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /marketing_expenses
   # GET /marketing_expenses.json
@@ -42,6 +45,12 @@ class MarketingExpensesController < ApplicationController
   def update
     respond_to do |format|
       if @marketing_expense.update(marketing_expense_params)
+
+        @project.create_activity :edited_marketing_expense, owner: current_user,
+              parameters: { text: 'Edited ', marketing_expense: @marketing_expense.id, form_data: params[:marketing_expense].to_s }
+
+        ProjectMailer.marketing_expense(@project, @marketing_expense, current_user)
+
         format.html { redirect_to @marketing_expense, notice: 'Marketing expense was successfully updated.' }
         format.json { render :show, status: :ok, location: @marketing_expense }
       else
@@ -65,6 +74,10 @@ class MarketingExpensesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_marketing_expense
       @marketing_expense = MarketingExpense.find(params[:id])
+    end
+
+    def set_project
+      @project = @marketing_expense.project
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

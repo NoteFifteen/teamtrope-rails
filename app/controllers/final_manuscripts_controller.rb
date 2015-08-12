@@ -1,5 +1,15 @@
 class FinalManuscriptsController < ApplicationController
   before_action :signed_in_user
+  before_action :booktrope_staff, except: [:create, :show]
+  before_action :set_final_manuscript, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @final_manuscripts = FinalManuscript.all
+  end
+
+  def show
+  end
 
   def create
     @project = Project.friendly.find(params[:project_id])
@@ -32,5 +42,39 @@ class FinalManuscriptsController < ApplicationController
     @final_manuscript.save
 
   end
+
+  def update
+    activity_text = nil
+    updated = []
+
+    # setting the update text.
+    [ {key: :updated_pdf, tag: 'pdf'},
+      {key: :updated_doc, tag: 'doc'},
+    ].each do | item |
+      if !params[item[:key]].nil? && params[item[:key]] == 'yes'
+        updated.push item[:tag]
+      end
+    end
+
+    activity_text = "Uploaded new versions of : #{activity_text} #{updated.join(', ')} for " if updated.size > 0
+
+    unless activity_text.nil?
+      @project.create_activity :edited_final_manuscript, owner: current_user,
+                              parameters: { text: activity_text, object_id: @final_manuscript.id, form_data: ''}
+
+      ProjectMailer.final_manuscript(@project, current_user)
+    end
+
+    redirect_to @final_manuscript
+  end
+
+  private
+    def set_final_manuscript
+      @final_manuscript = FinalManuscript.find(params[:id])
+    end
+
+    def set_project
+      @project = FinalManuscript.find(params[:id]).project
+    end
 
 end

@@ -17,7 +17,7 @@
     <% @cover_concepts.each do |cover_concept| %>
       <tr>
 
-        <td><%= link_to cover_concept.project.title, cover_concept.project %></td>
+        <td class='book-title'><%= link_to cover_concept.project.title, cover_concept.project %></td>
         <td><%= cover_concept.updated_at %></td>
 
         <% unless cover_concept.cover_concept_file_name.nil? %>
@@ -39,7 +39,7 @@
         <% end %>
 
         <td><%= link_to 'Show', cover_concept %></td>
-        <td><%= link_to 'Edit', edit_cover_concept_path(cover_concept) %></td>
+        <td><% if can? :edit, cover_concept %><%= link_to 'Edit', edit_cover_concept_path(cover_concept) %><% end %></td>
       </tr>
     <% end %>
   </tbody>

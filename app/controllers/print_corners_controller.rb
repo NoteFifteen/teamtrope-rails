@@ -1,5 +1,8 @@
 class PrintCornersController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff, except: :show
   before_action :set_print_corner, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
 
@@ -27,8 +30,20 @@ class PrintCornersController < ApplicationController
   end
 
   def update
-    @print_corner.update(print_corner_params)
-    respond_with(@print_corner)
+    respond_to do | format |
+      if @print_corner.update(print_corner_params)
+
+        @project.create_activity :edited_print_corner_request, owner: current_user,
+                               parameters: { text: 'Edited', object_id: @print_corner.id, form_data: params[:print_corner]}
+        ProjectMailer.print_corner_request(@project, current_user)
+        format.html { redirect_to @print_corner, notice: "Print Corner was successfully updated." }
+        format.json { render :show, status: :ok, location: @print_corner }
+
+      else
+        format.html { render :edit }
+        format.json { render json: @prrint_corner.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
@@ -39,6 +54,10 @@ class PrintCornersController < ApplicationController
   private
     def set_print_corner
       @print_corner = PrintCorner.find(params[:id])
+    end
+
+    def set_project
+      @project = @print_corner.project
     end
 
     def print_corner_params

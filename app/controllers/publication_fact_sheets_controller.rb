@@ -1,5 +1,8 @@
 class PublicationFactSheetsController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff, except: :show
   before_action :set_publication_fact_sheet, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /publication_fact_sheets
   # GET /publication_fact_sheets.json
@@ -42,6 +45,10 @@ class PublicationFactSheetsController < ApplicationController
   def update
     respond_to do |format|
       if @publication_fact_sheet.update(publication_fact_sheet_params)
+        @project.create_activity :edited_pfs, owner: current_user,
+                                parameters: { text: 'Edited', object_id: @publication_fact_sheet.id, form_data: params[:publication_fact_sheet]}
+
+        ProjectMailer.publication_fact_sheet(@project, current_user)
         format.html { redirect_to @publication_fact_sheet, notice: 'Publication fact sheet was successfully updated.' }
         format.json { render :show, status: :ok, location: @publication_fact_sheet }
       else
@@ -65,6 +72,10 @@ class PublicationFactSheetsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_publication_fact_sheet
       @publication_fact_sheet = PublicationFactSheet.find(params[:id])
+    end
+
+    def set_project
+      @project = @publication_fact_sheet.project
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

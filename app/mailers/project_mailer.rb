@@ -201,53 +201,62 @@ class ProjectMailer < ActionMailer::Base
     @project = project
     @current_user = current_user
 
-    tokens = {
-      'Content text has been converted to palatino linotype, size 10' => '&#10004;'.html_safe,
-      'Any Acknowledgments, Dedication, Author Notes, etc. that I want included are included in this manuscript' => '&#10004;'.html_safe,
-      'Any and all tracked changes have been accepted or rejected; Comments have been removed' => '&#10004;'.html_safe,
-      'All text is fully justified (text is aligned with both the left and right margin)' => '&#10004;'.html_safe,
-      'Chapter Headings are the way I want them to appear in the final manuscript (e.g. "Chapter One," "Chapter 1", "1", "CHAPTER ONE"). Also, I have reviewed and made sure that Chapter Numbering is correct (No missing or duplicated numbers).' => '&#10004;'.html_safe,
-      'All editing and stylistic choices (italics, caps) have been made and are final' => '&#10004;'.html_safe,
-      'All chapter headings are size 14 font and there is a page break inserted between each chapter' => '&#10004;'.html_safe,
-      'I have looked over and approved the delivered proofreading and the content. Nothing more will be added or removed from this document, and no further changes will be made.' => '&#10004;'.html_safe,
-      'All narrative breaks/scene changes are indicated with three asterisks (***).' => (params['scene_changes'].nil?) ? 'No' : 'Yes',
-      'Does your book contain sub-chapters?' => (params[:project]['has_sub_chapters'] == 'true') ? 'Yes, and all sub-section headers are indicated by increments of increasing font sizes' : 'No',
-      'Does your manuscript contain images?' => (params['does_contain_images'] != '0') ? 'Yes' : 'No',
-      'Imprint' => (! @project.imprint.nil?) ? @project.try(:imprint).try(:name) : 'N/A'
-    }
+    subject = ""
+    if params[:commit] != 'Update Manuscript'
+      tokens = {
+        'Content text has been converted to palatino linotype, size 10' => '&#10004;'.html_safe,
+        'Any Acknowledgments, Dedication, Author Notes, etc. that I want included are included in this manuscript' => '&#10004;'.html_safe,
+        'Any and all tracked changes have been accepted or rejected; Comments have been removed' => '&#10004;'.html_safe,
+        'All text is fully justified (text is aligned with both the left and right margin)' => '&#10004;'.html_safe,
+        'Chapter Headings are the way I want them to appear in the final manuscript (e.g. "Chapter One," "Chapter 1", "1", "CHAPTER ONE"). Also, I have reviewed and made sure that Chapter Numbering is correct (No missing or duplicated numbers).' => '&#10004;'.html_safe,
+        'All editing and stylistic choices (italics, caps) have been made and are final' => '&#10004;'.html_safe,
+        'All chapter headings are size 14 font and there is a page break inserted between each chapter' => '&#10004;'.html_safe,
+        'I have looked over and approved the delivered proofreading and the content. Nothing more will be added or removed from this document, and no further changes will be made.' => '&#10004;'.html_safe,
+        'All narrative breaks/scene changes are indicated with three asterisks (***).' => (params['scene_changes'].nil?) ? 'No' : 'Yes',
+        'Does your book contain sub-chapters?' => (params[:project]['has_sub_chapters'] == 'true') ? 'Yes, and all sub-section headers are indicated by increments of increasing font sizes' : 'No',
+        'Does your manuscript contain images?' => (params['does_contain_images'] != '0') ? 'Yes' : 'No',
+        'Imprint' => (! @project.imprint.nil?) ? @project.try(:imprint).try(:name) : 'N/A'
+      }
 
-    if(@project.previously_published == true)
-      tokens.store('Previously Published', 'Yes')
-      tokens.store('Previously Published Title', @project.previously_published_title)
-      tokens.store('Previously Published Year', @project.previously_published_year)
-      tokens.store('Previous Publisher', @project.previously_published_publisher)
+
+
+      if(@project.previously_published == true)
+        tokens.store('Previously Published', 'Yes')
+        tokens.store('Previously Published Title', @project.previously_published_title)
+        tokens.store('Previously Published Year', @project.previously_published_year)
+        tokens.store('Previous Publisher', @project.previously_published_publisher)
+      else
+        tokens.store('Previously Published', 'No')
+      end
+
+      if(!@project.try(:credit_request).nil?)
+        tokens.store('Additional Credits Requested', ("<pre>" + @project.credit_request + "</pre>").html_safe )
+      end
+
+      if(params[:dropbox_link] != '')
+        tokens.store('Images have been uploaded to Dropbox Folder', params['dropbox_link'])
+      end
+
+      if(params[:teamtrope_link] != '')
+        tokens.store('Images have been uploaded to Teamtrope Docs Section', params['teamtrope_link'])
+      end
+
+      if(params[:project]['special_text_treatment'] != '')
+        tokens.store('Sections requiring special treatment:', ("<pre>" +params[:project]['special_text_treatment'] + "</pre>").html_safe )
+      end
+
+      if(! @project.target_market_launch_date.nil?)
+        tokens.store('Target Market Launch Date', @project.target_market_launch_date)
+      end
+
+      tokens.store('Manuscript Word Count:', params[:project]['proofed_word_count'])
+
+      subject = "New Submit Final Proofed Document from #{current_user.name} for #{project.title} (#{params[:project]['proofed_word_count']} words)"
     else
-      tokens.store('Previously Published', 'No')
+      subject = "New Verion of Final Proofed Document from #{current_user.name} for #{project.title}"
     end
 
-    if(!@project.try(:credit_request).nil?)
-      tokens.store('Additional Credits Requested', ("<pre>" + @project.credit_request + "</pre>").html_safe )
-    end
-
-    if(params[:dropbox_link] != '')
-      tokens.store('Images have been uploaded to Dropbox Folder', params['dropbox_link'])
-    end
-
-    if(params[:teamtrope_link] != '')
-      tokens.store('Images have been uploaded to Teamtrope Docs Section', params['teamtrope_link'])
-    end
-
-    if(params[:project]['special_text_treatment'] != '')
-      tokens.store('Sections requiring special treatment:', ("<pre>" +params[:project]['special_text_treatment'] + "</pre>").html_safe )
-    end
-
-    if(! @project.target_market_launch_date.nil?)
-      tokens.store('Target Market Launch Date', @project.target_market_launch_date)
-    end
-
-    tokens.store('Manuscript Word Count:', params[:project]['proofed_word_count'])
-
-    subject = "New Submit Final Proofed Document from #{current_user.name} for #{project.title} (#{params[:project]['proofed_word_count']} words)"
+    tokens ||= {}
 
     send_email_message('proofed_manuscript', tokens, get_project_recipient_list(@project, roles: [:project_manager, :author]), subject)
     send_email_message('proofed_manuscript_admin', tokens, admin_proofed_manuscript_list, subject)

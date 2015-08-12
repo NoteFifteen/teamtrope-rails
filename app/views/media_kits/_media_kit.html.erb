@@ -1,2 +1,2 @@
-<h4>Media Kits</h4>
-<%= link_to "DOWNLOAD", download_original_manuscript_path(@project) if @project.manuscript.original? %><br />
+<h4>Media Kit</h4>
+<%= link_to "DOWNLOAD", download_media_kit_path(@project) if @project.media_kit.document? %><br />

@@ -1,6 +1,13 @@
-<h1>Editing kdp_select_enrollment</h1>
+<div class="container">
+  <div class="row">
+    <h4>Editing KDP Select Enrollment for <%= link_to @project.title, @project %></h4>
+    <div class="col-md-8">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>
 
-<%= render 'form' %>
+<br />
 
 <%= link_to 'Show', @kdp_select_enrollment %> |
 <%= link_to 'Back', kdp_select_enrollments_path %>

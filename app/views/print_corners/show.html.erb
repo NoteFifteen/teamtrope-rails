@@ -1,13 +1,8 @@
-<p id="notice"><%= notice %></p>
+<h1>Print Request for <%= link_to @project.title, @project%></h1>
 
 <p>
-  <strong>Project:</strong>
-  <%= @print_corner.project %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @print_corner.user %>
+  <strong>Requested By:</strong>
+  <%= link_to @print_corner.user.nickname, @print_corner.user.profile_page %>
 </p>
 
 <p>
@@ -100,5 +95,9 @@
   <%= @print_corner.expedite_instructions %>
 </p>
 
-<%= link_to 'Edit', edit_print_corner_path(@print_corner) %> |
-<%= link_to 'Back', print_corners_path %>
+<% if can? :edit, @print_corner %>
+  <%= link_to 'Edit', edit_print_corner_path(@print_corner) %> |
+  <%= link_to 'Back', print_corners_path %>
+<% end %>
+
+

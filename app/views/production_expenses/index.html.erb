@@ -1,6 +1,6 @@
 <h1>Production Expenses</h1>
 
-<table>
+<table id="production_expenses_table">
   <thead>
     <tr>
       <th>Project</th>
@@ -19,14 +19,15 @@
       <th>Additional team cost</th>
       <th>Additional booktrope cost</th>
       <th>Effective date</th>
-      <th colspan="3"></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
   <tbody>
     <% @production_expenses.each do |production_expense| %>
       <tr>
-        <td><%= link_to production_expense.project.title, production_expense.project %></td>
+        <td class="book-title"><%= link_to production_expense.project.title, production_expense.project %></td>
         <td><%= production_expense.total_quantity_ordered %></td>
         <td>$<%= production_expense.total_cost %></td>
         <td><%= production_expense.complimentary_quantity %></td>
@@ -44,12 +45,13 @@
         <td><%= production_expense.effective_date %></td>
         <td><%= link_to 'Show', production_expense %></td>
         <td><%= link_to 'Edit', edit_production_expense_path(production_expense) %></td>
-        <td><%= link_to 'Destroy', production_expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
+<script>
+  $("#production_expenses_table").DataTable({ 'pageLength': '100'});
+</script>
 
-<%= link_to 'New Production expense', new_production_expense_path %>

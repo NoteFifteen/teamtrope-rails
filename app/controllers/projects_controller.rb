@@ -386,7 +386,7 @@ class ProjectsController < ApplicationController
     if @project.update(update_project_params)
 
       @project.create_activity :submitted_price_promotion, owner: current_user,
-                               parameters: {text: 'submitted a price promotion',
+                               parameters: {text: 'Submitted a price promotion',
                                form_data: params[:project].to_s}
 
       update_current_task
@@ -677,7 +677,11 @@ class ProjectsController < ApplicationController
   end
 
   def media_kit
-    if @project.update(update_project_params)
+
+    @media_kit = MediaKit.find_or_initialize_by(project_id: @project.id)
+
+    # Validate the file has been uploaded before moving forward
+    if !@media_kit.document.nil?
       update_current_task
       @project.create_activity :media_kit, owner: current_user,
                                 parameters: { text: 'Uploaded Media Kit', form_data: params[:project].to_s}
@@ -741,7 +745,7 @@ class ProjectsController < ApplicationController
   def print_corner_request
     if @project.update(update_project_params)
       update_current_task
-      @project.create_activity :marketing_expense, owner: current_user,
+      @project.create_activity :print_corner_request, owner: current_user,
                                parameters: { text: 'Submitted a Print Copy Request', form_data: params[:project].to_s}
       flash[:success] = 'Submitted Print Copy Request.'
       redirect_to @project
@@ -776,8 +780,8 @@ class ProjectsController < ApplicationController
     redirect_to @project.published_file.pdf.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
-  def download_media_kits
-    redirect_to @project.media_kits.document.expiring_url(*Constants::DefaultLinkExpiration)
+  def download_media_kit
+    redirect_to @project.media_kit.document.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
   def download_layout

@@ -1,61 +1,70 @@
-<h1>Blog Tour</h1>
-<div class="gf_browser_safari gform_wrapper">
-	<%= simple_form_for @project, 
-				url: url_for(controller: 'projects', action: 'blog_tour',id: @project), 
-				html: { id: 'blog_tour' } do | f | %>
+
+<div class="container">
+  <h1>Blog Tour</h1>
+  <div>
+    <%= simple_form_for @project,
+        url: url_for(controller: 'projects', action: 'blog_tour',id: @project),
+        html: { id: 'blog_tour' } do | f | %>
     <%= f.error_notification %>
-    <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>	
-		<div >
-			<span>Booktrope will cover the upfront costs of one blog tour per title.  This form is to be used after the book manager has identified the tour the team wants to use, made arrangements with the company to set up the tour, and is requesting payment via paypal to Booktrope (accounting@booktrope.com).  The cost (limited to $100) will be treated as a marketing expense per the creative team agreement and allocated across the team.  </span>
-		</div>
-		
-		<div>
-			<ul>
-			<%= f.simple_fields_for :blog_tours, f.object.blog_tours.build do | blog_tour | %>
-				<li>
-					<div>
-						<%= blog_tour.input :cost, label: "Tour cost (must be $100 or less)", required: true %>
-						
-						<div><!-- class="instruction" -->Please enter a value less than or equal to <strong>100</strong>.</div>
-					</div>
-					<div>Please enter the cost of the tour you've selected.  PLEASE NOTE:  Booktrope will only cover the upfront cost of one tour per title for $100 or less. 
-						The cost of this tour will be treated as a marketing expense per the creative team agreement and the cost will be allocated across the team and offset against future royalties.  
-						The blog tour company should send the invoice via paypal to accounting@booktrope.com.
-					</div>					
-				</li>
-				
-				<li>
-					<%= blog_tour.input :blog_tour_service, label: 'Name of Blog Tour Service', required: true %>
-					<div>Enter the name of the tour service you plan to use (example, Chick Lit Plus Tours)</div>
-				</li>
-				
-				<li>
-					<%= blog_tour.input :tour_type, label: 'Type of Blog Tour', required: true %>
-					<div><!-- class="instruction" -->Indicate whether this is a review only tour, guest post/interview tour or combination. </div>
-				</li>
-				
-				<li>
-					<%= blog_tour.input :number_of_stops, label: 'How many stops are on your tour?', required: true %>
-				</li>
-				
-				<li>
-					<%= blog_tour.input :start_date, label: 'What date does your tour start?',
-								 required: true,
-								 start_year: Date.today.year
-					%>
-				</li>
-				
-				<li>
-					<%= blog_tour.input :end_date, label: 'What date does your tour end?',
-								required: true,
-								start_year: Date.today.year
-					%>
-				</li>
-			<% end %>
-			</ul>
-		</div>
-		<div>
-			<%= f.submit "submit" %>
-		</div>
-	<% end %>
+    <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+    <div>
+      <span>Booktrope will cover the upfront costs of one blog tour per title.  This form is to be used after the book manager has identified the tour the team wants to use, made arrangements with the company to set up the tour, and is requesting payment via paypal to Booktrope (accounting@booktrope.com).  The cost (limited to $100) will be treated as a marketing expense per the creative team agreement and allocated across the team.  </span>
+    </div>
+
+    <div>
+      <ul>
+      <%= f.simple_fields_for :blog_tours, f.object.blog_tours.build do | blog_tour | %>
+        <li>
+          <div>
+            <label>Tour cost (must be $100 or less)<span class="required">*</span></label>
+            <%= blog_tour.input :cost, label: false, required: true %>
+
+            <div><!-- class="instruction" -->Please enter a value less than or equal to <strong>100</strong>.</div>
+          </div>
+          <div>Please enter the cost of the tour you've selected.  PLEASE NOTE:  Booktrope will only cover the upfront cost of one tour per title for $100 or less.
+            The cost of this tour will be treated as a marketing expense per the creative team agreement and the cost will be allocated across the team and offset against future royalties.
+            The blog tour company should send the invoice via paypal to accounting@booktrope.com.
+          </div>
+        </li>
+
+        <li>
+          <label>Name of Blog Tour Service<span class="required">*</span></label>
+          <%= blog_tour.input :blog_tour_service, label: false, required: true %>
+          <div>Enter the name of the tour service you plan to use (example, Chick Lit Plus Tours)</div>
+        </li>
+
+        <li>
+          <label>Type of Blog Tour<span class="required">*</span></label>
+          <%= blog_tour.input :tour_type, label: false, required: true %>
+          <div><!-- class="instruction" -->Indicate whether this is a review only tour, guest post/interview tour or combination. </div>
+        </li>
+
+        <li>
+          <label>How many stops are on your tour?<span class="required">*</span></label>
+          <%= blog_tour.input :number_of_stops, label: false, required: true %>
+        </li>
+
+        <li>
+          <label>What date does your tour start?<span class="required">*</span></label>
+          <%= blog_tour.input :start_date, label: false,
+                 required: true,
+                 start_year: Date.today.year
+          %>
+        </li>
+
+        <li>
+          <label>What date does your tour end?<span class="required">*</span></label>
+          <%= blog_tour.input :end_date, label: false,
+                required: true,
+                start_year: Date.today.year
+          %>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+    <div>
+      <%= f.submit "submit" %>
+    </div>
+  <% end %>
+</div>
 </div>

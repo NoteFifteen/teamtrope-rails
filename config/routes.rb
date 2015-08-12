@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     resource :cover_template
     resource :final_manuscript
     resource :manuscript
+    resource :media_kit
     resource :project_layout
     resource :published_file
   end
@@ -104,7 +105,10 @@ Rails.application.routes.draw do
 
 
   resources :approve_blurbs
+  resources :artwork_rights_requests
+  resources :audit_team_membership_removals
   resources :blog_tours
+  resources :control_numbers
   resources :cover_templates
   resources :current_tasks
   resources :document_import_queues
@@ -114,13 +118,13 @@ Rails.application.routes.draw do
   resources :kdp_select_enrollments
   resources :man_devs
   resources :marketing_expenses
+  resources :media_kits
   resources :phases
   resources :publication_fact_sheets
   resources :published_files
   resources :price_change_promotions
   resources :print_corners
   resources :production_expenses
-  resources :project_layouts, except: [:edit, :destroy]
   resources :project_type_workflows
   resources :project_types
   resources :project_views
@@ -129,6 +133,7 @@ Rails.application.routes.draw do
   resources :tabs
   resources :tasks
   resources :task_dependencies
+  resources :task_performers
   resources :task_prerequisite_fields
   resources :unlocked_tasks
   resources :workflows
@@ -136,7 +141,6 @@ Rails.application.routes.draw do
   resources :cover_concepts
   resources :final_manuscripts
   resources :manuscripts
-  resources :project_layouts
   resources :published_files
 
 

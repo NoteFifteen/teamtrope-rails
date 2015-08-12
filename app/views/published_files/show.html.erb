@@ -50,6 +50,7 @@
   </tbody>
 </table>
 
-
-<%= link_to 'Edit', edit_published_file_path(@published_file) %> |
-<%= link_to 'Back', published_files_path %>
+<% if can? :edit, @published_file %>
+  <%= link_to 'Edit', edit_published_file_path(@published_file) %> |
+  <%= link_to 'Back', published_files_path %>
+<% end %>
