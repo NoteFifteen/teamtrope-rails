@@ -33,7 +33,7 @@ class ProductionExpensesController < ApplicationController
     @production_expense.update(production_expense_params)
 
     @project.create_activity :edited_production_expense, owner: current_user,
-      parameters: { text: 'Edited', object_id: @production_expense, form_data: params[:production_expense].to_s }
+      parameters: { text: 'Edited', object_id: @production_expense.id, form_data: params[:production_expense].to_s }
 
     ProjectMailer.production_expense(@project, @production_expense, current_user)
 
