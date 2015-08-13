@@ -10,6 +10,16 @@
   <%= @kdp_select_enrollment.enrollment_date %>
 </p>
 
+<p>
+  <strong>Date Requested</strong>
+  <%= @kdp_select_enrollment.created_at %>
+</p>
+
+<p>
+  <strong>Last Updated</strong>
+  <%= @kdp_select_enrollment.updated_at %>
+</p>
+
 <% unless @kdp_select_enrollment.update_type.nil? %>
 <p>
   <strong>Update type:</strong>

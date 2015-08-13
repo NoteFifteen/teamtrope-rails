@@ -5,6 +5,8 @@
     <tr>
       <th>Project</th>
       <th>Member</th>
+      <th>Requested</th>
+      <th>Last Updated</th>
       <th>Enrollment date</th>
       <th>Update type</th>
       <th>Update data</th>
@@ -19,6 +21,8 @@
       <tr>
         <td class="book-title"><%= link_to kdp_select_enrollment.project.title, kdp_select_enrollment.project unless kdp_select_enrollment.project.nil? %></td>
         <td><%= link_to kdp_select_enrollment.member.name, kdp_select_enrollment.member.profile_page unless kdp_select_enrollment.member.nil? %></td>
+        <td><%= kdp_select_enrollment.created_at %></td>
+        <td><%= kdp_select_enrollment.updated_at %></td>
         <td><%= kdp_select_enrollment.enrollment_date %></td>
         <td><%= kdp_select_enrollment.update_type %></td>
         <td><%= kdp_select_enrollment.update_data %></td>
