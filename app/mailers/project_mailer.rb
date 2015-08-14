@@ -74,6 +74,7 @@ class ProjectMailer < ActionMailer::Base
         'Imprint' => project.try(:imprint).try(:name),
         'eBook Library Price' => project.control_number.try(:ebook_library_price),
         'ASIN'  => project.control_number.try(:asin),
+        'Encore ASIN'  => project.control_number.try(:encore_asin),
         'AppleID' => project.control_number.try(:apple_id),
         'ePub ISBN' => project.control_number.try(:epub_isbn),
         'Hardback ISBN'  => project.control_number.try(:hardback_isbn),
