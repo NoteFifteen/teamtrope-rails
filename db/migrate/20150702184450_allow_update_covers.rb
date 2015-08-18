@@ -6,13 +6,18 @@ class AllowUpdateCovers < ActiveRecord::Migration
   def change
     cover_concept = Task.find_by_name('Cover Concept')
 
+    return if cover_concept.nil?
+
     Tasks.each do |task_name|
       task = Task.find_by_name(task_name)
-      unlocked_task = UnlockedTask.new
-      unlocked_task.task_id = task.id
-      unlocked_task.unlocked_task = cover_concept
-      unlocked_task.save
+        unless task.nil?
+          unlocked_task = UnlockedTask.new
+          unlocked_task.task_id = task.id
+          unlocked_task.unlocked_task = cover_concept
+          unlocked_task.save
+        end
     end
 
   end
+
 end

@@ -1,34 +1,28 @@
 <% if ! @project.control_number.nil? %>
     <h4>Control Numbers</h4>
     <ul>
-      <li>
-        eBook Library Price: <%= @project.control_number.ebook_library_price %>
-      </li>
-
-      <li>
-        ASIN: <%= @project.control_number.asin %>
-      </li>
-
-      <li>
-        Apple Id: <%= @project.control_number.apple_id %>
-      </li>
-
-      <li>
-        epub ISBN: <%= @project.control_number.epub_isbn %>
-      </li>
-
-      <li>
-        Hardback ISBN: <%= @project.control_number.hardback_isbn %>
-      </li>
-
-      <li>
-        Paperback ISBN: <%= @project.control_number.paperback_isbn %>
-      </li>
+      <%
+          control_fields = [
+              {:field => 'ebook_library_price', :label => 'eBook Library Price'},
+              {:field => 'asin',                :label =>  'ASIN'},
+              {:field => 'apple_id',            :label => 'Apple ID'},
+              {:field => 'epub_isbn',           :label => 'ePub ISBN'},
+              {:field => 'hardback_isbn',       :label => 'Hardback ISBN'},
+              {:field => 'paperback_isbn',      :label => 'Paperback ISBN'}
+          ]
+      %>
+      <% control_fields.each do |cf| %>
+        <% if ! @project.control_number.send(cf[:field]).nil? && @project.control_number.send(cf[:field]) != '' %>
+          <li>
+            <%= cf[:label] %>: <%= @project.control_number.send(cf[:field]) %>
+          </li>
+        <% end %>
+      <% end %>
 
       <% if current_user.role?(:booktrope_staff) %>
-          <li>
-            Parse ID: <%= @project.control_number.parse_id %>
-          </li>
+        <li>
+          Parse ID: <%= @project.control_number.parse_id %>
+        </li>
       <% end %>
     </ul>
 <% end %>

@@ -1,10 +1,18 @@
 class AddApproveFinalCoversTask < ActiveRecord::Migration
 
   def up
+
+    # Add the approval flag & notes fields
+    add_column :cover_templates, :final_cover_approved, :boolean
+    add_column :cover_templates, :final_cover_approval_date, :date
+    add_column :cover_templates, :final_cover_notes, :text
+
     # Add new task - Set the next task to id from Final Covers
     # Update next task for Final Covers to new task id
 
     final_covers = Task.find_by_name('Final Covers')
+
+    return if final_covers.nil?
 
     new_task = Task.new
     new_task.name = 'Approve Final Covers'
@@ -44,12 +52,6 @@ class AddApproveFinalCoversTask < ActiveRecord::Migration
     artwork_rights_tab = Tab.find_by_task_id(artwork_rights_task.id)
     artwork_rights_tab.order = artwork_rights_tab.order + 1
     artwork_rights_tab.save
-
-    # Add the approval flag & notes fields
-    add_column :cover_templates, :final_cover_approved, :boolean
-    add_column :cover_templates, :final_cover_approval_date, :date
-    add_column :cover_templates, :final_cover_notes, :text
-
   end
 
   def down
@@ -60,7 +62,6 @@ class AddApproveFinalCoversTask < ActiveRecord::Migration
     final_covers = Task.find_by_name('Final Covers')
     final_covers.next_task = approve_covers.next_task
     final_covers.save
-
 
     # Find the related tab
     tab = Tab.find_by_task_id(approve_covers.id)
