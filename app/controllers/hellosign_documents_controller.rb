@@ -42,6 +42,6 @@ class HellosignDocumentsController < ApplicationController
     end
 
     def hellosign_document_params
-      params.require(:hellosign_document).permit(:hellosign_id, :status, :hellosignable_id)
+      params.require(:hellosign_document).permit(:hellosign_id, :status, :hellosign_document_type_id)
     end
 end

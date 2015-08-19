@@ -1,6 +1,6 @@
 <h1>Hellosign Document Types</h1>
 
-<table>
+<table id="hellosign_document_types_table">
   <thead>
     <tr>
       <th>Name</th>
@@ -9,7 +9,9 @@
       <th>Template</th>
       <th>Signers</th>
       <th>Ccs</th>
-      <th colspan="3"></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
@@ -31,5 +33,9 @@
 </table>
 
 <br>
+
+<script>
+  $("#hellosign_document_types_table").DataTable({ 'pageLength': '100'});
+</script>
 
 <%= link_to 'New Hellosign document type', new_hellosign_document_type_path %>

@@ -1,7 +1,12 @@
-<p id="notice"><%= notice %></p>
+<h1>Hellosign Document</h1>
 
 <p>
-  <strong>Hellosign:</strong>
+  <strong>Type:</strong>
+  <%= link_to @hellosign_document.name, @hellosign_document.hellosign_document_type %>
+</p>
+
+<p>
+  <strong>Hellosign ID:</strong>
   <%= @hellosign_document.hellosign_id %>
 </p>
 
@@ -10,10 +15,6 @@
   <%= @hellosign_document.status %>
 </p>
 
-<p>
-  <strong>Hellosignable:</strong>
-  <%= @hellosign_document.hellosignable %>
-</p>
 
 <%= link_to 'Edit', edit_hellosign_document_path(@hellosign_document) %> |
 <%= link_to 'Back', hellosign_documents_path %>

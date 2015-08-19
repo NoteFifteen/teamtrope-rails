@@ -2,10 +2,14 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
+
+    <label>Hellosign Template Id<span class="required">*</span></label>
+    <%= f.input :template_id, label: false, required: true %>
     <%= f.input :name %>
+
     <%= f.input :subject %>
     <%= f.input :message %>
-    <%= f.input :template_id %>
+
     <%#= f.input :signers %>
     <%#= f.input :ccs %>
   </div>

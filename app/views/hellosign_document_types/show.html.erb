@@ -1,8 +1,8 @@
-<p id="notice"><%= notice %></p>
+<h1><%= @hellosign_document_type.name %></h1>
 
 <p>
-  <strong>Name:</strong>
-  <%= @hellosign_document_type.name %>
+  <strong>Hellosign Template ID:</strong>
+  <%= @hellosign_document_type.template_id %>
 </p>
 
 <p>
@@ -15,18 +15,15 @@
   <%= @hellosign_document_type.message %>
 </p>
 
-<p>
-  <strong>Template:</strong>
-  <%= @hellosign_document_type.template_id %>
-</p>
-
+<!-- list of signers -->
 <p>
   <strong>Signers:</strong>
   <%= @hellosign_document_type.signers %>
 </p>
 
+<!-- list of ccs -->
 <p>
-  <strong>Ccs:</strong>
+  <strong>CCs:</strong>
   <%= @hellosign_document_type.ccs %>
 </p>
 
