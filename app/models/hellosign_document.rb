@@ -9,13 +9,56 @@ class HellosignDocument < ActiveRecord::Base
   alias :signatures :hellosign_signatures
 
   def HellosignDocument.send_creative_team_agreement(team_membership)
+
+    creative_team_agreement = HellosignDocumentType.find_by_name("Creative Team Agreement")
+
+    return if creative_team_agreement.nil?
+
+    hellosign_document = creative_team_agreement.hellosign_documents.create!
+
+    signers = [
+      {
+        email_address: team_membership.member.email,
+        name: team_membership.member.name,
+        role: 'Client'
+      }
+    ]
+
+    custom_fields = {
+      role: team_membership.role.name,
+      role_description: team_membership.role.contract_description,
+      percentage: team_membership.percentage
+    }
+
+    hellosign_document.send_agreement(custom_fields, signers)
+
+
     # hellosign_hash = create_team_agreement_hash(team_membership)
     # response = HelloSign.send_signature_request_with_template(hellosign_hash)
     #
     # doc = HellosignDocument.create!( name: 'Creative Team Agreement',
-    # 			hellosign_id: response.data['signature_request_id'] )
+    #       hellosign_id: response.data['signature_request_id'] )
     #
     # doc.hellosign_signatures.create!( team_membership_id: team_membership.id )
+  end
+
+  def send_agreement(custom_fields, signers)
+    response = HelloSign.send_signature_request_with_template(build_hellosign_payload(custom_fields, signers))
+
+    self.update_attributes(hellosign_id: response.data['signature_request_id'])
+
+  end
+
+  def build_hellosign_payload(custom_fields, signers, mode = Figaro.env.hello_sign_status)
+    {
+      test_mode: (mode == 'live')? false : true,
+      template_id: template_id,
+      subject: subject,
+      message: message,
+      signers: (signers + self.signers).map(&:deep_symbolize_keys),
+      ccs: self.ccs.map(&:deep_symbolize_keys),
+      custom_fields: custom_fields.deep_symbolize_keys
+    }
   end
 
   private
