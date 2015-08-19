@@ -265,13 +265,27 @@ ActiveRecord::Schema.define(version: 20150926214432) do
 
   add_index "genres", ["wp_id"], name: "index_genres_on_wp_id", unique: true, using: :btree
 
+  create_table "hellosign_document_types", force: true do |t|
+    t.string   "name"
+    t.string   "subject"
+    t.text     "message"
+    t.string   "template_id"
+    t.json     "signers"
+    t.json     "ccs"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "hellosign_documents", force: true do |t|
     t.string   "name"
     t.string   "hellosign_id"
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "hellosign_document_type_id"
   end
+
+  add_index "hellosign_documents", ["hellosign_document_type_id"], name: "index_hellosign_documents_on_hellosign_document_type_id", using: :btree
 
   create_table "hellosign_signatures", force: true do |t|
     t.integer  "hellosign_document_id"

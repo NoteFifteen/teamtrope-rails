@@ -1,6 +1,12 @@
 class HellosignDocument < ActiveRecord::Base
+  belongs_to :hellosign_document_type
+
+  delegate :name, :template_id, :subject, :message, :ccs, :signers, to: :hellosign_document_type, allow_nil: true
+
   has_many :hellosign_signatures
   has_many :team_memberships, through: :hellosign_signatures
+
+  alias :signatures :hellosign_signatures
 
   def HellosignDocument.send_creative_team_agreement(team_membership)
     # hellosign_hash = create_team_agreement_hash(team_membership)
@@ -26,7 +32,7 @@ class HellosignDocument < ActiveRecord::Base
         {
           email_address: sanitize_address(team_membership.member.email, 'to'),
           name: team_membership.member.name,
-          role: 'Client'
+          role: team_membership.role.name
         },
         {
           email_address: sanitize_address('justin.jeffress+ken@booktrope.com', 'to'),

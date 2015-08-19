@@ -1,0 +1,17 @@
+<%= simple_form_for(@hellosign_document) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :hellosign_id %>
+    <%= f.input :status %>
+    <%= select_tag :hellosign_document_type,
+          options_for_select(
+          HellosignDocumentType.all.map { | n | [n.name, n.id] }
+          ) %>
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

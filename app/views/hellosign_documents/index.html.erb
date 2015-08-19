@@ -1,0 +1,36 @@
+<h1>Hellosign Documents</h1>
+
+<table id="hellosign_documents_table">
+  <thead>
+    <tr>
+      <th>Hellosign Id</th>
+      <th>Status</th>
+      <th>Document Type</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @hellosign_documents.each do |hellosign_document| %>
+      <tr>
+        <td><%= hellosign_document.hellosign_id %></td>
+        <td><%= hellosign_document.status %></td>
+        <td><%= hellosign_document.name %></td>
+        <td><%= link_to 'Show', hellosign_document %></td>
+        <td><%= link_to 'Edit', edit_hellosign_document_path(hellosign_document) %></td>
+        <td><%= link_to 'Destroy', hellosign_document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<script>
+  $("#hellosign_documents_table").DataTable({ 'pageLength': '100'});
+</script>
+
+
+<%= link_to 'New Hellosign document', new_hellosign_document_path %>
