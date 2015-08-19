@@ -5,6 +5,8 @@ ruby '2.1.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
 
+gem 'pry-rails', :group => :development
+
 gem "highcharts-rails", "~> 3.0.0"
 
 # Use SCSS for stylesheets
