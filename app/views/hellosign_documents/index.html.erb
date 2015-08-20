@@ -3,9 +3,12 @@
 <table id="hellosign_documents_table">
   <thead>
     <tr>
-      <th>Hellosign Id</th>
+      <th>Is Complete?</th>
+      <th>Project</th>
+      <th>HelloSign Link</th>
       <th>Status</th>
       <th>Document Type</th>
+      <th>Signers</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
@@ -15,9 +18,18 @@
   <tbody>
     <% @hellosign_documents.each do |hellosign_document| %>
       <tr>
-        <td><%= hellosign_document.hellosign_id %></td>
+        <td><% if hellosign_document.is_complete then%>Yes<% else %>No<% end %> </td>
+        <td class="book-title"><%= link_to hellosign_document.team_membership.project.title, hellosign_document.team_membership.project %></td>
+        <td><%= link_to "Details", hellosign_document.details_url unless hellosign_document.details_url.nil? %></td>
         <td><%= hellosign_document.status %></td>
         <td><%= hellosign_document.name %></td>
+        <td>
+          <ul>
+          <% hellosign_document.signatures.order(:order).each do | signer |%>
+            <li><%= signer.signer_name %></li>
+          <% end %>
+          </ul>
+        </td>
         <td><%= link_to 'Show', hellosign_document %></td>
         <td><%= link_to 'Edit', edit_hellosign_document_path(hellosign_document) %></td>
         <td><%= link_to 'Destroy', hellosign_document, method: :delete, data: { confirm: 'Are you sure?' } %></td>

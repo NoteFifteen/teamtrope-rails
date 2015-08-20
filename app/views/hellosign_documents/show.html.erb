@@ -15,6 +15,53 @@
   <%= @hellosign_document.status %>
 </p>
 
+<p>
+  <strong>Is Complete:</strong>
+  <%= @hellosign_document.is_complete %>
+</p>
+
+<p>
+  <strong>Has Error:</strong>
+  <%= @hellosign_document.has_error %>
+</p>
+
+<p>
+  <strong>Details:</strong>
+  <%= link_to "Check Details", @hellosign_document.details_url %>
+</p>
+
+<p>
+  <strong>Signing Url:</strong>
+  <%= link_to "Sign Here", @hellosign_document.signing_url %>
+</p>
+
+
+<h2>Signers</h2>
+<table>
+  <tr>
+    <th>Order</th>
+    <th>Signature ID</th>
+    <th>Signer Name</th>
+    <th>Signer Email</th>
+    <th>Status Code</th>
+    <th>Signed At</th>
+    <th>Last Viewed At</th>
+    <th>Last Reminded At</th>
+  </tr>
+  <% @hellosign_document.signatures.order(:order).each do | signature | %>
+  <tr>
+    <td><%= signature.order %></td>
+    <td><%= signature.signature_id %></td>
+    <td><%= signature.signer_name %></td>
+    <td><%= signature.signer_email_address %></td>
+    <td><%= signature.status_code %></td>
+    <td><%= signature.signed_at %></td>
+    <td><%= signature.last_viewed_at %></td>
+    <td><%= signature.last_reminded_at %></td>
+  </tr>
+  <% end %>
+</table>
+
 
 <%= link_to 'Edit', edit_hellosign_document_path(@hellosign_document) %> |
 <%= link_to 'Back', hellosign_documents_path %>

@@ -283,19 +283,33 @@ ActiveRecord::Schema.define(version: 20150926214432) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "hellosign_document_type_id"
+    t.integer  "team_membership_id"
+    t.string   "signing_url"
+    t.string   "final_copy_uri"
+    t.string   "details_url"
+    t.boolean  "is_complete",                default: false
+    t.boolean  "has_error",                  default: false
   end
 
   add_index "hellosign_documents", ["hellosign_document_type_id"], name: "index_hellosign_documents_on_hellosign_document_type_id", using: :btree
+  add_index "hellosign_documents", ["team_membership_id"], name: "index_hellosign_documents_on_team_membership_id", using: :btree
 
   create_table "hellosign_signatures", force: true do |t|
     t.integer  "hellosign_document_id"
-    t.integer  "team_membership_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "signature_id"
+    t.string   "signer_email_address"
+    t.string   "signer_name"
+    t.integer  "order"
+    t.string   "status_code"
+    t.datetime "signed_at"
+    t.datetime "last_viewed_at"
+    t.datetime "last_reminded_at"
+    t.string   "error"
   end
 
   add_index "hellosign_signatures", ["hellosign_document_id"], name: "index_hellosign_signatures_on_hellosign_document_id", using: :btree
-  add_index "hellosign_signatures", ["team_membership_id"], name: "index_hellosign_signatures_on_team_membership_id", using: :btree
 
   create_table "imprints", force: true do |t|
     t.string   "name"
