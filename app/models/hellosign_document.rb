@@ -40,8 +40,13 @@ class HellosignDocument < ActiveRecord::Base
 
     #send the signature request to hellosign using their api
 
-    #TODO: wrap in a begin/rescue
-    response = HelloSign.send_signature_request_with_template(build_hellosign_payload(custom_fields, signers))
+    begin
+      response = HelloSign.send_signature_request_with_template(
+                    build_hellosign_payload(custom_fields, signers)
+      )
+    rescue
+      #todo: figure out what types of error hellosign throws.
+    end
 
     #update the hellosign_id with the guid returned in the response.
     self.update_attributes(
