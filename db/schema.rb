@@ -303,10 +303,10 @@ ActiveRecord::Schema.define(version: 20150926214432) do
     t.string   "signer_name"
     t.integer  "order"
     t.string   "status_code"
+    t.string   "error"
     t.datetime "signed_at"
     t.datetime "last_viewed_at"
     t.datetime "last_reminded_at"
-    t.string   "error"
   end
 
   add_index "hellosign_signatures", ["hellosign_document_id"], name: "index_hellosign_signatures_on_hellosign_document_id", using: :btree
