@@ -766,154 +766,154 @@ class ProjectMailer < ActionMailer::Base
     list.uniq
   end
 
-  # Used for Project Created updates to Admin
+    # Used for Project Created updates to Admin
   def admin_project_created_list
-    %w( jesse@booktrope.com pennie.dade@booktrope.com andy@booktrope.com )
+    %w( tt_project_created_list@booktrope.com )
   end
 
   # Notify for a member removal request
   def admin_remove_member_request_list
-    %w( jesse@booktrope.com andy@booktrope.com evie.hutton@booktrope.com )
+    %w( tt_remove_member_request_list@booktrope.com )
   end
 
   # Used when a new team member is added
   def admin_accept_team_member_list
-    %w( jesse@booktrope.com )
+    %w( tt_accept_team_member_list@booktrope.com )
   end
 
   # The original manuscript has been uploaded
   def admin_original_manuscript_list
-    %w( jesse@booktrope.com )
+    %w( tt_original_manuscript_list@booktrope.com )
   end
 
   # Used for Control Number updates
   def admin_edit_control_numbers_list
-    %w( andy@booktrope.com justin.jeffress@booktrope.com kate.burkett@booktrope.com pennie.dade@booktrope.com)
+    %w( tt_edit_control_numbers_list@booktrope.com )
   end
 
   # Notify Payroll list of a new 1099 in Box
   def admin_1099_received_list
-    %w( Payroll@booktrope.com )
+    %w( tt_1099_received_list@booktrope.com )
   end
 
   # Notify of an allocation change
   def admin_rev_allocation_change_list
-    %w( evie.hutton@booktrope.com )
+    %w( tt_rev_allocation_change_list@booktrope.com )
   end
 
   # Notifications for when a user uploads an edited manuscript
   def admin_edited_manuscript_list
-    %w( jesse@booktrope.com adam.bodendieck@booktrope.com jennifer.gilbert@booktrope.com )
+    %w( tt_edited_manuscript_list@booktrope.com )
   end
 
   # A new stock cover image has been uploaded
   def admin_add_stock_cover_image_list
-    %w( shari.ryan@booktrope.com adam.bodendieck@booktrope.com )
+    %w( tt_add_stock_cover_image_list@booktrope.com )
   end
 
   # The layout has been uploaded
   def admin_layout_upload_list
-    %w( andy@booktrope.com )
+    %w( tt_layout_upload_list@booktrope.com )
   end
 
   # The final page count has been updated
   def admin_final_page_count_list
-    %w( andy@booktrope.com adam.bodendieck@booktrope.com )
+    %w( tt_final_page_count_list@booktrope.com )
   end
 
   # Images have been requested
   def admin_request_images_list
-    %w( andy@booktrope.com shari.ryan@booktrope.com adam.bodendieck@booktrope.com )
+    %w( tt_request_images_list@booktrope.com )
   end
 
   # The proofed manuscript has been uploaded
   def admin_proofed_manuscript_list
-    %w( vanyad@booktrope.com victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com andy@booktrope.com )
+    %w( tt_proofed_manuscript_list@booktrope.com )
   end
 
   # The layout style has been selected
   def admin_edit_layout_style_list
-    %w( vanyad@booktrope.com victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com andy@booktrope.com )
+    %w( tt_edit_layout_style_list@booktrope.com )
   end
 
   # The layout has been approved
   def admin_layout_approved_list
-    %w( vanyad@booktrope.com victoria@booktrope.com adam.bodendieck@booktrope.com kate.burkett@booktrope.com andy@booktrope.com )
+    %w( tt_layout_approved_list@booktrope.com )
   end
 
   # The Cover Concept has been uploaded
   def admin_cover_concept_upload_list
-    %w( ksears@booktrope.com andy@booktrope.com jennifer.gilbert@booktrope.com )
+    %w( tt_cover_concept_upload_list@booktrope.com )
   end
 
   # The cover art has been approved
   def admin_approve_cover_art_list
-    %w( ksears@booktrope.com jennifer.gilbert@booktrope.com )
+    %w( tt_approve_cover_art_list@booktrope.com )
   end
 
   def admin_upload_cover_templates_list
-    %w( shari.ryan@booktrope.com vanyad@booktrope.com adam.bodendieck@booktrope.com victoria@booktrope.com kate.burkett@booktrope.com andy@booktrope.com )
+    %w( tt_upload_cover_templates_list@booktrope.com )
   end
 
   # The Final Cover approved
   def admin_final_cover_approval_list
-    %w(  adam.bodendieck@booktrope.com shari.ryan@booktrope.com andy@booktrope.com )
+    %w( tt_final_cover_approval_list@booktrope.com )
   end
 
   def admin_artwork_rights_request_list
-    %w( Evie.Hutton@booktrope.com jesse@booktrope.com andy@booktrope.com )
+    %w( tt_artwork_rights_request_list@booktrope.com )
   end
 
   def admin_blurb_submit_list
-    %w( andy@booktrope.com jennifer.gilbert@booktrope.com ksears@booktrope.com )
+    %w( tt_blurb_submit_list@booktrope.com )
   end
 
   def admin_blurb_approve_list
-    %w( andy@booktrope.com jennifer.gilbert@booktrope.com ksears@booktrope.com )
+    %w( tt_blurb_approve_list@booktrope.com )
   end
 
   def admin_publication_fact_sheet_list
-    %w( vanyad@booktrope.com adam.bodendieck@booktrope.com victoria@booktrope.com kate.burkett@booktrope.com )
+    %w( tt_publication_fact_sheet_list@booktrope.com )
   end
 
   def admin_final_manuscript_list
-    %w( adam.bodendieck@booktrope.com andy@booktrope.com )
+    %w( tt_final_manuscript_list@booktrope.com )
   end
 
   def admin_publish_book_list
-    %w( andy@booktrope.com jesse@booktrope.com adam.bodendieck@booktrope.com john.hawkins@booktrope.com emily.duncan@booktrope.com )
+    %w( tt_publish_book_list@booktrope.com )
   end
 
   def admin_media_kit_list
-    %w( andy@booktrope.com )
+    %w( tt_media_kit_list@booktrope.com )
   end
 
   def admin_blog_tour_list
-    %w( ksears@booktrope.com payroll@booktrope.com )
+    %w( tt_blog_tour_list@booktrope.com )
   end
 
   def admin_price_promo_list
-    %w( Pennie.dade@booktrope.com kate.burkett@booktrope.com andy@booktrope.com adam.bodendieck@booktrope.com justin.jeffress@booktrope.com )
+    %w( tt_price_promo_list@booktrope.com )
   end
 
   def admin_print_corner_list
-    %w( adam.bodendieck@booktrope.com andy@booktrope.com )
+    %w( tt_print_corner_list@booktrope.com )
   end
 
   def admin_marketing_expense_list
-    %w( evie.hutton@booktrope.com )
+    %w( tt_marketing_expense_list@booktrope.com )
   end
 
   def admin_production_expense_list
-    %w( adam.bodendieck@booktrope.com evie.hutton@booktrope.com andy@booktrope.com )
+    %w( tt_production_expense_list@booktrope.com )
   end
 
   def admin_kdp_select_enrollment_list
-    %w( adam.bodendieck@booktrope.com Pennie.dade@booktrope.com andy@booktrope.com )
+    %w( tt_kdp_select_enrollment_list@booktrope.com )
   end
 
   def admin_kdp_select_update_list
-    %w( kate.burkett@booktrope.com Pennie.dade@booktrope.com ksears@booktrope.com andy@booktrope.com )
+    %w( tt_kdp_select_update_list@booktrope.com )
   end
 
   # Set the campaign header for MailGun tracking
