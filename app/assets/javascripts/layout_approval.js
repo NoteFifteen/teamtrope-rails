@@ -129,5 +129,29 @@ $(document).ready(function() {
         $("#project_layout_attributes_layout_approval_issue_list").val(issueList.tableToJson());
     });
 
+    // Simple validator for the form -- We want to make sure they select an option and
+    // get decent feedback if they do not.
+    $('#approve_layout').validate({
+        errorElement: 'span',
+        errorClass: 'validationError',
+        errorPlacement: function(error, element) {
+            // Put the error to the right
+            if(element.attr('type') === 'radio') {
+                var list = $(element).closest('ul');
+                error.insertBefore(list);
+            } else {
+                error.insertBefore(element);
+            }
+        },
+        rules: {
+            'project[layout_attributes][layout_approved]': {
+                required: true
+            }
+        },
+        messages: {
+            'project[layout_attributes][layout_approved]': 'Please select an option.'
+        }
+    });
+
 });
 

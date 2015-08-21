@@ -35,22 +35,22 @@
     <hr />
 
     <div class="layout_approval">
-      <p><strong>Is Layout Approved? *</strong></p>
+      <p><strong>Is Layout Approved?</strong><span class="required">*</span></p>
 
       <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'approve_layout', id: @project.id),
-                          html: { id: "approve_layout" } do |f| %>
+                          html: { id: 'approve_layout' } do |f| %>
         <%= f.error_notification %>
         <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
-
         <%= f.simple_fields_for :layout, (f.object.layout.nil?) ? f.object.build_layout : f.object.layout do | l | %>
+          <ul>
           <%= l.collection_radio_buttons :layout_approved,
                      [['approved', 'Yes'],
                       ['approved_revisions', 'Yes, with revisions (please complete the following to provide revision requests). Click the "Plus" sign to add a new line for each revision.']],
                      :first, :last,
-                     :item_wrapper_tag => 'div',
+                     :item_wrapper_tag => 'li',
                      :item_wrapper_class => 'radio'
           %>
-
+          </ul>
           <!-- need hidden input for list -->
           <%= l.input_field :layout_approval_issue_list, as: :hidden %>
         <% end %>
@@ -72,7 +72,7 @@
     <!-- This is where we would break the page for step 3 -->
     <hr />
     <div class="layout_approval">
-         <%= f.submit 'Save' %>
+         <%= f.submit 'Save', class: 'btn' %>
       <% end %>
     </div>
   </div>
