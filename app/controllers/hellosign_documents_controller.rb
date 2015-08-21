@@ -1,7 +1,7 @@
 class HellosignDocumentsController < ApplicationController
-  before_action :set_hellosign_document, only: [:show, :edit, :update, :destroy]
+  before_action :set_hellosign_document, only: [:show, :edit, :update, :destroy, :cancel_signature_request]
 
-  respond_to :html
+  respond_to :html, :js
 
   def index
     @hellosign_documents = HellosignDocument.all
@@ -33,6 +33,20 @@ class HellosignDocumentsController < ApplicationController
 
   def destroy
     @hellosign_document.destroy
+    respond_with(@hellosign_document)
+  end
+
+  def cancel_signature_request
+
+    begin
+      HelloSign.cancel_signature_request signature_request_id: @hellosign_document.hellosign_id
+      @hellosign_document.update_attributes(pending_cancellation: true)
+      flash[:success] = 'Cancellation Request Sent to HelloSign'
+    rescue HelloSign::Error::Gone => e
+      flash[:success] = 'This Signature Request has already been cancelled.'
+      @hellosign_document.update_attributes(pending_cancellation: false, is_cancelled: true)
+    end
+
     respond_with(@hellosign_document)
   end
 

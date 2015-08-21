@@ -288,6 +288,8 @@ ActiveRecord::Schema.define(version: 20150926214432) do
     t.string   "final_copy_uri"
     t.string   "details_url"
     t.boolean  "is_complete",                default: false
+    t.boolean  "pending_cancellation",       default: false
+    t.boolean  "is_cancelled",               default: false
     t.boolean  "has_error",                  default: false
   end
 
@@ -805,6 +807,7 @@ ActiveRecord::Schema.define(version: 20150926214432) do
     t.text     "contract_description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "needs_agreement",      default: false
   end
 
   add_index "roles", ["name"], name: "index_roles_on_name", unique: true, using: :btree

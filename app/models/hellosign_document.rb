@@ -74,6 +74,14 @@ class HellosignDocument < ActiveRecord::Base
     end
   end
 
+  def pending_cancellation?
+    pending_cancellation
+  end
+
+  def cancelled?
+    is_cancelled
+  end
+
   private
   def build_hellosign_payload(custom_fields, signers, mode = Figaro.env.hello_sign_status)
     {

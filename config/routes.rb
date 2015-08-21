@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   resources :hellosign_documents
 
+  match 'hellosign_documents/cancel_request/:id', to: 'hellosign_documents#cancel_signature_request', via: :patch
+
   resources :hellosign_document_types
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }

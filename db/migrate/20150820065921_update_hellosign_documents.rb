@@ -8,6 +8,8 @@ class UpdateHellosignDocuments < ActiveRecord::Migration
     add_column :hellosign_documents, :final_copy_uri, :string, before: :created_at
     add_column :hellosign_documents, :details_url, :string, before: :created_at
     add_column :hellosign_documents, :is_complete, :bool, default: false, before: :created_at
+    add_column :hellosign_documents, :pending_cancellation, :bool, default: false, before: :created_at
+    add_column :hellosign_documents, :is_cancelled, :bool, default: false, before: :created_at
     add_column :hellosign_documents, :has_error, :bool, default: false, before: :created_at
   end
 end

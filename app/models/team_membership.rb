@@ -13,7 +13,7 @@ class TeamMembership < ActiveRecord::Base
   # callbacks - when a team_membership has been created or the percentage has been
   # modified create and send a signing request via hellsign
   after_create :send_creative_team_agreement, unless: :skip_callbacks
-  after_update :send_agreement_when_needed
+  after_update :send_agreement_when_percentage_updated, unless: :skip_callbacks
 
   #
   RemovalReasons = [
@@ -41,13 +41,12 @@ class TeamMembership < ActiveRecord::Base
   private
 
   #only send an amended agreement if the percentage has changed.
-  def send_agreement_when_needed
-    puts "*********************** changed: #{percentage_changed?}"
+  def send_agreement_when_percentage_updated
     send_creative_team_agreement if percentage_changed?
   end
 
   def send_creative_team_agreement
-    HellosignDocument.send_creative_team_agreement(self)
+    HellosignDocument.send_creative_team_agreement(self) if self.role.needs_agreement?
   end
 
 end
