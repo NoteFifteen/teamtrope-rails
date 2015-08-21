@@ -79,7 +79,15 @@ class HellosignDocument < ActiveRecord::Base
   end
 
   def cancelled?
-    is_cancelled
+    cancelled
+  end
+
+  def has_error?
+    has_error
+  end
+
+  def complete?
+    is_complete
   end
 
   private

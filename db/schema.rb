@@ -289,7 +289,7 @@ ActiveRecord::Schema.define(version: 20150926214432) do
     t.string   "details_url"
     t.boolean  "is_complete",                default: false
     t.boolean  "pending_cancellation",       default: false
-    t.boolean  "is_cancelled",               default: false
+    t.boolean  "cancelled",                  default: false
     t.boolean  "has_error",                  default: false
   end
 

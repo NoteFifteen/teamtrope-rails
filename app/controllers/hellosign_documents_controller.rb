@@ -44,7 +44,7 @@ class HellosignDocumentsController < ApplicationController
       flash[:success] = 'Cancellation Request Sent to HelloSign'
     rescue HelloSign::Error::Gone => e
       flash[:success] = 'This Signature Request has already been cancelled.'
-      @hellosign_document.update_attributes(pending_cancellation: false, is_cancelled: true)
+      @hellosign_document.update_attributes(pending_cancellation: false, cancelled: true)
     end
 
     respond_with(@hellosign_document)
