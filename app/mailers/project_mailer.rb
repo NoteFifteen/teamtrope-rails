@@ -371,7 +371,8 @@ class ProjectMailer < ActionMailer::Base
         'Author bio is correct?' => '&#10004;'.html_safe,
         'Book blurb on back is final?' => '&#10004;'.html_safe,
         'ISBN bar code matches ISBN on title page of laid out document?' => '&#10004;'.html_safe,
-        'Author name and title are correct on front cover?' => '&#10004;'.html_safe
+        'Author name and title are correct on front cover?' => '&#10004;'.html_safe,
+        'All fonts are for commercial use and appropriate license(s) have been acquired?' => '&#10004;'.html_safe,
     }
 
     user_subject = "Upload Cover Templates from #{current_user.name} for #{project.title}"
