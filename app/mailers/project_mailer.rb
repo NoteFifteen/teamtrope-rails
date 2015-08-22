@@ -390,7 +390,7 @@ class ProjectMailer < ActionMailer::Base
     admin_subject = "New " + user_subject
 
     send_email_message('final_cover_approval', {}, get_project_recipient_list(@project, roles: [:author, :book_manager, :cover_designer, :project_manager]), user_subject)
-    send_email_message('final_cover_approval_admin', {}, admin_final_cover_approval_list, admin_subject)
+    send_email_message('final_cover_approval', {}, admin_final_cover_approval_list, admin_subject)
   end
 
   def artwork_rights_request(project, current_user)
