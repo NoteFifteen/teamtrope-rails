@@ -206,6 +206,8 @@ module Booktrope
             book["teamtropeProjectId"] = value
           when 'asin'
             book["asin"] = value
+          when 'encore_asin'
+            book["inclusionASIN"] = value
           when 'apple_id'
             book["appleId"] = value
           when 'hardback_isbn'
