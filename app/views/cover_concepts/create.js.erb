@@ -8,10 +8,16 @@ console.log(<%=@last_errors%>);
 
         <% if @updated_file == 'cover_concept_image' %>
             $('#cover_concept_image_submit_button').removeAttr('disabled').removeClass('disabled');
+            if ($('#updated_cover_concept_image').length) {
+               $('#updated_cover_concept_image').val("yes");
+            }
         <% end %>
 
         <% if @updated_file == 'stock_cover_image' %>
             $('#stock_cover_image_submit_button').removeAttr('disabled').removeClass('disabled');
+            if ($('#updated_stock_cover_image').length) {
+               $('#updated_stock_cover_image').val("yes");
+            }
         <% end %>
     <% end %>
 

@@ -1,4 +1,6 @@
 class ProjectTypeWorkflowsController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_project_type_workflow, only: [:show, :edit, :update, :destroy]
 
   # GET /project_type_workflows

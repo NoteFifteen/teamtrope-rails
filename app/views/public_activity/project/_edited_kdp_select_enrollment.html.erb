@@ -1,0 +1,11 @@
+<%= link_to image_tag(activity.owner.profile.avatar(:thumb), size: "40x40"), activity.owner.profile_page unless activity.owner.nil? || activity.owner.profile.nil? %>
+<%= link_to activity.owner.name, activity.owner.profile_page unless activity.owner.nil? || activity.owner.profile.nil? %>
+
+<% kdp_select_enrollment = KdpSelectEnrollment.find_by_id(activity.parameters[:object_id]) %>
+<% unless kdp_select_enrollment.nil? %>
+  <%= "#{activity.parameters[:text]} #{link_to("KDP Select Enrollment", kdp_select_enrollment)}".html_safe %>
+<% else %>
+  <%= "#{activity.parameters[:text]} KDP Select Enrollment" %>
+<% end %>
+on <%= activity.created_at.strftime("%Y/%m/%d %H:%M:%S") %>
+<br />

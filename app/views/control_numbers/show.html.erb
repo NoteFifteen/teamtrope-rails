@@ -1,0 +1,36 @@
+<h2>Showing Control Numbers for <%= link_to @control_number.project.title, @control_number.project %></h2>
+
+<p>
+  <strong>ASIN:</strong>
+  <%= @control_number.asin %>
+</p>
+
+<p>
+  <strong>Apple ID:</strong>
+  <%= @control_number.apple_id %>
+</p>
+
+<p>
+  <strong>Epub ISBN:</strong>
+  <%= @control_number.epub_isbn %>
+</p>
+
+<p>
+  <strong>Hardback ISBN:</strong>
+  <%= @control_number.hardback_isbn %>
+</p>
+
+<p>
+  <strong>Paperback ISBN:</strong>
+  <%= @control_number.paperback_isbn %>
+</p>
+
+<p>
+  <strong>Parse ID:</strong>
+  <%= @control_number.parse_id %>
+</p>
+
+<% if can? :edit, @controller_action %>
+  <%= link_to 'Edit', edit_control_number_path(@control_number) %> |
+  <%= link_to 'Back', control_numbers_path %>
+<% end %>

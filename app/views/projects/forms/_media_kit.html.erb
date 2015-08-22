@@ -1,24 +1,35 @@
+<div class="container">
 <h1>Media Kit</h1>
-<div class="gf_browser_safari gform_wrapper">
-  <%= simple_form_for @project,
-                      url: url_for(controller: 'projects', action: 'media_kit',  id: @project),
-                      html: { id: 'media_kit' } do | f | %>
-    <%= f.error_notification %>
-    <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
-    <div>
-      <ul>
-        <%= f.simple_fields_for :media_kits, f.object.media_kits.build  do | media_kit | %>
-        <li>
-          <%= media_kit.input :document, label: 'Media Kit', required: true  %>
-          <div>.doc, .docx, or .pdf only
-            If you have more than one book published by Booktrope and would like to be considered for a blog tour or other marketing service around your book release, please upload your media kit here.
-          </div>
-        </li>
+  <div class="row">
+    <div class="col-md-6">
+      <%
+        # amazon s3 uploads
+        [
+          {
+            label: "Media Kit (.pdf)", required: true, callback_url: project_media_kit_url(@project),
+            form_id: "media_kit_document_s3_uploader", callback_param: "media_kit_document[direct_upload_url]",
+            container_id: "media_kit_document_uploads_container", object: @project.media_kit, column_name: "document",
+            controller_action: 'download_media_kit'
+          }
+        ].each do | s3_upload_hash | %>
+
+          <%= render partial: "shared/amazon_s3_upload", locals: s3_upload_hash %>
         <% end %>
-      </ul>
+
+        <div>.doc, .docx, or .pdf only
+        If you have more than one book published by Booktrope and would like to be considered for a blog tour or other marketing service around your book release, please upload your media kit here.
+        </div>
+
+        <%= simple_form_for @project,
+          url: url_for(controller: 'projects', action: 'media_kit',  id: @project),
+          html: { id: 'media_kit' } do | f | %>
+            <%= f.error_notification %>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+            <%= f.simple_fields_for :media_kit, ((f.object.media_kit.nil?)? f.object.build_media_kit : f.object.media_kit)  do | media_kit | %>
+            <% end %>
+
+            <%= f.submit "submit", disabled: '', class: 'btn disabled', id: 'media_kit_submit_button' %>
+        <% end %>
     </div>
-    <div>
-      <%= f.submit "submit" %>
-    </div>
-  <% end %>
+  </div>
 </div>

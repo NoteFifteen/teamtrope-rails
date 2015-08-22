@@ -1,22 +1,28 @@
-<h1>Listing KDP Select Enrollments</h1>
+<h1>KDP Select Enrollments</h1>
 
-<table>
+<table id="kdp_select_enrollments_table">
   <thead>
     <tr>
       <th>Project</th>
       <th>Member</th>
+      <th>Requested</th>
+      <th>Last Updated</th>
       <th>Enrollment date</th>
       <th>Update type</th>
       <th>Update data</th>
-      <th colspan="3"></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
   <tbody>
     <% @kdp_select_enrollments.each do |kdp_select_enrollment| %>
       <tr>
-        <td><%= link_to kdp_select_enrollment.project.title, kdp_select_enrollment.project unless kdp_select_enrollment.project.nil? %></td>
+        <td class="book-title"><%= link_to kdp_select_enrollment.project.title, kdp_select_enrollment.project unless kdp_select_enrollment.project.nil? %></td>
         <td><%= link_to kdp_select_enrollment.member.name, kdp_select_enrollment.member.profile_page unless kdp_select_enrollment.member.nil? %></td>
+        <td><%= kdp_select_enrollment.created_at %></td>
+        <td><%= kdp_select_enrollment.updated_at %></td>
         <td><%= kdp_select_enrollment.enrollment_date %></td>
         <td><%= kdp_select_enrollment.update_type %></td>
         <td><%= kdp_select_enrollment.update_data %></td>
@@ -30,4 +36,6 @@
 
 <br>
 
-<%= link_to 'New Kdp select enrollment', new_kdp_select_enrollment_path %>
+<script>
+  $("#kdp_select_enrollments_table").DataTable({ 'pageLength': '100'});
+</script>

@@ -1,9 +1,4 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Project:</strong>
-  <%= @publication_fact_sheet.project %>
-</p>
+<h1>Publication Fact Sheet for <br /> <%= link_to @project.title, @project %></h1>
 
 <p>
   <strong>Author name:</strong>
@@ -72,7 +67,7 @@
 
 <p>
   <strong>Age range:</strong>
-  <%= @publication_fact_sheet.age_range %>
+  <%= Hash[PublicationFactSheet::AGE_RANGES][@publication_fact_sheet.age_range] %>
 </p>
 
 <p>
@@ -80,5 +75,7 @@
   <%= @publication_fact_sheet.paperback_cover_type %>
 </p>
 
-<%= link_to 'Edit', edit_publication_fact_sheet_path(@publication_fact_sheet) %> |
-<%= link_to 'Back', publication_fact_sheets_path %>
+<% if current_user.role? :booktrope_staff %>
+  <%= link_to 'Edit', edit_publication_fact_sheet_path(@publication_fact_sheet) %> |
+  <%= link_to 'Back', publication_fact_sheets_path %>
+<% end %>

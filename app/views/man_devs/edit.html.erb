@@ -1,6 +1,10 @@
-<h1>Editing man_dev</h1>
+<h1>Editing Manuscript Development for <br /><%= link_to @man_dev.project.title, @man_dev.project %></h1>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="col-md-8">
+    <%= render 'form' %>
+  </div>
+</div>
 
 <%= link_to 'Show', @man_dev %> |
 <%= link_to 'Back', man_devs_path %>

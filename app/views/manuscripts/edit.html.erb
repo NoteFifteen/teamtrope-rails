@@ -1,6 +1,10 @@
-<h1>Editing manuscript</h1>
+<h1>Editing Manuscript for <%= @project.title %></h1>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="col-md-8">
+    <%= render 'form' %>
+  </div>
+</div>
 
 <%= link_to 'Show', @manuscript %> |
 <%= link_to 'Back', manuscripts_path %>

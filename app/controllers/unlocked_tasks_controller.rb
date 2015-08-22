@@ -1,4 +1,6 @@
 class UnlockedTasksController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_unlocked_task, only: [:show, :edit, :update, :destroy]
 
   # GET /unlocked_tasks

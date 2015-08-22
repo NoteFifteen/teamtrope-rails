@@ -2,22 +2,47 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :project %>
-    <%= f.input :author_name %>
+
+    <label>Author Name<span class="required">*</span></label>
+    <%= f.input :author_name, label: false, required: true %>
+
     <%= f.input :series_name %>
     <%= f.input :series_number %>
-    <%= f.input :description %>
+
+    <label>Back Blurb / Book Description<span class="required">*</span></label>
+    <%= f.input :description, label: false, required: false %>
+
+    <label>Author Bio<span class="required">*</span></label>
     <%= f.input :author_bio %>
+
     <%= f.input :endorsements %>
-    <%= f.input :one_line_blurb %>
+
+    <label>One Line Blurb<span class="required">*</span></label>
+    <%= f.input :one_line_blurb, label: false, required: true %>
+
     <%= f.input :print_price %>
-    <%= f.input :ebook_price %>
-    <%= f.input :bisac_code_one %>
-    <%= f.input :bisac_code_two %>
-    <%= f.input :bisac_code_three %>
+
+    <label>ebook Price<span class="required">*</span></label>
+    <%= f.input :ebook_price, label: false, required: true %>
+
+    <label>BISAC Code One<span class="required">*</span></label>
+    <%= f.input :bisac_code_one, label: false, required: true %>
+
+    <%= f.input :bisac_code_two, label: 'BISAC Code Two' %>
+    <%= f.input :bisac_code_three, label: 'BISAC Code Three' %>
     <%= f.input :search_terms %>
-    <%= f.input :age_range %>
-    <%= f.input :paperback_cover_type %>
+
+    <label>What age range is most appropriate for your book?<span class="required">*</span></label>
+    <%= f.collection_radio_buttons :age_range, PublicationFactSheet::AGE_RANGES,
+                 :first, :last, required: true,
+                 collection_wrapper_tag: 'div',
+                 item_wrapper_tag: 'p' %>
+
+    <label>Do you want your paperback cover to be matte or glossy?<span class="required">*</span></label>
+    <%= f.collection_radio_buttons :paperback_cover_type, PublicationFactSheet::COVER_TYPES,
+                :first, :last, required: true,
+                collection_wrapper_tag: 'div',
+                item_wrapper_tag: 'p' %>
   </div>
 
   <div class="form-actions">

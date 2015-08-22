@@ -42,12 +42,7 @@
         <td><%= published_file.publication_date %></td>
 
         <td><%= link_to 'Show', published_file %></td>
-        <td><%= link_to 'Edit', edit_published_file_path(published_file) %></td>
-        <!--
-        <td><%=
-            # link_to 'Destroy', published_file, method: :delete, data: { confirm: 'Are you sure?' }
-        %></td>
-        -->
+        <td><% if can? :edit, published_file %><%= link_to 'Edit', edit_published_file_path(published_file) %><% end %>s</td>
       </tr>
     <% end %>
   </tbody>

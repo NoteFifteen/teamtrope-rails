@@ -1,3 +1,5 @@
+<h1><%= @task.name %></h1>
+
 <p>
   <strong>Workflow:</strong>
   <%= @task.workflow.name unless @task.workflow.nil? %>
@@ -5,22 +7,21 @@
 
 <p>
   <strong>Next:</strong>
-  <%= @task.next_id %>
+  <% unless @task.next_task.nil? %>
+    <%= link_to @task.next_task.name, @task.next_task %>
+  <% end %>
 </p>
 
 <p>
   <strong>Rejected task:</strong>
-  <%= @task.rejected_task_id %>
+  <% unless @task.rejected_task.nil? %>
+    <%= link_to @task.rejected_task.name, @task.rejected_task %>
+  <% end %>
 </p>
 
 <p>
   <strong>Partial:</strong>
   <%= @task.partial %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @task.name %>
 </p>
 
 <p>
@@ -43,21 +44,39 @@
   <%= @task.days_to_complete %>
 </p>
 
-<p>
-	<strong>Performer Roles:</strong>
-	<% @task.performers.each_with_index do | performer, index | %>
-		<%= performer.name %>
-		<%= "," if !index != 0 && index != @task.performers.count-1 %> 
-	<% end %>
-</p>
+<div class="row">
+  <div class="col-md-4">
+  <h4>Performer Roles:</h4>
+  <table>
+    <tr>
+      <th>Performers</th>
+    </tr>
+    <tbody>
+    <% @task.performers.each do | performer | %>
+      <tr><td><%= performer.name %></td></tr>
+    <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
 
-<p>
-	<strong>Unlocked Tasks:</strong>
-	<% @task.unlocked_tasks.each_with_index do | unlocked_task, index | %>
-		<%= unlocked_task.unlocked_task.name unless unlocked_task.unlocked_task.nil? %>
-		<%= "," if !index != 0 && index != @task.unlocked_tasks.count-1 %> 
-	<% end %>
-</p>
+<div class="row">
+  <div class="col-md-4">
+    <h4>Unlocked Tasks:</h4>
+    <table>
+      <tr>
+        <th>Task</th>
+      </tr>
+      <tbody>
+        <% @task.unlocked_tasks.each do | unlocked_task| %>
+        <%#= unlocked_task.unlocked_task.name unless unlocked_task.unlocked_task.nil? %>
+          <tr><td><%= link_to unlocked_task.unlocked_task.name, unlocked_task.unlocked_task %></td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>

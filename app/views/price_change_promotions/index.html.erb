@@ -18,16 +18,16 @@
       <th>Sites</th>
       <th>Start Date Parse ID(s)</th>
       <th>End Date Parse ID(s)</th>
-      <th>Read</th>
-      <th>Update</th>
-      <th>Destroy</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
   <tbody>
     <% @price_change_promotions.each do |price_change_promotion| %>
       <tr>
-        <td class=""><%= link_to price_change_promotion.project.title, price_change_promotion.project %></td>
+        <td class="book-title"><%= link_to price_change_promotion.project.title, price_change_promotion.project %></td>
         <td><%= price_change_promotion.type.map(&:humanize).join(",") %></td>
         <td><nobr><%= price_change_promotion.start_date %></nobr></td>
         <td><%= price_change_promotion.price_promotion %></td>
@@ -37,8 +37,16 @@
         <td><%= price_change_promotion.parse_ids["start_ids"].gsub(/,/, ",<br />").html_safe unless price_change_promotion.parse_ids.nil? || price_change_promotion.parse_ids["start_ids"].nil? %></td>
         <td><%= price_change_promotion.parse_ids["end_ids"].gsub(/,/, ", <br />").html_safe unless price_change_promotion.parse_ids.nil? || price_change_promotion.parse_ids["end_ids"].nil? %></td>
         <td><%= link_to 'Show', price_change_promotion %></td>
-        <td><%= link_to 'Edit', edit_price_change_promotion_path(price_change_promotion) %></td>
-        <td><%= link_to 'Destroy', price_change_promotion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if can? :edit, price_change_promotion %>
+            <%= link_to 'Edit', edit_price_change_promotion_path(price_change_promotion) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :delete, price_change_promotion %>
+            <%= link_to 'Destroy', price_change_promotion, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -50,5 +58,4 @@
 </script>
 <br>
 
-<%= link_to 'New Price change promotion', new_price_change_promotion_path %>
 </div>

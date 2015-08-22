@@ -14,6 +14,23 @@ $('#cover_template_<%=@updated_file%>_s3_uploader').html('<span><%=params[:filen
       console.error('cover_template_uploaded_files is undefined!  Cannot track uploaded book.');
     }
   <% end %>
+
+  <% if @updated_file == 'ebook_front_cover' %>
+    $('#updated_ebook_front_cover').val('yes');
+  <% end %>
+
+  <% if @updated_file == 'createspace_cover' %>
+    $('#updated_createspace_cover').val('yes');
+  <% end %>
+
+  <% if @updated_file == 'lightning_source_cover' %>
+    $('#updated_lightning_source_cover').val('yes');
+  <% end %>
+
+  <% if @updated_file == 'alternative_cover' %>
+    $('#updated_alternative_cover').val('yes');
+  <% end %>
+
 <% else %>
   $('#upload_<%=params[:unique_id]%> div.progress').removeClass('active progress-striped').addClass('progress-danger');
 <% end %>

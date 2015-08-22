@@ -1,0 +1,11 @@
+<%= link_to image_tag(activity.owner.profile.avatar(:thumb), size: "40x40"), activity.owner.profile_page unless activity.owner.nil? || activity.owner.profile.nil? %>
+<%= link_to activity.owner.name, activity.owner.profile_page unless activity.owner.nil? || activity.owner.profile.nil? %>
+
+<% cover_template = CoverTemplate.find_by_id(activity.parameters[:object_id]) %>
+<% unless cover_template.nil? %>
+  <%= "#{activity.parameters[:text]} for #{link_to("Cover Template", cover_template)}".html_safe %>
+<% else %>
+  <%= "#{activity.parameters[:text]} Cover Template" %>
+<% end %>
+on <%= activity.created_at.strftime("%Y/%m/%d %H:%M:%S") %>
+<br />

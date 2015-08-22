@@ -1,6 +1,10 @@
-<h1>Editing publication_fact_sheet</h1>
+<h1>Editing Publication Fact Sheet for <br /><%= link_to @project.title, @project %></h1>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="col-md-8">
+    <%= render 'form' %>
+  </div>
+</div>
 
 <%= link_to 'Show', @publication_fact_sheet %> |
 <%= link_to 'Back', publication_fact_sheets_path %>

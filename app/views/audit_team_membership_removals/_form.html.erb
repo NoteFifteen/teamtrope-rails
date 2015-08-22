@@ -1,0 +1,14 @@
+<%= simple_form_for(@audit_team_membership_removal) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :notes %>
+    <%= f.input :notified_member %>
+    <%= f.input :percentage %>
+    <%= f.input :reason %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

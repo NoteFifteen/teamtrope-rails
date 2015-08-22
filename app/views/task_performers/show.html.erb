@@ -1,0 +1,15 @@
+<h1>Task Performer</h1>
+
+<p>
+  <strong>Task:</strong>
+  <%= @task_performer.task.name unless @task_performer.task.nil? %>
+</p>
+
+<p>
+  <strong>Role:</strong>
+  <%= @task_performer.role.name unless @task_performer.role.nil? %>
+</p>
+
+
+<%= link_to 'Edit', edit_task_performer_path(@task_performer) %> |
+<%= link_to 'Back', task_performers_path %>

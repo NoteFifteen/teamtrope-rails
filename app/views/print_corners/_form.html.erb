@@ -4,7 +4,15 @@
   <div class="form-inputs">
     <%= f.association :project %>
     <%= f.association :user %>
-    <%= f.input :order_type %>
+    <label>Order Type</label>
+    <%= f.input :order_type, label: false,
+        collection: PrintCorner::OrderTypes,
+        label_method: :last, value_method: :first,
+        include_blank: false,
+        input_html: {
+            id: 'print_corner_type'
+        },
+        required: true %>
     <%= f.input :first_order %>
     <%= f.input :additional_order %>
     <%= f.input :over_125 %>

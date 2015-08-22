@@ -1,5 +1,5 @@
 class AnalyticsController < ApplicationController
-
+require 'pp'
   def show
     @project = Project.friendly.find(params[:project_id])
 
@@ -24,6 +24,8 @@ class AnalyticsController < ApplicationController
           },
           no_data: false
         }
+        pp response
+
       end
     when "nook"
       if @project.control_number.try(:parse_id)

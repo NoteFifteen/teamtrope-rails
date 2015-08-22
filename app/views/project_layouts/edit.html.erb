@@ -1,6 +1,10 @@
-<h1>Editing project_layout</h1>
+<h1>Editing Project Layout for <%= @project.title %></h1>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="col-md-8">
+    <%= render 'form' %>
+  </div>
+</div>
 
 <%= link_to 'Show', edit_project_layout_path(@project_layout) %> |
 <%= link_to 'Back', project_layouts_path %>

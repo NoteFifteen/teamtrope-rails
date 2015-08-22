@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   # GET /tasks
@@ -70,6 +71,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:workflow_id, :next_id, :rejected_task_id, :partial, :name, :icon, :tab_text, :intro_video, :days_to_complete, :team_only, :performer_ids => [])
+      params.require(:task).permit(:workflow_id, :next_id, :rejected_task_id, :partial, :name, :icon, :tab_text, :intro_video, :days_to_complete, :team_only, :performer_ids => [], :unlocked_ids => [])
     end
 end

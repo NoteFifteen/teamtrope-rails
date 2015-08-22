@@ -4,11 +4,12 @@
   <thead>
     <tr>
       <th>Name</th>
-			<th>Order</th>
+      <th>Order</th>
       <th>Color value</th>
       <th>Color</th>
-      <th>Icon</th>      
-      <th colspan="3"></th>
+      <th>Icon</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
@@ -22,12 +23,16 @@
         <td><%= phase.icon %></td>
         <td><%= link_to 'Show', phase %></td>
         <td><%= link_to 'Edit', edit_phase_path(phase) %></td>
-        <td><%= link_to 'Destroy', phase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
+
+<script>
+  $("#control_numbers_table").DataTable({ 'pageLength': '100'});
+</script>
+
 
 <%= link_to 'New Phase', new_phase_path %>
