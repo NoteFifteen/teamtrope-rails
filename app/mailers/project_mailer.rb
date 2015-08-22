@@ -514,8 +514,10 @@ class ProjectMailer < ActionMailer::Base
   def publish_book(project, current_user)
     @project = project
     @current_user = current_user
-    user_subject = "Publish Book from #{current_user.name} for #{project.title}"
+    imprint_text = (@project.try(:imprint).try(:name).nil?) ? '' : @project.try(:imprint).try(:name)
+    user_subject = "#{imprint_text} Book #{project.title} is Published! (submitted by #{current_user.name})"
     admin_subject = "New " + user_subject
+
 
     send_email_message('publish_book', {}, get_project_recipient_list(@project), user_subject)
     send_email_message('publish_book', {}, admin_publish_book_list, admin_subject)
