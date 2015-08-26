@@ -1,20 +1,25 @@
-console.log(<%=@last_errors%>);
-
-<% if @cover_concept.persisted? %>
-    $('#upload_<%=params[:unique_id]%>').hide();
-
-    <% if ! @updated_file.nil? %>
-        $('#<%=@updated_file%>_s3_uploader').html('<span><%=params[:filename] %> was successfully uploaded.</span>');
-
-        <% if @updated_file == 'cover_concept_image' %>
-            $('#cover_concept_image_submit_button').removeAttr('disabled').removeClass('disabled');
-        <% end %>
-
-        <% if @updated_file == 'stock_cover_image' %>
-            $('#stock_cover_image_submit_button').removeAttr('disabled').removeClass('disabled');
-        <% end %>
-    <% end %>
+<% if ! @last_errors.nil? && @last_errors.length > 0 %>
+    console.log(<%=@last_errors.to_s.html_safe%>);
+$('#upload_<%=params[:unique_id]%>').html('<span>There was an error processing your file.  Please check the file type and try again.<br><br></span>');
 
 <% else %>
-    $('#upload_<%=params[:unique_id]%> div.progress').removeClass('active progress-striped').addClass('progress-danger');
+
+    <% if @cover_concept.persisted? %>
+        $('#upload_<%=params[:unique_id]%>').hide();
+
+        <% if ! @updated_file.nil? %>
+            $('#<%=@updated_file%>_s3_uploader').html('<span><%=params[:filename] %> was successfully uploaded.</span>');
+
+            <% if @updated_file == 'cover_concept_image' %>
+                $('#cover_concept_image_submit_button').removeAttr('disabled').removeClass('disabled');
+            <% end %>
+
+            <% if @updated_file == 'stock_cover_image' %>
+                $('#stock_cover_image_submit_button').removeAttr('disabled').removeClass('disabled');
+            <% end %>
+        <% end %>
+
+    <% else %>
+        $('#upload_<%=params[:unique_id]%> div.progress').removeClass('active progress-striped').addClass('progress-danger');
+    <% end %>
 <% end %>
