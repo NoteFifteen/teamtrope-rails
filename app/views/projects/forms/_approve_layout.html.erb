@@ -35,7 +35,7 @@
     <hr />
 
     <div class="layout_approval">
-      <p><strong>Is Layout Approved? <span class="reqruired">*</span></strong></p>
+      <p><strong>Is Layout Approved? <span class="required">*</span></strong></p>
 
       <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'approve_layout', id: @project.id),
                           html: { id: "approve_layout" } do |f| %>
