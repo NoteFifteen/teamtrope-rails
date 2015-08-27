@@ -16,7 +16,7 @@ module Constants
     #       'text/plain'
     #     ]
     # },
-    :file_name => { :matches => [/doc?x$/i] },
+    # :file_name => { :matches => [/doc?x$/i] },
     :size => DefaultSizeIn
   ]
 

@@ -14,12 +14,12 @@ $(function() {
             progress_bar_target: $('#original_manuscript_uploads_container'),
             before_add: function (file) {
                 // Same as Constants::DefaultContentTypeDocumentParams
-                if (/(application\/msword|application\/vnd\.openxmlformats-officedocument\.wordprocessingml.document|text\/plain)$/i.test(file.type) || (/(doc?x)$/i.test(file.name))) {
+                //if (/(application\/msword|application\/vnd\.openxmlformats-officedocument\.wordprocessingml.document|text\/plain)$/i.test(file.type) || (/(doc?x)$/i.test(file.name))) {
                     return true;
-                } else {
-                    alert('File type must be .doc or .docx');
-                    return false;
-                }
+                //} else {
+                //    alert('File type must be .doc or .docx');
+                //    return false;
+                //}
             }
 
         }
@@ -39,12 +39,12 @@ $(function() {
             progress_bar_target: $('#edited_manuscript_uploads_container'),
             before_add: function (file) {
                 // Same as Constants::DefaultContentTypeDocumentParams
-                if (/(application\/msword|application\/vnd\.openxmlformats-officedocument\.wordprocessingml.document|text\/plain)$/i.test(file.type) || (/(doc?x)$/i.test(file.name))) {
+                //if (/(application\/msword|application\/vnd\.openxmlformats-officedocument\.wordprocessingml.document|text\/plain)$/i.test(file.type) || (/(doc?x)$/i.test(file.name))) {
                     return true;
-                } else {
-                    alert('File type must be .doc or .docx');
-                    return false;
-                }
+                //} else {
+                //    alert('File type must be .doc or .docx');
+                //    return false;
+                //}
             }
 
         }
@@ -64,12 +64,12 @@ $(function() {
             progress_bar_target: $('#proofed_manuscript_uploads_container'),
             before_add: function (file) {
                 // Same as Constants::DefaultContentTypeDocumentParams
-                if (/(application\/msword|application\/vnd\.openxmlformats-officedocument\.wordprocessingml.document|text\/plain)$/i.test(file.type) || (/(doc?x)$/i.test(file.name))) {
+                //if (/(application\/msword|application\/vnd\.openxmlformats-officedocument\.wordprocessingml.document|text\/plain)$/i.test(file.type) || (/(doc?x)$/i.test(file.name))) {
                     return true;
-                } else {
-                    alert('File type must be .doc or .docx');
-                    return false;
-                }
+                //} else {
+                //    alert('File type must be .doc or .docx');
+                //    return false;
+                //}
             }
 
         }
