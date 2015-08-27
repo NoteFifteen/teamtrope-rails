@@ -35,7 +35,7 @@
     <hr />
 
     <div class="layout_approval">
-      <p><strong>Is Layout Approved? *</strong></p>
+      <p><strong>Is Layout Approved? <span class="reqruired">*</span></strong></p>
 
       <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'approve_layout', id: @project.id),
                           html: { id: "approve_layout" } do |f| %>
@@ -60,10 +60,22 @@
               <th class="issue_list_number">Page</th>
               <th class="issue_list_text">Problem</th>
               <th class="issue_list_text">Fix</th>
-              <th>&nbsp;</th>
             </tr>
           </thead>
           <tbody>
+           <% 20.times do | i | %>
+            <tr>
+              <td class="issue_list_number">
+                <input id="page_<%= i %>" type="text" pattern="[0-9]*" class="form-control" name="page">
+              </td>
+              <td class="issue_list_text">
+                <input id="problem_<%= i %>" type="text" class="form-control" name="problem">
+              </td>
+              <td class="issue_list_text">
+                <input id="fix_<%= i %>" type="text" class="form-control" name="fix">
+              </td>
+            </tr>
+          <% end %>
           </tbody>
         </table>
 
