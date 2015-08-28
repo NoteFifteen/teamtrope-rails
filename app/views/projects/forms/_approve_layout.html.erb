@@ -52,7 +52,10 @@
           %>
 
           <!-- need hidden input for list -->
-          <%= l.input_field :layout_approval_issue_list, as: :hidden %>
+          <%#= l.input_field :layout_approval_issue_list, as: :hidden %>
+          <%= hidden_field_tag :layout_approval_issue_list,
+            f.object.layout.layout_approval_issue_list.to_json,
+            id: 'project_layout_attributes_layout_approval_issue_list' %>
         <% end %>
         <table id="approval_issue_list_table" style="display: none;">
           <thead>

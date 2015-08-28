@@ -908,7 +908,7 @@ class ProjectsController < ApplicationController
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
       :layout_attributes => [:id, :layout_style_choice, :page_header_display_name, :use_pen_name_on_title, :pen_name,
                              :use_pen_name_for_copyright, :exact_name_on_copyright, :layout_upload, :layout_notes,
-                             :layout_approved, :layout_approved_date, :layout_approval_issue_list, :final_page_count, :trim_size, :trim_size_w, :trim_size_h],
+                             :layout_approved, :layout_approved_date, :final_page_count, :trim_size, :trim_size_w, :trim_size_h],
       :manuscript_attributes => [:id, :original, :edited, :proofed],
       :marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information , :other_type, :other_service_provider],
       :media_kits_attributes => [:document],
