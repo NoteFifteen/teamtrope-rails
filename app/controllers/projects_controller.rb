@@ -388,8 +388,7 @@ class ProjectsController < ApplicationController
         @project.layout.update(layout_approval_issue_list: layout_approval_issue_list)
       end
 
-
-      #update_current_task
+      update_current_task
       activity_text = (:approved_layout == 'approved_revisions') ? 'Approved the layout with changes' : 'Approved the layout'
       @project.create_activity :approved_layout, owner: current_user,
                                parameters: { text: activity_text, form_data: params[:project].to_s }
