@@ -1,22 +1,18 @@
-<% if @final_manuscript.persisted? %>
-$('#upload_<%=params[:unique_id]%>').hide();
-
-<% if ! @updated_file.nil? %>
-$('#final_manuscript_<%=@updated_file%>_s3_uploader').html('<span><%=params[:filename] %> was successfully uploaded.</span>');
-
-    <% if @updated_file == 'pdf' %>
-        $('#final_manuscript_submit_button').removeAttr('disabled').removeClass('disabled');
-    <% end %>
-
-    <% if @updated_file == 'pdf' %>
-      $('#updated_pdf').val('yes');
-    <% end %>
-
-    <% if @updated_file == 'doc' %>
-      $('#updated_doc').val('yes');
-    <% end %>
-<% end %>
-
+<% if ! @last_errors.nil? && @last_errors.length > 0 %>
+    console.log(<%=@last_errors.to_s.html_safe%>);
+    $('#upload_<%=params[:unique_id]%>').html('<span>There was an error processing your file.  Please check the file type and try again.<br><br></span>');
 <% else %>
-$('#upload_<%=params[:unique_id]%> div.progress').removeClass('active progress-striped').addClass('progress-danger');
+    <% if @final_manuscript.persisted? %>
+        $('#upload_<%=params[:unique_id]%>').hide();
+
+        <% if ! @updated_file.nil? %>
+            $('#final_manuscript_<%=@updated_file%>_s3_uploader').html('<span><%=params[:filename] %> was successfully uploaded.</span>');
+
+            <% if @updated_file == 'pdf' %>
+                $('#final_manuscript_submit_button').removeAttr('disabled').removeClass('disabled');
+            <% end %>
+        <% end %>
+    <% else %>
+        $('#upload_<%=params[:unique_id]%> div.progress').removeClass('active progress-striped').addClass('progress-danger');
+    <% end %>
 <% end %>

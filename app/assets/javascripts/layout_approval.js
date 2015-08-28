@@ -12,19 +12,27 @@ Teamtrope.Layout.IssueList = function(table) {
     this.table = table;
 };
 
-Teamtrope.Layout.IssueList.prototype.drawRow = function (rowData) {
-    var row = $("<tr />");
-    this.table.append(row);
-    row.append($("<td class=\"issue_list_number\"> <input type=\"text\" pattern=\"[0-9]*\" class=\"form-control\" name=\"page\" value=\"" + rowData.page + "\"></td>"));
-    row.append($("<td class=\"issue_list_text\"> <input type=\"text\" class=\"form-control\" name=\"problem\" value=\"" + rowData.problem + "\"></td>"));
-    row.append($("<td class=\"issue_list_text\"> <input type=\"text\" class=\"form-control\" name=\"fix\" value=\"" + rowData.fix + "\"></td>"));
-    row.append($("<td> <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\" onclick=\"issueList.addRow(this, 0);\"></span> <span class=\"glyphicon glyphicon-minus\" aria-hidden=\"true\" onclick=\"issueList.removeRow(this);\"></span> </td>"));
+Teamtrope.Layout.IssueList.prototype.drawRow = function (index, rowData) {
+    //var row = $("<tr />");
+    //this.table.append(row);
+    //row.append($("<td class=\"issue_list_number\"> <input type=\"text\" pattern=\"[0-9]*\" class=\"form-control\" name=\"page\" value=\"" + rowData.page + "\"></td>"));
+    //row.append($("<td class=\"issue_list_text\"> <input type=\"text\" class=\"form-control\" name=\"problem\" value=\"" + rowData.problem + "\"></td>"));
+    //row.append($("<td class=\"issue_list_text\"> <input type=\"text\" class=\"form-control\" name=\"fix\" value=\"" + rowData.fix + "\"></td>"));
+    //row.append($("<td> <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\" onclick=\"issueList.addRow(this, 0);\"></span> <span class=\"glyphicon glyphicon-minus\" aria-hidden=\"true\" onclick=\"issueList.removeRow(this);\"></span> </td>"));
+
+    if (index != null)
+    {
+        $("#page_"+index).val(rowData.page);
+        $("#problem_"+index).val(rowData.problem);
+        $("#fix_"+index).val(rowData.fix);
+    }
+
 };
 
 Teamtrope.Layout.IssueList.prototype.drawTable = function (data) {
     var myObj = this;
     $.each(data, function (index, object) {
-        myObj.drawRow(object);
+        myObj.drawRow(index, object);
     });
 };
 
@@ -35,7 +43,7 @@ Teamtrope.Layout.IssueList.prototype.addEmptyRow = function () {
         fix: ''
     };
 
-    this.drawRow(rowData);
+    this.drawRow(null,rowData);
 };
 
 Teamtrope.Layout.IssueList.prototype.addRow = function (element, max) {
@@ -121,13 +129,13 @@ $(document).ready(function() {
 
     // Populate the hidden field with JSON data or clear it depending on
     // approval choice during submit.
-    $("#approve_layout").submit(function() {
-        if (! field.is(':checked') || field_value.val() == 'approved') {
-            $("#project_layout_attributes_layout_approval_issue_list").val('');
-        }
+    // $("#approve_layout").submit(function() {
+    //     if (! field.is(':checked') || field_value.val() == 'approved') {
+    //         $("#project_layout_attributes_layout_approval_issue_list").val('');
+    //     }
 
-        $("#project_layout_attributes_layout_approval_issue_list").val(issueList.tableToJson());
-    });
+    //     $("#project_layout_attributes_layout_approval_issue_list").val(issueList.tableToJson());
+    // });
 
     // Simple validator for the form -- We want to make sure they select an option and
     // get decent feedback if they do not.

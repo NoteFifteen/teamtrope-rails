@@ -1,26 +1,31 @@
-console.log(<%=@last_errors%>);
+<% if ! @last_errors.nil? && @last_errors.length > 0 %>
+    console.log(<%=@last_errors.to_s.html_safe%>);
+    $('#upload_<%=params[:unique_id]%>').html('<span>There was an error processing your file.  Please check the file type and try again.<br><br></span>');
+<% else %>
 
-<% if @cover_concept.persisted? %>
-    $('#upload_<%=params[:unique_id]%>').hide();
+    <% if @cover_concept.persisted? %>
+        $('#upload_<%=params[:unique_id]%>').hide();
 
-    <% if ! @updated_file.nil? %>
-        $('#<%=@updated_file%>_s3_uploader').html('<span><%=params[:filename] %> was successfully uploaded.</span>');
+        <% if ! @updated_file.nil? %>
+            $('#<%=@updated_file%>_s3_uploader').html('<span><%=params[:filename] %> was successfully uploaded.</span>');
 
-        <% if @updated_file == 'cover_concept_image' %>
-            $('#cover_concept_image_submit_button').removeAttr('disabled').removeClass('disabled');
-            if ($('#updated_cover_concept_image').length) {
-               $('#updated_cover_concept_image').val("yes");
-            }
-        <% end %>
+            <% if @updated_file == 'cover_concept_image' %>
+                $('#cover_concept_image_submit_button').removeAttr('disabled').removeClass('disabled');
+                if ($('#updated_cover_concept_image').length) {
+                   $('#updated_cover_concept_image').val("yes");
+                }
+            <% end %>
 
-        <% if @updated_file == 'stock_cover_image' %>
-            $('#stock_cover_image_submit_button').removeAttr('disabled').removeClass('disabled');
-            if ($('#updated_stock_cover_image').length) {
-               $('#updated_stock_cover_image').val("yes");
-            }
+            <% if @updated_file == 'stock_cover_image' %>
+                $('#stock_cover_image_submit_button').removeAttr('disabled').removeClass('disabled');
+                if ($('#updated_stock_cover_image').length) {
+                   $('#updated_stock_cover_image').val("yes");
+                }
+            <% end %>
+
+        <% else %>
+            $('#upload_<%=params[:unique_id]%> div.progress').removeClass('active progress-striped').addClass('progress-danger');
         <% end %>
     <% end %>
 
-<% else %>
-    $('#upload_<%=params[:unique_id]%> div.progress').removeClass('active progress-striped').addClass('progress-danger');
 <% end %>
