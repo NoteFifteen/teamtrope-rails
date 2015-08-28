@@ -66,13 +66,13 @@
            <% 20.times do | i | %>
             <tr>
               <td class="issue_list_number">
-                <input id="page_<%= i %>" type="text" pattern="[0-9]*" class="form-control" name="page">
+                <input id="page_<%= i %>" type="text" pattern="[0-9]*" class="form-control" name="page[<%= i%>]">
               </td>
               <td class="issue_list_text">
-                <input id="problem_<%= i %>" type="text" class="form-control" name="problem">
+                <input id="problem_<%= i %>" type="text" class="form-control" name="problem[<%= i %>]">
               </td>
               <td class="issue_list_text">
-                <input id="fix_<%= i %>" type="text" class="form-control" name="fix">
+                <input id="fix_<%= i %>" type="text" class="form-control" name="fix[<%= i %>]">
               </td>
             </tr>
           <% end %>

@@ -129,13 +129,13 @@ $(document).ready(function() {
 
     // Populate the hidden field with JSON data or clear it depending on
     // approval choice during submit.
-    $("#approve_layout").submit(function() {
-        if (! field.is(':checked') || field_value.val() == 'approved') {
-            $("#project_layout_attributes_layout_approval_issue_list").val('');
-        }
+    // $("#approve_layout").submit(function() {
+    //     if (! field.is(':checked') || field_value.val() == 'approved') {
+    //         $("#project_layout_attributes_layout_approval_issue_list").val('');
+    //     }
 
-        $("#project_layout_attributes_layout_approval_issue_list").val(issueList.tableToJson());
-    });
+    //     $("#project_layout_attributes_layout_approval_issue_list").val(issueList.tableToJson());
+    // });
 
 });
 
