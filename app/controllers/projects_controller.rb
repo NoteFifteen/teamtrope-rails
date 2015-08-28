@@ -375,6 +375,23 @@ class ProjectsController < ApplicationController
     @project.layout.touch(:layout_approved_date)
 
     if @project.update(update_project_params)
+
+      #creating the JSON List by hand
+      layout_approval_issue_list = []
+      params[:page].each do | key, item |
+        next if params[:page][key] == "" && params[:problem][key] == "" && params[:fix][key]
+        layout_approval_issue_list.push(
+        {
+          page: params[:page][key],
+          problem: params[:problem][key],
+          fix: params[:fix][key]
+        })
+      end
+
+      if layout_approval_issue_list.length > 0
+        @project.layout.update(layout_approval_issue_list: layout_approval_issue_list)
+      end
+
       update_current_task
       activity_text = (:approved_layout == 'approved_revisions') ? 'Approved the layout with changes' : 'Approved the layout'
       @project.create_activity :approved_layout, owner: current_user,
@@ -903,7 +920,7 @@ class ProjectsController < ApplicationController
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
       :layout_attributes => [:id, :layout_style_choice, :page_header_display_name, :use_pen_name_on_title, :pen_name,
                              :use_pen_name_for_copyright, :exact_name_on_copyright, :layout_upload, :layout_notes,
-                             :layout_approved, :layout_approved_date, :layout_approval_issue_list, :final_page_count, :trim_size, :trim_size_w, :trim_size_h],
+                             :layout_approved, :layout_approved_date, :final_page_count, :trim_size, :trim_size_w, :trim_size_h],
       :manuscript_attributes => [:id, :original, :edited, :proofed],
       :marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information , :other_type, :other_service_provider],
       :media_kits_attributes => [:document],
