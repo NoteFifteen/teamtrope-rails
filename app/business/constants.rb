@@ -46,9 +46,9 @@ module Constants
   ]
 
   DefaultContentTypePdfParams = [
-    :content_type => {
-      content_type: 'application/pdf'
-    },
+    # :content_type => {
+    #   content_type: 'application/pdf'
+    # },
     :size => DefaultSizeIn
   ]
 
