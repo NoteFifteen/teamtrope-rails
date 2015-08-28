@@ -48,7 +48,8 @@
                       ['approved_revisions', 'Yes, with revisions (please complete the following to provide revision requests). Click the "Plus" sign to add a new line for each revision.']],
                      :first, :last,
                      :item_wrapper_tag => 'div',
-                     :item_wrapper_class => 'radio'
+                     :item_wrapper_class => 'radio',
+                     :checked => 'approved_revisions'
           %>
 
           <!-- need hidden input for list -->
@@ -57,7 +58,7 @@
             f.object.layout.layout_approval_issue_list.to_json,
             id: 'project_layout_attributes_layout_approval_issue_list' %>
         <% end %>
-        <table id="approval_issue_list_table" style="display: none;">
+        <table id="approval_issue_list_table">
           <thead>
             <tr>
               <th class="issue_list_number">Page</th>
