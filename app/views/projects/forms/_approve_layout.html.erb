@@ -34,7 +34,7 @@
     <hr />
 
     <div class="layout_approval">
-      <p><strong>Is Layout Approved?</strong><span class="required">*</span></p>
+      <p><strong>Is Layout Approved? <span class="required">*</span></strong></p>
 
       <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'approve_layout', id: @project.id),
                           html: { id: 'approve_layout' } do |f| %>
@@ -47,22 +47,38 @@
                       ['approved_revisions', 'Yes, with revisions (please complete the following to provide revision requests). Click the "Plus" sign to add a new line for each revision.']],
                      :first, :last,
                      :item_wrapper_tag => 'li',
-                     :item_wrapper_class => 'radio'
+                     :item_wrapper_class => 'radio',
+                     :checked => 'approved_revisions'
           %>
           </ul>
           <!-- need hidden input for list -->
-          <%= l.input_field :layout_approval_issue_list, as: :hidden %>
+          <%#= l.input_field :layout_approval_issue_list, as: :hidden %>
+          <%= hidden_field_tag :layout_approval_issue_list,
+            f.object.layout.layout_approval_issue_list.to_json,
+            id: 'project_layout_attributes_layout_approval_issue_list' %>
         <% end %>
-        <table id="approval_issue_list_table" style="display: none;">
+        <table id="approval_issue_list_table">
           <thead>
             <tr>
               <th class="issue_list_number">Page</th>
               <th class="issue_list_text">Problem</th>
               <th class="issue_list_text">Fix</th>
-              <th>&nbsp;</th>
             </tr>
           </thead>
           <tbody>
+           <% 20.times do | i | %>
+            <tr>
+              <td class="issue_list_number">
+                <input id="page_<%= i %>" type="text" pattern="[0-9]*" class="form-control" name="page[<%= i%>]">
+              </td>
+              <td class="issue_list_text">
+                <input id="problem_<%= i %>" type="text" class="form-control" name="problem[<%= i %>]">
+              </td>
+              <td class="issue_list_text">
+                <input id="fix_<%= i %>" type="text" class="form-control" name="fix[<%= i %>]">
+              </td>
+            </tr>
+          <% end %>
           </tbody>
         </table>
 

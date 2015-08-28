@@ -10,13 +10,16 @@ module Constants
   DefaultSizeIn = { in: DefaultSize }
 
   DefaultContentTypeDocumentParams = [
-    :content_type => {
-      content_type: [ 'application/msword',
-          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-          'application/pdf',
-          'text/plain'
-        ]
-    },
+    # TTR-62 - Removing the mime-type validation due to user issues with uploading manuscripts
+    # :content_type => {
+    #   content_type: [
+    #       'application/msword',
+    #       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    #       'application/pdf',
+    #       'text/plain'
+    #     ]
+    # },
+    # :file_name => { :matches => [/doc?x$/i] },
     :size => DefaultSizeIn
   ]
 
