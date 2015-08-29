@@ -12,20 +12,40 @@
 
 <p>
   <strong>Message:</strong>
-  <%= @hellosign_document_type.message %>
+  <pre>
+    <%= @hellosign_document_type.message %>
+  </pre>
 </p>
 
-<!-- list of signers -->
-<p>
-  <strong>Signers:</strong>
-  <%= @hellosign_document_type.signers %>
-</p>
+<h2>Signers</h2>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Role</th>
+  </tr>
+  <% @hellosign_document_type.signers.each do | signer | %>
+  <tr>
+    <td><%= signer['name'] %></td>
+    <td><%= signer['email_address'] %></td>
+    <td><%= signer['role'] %></td>
+  </tr>
+  <% end %>
+</table>
 
-<!-- list of ccs -->
-<p>
-  <strong>CCs:</strong>
-  <%= @hellosign_document_type.ccs %>
-</p>
+<h2>CCs</h2>
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Role</th>
+  </tr>
+  <% @hellosign_document_type.ccs.each do | signer | %>
+  <tr>
+    <td><%= signer['email_address'] %></td>
+    <td><%= signer['role'] %></td>
+  </tr>
+  <% end %>
+</table>
 
 <%= link_to 'Edit', edit_hellosign_document_type_path(@hellosign_document_type) %> |
 <%= link_to 'Back', hellosign_document_types_path %>
