@@ -24,7 +24,7 @@
           url: url_for(controller: 'projects', action: 'media_kit',  id: @project),
           html: { id: 'media_kit' } do | f | %>
             <%= f.error_notification %>
-            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'media_kit_submitted_task_id' %>
             <%= f.simple_fields_for :media_kit, ((f.object.media_kit.nil?)? f.object.build_media_kit : f.object.media_kit)  do | media_kit | %>
             <% end %>
 

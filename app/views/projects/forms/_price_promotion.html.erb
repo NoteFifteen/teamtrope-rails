@@ -18,7 +18,7 @@
       <ul>
         <%= f.simple_fields_for :price_change_promotions, f.object.price_change_promotions.build do | pcp | %>
         <li>
-          <label>Please select the type of promotion you'd like to schedule<span class="gfield_required">*</span></label>
+          <label>Please select the type of promotion you'd like to schedule<span class="required">*</span></label>
           <%= pcp.collection_radio_buttons :type,PriceChangePromotion::PROMOTION_TYPES, :first, :last,
             collection_wrapper_tag: 'ul',
             item_wrapper_tag: 'li' %>
@@ -59,7 +59,7 @@
         <% end %>
 
         <li class="submit_button" style="display: none;">
-          <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'price_promotion_submitted_task_id' %>
           <%= submit_tag "Submit" %>
         </li>
       </ul>

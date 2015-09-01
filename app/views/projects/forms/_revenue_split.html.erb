@@ -17,9 +17,9 @@
 
   </script>
   <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'revenue_allocation_split',
-                                             id: @project), html: { id: "revenue_allocation_split" } do | f| %>
+                                             id: @project), html: { id: 'revenue_allocation_split' } do | f| %>
 
-    <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+    <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'rev_allocation_submitted_task_id' %>
     <%= hidden_field_tag :fullAmount, @project.project_type.team_total_percent %><br />
 
     <div class="row">
@@ -41,14 +41,15 @@
                   <td><%= builder.object.role.name %></td>
                   <td><%= builder.object.member.name %> <%= builder.input :id, as: :hidden %></td>
 
-                  <td width="140">
+                  <td style="width: 140px;">
                     <div class="input-group">
-                      <%= builder.input :percentage, label: false, input_html: {class: "percentage form-control"} %>
-                      <span class="input-group-addon" id="basic-addon1">%</span>
+                      <%= builder.input :percentage, label: false, input_html: {class: 'percentage form-control'} %>
+                      <% input_id = 'basic-addon-id-' + builder.object.id.to_s %>
+                      <span class="input-group-addon" id="<%= input_id %>">%</span>
                     </div>
                   </td>
 
-                  <td  width="140"><%= builder.object.role.required_roles.first.suggested_percent %> %</td>
+                  <td style="width: 140px;"><%= builder.object.role.required_roles.first.suggested_percent %> %</td>
                 </tr>
             <% end %>
             </tbody>
@@ -68,13 +69,14 @@
             </tfoot>
           </table>
       </div>
-  </div>
-  <div class="row">
-    <div class="col-md-8">
-      <%= select_date (Date.today.day == 1)? Date.today : Date.today + 1.month, prefix: :effective_date, start_year: Date.today.year, discard_day: true %><br /><br />
-      <div>The date you would like this allocation agreement to take effect.</div><br />
-      <%= f.submit 'submit' %>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <%= select_date (Date.today.day == 1)? Date.today : Date.today + 1.month, prefix: :effective_date, start_year: Date.today.year, discard_day: true %><br /><br />
+        <div>The date you would like this allocation agreement to take effect.</div><br />
+        <%= f.submit 'submit' %>
+      </div>
     </div>
   <% end %>
-  </div>
+
 </div>

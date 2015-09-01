@@ -31,7 +31,7 @@
 
         <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'cover_concept_upload', id: @project) do | f | %>
             <%= f.error_notification %>
-            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'upload_cover_concept_submitted_task_id' %>
 
             <br>
 

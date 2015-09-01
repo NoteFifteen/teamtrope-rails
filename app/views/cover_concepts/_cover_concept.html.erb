@@ -2,7 +2,7 @@
 <b>Image Request(s):</b> <br/>
 <% if(!@project.cover_concept.image_request_list.nil? &&
        @project.cover_concept.image_request_list.count > 0) %>
-    <table cellspacing="0" border="0" height="100%" cellpadding="3" cellspacing="3" width="80%">
+    <table style="width: 80%; padding: 3px; border-spacing: 3px;">
       <thead>
       <tr>
         <th style="text-align: left; background-color: #555555; color: white; line-height: 18px;">Subject</th>
@@ -11,7 +11,7 @@
       </thead>
       <tbody>
       <% @project.cover_concept.image_request_list.each do |img| %>
-          <tr bgcolor="<%= cycle('#ffffff', '#a3a9af') -%>">
+          <tr style="background: <%= cycle('#ffffff', '#a3a9af') -%>;">
             <td style="text-align: left; overflow: auto; font-family: Arial, Helvetica, sans-serif; line-height: 18px;"> <%= img['subject']  %></td>
             <td style="text-align: left; overflow: auto; font-family: Arial, Helvetica, sans-serif; line-height: 18px;"> <%= img['link'] %></td>
           </tr>
@@ -35,13 +35,13 @@
     <div class="row">
         <div class="col-md-6">
           <b>Cover Concept:</b> <%= link_to "DOWNLOAD", download_cover_concept_path(@project) if cover_concept.cover_concept? %><br/>
-          <%= image_tag download_cover_concept_path(@project), width: "340px" if cover_concept.try(:cover_concept?) %>
+          <%= image_tag download_cover_concept_path(@project), width: "340" if cover_concept.try(:cover_concept?) %>
         </div>
 
         <% if @project.cover_concept.unapproved_cover_concept? %>
           <div class="col-md-6">
             <b>Unapproved Cover Concept:</b> <%= link_to "DOWNLOAD", download_unapproved_cover_concept_path(@project) %><br/>
-            <%= image_tag download_unapproved_cover_concept_path(@project), width: "340px" %>
+            <%= image_tag download_unapproved_cover_concept_path(@project), width: "340" %>
           </div>
         <% end %>
     </div>
@@ -52,7 +52,7 @@
                 <b>Stock Cover Image:</b> <%= link_to "DOWNLOAD", download_stock_cover_image_path(@project) %><br/>
             </div>
             <% if(['image/jpeg', 'image/pjpeg', 'image/png'].include? cover_concept.try(:stock_cover_image_content_type)) %>
-                <%= image_tag download_stock_cover_image_path(@project), class: 'alignright', width: "340px" %>
+                <%= image_tag download_stock_cover_image_path(@project), class: 'alignright', width: "340" %>
             <% end %>
         </div>
     <% end %>

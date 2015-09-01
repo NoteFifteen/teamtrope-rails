@@ -7,7 +7,7 @@
       <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'approve_final_cover',
                                                  id: @project), html: { id: 'approve_final_cover' } do | f | %>
           <%= f.error_notification %>
-          <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'approve_final_cover_submitted_task_id' %>
 
           <%= f.simple_fields_for :cover_template,
                                   (f.object.cover_template.nil?)? f.object.build_cover_template :

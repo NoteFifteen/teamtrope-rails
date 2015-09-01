@@ -28,7 +28,7 @@
 
       <%= simple_form_for @project, url: url_for(controller: "projects", action: "layout_upload", id: @project), html: { id: 'upload_layout_form' } do | f | %>
           <%= f.error_notification %>
-          <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'upload_layouts_submitted_task_id' %>
           <%= f.simple_fields_for :layout, (f.object.layout.nil?) ? f.object.build_layout : f.object.layout do | l | %>
             <%= l.input :layout_notes, as: :text, label: 'Layout Info', input_html: { rows: 10, cols: 50 } %>
           <% end %>

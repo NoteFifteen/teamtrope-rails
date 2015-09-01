@@ -3,7 +3,7 @@
 
   <%= simple_form_for(@project, url: url_for(:controller => 'projects', :action => 'artwork_rights_request', id: @project.id), html: { id: 'artwork_rights_request_form' })  do |f| %>
       <%= f.error_notification %>
-      <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+      <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'artwork_rights_submitted_task_id' %>
 
       <div class="row">
         <div class="col-md-12">

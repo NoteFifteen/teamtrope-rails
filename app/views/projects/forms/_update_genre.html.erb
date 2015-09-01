@@ -5,10 +5,10 @@
   <div class="row">
     <div class="col-md-10">
       <div>
-      <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'update_genre', id: @project),
+        <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'update_genre', id: @project),
                           html: { id: "update_genre" } do | f | %>
           <%= f.error_notification %>
-          <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'update_genre_submitted_task_id' %>
 
             <div class="input_field">
               <%= f.simple_fields_for :book_genres, f.object.book_genres.build do | genre | %>
@@ -20,7 +20,8 @@
           <div>
             <%= f.submit "Submit", class: 'btn', id: 'update_genre_submit_button' %>
           </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

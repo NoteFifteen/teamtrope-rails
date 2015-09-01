@@ -99,7 +99,7 @@ class ProjectMailer < ActionMailer::Base
       'Role' => role.try(:name),
       'New Team Member' => member.try(:name),
       'Percentage' => percentage + '%',
-      'Effective Date' => "#{params[:effective_date][:year]} / #{params[:effective_date][:month]} / #{params[:effective_date][:day]}"
+      'Effective Date' => "#{params[:accept_member_effective_date][:year]} / #{params[:accept_member_effective_date][:month]} / #{params[:accept_member_effective_date][:day]}"
     }
 
     user_subject = "Accept Team Member from #{@current_user.name} for #{@project.title}"

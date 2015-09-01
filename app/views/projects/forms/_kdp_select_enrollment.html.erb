@@ -50,7 +50,7 @@
                               html: { id: "kdp_select" } do |f| %>
 
             <%= f.error_notification %>
-            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'kdp_update_submitted_task_id' %>
             <div>
               <%
                  authors = []

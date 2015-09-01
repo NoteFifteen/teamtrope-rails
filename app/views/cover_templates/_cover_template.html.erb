@@ -1,7 +1,7 @@
 <h4>Cover Files</h4>
 <% if ! @project.try(:cover_template).nil? %>
 
-    <%= image_tag download_ebook_front_cover_path(@project), class: 'alignright', width: "340px" unless ! cover_template.ebook_front_cover?%>
+    <%= image_tag download_ebook_front_cover_path(@project), class: 'alignright', width: "340" unless ! cover_template.ebook_front_cover?%>
 
     <% if ! @project.try(:cover_template).try(:final_cover_approval_date).nil? && @project.try(:cover_template).try(:final_cover_approved) == true %>
         Approved: <b>Yes</b><br>

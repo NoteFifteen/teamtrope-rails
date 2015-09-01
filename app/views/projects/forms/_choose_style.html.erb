@@ -11,7 +11,7 @@
     <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'edit_layout_style', id: @project.id),
                         html: { id: "edit_layout_style" } do |f| %>
       <%= f.error_notification %>
-      <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+      <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'choose_style_submitted_task_id' %>
       <%= f.simple_fields_for :layout, (f.object.layout.nil?) ? f.object.build_layout : f.object.layout do | l | %>
         <div>
           <ul>

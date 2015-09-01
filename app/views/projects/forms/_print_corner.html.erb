@@ -8,7 +8,7 @@
                  url: url_for(controller: 'projects', action: 'print_corner_request', id: @project),
                  html: { id: 'add_print_request_form' } do | f | %>
         <%= f.error_notification %>
-        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'print_corner_submitted_task_id' %>
 
         <%= f.simple_fields_for :print_corners, f.object.print_corners.build do | pc | %>
           <%= pc.input :user_id, as: :hidden, input_html: { value: @current_user.try(:id) }  %>
@@ -165,18 +165,18 @@
                       </div>
                       <div class="col-md-6">
                         <!-- Marketing Only-->
-                        <span id="pc_shipping_state_list" style="display: none;">
+                        <div id="pc_shipping_state_list" style="display: none;">
                           <label>State</label>
                           <%
                           #  pc.input :shipping_address_state, label: false, collection: us_states_list, label_method: :last, value_method: :first, required: false
                           %>
-                        </span>
+                        </div>
 
                         <!-- Author / Creative only-->
-                        <span id="pc_shipping_state">
+                        <div id="pc_shipping_state">
                           <label>State / Province / Region</label>
                           <%= pc.input :shipping_address_state, label: false %>
-                        </span>
+                        </div>
                       </div>
                     </div>
 
@@ -186,7 +186,7 @@
                         <%= pc.input :shipping_address_zip, label: false %>
                       </div>
                       <div class="col-md-6">
-                        <span id="pc_country_list">
+                        <div id="pc_country_list">
                         <!-- Country Selection // Author / Creative only -->
                         <label>Country</label>
                         <%= pc.input :shipping_address_country, label: false,
@@ -196,7 +196,7 @@
                                      include_blank: false,
                                      required: false
                         %>
-                        </span>
+                        </div>
                       </div>
                     </div>
                   </div>

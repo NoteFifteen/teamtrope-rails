@@ -78,7 +78,7 @@ class ProjectsController < ApplicationController
 
       publish(:modify_team_member, @project, params[:project][:team_memberships_attributes]['0'][:role_id])
       update_current_task
-      Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, DateTime.parse("#{params[:effective_date][:year]}/#{params[:effective_date][:month]}/#{params[:effective_date][:day]}")
+      Booktrope::ParseWrapper.save_revenue_allocation_record_to_parse @project, current_user, DateTime.parse("#{params[:accept_member_effective_date][:year]}/#{params[:accept_member_effective_date][:month]}/#{params[:accept_member_effective_date][:day]}")
 
       ProjectMailer.accepted_team_member(@project, current_user, params)
       flash[:success] = 'Accepted a Team Member'
@@ -341,7 +341,9 @@ class ProjectsController < ApplicationController
       publish(:modify_imprint, @project)
 
       # Update the record in Parse
-      Booktrope::ParseWrapper.update_project_control_numbers @project.control_number
+      if ! @project.control_number.nil?
+        Booktrope::ParseWrapper.update_project_control_numbers @project.control_number
+      end
 
       # Record activity here
       @project.create_activity :updated_control_numbers, owner: current_user,

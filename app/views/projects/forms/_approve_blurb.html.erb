@@ -7,14 +7,13 @@
         <%= simple_form_for @project, 
                   url: url_for(controller: 'projects', action: 'approve_blurb', id: @project), 
                   html: { id: 'approve_blurb' } do | f | %>
-        <%= f.error_notification %>
-        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+          <%= f.error_notification %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'approve_blurb_submitted_task_id' %>
 
-        <%= f.simple_fields_for :approve_blurb, (f.object.approve_blurb.nil?)? f.object.build_approve_blurb :
-            f.object.approve_blurb do | approve_blurb | %>
+          <%= f.simple_fields_for :approve_blurb, (f.object.approve_blurb.nil?)? f.object.build_approve_blurb :
+              f.object.approve_blurb do | approve_blurb | %>
 
-
-            <label>Is Blurb Approved? *</label>
+            <label>Is Blurb Approved? <span class="required">*</span></label>
             <%= approve_blurb.collection_radio_buttons :blurb_approval_decision,
                                            [[true, 'Yes'],
                                             [false, 'No']],
@@ -28,10 +27,9 @@
                           input_html: { rows: 10, cols: 50, id: 'blurb_notes', value:  '' }
               %>
             </div>
-            <% end %>
-            <br/>
-            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
-            <%= f.submit 'Submit' %>
+          <% end %>
+          <br/>
+          <%= f.submit 'Submit' %>
         <% end %>
       </div>
     </div>

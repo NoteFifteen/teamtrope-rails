@@ -6,7 +6,7 @@
         url: url_for(controller: 'projects', action: 'blog_tour',id: @project),
         html: { id: 'blog_tour' } do | f | %>
     <%= f.error_notification %>
-    <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+    <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'blog_tour_submitted_task_id' %>
     <div>
       <span>Booktrope will cover the upfront costs of one blog tour per title.  This form is to be used after the book manager has identified the tour the team wants to use, made arrangements with the company to set up the tour, and is requesting payment via paypal to Booktrope (accounting@booktrope.com).  The cost (limited to $100) will be treated as a marketing expense per the creative team agreement and allocated across the team.  </span>
     </div>
