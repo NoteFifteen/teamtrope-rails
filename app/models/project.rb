@@ -132,6 +132,20 @@ class Project < ActiveRecord::Base
 
   end
 
+  #return true if there are no outstanding unsigned documents for this project.
+  # def valid_member? user
+  #     HellosignDocument
+  #       .where(team_membership_id: team_memberships.where(member: user).ids, is_complete: false)
+  #       .where.not(cancelled: true, pending_cancellation: true)
+  #       .count <= 0
+  # end
+
+  def unsigned_contracts user
+      HellosignDocument
+        .where(team_membership_id: team_memberships.where(member: user).ids, is_complete: false)
+        .where.not(cancelled: true, pending_cancellation: true)
+  end
+
   def is_team_member?(user)
     members.ids.include?(user.id)
   end

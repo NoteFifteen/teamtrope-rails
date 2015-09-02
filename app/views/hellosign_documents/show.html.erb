@@ -1,20 +1,22 @@
 <h1><%= @hellosign_document.name %> <br />for<br /> <%= link_to @hellosign_document.team_membership.project.title, @hellosign_document.team_membership.project %></h1>
 
-<% unless @hellosign_document.cancelled? || @hellosign_document.pending_cancellation? %>
-  <div id="cancel_button_<%= @hellosign_document.id %>">
-    <%= simple_form_for(@hellosign_document,
+<% unless @hellosign_document.complete? %>
+  <% unless  (@hellosign_document.cancelled? || @hellosign_document.pending_cancellation?)%>
+    <div id="cancel_button_<%= @hellosign_document.id %>">
+      <%= simple_form_for(@hellosign_document,
               url: url_for(
                   controller: 'hellosign_documents',
                   action: 'cancel_signature_request',
                   id: @hellosign_document),
               remote: true) do | f | %>
-      <%= f.submit "Cancel", class: 'btn' %>
-    <% end %>
-  </div>
-<% else %>
-  <div>
-    <%= @hellosign_document.cancelled?? "Cancelled" : "Pending Cancellation" %>
-  </div>
+        <%= f.submit "Cancel", class: 'btn' %>
+      <% end %>
+    </div>
+  <% else %>
+    <div>
+      <%= @hellosign_document.cancelled?? "Cancelled" : "Pending Cancellation" %>
+    </div>
+  <% end %>
 <% end %>
 
 <h2>Document Information</h2>
@@ -46,7 +48,7 @@
   </tr>
   <tr>
     <td>Signing Url</td>
-    <td><%= link_to "Sign Here", @hellosign_document.signing_url %></td>
+    <td><%=  (!@hellosign_document.complete?)? link_to("Sign Here", @hellosign_document.signing_url) : "N/A" %></td>
   </tr>
   <% end %>
 </table>

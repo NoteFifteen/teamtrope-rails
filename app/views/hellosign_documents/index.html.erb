@@ -31,7 +31,11 @@
           <% end %>
           </ul>
         </td>
-        <% unless hellosign_document.cancelled? || hellosign_document.pending_cancellation? %>
+        <% if hellosign_document.is_complete %>
+        <td>
+          Complete
+        </td>
+        <% elsif !hellosign_document.cancelled? && !hellosign_document.pending_cancellation? %>
         <td id='cancel_button_<%= hellosign_document.id %>'>
           <%= simple_form_for(hellosign_document,
             url: url_for(
