@@ -9,7 +9,8 @@
           ),
           name: 'hellosign_document[hellosign_document_type_id]',
           class: 'select form-control' %>
-    <%= f.input :hellosign_id %>
+    <label>Hellosign ID<span class="required">*</span></label>
+    <%= f.input :hellosign_id, label: false %>
     <%= f.input :status %>
 
   </div>

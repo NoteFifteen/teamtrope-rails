@@ -1,3 +1,4 @@
+<% provide(:title, "#{@hellosign_document.name} for #{@hellosign_document.team_membership.project.title}") %>
 <h1><%= @hellosign_document.name %> <br />for<br /> <%= link_to @hellosign_document.team_membership.project.title, @hellosign_document.team_membership.project %></h1>
 
 <% unless @hellosign_document.complete? %>
