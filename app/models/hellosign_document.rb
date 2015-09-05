@@ -60,6 +60,11 @@ class HellosignDocument < ActiveRecord::Base
 
     #creating the hellosign signatures that represent the people that must sign this document
     response.data['signatures'].each do | signature |
+      #binding.pry
+      member_id = nil
+      if member = User.find_by_email(signature['signer_email_address'])
+        member_id = member.id
+      end
       self.hellosign_signatures.create!(
         signature_id: signature['signature_id'],
         signer_email_address: signature['signer_email_address'],
@@ -69,7 +74,8 @@ class HellosignDocument < ActiveRecord::Base
         signed_at: signature['signed_at'],
         last_viewed_at: signature['last_viewed_at'],
         last_reminded_at: signature['last_reminded_at'],
-        error: signature['error']
+        error: signature['error'],
+        member_id: member_id
       )
     end
   end

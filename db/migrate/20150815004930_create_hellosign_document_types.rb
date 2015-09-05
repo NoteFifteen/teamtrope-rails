@@ -10,5 +10,6 @@ class CreateHellosignDocumentTypes < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :hellosign_document_types, :name, unique: true
   end
 end

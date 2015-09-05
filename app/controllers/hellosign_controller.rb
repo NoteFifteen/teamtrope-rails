@@ -23,11 +23,30 @@ class HellosignController < ApplicationController
         hellosign_signature.save
 
         is_complete = false if signature['status_code'] != 'signed'
-
       end
 
-      document.update_attributes(is_complete: true) if is_complete
+      project = document.team_membership.project
+      case event['event']['event_type']
+      when 'signature_request_sent'
+        activity = :hs_signature_request_sent
+        text = " was sent a #{document.name}"
+      when 'signature_request_viewed'
+        activity = :hs_signature_request_viewed
+        text = " viewed #{document.name}"
+      when 'signature_request_signed'
+        activity = :hs_signature_request_signed
+        text = " signed #{document.name}"
+      else
+      end
 
+      signature = document.signatures.find_by_signature_id(event['event']['event_metadata']['related_signature_id'])
+      owner = signature.member unless signature.nil?
+
+      project.create_activity activity,
+        owner: document.signatures.order(:order).first.member,
+        parameters: { text: text } if activity && ! owner.nil?
+
+      document.update_attributes(is_complete: true) if is_complete
     end
 
     render json: 'Hello API Event Received',

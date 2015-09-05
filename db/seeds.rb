@@ -191,20 +191,6 @@ end
   end
 end
 
-HellosignDocumentType.create!(
-  name: 'Creative Team Agreement',
-  subject: 'New Creative Team Agreement',
-  message: 'Please sign this document using HelloSign. Thank you.',
-  template_id: "3f53b709eaf29f4c19cd498fabdcec906679f671",
-  signers: [
-    {"email_address"=>"justin.jeffress+ken@booktrope.com", "name"=>"Ken Shear", "role"=>"Booktrope-CEO"}
-  ],
-  ccs: [
-    {"email_address"=>"justin.jeffress+intake@booktrope.com", "role"=>"Intake Manager"},
-    {"email_address"=>"justin.jeffress+hr@booktrope.com", "role"=>"HR/Accounting"}
-  ]
-)
-
 ##########################################################################################
 # Development only
 # The following data is for development only do not create these objects for production
@@ -240,6 +226,20 @@ if Rails.env == "development"
     {project_id: 2, member_id: 12, role_id: 4, percentage: 7.0 }
   ])
   ActiveRecord::Base.skip_callbacks = false
+
+  HellosignDocumentType.create!(
+    name: 'Creative Team Agreement',
+    subject: 'New Creative Team Agreement',
+    message: 'Please sign this document using HelloSign. Thank you.',
+    template_id: "3f53b709eaf29f4c19cd498fabdcec906679f671",
+    signers: [
+      {"email_address"=>"#{ENV['admin_user']}+ken@booktrope.com", "name"=>"Ken Shear", "role"=>"Booktrope-CEO"}
+    ],
+    ccs: [
+      {"email_address"=>"#{ENV['admin_user']}+intake@booktrope.com", "role"=>"Intake Manager"},
+      {"email_address"=>"#{ENV['admin_user']}+hr@booktrope.com", "role"=>"HR/Accounting"}
+    ]
+  )
 
   users = [
     {email: "#{ENV["admin_user"]}@booktrope.com", name: "#{ENV["admin_user"]}", password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 5}, # Author + Staff

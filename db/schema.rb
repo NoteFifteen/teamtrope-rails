@@ -277,7 +277,6 @@ ActiveRecord::Schema.define(version: 20150926214432) do
   end
 
   create_table "hellosign_documents", force: true do |t|
-    t.string   "name"
     t.string   "hellosign_id"
     t.string   "status"
     t.datetime "created_at"
@@ -309,9 +308,11 @@ ActiveRecord::Schema.define(version: 20150926214432) do
     t.datetime "signed_at"
     t.datetime "last_viewed_at"
     t.datetime "last_reminded_at"
+    t.integer  "member_id"
   end
 
   add_index "hellosign_signatures", ["hellosign_document_id"], name: "index_hellosign_signatures_on_hellosign_document_id", using: :btree
+  add_index "hellosign_signatures", ["member_id"], name: "index_hellosign_signatures_on_member_id", using: :btree
 
   create_table "imprints", force: true do |t|
     t.string   "name"
