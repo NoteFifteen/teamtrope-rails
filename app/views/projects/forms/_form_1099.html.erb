@@ -117,15 +117,18 @@
 
               <li>
                 <ul>
-                  <% [['ssn', 'SSN (Social Security Number'], ['eid', 'EIN (Business Tax ID)']].each do |radio_button| %>
+                  <% [{:short => 'ssn', :long => 'SSN (Social Security Number', :checked => true },
+                      {:short => 'eid', :long => 'EIN (Business Tax ID)', :checked => false }].each do |radio_button| %>
                       <li>
-                        <label><%= radio_button_tag 'form_1099[tax_id]', radio_button.first %> <%= radio_button.last %></label>
+                        <% options = ['form_1099[tax_id]', radio_button[:short]] %>
+                        <% options.push({:checked => true}) if radio_button[:checked] == true %>
+                        <label><%= radio_button_tag *options %> <%= radio_button[:long] %></label>
                       </li>
                   <% end %>
                 </ul>
               </li>
 
-              <li id="social_security_number_wrapper" style="display: none; ">
+              <li id="social_security_number_wrapper">
                 <%= label_tag 'form_1099[social_security_number]', 'Social Security Number' %> &nbsp;<span class="required">*</span><br/>
                 <%= text_field_tag 'form_1099[social_security_number]', nil %>
               </li>
