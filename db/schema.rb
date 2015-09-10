@@ -118,11 +118,6 @@ ActiveRecord::Schema.define(version: 20150814205106) do
     t.string   "encore_asin"
   end
 
-  add_index "control_numbers", ["apple_id"], name: "index_control_numbers_on_apple_id", using: :btree
-  add_index "control_numbers", ["asin"], name: "index_control_numbers_on_asin", using: :btree
-  add_index "control_numbers", ["epub_isbn"], name: "index_control_numbers_on_epub_isbn", using: :btree
-  add_index "control_numbers", ["hardback_isbn"], name: "index_control_numbers_on_hardback_isbn", using: :btree
-  add_index "control_numbers", ["paperback_isbn"], name: "index_control_numbers_on_paperback_isbn", using: :btree
   add_index "control_numbers", ["project_id"], name: "index_control_numbers_on_project_id", using: :btree
 
   create_table "cover_concepts", force: true do |t|
@@ -184,9 +179,9 @@ ActiveRecord::Schema.define(version: 20150814205106) do
     t.string   "cover_preview_content_type"
     t.integer  "cover_preview_file_size"
     t.datetime "cover_preview_updated_at"
-    t.text     "final_cover_notes"
-    t.date     "final_cover_approval_date"
     t.boolean  "final_cover_approved"
+    t.date     "final_cover_approval_date"
+    t.text     "final_cover_notes"
   end
 
   add_index "cover_templates", ["project_id"], name: "index_cover_templates_on_project_id", using: :btree
