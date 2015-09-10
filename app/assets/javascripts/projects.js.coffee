@@ -492,6 +492,9 @@ jQuery ->
       'form_1099[email]': {
         required: true
       },
+      'form_1099[us_citizen_or_resident]': {
+        required: true
+      },
       'form_1099[address]': {
         required: true
       },
@@ -503,6 +506,27 @@ jQuery ->
       },
       'form_1099[zip]': {
         required: true
+      },
+      'form_1099[tax_id]': {
+        required: true
+      },
+      'form_1099[social_security_number]': {
+        required: {
+          depends: (element) =>
+            return $("input[name=form_1099\\[tax_id\\]]:checked").val() == 'ssn';
+        }
+      },
+      'form_1099[business_tax_id]': {
+        required: {
+          depends: (element) =>
+            return $("input[name=form_1099\\[tax_id\\]]:checked").val() == 'eid';
+        }
+      },
+      'form_1099[business_name]': {
+        required: {
+          depends: (element) =>
+            return $("input[name=form_1099\\[tax_id\\]]:checked").val() == 'eid';
+        }
       },
       'form_1099[bank_name]': {
         required: true
