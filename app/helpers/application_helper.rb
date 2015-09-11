@@ -1,3 +1,4 @@
+# coding: utf-8
 module ApplicationHelper
   def full_title(page_title)
     base_title = "Teamtrope"
@@ -9,12 +10,12 @@ module ApplicationHelper
   end
 
   def link_to_add_fields(name, f, association)
-  	new_object = f.object.send(association).klass.new
-  	id = new_object.object_id
-  	fields = f.fields_for(association, new_object, child_index: id) do | builder |
-  		render(association.to_s.singularize + "_fields", f: builder)
-  	end
-  	link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
+    new_object = f.object.send(association).klass.new
+    id = new_object.object_id
+    fields = f.fields_for(association, new_object, child_index: id) do | builder |
+        render(association.to_s.singularize + "_fields", f: builder)
+    end
+    link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
   end
 
   # List of countries for any Country selection
@@ -291,4 +292,12 @@ module ApplicationHelper
     ]
   end
 
+end
+
+
+class String
+  # lowercase and replace spaces with _
+  def normalize
+    return self.downcase.gsub(/ /, '_')
+  end
 end
