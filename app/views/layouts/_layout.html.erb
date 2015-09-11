@@ -1,10 +1,10 @@
 <h4>Layout Options</h4>
 <% unless @project.layout.nil? %>
     Layout Style: <%= (@project.layout.layout_style_choice.nil?) ? 'N/A' : @project.layout.layout_style_choice %><br/>
-    Use Pen Name?: <%= (@project.layout.pen_name.nil?) ? 'N/A' : (@project.layout.pen_name?) ? 'Yes' : 'No' %><br/>
+    Use Pen Name: <%= (@project.layout.pen_name.nil?) ? 'N/A' : (@project.layout.pen_name?) ? 'Yes' : 'No' %><br/>
     <% if @project.layout.pen_name %>
         Pen Name: <%= @project.layout.pen_name %><br/>
     <% end %>
-    Use Pen Name for Copyright?: <%= (@project.layout.use_pen_name_for_copyright.nil?) ? 'N/A' : ((@project.layout.use_pen_name_for_copyright) ? 'Yes' : 'No') %><br/>
+    Use Pen Name for Copyright: <%= (@project.layout.use_pen_name_for_copyright.nil?) ? 'N/A' : ((@project.layout.use_pen_name_for_copyright) ? 'Yes' : 'No') %><br/>
     Layout: <%= link_to "DOWNLOAD", download_layout_path(@project) if layout.layout_upload? %><br />
 <% end %>
