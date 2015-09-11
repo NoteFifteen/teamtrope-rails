@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150814205106) do
+ActiveRecord::Schema.define(version: 20150911180704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -626,6 +626,7 @@ ActiveRecord::Schema.define(version: 20150814205106) do
   end
 
   add_index "required_roles", ["project_type_id"], name: "index_required_roles_on_project_type_id", using: :btree
+  add_index "required_roles", ["role_id", "project_type_id"], name: "index_required_roles_on_role_id_and_project_type_id", unique: true, using: :btree
   add_index "required_roles", ["role_id"], name: "index_required_roles_on_role_id", using: :btree
 
   create_table "roles", force: true do |t|
@@ -634,6 +635,8 @@ ActiveRecord::Schema.define(version: 20150814205106) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "roles", ["name"], name: "index_roles_on_name", unique: true, using: :btree
 
   create_table "tabs", force: true do |t|
     t.integer  "task_id"

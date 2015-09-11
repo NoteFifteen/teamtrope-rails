@@ -39,20 +39,20 @@ class User < ActiveRecord::Base
   # Used for the Accept Team Member available members for a role and built to exclude
   # a member who is already assigned the same role in the project
   def self.with_role_excluding_project (role, project)
-    project_roles = project.send(role.normalized_name.pluralize).map {|role| role.member_id }
+    project_roles = project.send(role.name.normalize.pluralize).map {|role| role.member_id }
     if(project_roles.size > 0)
-      self.with_role( role.normalized_name ).
+      self.with_role( role.name.normalize ).
           where('id not in (?)', project_roles).
           map { |user| { id: user.id, name: user.name } }
     else
-      self.with_role( role.normalized_name ).map { |user| { id: user.id, name: user.name } }
+      self.with_role( role.name.normalize ).map { |user| { id: user.id, name: user.name } }
     end
   end
 
   # Used for the Accept Team Member available members for a role and built to exclude
   # a member who is already assigned the same role in the project
   def self.active_users_excluding_project(role, project)
-    project_roles = project.send(role.normalized_name.pluralize).map {|role| role.member_id }
+    project_roles = project.send(role.name.normalize.pluralize).map {|role| role.member_id }
     if(project_roles.size > 0)
       self.active_users.
           where('id not in (?)', project_roles).

@@ -8,12 +8,15 @@
   </tr>
   </thead>
   <tbody>
+  <% total_suggested = 0.0 %>
   <% @project.team_allocations.each do | role | %>
       <tr>
         <td><%= role[:role_name] %></td>
         <td><%= role[:member_name] %></td>
-        <td><%= role[:allocated_percentage] %> %</td>
-        <td><%= role[:suggested_percentage] %> %</td>
+        <td><%= role[:allocated_percentage] %>%</td>
+        <% suggested = @project.suggested_allocation_by_name(role[:role_name]) %>
+        <% total_suggested += suggested %>
+        <td><%= suggested %>%</td>
       </tr>
   <% end %>
   </tbody>
@@ -24,10 +27,7 @@
       0%
     </td>
     <td id="tableSuggestedTotal">
-      <% total = 0
-         @project.team_allocations.map { |r| total += r[:suggested_percentage] }
-      %>
-      <%= total %>%
+      <%= total_suggested %>%
     </td>
   </tr>
   <tr>

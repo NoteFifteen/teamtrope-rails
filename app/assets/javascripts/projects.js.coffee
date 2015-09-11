@@ -93,7 +93,7 @@ jQuery(document).ready () ->
       field_val = if isNaN(field_val) then 0 else field_val
       total += field_val
 
-    $("#split_threshold").html(total + " %")
+    $("#split_threshold").html(total + "%")
 
     if(maxPercent && total > maxPercent)
       $("#split_threshold").addClass('alert-danger')
@@ -618,4 +618,3 @@ jQuery(document).ready () ->
     $("#total_marketing_cost").val(total.toFixed(2)))
 
   $(".marketing").first().trigger("change")
-
