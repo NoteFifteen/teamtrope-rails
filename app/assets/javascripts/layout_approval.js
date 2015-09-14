@@ -87,7 +87,7 @@ Teamtrope.Layout.IssueList.prototype.tableToJson = function () {
 Teamtrope.Layout.IssueList.prototype.initialize = function (issue_list_json) {
     if(issue_list_json != null && issue_list_json.length > 0) {
         var issue_list = jQuery.parseJSON(issue_list_json);
-        if(issue_list.length > 0) {
+        if(issue_list != null && issue_list.length > 0) {
             this.drawTable(issue_list);
         } else {
             this.addEmptyRow();
