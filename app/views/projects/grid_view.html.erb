@@ -2,7 +2,7 @@
 <div class="page" id="blog-page" role="main">
   <h2>The Grid (<%= @project_grid_table_rows.count %>)</h2>
   <%= link_to "New", new_project_path %><br /><br />
-  <script type="text/javascript" async="">
+  <script type="text/javascript">
     function toggleTable1() {
     var lTable = document.getElementById("projectGridTable");
     lTable.style.display = (lTable.style.display == "table") ? "none" : "table";}

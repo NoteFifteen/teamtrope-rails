@@ -50,7 +50,7 @@
             html: {id: "final_manuscript"} do | f |
         %>
             <%= f.error_notification %>
-            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'final_manuscript_submitted_task_id' %>
 
           <%= f.submit "Submit", disabled: '', class: 'btn disabled', id: 'final_manuscript_submit_button' %>
         <% end %>

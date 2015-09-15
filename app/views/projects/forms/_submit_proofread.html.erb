@@ -201,7 +201,7 @@
                 </ul>
             </div>
             <br>
-            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'submit_proofread_submitted_task_id' %>
             <%= f.submit "Submit", id: 'submit_proofed_manuscript_hidden', style: 'display: none;' %>
         <% end %>
 

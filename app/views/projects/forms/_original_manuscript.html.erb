@@ -30,7 +30,7 @@
                         url: url_for(controller: 'projects', action: 'original_manuscript', id: @project),
                         html: { id: 'original_manuscript' } do | f | %>
             <%= f.error_notification %>
-          <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'original_manuscript_submitted_task_id' %>
           <br>
           <%= f.submit "Submit", disabled: '', class: 'btn disabled', id: 'original_manuscript_submit_button' %>
         <% end %>

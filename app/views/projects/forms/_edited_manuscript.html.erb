@@ -35,7 +35,7 @@
                           url: url_for(controller: 'projects', action: 'edited_manuscript', id: @project),
                           html: { id: 'submit_edited_manuscript' } do |f| %>
 
-          <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'edited_manuscript_submitted_task_id' %>
           <label>Do any of the following apply to your book?</label>
           <ul>
             <li><%= f.input :childrens_book, as: :boolean, label: "Children's book" %></li>

@@ -4,7 +4,7 @@
 
   <%= simple_form_for(@project, url: url_for(:controller => 'projects', :action => 'accept_team_member', id: @project.id), html: { id: 'new_team_membership' } ) do |f| %>
       <%= f.error_notification %>
-      <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+      <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'accept_member_submitted_task_id' %>
 
       <div class="row">
         <div class="col-md-6">
@@ -40,7 +40,7 @@
               %>
           <% end %>
 
-          <%= select_date (Date.today.day == 1)? Date.today : Date.today + 1.month, prefix: :effective_date, start_year: Date.today.year, discard_day: true %><br /><br />
+          <%= select_date (Date.today.day == 1)? Date.today : Date.today + 1.month, prefix: :accept_member_effective_date, start_year: Date.today.year, discard_day: true %><br /><br />
 
           <div>The date you would like this allocation agreement to take effect.</div><br />
 

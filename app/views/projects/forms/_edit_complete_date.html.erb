@@ -9,7 +9,7 @@
 					hint: "Please enter the date that the team commits to completing the final edit",
 					required: true  %>
 
-		<%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+		<%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'edit_complete_date_submitted_task_id' %>
 		<%= f.submit "submit" %>
 
 <% end %>

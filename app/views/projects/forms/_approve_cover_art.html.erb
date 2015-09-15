@@ -7,7 +7,7 @@
         <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'approve_cover_art',
                                                    id: @project), html: { id: 'approve_cover_art' } do | f | %>
             <%= f.error_notification %>
-            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'approve_cover_art_submitted_task_id' %>
 
             <label>Is Cover Approved? *</label>
             <%= f.collection_radio_buttons :cover_art_approval_decision,

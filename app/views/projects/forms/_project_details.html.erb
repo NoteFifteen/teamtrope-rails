@@ -6,18 +6,20 @@
       <td><%= ct.task.workflow.name %>:</td>
       <td><%= ct.task.name %></td>
       <td>Last Updated on <%= ct.updated_at.strftime("%m/%d/%Y") unless ct.updated_at.nil? %></td>
-      <% if current_user.role?(:booktrope_staff) %>
+      <td>
         <% prev_step = Task.find_by_next_id(ct.task.id) %>
-        <% if ! prev_step.nil? %>
-          <td>
-            <%= simple_form_for(@project, url: url_for(:controller => 'projects', :action => 'rollback_current_task', id: @project.id),
-                                html: { id: 'rollback_' + ct.task.workflow.name.downcase.gsub(/ /, "_") } ) do |f| %>
-              <%= hidden_field_tag :current_workflow_task_id, ct.task.id %>
-              <button class="btn btn-warning btn-xs" type="submit">Go back to <%= prev_step.name %> </button>
-            <% end %>
-          </td>
+        <% if current_user.role?(:booktrope_staff) && ! prev_step.nil? %>
+          <%= simple_form_for(@project, url: url_for(:controller => 'projects', :action => 'rollback_current_task', id: @project.id),
+                              html: { id: 'rollback_' + ct.task.workflow.name.downcase.gsub(/ /, "_") } ) do |f|
+          %>
+            <% html_id = ct.task.workflow.name.downcase.gsub(/ /, "_") + '_workflow_task_id' %>
+            <%= hidden_field_tag :current_workflow_task_id, ct.task.id, id: html_id %>
+            <button class="btn btn-warning btn-xs" type="submit">Go back to <%= prev_step.name %> </button>
+          <% end %>
+        <% else %>
+          &nbsp;
         <% end %>
-      <% end %>
+      </td>
     </tr>
 <% end %>
 </table>

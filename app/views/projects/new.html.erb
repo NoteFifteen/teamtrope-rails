@@ -20,14 +20,13 @@
         <%= simple_form_for @project, html: { id: 'new_project_form' } do | f | %>
 
           <div class="input_field">
-            <label>Title:&nbsp;<span class="required">*</span><br/>
+            <label>Title:&nbsp;<span class="required">*</span></label><br/>
               <%= f.input :title, label: false, :input_html => { type: 'text', size: '40' } %>
-            </label>
           </div>
 
           <div class="input_field">
             <%= f.simple_fields_for :team_memberships, f.object.team_memberships.build do | member | %>
-              <label>Author:&nbsp;<span class="required">*</span><br/>
+              <label>Author:&nbsp;<span class="required">*</span></label><br/>
                 <% if current_user.role?(:booktrope_staff) %>
                   <%= member.input :member_id,
                         label: false,
@@ -47,7 +46,6 @@
                   <span><em><%= current_user.name %></em></span>
                   <%= member.input :member_id, as: :hidden, :input_html => { :value => current_user.id } %>
                 <% end %>
-              </label>
               <%= member.input :role_id, as: :hidden, :input_html => { :value => Role.where(name: 'Author').first.id } %>
             <% end %>
           </div>
@@ -61,21 +59,19 @@
 
           <div class="input_field">
             <label>Does your book have any pictures or illustrations other than what you envision for the cover? &nbsp;<span class="required">*</span></label>
-            <%= f.collection_radio_buttons :has_internal_illustrations,
-                                           [[true, 'Yes'], [false, 'No']], :first, :last,
-                                           :collection_wrapper_tag => 'ul',
-                                           :collection_wrapper_class => 'collection_radio_buttons',
-                                           :item_wrapper_tag => 'li'
+            <%= f.input :has_internal_illustrations, as: :radio_buttons,
+                        collection: [['Yes', true], ['No', false]],
+                        wrapper: :vertical_radio_and_checkboxes,
+                        label: false
             %>
           </div>
 
           <div class="input_field">
             <label>Has this title been published previously?&nbsp;<span class="required">*</span></label>
-            <%= f.collection_radio_buttons :previously_published,
-                                           [[true, 'Yes'], [false, 'No']], :first, :last,
-                                           :collection_wrapper_tag => 'ul',
-                                           :collection_wrapper_class => 'collection_radio_buttons',
-                                           :item_wrapper_tag => 'li'
+            <%= f.input :previously_published, as: :radio_buttons,
+                        collection: [['Yes', true], ['No', false]],
+                        wrapper: :vertical_radio_and_checkboxes,
+                        label: false
             %>
           </div>
 
@@ -97,22 +93,22 @@
 
           <div class="input_field">
             <label >Imprint&nbsp;<span class="required">*</span></label><br/>
-            <%= f.collection_radio_buttons :imprint_id, Imprint.all, :id, :name,
-                                           :checked => 1,
-                                           :collection_wrapper_class => 'collection_radio_buttons',
-                                           :collection_wrapper_tag => 'ul', :item_wrapper_tag => 'li' %>
+            <%= f.input :imprint_id, as: :radio_buttons,
+                              collection: Imprint.all.map{ |imp| [imp.name, imp.id ] },
+                              wrapper: :vertical_radio_and_checkboxes,
+                              label: false
+            %>
             <p class="input_description">IMPORTANT: If you have not discussed being part of a specific imprint with the imprint's Managing Director or Booktrope Management, please select "Booktrope Editions." </p>
           </div>
 
           <div class="input_field">
-            <label>Synopsis:&nbsp;<span class="required">*</span><br/>
+            <label>Synopsis:&nbsp;<span class="required">*</span></label><br/>
               <%= f.input :synopsis, as: :text, label: false, input_html: { rows: 8, cols: 70 } %>
-            </label>
             <p class="input_description">If you don't have a full synopsis, don't worry - a couple of sentences about the book will suffice.</p>
           </div>
 
           <div class="input_field">
-            <label>Project Type:&nbsp;<span class="required">*</span><br/>
+            <label>Project Type:&nbsp;<span class="required">*</span></label><br/>
               <%= f.input :project_type_id,
                      label: false,
                      collection: ProjectType.all,
@@ -121,13 +117,11 @@
                      required: true,
                      :selected => ProjectType.where(name: 'Standard Project').first.id
               %>
-            </label>
           </div>
 
           <div class="input_field">
-            <label>Teamroom Link:&nbsp;<span class="required">*</span><br/>
+            <label>Teamroom Link:&nbsp;<span class="required">*</span></label><br/>
               <%= f.input :teamroom_link, label: false, :input_html => { type: 'text', size: '40' } %>
-            </label>
             <p class="input_description">Include the full url with 'http://'.</p>
           </div>
 

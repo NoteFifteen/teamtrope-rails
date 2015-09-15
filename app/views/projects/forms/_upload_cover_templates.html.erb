@@ -1,3 +1,4 @@
+
 <!-- Upload Cover Templates / Final Covers -->
 <div class="container">
   <h1>Upload Cover Templates</h1>
@@ -90,46 +91,46 @@
       </li>
     </ul>
 
-    <%= simple_form_for @project,
-        url: url_for(controller: 'projects', action: 'upload_cover_templates', id: @project),
-        html: { id: "upload_cover_templates" } do | f | %>
-    <%= f.error_notification %>
-    <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
-
     <div>
-      <ul class="cover_template_list">
-      <%= f.simple_fields_for :cover_template,
-        (f.object.cover_template.nil?)? f.object.build_cover_template :
-        f.object.cover_template do | cover_template | %>
+      <%= simple_form_for @project,
+          url: url_for(controller: 'projects', action: 'upload_cover_templates', id: @project),
+          html: { id: "upload_cover_templates" } do | f | %>
+        <%= f.error_notification %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'upload_cover_templates_submitted_task_id' %>
 
-        <li class="cover_template_list">
-          <label>Book Manager and Author Sign Off on following<span class="required">*</span></label>
-          <div>
-            <ul class="cover_template_sign_off">
-              <%
-                [
-                  'Author bio is correct?',
-                  'Book blurb on back is final?',
-                  'ISBN bar code matches ISBN on title page of laid out document?',
-                  'Author name and title are correct on front cover?',
-                  'All fonts are for commercial use and appropriate license(s) have been acquired?'
-                ].each_with_index do | check_box, index |
-              %>
-              <li class="cover_template_sign_off">
-                <%= check_box_tag "checklist_#{index}", index, false, class: "upload_cover_checklist " %>
-                <%= label_tag "checklist_#{index}",check_box, class: "" %>
-              </li>
-              <% end %>
-            </ul>
-          </div>
-        </li>
+        <%= f.simple_fields_for :cover_template,
+          (f.object.cover_template.nil?)? f.object.build_cover_template :
+          f.object.cover_template do | cover_template | %>
+
+          <ul class="cover_template_list">
+              <li class="cover_template_list">
+              <label>Book Manager and Author Sign Off on following<span class="required">*</span></label>
+              <div>
+                <ul class="cover_template_sign_off">
+                  <%
+                  [
+                    'Author bio is correct?',
+                    'Book blurb on back is final?',
+                    'ISBN bar code matches ISBN on title page of laid out document?',
+                    'Author name and title are correct on front cover?',
+                    'All fonts are for commercial use and appropriate license(s) have been acquired?'
+                  ].each_with_index do | check_box, index |
+                  %>
+                    <li class="cover_template_sign_off">
+                      <%= check_box_tag "checklist_#{index}", index, false, class: "upload_cover_checklist " %>
+                      <%= label_tag "checklist_#{index}",check_box, class: "" %>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        <% end %>
+        <br />
+        <div>
+          <%= f.submit "submit", disabled: '', class: 'btn disabled', id: 'cover_template_submit_button'  %>
+        </div>
       <% end %>
-      </ul>
     </div>
-    <br />
-    <div>
-      <%= f.submit "submit", disabled: '', class: 'btn disabled', id: 'cover_template_submit_button'  %>
-    </div>
-  <% end %>
   </div>
 </div>

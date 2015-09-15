@@ -9,7 +9,7 @@
           id: @project.id),
           html: { id: "final_page_count" } do |f| %>
         <%= f.error_notification %>
-        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'final_page_count_submitted_task_id' %>
 
         <p>For Booktrope Production Team use Only. This is where the Booktrope Production Team indicates the final page count.</p>
 

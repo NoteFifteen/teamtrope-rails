@@ -19,7 +19,7 @@
             %>
             <% end %>
             <br/>
-            <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'manuscript_development_submitted_task_id' %>
             <%= f.submit 'Submit' %>
         <% end %>
       </div>

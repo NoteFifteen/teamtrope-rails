@@ -1,3 +1,4 @@
+
 <!-- Remove Team Member Request -->
 <script>
     Teamtrope.team_memberships = <%= @project.members_available_for_removal.to_json.html_safe %>;
@@ -11,13 +12,13 @@
       <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'remove_team_member', id: @project.id),
                              html: { id: "remove_team_member" } do |f| %>
         <%= f.error_notification %>
-        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'team_change_submitted_task_id' %>
 
         <%= f.simple_fields_for :audit_team_membership_removals, f.object.audit_team_membership_removals.build do | builder | %>
 
           <div id="remove_team_member_errors"></div>
           <div class="collection_list_input">
-            <label>Remove Team Member<span>*</span></label>
+            <div>Remove Team Member<span class="required">*</span></div>
             <%= builder.input :member_id,
                               collection: [],
                               input_html: {
@@ -30,26 +31,23 @@
           </div>
 
           <div class="collection_list_input">
-            <label>Reason *</label>
-            <%= builder.collection_radio_buttons :reason, TeamMembership::RemovalReasons, :first, :last,
-                                                 :collection_wrapper_tag => 'ul',
-                                                 :item_wrapper_tag => 'li',
-                                                 input_html: {
-                                                         id: 'remove_team_member_reason'
-                                                 },
-                                                 required: true
+            <div>Reason <span class="required">*</span></div>
+            <%= builder.input :reason, as: :radio_buttons,
+                             collection: TeamMembership::RemovalReasons.map { |short, long| [long, short, {:id => 'project_audit_team_membership_removals_attributes_0_reason_' + short.to_s }]},
+                             wrapper: :vertical_radio_and_checkboxes,
+                             input_html: {
+                                     id: 'remove_team_member_reason'
+                             },
+                             label: false
             %>
             </div>
 
             <div class="collection_list_input">
-              <label>Have you notified this member of the pending change?<span>*</span></label>
-              <%= builder.collection_radio_buttons :notified_member,
-                                                   [[true, 'Yes'], [false, 'No']], :first, :last,
-                                                   :collection_wrapper_tag => 'ul',
-                                                   :item_wrapper_tag => 'li',
-                                                   input_html: {
-                                                           id: 'remove_team_member_notified_member'
-                                                   }
+              <label>Have you notified this member of the pending change?<span class="required">*</span></label>
+              <%= builder.input :notified_member, as: :radio_buttons,
+                                collection: [['Yes', true], ['No', false]],
+                                wrapper: :vertical_radio_and_checkboxes,
+                                label: false
               %>
             </div>
         <% end %>

@@ -7,25 +7,24 @@
         <!-- form -->
       <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'request_images', id: @project), html: { id: 'request_images_form' } do | f | %>
         <%= f.error_notification %>
-        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'request_image_submitted_task_id' %>
 
         <%= f.simple_fields_for :cover_concept, (f.object.cover_concept.nil?) ? f.object.build_cover_concept : f.object.cover_concept do | cc | %>
 
           <div>
-            <label>Shutterstock or DollarPhotoClub.com Image Links<span class="required">*</span>
-              <%= cc.input_field :image_request_list, as: :hidden %>
-              <table id="image_request_list_table" class="table" style="display: table;">
-                <thead>
-                <tr>
-                  <th>Subject</th>
-                  <th>Link</th>
-                  <th>&nbsp;</th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-            </label>
+            <label>Shutterstock or DollarPhotoClub.com Image Links<span class="required">*</span></label>
+            <%= cc.input_field :image_request_list, as: :hidden %>
+            <table id="image_request_list_table" class="table" style="display: table;">
+              <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Link</th>
+                <th>&nbsp;</th>
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
           </div>
           <span>Enter a word or two describing the subject of the image (to help us make sure we're getting the right one for you), and then enter the full link (including the http://)<br/></span>
         <% end %>

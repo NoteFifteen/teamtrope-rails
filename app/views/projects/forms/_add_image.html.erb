@@ -28,7 +28,7 @@
       <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'add_stock_cover_image', id: @project),
                           html: { id: "add_stock_cover_image" } do | f | %>
         <%= f.error_notification %>
-        <%= hidden_field_tag :submitted_task_id, current_tab.task.id %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'add_image_submitted_task_id' %>
 
         <br/>
 

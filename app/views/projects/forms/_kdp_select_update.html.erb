@@ -22,7 +22,7 @@
                             url: form_submit_url,
                             html: { id: "kdp_update" } do |f| %>
           <%= f.error_notification %>
-          <%= hidden_field_tag :submitted_task_id, current_tab.task.id unless current_tab.nil? %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'kdp_enrollment_submitted_task_id' unless current_tab.nil? %>
 
               <div id="kdp_update_first_page">
                 <h2>Note: You can only participate in EITHER the Kindle Countdown Deal OR the Free Book Promotion for each
