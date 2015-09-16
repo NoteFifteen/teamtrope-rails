@@ -88,6 +88,9 @@ namespace :teamtrope do
             when 'book_cover_concept'
               project.build_cover_concept if project.cover_concept.nil?
               project.cover_concept.cover_concept = prepare_url(document.url, document)
+            when 'book_raw_cover'
+              project.build_cover_template if project.cover_template.nil?
+              project.cover_template.raw_cover = prepare_url(document.url, document)
             when 'book_ebook_front_cover'
               project.build_cover_template if project.cover_template.nil?
               project.cover_template.ebook_front_cover = prepare_url(document.url, document)

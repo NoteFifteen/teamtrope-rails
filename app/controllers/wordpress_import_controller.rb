@@ -267,6 +267,7 @@ class WordpressImportController < ApplicationController
 
   def prepare_cover_template_fields(project_meta)
     {
+      raw_cover: prepare_attachment(project_meta, 'book_raw_cover'),
       alternative_cover: prepare_attachment(project_meta, 'book_alternative_cover_template'),
       createspace_cover: prepare_attachment(project_meta, 'book_createspace_cover'),
       ebook_front_cover: prepare_attachment(project_meta, 'book_ebook_front_cover'),

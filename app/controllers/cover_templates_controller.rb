@@ -31,6 +31,14 @@ class CoverTemplatesController < ApplicationController
     @updated_file = nil
     update_hash = {}
 
+    unless params[:cover_template_raw_cover].nil?
+      update_hash[:raw_cover_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
+      update_hash[:raw_cover_content_type] = (params[:filetype].nil?)? 'application/octet-stream' : params[:filetype]
+      update_hash[:raw_cover_file_size] = params[:filesize] unless params[:filesize].nil? || params[:filesize] == ''
+      update_hash[:raw_cover_direct_upload_url] = params[:cover_template_raw_cover]['direct_upload_url'] unless params[:cover_template_raw_cover]['direct_upload_url'].nil?
+      @updated_file = "raw_cover"
+    end
+
     unless params[:cover_template_ebook_front_cover].nil?
       update_hash[:ebook_front_cover_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
       update_hash[:ebook_front_cover_content_type] = (params[:filetype].nil?)? 'image/jpeg' : params[:filetype]
@@ -77,7 +85,8 @@ class CoverTemplatesController < ApplicationController
     updated = []
 
     # setting the update text.
-    [ {key: :updated_ebook_front_cover,      tag: 'eBook'},
+    [ {key: :updated_raw_cover,              tag: 'Raw'},
+      {key: :updated_ebook_front_cover,      tag: 'eBook'},
       {key: :updated_createspace_cover,      tag: 'Createspace'},
       {key: :updated_lightning_source_cover, tag: 'Lightning Source'},
       {key: :updated_alternative_cover,      tag: 'Alternative'}

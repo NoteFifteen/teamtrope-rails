@@ -35,6 +35,25 @@ $('#cover_template_ebook_front_cover_s3_uploader').validate({
 });
 
 $(function() {
+    // raw front cover
+    $('#cover_template_raw_cover_s3_uploader').S3Uploader(
+        {
+            remove_completed_progress_bar: false,
+            progress_bar_target: $('#cover_template_raw_cover_uploads_container'),
+            before_add: function(file) {
+                if (/(image\/vnd.adobe.photoshop|application\/postscript)$/i.test(file.type)) {
+                    return true;
+                } else {
+                    alert('File type must be .psd or .ai');
+                    return false;
+                }
+            }
+    }
+    );
+    $('#cover_template_raw_cover_s3_uploader').bind('s3_upload_failed', function(e, content) {
+        return alert(content.filename + ' failed to upload');
+    });
+
     // ebook front cover
     $('#cover_template_ebook_front_cover_s3_uploader').S3Uploader(
         {
@@ -50,12 +69,11 @@ $(function() {
             }
     }
     );
-
-    // createspace cover
     $('#cover_template_ebook_front_cover_s3_uploader').bind('s3_upload_failed', function(e, content) {
         return alert(content.filename + ' failed to upload');
     });
 
+    // createspace cover
     $('#cover_template_createspace_cover_s3_uploader').S3Uploader(
         {
             remove_completed_progress_bar: false,
