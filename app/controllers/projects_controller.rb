@@ -578,8 +578,9 @@ class ProjectsController < ApplicationController
   def upload_cover_templates
     @cover_template = CoverTemplate.find_or_initialize_by(project_id: @project.id)
 
-    # Validate the file has been uploaded before moving forward
-    if ! @cover_template.ebook_front_cover.nil? &&
+    # Validate the files have been uploaded before moving forward
+    if ! @cover_template.raw_cover.nil? &&
+       ! @cover_template.ebook_front_cover.nil? &&
        ! @cover_template.createspace_cover.nil? &&
        ! @cover_template.lightning_source_cover.nil?
 
@@ -838,6 +839,10 @@ class ProjectsController < ApplicationController
 
   def download_final_manuscript_doc
     redirect_to @project.final_manuscript.doc.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_raw_cover
+    redirect_to @project.cover_template.raw_cover.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
   def download_alternate_cover

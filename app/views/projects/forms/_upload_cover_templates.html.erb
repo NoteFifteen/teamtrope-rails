@@ -5,15 +5,41 @@
     <h5>Please upload the cover templates.</h5>
 
     <ul class="cover_template_list">
-      <li class="cover_template_list">
 
-        <label>Front Cover File <span class="required">*</span></label>
+      <%-# 2015-09-14 NB we don't use "accept" to cause the file picker to filter. -%>
+      <%-# Apparently this was not working right in all browsers... -%>
+
+      <li class="cover_template_list">
+        <label>Raw Cover File<span class="required">*</span></label>
+        <%= s3_uploader_form callback_url: project_cover_template_url(@project),
+                              id: "cover_template_raw_cover_s3_uploader",
+                              acl: 'private',
+                              callback_param: 'cover_template_raw_cover[direct_upload_url]',
+                              expiration: 24.hours.from_now.utc.iso8601,
+                              max_file_size: 100.megabytes do %>
+          <%= file_field_tag :file, multiple: false %>
+        <% end %>
+        <div id="cover_template_raw_cover_uploads_container"></div>
+        <script id="template-upload" type="text/x-tmpl">
+          <div id="upload_{%=o.unique_id%}" class="upload">
+            <h5>{%=o.name%}</h5>
+            <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+          </div>
+        </script>
+        <div><!-- gfield_description -->
+          Raw front cover file, .psd (Photoshop) or .ai (Illustrator) only<br />
+          This is needed in case of new editions, sequels, collections, anthologies, etc.
+        </div>
+      </li>
+
+      <li class="cover_template_list">
+        <label>Front Cover File JPEG<span class="required">*</span></label>
         <%= s3_uploader_form callback_url: project_cover_template_url(@project),
                               id: "cover_template_ebook_front_cover_s3_uploader",
                               acl: 'private',
                               callback_param: 'cover_template_ebook_front_cover[direct_upload_url]',
                               expiration: 24.hours.from_now.utc.iso8601,
-                            max_file_size: 100.megabytes do %>
+                              max_file_size: 100.megabytes do %>
           <%= file_field_tag :file, multiple: false %>
         <% end %>
         <div id="cover_template_ebook_front_cover_uploads_container"></div>
@@ -24,9 +50,8 @@
           </div>
         </script>
         <div><!-- gfield_description -->
-          Final Front cover jpeg only<br />
-          jpeg should be minimum 1650 px height<br /><br />
-          This will be used as your ebook cover and for display on vendor sites such as Amazon and BN.com
+          Final front cover, JPEG only, minimum 1650px height<br />
+          This will be used as your ebook cover and for display on vendor sites such as Amazon and BN.com.
         </div>
       </li>
 
@@ -88,6 +113,7 @@
         </script>
         <div><!-- gfield_description -->This field is not typically used; do not upload anything here unless you have specifically discussed with Booktrope management. </div>
       </li>
+
     </ul>
 
     <%= simple_form_for @project,

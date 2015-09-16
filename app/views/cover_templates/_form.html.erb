@@ -2,6 +2,12 @@
 # amazon s3 uploads
 [
   {
+    label: "Raw Cover File", required: true, callback_url: project_cover_template_url(@project),
+    form_id: "cover_template_raw_cover_s3_uploader", callback_param: "cover_template_raw_cover[direct_upload_url]",
+    container_id: "cover_template_raw_cover_uploads_container", object: @cover_template, column_name: "raw_cover",
+    controller_action: 'download_raw_cover'
+  },
+  {
     label: "Front Cover File", required: true, callback_url: project_cover_template_url(@project),
     form_id: "cover_template_ebook_front_cover_s3_uploader", callback_param: "cover_template_ebook_front_cover[direct_upload_url]",
     container_id: "cover_template_ebook_front_cover_uploads_container", object: @cover_template, column_name: "ebook_front_cover",

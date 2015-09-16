@@ -3,6 +3,7 @@ class CoverTemplate < ActiveRecord::Base
 
   include PaperclipS3UploadProcessing
 
+  has_attached_file :raw_cover,         :s3_permissions => 'authenticated-read'
   has_attached_file :alternative_cover, :s3_permissions => 'authenticated-read'
   has_attached_file :createspace_cover, :s3_permissions => 'authenticated-read'
   has_attached_file :ebook_front_cover, :s3_permissions => 'authenticated-read'
@@ -20,6 +21,9 @@ class CoverTemplate < ActiveRecord::Base
     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
   end
 
+  validates_attachment :raw_cover,
+    *Constants::DefaultContentTypeRawImageParams
+
   validates_attachment :alternative_cover,
     *Constants::DefaultContentTypePdfParams
 
@@ -36,6 +40,10 @@ class CoverTemplate < ActiveRecord::Base
   after_save :transfer_and_cleanup
 
   # The following methods are to unescape the direct upload url path
+  def raw_cover_direct_upload_url=(escaped_url)
+    write_attribute :raw_cover_direct_upload_url, self.unescape_url(escaped_url)
+  end
+
   def ebook_front_cover_direct_upload_url=(escaped_url)
     write_attribute :ebook_front_cover_direct_upload_url, self.unescape_url(escaped_url)
   end
@@ -56,6 +64,8 @@ class CoverTemplate < ActiveRecord::Base
   def transfer_and_cleanup
     transfer_and_cleanup_with_block do | type |
       case type
+      when :raw_cover
+        self.update_column :raw_cover_processed, true
       when :ebook_front_cover
         self.update_column :ebook_front_cover_processed, true
       when :createspace_cover
@@ -71,6 +81,11 @@ class CoverTemplate < ActiveRecord::Base
   def set_upload_attributes
     set_upload_attributes_with_block do | type, direct_upload_url_data, direct_upload_head |
       case(type)
+      when :raw_cover
+        self.raw_cover_file_name = direct_upload_url_data[:filename]
+        self.raw_cover_file_size = direct_upload_head.content_length
+        self.raw_cover_content_type = direct_upload_head.content_type
+        self.raw_cover_updated_at = direct_upload_head.last_modified
       when :ebook_front_cover
         self.ebook_front_cover_file_name = direct_upload_url_data[:filename]
         self.ebook_front_cover_file_size = direct_upload_head.content_length
@@ -96,6 +111,10 @@ class CoverTemplate < ActiveRecord::Base
   end
 
   def get_direct_upload_url
+    if raw_cover_direct_upload_url_changed?
+      return DIRECT_UPLOAD_URL_FORMAT.match(raw_cover_direct_upload_url)
+    end
+
     if ebook_front_cover_direct_upload_url_changed?
       return DIRECT_UPLOAD_URL_FORMAT.match(ebook_front_cover_direct_upload_url)
     end
@@ -111,10 +130,13 @@ class CoverTemplate < ActiveRecord::Base
     if alternative_cover_direct_upload_url_changed?
       return DIRECT_UPLOAD_URL_FORMAT.match(alternative_cover_direct_upload_url)
     end
-
   end
 
   def get_uploaded_type
+    if raw_cover_direct_upload_url_changed?
+      return :raw_cover
+    end
+
     if ebook_front_cover_direct_upload_url_changed?
       return :ebook_front_cover
     end
@@ -130,7 +152,6 @@ class CoverTemplate < ActiveRecord::Base
     if alternative_cover_direct_upload_url_changed?
       return :alternative_cover
     end
-
   end
 
 end
