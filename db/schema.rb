@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150915181539) do
+ActiveRecord::Schema.define(version: 20150917202106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -188,6 +188,12 @@ ActiveRecord::Schema.define(version: 20150915181539) do
     t.datetime "raw_cover_updated_at"
     t.string   "raw_cover_direct_upload_url"
     t.string   "raw_cover_processed"
+    t.string   "font_license_file_name"
+    t.string   "font_license_content_type"
+    t.string   "font_license_file_dize"
+    t.string   "font_license_updated_at"
+    t.string   "font_license_direct_upload_url"
+    t.string   "font_license_processed"
   end
 
   add_index "cover_templates", ["project_id"], name: "index_cover_templates_on_project_id", using: :btree

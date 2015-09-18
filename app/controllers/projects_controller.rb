@@ -861,6 +861,10 @@ class ProjectsController < ApplicationController
     redirect_to @project.cover_template.lightning_source_cover.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
+  def download_font_license
+    redirect_to @project.cover_template.font_license.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
   def download_cover_concept
     redirect_to @project.cover_concept.cover_concept.expiring_url(*Constants::DefaultLinkExpiration)
   end

@@ -103,6 +103,9 @@ namespace :teamtrope do
             when 'book_alternative_cover_template'
               project.build_cover_template if project.cover_template.nil?
               project.cover_template.alternative_cover = prepare_url(document.url, document)
+            when 'book_font_license'
+              project.build_cover_template if project.cover_template.nil?
+              project.cover_template.font_license = prepare_url(document.url, document)
             when 'book_final_manuscript_pdf'
               project.build_final_manuscript if project.final_manuscript.nil?
               project.final_manuscript.pdf = prepare_url(document.url, document)

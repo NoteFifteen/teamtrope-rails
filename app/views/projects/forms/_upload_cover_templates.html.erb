@@ -72,6 +72,9 @@
             <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
           </div>
         </script>
+        <div><!-- gfield_description -->
+          This should be a .pdf.<br />
+        </div>
       </li>
 
       <li class="cover_template_list">
@@ -91,7 +94,7 @@
             <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
           </div>
         </script>
-        <div><!-- gfield_description -->Please save the cover file for lightning source in the form [isbn_number_without_dashes]-cvr.pdf on your local computer before uploading here. Example: 1234567890123-cvr.pdf.</div>
+        <div><!-- gfield_description -->Please save the cover file for lightning source in the form [isbn_number_without_dashes]-cvr.pdf on your local computer before uploading here. Example: 1234567890123-cvr.pdf</div>
       </li>
 
       <li class="cover_template_list">
@@ -112,6 +115,26 @@
           </div>
         </script>
         <div><!-- gfield_description -->This field is not typically used; do not upload anything here unless you have specifically discussed with Booktrope management. </div>
+      </li>
+
+      <li class="cover_template_list">
+        <label>Font License</label>
+        <%= s3_uploader_form callback_url: project_cover_template_url(@project),
+                              id: "cover_template_font_license_s3_uploader",
+                              acl: 'private',
+                              callback_param: 'cover_template_font_license[direct_upload_url]',
+                              expiration: 24.hours.from_now.utc.iso8601,
+                              max_file_size: 100.megabytes do %>
+          <%= file_field_tag :file, multiple: false %>
+        <% end %>
+        <div id="cover_template_font_license_uploads_container"></div>
+        <script id="template-upload" type="text/x-tmpl">
+          <div id="upload_{%=o.unique_id%}" class="upload">
+            <h5>{%=o.name%}</h5>
+            <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+          </div>
+        </script>
+        <div><!-- gfield_description -->Upload any cover font license files here (as a .zip if there are multiple files). </div>
       </li>
 
     </ul>
@@ -138,7 +161,7 @@
                   'Book blurb on back is final?',
                   'ISBN bar code matches ISBN on title page of laid out document?',
                   'Author name and title are correct on front cover?',
-                  'All fonts are for commercial use and appropriate license(s) have been acquired?'
+                  'All fonts are for commercial use, and appropriate license(s) have been acquired?'
                 ].each_with_index do | check_box, index |
               %>
               <li class="cover_template_sign_off">

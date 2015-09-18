@@ -24,4 +24,8 @@
 <p>Download Alternate Cover: <%= link_to(@project.cover_template.alternative_cover_file_name, url_for(controller: 'projects', action: 'download_alternate_cover', id: @project, only_path: false)) %></p>
 <% end %>
 
+<% if( @project.cover_template.font_license? ) %>
+<p>Font License: <%= link_to(@project.cover_template.font_license_file_name, url_for(controller: 'projects', action: 'download_font_license, id: @project, only_path: false)) %></p>
+<% end %>
+
 <p>You may also find the uploaded files on the Project page under the Assets tab.</p>

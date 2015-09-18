@@ -27,3 +27,4 @@ eBook Front Cover: <%= (@project.cover_template.ebook_front_cover?) ? (link_to "
 CreateSpace Full Cover: <%= (@project.cover_template.createspace_cover?) ? (link_to "DOWNLOAD", @project.cover_template.createspace_cover.expiring_url(*Constants::LinkExpirationOneMonth)) : 'N/A' %><br/>
 Lightning Source Full Cover: <%= (@project.cover_template.lightning_source_cover?) ? (link_to "DOWNLOAD", @project.cover_template.lightning_source_cover.expiring_url(*Constants::LinkExpirationOneMonth)) : 'N/A' %><br/>
 Alternate Cover: <%= (@project.cover_template.alternative_cover?) ? (link_to "DOWNLOAD", @project.cover_template.alternative_cover.expiring_url(*Constants::LinkExpirationOneMonth)) : 'N/A' %><br/><br/>
+Font File: <%= (@project.cover_template.font_file?) ? (link_to "DOWNLOAD", @project.cover_template.font_file.expiring_url(*Constants::LinkExpirationOneMonth)) : 'N/A' %><br/><br/>

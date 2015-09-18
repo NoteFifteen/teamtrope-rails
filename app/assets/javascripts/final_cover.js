@@ -129,4 +129,16 @@ $(function() {
     $('#cover_template_alternative_cover_s3_uploader').bind('s3_upload_failed', function(e, content) {
         return alert(content.filename + ' failed to upload');
     });
+
+    // font license
+    $('#cover_template_font_license_s3_uploader').S3Uploader(
+        {
+            remove_completed_progress_bar: false,
+            progress_bar_target: $('#cover_template_font_license_uploads_container'),
+            // no constraint on file suffix for font files (or zips of them)
+        }
+    );
+    $('#cover_template_font_license_s3_uploader').bind('s3_upload_failed', function(e, content) {
+        return alert(content.filename + ' failed to upload');
+    });
 });

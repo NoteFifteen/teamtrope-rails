@@ -18,7 +18,7 @@ class CoverTemplatesControllerTest < ActionController::TestCase
 
   test "should create cover_template" do
     assert_difference('CoverTemplate.count') do
-      post :create, cover_template: { raw_cover: @cover_template.raw_cover, alternative_cover: @cover_template.alternative_cover, createspace_cover: @cover_template.createspace_cover, ebook_front_cover: @cover_template.ebook_front_cover, lightning_source: @cover_template.lightning_source }
+      post :create, cover_template: { raw_cover: @cover_template.raw_cover, alternative_cover: @cover_template.alternative_cover, createspace_cover: @cover_template.createspace_cover, ebook_front_cover: @cover_template.ebook_front_cover, lightning_source: @cover_template.lightning_source, font_license: @cover_template.font_license }
     end
 
     assert_redirected_to cover_template_path(assigns(:cover_template))
@@ -35,7 +35,7 @@ class CoverTemplatesControllerTest < ActionController::TestCase
   end
 
   test "should update cover_template" do
-    patch :update, id: @cover_template, cover_template: { raw_cover: @cover_template.raw_cover, alternative_cover: @cover_template.alternative_cover, createspace_cover: @cover_template.createspace_cover, ebook_front_cover: @cover_template.ebook_front_cover, lightning_source: @cover_template.lightning_source }
+    patch :update, id: @cover_template, cover_template: { raw_cover: @cover_template.raw_cover, alternative_cover: @cover_template.alternative_cover, createspace_cover: @cover_template.createspace_cover, ebook_front_cover: @cover_template.ebook_front_cover, lightning_source: @cover_template.lightning_source, font_license: @cover_template.font_license }
     assert_redirected_to cover_template_path(assigns(:cover_template))
   end
 
