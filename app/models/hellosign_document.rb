@@ -11,7 +11,8 @@ class HellosignDocument < ActiveRecord::Base
 
     creative_team_agreement = HellosignDocumentType.find_by_name("Creative Team Agreement")
 
-    return if creative_team_agreement.nil?
+    # temporary fix for trying to access the layout before it exists.
+    return if creative_team_agreement.nil? || team_membership.project.layout.nil?
 
     hellosign_document = creative_team_agreement.hellosign_documents.create!(
       team_membership_id: team_membership.id
@@ -21,19 +22,29 @@ class HellosignDocument < ActiveRecord::Base
       {
         email_address: team_membership.member.email,
         name: team_membership.member.name,
-        role: 'Client'
+        role: 'TeamMember'
       }
     ]
 
     custom_fields = {
-      role: team_membership.role.name,
-      role_description: team_membership.role.contract_description,
-      percentage: team_membership.percentage
-    }
+      book_title: team_membership.project.title,
+      legal_name: team_membership.project.layout.legal_name,
+      pen_name: team_membership.project.layout.use_pen_name_on_title ? team_membership.project.layout.pen_name  : "N/A",
+    }.merge(hellosign_document.prepare_parties_and_payments(TeamMembership.where(project_id: team_membership.project_id)))
 
     hellosign_document.send_agreement(custom_fields, signers)
 
     hellosign_document
+  end
+
+  def prepare_parties_and_payments(team_memberships)
+    parties = ""
+    payments = ""
+    team_memberships.each do | team_membership |
+      parties << "#{team_membership.role.name}: #{team_membership.member.name}\n"
+      payments << "#{team_membership.role.name}: #{team_membership.percentage}\n"
+    end
+    {parties: parties, payments: payments}
   end
 
   def send_agreement(custom_fields, signers)
@@ -44,8 +55,10 @@ class HellosignDocument < ActiveRecord::Base
       response = HelloSign.send_signature_request_with_template(
                     build_hellosign_payload(custom_fields, signers)
       )
-    rescue
+    rescue StandardError => e
       #todo: figure out what types of error hellosign throws.
+      #binding.pry
+      raise e
     end
 
     #update the hellosign_id with the guid returned in the response.

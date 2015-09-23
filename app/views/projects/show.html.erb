@@ -13,17 +13,6 @@
       <% end %>
     </div>
 
-    <% if (unsigned_contracts = @project.unsigned_contracts(current_user)) && unsigned_contracts.count > 0 %>
-    <div>
-      You need too sign:
-      <ul>
-        <% unsigned_contracts.each do | contract | %>
-        <li><%= link_to contract.name, contract.signing_url %></li>
-        <% end %>
-      </ul>
-    </div>
-    <% end %>
-
     <div class="pcss3t pcss3t-icons-left  pcss3t-height-auto pcss3t-theme-3-all-white">
       <label>Team: </label>
       <label class='brown'>

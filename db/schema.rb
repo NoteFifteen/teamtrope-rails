@@ -356,6 +356,7 @@ ActiveRecord::Schema.define(version: 20150926214432) do
     t.string   "layout_upload_processed"
     t.float    "trim_size_w"
     t.float    "trim_size_h"
+    t.string   "legal_name"
   end
 
   add_index "layouts", ["project_id"], name: "index_layouts_on_project_id", using: :btree
