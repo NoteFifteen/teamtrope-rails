@@ -4,7 +4,7 @@ class HellosignDocument < ActiveRecord::Base
 
   delegate :name, :template_id, :subject, :message, :ccs, :signers, to: :hellosign_document_type, allow_nil: true
 
-  has_many :hellosign_signatures
+  has_many :hellosign_signatures, dependent: :destroy
   alias :signatures :hellosign_signatures
 
   def HellosignDocument.send_creative_team_agreement(team_membership)
