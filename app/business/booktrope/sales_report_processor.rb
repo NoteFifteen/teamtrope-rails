@@ -39,7 +39,7 @@ module Booktrope
         end
 
         # Skip blank lines or unprocessable files
-        continue if rec[:source_table_name].nil?
+        next if rec[:source_table_name].nil?
 
         # Convert the dates
         start_date = transform_date(rec[:start_date])
