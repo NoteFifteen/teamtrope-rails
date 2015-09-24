@@ -455,7 +455,13 @@ class ProjectMailer < ActionMailer::Base
         'BISAC code three' => pfs.try(:bisac_code_three),
         'Search terms' => ('<pre>' + pfs.try(:search_terms) + '</pre>').html_safe,
         'Age range' => PublicationFactSheet::AGE_RANGES.to_h[pfs.try(:age_range)],
-        'Paperback cover' => PublicationFactSheet::COVER_TYPES.to_h[pfs.try(:paperback_cover_type)]
+        'Paperback cover' => PublicationFactSheet::COVER_TYPES.to_h[pfs.try(:paperback_cover_type)],
+        'Paperback ISBN' => project.control_number.try(:paperback_isbn) || 'None Provided',
+        'Epub ISBN' => project.control_number.try(:epub_isbn) || 'None Provided',
+        'Page Count' => (project.layout.try(:final_page_count) || project.page_count).to_s,
+        'Trim Size' => "#{project.layout.try(:trim_size_w) || '?'} " \
+                       "x #{project.layout.try(:trim_size_h) || '?'}",
+        'Imprint' => project.imprint.try(:name) || 'None Provided',
     }
 
     user_subject = "Publication Fact Sheet from #{current_user.name} for #{project.title}"
