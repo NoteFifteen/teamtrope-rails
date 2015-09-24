@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  report_data_file_id: 
+  source_table_name: MyString
+  start_date: 2015-08-13
+  end_date: 2015-08-13
+  quantity: 1
+  revenue_multiccy: 1.5
+  currency_use: MyString
+  country: MyString
+  bn_identifier: MyString
+  epub_isbn: MyString
+  paperback_isbn: MyString
+  apple_identifier: MyString
+  asin: MyString
+  kdp_royalty_type: MyString
+  kdp_transaction_type: MyString
+  list_price_multiccy: MyString
+  isbn_hardcover: MyString
+  unit_revenue: 1.5
+  revenue_usd: 1.5
+
+two:
+  report_data_file_id: 
+  source_table_name: MyString
+  start_date: 2015-08-13
+  end_date: 2015-08-13
+  quantity: 1
+  revenue_multiccy: 1.5
+  currency_use: MyString
+  country: MyString
+  bn_identifier: MyString
+  epub_isbn: MyString
+  paperback_isbn: MyString
+  apple_identifier: MyString
+  asin: MyString
+  kdp_royalty_type: MyString
+  kdp_transaction_type: MyString
+  list_price_multiccy: MyString
+  isbn_hardcover: MyString
+  unit_revenue: 1.5
+  revenue_usd: 1.5

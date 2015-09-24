@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150814205106) do
+ActiveRecord::Schema.define(version: 20150910204128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,11 @@ ActiveRecord::Schema.define(version: 20150814205106) do
     t.string   "encore_asin"
   end
 
+  add_index "control_numbers", ["apple_id"], name: "index_control_numbers_on_apple_id", unique: true, using: :btree
+  add_index "control_numbers", ["asin"], name: "index_control_numbers_on_asin", unique: true, using: :btree
+  add_index "control_numbers", ["epub_isbn"], name: "index_control_numbers_on_epub_isbn", unique: true, using: :btree
+  add_index "control_numbers", ["hardback_isbn"], name: "index_control_numbers_on_hardback_isbn", unique: true, using: :btree
+  add_index "control_numbers", ["paperback_isbn"], name: "index_control_numbers_on_paperback_isbn", unique: true, using: :btree
   add_index "control_numbers", ["project_id"], name: "index_control_numbers_on_project_id", using: :btree
 
   create_table "cover_concepts", force: true do |t|
@@ -378,6 +383,42 @@ ActiveRecord::Schema.define(version: 20150814205106) do
 
   add_index "media_kits", ["project_id"], name: "index_media_kits_on_project_id", using: :btree
 
+  create_table "parse_books", force: true do |t|
+    t.string   "object_id"
+    t.string   "apple_id"
+    t.string   "asin"
+    t.string   "author"
+    t.string   "bnid"
+    t.string   "createspace_isbn"
+    t.string   "detail_page_url_nook"
+    t.string   "detail_url_apple"
+    t.string   "detail_url_google_play"
+    t.string   "detail_url"
+    t.string   "epub_isbn"
+    t.string   "epub_isbn_itunes"
+    t.string   "google_play_url"
+    t.string   "hardback_isbn"
+    t.string   "image_url_google_play"
+    t.string   "image_url_nook"
+    t.string   "inclusion_asin"
+    t.string   "kdp_url"
+    t.string   "large_image_apple"
+    t.string   "large_image"
+    t.string   "lightning_source"
+    t.string   "meta_comet_id"
+    t.string   "nook_url"
+    t.string   "paperback_isbn"
+    t.date     "publication_date_amazon"
+    t.string   "publisher"
+    t.integer  "teamtrope_id"
+    t.integer  "teamtrope_project_id"
+    t.string   "title"
+    t.date     "parse_created_at"
+    t.date     "parse_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "phases", force: true do |t|
     t.integer  "project_view_id"
     t.string   "name"
@@ -617,6 +658,95 @@ ActiveRecord::Schema.define(version: 20150814205106) do
 
   add_index "published_files", ["project_id"], name: "index_published_files_on_project_id", using: :btree
 
+  create_table "report_data_countries", force: true do |t|
+    t.string   "name"
+    t.string   "code_iso"
+    t.string   "code_un"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "report_data_files", force: true do |t|
+    t.binary   "source_file"
+    t.string   "filename"
+    t.boolean  "is_valid",    default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "report_data_kdp_types", force: true do |t|
+    t.string   "kdp_transaction_type"
+    t.string   "kdp_royalty_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "report_data_kdp_types", ["kdp_transaction_type", "kdp_royalty_type"], name: "index_kdp_types", unique: true, using: :btree
+
+  create_table "report_data_monthly_sales", force: true do |t|
+    t.integer  "report_data_file_id"
+    t.integer  "report_data_source_id"
+    t.integer  "project_id"
+    t.integer  "report_data_kdp_type_id"
+    t.integer  "report_data_country_id"
+    t.boolean  "is_valid"
+    t.integer  "year"
+    t.integer  "month"
+    t.integer  "quantity",                default: 0
+    t.float    "revenue",                 default: 0.0
+    t.float    "list_price",              default: 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "report_data_monthly_sales", ["project_id"], name: "index_report_data_monthly_sales_on_project_id", using: :btree
+  add_index "report_data_monthly_sales", ["report_data_file_id"], name: "index_report_data_monthly_sales_on_report_data_file_id", using: :btree
+  add_index "report_data_monthly_sales", ["report_data_source_id", "year", "month", "is_valid"], name: "index_monthly_sales_by_source", using: :btree
+  add_index "report_data_monthly_sales", ["report_data_source_id"], name: "index_report_data_monthly_sales_on_report_data_source_id", using: :btree
+  add_index "report_data_monthly_sales", ["year", "month", "is_valid"], name: "index_monthly_sales", using: :btree
+
+  create_table "report_data_rows", force: true do |t|
+    t.integer  "report_data_file_id"
+    t.integer  "project_id"
+    t.boolean  "is_valid",             default: true
+    t.string   "source_table_name"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "quantity"
+    t.float    "revenue_multiccy"
+    t.string   "currency_use"
+    t.string   "country"
+    t.string   "bn_identifier"
+    t.string   "epub_isbn"
+    t.string   "paperback_isbn"
+    t.string   "apple_identifier"
+    t.string   "asin"
+    t.string   "kdp_royalty_type"
+    t.string   "kdp_transaction_type"
+    t.string   "list_price_multiccy"
+    t.string   "isbn_hardcover"
+    t.float    "unit_revenue"
+    t.float    "revenue_usd"
+    t.string   "author"
+    t.string   "title"
+    t.string   "imprint"
+    t.datetime "sale_date"
+    t.string   "retailer"
+    t.string   "period"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "report_data_rows", ["project_id"], name: "index_report_data_rows_on_project_id", using: :btree
+  add_index "report_data_rows", ["report_data_file_id"], name: "index_report_data_rows_on_report_data_file_id", using: :btree
+
+  create_table "report_data_sources", force: true do |t|
+    t.string   "name"
+    t.string   "name_short"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "required_roles", force: true do |t|
     t.integer  "role_id"
     t.integer  "project_type_id"
@@ -634,6 +764,8 @@ ActiveRecord::Schema.define(version: 20150814205106) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "roles", ["name"], name: "index_roles_on_name", unique: true, using: :btree
 
   create_table "tabs", force: true do |t|
     t.integer  "task_id"

@@ -1,0 +1,63 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  objectId: MyString
+  appleId: MyString
+  asin: MyString
+  author: MyString
+  bnid: MyString
+  createspaceIsbn: MyString
+  detailPageUrlNook: MyString
+  detailUrlApple: MyString
+  detailUrlGooglePlay: MyString
+  detail_url: MyString
+  epubIsbn: MyString
+  epubIsbnItunes: MyString
+  googlePlayUrl: MyString
+  hardbackIsbn: MyString
+  imageUrlGooglePlay: MyString
+  imageUrlNook: MyString
+  inclusionASIN: MyString
+  kdpUrl: MyString
+  largeImageApple: MyString
+  large_image: MyString
+  lightningSource: MyString
+  metaCometId: MyString
+  nookUrl: MyString
+  paperbackIsbn: MyString
+  publicationDateAmazon: 2015-08-11
+  publisher: MyString
+  teamtropeId: MyString
+  teamtropeProjectId: MyString
+  title: MyString
+
+two:
+  objectId: MyString
+  appleId: MyString
+  asin: MyString
+  author: MyString
+  bnid: MyString
+  createspaceIsbn: MyString
+  detailPageUrlNook: MyString
+  detailUrlApple: MyString
+  detailUrlGooglePlay: MyString
+  detail_url: MyString
+  epubIsbn: MyString
+  epubIsbnItunes: MyString
+  googlePlayUrl: MyString
+  hardbackIsbn: MyString
+  imageUrlGooglePlay: MyString
+  imageUrlNook: MyString
+  inclusionASIN: MyString
+  kdpUrl: MyString
+  largeImageApple: MyString
+  large_image: MyString
+  lightningSource: MyString
+  metaCometId: MyString
+  nookUrl: MyString
+  paperbackIsbn: MyString
+  publicationDateAmazon: 2015-08-11
+  publisher: MyString
+  teamtropeId: MyString
+  teamtropeProjectId: MyString
+  title: MyString

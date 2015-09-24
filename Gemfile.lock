@@ -107,6 +107,8 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     erubis (2.7.0)
+    exchange (1.2.2)
+      nokogiri (~> 1, >= 1.0.0)
     execjs (2.2.2)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
@@ -283,6 +285,7 @@ DEPENDENCIES
   cocoon
   coffee-rails (~> 4.0.0)
   devise
+  exchange (~> 1.2.0)
   figaro
   friendly_id (~> 5.1.0)
   hellosign-ruby-sdk!
@@ -314,6 +317,3 @@ DEPENDENCIES
   unicorn
   will_paginate (= 3.0.7)
   wisper
-
-BUNDLED WITH
-   1.10.6
