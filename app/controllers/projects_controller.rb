@@ -350,12 +350,12 @@ class ProjectsController < ApplicationController
                                parameters: {text: 'Updated the Control Numbers', form_data: params[:project].to_s}
       flash[:success] = 'Updated the Control Numbers'
       ProjectMailer.edit_control_numbers(@project, current_user)
+
+      redirect_to @project
     else
-      flash[:danger] = 'Error updating the Control Numbers, please review.'
+      flash[:danger] = 'Error updating the Control Numbers, please review.  Remember, all control numbers must be unique!'
       render 'show'
     end
-
-    redirect_to @project
   end
 
   def edit_layout_style

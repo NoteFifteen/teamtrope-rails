@@ -4,8 +4,14 @@ class ControlNumber < ActiveRecord::Base
   # a single row.  This data is also used to interface with and update similar records in Parse.
   belongs_to :project
 
+  validates_uniqueness_of :asin, :apple_id, :epub_isbn, :hardback_isbn, :paperback_isbn, :encore_asin, :parse_id, :allow_nil => true
+
   def epub_isbn=(isbn)
-    super(strip_dashes(isbn))
+    if isbn.nil? || isbn.length == 0
+      super(nil)
+    else
+      super(strip_dashes(isbn))
+    end
   end
 
   def epub_isbn
@@ -13,7 +19,11 @@ class ControlNumber < ActiveRecord::Base
   end
 
   def hardback_isbn=(isbn)
-    super(strip_dashes(isbn))
+    if isbn.nil? || isbn.length == 0
+      super(nil)
+    else
+      super(strip_dashes(isbn))
+    end
   end
 
   def hardback_isbn
@@ -21,13 +31,48 @@ class ControlNumber < ActiveRecord::Base
   end
 
   def paperback_isbn=(isbn)
-    super(strip_dashes(isbn))
+    if isbn.nil? || isbn.length == 0
+      super(nil)
+    else
+      super(strip_dashes(isbn))
+    end
   end
 
   def paperback_isbn
     add_dashes_to_isbn(super)
   end
 
+  def asin=(asin)
+    if asin.nil? || asin.length == 0
+      super(nil)
+    else
+      super(asin)
+    end
+  end
+
+  def encore_asin=(asin)
+    if asin.nil? || asin.length == 0
+      super(nil)
+    else
+      super(asin)
+    end
+  end
+
+  def apple_id=(asin)
+    if asin.nil? || asin.length == 0
+      super(nil)
+    else
+      super(asin)
+    end
+  end
+
+  def parse_id=(parse_id)
+    if parse_id.nil? || parse_id.length == 0
+      super(nil)
+    else
+      super(parse_id)
+    end
+  end
 
   private
 
