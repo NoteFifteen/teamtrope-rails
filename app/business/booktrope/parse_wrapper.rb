@@ -187,7 +187,7 @@ module Booktrope
     # record in Parse.
     def ParseWrapper.update_project_control_numbers(control_number)
 
-      unless control_number.parse_id.try(:empty?)
+      unless control_number.try(:parse_id).nil?
         # In order to edit an existing record on parse we must load it
         # so we pass true to prepare_book to fetch the record out of parse.
         book = prepare_book(control_number.parse_id, true)
