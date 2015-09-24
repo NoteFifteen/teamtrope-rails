@@ -21,36 +21,39 @@ module Booktrope
             source_list.each do |year, year_list|
               year_list.each do |month, month_list|
                 month_list.each do |country, project_list|
-                  project_list.each do |project_id, project|
+                  project_list.each do |project_id, list_prices|
+                    list_prices.each do |list_price, project|
 
-                    if (! defined? @monthly_sales) || (@monthly_sales.nil?)
-                      @monthly_sales = ReportDataMonthlySales.new
-                    end
-
-                    # These are all of records for the project
-                    project.each do |row|
-
-                      if ! @monthly_sales.nil? && @monthly_sales.is_valid.nil?
-                        @monthly_sales.is_valid = true
-                        @monthly_sales.report_data_file = report_data_file
-                        @monthly_sales.report_data_source = get_report_data_source_model(source)
-                        @monthly_sales.report_data_country = get_report_data_country_model(country) unless country.nil?
-                        @monthly_sales.year = year
-                        @monthly_sales.month = month
-                        @monthly_sales.project_id = project_id unless project_id == 0
+                      if (! defined? @monthly_sales) || (@monthly_sales.nil?)
+                        @monthly_sales = ReportDataMonthlySales.new
                       end
 
-                      ## Sum the totals here
-                      @monthly_sales.quantity += row.quantity unless row.quantity.nil?
-                      # @monthly_sales.revenue += row.revenue_usd unless row.revenue_usd.nil?
-                      revenue = convert_currency(country, row.currency_use, row.start_date, row.revenue_multiccy, row.revenue_usd)
-                      @monthly_sales.revenue += revenue unless revenue.nil?
+                      # These are all of records for the project
+                      project.each do |row|
+
+                        if ! @monthly_sales.nil? && @monthly_sales.is_valid.nil?
+                          @monthly_sales.is_valid = true
+                          @monthly_sales.report_data_file = report_data_file
+                          @monthly_sales.report_data_source = get_report_data_source_model(source)
+                          @monthly_sales.report_data_country = get_report_data_country_model(country) unless country.nil?
+                          @monthly_sales.year = year
+                          @monthly_sales.month = month
+                          @monthly_sales.project_id = project_id unless project_id == 0
+                          @monthly_sales.list_price = list_price || 0.0
+                        end
+
+                        ## Sum the totals here
+                        @monthly_sales.quantity += row.quantity unless row.quantity.nil?
+                        # @monthly_sales.revenue += row.revenue_usd unless row.revenue_usd.nil?
+                        revenue = convert_currency(country, row.currency_use, row.start_date, row.revenue_multiccy, row.revenue_usd)
+                        @monthly_sales.revenue += revenue unless revenue.nil?
+
+                      end
+                      # save the record after we've totaled everything up, then reset
+                      @monthly_sales.save
+                      @monthly_sales = nil
 
                     end
-                    # save the record after we've totaled everything up, then reset
-                    @monthly_sales.save
-                    @monthly_sales = nil
-
                   end
                 end
               end
@@ -114,6 +117,8 @@ module Booktrope
           year = row.start_date.year
           month = row.start_date.month
 
+          list_price = row.list_price_multiccy || 0.0
+
           ## Now the nasty code to search then initialize the aggregator storage
           if ! @records.has_key?(source)
             @records[source] = {}
@@ -132,10 +137,14 @@ module Booktrope
           end
 
           if ! @records[source][year][month][country].has_key?(project_id)
-            @records[source][year][month][country][project_id] = []
+            @records[source][year][month][country][project_id] = {}
           end
 
-          @records[source][year][month][country][project_id] << row
+          if ! @records[source][year][month][country][project_id].has_key?(list_price)
+            @records[source][year][month][country][project_id][list_price] = []
+          end
+
+          @records[source][year][month][country][project_id][list_price] << row
 
         end
 
@@ -174,8 +183,8 @@ module Booktrope
           case country
             when 'AUSTRALIA, COMMONWEALTH OF', 'AUS', 'LS - AUSTRALIA'
               country = 'AU'
-            when 'GB', 'LS-UNITED KINGDOM', 'UNITED KINGDOM OF GREAT BRITAIN AND N. IRELAND'
-              country = 'UK'
+            when 'UK', 'LS-UNITED KINGDOM', 'UNITED KINGDOM OF GREAT BRITAIN AND N. IRELAND'
+              country = 'GB'
             when 'EUROPE' # Not really a country..
               country = 'EU'
             when "MONGOLIA, MONGOLIAN PEOPLE'S REPUBLIC"
@@ -184,7 +193,7 @@ module Booktrope
               country = 'SG'
             when 'SOUTH AFRICA, REPUBLIC OF'
               country = 'ZA'
-            when 'UNITED STATES OF AMERICA', 'LS-UNITED STATES' 'ESTORE'
+            when 'UNITED STATES OF AMERICA', 'LS-UNITED STATES' 'ESTORE', 'USD'
               country = 'US'
           end
 

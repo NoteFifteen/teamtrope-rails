@@ -8,12 +8,15 @@ module Booktrope
 
         # Custom processors
         Booktrope::SalesReporting::Processors::CreateSpace,
+        Booktrope::SalesReporting::Processors::Encore,
         Booktrope::SalesReporting::Processors::Itunes,
+        Booktrope::SalesReporting::Processors::Inscribe,
         Booktrope::SalesReporting::Processors::Kindle,
         Booktrope::SalesReporting::Processors::Kobo,
         Booktrope::SalesReporting::Processors::Lsi,
         Booktrope::SalesReporting::Processors::Nook,
         Booktrope::SalesReporting::Processors::Oyster,
+        Booktrope::SalesReporting::Processors::Scribd,
     ]
 
     # Iterate through a CSV file and add all related records
@@ -28,12 +31,15 @@ module Booktrope
       file.source_file = File.read(file.filename)
       file.save
 
-      CSV.foreach(ENV['report_file'], :headers => :first_row, :header_converters => :symbol) do | rec |
+      CSV.foreach(ENV['report_file'], :headers => :first_row, :header_converters => :symbol, :encoding => 'ISO-8859-1') do | rec |
 
         # This is debug log so we really only want it if executed from the console
         if File.basename($0) == 'rake'
           puts "#{rec[:source_table_name]} - #{rec[:start_date]} / #{rec[:end_date]} - #{rec[:epub_isbn]}"
         end
+
+        # Skip blank lines or unprocessable files
+        continue if rec[:source_table_name].nil?
 
         # Convert the dates
         start_date = transform_date(rec[:start_date])
@@ -67,6 +73,15 @@ module Booktrope
         row.kdp_transaction_type  = rec[:kdp__transaction_type]
         row.list_price_multiccy   = rec[:list_price_multiccy].to_f
         row.isbn_hardcover        = rec[:isbn_hardcover_use]
+
+        # These are option fields that may or may not exist depending on the import file
+        row.author                = rec[:author] if rec.has_key?(:author)
+        row.title                 = rec[:title] if rec.has_key?(:title)
+        row.imprint               = rec[:imprint] if rec.has_key?(:imprint)
+        row.sale_date             = transform_date(rec[:sale_date]) if rec.has_key?(:sale_date)
+        row.retailer              = rec[:retailer] if rec.has_key?(:retailer)
+        row.period                = rec[:period] if rec.has_key?(:period)
+
         row.save
 
         add_row_to_sales_records(row)
@@ -87,30 +102,33 @@ module Booktrope
       # Sane default for now
       processor = Booktrope::SalesReporting::Processors::BasicProcessor.instance
 
-      case row.source_table_name
-        when 'CreateSpace'
+      case row.source_table_name.upcase
+        when 'CREATESPACE'
           processor = Booktrope::SalesReporting::Processors::CreateSpace.instance
-        when 'Kindle'
+        when 'ENCORE', 'AMAZON ENCORE'
+          processor = Booktrope::SalesReporting::Processors::Encore.instance
+        when 'KINDLE', 'KDP'
           processor = Booktrope::SalesReporting::Processors::Kindle.instance
-        when 'Kobo'
+        when 'KOBO'
           processor = Booktrope::SalesReporting::Processors::Kobo.instance
         when 'LSI'
           processor = Booktrope::SalesReporting::Processors::Lsi.instance
         when 'NOOK'
           processor = Booktrope::SalesReporting::Processors::Nook.instance
-        when 'Oyster'
+        when 'OYSTER'
           processor = Booktrope::SalesReporting::Processors::Oyster.instance
-        when 'iTunes'
+        when 'INSCRIBE'
+          processor = Booktrope::SalesReporting::Processors::Inscribe.instance
+        when 'ITUNES'
           processor = Booktrope::SalesReporting::Processors::Itunes.instance
+        when 'SCRIBD'
+          processor = Booktrope::SalesReporting::Processors::Scribd.instance
 
         # All of these just use the basic processor
-        when 'Amazon Encore'
-        when 'Amazon Publishing Agreement'
-        when 'Bulk'
-        when 'Direct Sales'
-        when 'Ebsco'
-        when 'Inscribe'
-        when 'Scribd'
+        when 'AMAZON PUBLISHING AGREEMENT'
+        when 'BULK'
+        when 'DIRECT SALES'
+        when 'EBSCO'
       end
 
       processor

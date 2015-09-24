@@ -17,6 +17,12 @@ class StripSlashesFromIsbnNumbers < ActiveRecord::Migration
       cn.epub_isbn      = nil unless cn.epub_isbn.nil?       || cn.epub_isbn.length > 0
       cn.hardback_isbn  = nil unless cn.hardback_isbn.nil?   || cn.hardback_isbn.length > 0
       cn.paperback_isbn = nil unless cn.paperback_isbn.nil?  || cn.paperback_isbn.length > 0
+
+      cn.epub_isbn = cn.epub_isbn.gsub(/-/, '') unless cn.epub_isbn.nil?
+      cn.hardback_isbn = cn.hardback_isbn.gsub(/-/, '') unless cn.hardback_isbn.nil?
+      cn.paperback_isbn = cn.paperback_isbn.gsub(/-/, '') unless cn.paperback_isbn.nil?
+
+      cn.save
     end
 
     # Add indexes so it's easy to search, force unique

@@ -51,6 +51,8 @@ module Booktrope
           year = row.start_date.year
           month = row.start_date.month
 
+          list_price = row.list_price_multiccy || 0.0
+
           ## Now the nasty code to search then initialize the aggregator storage
           if ! @records.has_key?(source)
             @records[source] = {}
@@ -72,15 +74,19 @@ module Booktrope
             @records[source][year][month][country][project_id] = {}
           end
 
-          if ! @records[source][year][month][country][project_id].has_key?(row.kdp_transaction_type)
-            @records[source][year][month][country][project_id][row.kdp_transaction_type] = {}
+          if ! @records[source][year][month][country][project_id].has_key?(list_price)
+            @records[source][year][month][country][project_id][list_price] = {}
           end
 
-          if ! @records[source][year][month][country][project_id][row.kdp_transaction_type].has_key?(row.kdp_royalty_type)
-            @records[source][year][month][country][project_id][row.kdp_transaction_type][row.kdp_royalty_type] = []
+          if ! @records[source][year][month][country][project_id][list_price].has_key?(row.kdp_transaction_type)
+            @records[source][year][month][country][project_id][list_price][row.kdp_transaction_type] = {}
           end
 
-          @records[source][year][month][country][project_id][row.kdp_transaction_type][row.kdp_royalty_type] << row
+          if ! @records[source][year][month][country][project_id][list_price][row.kdp_transaction_type].has_key?(row.kdp_royalty_type)
+            @records[source][year][month][country][project_id][list_price][row.kdp_transaction_type][row.kdp_royalty_type] = []
+          end
+
+          @records[source][year][month][country][project_id][list_price][row.kdp_transaction_type][row.kdp_royalty_type] << row
         end
 
         # This will record all records passed into it into monthly sales records
@@ -95,39 +101,41 @@ module Booktrope
             source_list.each do |year, year_list|
               year_list.each do |month, month_list|
                 month_list.each do |country, country_list|
-                  country_list.each do |project_id, projects_list|
-                    projects_list.each do |kdp_transaction_type, kdp_transactions|
-                      kdp_transactions.each do |kdp_royalty_type, records|
+                  country_list.each do |project_id, list_prices|
+                    list_prices.each do |list_price, projects_list|
+                      projects_list.each do |kdp_transaction_type, kdp_transactions|
+                        kdp_transactions.each do |kdp_royalty_type, records|
 
-                          if (! defined? @monthly_sales) || (@monthly_sales.nil?)
-                            @monthly_sales = ReportDataMonthlySales.new
-                          end
-
-                          # These are all of records for the project
-                          records.each do |row|
-
-                            if ! @monthly_sales.nil? && @monthly_sales.is_valid.nil?
-                              @monthly_sales.is_valid = true
-                              @monthly_sales.report_data_file = report_data_file
-                              @monthly_sales.report_data_source = get_report_data_source_model(source)
-                              @monthly_sales.report_data_country = get_report_data_country_model(country) unless country.nil?
-                              @monthly_sales.year = year
-                              @monthly_sales.month = month
-                              @monthly_sales.project_id = project_id unless project_id == 0
-                              @monthly_sales.report_data_kdp_type = get_report_data_kdp_transaction_type_model(kdp_transaction_type, kdp_royalty_type)
+                            if (! defined? @monthly_sales) || (@monthly_sales.nil?)
+                              @monthly_sales = ReportDataMonthlySales.new
                             end
 
-                            ## Sum the totals here
-                            @monthly_sales.quantity += row.quantity unless row.quantity.nil?
-                            @monthly_sales.revenue += row.revenue_usd unless row.revenue_usd.nil?
+                            # These are all of records for the project
+                            records.each do |row|
 
-                          end
-                          # save the record after we've totaled everything up, then reset
-                          @monthly_sales.save
-                          @monthly_sales = nil
+                              if ! @monthly_sales.nil? && @monthly_sales.is_valid.nil?
+                                @monthly_sales.is_valid = true
+                                @monthly_sales.report_data_file = report_data_file
+                                @monthly_sales.report_data_source = get_report_data_source_model(source)
+                                @monthly_sales.report_data_country = get_report_data_country_model(country) unless country.nil?
+                                @monthly_sales.year = year
+                                @monthly_sales.month = month
+                                @monthly_sales.project_id = project_id unless project_id == 0
+                                @monthly_sales.list_price = list_price || 0.0
+                                @monthly_sales.report_data_kdp_type = get_report_data_kdp_transaction_type_model(kdp_transaction_type, kdp_royalty_type)
+                              end
 
+                              ## Sum the totals here
+                              @monthly_sales.quantity += row.quantity unless row.quantity.nil?
+                              @monthly_sales.revenue += row.revenue_usd unless row.revenue_usd.nil?
+
+                            end
+                            # save the record after we've totaled everything up, then reset
+                            @monthly_sales.save
+                            @monthly_sales = nil
+
+                        end
                       end
-
                     end
                   end
                 end

@@ -503,6 +503,7 @@ if Rails.env == "development"
       { name: "Zambia", code_iso: "ZM", code_un: "ZMB" },
       { name: "Zimbabwe", code_iso: "ZW", code_un: "ZWE" },
       { name: "Aland Islands", code_iso: "AX", code_un: "ALA" },
+      { name: "Europe", code_iso: "EU", code_un: nil },
   ])
 
 end

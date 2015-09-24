@@ -16,7 +16,6 @@ ActiveRecord::Schema.define(version: 20150910204128) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
-  enable_extension "pg_stat_statements"
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -695,6 +694,7 @@ ActiveRecord::Schema.define(version: 20150910204128) do
     t.integer  "month"
     t.integer  "quantity",                default: 0
     t.float    "revenue",                 default: 0.0
+    t.float    "list_price",              default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -709,8 +709,6 @@ ActiveRecord::Schema.define(version: 20150910204128) do
     t.integer  "report_data_file_id"
     t.integer  "project_id"
     t.boolean  "is_valid",             default: true
-    t.boolean  "is_matched",           default: false
-    t.boolean  "is_processed",         default: false
     t.string   "source_table_name"
     t.date     "start_date"
     t.date     "end_date"
@@ -729,6 +727,12 @@ ActiveRecord::Schema.define(version: 20150910204128) do
     t.string   "isbn_hardcover"
     t.float    "unit_revenue"
     t.float    "revenue_usd"
+    t.string   "author"
+    t.string   "title"
+    t.string   "imprint"
+    t.datetime "sale_date"
+    t.string   "retailer"
+    t.string   "period"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

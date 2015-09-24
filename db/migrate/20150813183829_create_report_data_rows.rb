@@ -4,8 +4,6 @@ class CreateReportDataRows < ActiveRecord::Migration
       t.references :report_data_file, index: true
       t.references :project, index: true
       t.boolean :is_valid, :default => true
-      t.boolean :is_matched, :default => false
-      t.boolean :is_processed, :default => false
       t.string :source_table_name, index: true
       t.date :start_date, index: true
       t.date :end_date
@@ -24,6 +22,14 @@ class CreateReportDataRows < ActiveRecord::Migration
       t.string :isbn_hardcover, index: true
       t.float :unit_revenue
       t.float :revenue_usd
+
+      # Optional fields
+      t.string :author, :default => nil
+      t.string :title, :default => nil
+      t.string :imprint, :default => nil
+      t.timestamp :sale_date
+      t.string :retailer
+      t.string :period
 
       t.timestamps
     end

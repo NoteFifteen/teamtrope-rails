@@ -13,6 +13,7 @@ class CreateReportDataMonthlySales < ActiveRecord::Migration
       t.integer :month
       t.integer :quantity, :default => 0
       t.float :revenue, :default => 0.0
+      t.float :list_price, :default => 0.0
 
       t.timestamps
     end
