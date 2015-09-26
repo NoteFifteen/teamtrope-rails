@@ -4,6 +4,10 @@
 
 <p>The following covers were uploaded </p>
 
+<% if( @project.cover_template.raw_cover? ) %>
+<p>Download Raw Cover: <%= link_to(@project.cover_template.raw_cover_file_name, url_for(controller: 'projects', action: 'download_raw_cover', id: @project, only_path: false)) %></p>
+<% end %>
+
 <% if( @project.cover_template.ebook_front_cover? ) %>
 <p>Download ebook Front Cover: <%= link_to(@project.cover_template.ebook_front_cover_file_name, url_for(controller: 'projects', action: 'download_ebook_front_cover', id: @project, only_path: false)) %></p>
 <% end %>
@@ -18,6 +22,10 @@
 
 <% if( @project.cover_template.alternative_cover? ) %>
 <p>Download Alternate Cover: <%= link_to(@project.cover_template.alternative_cover_file_name, url_for(controller: 'projects', action: 'download_alternate_cover', id: @project, only_path: false)) %></p>
+<% end %>
+
+<% if( @project.cover_template.font_license? ) %>
+<p>Font License: <%= link_to(@project.cover_template.font_license_file_name, url_for(controller: 'projects', action: 'download_font_license', id: @project, only_path: false)) %></p>
 <% end %>
 
 <p>You may also find the uploaded files on the Project page under the Assets tab.</p>

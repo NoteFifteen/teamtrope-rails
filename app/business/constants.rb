@@ -52,6 +52,13 @@ module Constants
     :size => DefaultSizeIn
   ]
 
+  # .ai is application/postscript...sigh
+  DefaultContentTypeRawImageParams = [
+    :content_type => { content_type: ['image/vnd.adobe.photoshop', 'application/postscript'] },
+    :file_name => { :matches => [/(vnd|ai)$/i] },
+    :size => DefaultSizeIn
+  ]
+
   # For a pure zip file
   DefaultContentTypeZipParams = [
       :content_type => {

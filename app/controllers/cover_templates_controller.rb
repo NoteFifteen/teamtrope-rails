@@ -31,6 +31,14 @@ class CoverTemplatesController < ApplicationController
     @updated_file = nil
     update_hash = {}
 
+    unless params[:cover_template_raw_cover].nil?
+      update_hash[:raw_cover_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
+      update_hash[:raw_cover_content_type] = (params[:filetype].nil?)? 'application/octet-stream' : params[:filetype]
+      update_hash[:raw_cover_file_size] = params[:filesize] unless params[:filesize].nil? || params[:filesize] == ''
+      update_hash[:raw_cover_direct_upload_url] = params[:cover_template_raw_cover]['direct_upload_url'] unless params[:cover_template_raw_cover]['direct_upload_url'].nil?
+      @updated_file = "raw_cover"
+    end
+
     unless params[:cover_template_ebook_front_cover].nil?
       update_hash[:ebook_front_cover_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
       update_hash[:ebook_front_cover_content_type] = (params[:filetype].nil?)? 'image/jpeg' : params[:filetype]
@@ -63,6 +71,14 @@ class CoverTemplatesController < ApplicationController
       @updated_file = "alternative_cover"
     end
 
+    unless params[:cover_template_font_license].nil?
+      update_hash[:font_license_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
+      update_hash[:font_license_content_type] = params[:filename].nil?? 'application/octet-stream' : params[:filetype]
+      update_hash[:font_license_file_size] = params[:filesize] unless params[:filesize].nil? || params[:filesize] == ''
+      update_hash[:font_license_direct_upload_url] = params[:cover_template_font_license]['direct_upload_url'] unless params[:cover_template_font_license]['direct_upload_url'].nil?
+      @updated_file = "font_license"
+    end
+
     @cover_template.update(update_hash)
     @cover_template.save
     @last_errors = @cover_tempate.try(:errors).try(:full_messages)
@@ -77,10 +93,12 @@ class CoverTemplatesController < ApplicationController
     updated = []
 
     # setting the update text.
-    [ {key: :updated_ebook_front_cover,      tag: 'eBook'},
+    [ {key: :updated_raw_cover,              tag: 'Raw'},
+      {key: :updated_ebook_front_cover,      tag: 'eBook'},
       {key: :updated_createspace_cover,      tag: 'Createspace'},
       {key: :updated_lightning_source_cover, tag: 'Lightning Source'},
-      {key: :updated_alternative_cover,      tag: 'Alternative'}
+      {key: :updated_alternative_cover,      tag: 'Alternative'},
+      {key: :updated_font_license,           tag: 'Font License'},
     ].each do | item |
       if !params[item[:key]].nil? && params[item[:key]] == 'yes'
         updated.push item[:tag]

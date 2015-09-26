@@ -93,10 +93,12 @@ Rails.application.routes.draw do
   match '/projects/download_final_manuscript_pdf/:id', to: 'projects#download_final_manuscript_pdf', via: 'get', as: 'download_final_manuscript_pdf'
   match '/projects/download_final_manuscript_doc/:id', to: 'projects#download_final_manuscript_doc', via: 'get', as: 'download_final_manuscript_doc'
 
+  match '/projects/download_raw_cover/:id',              to: 'projects#download_raw_cover',              via: 'get', as: 'download_raw_cover'
   match '/projects/download_alternate_cover/:id',        to: 'projects#download_alternate_cover',        via: 'get', as: 'download_alternate_cover'
   match '/projects/download_createspace_cover/:id',      to: 'projects#download_createspace_cover',      via: 'get', as: 'download_createspace_cover'
   match '/projects/download_ebook_front_cover/:id',      to: 'projects#download_ebook_front_cover',      via: 'get', as: 'download_ebook_front_cover'
   match '/projects/download_lightning_source_cover/:id', to: 'projects#download_lightning_source_cover', via: 'get', as: 'download_lightning_source_cover'
+  match '/projects/download_font_license/:id',           to: 'projects#download_font_license',           via: 'get', as: 'download_font_license'
 
   match '/projects/download_cover_concept/:id',          to: 'projects#download_cover_concept',          via: 'get', as: 'download_cover_concept'
   match '/projects/download_unapproved_cover_concept/:id',   to: 'projects#download_unapproved_cover_concept',  via: 'get', as: 'download_unapproved_cover_concept'
