@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(version: 20150918094426) do
     t.string   "raw_cover_processed"
     t.string   "font_license_file_name"
     t.string   "font_license_content_type"
-    t.string   "font_license_file_dize"
+    t.string   "font_license_file_size"
     t.string   "font_license_updated_at"
     t.string   "font_license_direct_upload_url"
     t.string   "font_license_processed"

@@ -271,7 +271,7 @@ class WordpressImportController < ApplicationController
       alternative_cover: prepare_attachment(project_meta, 'book_alternative_cover_template'),
       createspace_cover: prepare_attachment(project_meta, 'book_createspace_cover'),
       ebook_front_cover: prepare_attachment(project_meta, 'book_ebook_front_cover'),
-      lightning_source_cover: prepare_attachment(project_meta, 'book_lightning_source_cover')
+      lightning_source_cover: prepare_attachment(project_meta, 'book_lightning_source_cover'),
       font_license: prepare_attachment(project_meta, 'book_font_license'),
     }
   end

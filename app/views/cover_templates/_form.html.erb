@@ -35,7 +35,7 @@
     label: "Font License File", required: false, callback_url: project_cover_template_url(@project),
     form_id: "cover_template_font_license_s3_uploader", callback_param: "cover_template_font_license[direct_upload_url]",
     container_id: "cover_template_font_license_uploads_container", object: @cover_template, column_name: "font_license",
-    controller_action: 'download_font_license
+    controller_action: 'download_font_license'
   },
 ].each do | s3_upload_hash | %>
 
@@ -47,6 +47,7 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
+    <%= hidden_field_tag :updated_raw_cover, 'no' %>
     <%= hidden_field_tag :updated_ebook_front_cover, 'no' %>
     <%= hidden_field_tag :updated_createspace_cover, 'no' %>
     <%= hidden_field_tag :updated_lightning_source_cover, 'no' %>

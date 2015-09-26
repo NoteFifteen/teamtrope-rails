@@ -579,13 +579,13 @@ class ProjectsController < ApplicationController
     @cover_template = CoverTemplate.find_or_initialize_by(project_id: @project.id)
 
     # Validate the files have been uploaded before moving forward
-    if ! @cover_template.raw_cover.nil? &&
-       ! @cover_template.ebook_front_cover.nil? &&
-       ! @cover_template.createspace_cover.nil? &&
-       ! @cover_template.lightning_source_cover.nil?
+    if @cover_template.raw_cover &&
+       @cover_template.ebook_front_cover &&
+       @cover_template.createspace_cover &&
+       @cover_template.lightning_source_cover
 
+      @cover_template.update_attribute(:font_list, params[:font_list])
       @cover_template.update_attribute(:final_cover_approved, nil)
-
       update_current_task
       @project.create_activity :uploaded_cover_templates, owner: current_user,
                                 parameters: { text: 'Uploaded Cover Templates', form_data: params[:project].to_s}

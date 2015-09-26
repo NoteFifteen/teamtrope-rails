@@ -51,6 +51,12 @@
         <td> - </td>
         <% end %>
 
+        <% unless cover_template.font_license.nil? %>
+        <td><%= link_to cover_template.try(:font_license_file_name), url_for(controller: 'projects', action: 'download_font_license', id: cover_template.project, only_path: false) %></td>
+        <% else %>
+        <td> - </td>
+        <% end %>
+
         <td><%= link_to 'Show', cover_template %></td>
         <td><% if can? :edit, cover_template %><%= link_to 'Edit', edit_cover_template_path(cover_template) %><% end %></td>
 

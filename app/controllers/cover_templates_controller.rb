@@ -79,10 +79,6 @@ class CoverTemplatesController < ApplicationController
       @updated_file = "font_license"
     end
 
-    if params[:font_list]
-      update_hash[:font_list] = params[:font_list]
-    end
-
     @cover_template.update(update_hash)
     @cover_template.save
     @last_errors = @cover_tempate.try(:errors).try(:full_messages)

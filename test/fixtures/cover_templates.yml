@@ -2,7 +2,6 @@
 
 one:
   project_id:
-  raw_cover:
   front_cover:
   createspace_cover:
   lightning_source_cover:
@@ -10,7 +9,6 @@ one:
 
 two:
   project_id:
-  raw_cover:
   front_cover:
   createspace_cover:
   lightning_source_cover:
