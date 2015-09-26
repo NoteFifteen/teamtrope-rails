@@ -25,6 +25,7 @@
     Lightning Source Full Cover: <%= (cover_template.lightning_source_cover?) ? (link_to "DOWNLOAD", download_lightning_source_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
     Alternate Cover: <%= (cover_template.alternative_cover?) ? (link_to "DOWNLOAD", download_alternate_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
     Font License: <%= (cover_template.font_license?) ? (link_to "DOWNLOAD", download_font_license_path(@project), :target => "_blank") : 'N/A' %><br/>
+    Font List: <%= cover_template.font_list %><br/>
 
     <br/>
     Last Updated: <%= @project.try(:cover_template).try(:updated_at).try(:strftime, "%Y-%m-%d") %><br/>
