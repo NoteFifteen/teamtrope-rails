@@ -618,4 +618,3 @@ jQuery(document).ready () ->
     $("#total_marketing_cost").val(total.toFixed(2)))
 
   $(".marketing").first().trigger("change")
-

@@ -28,7 +28,7 @@
         </script>
         <div><!-- gfield_description -->
           Raw front cover file, .psd (Photoshop) or .ai (Illustrator) only<br />
-          This is needed in case of new editions, sequels, collections, anthologies, etc.
+          We keep this on file in case of new editions, sequels, collections, anthologies, etc.
         </div>
       </li>
 
@@ -134,7 +134,7 @@
             <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
           </div>
         </script>
-        <div><!-- gfield_description -->Upload any cover font license files here (as a .zip if there are multiple files). </div>
+        <div><!-- gfield_description -->Upload font license files here, if any are needed. If there are multiple files, upload them together as a single .zip.</div>
       </li>
 
     </ul>
@@ -150,6 +150,14 @@
       <%= f.simple_fields_for :cover_template,
         (f.object.cover_template.nil?)? f.object.build_cover_template :
         f.object.cover_template do | cover_template | %>
+
+
+        <li class="cover_template_list">
+          <%= label_tag 'font_list', 'Font List' %><br />
+          <%= text_field_tag 'font_list', nil, size: 60 %><br />
+          <div><!-- gfield_description -->List the names of fonts used (separated by commas if there's more than one).</div>
+        </li>
+
 
         <li class="cover_template_list">
           <label>Book Manager and Author Sign Off on following<span class="required">*</span></label>

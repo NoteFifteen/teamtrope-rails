@@ -25,12 +25,14 @@ $('#cover_template_ebook_front_cover_s3_uploader').validate({
         'checklist_1': { required: true },
         'checklist_2': { required: true },
         'checklist_3': { required: true }
+        'checklist_4': { required: true }
     },
     messages: {
         'checklist_0': 'All checklist items must be signed off before proceeding',
         'checklist_1': 'All checklist items must be signed off before proceeding',
         'checklist_2': 'All checklist items must be signed off before proceeding',
         'checklist_3': 'All checklist items must be signed off before proceeding'
+        'checklist_4': 'All checklist items must be signed off before proceeding'
     }
 });
 

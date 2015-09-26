@@ -23,7 +23,7 @@
     eBook Front Cover: <%= (cover_template.ebook_front_cover?) ? (link_to "DOWNLOAD", download_ebook_front_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
     CreateSpace Full Cover: <%= (cover_template.createspace_cover?) ? (link_to "DOWNLOAD", download_createspace_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
     Lightning Source Full Cover: <%= (cover_template.lightning_source_cover?) ? (link_to "DOWNLOAD", download_lightning_source_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
-    Alternate Cover: <%= (cover_template.alternative_cover?) ? (link_to "DOWNLOAD", download_font_license_path(@project), :target => "_blank") : 'N/A' %><br/>
+    Alternate Cover: <%= (cover_template.alternative_cover?) ? (link_to "DOWNLOAD", download_alternate_cover_path(@project), :target => "_blank") : 'N/A' %><br/>
     Font License: <%= (cover_template.font_license?) ? (link_to "DOWNLOAD", download_font_license_path(@project), :target => "_blank") : 'N/A' %><br/>
 
     <br/>
