@@ -2,11 +2,12 @@
 var cover_template_uploaded_files = [];
 
 function requiredCoverTemplateFilesUnlockSubmit() {
-  unlock = ['raw_cover', 'ebook_front_cover', 'createspace_cover', 'lightning_source_cover'].every(function(upload) {
-      return cover_template_uploaded_files.indexOf(upload) > -1
+  required = ['raw_cover', 'ebook_front_cover', 'createspace_cover', 'lightning_source_cover']
+  unlock = required.every(function(upload) {
+    return cover_template_uploaded_files.indexOf(upload) > -1
   })
   if (unlock) {
-      $('#cover_template_submit_button').removeAttr('disabled').removeClass('disabled');
+    $('#cover_template_submit_button').removeAttr('disabled').removeClass('disabled');
   }
   return unlock;
 }
@@ -26,6 +27,16 @@ $('#cover_template_ebook_front_cover_s3_uploader').validate({
         'checklist_2': 'All checklist items must be signed off before proceeding',
         'checklist_3': 'All checklist items must be signed off before proceeding',
         'checklist_4': 'All checklist items must be signed off before proceeding'
+    }
+});
+
+// Add a form validator (this is for Update PSD...blech)
+$('#cover_template_raw_cover_s3_uploader').validate({
+    rules: {
+        'checklist_0': { required: true }
+    },
+    messages: {
+        'checklist_0': 'Checklist item must be signed off before proceeding'
     }
 });
 

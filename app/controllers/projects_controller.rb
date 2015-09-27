@@ -586,7 +586,9 @@ class ProjectsController < ApplicationController
        @cover_template.createspace_cover &&
        @cover_template.lightning_source_cover
 
-      @cover_template.update_attribute(:font_list, params[:font_list])
+      if params[:font_list].present?
+        @cover_template.update_attribute(:font_list, params[:font_list])
+      end
       @cover_template.update_attribute(:final_cover_approved, nil)
       update_current_task
       @project.create_activity :uploaded_cover_templates, owner: current_user,
