@@ -2,12 +2,11 @@
 var cover_template_uploaded_files = [];
 
 function requiredCoverTemplateFilesUnlockSubmit() {
-  required = ['raw_cover', 'ebook_front_cover', 'createspace_cover', 'lightning_source_cover']
-  unlock = required.every(function(upload) {
-    return cover_template_uploaded_files.indexOf(upload) > -1
+  unlock = ['raw_cover', 'ebook_front_cover', 'createspace_cover', 'lightning_source_cover'].every(function(upload) {
+      return cover_template_uploaded_files.indexOf(upload) > -1
   })
   if (unlock) {
-    $('#cover_template_submit_button').removeAttr('disabled').removeClass('disabled');
+      $('#cover_template_submit_button').removeAttr('disabled').removeClass('disabled');
   }
   return unlock;
 }
