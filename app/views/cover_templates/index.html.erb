@@ -21,6 +21,12 @@
 
         <td><%= cover_template.updated_at %></td>
 
+        <% unless cover_template.raw_cover.nil? %>
+        <td><%= link_to cover_template.try(:raw_cover_file_name), url_for(controller: 'projects', action: 'download_raw_cover', id: cover_template.project, only_path: false) %></td>
+        <% else %>
+        <td> - </td>
+        <% end %>
+
         <% unless cover_template.ebook_front_cover.nil? %>
         <td><%= link_to cover_template.try(:ebook_front_cover_file_name), url_for(controller: 'projects', action: 'download_ebook_front_cover', id: cover_template.project, only_path: false) %></td>
         <% else %>
@@ -41,6 +47,12 @@
 
         <% unless cover_template.alternative_cover_file_name.nil? %>
         <td><%= link_to cover_template.try(:alternative_cover_file_name), url_for(controller: 'projects', action: 'download_alternate_cover', id: cover_template.project, only_path: false) %></td>
+        <% else %>
+        <td> - </td>
+        <% end %>
+
+        <% unless cover_template.font_license.nil? %>
+        <td><%= link_to cover_template.try(:font_license_file_name), url_for(controller: 'projects', action: 'download_font_license', id: cover_template.project, only_path: false) %></td>
         <% else %>
         <td> - </td>
         <% end %>

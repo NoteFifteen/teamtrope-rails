@@ -10,6 +10,16 @@
     <th>Updated</th>
   </thead>
   <tbody>
+    <tr>
+      <td>Raw</td>
+      <% if ! @cover_template.raw_cover_file_name.nil? %>
+         <td><%= link_to @cover_template.raw_cover_file_name, url_for(controller: 'projects', action: 'download_raw_cover', id: @cover_template.project, only_path: false) %></td>
+      <% else %>
+         <td> - </td>
+      <% end %>
+      <td><%= (! @cover_template.raw_cover_file_size.nil?)  ? @cover_template.raw_cover_file_size  : '-' %></td>
+      <td><%= (! @cover_template.raw_cover_updated_at.nil?) ? @cover_template.raw_cover_updated_at : '-' %></td>
+    </tr>
 
     <tr>
       <td>ebook</td>
@@ -55,6 +65,16 @@
       <td><%= (! @cover_template.alternative_cover_updated_at.nil?) ? @cover_template.alternative_cover_updated_at : '-' %></td>
     </tr>
 
+    <tr>
+      <td>Font License</td>
+      <% if ! @cover_template.font_license_file_name.nil? %>
+         <td><%= link_to @cover_template.font_license_file_name, url_for(controller: 'projects', action: 'download_font_file, id: @cover_template.project, only_path: false) %></td>
+      <% else %>
+         <td> - </td>
+      <% end %>
+      <td><%= (! @cover_template.font_license_file_size.nil?)  ? @cover_template.font_license_file_size  : '-' %></td>
+      <td><%= (! @cover_template.font_license_updated_at.nil?) ? @cover_template.font_license_updated_at : '-' %></td>
+    </tr>
   </tbody>
 </table>
 

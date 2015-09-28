@@ -580,13 +580,16 @@ class ProjectsController < ApplicationController
   def upload_cover_templates
     @cover_template = CoverTemplate.find_or_initialize_by(project_id: @project.id)
 
-    # Validate the file has been uploaded before moving forward
-    if ! @cover_template.ebook_front_cover.nil? &&
-       ! @cover_template.createspace_cover.nil? &&
-       ! @cover_template.lightning_source_cover.nil?
+    # Validate the files have been uploaded before moving forward
+    if @cover_template.raw_cover &&
+       @cover_template.ebook_front_cover &&
+       @cover_template.createspace_cover &&
+       @cover_template.lightning_source_cover
 
+      if params[:font_list].present?
+        @cover_template.update_attribute(:font_list, params[:font_list])
+      end
       @cover_template.update_attribute(:final_cover_approved, nil)
-
       update_current_task
       @project.create_activity :uploaded_cover_templates, owner: current_user,
                                 parameters: { text: 'Uploaded Cover Templates', form_data: params[:project].to_s}
@@ -842,6 +845,10 @@ class ProjectsController < ApplicationController
     redirect_to @project.final_manuscript.doc.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
+  def download_raw_cover
+    redirect_to @project.cover_template.raw_cover.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
   def download_alternate_cover
     redirect_to @project.cover_template.alternative_cover.expiring_url(*Constants::DefaultLinkExpiration)
   end
@@ -856,6 +863,10 @@ class ProjectsController < ApplicationController
 
   def download_lightning_source_cover
     redirect_to @project.cover_template.lightning_source_cover.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_font_license
+    redirect_to @project.cover_template.font_license.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
   def download_cover_concept

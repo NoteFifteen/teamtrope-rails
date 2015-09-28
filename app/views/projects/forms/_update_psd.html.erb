@@ -1,0 +1,95 @@
+<!-- Update PSD -->
+<div class="container">
+  <h1>Update PSD and Font Info</h1>
+  <div class="col-md-8">
+    <h5>Please upload the raw cover file and font license file.</h5>
+
+    <ul class="cover_template_list">
+
+      <%-# 2015-09-26 see note in _upload_cover_templates.html.erb about why we don't use accept: -%>
+
+      <li class="cover_template_list">
+        <label>Raw Cover File<span class="required">*</span></label>
+        <%= s3_uploader_form callback_url: project_cover_template_url(@project),
+            id: "cover_template_raw_cover_s3_uploader",
+                              acl: 'private',
+                              callback_param: 'cover_template_raw_cover[direct_upload_url]',
+                              expiration: 24.hours.from_now.utc.iso8601,
+                              max_file_size: 100.megabytes do %>
+          <%= file_field_tag :file, multiple: false %>
+        <% end %>
+        <div id="cover_template_raw_cover_uploads_container"></div>
+        <script id="template-upload" type="text/x-tmpl">
+          <div id="upload_{%=o.unique_id%}" class="upload">
+            <h5>{%=o.name%}</h5>
+            <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+          </div>
+        </script>
+        <div><!-- gfield_description -->
+          Raw front cover file, .psd (Photoshop) or .ai (Illustrator) only<br />
+          We keep this on file in case of new editions, sequels, collections, anthologies, etc.
+        </div>
+      </li>
+
+      <li class="cover_template_list">
+        <label>Font License</label>
+        <%= s3_uploader_form callback_url: project_cover_template_url(@project),
+                              id: "cover_template_font_license_s3_uploader",
+                              acl: 'private',
+                              callback_param: 'cover_template_font_license[direct_upload_url]',
+                              expiration: 24.hours.from_now.utc.iso8601,
+                              max_file_size: 100.megabytes do %>
+          <%= file_field_tag :file, multiple: false %>
+        <% end %>
+        <div id="cover_template_font_license_uploads_container"></div>
+        <script id="template-upload" type="text/x-tmpl">
+          <div id="upload_{%=o.unique_id%}" class="upload">
+            <h5>{%=o.name%}</h5>
+            <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
+          </div>
+        </script>
+        <div><!-- gfield_description -->Upload font license files here, if any are needed. If there are multiple files, upload them together as a single .zip.</div>
+      </li>
+
+    </ul>
+
+    <div>
+      <%= simple_form_for @project,
+          url: url_for(controller: 'projects', action: 'upload_cover_templates', id: @project),
+          html: { id: "upload_cover_templates" } do | f | %>
+        <%= f.error_notification %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'updated_psd_submitted_task_id' %>
+
+        <li class="cover_template_list">
+          <%= label_tag 'font_list', 'Font List' %><br />
+          <%= text_field_tag 'font_list', nil, size: 60 %><br />
+          <div><!-- gfield_description -->List the names of fonts used (separated by commas if there's more than one).</div>
+        </li>
+
+        <li class="cover_template_list">
+          <label>Book Manager and Author Sign Off on following<span class="required">*</span></label>
+          <div>
+            <ul class="cover_template_sign_off">
+              <%
+                [
+                  'All fonts are for commercial use, and appropriate license(s) have been acquired?'
+                ].each_with_index do | check_box, index |
+              %>
+              <li class="cover_template_sign_off">
+                <%= check_box_tag "checklist_#{index}", index, false, class: "upload_cover_checklist" %>
+                <%= label_tag "checklist_#{index}", check_box, class: "" %>
+              </li>
+              <% end %>
+            </ul>
+          </div>
+        </li>
+
+        <br />
+
+        <div>
+          <%= f.submit "submit", id: 'update_psd_submit_button'  %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
