@@ -6,10 +6,9 @@
     <%= f.input :full_name, label: false %>
   </div>
   <div class="col-md-3 psuedo_table_row">
-    <%= f.input :email, label: false, input_html: { maxlength: 40 } %>
+    <%= f.input :email, label: false, input_html: { maxlength: 254 } %>
   </div>
   <div class="col-md-2 psuedo_table_row">
     <%= link_to_remove_association "Remove", f, :class => 'btn btn-primary btn-fix' %>
   </div>
 </div>
-
