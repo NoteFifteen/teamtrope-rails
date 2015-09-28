@@ -37,16 +37,7 @@ class HellosignDocumentsController < ApplicationController
   end
 
   def cancel_signature_request
-
-    begin
-      HelloSign.cancel_signature_request signature_request_id: @hellosign_document.hellosign_id
-      @hellosign_document.update_attributes(pending_cancellation: true)
-      flash[:success] = 'Cancellation Request Sent to HelloSign'
-    rescue HelloSign::Error::Gone => e
-      flash[:success] = 'This Signature Request has already been cancelled.'
-      @hellosign_document.update_attributes(pending_cancellation: false, cancelled: true)
-    end
-
+    CancelRequestJob.create hellosign_document_id: @hellosign_document.id
     respond_with(@hellosign_document)
   end
 

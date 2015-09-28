@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   match 'hellosign_documents/cancel_request/:id', to: 'hellosign_documents#cancel_signature_request', via: :patch
 
   resources :hellosign_document_types
+  mount Resque::Server, at: "/resque"
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 

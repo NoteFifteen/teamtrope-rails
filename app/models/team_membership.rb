@@ -46,7 +46,8 @@ class TeamMembership < ActiveRecord::Base
   end
 
   def send_creative_team_agreement
-    HellosignDocument.send_creative_team_agreement(self) if self.role.needs_agreement?
+    #HellosignDocument.send_creative_team_agreement(self) if self.role.needs_agreement?
+    SigningRequestJob.create team_membership_id: self.id if self.role.needs_agreement?
   end
 
 end

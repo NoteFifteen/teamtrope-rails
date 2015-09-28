@@ -104,6 +104,9 @@ gem 'unicorn'
 # Used for disabling/rewriting email addresses in non-production environments
 gem 'sanitize_email'
 
+gem 'resque', "~> 1.22.0", require: 'resque/server'
+gem 'resque-status', require: 'resque/status_server'
+
 # Use for both Prod & Staging
 gem 'rails_12factor', '0.0.2', group: [:staging, :production]
 #gem 'newrelic_rpm', group: [:staging, :production]
