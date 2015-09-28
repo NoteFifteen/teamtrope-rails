@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
 
+  include ApplicationHelper
   include PublicActivity::Model
 
   # friendly_id
@@ -148,18 +149,31 @@ class Project < ActiveRecord::Base
     end
   end
 
+  # Returns a suggested per-member allocation for a given role
+  # (taking into account the possibility of zero or multiple members in that role)
+  def suggested_allocation(role)
+    count = self.send(role.name.normalize.pluralize).count
+    count = [count, 1].max
+    role.suggested_percent / count
+  end
+
+  def suggested_allocation_by_name(role_name)
+    suggested_allocation(Role.find_by(name: role_name))
+  end
+
   # Returns a list of all roles and each member in those roles (there may be multiples) if they've been assigned
   def team_allocations
     team = []
     project_type.required_roles.each do |rr|
 
-      role = self.send(rr.role.normalized_name.pluralize)
+      role = self.send(rr.role.name.normalize.pluralize)
 
       # We're excluding the optional roles here, so they don't show in the table if they haven't been added.
-      if role.count == 0 && ! %w( Advisor Agent ).include?(rr.role.name)
+      # A role is optional if and only if suggested_percent is 0
+      # If there's more than one member in a role, then divide suggested_percent by number of members
+      if role.count == 0 && rr.suggested_percent > 0.0
         team << { :role_name => rr.role.name,
                   :member_name => '',
-                  :suggested_percentage => rr.suggested_percent,
                   :allocated_percentage => 0
         }
       else
@@ -167,7 +181,6 @@ class Project < ActiveRecord::Base
 
           team << { :role_name => mr.role.name,
                     :member_name => mr.member.name,
-                    :suggested_percentage => rr.suggested_percent,
                     :allocated_percentage => mr.percentage
           }
         end
@@ -180,7 +193,7 @@ class Project < ActiveRecord::Base
 
   def members_available_for_removal
     team_memberships.reject{|s| s.new_record? }
-                    .reject{|s| s.role.normalized_name == 'author' unless self.authors.count > 1}
+                    .reject{|s| s.role.name.normalize == 'author' unless self.authors.count > 1}
                     .map { |member| {
                       membership_id: member.id,
                       member_name: member.member.name + ' (' + member.role.name + ')'
