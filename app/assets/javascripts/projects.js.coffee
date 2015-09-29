@@ -396,6 +396,18 @@ jQuery.validator.addMethod('isbnFormatValidator', (value, element, params) ->
 jQuery ->
   $('#control_numbers').validate({
     rules: {
+      'project[control_number_attributes][apple_id]': {
+        number: true
+      },
+      'project[control_number_attributes][asin]': {
+        number: true
+      },
+      'project[control_number_attributes][encode_asin]': {
+        number: true
+      },
+      'project[control_number_attributes][bnid]': {
+        number: true
+      },
       'project[control_number_attributes][epub_isbn]': {
         isbnFormatValidator: true
       },
