@@ -4,7 +4,9 @@ class SigningRequestJob
   @queue = :signing_request
   def perform
 
-    at(0, 100, "Starting...")
+    current_step = 0
+    total_steps = 3
+    at(current_step+=1, total_steps, "Starting...")
 
     team_membership_id = options["team_membership_id"]
 
@@ -14,13 +16,12 @@ class SigningRequestJob
 
     raise "No team_membership found for #{team_membership_id}" if team_membership.nil?
 
-    at(50, 100, "Sending Request...")
+    at(current_step+=1, total_steps, "Sending Request...")
     # sending the creative team agreement!
+
+    sleep 5.0
     HellosignDocument.send_creative_team_agreement team_membership
 
-
-
-
-    at(100, 100, "Finished.")
+    at(current_step+=1, total_steps, "Finished.")
   end
 end
