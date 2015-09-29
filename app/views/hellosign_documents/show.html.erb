@@ -1,5 +1,9 @@
-<% provide(:title, "#{@hellosign_document.name} for #{@hellosign_document.team_membership.project.title}") %>
-<h1><%= @hellosign_document.name %> <br />for<br /> <%= link_to @hellosign_document.team_membership.project.title, @hellosign_document.team_membership.project %></h1>
+<% provide(:title, "#{@hellosign_document.name}") %>
+<h1><%= @hellosign_document.name %>
+  <% unless @hellosign_document.team_membership.nil? %>
+  <br />for<br /> <%= link_to @hellosign_document.team_membership.project.title, @hellosign_document.team_membership.project %>
+  <% end %>
+</h1>
 
 <% unless @hellosign_document.complete? %>
   <% unless  (@hellosign_document.cancelled? || @hellosign_document.pending_cancellation?)%>
