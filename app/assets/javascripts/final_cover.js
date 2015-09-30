@@ -45,8 +45,9 @@ $(function() {
         {
             remove_completed_progress_bar: false,
             progress_bar_target: $('#cover_template_raw_cover_uploads_container'),
+            // we can't count on file.type because some browsers suck :-P
             before_add: function(file) {
-                if (/(image\/vnd.adobe.photoshop|application\/postscript)$/i.test(file.type)) {
+                if (/\.(psd|ai)$/i.test(file.name)) {
                     return true;
                 } else {
                     alert('File type must be .psd or .ai');
