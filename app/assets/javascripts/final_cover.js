@@ -45,15 +45,15 @@ $(function() {
         {
             remove_completed_progress_bar: false,
             progress_bar_target: $('#cover_template_raw_cover_uploads_container'),
-            // we do not check file.type because some browsers suck :-P
-            // before_add: function(file) {
-            //     if (/(image\/vnd.adobe.photoshop|application\/postscript)$/i.test(file.type)) {
-            //         return true;
-            //     } else {
-            //         alert('File type must be .psd or .ai');
-            //         return false;
-            //     }
-            // }
+            // we can't count on file.type because some browsers suck :-P
+            before_add: function(file) {
+                if (/\.(psd|ai)$/i.test(file.name)) {
+                    return true;
+                } else {
+                    alert('File type must be .psd or .ai');
+                    return false;
+                }
+            }
     }
     );
     $('#cover_template_raw_cover_s3_uploader').bind('s3_upload_failed', function(e, content) {
