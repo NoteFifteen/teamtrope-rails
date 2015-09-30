@@ -17,7 +17,7 @@ Some refactoring has already been done (eg., `shared/amazon_s3_upload`), but mor
 
 ### Migrations
 
-Also as it currently stands, every time we want to add a new file upload, we need to do a schema migration. Migrations are a chokepoint in the develop/test/deploy cycle. The larger the dev team gets, the more this will be the case. Because of `schema.rb`, migrations frequently end up forcing developers to rebase; regardless, changes that involve migrations entail more process than changes that don't.
+Also as it currently stands, every time a need arises for a new file upload type, it results in a schema migration. Migrations are a chokepoint in the develop/test/deploy cycle. The larger the dev team gets, the more this will be the case. Because of `schema.rb`, migrations frequently end up forcing developers to rebase; regardless, changes that involve migrations entail more process than changes that don't.
 
 ### Testing
 
@@ -47,10 +47,13 @@ Proposed is a table along the following lines:
       content_type,
       file_size,
 
-      uploaded_by integer, // REFERENCES users
-      project_id integer,  // REFERENCES projects
-      upload_type varchar(255),  // eg., cover_template_raw_cover (is this the best name for this?)
-      deleted boolean DEFAULT false,
+      uploaded_by INTEGER, // REFERENCES users
+      project_id INTEGER,  // REFERENCES projects
+      upload_type VARCHAR(255),  // eg., cover_template_raw_cover (is this the best name for this?)
+
+      hidden_at TIMESTAMP WITHOUT TIME ZONE,  // NULL means not hidden
+      hidden_by INTEGER,  // REFERENCES users
+      hidden_reason VARCHAR(255),
     };
 
 ### Usage
@@ -60,13 +63,19 @@ In order to add a new file upload type--for example, the "raw\_cover" upload rec
 To see the current "raw\_cover", there would be a method on the `Uploads` model (`Uploads#get_current` perhaps?) with args `project_id, upload_type`. This method would do something like
 
 ```
-SELECT * FROM uploads WHERE project_id = ?  AND upload_type = ? AND NOT deleted ORDER DESC BY created_at LIMIT 1
+SELECT * FROM uploads WHERE project_id = ?  AND upload_type = ? AND hidden_at IS NULL ORDER DESC BY created_at LIMIT 1
 ```
 
 Also, the following query would produce a history of that type:
 
 ```
-SELECT * FROM uploads WHERE project_id = ?  AND upload_type = ? AND NOT deleted ORDER DESC BY created_at
+SELECT * FROM uploads WHERE project_id = ?  AND upload_type = ? AND hidden_at IS NULL ORDER DESC BY created_at
 ```
 
+`hidden_BAR` fields could be used to "revert" to a previous version of a file while still keeping a record of the new version.
+
+A more nuanced query on the uploads table could produce a timeline of current files.
+
 etc.
+
+If a need arises to actually delete files from S3, the corresponding uploads rows could be deleted at the same time as the S3 files (or just before, really...). (Or there could be `deleted_BAR` fields as well? But this seems like it might be overkill. Thoughts?)
