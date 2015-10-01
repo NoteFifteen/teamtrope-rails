@@ -14,7 +14,7 @@ class HellosignDocument < ActiveRecord::Base
     # temporary fix for trying to access the layout before it exists.
     return if creative_team_agreement.nil? || team_membership.project.layout.nil?
 
-    hellosign_document = creative_team_agreement.hellosign_documents.create!(
+    hellosign_document = creative_team_agreement.hellosign_documents.new(
       team_membership_id: team_membership.id
     )
 
@@ -28,6 +28,7 @@ class HellosignDocument < ActiveRecord::Base
 
     custom_fields = {
       book_title: team_membership.project.title,
+      team_role: team_membership.role.name,
       legal_name: team_membership.project.layout.legal_name,
       pen_name: team_membership.project.layout.use_pen_name_on_title ? team_membership.project.layout.pen_name  : "N/A",
     }.merge(hellosign_document.prepare_parties_and_payments(TeamMembership.where(project_id: team_membership.project_id)))
@@ -57,7 +58,6 @@ class HellosignDocument < ActiveRecord::Base
       )
     rescue StandardError => e
       #todo: figure out what types of error hellosign throws.
-      #binding.pry
       raise e
     end
 
