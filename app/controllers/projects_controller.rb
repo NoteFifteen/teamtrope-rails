@@ -30,13 +30,6 @@ class ProjectsController < ApplicationController
       publish(:create_project, @project)
       ProjectMailer.project_created(@project, current_user)
 
-      # temporary fix we can't create the author agreemenent via the callback
-      # because the layout doesn't exist until after @project.save completes
-      # We wont need to to this since we will enqueue a task via resque.
-      author_membership = @project.team_memberships.where(role: Role.find_by_name("Author")).first
-
-      HellosignDocument.send_creative_team_agreement(author_membership)
-
       redirect_to @project
     else
       flash[:danger] = 'Error creating project!'
