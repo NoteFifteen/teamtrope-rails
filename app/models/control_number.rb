@@ -4,7 +4,7 @@ class ControlNumber < ActiveRecord::Base
   # a single row.  This data is also used to interface with and update similar records in Parse.
   belongs_to :project
 
-  validates_uniqueness_of :asin, :apple_id, :epub_isbn, :hardback_isbn, :paperback_isbn, :encore_asin, :parse_id, :allow_nil => true
+  validates_uniqueness_of :apple_id, :asin, :bnid, :epub_isbn, :encore_asin, :hardback_isbn, :paperback_isbn, :parse_id, :allow_nil => true
 
   def epub_isbn=(isbn)
     if isbn.nil? || isbn.length == 0

@@ -62,5 +62,24 @@ namespace :teamtrope do
 
   end
 
+  desc "Updates bnid in control_numbers based on what's in Parse"
+  task backfill_bnid_from_parse: :environment do
+    query = Parse::Query.new('Book')
+    query.limit = 1000
+    query.get.each do |b|
+
+      if ! b['bnid'].nil?
+        cn = ControlNumber.find_by_parse_id(b['objectId'])
+
+        if ! cn.nil?
+          puts "Updating project #{cn.project_id}"
+          cn.bnid = b['bnid']
+          cn.save
+        end
+
+      end
+
+    end
+  end
 
 end

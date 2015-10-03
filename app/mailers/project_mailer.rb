@@ -76,6 +76,7 @@ class ProjectMailer < ActionMailer::Base
         'ASIN'  => project.control_number.try(:asin),
         'Encore ASIN'  => project.control_number.try(:encore_asin),
         'AppleID' => project.control_number.try(:apple_id),
+        'Barnes & Noble ID' => project.control_number.try(:bnid),
         'ePub ISBN' => project.control_number.try(:epub_isbn),
         'Hardback ISBN'  => project.control_number.try(:hardback_isbn),
         'Paperback ISBN'  => project.control_number.try(:paperback_isbn)
