@@ -1,4 +1,6 @@
 class HellosignDocumentTypesController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_hellosign_document_type, only: [:show, :edit, :update, :destroy]
 
   respond_to :html

@@ -1,4 +1,6 @@
 class HellosignDocumentsController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_hellosign_document, only: [:show, :edit, :update, :destroy, :cancel_signature_request]
 
   respond_to :html, :js
