@@ -231,7 +231,7 @@ if Rails.env == "development"
     name: 'Creative Team Agreement',
     subject: 'New Creative Team Agreement',
     message: 'Please sign this document using HelloSign. Thank you.',
-    template_id: "3f53b709eaf29f4c19cd498fabdcec906679f671",
+    template_id: "89b8470207a85ea8ea580fd8f0ac89fc0ca302fc",
     signers: [
       {"email_address"=>"#{ENV['admin_user']}+ken@booktrope.com", "name"=>"Ken Shear", "role"=>"Booktrope-CEO"}
     ],

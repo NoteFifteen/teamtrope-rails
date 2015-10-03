@@ -276,6 +276,8 @@ ActiveRecord::Schema.define(version: 20150926214432) do
     t.datetime "updated_at"
   end
 
+  add_index "hellosign_document_types", ["name"], name: "index_hellosign_document_types_on_name", unique: true, using: :btree
+
   create_table "hellosign_documents", force: true do |t|
     t.string   "hellosign_id"
     t.string   "status"
@@ -284,7 +286,7 @@ ActiveRecord::Schema.define(version: 20150926214432) do
     t.integer  "hellosign_document_type_id"
     t.integer  "team_membership_id"
     t.string   "signing_url"
-    t.string   "final_copy_uri"
+    t.string   "files_url"
     t.string   "details_url"
     t.boolean  "is_complete",                default: false
     t.boolean  "pending_cancellation",       default: false
@@ -811,8 +813,6 @@ ActiveRecord::Schema.define(version: 20150926214432) do
     t.datetime "updated_at"
     t.boolean  "needs_agreement",      default: false
   end
-
-  add_index "roles", ["name"], name: "index_roles_on_name", unique: true, using: :btree
 
   create_table "tabs", force: true do |t|
     t.integer  "task_id"

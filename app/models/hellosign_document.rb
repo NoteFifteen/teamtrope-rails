@@ -43,7 +43,8 @@ class HellosignDocument < ActiveRecord::Base
     payments = ""
     team_memberships.each do | team_membership |
       parties << "#{team_membership.role.name}: #{team_membership.member.name}\n"
-      payments << "#{team_membership.role.name}: #{team_membership.percentage}\n"
+      # sprintf %g will only print a decimal if not whole number
+      payments << "#{team_membership.role.name}: #{sprintf("%g", team_membership.percentage)}%\n"
     end
     {parties: parties, payments: payments}
   end
@@ -57,7 +58,8 @@ class HellosignDocument < ActiveRecord::Base
                     build_hellosign_payload(custom_fields, signers)
       )
     rescue StandardError => e
-      #todo: figure out what types of error hellosign throws.
+      #todo: determine if we need to do anything if we trap the error.
+      # for now we just raise the error
       raise e
     end
 
@@ -65,7 +67,7 @@ class HellosignDocument < ActiveRecord::Base
     self.update_attributes(
       hellosign_id: response.data['signature_request_id'],
       signing_url: response.data['signing_url'],
-      final_copy_uri: response.data['final_copy_uri'],
+      files_url: response.data['files_url'],
       details_url: response.data['details_url'],
       is_complete: response.data['is_complete'],
       has_error: response.data['has_error']
@@ -73,7 +75,6 @@ class HellosignDocument < ActiveRecord::Base
 
     #creating the hellosign signatures that represent the people that must sign this document
     response.data['signatures'].each do | signature |
-      #binding.pry
       member_id = nil
       if member = User.find_by_email(signature['signer_email_address'])
         member_id = member.id

@@ -12,7 +12,7 @@ before_fork do |server, worker|
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.connection.disconnect!
 
-  #Rusing redis cloud
+  #Using redis cloud
   if defined?(Resque)
     Resque.redis.quit
     Rails.logger.info('Disconnected from Redis')

@@ -27,6 +27,7 @@ class CancelRequestJob
       return true
     end
 
+    #todo: retry a few times if not actually cancelled.
     #check to see if it was actually cancelled
     begin
       at(steps_completed+=1, total_steps, "#{steps_completed} of #{total_steps} confirming cancellation with hellosign")
