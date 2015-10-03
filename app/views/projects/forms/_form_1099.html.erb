@@ -176,6 +176,7 @@
             </ul>
           </div>
           <br/>
+          <%= hidden_field_tag 'form_1099[created_by]', current_user.uid %>
           <div>
             <%= f.submit "Submit" %>
           </div>
