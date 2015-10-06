@@ -1,7 +1,7 @@
 <% if @approved %>
-    <p>The following blurb has been reviewed and was approved as of <%= @project.approve_blurb.blurb_approval_date %>.</p>
+    <p>The following blurb for <%= @project.title %> has been reviewed and was approved as of <%= @project.approve_blurb.blurb_approval_date %>.</p>
 <% else %>
-    <p>The following blurb has been reviewed and was not approved.  Please notify the team if necessary.</p>
+    <p>The following blurb for <%= @project.title %> has been reviewed and was not approved.  Please notify the team if necessary.</p>
 <% end %>
 
 <b>Blurb:</b>
