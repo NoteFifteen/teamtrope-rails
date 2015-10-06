@@ -54,7 +54,8 @@ module Constants
 
   # .ai is application/postscript...sigh
   DefaultContentTypeRawImageParams = [
-    :content_type => { content_type: ['image/vnd.adobe.photoshop', 'application/postscript'] },
+    # These are commented out because this has not been reliable in the past.
+    # :content_type => { content_type: ['image/vnd.adobe.photoshop', 'application/postscript', 'application/x-photoshop'] },
     :file_name => { :matches => [/(psd|ai)$/i] },
     :size => DefaultSizeIn
   ]
