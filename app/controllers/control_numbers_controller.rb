@@ -58,6 +58,6 @@ class ControlNumbersController < ApplicationController
     end
 
     def control_number_params
-      params.require(:control_number).permit(:asin, :apple_id, :epub_isbn, :paperback_isbn, :hardback_isbn)
+      params.require(:control_number).permit(:asin, :apple_id, :bnid, :encore_asin, :epub_isbn, :paperback_isbn, :hardback_isbn)
     end
 end

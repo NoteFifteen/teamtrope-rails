@@ -923,7 +923,7 @@ class ProjectsController < ApplicationController
       :artwork_rights_requests_attributes => [:id, :role_type, :full_name, :email, :_destroy],
       :blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
       :book_genres_attributes => [:genre_id],
-      :control_number_attributes => [:id, :ebook_library_price, :asin, :encore_asin, :apple_id, :epub_isbn, :hardback_isbn,
+      :control_number_attributes => [:id, :ebook_library_price, :asin, :bnid, :encore_asin, :apple_id, :epub_isbn, :hardback_isbn,
                                      :paperback_isbn, :parse_id],
       :cover_concept_attributes => [:id, :cover_concept_notes, :cover_art_approval_date, :image_request_list],
       :cover_template_attributes => [:id, :final_cover_approved, :final_cover_approval_date, :final_cover_notes],
