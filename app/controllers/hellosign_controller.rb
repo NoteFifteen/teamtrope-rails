@@ -14,6 +14,10 @@ class HellosignController < ApplicationController
       is_complete = true
       event['signature_request']['signatures'].each do | signature |
         hellosign_signature = HellosignSignature.find_by_signature_id(signature['signature_id'])
+        # skip if there is no signature in the db that matches 'signature_id'
+        # odds are the documet was created on a dev box.
+        # TODO: ensure dev versions of the document don't mix with live.
+        next if hellosign_signature.nil?
         hellosign_signature.status_code = signature['status_code']
 
         hellosign_signature.last_viewed_at = DateTime.strptime signature['last_viewed_at'].to_s, '%s' unless signature['last_viewed_at'].nil?
