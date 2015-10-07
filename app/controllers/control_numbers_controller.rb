@@ -37,8 +37,6 @@ class ControlNumbersController < ApplicationController
     @project.create_activity :updated_control_numbers, owner: current_user,
                              parameters: {text: "Edited the Control Numbers", form_data: params[:control_number].to_s }
 
-
-
     ProjectMailer.edit_control_numbers(@project, current_user)
     respond_with(@control_number)
   end

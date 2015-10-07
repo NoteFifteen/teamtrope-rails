@@ -387,10 +387,24 @@ jQuery ->
   })
 
 ## Control Numbers
+
+# Strip spaces out of the inputs for all inputs matching control_number_attributes
+jQuery(document).ready () ->
+  $('input[name^=project\\[control_number_attributes\\]]').change (event) ->
+    this.value = this.value.replace(/\s/g, '')
+
+# Custom ISBN Format validator
 jQuery.validator.addMethod('isbnFormatValidator', (value, element, params) ->
   value = value.replace(/-/g, '')
   return ((value.length == 13 && ! isNaN(value)) || value == '')
 , jQuery.validator.format('ISBN must be in the format XXX-X-XXXXX-XXX-X or XXXXXXXXXXXXX')
+)
+
+# Custom ASIN Format Validator
+jQuery.validator.addMethod('asinFormatValidator', (value, element, params) ->
+  match = value.match(/([A-z0-9]{10})/gi)
+  return ((value.length == 10 && match != null) || value == '')
+, jQuery.validator.format('ASIN must be 10 characters long using only alphanumeric characters.')
 )
 
 jQuery ->
@@ -400,10 +414,10 @@ jQuery ->
         number: true
       },
       'project[control_number_attributes][asin]': {
-        number: true
+        asinFormatValidator: true
       },
-      'project[control_number_attributes][encode_asin]': {
-        number: true
+      'project[control_number_attributes][encore_asin]': {
+        asinFormatValidator: true
       },
       'project[control_number_attributes][bnid]': {
         number: true
