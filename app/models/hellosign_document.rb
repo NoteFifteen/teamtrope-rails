@@ -7,12 +7,15 @@ class HellosignDocument < ActiveRecord::Base
   has_many :hellosign_signatures, dependent: :destroy
   alias :signatures :hellosign_signatures
 
+  # factory method used to create a 'Creative Team Agreement' and send the signing request.
   def HellosignDocument.send_creative_team_agreement(team_membership)
 
     creative_team_agreement = HellosignDocumentType.find_by_name("Creative Team Agreement")
 
-    # temporary fix for trying to access the layout before it exists.
-    return if creative_team_agreement.nil? || team_membership.project.layout.nil?
+
+    raise "We can't create 'Creative Team Agreements' without a matching HellosignDocumentType" if creative_team_agreement.nil?
+
+    raise "The project layout doesn't exist for project id: #{team_membership.project.id}" if team_membership.project.layout.nil?
 
     hellosign_document = creative_team_agreement.hellosign_documents.new(
       team_membership_id: team_membership.id
@@ -52,7 +55,6 @@ class HellosignDocument < ActiveRecord::Base
   def send_agreement(custom_fields, signers)
 
     #send the signature request to hellosign using their api
-
     begin
       response = HelloSign.send_signature_request_with_template(
                     build_hellosign_payload(custom_fields, signers)
@@ -117,24 +119,48 @@ class HellosignDocument < ActiveRecord::Base
       template_id: template_id,
       subject: subject,
       message: message,
-      signers: (signers + self.signers).map(&:deep_symbolize_keys),
-      ccs: self.ccs.map(&:deep_symbolize_keys),
+      signers: prepare_signers(signers, mode),
+      ccs: prepare_ccs,
       custom_fields: custom_fields.deep_symbolize_keys
     }
   end
 
-  # Make use of the Sanitizer which will use the config to get the correct recipients
-  # and use them, but only if active.
-  def HellosignDocument.sanitize_address(original_address, type)
-    # Fake a message & pass it into the sanitizer
-    mail       = Mail.new
-    mail[:to]  = original_address
-    mail[:cc]  = original_address
-    mail[:bcc] = original_address
-    sanitizer  = SanitizeEmail::OverriddenAddresses.new(mail)
+  # Prepare signers and sanitize if necessary
+  def prepare_signers(signers, mode = Figaro.env.hello_sign_status)
+    signers = (signers + self.signers).map(&:deep_symbolize_keys)
+    sanitize(signers, mode)
+  end
 
-    # Grab the sanitized address.  This method does not return the friendly name containing
-    # the original address which HelloSign chokes on.
-    sanitizer.send("sanitized_#{type}")
+  # prepare and sanitize* the ccs (* if necessary)
+  def prepare_ccs(mode = Figaro.env.hello_sign_status)
+    sanitize(self.ccs.map(&:deep_symbolize_keys), mode)
+  end
+
+
+  def sanitize(santize_these, mode = Figaro.envv.hello_sign_status)
+    if mode == 'live'
+      santize_these
+    else
+      santize_these.each do | signer |
+        signer[:email_address] = HellosignDocument.sanitize_address(signer[:role])
+      end
+      santize_these
+    end
+  end
+
+  #TODO: consider moving this to constants if we plan to use this role map elsewhere
+  HELLOSIGN_ROLES = {
+    "TeamMember"     => Figaro.env.hellosign_override_team_member,
+    "Booktrope-CEO"  => Figaro.env.hellosign_override_ceo,
+    'Intake Manager' => Figaro.env.hellosign_override_intake,
+    'HR/Accounting'  => Figaro.env.hellosign_override_hr,
+    'DEFAULT'        => Figaro.env.hellosign_document_default
+  }
+
+  # santize the email address to send to hellosign based upon what's defined in
+  # application.yml
+  def HellosignDocument.sanitize_address(hellosign_role)
+    #default to justin.jeffress@booktrope if the overrides aren't set in application.yml
+    HELLOSIGN_ROLES[hellosign_role] || HELLOSIGN_ROLES['DEFAULT'] || "justin.jeffress@booktrope.com"
   end
 end
