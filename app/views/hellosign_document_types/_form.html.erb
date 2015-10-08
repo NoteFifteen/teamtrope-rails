@@ -1,0 +1,50 @@
+<%= simple_form_for(@hellosign_document_type, html: { id: 'hellosign_document_type_form' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+    <label>Hellosign Template Id<span class="required">*</span></label>
+    <%= f.input :template_id, label: false, required: true %>
+
+    <label>Name<span class="required">*</span></label>
+    <%= f.input :name, label: false %>
+
+    <%= f.input :subject %>
+    <%= f.input :message %>
+
+
+    <label>Signers</label>
+    <table id="signers_table" class="table" style="display: table;">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <%= f.input_field :signers, as: :hidden %>
+    <%= f.input_field :ccs, as: :hidden %>
+
+    <label>CCs</label>
+    <table id="ccs_table" class="table" style="display: table;">
+      <thead>
+      <tr>
+        <th>Email</th>
+        <th>Role</th>
+        <th>&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -23,12 +23,12 @@ Imprint.create!([
 
 # create the roles
 Role.create!([
-  {name: "Author", contract_description: 'The author role contract text'},
-  {name: "Book Manager", contract_description: 'The Book Manager role contract text'},
-  {name: "Cover Designer", contract_description: 'The Cover Designer role contract text'},
-  {name: "Editor", contract_description: 'The Editor role contract text'},
-  {name: "Project Manager", contract_description: 'The Projct Manager role contract text'},
-  {name: "Proofreader", contract_description: 'The Proofreader role contract text'},
+  {name: "Author", contract_description: 'The author role contract text', needs_agreement: true},
+  {name: "Book Manager", contract_description: 'The Book Manager role contract text', needs_agreement: true},
+  {name: "Cover Designer", contract_description: 'The Cover Designer role contract text', needs_agreement: true},
+  {name: "Editor", contract_description: 'The Editor role contract text', needs_agreement: true},
+  {name: "Project Manager", contract_description: 'The Projct Manager role contract text', needs_agreement: true},
+  {name: "Proofreader", contract_description: 'The Proofreader role contract text', needs_agreement: true},
   {name: "Agent", contract_description: 'The Proofreader role contract text'},
   {name: "Advisor", contract_description: 'The Proofreader role contract text'},
 ])
@@ -226,6 +226,20 @@ if Rails.env == "development"
     {project_id: 2, member_id: 12, role_id: 4, percentage: 7.0 }
   ])
   ActiveRecord::Base.skip_callbacks = false
+
+  HellosignDocumentType.create!(
+    name: 'Creative Team Agreement',
+    subject: 'New Creative Team Agreement',
+    message: 'Please sign this document using HelloSign. Thank you.',
+    template_id: "89b8470207a85ea8ea580fd8f0ac89fc0ca302fc",
+    signers: [
+      {"email_address"=>"#{ENV['admin_user']}+ken@booktrope.com", "name"=>"Ken Shear", "role"=>"Booktrope-CEO"}
+    ],
+    ccs: [
+      {"email_address"=>"#{ENV['admin_user']}+intake@booktrope.com", "role"=>"Intake Manager"},
+      {"email_address"=>"#{ENV['admin_user']}+hr@booktrope.com", "role"=>"HR/Accounting"}
+    ]
+  )
 
   users = [
     {email: "#{ENV["admin_user"]}@booktrope.com", name: "#{ENV["admin_user"]}", password: ENV["password"], password_confirmation: ENV["password"], roles_mask: 5}, # Author + Staff

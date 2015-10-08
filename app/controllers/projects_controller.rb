@@ -29,6 +29,7 @@ class ProjectsController < ApplicationController
       @project.create_workflow_tasks
       publish(:create_project, @project)
       ProjectMailer.project_created(@project, current_user)
+
       redirect_to @project
     else
       flash[:danger] = 'Error creating project!'
@@ -908,7 +909,9 @@ class ProjectsController < ApplicationController
     params.require(:project).permit(:title, :final_title, :project_type_id, :teamroom_link, :synopsis,
                                     :page_count, :has_internal_illustrations, :previously_published,
                                     :special_text_treatment, :imprint_id,
-                                    :book_genres_attributes => [:genre_id], :team_memberships_attributes => [:role_id, :member_id, :percentage]
+                                    :book_genres_attributes => [:genre_id],
+                                    :layout_attributes => [:pen_name, :legal_name, :use_pen_name_on_title],
+                                    :team_memberships_attributes => [:role_id, :member_id, :percentage]
     )
   end
 

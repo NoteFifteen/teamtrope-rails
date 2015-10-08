@@ -5,6 +5,8 @@ ruby '2.1.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
 
+gem 'pry-rails', :group => :development
+
 gem "highcharts-rails", "~> 3.0.0"
 
 # Use SCSS for stylesheets
@@ -101,6 +103,9 @@ gem 'unicorn'
 
 # Used for disabling/rewriting email addresses in non-production environments
 gem 'sanitize_email'
+
+gem 'resque', "~> 1.22.0", require: 'resque/server'
+gem 'resque-status', require: 'resque/status_server'
 
 # Use for both Prod & Staging
 gem 'rails_12factor', '0.0.2', group: [:staging, :production]

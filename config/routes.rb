@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  resources :hellosign_documents
+
+  match 'hellosign_documents/cancel_request/:id', to: 'hellosign_documents#cancel_signature_request', via: :patch
+
+  resources :hellosign_document_types
+  mount Resque::Server, at: "/resque"
+
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   get 'wordpress_import/import'
@@ -25,7 +32,7 @@ Rails.application.routes.draw do
   get '/box/request_access', to: 'static_pages#box_request_access', as: 'box_request'
   get '/box/redirect',       to: 'static_pages#box_redirect',       as: 'box-redirect'
 
-  #post 'hellosign' => 'hellosign#record_event'
+  post 'hellosign' => 'hellosign#record_event'
 
   resources :projects do
     resource :analytics, only: [:show]

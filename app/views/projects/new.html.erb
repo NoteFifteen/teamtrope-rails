@@ -108,7 +108,29 @@
           </div>
 
           <div class="input_field">
-            <label>Project Type:&nbsp;<span class="required">*</span></label><br/>
+            <%= f.simple_fields_for :layout, (f.object.layout.nil?) ? f.object.build_layout : f.object.layout do | l | %>
+            <label>Are you using a pen name on the title?<span class="required">*</span></label>
+            <div>
+              <!-- The choice here should conditionally unlock fields below -->
+              <%= l.collection_radio_buttons :use_pen_name_on_title,
+                                           [[true, 'Yes'], [false, 'No']], :first, :last,
+                                           :collection_wrapper_class => 'collection_radio_buttons',
+                                           :collection_wrapper_tag => 'ul',
+                                           :item_wrapper_tag => 'li', required: true
+              %>
+            </div>
+            <div class='input_field pen_name_optional'>
+              <label>What is your pen name?<span class="required">*</span></label>
+              <%= l.input :pen_name, label: false, required: true %>
+            </div>
+            <div class='input_field pen_name_optional'>
+              <label>What is your legal name?<span class="required">*</span></label>
+              <%= l.input :legal_name, label: false, required: true %>
+            </div>
+            <% end %>
+          </div>
+          <div class="input_field">
+            <label>Project Type:&nbsp;<span class="required">*</span><br/>
               <%= f.input :project_type_id,
                      label: false,
                      collection: ProjectType.all,

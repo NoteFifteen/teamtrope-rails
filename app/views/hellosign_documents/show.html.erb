@@ -1,0 +1,91 @@
+<% provide(:title, "#{@hellosign_document.name}") %>
+<h1><%= @hellosign_document.name %>
+  <% unless @hellosign_document.team_membership.nil? %>
+  <br />for<br /> <%= link_to @hellosign_document.team_membership.project.title, @hellosign_document.team_membership.project %>
+  <% end %>
+</h1>
+
+<% unless @hellosign_document.complete? %>
+  <% unless  (@hellosign_document.cancelled? || @hellosign_document.pending_cancellation?)%>
+    <div id="cancel_button_<%= @hellosign_document.id %>">
+      <%= simple_form_for(@hellosign_document,
+              url: url_for(
+                  controller: 'hellosign_documents',
+                  action: 'cancel_signature_request',
+                  id: @hellosign_document),
+              remote: true) do | f | %>
+        <%= f.submit "Cancel", class: 'btn' %>
+      <% end %>
+    </div>
+  <% else %>
+    <div>
+      <%= @hellosign_document.cancelled?? "Cancelled" : "Pending Cancellation" %>
+    </div>
+  <% end %>
+<% end %>
+
+<h2>Document Information</h2>
+<table>
+  <tr>
+    <td>Type</td>
+    <td><%= link_to @hellosign_document.name, @hellosign_document.hellosign_document_type %></td>
+  </tr>
+  <tr>
+    <td>Hellosign ID:</td>
+    <td><%= @hellosign_document.hellosign_id %></td>
+  </tr>
+  <tr>
+    <td>Status</td>
+    <td><%= @hellosign_document.status %></td>
+  </tr>
+  <tr>
+    <td>Is Complete</td>
+    <td><%= @hellosign_document.is_complete ? "Yes"  : "No" %></td>
+  </tr>
+  <tr>
+    <td>Has Error</td>
+    <td><%= @hellosign_document.has_error ? "Yes" : "No" %></td>
+  </tr>
+  <% unless @hellosign_document.cancelled? %>
+  <tr>
+    <td>Details</td>
+    <td><%= link_to "Check Details", @hellosign_document.details_url %></td>
+  </tr>
+  <tr>
+    <td>Signing Url</td>
+    <td><%=  (!@hellosign_document.complete?)? link_to("Sign Here", @hellosign_document.signing_url) : "N/A" %></td>
+  </tr>
+  <% end %>
+</table>
+
+
+
+<h2>Signers</h2>
+<table>
+  <tr>
+    <th>Order</th>
+    <th>Signature ID</th>
+    <th>Signer Name</th>
+    <th>Signer Email</th>
+    <th>Status Code</th>
+    <th>Signed At</th>
+    <th>Last Viewed At</th>
+    <th>Last Reminded At</th>
+  </tr>
+  <% @hellosign_document.signatures.order(:order).each do | signature | %>
+  <tr>
+    <td><%= signature.order + 1 %></td>
+    <td><%= signature.signature_id %></td>
+    <td><%= signature.signer_name %></td>
+    <td><%= signature.signer_email_address %></td>
+    <td><%= signature.status_code %></td>
+    <td><%= signature.signed_at %></td>
+    <td><%= signature.last_viewed_at %></td>
+    <td><%= signature.last_reminded_at %></td>
+  </tr>
+  <% end %>
+</table>
+
+
+<%= link_to 'Edit', edit_hellosign_document_path(@hellosign_document) %> |
+<%= link_to 'Back', hellosign_documents_path %>

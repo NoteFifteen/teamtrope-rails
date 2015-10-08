@@ -265,23 +265,56 @@ ActiveRecord::Schema.define(version: 20150926214432) do
 
   add_index "genres", ["wp_id"], name: "index_genres_on_wp_id", unique: true, using: :btree
 
-  create_table "hellosign_documents", force: true do |t|
+  create_table "hellosign_document_types", force: true do |t|
     t.string   "name"
+    t.string   "subject"
+    t.text     "message"
+    t.string   "template_id"
+    t.json     "signers"
+    t.json     "ccs"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "hellosign_document_types", ["name"], name: "index_hellosign_document_types_on_name", unique: true, using: :btree
+
+  create_table "hellosign_documents", force: true do |t|
     t.string   "hellosign_id"
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "hellosign_document_type_id"
+    t.integer  "team_membership_id"
+    t.string   "signing_url"
+    t.string   "files_url"
+    t.string   "details_url"
+    t.boolean  "is_complete",                default: false
+    t.boolean  "pending_cancellation",       default: false
+    t.boolean  "cancelled",                  default: false
+    t.boolean  "has_error",                  default: false
   end
+
+  add_index "hellosign_documents", ["hellosign_document_type_id"], name: "index_hellosign_documents_on_hellosign_document_type_id", using: :btree
+  add_index "hellosign_documents", ["team_membership_id"], name: "index_hellosign_documents_on_team_membership_id", using: :btree
 
   create_table "hellosign_signatures", force: true do |t|
     t.integer  "hellosign_document_id"
-    t.integer  "team_membership_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "signature_id"
+    t.string   "signer_email_address"
+    t.string   "signer_name"
+    t.integer  "order"
+    t.string   "status_code"
+    t.string   "error"
+    t.datetime "signed_at"
+    t.datetime "last_viewed_at"
+    t.datetime "last_reminded_at"
+    t.integer  "member_id"
   end
 
   add_index "hellosign_signatures", ["hellosign_document_id"], name: "index_hellosign_signatures_on_hellosign_document_id", using: :btree
-  add_index "hellosign_signatures", ["team_membership_id"], name: "index_hellosign_signatures_on_team_membership_id", using: :btree
+  add_index "hellosign_signatures", ["member_id"], name: "index_hellosign_signatures_on_member_id", using: :btree
 
   create_table "imprints", force: true do |t|
     t.string   "name"
@@ -325,6 +358,7 @@ ActiveRecord::Schema.define(version: 20150926214432) do
     t.string   "layout_upload_processed"
     t.float    "trim_size_w"
     t.float    "trim_size_h"
+    t.string   "legal_name"
   end
 
   add_index "layouts", ["project_id"], name: "index_layouts_on_project_id", using: :btree
@@ -777,9 +811,8 @@ ActiveRecord::Schema.define(version: 20150926214432) do
     t.text     "contract_description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "needs_agreement",      default: false
   end
-
-  add_index "roles", ["name"], name: "index_roles_on_name", unique: true, using: :btree
 
   create_table "tabs", force: true do |t|
     t.integer  "task_id"

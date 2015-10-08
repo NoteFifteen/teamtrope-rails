@@ -44,7 +44,8 @@ class RolesController < ApplicationController
   def update
     respond_to do |format|
       if @role.update(role_params)
-        format.html { redirect_to @role, notice: 'Role was successfully updated.' }
+        flash[:success] = 'Role was successfully updated.'
+        format.html { redirect_to @role }
         format.json { render :show, status: :ok, location: @role }
       else
         format.html { render :edit }
@@ -71,6 +72,6 @@ class RolesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def role_params
-      params.require(:role).permit(:name)
+      params.require(:role).permit(:name, :contract_description, :needs_agreement)
     end
 end

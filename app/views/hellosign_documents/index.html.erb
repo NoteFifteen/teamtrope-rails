@@ -1,0 +1,72 @@
+<% provide(:title, "Hellosign Documents") %>
+<h1>Hellosign Documents</h1>
+
+<table id="hellosign_documents_table">
+  <thead>
+    <tr>
+      <th>Is Complete?</th>
+      <th>Project</th>
+      <th>HelloSign Link</th>
+      <th>Status</th>
+      <th>Document Type</th>
+      <th>Signers</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @hellosign_documents.each do |hellosign_document| %>
+      <tr>
+        <td><% if hellosign_document.is_complete then%>Yes<% else %>No<% end %> </td>
+        <td class="book-title">
+          <% unless hellosign_document.team_membership.nil? %>
+            <%= link_to hellosign_document.team_membership.project.title, hellosign_document.team_membership.project %>
+          <% else %>
+          Member removed from project.
+          <% end %>
+        </td>
+        <td><%= link_to "Details", hellosign_document.details_url unless hellosign_document.details_url.nil? %></td>
+        <td><%= hellosign_document.status %></td>
+        <td><%= hellosign_document.name %></td>
+        <td>
+          <ul class='list-group'>
+          <% hellosign_document.signatures.order(:order).each do | signer |%>
+            <li class='list-group-item'><%= signer.signer_name %></li>
+          <% end %>
+          </ul>
+        </td>
+        <% if hellosign_document.is_complete %>
+        <td>
+          Complete
+        </td>
+        <% elsif !hellosign_document.cancelled? && !hellosign_document.pending_cancellation? %>
+        <td id='cancel_button_<%= hellosign_document.id %>'>
+          <%= simple_form_for(hellosign_document,
+            url: url_for(
+                controller: 'hellosign_documents',
+                action: 'cancel_signature_request',
+                id: hellosign_document),
+            remote: true) do | f | %>
+            <%= f.submit "Cancel", class: 'btn' %>
+          <% end %>
+        </td>
+        <% else %>
+        <td><%= (hellosign_document.cancelled?)? "Cancelled" : "Pending Cancellation"%></td>
+        <% end %>
+        <td><%= link_to 'Show', hellosign_document %></td>
+        <td><%= link_to 'Edit', edit_hellosign_document_path(hellosign_document) %></td>
+        <td><%= link_to 'Destroy', hellosign_document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<script>
+  $("#hellosign_documents_table").DataTable({ 'pageLength': '100'});
+</script>
+

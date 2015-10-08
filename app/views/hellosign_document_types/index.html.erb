@@ -1,0 +1,54 @@
+<% provide(:title, "Hellosign Document Types") %>
+<h1>Hellosign Document Types</h1>
+
+<table id="hellosign_document_types_table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Subject</th>
+      <th>Message</th>
+      <th>Template</th>
+      <th>Signers</th>
+      <th>Ccs</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @hellosign_document_types.each do |hellosign_document_type| %>
+      <tr>
+        <td><%= hellosign_document_type.name %></td>
+        <td><%= hellosign_document_type.subject %></td>
+        <td><%= hellosign_document_type.message %></td>
+        <td><%= hellosign_document_type.template_id %></td>
+        <td>
+          <ul class='list-group'>
+          <% hellosign_document_type.signers.each do | signer | %>
+            <li class='list-group-item'><%= "#{signer["role"]} #{signer["email_address"]}" %></li>
+          <% end %>
+          </ul>
+        </td>
+        <td>
+          <ul class='list-group'>
+          <% hellosign_document_type.ccs.each do | cc | %>
+            <li class='list-group-item'><%= "#{cc["role"]} #{cc["email_address"]}"  %></li>
+          <% end %>
+          </ul>
+        </td>
+        <td><%= link_to 'Show', hellosign_document_type %></td>
+        <td><%= link_to 'Edit', edit_hellosign_document_type_path(hellosign_document_type) %></td>
+        <td><%= link_to 'Destroy', hellosign_document_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<script>
+  $("#hellosign_document_types_table").DataTable({ 'pageLength': '100'});
+</script>
+
+<%= link_to 'New Hellosign document type', new_hellosign_document_type_path %>
