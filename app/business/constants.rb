@@ -9,6 +9,11 @@ module Constants
   DefaultSize = 0..120.megabytes
   DefaultSizeIn = { in: DefaultSize }
 
+  # 500MB because that's the limit we use for S3 uploads
+  # would be nice to coordinate these at some point
+  MaxSize = 0..500.megabytes
+  MaxSizeIn = { in: MaxSize }
+
   DefaultContentTypeDocumentParams = [
     # TTR-62 - Removing the mime-type validation due to user issues with uploading manuscripts
     # :content_type => {
@@ -57,7 +62,7 @@ module Constants
     # These are commented out because this has not been reliable in the past.
     # :content_type => { content_type: ['image/vnd.adobe.photoshop', 'application/postscript', 'application/x-photoshop'] },
     :file_name => { :matches => [/(psd|ai)$/i] },
-    :size => DefaultSizeIn
+    :size => MaxSizeIn
   ]
 
   # For a pure zip file
