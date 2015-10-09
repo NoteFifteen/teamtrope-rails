@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150926214432) do
+ActiveRecord::Schema.define(version: 20151008174040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 20150926214432) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "encore_asin"
+    t.string   "bnid"
   end
 
   add_index "control_numbers", ["apple_id"], name: "index_control_numbers_on_apple_id", unique: true, using: :btree
@@ -200,6 +201,12 @@ ActiveRecord::Schema.define(version: 20150926214432) do
     t.string   "font_license_direct_upload_url"
     t.string   "font_license_processed"
     t.string   "font_list"
+    t.string   "final_cover_screenshot_file_name"
+    t.string   "final_cover_screenshot_content_type"
+    t.integer  "final_cover_screenshot_file_size"
+    t.datetime "final_cover_screenshot_update_at"
+    t.string   "final_cover_screenshot_direct_upload_url"
+    t.string   "final_cover_screenshot_direct_processed"
   end
 
   add_index "cover_templates", ["project_id"], name: "index_cover_templates_on_project_id", using: :btree

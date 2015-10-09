@@ -79,6 +79,14 @@ class CoverTemplatesController < ApplicationController
       @updated_file = "font_license"
     end
 
+    unless params[:cover_template_final_cover_screenshot].nil?
+      update_hash[:final_cover_screenshot_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
+      update_hash[:final_cover_screenshot_content_type] = params[:filename].nil?? 'application/octet-stream' : params[:filetype]
+      update_hash[:final_cover_screenshot_file_size] = params[:filesize] unless params[:filesize].nil? || params[:filesize] == ''
+      update_hash[:final_cover_screenshot_direct_upload_url] = params[:cover_template_final_cover_screenshot]['direct_upload_url'] unless params[:cover_template_final_cover_screenshot]['direct_upload_url'].nil?
+      @updated_file = "final_cover_screenshot"
+    end
+
     @cover_template.update(update_hash)
     @cover_template.save
     @last_errors = @cover_tempate.try(:errors).try(:full_messages)
@@ -99,6 +107,7 @@ class CoverTemplatesController < ApplicationController
       {key: :updated_lightning_source_cover, tag: 'Lightning Source'},
       {key: :updated_alternative_cover,      tag: 'Alternative'},
       {key: :updated_font_license,           tag: 'Font License'},
+      {key: :updated_final_cover_screenshot, tag: 'Final Approval Screenshot'},
     ].each do | item |
       if !params[item[:key]].nil? && params[item[:key]] == 'yes'
         updated.push item[:tag]

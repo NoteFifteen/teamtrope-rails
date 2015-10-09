@@ -9,6 +9,7 @@ class CoverTemplate < ActiveRecord::Base
   has_attached_file :ebook_front_cover, :s3_permissions => 'authenticated-read'
   has_attached_file :lightning_source_cover, :s3_permissions => 'authenticated-read'
   has_attached_file :font_license,      :s3_permissions => 'authenticated-read'
+  has_attached_file :final_cover_screenshot,  :s3_permissions => 'authenticated-read'
 
   has_attached_file :cover_preview,
         :styles => { :large => "600x600>", :medium => "300x300>", :thumb => "120x120>"},
@@ -40,7 +41,8 @@ class CoverTemplate < ActiveRecord::Base
   #validates_attachment :font_license,
   #  (no content_type or file_name validation of font license...)
 
-
+  validates_attachment :final_cover_screenshot,
+    *Constants::DefaultContentTypeScreenshotParams
 
   before_create :set_upload_attributes
   after_save :transfer_and_cleanup
@@ -70,6 +72,10 @@ class CoverTemplate < ActiveRecord::Base
     write_attribute :font_license_direct_upload_url, self.unescape_url(escaped_url)
   end
 
+  def final_cover_screenshot_direct_upload_url=(escaped_url)
+    write_attribute :final_cover_screenshot_direct_upload_url, self.unescape_url(escaped_url)
+  end
+
   # Final upload processing step
   def transfer_and_cleanup
     transfer_and_cleanup_with_block do | type |
@@ -86,6 +92,8 @@ class CoverTemplate < ActiveRecord::Base
         self.update_column :alternative_cover_processed, true
       when :font_license
         self.update_column :font_license_processed, true
+      when :final_cover_screenshot
+        self.update_column :final_cover_screenshot_processed, true
       end
     end
   end
@@ -123,6 +131,11 @@ class CoverTemplate < ActiveRecord::Base
         self.font_license_file_size = direct_upload_head.content_length
         self.font_license_content_type = direct_upload_head.content_type
         self.font_license_updated_at = direct_upload_head.last_modified
+      when :final_cover_screenshot
+        self.final_cover_screenshot_file_name = direct_upload_url_data[:filename]
+        self.final_cover_screenshot_file_size = direct_upload_head.content_length
+        self.final_cover_screenshot_content_type = direct_upload_head.content_type
+        self.final_cover_screenshot_updated_at = direct_upload_head.last_modified
       end
     end
   end
@@ -151,6 +164,10 @@ class CoverTemplate < ActiveRecord::Base
     if font_license_direct_upload_url_changed?
       return DIRECT_UPLOAD_URL_FORMAT.match(font_license_direct_upload_url)
     end
+
+    if final_cover_screenshot_direct_upload_url_changed?
+      return DIRECT_UPLOAD_URL_FORMAT.match(final_cover_screenshot_direct_upload_url)
+    end
   end
 
   def get_uploaded_type
@@ -176,6 +193,10 @@ class CoverTemplate < ActiveRecord::Base
 
     if font_license_direct_upload_url_changed?
       return :font_license
+    end
+
+    if final_cover_screenshot_direct_upload_url_changed?
+      return :final_cover_screenshot
     end
   end
 
