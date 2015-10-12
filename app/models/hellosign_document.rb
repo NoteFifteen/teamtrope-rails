@@ -17,6 +17,8 @@ class HellosignDocument < ActiveRecord::Base
 
     raise "The project layout doesn't exist for project id: #{team_membership.project.id}" if team_membership.project.layout.nil?
 
+    raise "No legal name provided for the author, project id: #{team_membership.project.id}" if team_membership.project.layout.legal_name.nil?
+
     hellosign_document = creative_team_agreement.hellosign_documents.new(
       team_membership_id: team_membership.id
     )
