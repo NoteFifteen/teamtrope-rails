@@ -13,8 +13,10 @@ class HellosignController < ApplicationController
 
       # if a signing request is created outside of teamtrope we need to map the
       # the new document to an existing document type if we find one.
-      document_type = HellosignDocumentType.find_by_subject(event['signature_request']['subject'])
-      document.update_attributes(hellosign_document_type: document_type) unless document_type.nil?
+      if document.hellosign_document_type_id.nil?
+        document_type = HellosignDocumentType.find_by_subject(event['signature_request']['subject'])
+        document.update_attributes(hellosign_document_type: document_type) unless document_type.nil?
+      end
 
       is_complete = true
       event['signature_request']['signatures'].each do | signature |
