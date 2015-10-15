@@ -583,9 +583,7 @@ class ProjectsController < ApplicationController
 
     # Validate the files have been uploaded before moving forward
     if @cover_template.raw_cover &&
-       @cover_template.ebook_front_cover &&
-       @cover_template.createspace_cover &&
-       @cover_template.lightning_source_cover
+       @cover_template.ebook_front_cover
 
       if params[:font_list].present?
         @cover_template.update_attribute(:font_list, params[:font_list])
