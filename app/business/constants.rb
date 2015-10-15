@@ -50,6 +50,11 @@ module Constants
     :size => DefaultSizeIn
   ]
 
+  DefaultContentTypeScreenshotParams = [
+    :file_name => { :matches => [/(jpe?g|png)$/i] },
+    :size => DefaultSizeIn
+  ]
+
   DefaultContentTypePdfParams = [
     # :content_type => {
     #   content_type: 'application/pdf'

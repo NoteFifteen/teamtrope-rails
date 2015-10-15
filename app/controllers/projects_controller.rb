@@ -868,6 +868,10 @@ class ProjectsController < ApplicationController
     redirect_to @project.cover_template.font_license.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
+  def download_final_cover_screenshot
+    redirect_to @project.cover_template.final_cover_screenshot.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
   def download_cover_concept
     redirect_to @project.cover_concept.cover_concept.expiring_url(*Constants::DefaultLinkExpiration)
   end
