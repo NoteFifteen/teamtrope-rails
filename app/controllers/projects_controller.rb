@@ -936,7 +936,7 @@ class ProjectsController < ApplicationController
       :approve_blurb_attributes => [:id, :blurb_approval_decision, :blurb_approval_date, :blurb_notes],
       :final_manuscript_attributes => [:id, :pdf, :doc],
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
-      :layout_attributes => [:id, :layout_style_choice, :page_header_display_name, :use_pen_name_on_title, :pen_name,
+      :layout_attributes => [:id, :layout_style_choice, :page_header_display_name, :use_pen_name_on_title, :pen_name, :legal_name,
                              :use_pen_name_for_copyright, :exact_name_on_copyright, :layout_upload, :layout_notes,
                              :layout_approved, :layout_approved_date, :final_page_count, :trim_size, :trim_size_w, :trim_size_h],
       :manuscript_attributes => [:id, :original, :edited, :proofed],
