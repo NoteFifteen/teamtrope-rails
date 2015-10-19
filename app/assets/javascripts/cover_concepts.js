@@ -36,7 +36,7 @@ $(document).ready(function() {
             'project[cover_concepts][image_source]': {
                 required: true
             },
-            'project[cover_concepts][signoffs]': {
+            'project[cover_concepts][signoffs][]': {
                 required: true,
                 minlength: 2
             },
@@ -48,7 +48,7 @@ $(document).ready(function() {
             'project[cover_concepts][image_source]': {
                 required: 'You must specify a source for the cover concept image.'
             },
-            'project[cover_concepts][signoffs]': {
+            'project[cover_concepts][signoffs][]': {
                 required: 'You must confirm all the signoff items.',
                 minlength: 'You must confirm all the signoff items.'
             }
