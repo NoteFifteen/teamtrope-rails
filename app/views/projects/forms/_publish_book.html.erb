@@ -75,7 +75,7 @@
           <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'publish_book_submitted_task_id' %>
           <%= f.simple_fields_for :published_file, ((f.object.published_file.nil?) ? f.object.build_published_file : f.object.published_file) do |published_file| %>
               <div>
-                <%= published_file.input :publication_date, label: "Publication Date", start_year: Date.today.year, :wrapper => :vertical_form %>
+                <%= published_file.input :publication_date, label: "Publication Date", start_year: 2009, :wrapper => :vertical_form %>
                 <span>Enter the Booktrope official publication date for the book.</span>
               </div>
 
