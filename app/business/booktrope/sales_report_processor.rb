@@ -56,13 +56,13 @@ module Booktrope
         row.country               = rec[:country]
         row.currency_use          = rec[:currency_use]
         row.quantity              = rec[:quantity].to_i
-        row.revenue_multiccy      = rec[:revenue_multiccy].to_f
+        row.revenue_multiccy      = rec[:revenue_multiccy].gsub(/,/, '').to_f
 
         # This is passed along by some channels, but I don't really trust it
-        row.unit_revenue          = rec[:unit_revenue].to_f
+        row.unit_revenue          = rec[:unit_revenue].gsub(/,/, '').to_f
 
         # This should be the total of qty * revenue
-        row.revenue_usd           = rec[:revenue_usd].to_f
+        row.revenue_usd           = rec[:revenue_usd].gsub(/,/, '').to_f
 
         row.bn_identifier         = rec[:bn_identifier]
         row.epub_isbn             = rec[:epub_isbn]
@@ -71,7 +71,7 @@ module Booktrope
         row.asin                  = rec[:asin]
         row.kdp_royalty_type      = rec[:kdp__royalty_type]
         row.kdp_transaction_type  = rec[:kdp__transaction_type]
-        row.list_price_multiccy   = rec[:list_price_multiccy].to_f
+        row.list_price_multiccy   = rec[:list_price_multiccy].gsub(/,/, '').to_f
         row.isbn_hardcover        = rec[:isbn_hardcover_use]
 
         # These are option fields that may or may not exist depending on the import file
