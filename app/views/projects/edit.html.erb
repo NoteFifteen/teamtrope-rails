@@ -42,7 +42,7 @@
   <%= f.label :edit_complete_date %><br />
   <%= f.text_field :edit_complete_date %><br />
 
-  <%= fields_for :layout, (f.object.layout.nil?)? f.object.build_layout :
+  <%= f.fields_for :layout, (f.object.layout.nil?)? f.object.build_layout :
     f.object.layout do | project_layout | %>
     <%= project_layout.label :pen_name %><br />
     <%= project_layout.text_field :pen_name %><br />
