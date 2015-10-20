@@ -109,7 +109,7 @@ gem 'resque-status', require: 'resque/status_server'
 
 # Use for both Prod & Staging
 gem 'rails_12factor', '0.0.2', group: [:staging, :production]
-#gem 'newrelic_rpm', group: [:staging, :production]
+gem 'newrelic_rpm', group: [:staging, :production]
 
 # Exclusive for Development
 group :development do
