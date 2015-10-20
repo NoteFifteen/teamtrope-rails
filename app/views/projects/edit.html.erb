@@ -1,50 +1,58 @@
 <% provide(:title, "Edit Project") %>
 <h1>Edit Project</h1>
 <%= form_for(@project) do | f | %>
-	<%= f.label :final_title %><br />
-	<%= f.text_field :final_title %><br />	
+  <%= f.label :final_title %><br />
+  <%= f.text_field :final_title %><br />
 
-	<%= f.label "On Screen Title" %><br />
-	<%= f.text_field :title %><br />	
+  <%= f.label "On Screen Title" %><br />
+  <%= f.text_field :title %><br />
 
-	<%= f.label :synopsis, "Synopsis"%>
-	<%= f.text_area :synopsis, size: "50x10" %><br /><br />
+  <%= f.label :synopsis, "Synopsis"%>
+  <%= f.text_area :synopsis, size: "50x10" %><br /><br />
 
-	<%= f.label :project_type_id %><br />
-	<%= f.collection_select :project_type_id, ProjectType.all, :id, :name %><br />
+  <%= f.label :project_type_id %><br />
+  <%= f.collection_select :project_type_id, ProjectType.all, :id, :name %><br />
 
-	<%= f.label :stock_image_request_link %><br />
-	<%= f.text_field :stock_image_request_link %><br />
-	<%= f.label :previously_published %><br />
-	<%= f.text_field :previously_published %><br />
-	<%= f.label :proofed_word_count %><br />
-	<%= f.text_field :proofed_word_count %><br />
-	<%= f.label :cover_concept %><br />
-	<%= f.text_field :cover_concept %><br />
-	<%= f.label :teamroom_link %><br />
-	<%= f.text_field :teamroom_link %><br />
-	<%= f.label :publication_date %><br />
-	<%= f.text_field :publication_date %><br />
-	<%= f.label :special_text_treatment %><br />
-	<%= f.text_field :special_text_treatment %><br />
-	<%= f.label :has_sub_chapters %><br />
-	<%= f.text_field :has_sub_chapters %><br />
-	<%= f.label :has_index %><br />
-	<%= f.text_field :has_index %><br />
-	<%= f.label :non_standard_size %><br />
-	<%= f.text_field :non_standard_size %><br />
-	<%= f.label :has_internal_illustrations %><br />
-	<%= f.text_field :has_internal_illustrations %><br />
-	<%= f.label :color_interior %><br />
-	<%= f.text_field :color_interior %><br />
-	<%= f.label :childrens_book %><br />
-	<%= f.text_field :childrens_book %><br />
-	<%= f.label :edit_complete_date %><br />
-	<%= f.text_field :edit_complete_date %><br />
+  <%= f.label :stock_image_request_link %><br />
+  <%= f.text_field :stock_image_request_link %><br />
+  <%= f.label :previously_published %>
+  <%= f.check_box :previously_published %><br />
+  <%= f.label :proofed_word_count %><br />
+  <%= f.text_field :proofed_word_count %><br />
+  <%= f.label :cover_concept %><br />
+  <%= f.text_field :cover_concept %><br />
+  <%= f.label :teamroom_link %><br />
+  <%= f.text_field :teamroom_link %><br />
+  <%= f.label :publication_date %><br />
+  <%= f.text_field :publication_date %><br />
+  <%= f.label :special_text_treatment %><br />
+  <%= f.text_field :special_text_treatment %><br />
+  <%= f.label :has_sub_chapters %><br />
+  <%= f.text_field :has_sub_chapters %><br />
+  <%= f.label :has_index %><br />
+  <%= f.text_field :has_index %><br />
+  <%= f.label :non_standard_size %><br />
+  <%= f.text_field :non_standard_size %><br />
+  <%= f.label :has_internal_illustrations %>
+  <%= f.check_box :has_internal_illustrations %><br />
+  <%= f.label :color_interior %><br />
+  <%= f.text_field :color_interior %><br />
+  <%= f.label :childrens_book %><br />
+  <%= f.text_field :childrens_book %><br />
+  <%= f.label :edit_complete_date %><br />
+  <%= f.text_field :edit_complete_date %><br />
 
-	
-	<h2>Genres</h2>
-	<%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: false } ) %><br /><br />
+  <%= fields_for :layout, (f.object.layout.nil?)? f.object.build_layout :
+    f.object.layout do | project_layout | %>
+    <%= project_layout.label :pen_name %><br />
+    <%= project_layout.text_field :pen_name %><br />
+    <%= project_layout.label :legal_name %><br />
+    <%= project_layout.text_field :legal_name %>
+  <% end %>
 
-	<%= f.submit %>
+
+  <h2>Genres</h2>
+  <%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: false } ) %><br /><br />
+
+  <%= f.submit %>
 <% end %>
