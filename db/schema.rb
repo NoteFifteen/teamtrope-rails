@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151008174040) do
+ActiveRecord::Schema.define(version: 20151016195332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,6 +149,7 @@ ActiveRecord::Schema.define(version: 20151008174040) do
     t.string   "unapproved_cover_concept_content_type"
     t.integer  "unapproved_cover_concept_file_size"
     t.datetime "unapproved_cover_concept_updated_at"
+    t.string   "image_source"
   end
 
   add_index "cover_concepts", ["project_id"], name: "index_cover_concepts_on_project_id", using: :btree

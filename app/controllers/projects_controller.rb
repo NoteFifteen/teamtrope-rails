@@ -306,6 +306,14 @@ class ProjectsController < ApplicationController
   def cover_concept_upload
     @cover_concept = CoverConcept.find_or_initialize_by(project_id: @project.id)
 
+    pccis = params[:project][:cover_concepts][:image_source]
+    if pccis.present?
+      if pccis == 'other' && params[:cover_concept_image_source_other_input].present?
+        pccis = params[:cover_concept_image_source_other_input]
+      end
+      @cover_concept.update_attribute(:image_source, pccis)
+    end
+
     # Validate the file has been uploaded before moving forward
     if ! @cover_concept.cover_concept.nil?
       @project.create_activity :uploaded_cover_concept, owner: current_user,

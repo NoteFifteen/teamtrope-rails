@@ -20,6 +20,20 @@ class CoverConcept < ActiveRecord::Base
   before_save :set_upload_attributes
   after_save :transfer_and_cleanup
 
+  # if we find ourselves wanting to use this elsewhere, we should probably find it a better home...
+  ImageSourceMap = {
+    'shutterstock'      => 'Shutterstock',
+    'dollarstock'       => 'Dollarstock Photo',
+    'illustration'      => 'Illustration',
+    'original'          => 'Original art from someone other than designer',
+    'other'             => '<input id="cover_concept_image_source_other_input" name="cover_concept_image_source_other_input" type="text" size="200" value="Other">'.html_safe,
+  }
+
+  ConfirmationCheckboxes = {
+    'can_be_used'    => 'By clicking this box, I confirm this art can be used by Booktrope for commercial purposes.',
+    'fonts_licensed' => 'By clicking this box, I confirm all fonts used are licensed by cover designer for commercial use.',
+  }
+
   # The following methods are to unescape the direct upload url path
   def cover_concept_image_direct_upload_url=(escaped_url)
     write_attribute(:cover_concept_image_direct_upload_url, self.unescape_url(escaped_url))

@@ -1,4 +1,3 @@
-
 <!-- Upload Cover Concept -->
 <div class="container">
     <h1>Upload Cover Concept</h1>
@@ -29,11 +28,44 @@
           <p>Please select an image file (.jpg) of your cover concept for approval.</p>
         </div>
 
-        <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'cover_concept_upload', id: @project) do | f | %>
+        <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'cover_concept_upload', id: @project), html: {id: "cover_concept_upload", class: "cover_concept_upload"}  do | f | %>
             <%= f.error_notification %>
+            <br>
+
             <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'upload_cover_concept_submitted_task_id' %>
 
             <br>
+            <br>
+
+            <font color="red"><div id="cover_concept_upload_errors"></div></font>
+
+            <%= f.simple_fields_for :cover_concepts do | builder | %>
+              <div>
+                <label>What is the source of this image? <span class="required">*</span></label>
+                <%= builder.input :image_source,
+                    required: false,
+                    as: :radio_buttons,
+                    collection: CoverConcept::ImageSourceMap.map {|short, long| [long, short, {:id => 'cover_concept_image_source_' + short.to_s}]},
+                    wrapper: :vertical_radio_and_checkboxes,
+                    input_html: {id: 'cover_concept_image_source'},
+                    label: false
+                %>
+              </div>
+
+              <br>
+
+              <div>
+                <label>Signoff <span class="required">*</span></label>
+                <%= builder.input :signoffs,
+                    required: false,
+                    as: :check_boxes,
+                    collection: CoverConcept::ConfirmationCheckboxes.map {|short, long| [long, short, {:id => "cover_concept_signoff_checklist_#{short}"}]},
+                    wrapper: :vertical_radio_and_checkboxes,
+                    input_html: {id: 'cover_concept_signoff_checklist'},
+                    label: false
+                %>
+              </div>
+            <% end %>
 
             <div>
               <%= f.submit "Submit", disabled: '', class: 'btn disabled', id: 'cover_concept_image_submit_button' %>
