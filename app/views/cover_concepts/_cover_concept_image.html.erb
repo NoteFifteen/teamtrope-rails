@@ -1,0 +1,14 @@
+<%=
+   render partial: "shared/amazon_s3_upload", locals: {
+   label: "Cover Concept Image (.jpg)",
+   required: true,
+   form_id: "cover_concept_image_s3_uploader",
+   callback_param: "cover_concept_image[direct_upload_url]",
+   callback_url: project_cover_concepts_url(@project),
+   container_id: "cover_concept_image_uploads_container",
+   object: @cover_concept,
+   column_name: "cover_concept",
+   controller_action: "download_cover_concept",
+   explanation: "Please upload an image file of your cover concept for approval."
+   }
+%>

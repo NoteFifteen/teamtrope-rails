@@ -1,32 +1,13 @@
-<%
-# amazon s3 uploads
-[
-  {
-    label: "Original Manuscript", required: true, callback_url: project_manuscript_url(@project),
-    form_id: "original_manuscript_s3_uploader", callback_param: "original_manuscript[direct_upload_url]",
-    container_id: "original_manuscript_uploads_container", object: @manuscript, column_name: "original",
-    controller_action: 'download_original_manuscript'
-  },
-  {
-    label: "Edited Manuscript", required: true, callback_url: project_manuscript_url(@project),
-    form_id: "edited_manuscript_s3_uploader", callback_param: "edited_manuscript[direct_upload_url]",
-    container_id: "edited_manuscript_uploads_container", object: @manuscript, column_name: "edited",
-    controller_action: 'download_edited_manuscript'
-  },
-  {
-    label: "Proofed Manuscript", required: true, callback_url: project_manuscript_url(@project),
-    form_id: "proofed_manuscript_s3_uploader", callback_param: "proofed_manuscript[direct_upload_url]",
-    container_id: "proofed_manuscript_uploads_container", object: @manuscript, column_name: "proofed",
-    controller_action: 'download_proofed_manuscript'
+<br>
+<%= render partial: "manuscripts/original_manuscript" %>
 
-  }
-].each do | s3_upload_hash | %>
+<br>
+<%= render partial: "manuscripts/edited_manuscript" %>
 
-<%= render partial: "shared/amazon_s3_upload", locals: s3_upload_hash %>
+<br>
+<%= render partial: "manuscripts/proofed_manuscript" %>
 
-<% end %>
-
-
+<br>
 <%= simple_form_for(@manuscript) do |f| %>
   <%= f.error_notification %>
 

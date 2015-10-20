@@ -1,25 +1,10 @@
-<%
-# amazon s3 uploads
-[
-  {
-    label: "Cover Concept Image (.jpg)", required: true, callback_url: project_cover_concepts_url(@project),
-    form_id: "cover_concept_image_s3_uploader", callback_param: "cover_concept_image[direct_upload_url]",
-    container_id: "cover_concept_image_uploads_container", object: @cover_concept, column_name: "cover_concept",
-    controller_action: 'download_cover_concept'
-  },
-  {
-    label: "Stock Cover Image (.jpg, .png, or .zip)", required: true, callback_url: project_cover_concepts_url(@project),
-    form_id: "stock_cover_image_s3_uploader", callback_param: "stock_cover_image[direct_upload_url]",
-    container_id: "stock_cover_image_uploads_container", object: @cover_concept, column_name: "stock_cover_image",
-    controller_action: 'download_stock_cover_image'
-  }
-].each do | s3_upload_hash | %>
+<br>
+<%= render partial: "cover_concepts/cover_concept_image" %>
 
-<%= render partial: "shared/amazon_s3_upload", locals: s3_upload_hash %>
+<br>
+<%= render partial: "cover_concepts/stock_cover_image" %>
 
-<% end %>
-
-
+<br>
 <%= simple_form_for(@cover_concept) do |f| %>
   <%= f.error_notification %>
 

@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(version: 20151016195332) do
   add_index "control_numbers", ["hardback_isbn"], name: "index_control_numbers_on_hardback_isbn", unique: true, using: :btree
   add_index "control_numbers", ["paperback_isbn"], name: "index_control_numbers_on_paperback_isbn", unique: true, using: :btree
   add_index "control_numbers", ["project_id"], name: "index_control_numbers_on_project_id", using: :btree
+  add_index "control_numbers", ["bnid"], name: "index_control_numbers_on_bnid", unique: true, using: :btree
 
   create_table "cover_concepts", force: true do |t|
     t.integer  "project_id"

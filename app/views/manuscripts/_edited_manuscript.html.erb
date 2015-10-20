@@ -1,0 +1,13 @@
+<%=
+   render partial: "shared/amazon_s3_upload", locals: {
+   label: "Edited Manuscript <strong>(.doc or .docx only)</strong>",
+   required: true,
+   callback_url: project_manuscript_url(@project),
+   form_id: "edited_manuscript_s3_uploader",
+   callback_param: "edited_manuscript[direct_upload_url]",
+   container_id: "edited_manuscript_uploads_container",
+   object: @manuscript,
+   column_name: "edited",
+   controller_action: 'download_edited_manuscript'
+   }
+%>

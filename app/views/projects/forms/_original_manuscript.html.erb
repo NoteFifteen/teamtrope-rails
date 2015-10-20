@@ -1,30 +1,13 @@
-
 <!-- Original Manuscript -->
 <div class="container">
   <h1>Original Manuscript</h1>
   <div class="row">
     <div class="col-md-10">
 
-        Upload the Original Manuscript to unlock additional steps.
-      <div>
-        <label>Original Manuscript <span class="required">*</span></label>
-        <%= s3_uploader_form callback_url: project_manuscript_url(@project),
-                             id: "original_manuscript_s3_uploader",
-                             acl: "private",
-                             callback_param: "original_manuscript[direct_upload_url]",
-                             expiration: 24.hours.from_now.utc.iso8601,
-                             max_file_size: 100.megabytes do %>
-            <%= file_field_tag :file, multiple: false %>
-        <% end %>
-        <div id="original_manuscript_uploads_container"></div>
-        <script id="template-upload" type="text/x-tmpl">
-                  <div id="upload_{%=o.unique_id%}" class="upload">
-                    <h5>{%=o.name%}</h5>
-                    <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
-                  </div>
-          </script>
-        <strong>Please only upload .doc & .docx files!</strong>
-      </div>
+        Upload the Original Manuscript to unlock additional steps. <strong>(Must be .doc or .docx!)</strong>
+
+        <%= render partial: "manuscripts/original_manuscript" %>
+        <br>
 
         <%= simple_form_for @project,
                         url: url_for(controller: 'projects', action: 'original_manuscript', id: @project),

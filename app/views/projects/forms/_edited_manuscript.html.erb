@@ -10,26 +10,9 @@
 
       Please note the special formatting requirements required for uploading in step 2.2.
 
-      <div>
-        <label>Final Manuscript <span class='required'>*</span></label>
-        <%= s3_uploader_form callback_url: project_manuscript_url(@project),
-                             id: 'edited_manuscript_s3_uploader',
-                             acl: 'private',
-                             callback_param: 'edited_manuscript[direct_upload_url]',
-                             expiration: 24.hours.from_now.utc.iso8601,
-                             max_file_size: 100.megabytes do %>
-            <%= file_field_tag :file, multiple: false %>
-        <% end %>
-        <div id='edited_manuscript_uploads_container'></div>
-        <script id='template-upload' type='text/x-tmpl'>
-                  <div id='upload_{%=o.unique_id%}' class='upload'>
-                    <h5>{%=o.name%}</h5>
-                    <div class='progress progress-striped active'><div class='bar' style='width: 0%'></div></div>
-                  </div>
+      <%= render partial: "manuscripts/edited_manuscript" %>
+      <br>
 
-        </script>
-        <strong>Please only upload .doc & .docx files!</strong>
-      </div>
       <br>
       <%= simple_form_for @project,
                           url: url_for(controller: 'projects', action: 'edited_manuscript', id: @project),

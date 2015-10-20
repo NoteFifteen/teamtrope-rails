@@ -1,5 +1,5 @@
 <div>
-  <label><%= label %><% if required %><span class="required">*</span><% end %></label>
+  <label><%= label.html_safe %><% if required %><span class="required">*</span><% end %></label>
   <%= s3_uploader_form callback_url: callback_url,
                        id: form_id,
                        acl: "private",
@@ -24,6 +24,8 @@
           <h5>{%=o.name%}</h5>
           <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
         </div>
-
   </script>
+  <% if defined?(explanation) and explanation %>
+    <p><%= explanation.html_safe %></p>
+  <% end %>
 </div>
