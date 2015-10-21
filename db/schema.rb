@@ -685,7 +685,6 @@ ActiveRecord::Schema.define(version: 20151021073353) do
     t.string   "bisac_code_name_one"
     t.string   "bisac_code_name_two"
     t.string   "bisac_code_name_three"
-    t.integer  "starting_grade_index"
   end
 
   add_index "publication_fact_sheets", ["project_id"], name: "index_publication_fact_sheets_on_project_id", using: :btree
