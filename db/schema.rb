@@ -121,11 +121,11 @@ ActiveRecord::Schema.define(version: 20151016195332) do
 
   add_index "control_numbers", ["apple_id"], name: "index_control_numbers_on_apple_id", unique: true, using: :btree
   add_index "control_numbers", ["asin"], name: "index_control_numbers_on_asin", unique: true, using: :btree
+  add_index "control_numbers", ["bnid"], name: "index_control_numbers_on_bnid", unique: true, using: :btree
   add_index "control_numbers", ["epub_isbn"], name: "index_control_numbers_on_epub_isbn", unique: true, using: :btree
   add_index "control_numbers", ["hardback_isbn"], name: "index_control_numbers_on_hardback_isbn", unique: true, using: :btree
   add_index "control_numbers", ["paperback_isbn"], name: "index_control_numbers_on_paperback_isbn", unique: true, using: :btree
   add_index "control_numbers", ["project_id"], name: "index_control_numbers_on_project_id", using: :btree
-  add_index "control_numbers", ["bnid"], name: "index_control_numbers_on_bnid", unique: true, using: :btree
 
   create_table "cover_concepts", force: true do |t|
     t.integer  "project_id"
@@ -383,29 +383,25 @@ ActiveRecord::Schema.define(version: 20151016195332) do
   add_index "man_devs", ["project_id"], name: "index_man_devs_on_project_id", using: :btree
 
   create_table "manuscripts", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-
     t.integer  "project_id"
-
     t.string   "original_file_name"
     t.string   "original_content_type"
     t.integer  "original_file_size"
     t.datetime "original_updated_at"
-    t.string   "original_file_direct_upload_url"
-    t.boolean  "original_file_processed",         default: false
-
     t.string   "edited_file_name"
     t.string   "edited_content_type"
     t.integer  "edited_file_size"
     t.datetime "edited_updated_at"
-    t.string   "edited_file_direct_upload_url"
-    t.boolean  "edited_file_processed",           default: false
-
     t.string   "proofed_file_name"
     t.string   "proofed_content_type"
     t.integer  "proofed_file_size"
     t.datetime "proofed_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "original_file_direct_upload_url"
+    t.boolean  "original_file_processed",         default: false
+    t.string   "edited_file_direct_upload_url"
+    t.boolean  "edited_file_processed",           default: false
     t.string   "proofed_file_direct_upload_url"
     t.boolean  "proofed_file_processed",          default: false
   end
