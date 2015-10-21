@@ -383,25 +383,29 @@ ActiveRecord::Schema.define(version: 20151016195332) do
   add_index "man_devs", ["project_id"], name: "index_man_devs_on_project_id", using: :btree
 
   create_table "manuscripts", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+
     t.integer  "project_id"
+
     t.string   "original_file_name"
     t.string   "original_content_type"
     t.integer  "original_file_size"
     t.datetime "original_updated_at"
+    t.string   "original_file_direct_upload_url"
+    t.boolean  "original_file_processed",         default: false
+
     t.string   "edited_file_name"
     t.string   "edited_content_type"
     t.integer  "edited_file_size"
     t.datetime "edited_updated_at"
+    t.string   "edited_file_direct_upload_url"
+    t.boolean  "edited_file_processed",           default: false
+
     t.string   "proofed_file_name"
     t.string   "proofed_content_type"
     t.integer  "proofed_file_size"
     t.datetime "proofed_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "original_file_direct_upload_url"
-    t.boolean  "original_file_processed",         default: false
-    t.string   "edited_file_direct_upload_url"
-    t.boolean  "edited_file_processed",           default: false
     t.string   "proofed_file_direct_upload_url"
     t.boolean  "proofed_file_processed",          default: false
   end
