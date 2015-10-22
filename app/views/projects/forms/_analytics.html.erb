@@ -30,7 +30,13 @@
                                 color: '#1394BB',
                                 type: 'column',
                                 data: $.parseJSON(analytics.sales.data)
-                            }]
+                            },{
+                                name: 'KDP Unlimited',
+                                color: '#CCCCCC',
+                                type: 'column',
+                                data: $.parseJSON(analytics.sales.kdp_unlimited)
+                            }
+                            ]
                         });
                 } else {
                     $('#daily-sales-container').html('<span>Unable to locate Sales Data.</span>');
