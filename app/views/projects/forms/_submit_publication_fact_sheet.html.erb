@@ -26,8 +26,8 @@
             </li>
 
             <%= f.simple_fields_for :publication_fact_sheet,
-              (f.object.publication_fact_sheet.nil?)? f.object.build_publication_fact_sheet :
-              f.object.publication_fact_sheet do | pfs | %>
+              (f.object.publication_fact_sheet.nil?) ? f.object.build_publication_fact_sheet :
+              f.object.publication_fact_sheet, id: @project.publication_fact_sheet do | pfs | %>
 
                 <li>
                   <%= pfs.input :author_name, label: 'Author Name', required: true %>
