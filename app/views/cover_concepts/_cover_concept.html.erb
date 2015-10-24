@@ -28,6 +28,18 @@
     </pre><br/>
 <% end %>
 
+<h4>Cover Concept Image Source</h4>
+<b>Cover Concept Image Source:</b>
+<% imgsrc = @project.cover_concept.image_source %>
+<% if imgsrc.nil? %>
+  N/A
+<% elsif CoverConcept::ImageSourceMap[imgsrc] %>
+  <%= CoverConcept::ImageSourceMap[imgsrc] %>
+<% else %>
+  <%= imgsrc %>
+<% end %>
+<br/>
+
 <h4>Cover Concept</h4>
 <% if ! @project.cover_concept %>
     N/A<br/>
