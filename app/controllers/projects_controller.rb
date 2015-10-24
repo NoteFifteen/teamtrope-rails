@@ -944,7 +944,7 @@ class ProjectsController < ApplicationController
       :media_kits_attributes => [:document],
       :price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion, :sites => []],
       :production_expenses_attributes => [:additional_booktrope_cost, :additional_costs, :additional_team_cost, :author_advance_cost, :author_advance_quantity, :calculation_explanation, :complimentary_cost, :complimentary_quantity, :effective_date, :marketing_quantity, :marketing_cost, :paypal_invoice_amount, :purchased_cost, :purchased_quantity, :total_cost, :total_quantity_ordered],
-      :publication_fact_sheet_attributes => [ :author_name, :series_name, :series_number, :description,
+      :publication_fact_sheet_attributes => [ :id, :author_name, :series_name, :series_number, :description,
             :author_bio, :endorsements, :one_line_blurb, :print_price, :ebook_price,
             :bisac_code_one, :bisac_code_two, :bisac_code_three, :search_terms, :age_range,
             :paperback_cover_type ],
