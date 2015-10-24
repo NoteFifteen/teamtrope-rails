@@ -100,7 +100,17 @@
               <% if %w( advisor agent ).include?(r.role.name.normalize) %>
                 <%= User.active_users_excluding_project(r.role, @project).to_json.html_safe %>
               <% else %>
-                <%= User.with_role_excluding_project(r.role, @project).to_json.html_safe %>
+                <% members =  User.with_role_excluding_project(r.role, @project) %>
+
+                <% if r.role.name.normalize.include?('book_manager') %>
+                  <% @project.authors.each do |author| %>
+                      <% if author.member.roles.include?('self_managed_author')%>
+                        <% members << {:id => author.member.id, :name => author.member.name }%>
+                      <% end %>
+                  <% end %>
+                <% end %>
+
+                <%= members.to_json.html_safe %>
               <% end %>
       );
 
