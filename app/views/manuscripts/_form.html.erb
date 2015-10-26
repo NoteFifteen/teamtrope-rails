@@ -2,10 +2,16 @@
 <%= render partial: "manuscripts/original_manuscript" %>
 
 <br>
+<%= render partial: "manuscripts/first_pass_edit" %>
+
+<br>
 <%= render partial: "manuscripts/edited_manuscript" %>
 
 <br>
 <%= render partial: "manuscripts/proofed_manuscript" %>
+
+<br>
+<%= render partial: "manuscripts/proofread_complete" %>
 
 <br>
 <%= simple_form_for(@manuscript) do |f| %>
@@ -13,8 +19,10 @@
 
   <div class="form-inputs">
     <%= hidden_field_tag :updated_original_manuscript, 'no' %>
+    <%= hidden_field_tag :updated_first_pass_edit, 'no' %>
     <%= hidden_field_tag :updated_edited_manuscript, 'no' %>
     <%= hidden_field_tag :updated_proofed_manuscript, 'no' %>
+    <%= hidden_field_tag :updated_proofread_complete, 'no' %>
   </div>
 
   <div class="form-actions">

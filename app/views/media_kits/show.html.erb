@@ -11,7 +11,7 @@
   <tbody>
   <td>
     <% if !@media_kit.document_file_name.nil? %>
-      <%= link_to @media_kit.try(:document_file_name), url_for(controller: 'projects', action: 'download_media_kit', id: @media_kit.project, only_path: false) %>
+      <%= link_to @media_kit.try(:document_file_name), url_for(controller: 'projects', action: 'download_media_kit_document', id: @media_kit.project, only_path: false) %>
     <% else %>
       -
     <% end %>

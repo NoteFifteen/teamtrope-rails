@@ -21,66 +21,44 @@ class ManuscriptsController < ApplicationController
     @updated_file = nil
     update_hash = {}
 
-    if ! params[:original_manuscript].nil?
-      update_hash[:original_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
-      update_hash[:original_content_type] = params[:filetype] unless params[:filetype].nil? || params[:filetype] == ''
-      update_hash[:original_file_size] = params[:filesize] unless params[:filesize].nil? || params[:filesize] == ''
-      update_hash[:original_file_direct_upload_url] = params[:original_manuscript]['direct_upload_url'] unless params[:original_manuscript]['direct_upload_url'].nil?
-      update_hash[:original_file_processed] = false
-      @updated_file = 'original_manuscript'
+    Manuscript::MANUSCRIPT_VERSIONS.each do |version|
+      if params[version.to_sym]
+        print("\n\n############## version = #{version} ###############\n\n")
+        update_hash[(version + '_file_name').to_sym]              = params[:filename] if params[:filename].present?
+        update_hash[(version + '_content_type').to_sym]           = params[:filetype] if params[:filetype].present?
+        update_hash[(version + '_file_size').to_sym]              = params[:filesize] if params[:filesize].present?
+        update_hash[(version + '_file_direct_upload_url').to_sym] = params[version]['direct_upload_url'] if params[version]['direct_upload_url'].present?
+        update_hash[(version + '_file_processed').to_sym]         = false
+        @updated_file = version
+      end
     end
 
-    if ! params[:edited_manuscript].nil?
-      update_hash[:edited_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
-      update_hash[:edited_content_type] = params[:filetype] unless params[:filetype].nil? || params[:filetype] == ''
-      update_hash[:edited_file_size] = params[:filesize] unless params[:filesize].nil? || params[:filesize] == ''
-      update_hash[:edited_file_direct_upload_url] = params[:edited_manuscript]['direct_upload_url'] unless params[:edited_manuscript]['direct_upload_url'].nil?
-      update_hash[:edited_file_processed] = false
-      @updated_file = 'edited_manuscript'
-    end
-
-    if ! params[:proofed_manuscript].nil?
-      update_hash[:proofed_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
-      update_hash[:proofed_content_type] = params[:filetype] unless params[:filetype].nil? || params[:filetype] == ''
-      update_hash[:proofed_file_size] = params[:filesize] unless params[:filesize].nil? || params[:filesize] == ''
-      update_hash[:proofed_file_direct_upload_url] = params[:proofed_manuscript]['direct_upload_url'] unless params[:proofed_manuscript]['direct_upload_url'].nil?
-      update_hash[:proofed_file_processed] = false
-      @updated_file = 'proofed_manuscript'
-    end
-
+    print("\n\n############## update_hash = ", update_hash, " ###############\n\n")
+    print("\n\n############## before = ", @manuscript, " ###############\n\n")
     @manuscript.update(update_hash)
-    @manuscript.save
+    print("\n\n############## after = ", @manuscript, " ###############\n\n")
+#    @manuscript.save
+    print("\n\n############## saved = ", @manuscript, " ###############\n\n")
     @last_errors = @manuscript.errors.full_messages
     return
   end
 
   def update
-    activity_text = nil
     updated = []
-    upload_mask = 0 # mask for determining which file was updated and requires a notification email.
-    # setting the update text.
-    [ {key: :updated_original_manuscript, tag: 'Original'},
-      {key: :updated_edited_manuscript,   tag: 'Edited'},
-      {key: :updated_proofed_manuscript,  tag: 'Proofed'}
-    ].each_with_index do | item, index |
-      if !params[item[:key]].nil? && params[item[:key]] == 'yes'
-        updated.push item[:tag]
-        upload_mask |= 2**index
+
+    Manuscript::MANUSCRIPT_VERSIONS.each do |version|
+      human_version = version.gsub('_', ' ').titleize
+      if params[version.to_sym] == 'yes'
+        updated.push(human_version)
+        ProjectMailer.send('manuscript_' + version, @project, current_user)
       end
     end
 
-    activity_text = "Uploaded a new version of: #{activity_text} #{updated.join(', ')} for " if updated.size > 0
-
-    unless activity_text.nil?
+    if updated.present?
+      activity_text = "Uploaded a new version of: #{updated.join(', ')} for "
       @project.create_activity :edited_manuscripts, owner: current_user,
                              parameters: { text: activity_text, object_id: @manuscript.id, form_data: ''}
     end
-
-    # sending alert emails based on the upload mask
-    ProjectMailer.original_manuscript_uploaded(@project, current_user) if upload_mask & 1 == 1
-    ProjectMailer.submit_edited_manuscript(@project, current_user) if upload_mask & 2 == 2
-    ProjectMailer.proofed_manuscript(@project, current_user, params) if upload_mask & 4 == 4
-
 
     redirect_to @manuscript
   end

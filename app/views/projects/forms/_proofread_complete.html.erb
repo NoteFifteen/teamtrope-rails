@@ -1,4 +1,3 @@
-
 <!-- Submit Final Proofed Document -->
 <div class="container">
   <h1>Submit Final Proofed Document</h1>
@@ -205,28 +204,11 @@
             <%= f.submit "Submit", id: 'submit_proofed_manuscript_hidden', style: 'display: none;' %>
         <% end %>
 
-      <div>
-        <h4>Final Manuscript <span class='required'>*</span></h4>
-        <%= s3_uploader_form callback_url: project_manuscript_url(@project),
-                             id: 'proofed_manuscript_s3_uploader',
-                             acl: 'private',
-                             callback_param: 'proofed_manuscript[direct_upload_url]',
-                             expiration: 24.hours.from_now.utc.iso8601,
-                             max_file_size: 100.megabytes do %>
-            <%= file_field_tag :file, multiple: false %>
-        <% end %>
-        <div id='proofed_manuscript_uploads_container'></div>
-        <script id='template-upload' type='text/x-tmpl'>
-                  <div id='upload_{%=o.unique_id%}' class='upload'>
-                    <h5>{%=o.name%}</h5>
-                    <div class='progress progress-striped active'><div class='bar' style='width: 0%'></div></div>
-                  </div>
+      <br>
+      <%= render partial: "manuscripts/proofread_complete" %>
+      <br>
 
-        </script>
-        <strong>Please only upload .doc & .docx files!</strong>
-      </div>
-
-      <button class="btn disabled" disabled id="submit_proofred_manuscript_fake" onclick="submitProofreadManuscriptForm();" >Submit</button>
+      <button class="btn disabled" disabled id="proofread_complete_fake_submit_button" onclick="submitProofreadManuscriptForm();" >Submit</button>
       <script>
           $(function() {
               // This attaches the datepicker to a "fake" input field with the MM/DD/YYYY format that users

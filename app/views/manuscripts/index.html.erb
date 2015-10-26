@@ -6,8 +6,10 @@
       <th>Project</th>
       <th>Update</th>
       <th>Original</th>
+      <th>First Pass Edit</th>
       <th>Edited</th>
       <th>Proofed</th>
+      <th>Proofread Complete</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
     </tr>
@@ -18,27 +20,17 @@
       <tr>
         <td><%= link_to manuscript.project.title, manuscript.project %></td>
         <td><%= manuscript.updated_at %></td>
+        <% Manuscripts::MANUSCRIPT_VERSIONS.each do |version| %>
+        <% filename_attr = version + '_file_name' %>
         <td>
-          <% unless manuscript.original_file_name.nil? %>
-            <%= link_to manuscript.original_file_name, url_for(controller: 'projects', action: 'download_original_manuscript', id: manuscript.project, only_path: false) %>
+          <% if manuscript.send(filename_attr) %>
+            <%= link_to manuscript.send(filename_attr), url_for(controller: 'projects', action: 'download_' + version, id: manuscript.project, only_path: false) %>
           <% else %>
           -
           <% end %>
         </td>
-        <td>
-          <% unless manuscript.edited_file_name.nil? %>
-            <%= link_to manuscript.edited_file_name, url_for(controller: 'projects', action: 'download_edited_manuscript', id: manuscript.project, only_path: false) %>
-          <% else %>
-          -
-          <% end %>
-        </td>
-        <td>
-          <% unless manuscript.proofed_file_name.nil? %>
-            <%= link_to manuscript.proofed_file_name, url_for(controller: 'projects', action: 'download_proofed_manuscript', id: manuscript.project, only_path: false) %>
-          <% else %>
-          -
-          <% end %>
-        </td>
+        <% end %>
+
         <td><%= link_to 'Show', manuscript %></td>
         <td><% if can? :edit, manuscript %><%= link_to 'Edit', edit_manuscript_path(manuscript) %><% end %></td>
       </tr>

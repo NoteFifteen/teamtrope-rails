@@ -6,7 +6,7 @@ class Tab < ActiveRecord::Base
 
   validates :task_id, presence: true
 
-  # increment .order for all tabs subsequent tabs in the phase
+  # increment .order for all subsequent tabs in the phase
   # this leaves "space" for a tab to follow this one
   def make_space_after
     subsequent_tabs = phase.tabs.joins(:task).where(

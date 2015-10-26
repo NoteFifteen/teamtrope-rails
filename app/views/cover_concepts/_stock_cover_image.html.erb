@@ -2,12 +2,9 @@
    render partial: "shared/amazon_s3_upload", locals: {
    label: "Stock Cover Image (.jpg, .png, or .zip)",
    required: true,
-   form_id: "stock_cover_image_s3_uploader",
-   callback_param: "stock_cover_image[direct_upload_url]",
    callback_url: project_cover_concepts_url(@project),
-   container_id: "stock_cover_image_uploads_container",
+   base: "stock_cover_image",
    object: @cover_concept,
-   column_name: "stock_cover_image",
-   controller_action: "download_stock_cover_image"
+   filename_suffixes: ['.jpg', '.jpeg', '.png', '.zip']
    }
 %>

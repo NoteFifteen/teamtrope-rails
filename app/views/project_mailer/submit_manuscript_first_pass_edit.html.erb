@@ -1,0 +1,9 @@
+<p>Thank you for submitting your first pass edit manuscript.</p>
+
+<% if( ! @project.manuscript.first_pass_edit_file_name.nil? ) %>
+    <p>Download: <%= link_to(@project.manuscript.first_pass_edit_file_name, url_for(controller: 'projects', action: 'download_first_pass_edit', id: @project, only_path: false)) %></p>
+<% end %>
+
+<div>
+  - Booktrope
+</div>

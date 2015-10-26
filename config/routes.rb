@@ -61,7 +61,6 @@ Rails.application.routes.draw do
   match '/projects/edit_control_numbers/:id',     to: 'projects#edit_control_numbers',     via: [:patch, :post]
   match '/projects/edit_complete_date/:id',       to: 'projects#edit_complete_date',       via: 'patch'
   match '/projects/edit_layout_style/:id',        to: 'projects#edit_layout_style',        via: 'patch'
-  match '/projects/edited_manuscript/:id',        to: 'projects#edited_manuscript',        via: 'patch'
   match '/projects/final_manuscript/:id',         to: 'projects#final_manuscript',         via: 'patch'
   match '/projects/kdp_select/:id',               to: 'projects#kdp_select',               via: 'patch'
   match '/projects/kdp_update/:id',               to: 'projects#kdp_update',               via: 'patch'
@@ -69,11 +68,9 @@ Rails.application.routes.draw do
   match '/projects/man_dev/:id',                  to: 'projects#man_dev',                  via: 'patch'
   match '/projects/marketing_expense/:id',        to: 'projects#marketing_expense',        via: 'patch'
   match '/projects/media_kit/:id',                to: 'projects#media_kit',                via: 'patch'
-  match '/projects/original_manuscript/:id',      to: 'projects#original_manuscript',      via: 'patch'
   match '/projects/production_expense/:id',       to: 'projects#production_expense',       via: 'patch'
   match '/projects/price_promotion/:id',          to: 'projects#price_promotion',          via: 'patch'
   match '/projects/print_corner_request/:id',     to: 'projects#print_corner_request',     via: 'patch'
-  match '/projects/proofed_manuscript/:id',       to: 'projects#proofed_manuscript',       via: 'patch'
   match '/projects/publish_book/:id',             to: 'projects#publish_book',             via: 'patch'
   match '/projects/remove_team_member/:id',       to: 'projects#remove_team_member',       via: 'patch'
   match '/projects/revenue_allocation_split/:id', to: 'projects#revenue_allocation_split', via: 'patch'
@@ -86,15 +83,23 @@ Rails.application.routes.draw do
   match '/projects/update_genre/:id',             to: 'projects#update_genre',             via: 'patch'
   match '/projects/upload_cover_templates/:id',   to: 'projects#upload_cover_templates',   via: 'patch'
 
-  match '/projects/download_original_manuscript/:id',  to: 'projects#download_original_manuscript', via: 'get', as: 'download_original_manuscript'
-  match '/projects/download_edited_manuscript/:id',    to: 'projects#download_edited_manuscript',   via: 'get', as: 'download_edited_manuscript'
-  match '/projects/download_proofed_manuscript/:id',   to: 'projects#download_proofed_manuscript',  via: 'get', as: 'download_proofed_manuscript'
+  match '/projects/original_manuscript/:id',      to: 'projects#original_manuscript',      via: 'patch'
+  match '/projects/first_pass_edit/:id',          to: 'projects#first_pass_edit',          via: 'patch'
+  match '/projects/edited_manuscript/:id',        to: 'projects#edited_manuscript',        via: 'patch'
+  match '/projects/proofed_manuscript/:id',       to: 'projects#proofed_manuscript',       via: 'patch'
+  match '/projects/proofread_complete/:id',       to: 'projects#proofread_complete',       via: 'patch'
+
+  match '/projects/download_original_manuscript/:id',  to: 'projects#download_original', via: 'get', as: 'download_original'
+  match '/projects/download_first_pass_edit/:id',      to: 'projects#download_first_pass_edit',       via: 'get', as: 'download_first_pass_edit'
+  match '/projects/download_edited_manuscript/:id',    to: 'projects#download_edited',   via: 'get', as: 'download_edited'
+  match '/projects/download_proofed_manuscript/:id',   to: 'projects#download_proofed',  via: 'get', as: 'download_proofed'
+  match '/projects/download_proofread_complete/:id',   to: 'projects#download_proofread_complete',  via: 'get', as: 'download_proofread_complete'
 
   match '/projects/download_published_file_mobi/:id',  to: 'projects#download_published_file_mobi', via: 'get', as: 'download_published_file_mobi'
   match '/projects/download_published_file_epub/:id',  to: 'projects#download_published_file_epub', via: 'get', as: 'download_published_file_epub'
   match '/projects/download_published_file_pdf/:id',   to: 'projects#download_published_file_pdf',  via: 'get', as: 'download_published_file_pdf'
 
-  match '/projects/download_media_kit/:id',            to: 'projects#download_media_kit',           via: 'get', as: 'download_media_kit'
+  match '/projects/download_media_kit_document/:id',   to: 'projects#download_media_kit_document',  via: 'get', as: 'download_media_kit_document'
   match '/projects/download_layout/:id',               to: 'projects#download_layout',              via: 'get', as: 'download_layout'
 
   match '/projects/download_final_manuscript_pdf/:id', to: 'projects#download_final_manuscript_pdf', via: 'get', as: 'download_final_manuscript_pdf'

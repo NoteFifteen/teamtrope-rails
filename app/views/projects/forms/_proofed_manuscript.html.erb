@@ -1,0 +1,23 @@
+<!-- Proofed Manuscript -->
+<div class="container">
+  <h1>Proofed Manuscript</h1>
+  <div class="row">
+    <div class="col-md-10">
+
+        Upload the Proofed Manuscript to unlock additional steps.
+
+        <br>
+        <%= render partial: "manuscripts/proofed_manuscript" %>
+        <br>
+
+        <%= simple_form_for @project,
+                        url: url_for(controller: 'projects', action: 'proofed_manuscript', id: @project),
+                        html: { id: 'proofed_manuscript' } do | f | %>
+            <%= f.error_notification %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'proofed_manuscript_submitted_task_id' %>
+          <br>
+          <%= f.submit "Submit", disabled: '', class: 'btn disabled', id: 'proofed_submit_button' %>
+        <% end %>
+    </div>
+  </div>
+</div>

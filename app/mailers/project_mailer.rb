@@ -176,30 +176,52 @@ class ProjectMailer < ActionMailer::Base
   end
 
   # Notify team members & the staff that the original manuscript has been uploaded
-  def original_manuscript_uploaded(project, current_user)
+  def manuscript_original(project, current_user)
     @project = project
     @current_user = current_user
 
     user_subject = "Original Manuscript from #{current_user.name} for #{project.title}"
     admin_subject = "New " + user_subject
 
-    send_email_message('original_manuscript', {}, get_project_recipient_list(@project, roles: [:project_manager, :book_manager, :author]), user_subject)
-    send_email_message('original_manuscript_admin', {}, admin_original_manuscript_list, admin_subject)
+    send_email_message('submit_manuscript_original', {}, get_project_recipient_list(@project, roles: [:project_manager, :book_manager, :author]), user_subject)
+    send_email_message('submit_manuscript_original_admin', {}, admin_original_manuscript_list, admin_subject)
   end
 
-  def submit_edited_manuscript(project, current_user)
+  def manuscript_first_pass_edit(project, current_user)
+    @project = project
+    @current_user = current_user
+
+    user_subject = "First Pass Edit Manuscript Submission for #{project.title}"
+    admin_subject = "New First Pass Edit Manuscript from #{current_user.name} for {project.title}"
+
+    send_email_message('submit_manuscript_first_pass_edit', {}, get_project_recipient_list(@project, roles: [:author, :project_manager, :book_manager, :editor, :proofreader]), user_subject)
+    send_email_message('submit_manuscript_first_pass_edit_admin', {}, admin_first_pass_edit_list, admin_subject)
+  end
+
+  def manuscript_edited(project, current_user)
     @project = project
     @current_user = current_user
 
     user_subject = "Edited Manuscript Submission for #{project.title}"
     admin_subject = "New Submit Edited Manuscript from #{current_user.name} for {project.title}"
 
-    send_email_message('submit_edited_manuscript', {}, get_project_recipient_list(@project, roles: [:author, :project_manager, :book_manager, :editor, :proofreader]), user_subject)
-    send_email_message('submit_edited_manuscript_admin', {}, admin_edited_manuscript_list, admin_subject)
+    send_email_message('submit_manuscript_edited', {}, get_project_recipient_list(@project, roles: [:author, :project_manager, :book_manager, :editor, :proofreader]), user_subject)
+    send_email_message('submit_manuscript_edited_admin', {}, admin_edited_manuscript_list, admin_subject)
+  end
+
+  def manuscript_proofed(project, current_user)
+    @project = project
+    @current_user = current_user
+
+    user_subject = "Proofed Manuscript Submission for #{project.title}"
+    admin_subject = "New Submit Proofed Manuscript from #{current_user.name} for {project.title}"
+
+    send_email_message('submit_manuscript_proofed', {}, get_project_recipient_list(@project, roles: [:author, :project_manager, :book_manager, :editor, :proofreader]), user_subject)
+    send_email_message('submit_manuscript_proofed_admin', {}, admin_proofed_manuscript_list, admin_subject)
   end
 
   # Manuscript submitted by Proof-Reader
-  def proofed_manuscript(project, current_user, params)
+  def manuscript_proofread_complete(project, current_user, params)
     @project = project
     @current_user = current_user
 
@@ -260,8 +282,8 @@ class ProjectMailer < ActionMailer::Base
 
     tokens ||= {}
 
-    send_email_message('proofed_manuscript', tokens, get_project_recipient_list(@project, roles: [:project_manager, :author]), subject)
-    send_email_message('proofed_manuscript_admin', tokens, admin_proofed_manuscript_list, subject)
+    send_email_message('submit_manuscript_proofread_complete', tokens, get_project_recipient_list(@project, roles: [:project_manager, :author]), subject)
+    send_email_message('submit_manuscript_proofread_complete_admin', tokens, admin_proofed_manuscript_list, subject)
   end
 
   def edit_layout_style(project, current_user)
@@ -786,7 +808,29 @@ class ProjectMailer < ActionMailer::Base
     list.uniq
   end
 
-    # Used for Project Created updates to Admin
+  # Manuscript task notification emails
+  def admin_original_manuscript_list
+    %w( tt_original_manuscript_list@booktrope.com )
+  end
+
+  def admin_first_pass_edit_list
+    %w( tt_first_pass_edit_list@booktrope.com )
+  end
+
+  def admin_edited_manuscript_list
+    %w( tt_edited_manuscript_list@booktrope.com )
+  end
+
+  def admin_proofed_manuscript_list
+    %w( tt_proofed_manuscript_list@booktrope.com )
+  end
+
+  def admin_proofread_complete_list
+    %w( tt_proofread_complete_list@booktrope.com )
+  end
+
+
+  # Used for Project Created updates to Admin
   def admin_project_created_list
     %w( tt_project_created_list@booktrope.com )
   end
@@ -799,11 +843,6 @@ class ProjectMailer < ActionMailer::Base
   # Used when a new team member is added
   def admin_accept_team_member_list
     %w( tt_accept_team_member_list@booktrope.com )
-  end
-
-  # The original manuscript has been uploaded
-  def admin_original_manuscript_list
-    %w( tt_original_manuscript_list@booktrope.com )
   end
 
   # Used for Control Number updates
@@ -819,11 +858,6 @@ class ProjectMailer < ActionMailer::Base
   # Notify of an allocation change
   def admin_rev_allocation_change_list
     %w( tt_rev_allocation_change_list@booktrope.com )
-  end
-
-  # Notifications for when a user uploads an edited manuscript
-  def admin_edited_manuscript_list
-    %w( tt_edited_manuscript_list@booktrope.com )
   end
 
   # A new stock cover image has been uploaded
@@ -844,11 +878,6 @@ class ProjectMailer < ActionMailer::Base
   # Images have been requested
   def admin_request_images_list
     %w( tt_request_images_list@booktrope.com )
-  end
-
-  # The proofed manuscript has been uploaded
-  def admin_proofed_manuscript_list
-    %w( tt_proofed_manuscript_list@booktrope.com )
   end
 
   # The layout style has been selected

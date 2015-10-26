@@ -25,13 +25,13 @@ class CoverConceptsController < ApplicationController
     @updated_file = nil
     update_hash = {}
 
-    if ! params[:cover_concept_image].nil?
+    if ! params[:cover_concept].nil?
       update_hash[:cover_concept_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
       update_hash[:cover_concept_content_type] = params[:filetype] unless params[:filetype].nil? || params[:filetype] == ''
       update_hash[:cover_concept_file_size] = params[:filesize] unless params[:filesize].nil? || params[:filesize] == ''
-      update_hash[:cover_concept_image_direct_upload_url] = params[:cover_concept_image]['direct_upload_url'] unless params[:cover_concept_image]['direct_upload_url'].nil?
-      update_hash[:cover_concept_image_processed] = false
-      @updated_file = 'cover_concept_image'
+      update_hash[:cover_concept_direct_upload_url] = params[:cover_concept]['direct_upload_url'] unless params[:cover_concept]['direct_upload_url'].nil?
+      update_hash[:cover_concept_processed] = false
+      @updated_file = 'cover_concept'
     end
 
     if ! params[:stock_cover_image].nil?
@@ -54,7 +54,7 @@ class CoverConceptsController < ApplicationController
     activity_text = nil
     send_cover_concept_email = false
     send_stock_image_email = false
-    if !params[:updated_cover_concept_image].nil? && params[:updated_cover_concept_image] == "yes"
+    if !params[:updated_cover_concept].nil? && params[:updated_cover_concept] == "yes"
       activity_text = "Updated Cover Concept Image"
       send_cover_concept_email = true
     end

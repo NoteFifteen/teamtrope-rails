@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016195332) do
+ActiveRecord::Schema.define(version: 20151020215616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,8 +142,8 @@ ActiveRecord::Schema.define(version: 20151016195332) do
     t.integer  "stock_cover_image_file_size"
     t.datetime "stock_cover_image_updated_at"
     t.json     "image_request_list"
-    t.string   "cover_concept_image_direct_upload_url"
-    t.boolean  "cover_concept_image_processed",         default: false
+    t.string   "cover_concept_direct_upload_url"
+    t.boolean  "cover_concept_processed",               default: false
     t.string   "stock_cover_image_direct_upload_url"
     t.boolean  "stock_cover_image_processed",           default: false
     t.string   "unapproved_cover_concept_file_name"
@@ -392,18 +392,30 @@ ActiveRecord::Schema.define(version: 20151016195332) do
     t.string   "edited_content_type"
     t.integer  "edited_file_size"
     t.datetime "edited_updated_at"
-    t.string   "proofed_file_name"
-    t.string   "proofed_content_type"
-    t.integer  "proofed_file_size"
-    t.datetime "proofed_updated_at"
+    t.string   "proofread_complete_file_name"
+    t.string   "proofread_complete_content_type"
+    t.integer  "proofread_complete_file_size"
+    t.datetime "proofread_complete_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "original_file_direct_upload_url"
-    t.boolean  "original_file_processed",         default: false
+    t.boolean  "original_file_processed",                   default: false
     t.string   "edited_file_direct_upload_url"
-    t.boolean  "edited_file_processed",           default: false
+    t.boolean  "edited_file_processed",                     default: false
+    t.string   "proofread_complete_file_direct_upload_url"
+    t.boolean  "proofread_complete_file_processed",         default: false
+    t.string   "proofed_file_name"
+    t.integer  "proofed_file_size"
+    t.string   "proofed_content_type"
+    t.datetime "proofed_updated_at"
     t.string   "proofed_file_direct_upload_url"
-    t.boolean  "proofed_file_processed",          default: false
+    t.boolean  "proofed_file_processed"
+    t.string   "first_pass_edit_file_name"
+    t.integer  "first_pass_edit_file_size"
+    t.string   "first_pass_edit_content_type"
+    t.datetime "first_pass_edit_updated_at"
+    t.string   "first_pass_edit_file_direct_upload_url"
+    t.boolean  "first_pass_edit_file_processed"
   end
 
   add_index "manuscripts", ["project_id"], name: "index_manuscripts_on_project_id", using: :btree

@@ -1,0 +1,23 @@
+<!-- First Pass Edit -->
+<div class="container">
+  <h1>First Pass Edit</h1>
+  <div class="row">
+    <div class="col-md-10">
+
+        Upload the First Pass Edit to unlock additional steps.
+
+        <br>
+        <%= render partial: "manuscripts/first_pass_edit" %>
+        <br>
+
+        <%= simple_form_for @project,
+                        url: url_for(controller: 'projects', action: 'first_pass_edit', id: @project),
+                        html: { id: 'first_pass_edit' } do | f | %>
+            <%= f.error_notification %>
+          <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'first_pass_edit_submitted_task_id' %>
+          <br>
+          <%= f.submit "Submit", disabled: '', class: 'btn disabled', id: 'first_pass_edit_submit_button' %>
+        <% end %>
+    </div>
+  </div>
+</div>

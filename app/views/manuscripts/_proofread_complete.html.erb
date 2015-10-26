@@ -1,9 +1,9 @@
 <%=
    render partial: "shared/amazon_s3_upload", locals: {
-   label: "Proofed Manuscript <strong>(.doc or .docx only)</strong>",
+   label: "Final Manuscript <strong>(.doc or .docx only)</strong>",
    required: true,
    callback_url: project_manuscript_url(@project),
-   base: "proofed",
+   base: "proofread_complete",
    object: @manuscript,
    filename_suffixes: ['doc', 'docx']
    }

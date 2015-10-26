@@ -2,12 +2,11 @@
    render partial: "shared/amazon_s3_upload", locals: {
    label: "Final .pdf",
    required: true,
-   form_id: "final_manuscript_pdf_s3_uploader",
-   callback_param: "final_manuscript_pdf[direct_upload_url]",
-   callback_url: project_final_manuscript_url(@project),
-   container_id: "final_manuscript_pdf_uploads_container",
-   object: @final_manuscript,
+   base: "final_manuscript_pdf",
    column_name: "pdf",
-   controller_action: "download_final_manuscript_pdf"
+   callback_url: project_final_manuscript_url(@project),
+   object: @final_manuscript,
+   controller_action: "download_final_manuscript_pdf",
+   filename_suffixes: ['pdf']
    }
 %>

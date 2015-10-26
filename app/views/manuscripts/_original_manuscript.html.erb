@@ -3,11 +3,8 @@
    label: "Original Manuscript <strong>(.doc or .docx only)</strong>",
    required: true,
    callback_url: project_manuscript_url(@project),
-   form_id: "original_manuscript_s3_uploader",
-   callback_param: "original_manuscript[direct_upload_url]",
-   container_id: "original_manuscript_uploads_container",
+   base: "original",
    object: @manuscript,
-   column_name: "original",
-   controller_action: 'download_original_manuscript'
+   filename_suffixes: ['doc', 'docx']
    }
 %>

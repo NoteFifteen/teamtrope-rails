@@ -9,10 +9,10 @@
         <% if ! @updated_file.nil? %>
             $('#<%=@updated_file%>_s3_uploader').html('<span><%=params[:filename] %> was successfully uploaded.</span>');
 
-            <% if @updated_file == 'cover_concept_image' %>
-                $('#cover_concept_image_submit_button').removeAttr('disabled').removeClass('disabled');
-                if ($('#updated_cover_concept_image').length) {
-                   $('#updated_cover_concept_image').val("yes");
+            <% if @updated_file == 'cover_concept' %>
+                $('#cover_concept_submit_button').removeAttr('disabled').removeClass('disabled');
+                if ($('#updated_cover_concept').length) {
+                   $('#updated_cover_concept').val("yes");
                 }
             <% end %>
 

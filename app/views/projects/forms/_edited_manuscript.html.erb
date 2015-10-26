@@ -6,10 +6,11 @@
     <div class='col-md-6'>
 
       Once the editing process is complete, Author must upload your final manuscript for proofreading here. You are only
-      allowed to submit once, so please ensure editing is final! (.doc or .docx only)<br><br>
+      allowed to submit once, so please ensure editing is final!<br><br>
 
       Please note the special formatting requirements required for uploading in step 2.2.
 
+      <br>
       <%= render partial: "manuscripts/edited_manuscript" %>
       <br>
 
@@ -28,7 +29,7 @@
           </ul>
 
 
-          <%= f.submit 'Submit', disabled: '', class: 'btn disabled', id: 'edited_manuscript_submit_button' %>
+          <%= f.submit 'Submit', disabled: '', class: 'btn disabled', id: 'edited_submit_button' %>
       <% end %>
       <%
          #TODO: investigate checkbox collection

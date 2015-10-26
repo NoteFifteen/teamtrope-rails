@@ -4,8 +4,9 @@
   <div class="row">
     <div class="col-md-10">
 
-        Upload the Original Manuscript to unlock additional steps. <strong>(Must be .doc or .docx!)</strong>
+        Upload the Original Manuscript to unlock additional steps.
 
+        <br>
         <%= render partial: "manuscripts/original_manuscript" %>
         <br>
 
@@ -15,7 +16,7 @@
             <%= f.error_notification %>
           <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'original_manuscript_submitted_task_id' %>
           <br>
-          <%= f.submit "Submit", disabled: '', class: 'btn disabled', id: 'original_manuscript_submit_button' %>
+          <%= f.submit "Submit", disabled: '', class: 'btn disabled', id: 'original_submit_button' %>
         <% end %>
     </div>
   </div>

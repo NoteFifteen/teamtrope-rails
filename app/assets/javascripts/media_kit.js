@@ -22,26 +22,3 @@ function requiredMediaKitDocumentUnlockSubmit() {
 
     return false;
 }
-
-
-$(function() {
-
-    // document File
-    $('#media_kit_document_s3_uploader').S3Uploader(
-        {
-            remove_completed_progress_bar: false,
-            progress_bar_target: $('#media_kit_document_uploads_container'),
-            before_add: function(file) {
-                if (/(application\/pdf)$/i.test(file.type) || (/(pdf)$/i.test(file.name))) {
-                    return true;
-                } else {
-                    alert('File type must be .pdf');
-                    return false;
-                }
-            }
-        }
-    );
-    $('#media_kit_document_s3_uploader').bind('s3_upload_failed', function(e, content) {
-        return alert(content.filename + ' failed to upload');
-    });
-});

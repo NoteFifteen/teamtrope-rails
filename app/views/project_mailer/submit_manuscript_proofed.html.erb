@@ -1,0 +1,9 @@
+<p>Thank you for submitting your proofed manuscript.</p>
+
+<% if( ! @project.manuscript.proofed_file_name.nil? ) %>
+    <p>Download: <%= link_to(@project.manuscript.proofed_file_name, url_for(controller: 'projects', action: 'download_proofed', id: @project, only_path: false)) %></p>
+<% end %>
+
+<div>
+  - Booktrope
+</div>

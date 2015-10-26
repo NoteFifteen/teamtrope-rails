@@ -1,0 +1,12 @@
+<%=
+   render partial: "shared/amazon_s3_upload", locals: {
+   label: "Media Kit (.doc, .docx, or .pdf only)",
+   required: false,
+   callback_url: project_media_kit_url(@project),
+   base: "media_kit_document",
+   object: @media_kit,
+   column_name: "document",
+   explanation: "If you have more than one book published by Booktrope and would like to be considered for a blog tour or other marketing service around your book release, please upload your media kit here.",
+   filename_suffixes: ['doc', 'docx', 'pdf']
+   }
+%>
