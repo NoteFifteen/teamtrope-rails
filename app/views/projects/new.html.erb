@@ -116,14 +116,15 @@
                                            [[true, 'Yes'], [false, 'No']], :first, :last,
                                            :collection_wrapper_class => 'collection_radio_buttons',
                                            :collection_wrapper_tag => 'ul',
-                                           :item_wrapper_tag => 'li', required: true
+                                           :item_wrapper_tag => 'li', required: true,
+                                           :checked => false
               %>
             </div>
             <div class='input_field pen_name_optional'>
               <label>What is your pen name?<span class="required">*</span></label>
-              <%= l.input :pen_name, label: false, required: true %>
+              <%= l.input :pen_name, label: false, required: false %>
             </div>
-            <div class='input_field pen_name_optional'>
+            <div class='input_field'>
               <label>What is your legal name?<span class="required">*</span></label>
               <%= l.input :legal_name, label: false, required: true %>
             </div>
