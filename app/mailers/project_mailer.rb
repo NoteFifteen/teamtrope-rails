@@ -455,6 +455,7 @@ class ProjectMailer < ActionMailer::Base
         'BISAC code three' => pfs.try(:bisac_code_three),
         'Search terms' => ('<pre>' + pfs.try(:search_terms) + '</pre>').html_safe,
         'Age range' => PublicationFactSheet::AGE_RANGES.to_h[pfs.try(:age_range)],
+        'Starting Grade Level' => pfs.try(:starting_grade_level),
         'Paperback price' => '$' + pfs.try(:print_price).to_s,
         'Paperback cover' => PublicationFactSheet::COVER_TYPES.to_h[pfs.try(:paperback_cover_type)],
         'Paperback ISBN' => project.control_number.try(:paperback_isbn) || 'None Provided',

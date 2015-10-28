@@ -137,6 +137,13 @@
                          item_wrapper_tag: 'li' %>
                 </li>
 
+                <li id="starting_grade_level_wrapper" style="display:none">
+                  <label>What is the most appropriate starting grade level?<span class="required">*</span></label>
+                  <select id="starting_grade_level" class="select form-control valid" name="starting_grade_level"></select>
+                </li>
+
+                <%= pfs.input :starting_grade_index, as: :hidden %>
+
                 <li>
                   <%= pfs.label :paperback_cover_type, 'Do you want your paperback cover to be matte or glossy?<span>*</span>'.html_safe %>
                   <%= pfs.collection_radio_buttons :paperback_cover_type, PublicationFactSheet::COVER_TYPES,

@@ -955,7 +955,7 @@ class ProjectsController < ApplicationController
       :publication_fact_sheet_attributes => [ :id, :author_name, :series_name, :series_number, :description,
             :author_bio, :endorsements, :one_line_blurb, :print_price, :ebook_price,
             :bisac_code_one, :bisac_code_two, :bisac_code_three, :search_terms, :age_range,
-            :paperback_cover_type ],
+            :paperback_cover_type, :starting_grade_index],
       :published_file_attributes => [:publication_date],
       :status_updates_attributes => [:type, :status],
       :team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy],

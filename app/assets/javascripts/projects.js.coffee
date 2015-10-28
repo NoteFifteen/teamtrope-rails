@@ -104,6 +104,70 @@ jQuery(document).ready () ->
 
   $(".percentage").first().trigger("change")
 
+jQuery ->
+  selector = "input[name=project\\[publication_fact_sheet_attributes\\]\\[age_range\\]]"
+
+  field = $(selector + ":radio")
+  ageRange = $(selector + ":checked")
+
+  options = getStartingGradesForAgeRange(ageRange.val())
+  renderStartingGradeIndexDropdown(options)
+
+  # when the age range has been changed reset the starting grade level dropdown
+  $(field).change (event) =>
+    ageRange = $(selector + ":checked")
+    options = getStartingGradesForAgeRange(ageRange.val())
+    renderStartingGradeIndexDropdown(options)
+
+    # blank out the starting grade level (this will compensate for when the user selects an option without a starting grade level)
+    $("#project_publication_fact_sheet_attributes_starting_grade_index").val("")
+
+  # upon saving the form, set the grade level to what was chosen.
+  $("#publication_fact_sheet").submit (event) ->
+    starting_grade_level = $("#starting_grade_level").val()
+    $("#project_publication_fact_sheet_attributes_starting_grade_index").val(starting_grade_level)
+
+# given a list of options renders the dropdown for #starting_grade_level
+renderStartingGradeIndexDropdown = (options) ->
+  startingGradeIndex = $("#project_publication_fact_sheet_attributes_starting_grade_index").val()
+
+  startingGradeLevel = $("#starting_grade_level")
+  startingGradeLevel.empty()
+  for key, val of options
+    selected = ""
+    if (parseInt(val) == parseInt(startingGradeIndex))
+      selected = "selected"
+    startingGradeLevel.append("<option " + selected + " value=\"" + val + "\">" + key + "</option>")
+
+# returns a list of corresponding grade levels for the provided ageRange
+getStartingGradesForAgeRange = (ageRange) ->
+  options = {}
+  options["Please choose a starting grade level"] = ""
+  switch ageRange
+    when 'grade_school'
+      $("#starting_grade_level_wrapper").slideDown()
+      options["Pre-K"] = 0
+      options["Kindergarten"] = 1
+      options["1st Grade"] = 2
+      options["2nd Grade"] = 3
+      options["3rd Grade"] = 4
+      options["4th Grade"] = 5
+    when 'middle_school'
+      $("#starting_grade_level_wrapper").slideDown()
+      options["5th Grade"] = 6
+      options["6th Grade"] = 7
+      options["7th Grade"] = 8
+      options["8th Grade"] = 9
+    when 'high_school'
+      $("#starting_grade_level_wrapper").slideDown()
+      options["9th Grade"] = 10
+      options["10th Grade"] = 11
+      options["11th Grade"] = 12
+      options["12th Grade"] = 13
+    else
+      $("#starting_grade_level_wrapper").slideUp()
+
+  options
 
 ## price change promotion form event handlers
 jQuery ->
@@ -302,6 +366,9 @@ jQuery ->
 jQuery ->
   $("#publication_fact_sheet").validate({
     rules: {
+      'starting_grade_level':{
+        required: true
+      },
       'project[publication_fact_sheet_attributes][age_range]': {
         required: true
       },
