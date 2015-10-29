@@ -39,7 +39,7 @@ class NewManuscriptTabs < ActiveRecord::Migration
     add_column :manuscripts, :proofed_file_direct_upload_url, :string
     add_column :manuscripts, :proofed_file_processed,         :boolean
 
-    # new columns for proofed
+    # new columns for first_pass_edit
     add_column :manuscripts, :first_pass_edit_file_name,              :string
     add_column :manuscripts, :first_pass_edit_file_size,              :integer
     add_column :manuscripts, :first_pass_edit_content_type,           :string
@@ -76,7 +76,7 @@ class NewManuscriptTabs < ActiveRecord::Migration
         original_task.unlocked_tasks.create!(unlocked_task: fpe_task)
 
         # tab-fu
-        original_tab.make_new_tab_after(fpe_task)
+#        original_tab.make_new_tab_after(fpe_task)
       end
 
       direction.down do
