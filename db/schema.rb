@@ -207,7 +207,7 @@ ActiveRecord::Schema.define(version: 20151016195332) do
     t.integer  "final_cover_screenshot_file_size"
     t.datetime "final_cover_screenshot_update_at"
     t.string   "final_cover_screenshot_direct_upload_url"
-    t.string   "final_cover_screenshot_direct_processed"
+    t.string   "final_cover_screenshot_processed"
   end
 
   add_index "cover_templates", ["project_id"], name: "index_cover_templates_on_project_id", using: :btree
@@ -821,6 +821,8 @@ ActiveRecord::Schema.define(version: 20151016195332) do
     t.datetime "updated_at"
     t.boolean  "needs_agreement",      default: false
   end
+
+  add_index "roles", ["name"], name: "index_roles_on_name", unique: true, using: :btree
 
   create_table "tabs", force: true do |t|
     t.integer  "task_id"

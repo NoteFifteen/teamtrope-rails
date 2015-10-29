@@ -1,87 +1,98 @@
-<h1>Free/Price Promo</h1>
 
-<% if @project.try(:control_number).try(:parse_id) %>
+<!-- Free/Price Promo -->
+<div class="container">
+  <h1>Free/Price Promo</h1>
+  <div class="row">
+    <div class="col-md-8">
+        <% if @project.try(:control_number).try(:parse_id) && @project.try(:kdp_select_enrollment).nil? %>
+          <%= simple_form_for @project,
+                  url: url_for(controller: 'projects', action: 'price_promotion', id: @project),
+                  html: { id: "price_promotion_form" } do | f | %>
+            <div>
+              <span>
+                <p>NOTE: If you are enrolled in KDP Select, DO NOT use this form to schedule your Free or Kindle Countdown promotions. For KDP promos, please use the "KDP Update" Form located in your book's Project.</p>
+                <p>For more information how to schedule and effectively and execute a free book campaign, check out <a href="https://teamtrope.com/docs/free-book-promotions/" target="blank">this document</a>.</p>
+                <p>If you choose an iTunes/Force Free promotion, there is NO guarantee your book will go free on Amazon.  Please do not commit to any promotional spend or ads until Amazon has actually made your book free.</p>
+                <p>PLEASE REVIEW THE FREE BOOK PROMOTION GUIDELINES BEFORE PROCEEDING:  <a href="https://teamtrope.com/docs/free-book-promotions-2/">Free Book Promos</a></p>
+              </span>
+            </div>
+            <div>
+              <ul>
+                <%= f.simple_fields_for :price_change_promotions, f.object.price_change_promotions.build do | pcp | %>
+                    <li>
+                      <label>Please select the type of promotion you'd like to schedule<span class="required">*</span></label>
+                      <%= pcp.collection_radio_buttons :type,PriceChangePromotion::PROMOTION_TYPES, :first, :last,
+                        collection_wrapper_tag: 'ul',
+                        item_wrapper_tag: 'li' %>
+                      <div>
+                        *If you are doing a promotion and want a temporary price change but you aren't sure when you'll want to raise the price again (or what price you'll want to raise it to), use this option.  Please be sure to submit this form again, using the Permanent Price Change option, when you want the book removed from "free" status and priced on iTunes again.
+                      </div>
+                    </li>
+                    <li class="start_date" style="display: none;">
+                      <%= pcp.input :start_date, as: :date, start_year: Date.today.year, label: 'Start Date' %>
+                      <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(4i)]", "8" %>
+                      <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(5i)]", "0" %>
+                      <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(6i)]", "0" %>
+                    </li>
+                    <li class="price_promotion" style="display: none;">
+                      <%= pcp.input :price_promotion, label: 'Promotion Price' %>
+                    </li>
+                    <li class="end_date" style="display: none;">
+                      <%= pcp.input :end_date, as: :date, start_year: Date.today.year, label: 'End Date' %>
+                      <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(4i)]", "7" %>
+                      <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(5i)]", "59" %>
+                      <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(6i)]", "59" %>
+                    </li>
+                    <li class="price_after_promotion" style="display: none;">
+                      <%= pcp.input :price_after_promotion, label: 'Price After Promotion' %>
+                    </li>
 
-<div class="gf_browser_safari gform_wrapper">
-  <%= simple_form_for @project,
-        url: url_for(controller: 'projects', action: 'price_promotion', id: @project),
-        html: { id: "price_promotion_form" } do | f | %>
-    <div>
-      <span>
-        <p>NOTE: If you are enrolled in KDP Select, DO NOT use this form to schedule your Free or Kindle Countdown promotions. For KDP promos, please use the "KDP Update" Form located in your book's Project.</p>
-        <p>For more information how to schedule and effectively and execute a free book campaign, check out <a href="https://teamtrope.com/docs/free-book-promotions/" target="blank">this document</a>.</p>
-        <p>If you choose an iTunes/Force Free promotion, there is NO guarantee your book will go free on Amazon.  Please do not commit to any promotional spend or ads until Amazon has actually made your book free.</p>
-        <p>PLEASE REVIEW THE FREE BOOK PROMOTION GUIDELINES BEFORE PROCEEDING:  <a href="https://teamtrope.com/docs/free-book-promotions-2/">Free Book Promos</a></p>
-      </span>
-    </div>
-    <div>
-      <ul>
-        <%= f.simple_fields_for :price_change_promotions, f.object.price_change_promotions.build do | pcp | %>
-        <li>
-          <label>Please select the type of promotion you'd like to schedule<span class="required">*</span></label>
-          <%= pcp.collection_radio_buttons :type,PriceChangePromotion::PROMOTION_TYPES, :first, :last,
-            collection_wrapper_tag: 'ul',
-            item_wrapper_tag: 'li' %>
-          <div>
-            *If you are doing a promotion and want a temporary price change but you aren't sure when you'll want to raise the price again (or what price you'll want to raise it to), use this option.  Please be sure to submit this form again, using the Permanent Price Change option, when you want the book removed from "free" status and priced on iTunes again.
-          </div>
-        </li>
-        <li class="start_date" style="display: none;">
-          <%= pcp.input :start_date, as: :date, start_year: Date.today.year, label: 'Start Date' %>
-          <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(4i)]", "8" %>
-          <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(5i)]", "0" %>
-          <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(6i)]", "0" %>
-        </li>
-        <li class="price_promotion" style="display: none;">
-          <%= pcp.input :price_promotion, label: 'Promotion Price' %>
-        </li>
-        <li class="end_date" style="display: none;">
-          <%= pcp.input :end_date, as: :date, start_year: Date.today.year, label: 'End Date' %>
-          <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(4i)]", "7" %>
-          <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(5i)]", "59" %>
-          <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(6i)]", "59" %>
-        </li>
-        <li class="price_after_promotion" style="display: none;">
-          <%= pcp.input :price_after_promotion, label: 'Price After Promotion' %>
-        </li>
+                    <li class="temp_price_promotion" style="display: none;">
+                      <label>Get the word out about your $0.99 price promotions and contact the sites below</label>
+                      <%= pcp.collection_check_boxes :sites, PriceChangePromotion::SITES,
+                        :first, :last,
+                        collection_wrapper_tag: 'ul',
+                        item_wrapper_tag: 'li'
+                      %>
+                      <div>If you're doing a $0.99 promotion, we strongly encourage you to submit to these sites to help let readers know about the deal.  Don't forget to spread the word on social media as well!
+                        *Booktrope will pay this expense and treat it as a marketing expense shared across the team.  Please use the following paypal address accounting@booktrope.com.
+                      </div>
+                    </li>
+                <% end %>
 
-        <li class="temp_price_promotion" style="display: none;">
-          <label>Get the word out about your $0.99 price promotions and contact the sites below</label>
-          <%= pcp.collection_check_boxes :sites, PriceChangePromotion::SITES,
-            :first, :last,
-            collection_wrapper_tag: 'ul',
-            item_wrapper_tag: 'li'
-          %>
-          <div>If you're doing a $0.99 promotion, we strongly encourage you to submit to these sites to help let readers know about the deal.  Don't forget to spread the word on social media as well!
-            *Booktrope will pay this expense and treat it as a marketing expense shared across the team.  Please use the following paypal address accounting@booktrope.com.
-          </div>
-        </li>
+                <li class="submit_button" style="display: none;">
+                  <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'price_promotion_submitted_task_id' %>
+                  <%= submit_tag "Submit" %>
+                </li>
+              </ul>
+            </div>
+          <% end %>
+        <% else %>
+          <% if ! @project.try(:kdp_select_enrollment).nil? %>
+            <p>Please submit a Booktrope Assistance ticket if you wish to change your price.</p>
+          <% else %>
+            <% if @project.try(:control_number).try(:parse_id).nil? %>
+              <% if current_user.role? :booktrope_staff %>
+                <p>
+                  Oops, in order to request a price change we need to know its control numbers.<br />
+                  Please add the control numbers to the project by submitting the <a id="promo_control_number_link" href="#" >Ctrl No. tab</a>.<br />
+                </p>
+                <script type="text/javascript">
+                    $(function() {
+                        $("#promo_control_number_link").click(function(e) {
+                            $("#tab700").prop('checked', true)
+                        });
+                    });
+                </script>
+              <% else %>
+                <p>
+                  Oops, in order to request a price change we need to know its control numbers.<br />
+                  Please request the Booktrope staff responsible for control numbers to update your project.
+                </p>
+              <% end %>
+            <% end %>
+          <% end %>
         <% end %>
-
-        <li class="submit_button" style="display: none;">
-          <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'price_promotion_submitted_task_id' %>
-          <%= submit_tag "Submit" %>
-        </li>
-      </ul>
+      </div>
     </div>
-  <% end %>
 </div>
-  <% else %>
-  <script type="text/javascript">
-    $(function() {
-      $("#promo_control_number_link").click(function(e) {
-        $("#tab700").prop('checked', true)
-      });
-    });
-
-  </script>
-  <p>
-    <% if current_user.role? :booktrope_staff %>
-    Oops, in order to request a price change we need to know its control numbers.<br />
-    Please add the control numbers to the project by submitting the <a id="promo_control_number_link" href="#" >Ctrl No. tab</a>.<br />
-    <% else %>
-    Oops, in order to request a price change we need to know its control numbers.<br />
-    Please request the Booktrope staff responsible for control numbers to update your project.
-    <% end %>
-  </p>
-  <% end %>
