@@ -295,6 +295,10 @@ jQuery ->
     rules: {
       checklist_0: {
         checklistValidator: [".upload_cover_checklist"]
+      },
+      font_list: {
+        required: true,
+        minlength: 3
       }
     }
   })

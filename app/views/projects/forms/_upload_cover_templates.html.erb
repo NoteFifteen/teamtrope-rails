@@ -148,7 +148,7 @@
         <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'upload_cover_templates_submitted_task_id' %>
 
         <li class="cover_template_list">
-          <%= label_tag 'font_list', 'Font List' %><br />
+          <%= label_tag 'font_list', 'Font List <span class="required">*</span>'.html_safe %><br />
           <%= text_field_tag 'font_list', nil, size: 60 %><br />
           <div><!-- gfield_description -->List the names of fonts used (separated by commas if there's more than one).</div>
         </li>
