@@ -121,11 +121,11 @@
             </div>
             <div class='input_field pen_name_optional'>
               <label>What is your pen name?<span class="required">*</span></label>
-              <%= l.input :pen_name, label: false, required: true %>
+              <%= l.input :pen_name, label: false %>
             </div>
-            <div class='input_field pen_name_optional'>
+            <div class='input_field'>
               <label>What is your legal name?<span class="required">*</span></label>
-              <%= l.input :legal_name, label: false, required: true %>
+              <%= l.input :legal_name, label: false %>
             </div>
             <% end %>
           </div>
@@ -173,7 +173,15 @@
             'project[book_genres_attributes][0][genre_id]': { required: true },
             'project[has_internal_illustrations]': { required: true },
             'project[previously_published]': { required: true },
-            'project[project_type_id]': { required: true }
+            'project[project_type_id]': { required: true },
+            'project[layout_attributes][legal_name]': { required: true},
+            'project[layout_attributes][pen_name]': {
+              required: {
+                depends: function(element) {
+                  return ($("input[name=project\\[layout_attributes\\]\\[use_pen_name_on_title\\]]:checked").val() == 'true');
+                }
+              }
+            }
         },
         messages: {
             'project[title]': 'Please enter a working title for this project.',
@@ -183,7 +191,9 @@
             'project[previously_published]': 'Please answer Yes or No.',
             'project[synopsis]': 'Please provide a brief synopsis for this project.',
             'project[project_type_id]': 'Please select a Project Type.',
-            'project[teamroom_link]': 'A Teamroom link is required and must contain a valid URL.'
+            'project[teamroom_link]': 'A Teamroom link is required and must contain a valid URL.',
+            'project[layout_attributes][legal_name]': 'Please your legal name.',
+            'project[layout_attributes][pen_name]': 'Please provide your pen name.'
         }
     });
 </script>
