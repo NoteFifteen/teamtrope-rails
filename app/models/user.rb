@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   scope :inactive_users, -> { where(active: false) }
 
 
-  ROLES = %w[booktrope_staff moderator author book_manager cover_designer editor project_manager proofreader volunteer observer illustrator agent investor self_managed_author]
+  ROLES = %w[booktrope_staff moderator author book_manager cover_designer editor project_manager proofreader volunteer observer illustrator agent investor]
 
   # Used for the Accept Team Member available members for a role and built to exclude
   # a member who is already assigned the same role in the project
@@ -116,9 +116,8 @@ class User < ActiveRecord::Base
 
       # Update the roles based on what's currently in OldTrope
       if (! oauth['extra']['raw_info']['roles'].nil?)
-        roles = JSON.parse(oauth['extra']['raw_info']['roles']).map{|r| r.downcase.gsub(/[\s-]/, '_')}
-        roles << 'project_manager' if roles.include? 'book_manager'
-        roles << 'author' if roles.include? 'self_managed_author'
+        roles = JSON.parse(oauth['extra']['raw_info']['roles']).map{|r| r.downcase.gsub(/ /, '_')}
+        roles << 'project_manager' if roles.include? "book_manager"
         user.roles = roles
         user.save
       end
