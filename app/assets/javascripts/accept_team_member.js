@@ -121,16 +121,7 @@ Teamtrope.BuildTeam.AcceptMember.prototype.getSuggestedPercentageForRole = funct
 
 Teamtrope.BuildTeam.AcceptMember.prototype.getMembersForRole = function (role) {
     var list = this.member_roles[role];
-    if($.isArray(list)) {
-        // Alphabetize the list
-        list.sort(function (a, b) {
-            return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
-        });
-    } else {
-        list = [];
-    }
-
-    return list;
+    return ($.isArray(list)) ? list : [];
 };
 
 Teamtrope.BuildTeam.AcceptMember.prototype.updateMemberSelect = function () {
