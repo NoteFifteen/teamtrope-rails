@@ -23,7 +23,6 @@ class ManuscriptsController < ApplicationController
 
     Manuscript::MANUSCRIPT_VERSIONS.each do |version|
       if params[version.to_sym]
-        print("\n\n############## version = #{version} ###############\n\n")
         update_hash[(version + '_file_name').to_sym]              = params[:filename] if params[:filename].present?
         update_hash[(version + '_content_type').to_sym]           = params[:filetype] if params[:filetype].present?
         update_hash[(version + '_file_size').to_sym]              = params[:filesize] if params[:filesize].present?
@@ -33,12 +32,7 @@ class ManuscriptsController < ApplicationController
       end
     end
 
-    print("\n\n############## update_hash = ", update_hash, " ###############\n\n")
-    print("\n\n############## before = ", @manuscript, " ###############\n\n")
     @manuscript.update(update_hash)
-    print("\n\n############## after = ", @manuscript, " ###############\n\n")
-#    @manuscript.save
-    print("\n\n############## saved = ", @manuscript, " ###############\n\n")
     @last_errors = @manuscript.errors.full_messages
     return
   end
