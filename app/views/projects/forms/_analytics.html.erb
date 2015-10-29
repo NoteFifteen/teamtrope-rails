@@ -30,32 +30,10 @@
                                 color: '#1394BB',
                                 type: 'column',
                                 data: $.parseJSON(analytics.sales.data)
-                            }
-                            ]
+                            }]
                         });
                 } else {
                     $('#daily-sales-container').html('<span>Unable to locate Sales Data.</span>');
-                }
-
-                if(analytics.sales.title) {
-                    new Highcharts.Chart(
-                        {
-                            chart:     { zoomType: 'xy', renderTo: "kdp-sales-container"},
-                            title:     { text: analytics.sales.title },
-                            subtitle:  { text: 'Sales Intelligence Estimates (Amazon US Only)' },
-                            xAxis:    [{ type: 'datetime', dateTimeLabelFormats: { month: '%e. %b',year: '%b' } }],
-                            yAxis:     { title: { text: 'Sales Estimate' }, min: 0 },
-                            tooltip:   { shared: true },
-                            series:   [{
-                                name: 'KDP Unlimited',
-                                color: '#FB9A2F',
-                                type: 'column',
-                                data: $.parseJSON(analytics.sales.kdp_unlimited)
-                            }
-                            ]
-                        });
-                } else {
-                    $('#kdp-sales-container').html('<span>Unable to locate Sales Data.</span>');
                 }
 
                 if(analytics.rank.title) {
@@ -178,6 +156,5 @@
 </script>
 <div id="price-ranking-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 <div id="daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
-<div id="kdp-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 <div id="apple-daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 <div id="nook-daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
