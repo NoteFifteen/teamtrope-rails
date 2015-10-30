@@ -230,14 +230,14 @@ module Booktrope
             currency_type = 'USD'
           end
 
-          # No need to convert if it's already USD
-          if ! currency_type.nil? && currency_type.upcase == 'USD'
-            return revenue_multiccy
-          end
-
-          # this value is already converted, so if we have it, return it
+          # This value is already converted, so if we have it, return it
           if ! recorded_revenue.nil? && recorded_revenue > 0
             return recorded_revenue
+          end
+
+          # No need to convert if it's already USD, and the amount > 0, otherwise ignore it
+          if ! currency_type.nil? && currency_type.upcase == 'USD' && ! revenue_multiccy.nil? && revenue_multiccy > 0
+            return revenue_multiccy
           end
 
           # If we haven't been passed the correct values necessary to convert, raise an exception
