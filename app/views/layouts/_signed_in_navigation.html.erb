@@ -11,7 +11,10 @@
 
                   <li class="menu-item menu-item-type-custom menu-item-object-custom"><%= link_to "* Help *", 'https://teamtrope.com/project-status-and-grid-explanation/'%></li>
                   <% Constants::ProjectsIndexFilters.each do | key, value | %>
-                  <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to (value[:label].try(:empty?))? value[:task_name] : value[:label], projects_path(show: key) %></li>
+                    <% # If there are roles listed in required_roles, we need to make sure the user has one of those roles -- But if the required roles is empty anyone can view %>
+                    <% if value[:required_roles] && value[:required_roles].size == 0 || (current_user.roles & value[:required_roles].map {|r| r.to_s } ).size > 0 %>
+                       <li class="menu-item menu-item-type-taxonomy menu-item-object-status"><%= link_to (value[:label].try(:empty?))? value[:task_name] : value[:label], projects_path(show: key) %></li>
+                    <% end %>
                   <% end %>
 
                   <% if current_user.role? :booktrope_staff %>
