@@ -98,6 +98,7 @@ module Constants
   # only change the task_name if the task name in the database has been changed.
   # use the label to override what appears in the dropdown navigation.
   AdminProjectsIndexFilters = {
+    all: { label: 'All Projects', task_name: '', workflow_name: '' },
     manuscript_development: { label: '', task_name: 'Manuscript Development', workflow_name: 'production' },
     upload_layout: { label: '', task_name: 'Upload Layout', workflow_name: 'design' },
     approve_cover: { label: '', task_name: 'Approve Cover', workflow_name: 'marketing' },
@@ -119,8 +120,7 @@ module Constants
     choose_style: { label: '', task_name: 'Choose Style', workflow_name: 'design', required_roles: [] },
     final_covers: { label: '', task_name: 'Final Covers', workflow_name: 'design', required_roles: [] },
     submit_pfs: { label: '', task_name: 'Submit PFS', workflow_name: 'marketing', required_roles: [] },
-    published: { label: 'Published', task_name: 'Production Complete', workflow_name: 'production', required_roles: [] },
-    all: { label: 'All Projects', task_name: '', workflow_name: '', required_roles: [ :booktrope_staff ] }
+    published: { label: 'Published', task_name: 'Production Complete', workflow_name: 'production', required_roles: [] }
   }
 
 end
