@@ -58,6 +58,27 @@
                     $('#kdp-sales-container').html('<span>Unable to locate Sales Data.</span>');
                 }
 
+                if(analytics.sales.title) {
+                    new Highcharts.Chart(
+                        {
+                            chart:     { zoomType: 'xy', renderTo: "kdp-free-promo-container"},
+                            title:     { text: 'Kindle Edition Free Promo' },
+                            subtitle:  { text:  analytics.sales.title },
+                            xAxis:    [{ type: 'datetime', dateTimeLabelFormats: { month: '%e. %b',year: '%b' } }],
+                            yAxis:     { title: { text: 'Sales Estimate' }, min: 0 },
+                            tooltip:   { shared: true },
+                            series:   [{
+                                name: 'Free Promo',
+                                color: '#232F33',
+                                type: 'column',
+                                data: $.parseJSON(analytics.sales.kpd_free_promo)
+                            }
+                            ]
+                        });
+                } else {
+                    $('#kdp-free-promo-container').html('<span>Unable to locate Sales Data.</span>');
+                }
+
                 if(analytics.rank.title) {
                     new Highcharts.Chart(
                         {
@@ -179,5 +200,6 @@
 <div id="price-ranking-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 <div id="daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 <div id="kdp-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
+<div id="kdp-free-promo-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 <div id="apple-daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 <div id="nook-daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
