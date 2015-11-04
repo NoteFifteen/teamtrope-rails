@@ -69,7 +69,7 @@
           <% end %>
         <% else %>
           <% if ! @project.try(:kdp_select_enrollment).nil? %>
-            <p>Please submit a Booktrope Assistance ticket if you wish to change your price.</p>
+            <p>This book is in KDP.  Please submit a Booktrope Assistance ticket if you wish to change your price.</p>
           <% else %>
             <% if @project.try(:control_number).try(:parse_id).nil? %>
               <% if current_user.role? :booktrope_staff %>
