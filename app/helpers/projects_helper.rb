@@ -12,7 +12,7 @@ module ProjectsHelper
 
     # Safe fall-back if we can't find anything
     if @projects.nil?
-      get_all_projects
+      get_my_projects
     end
   end
 
