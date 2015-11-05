@@ -32,7 +32,7 @@
     <% @print_corners.each do |print_corner| %>
       <tr>
         <td class="book-title"><%= link_to print_corner.project.title, print_corner.project  %></td>
-        <td><%= link_to print_corner.user.nickname, print_corner.user.profile_page %></td>
+        <td><%= link_to print_corner.user.nickname, print_corner.user.profile_page unless print_corner.user.nil? %></td>
         <td><%= print_corner.order_type %></td>
         <td><%= print_corner.first_order %></td>
         <td><%= print_corner.additional_order %></td>
