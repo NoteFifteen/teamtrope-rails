@@ -619,6 +619,7 @@ class ProjectMailer < ActionMailer::Base
 
   def print_corner_request(project, current_user)
     @project = project
+    @current_user = current_user
     pc = project.print_corners.last
 
     tokens = {
@@ -773,8 +774,13 @@ class ProjectMailer < ActionMailer::Base
     role_values = Roles.values_at *role_keys # if :none is passed then values_at will return an empty array
 
     # If current_user is set, attempt to add them to the recipient list
-    if ! @current_user.nil? && send_submitter
-      list << "#{@current_user.name} <#{@current_user.email}>"
+    if send_submitter
+      if ! @current_user.nil?
+        list << "#{@current_user.name} <#{@current_user.email}>"
+      else
+        called_by =  caller[0][/`.*'/][1..-2]
+        Rails.logger.error "No current_user defined and send_submitter is true!  Called from #{called_by}"
+      end
     end
 
     project.team_memberships.where(role_id: role_values).each do  |m|
