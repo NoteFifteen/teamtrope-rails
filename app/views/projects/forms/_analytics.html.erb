@@ -20,8 +20,8 @@
                     new Highcharts.Chart(
                         {
                             chart:     { zoomType: 'xy', renderTo: "daily-sales-container"},
-                            title:     { text: analytics.sales.title },
-                            subtitle:  { text: 'Sales Intelligence Estimates (Amazon US Only)' },
+                            title:     { text: 'Amazon US Only Estimated Daily eBook Sales' },
+                            subtitle:  { text:  analytics.sales.title },
                             xAxis:    [{ type: 'datetime', dateTimeLabelFormats: { month: '%e. %b',year: '%b' } }],
                             yAxis:     { title: { text: 'Sales Estimate' }, min: 0 },
                             tooltip:   { shared: true },
@@ -30,18 +30,61 @@
                                 color: '#1394BB',
                                 type: 'column',
                                 data: $.parseJSON(analytics.sales.data)
-                            }]
+                            }
+                            ]
                         });
                 } else {
                     $('#daily-sales-container').html('<span>Unable to locate Sales Data.</span>');
+                }
+
+                if(analytics.sales.title) {
+                    new Highcharts.Chart(
+                        {
+                            chart:     { zoomType: 'xy', renderTo: "kdp-sales-container"},
+                            title:     { text: 'Kindle Edition Normalized Pages Read' },
+                            subtitle:  { text:  analytics.sales.title },
+                            xAxis:    [{ type: 'datetime', dateTimeLabelFormats: { month: '%e. %b',year: '%b' } }],
+                            yAxis:     { title: { text: 'Sales Estimate' }, min: 0 },
+                            tooltip:   { shared: true },
+                            series:   [{
+                                name: 'Pages Read',
+                                color: '#FB9A2F',
+                                type: 'column',
+                                data: $.parseJSON(analytics.sales.kdp_unlimited)
+                            }
+                            ]
+                        });
+                } else {
+                    $('#kdp-sales-container').html('<span>Unable to locate Sales Data.</span>');
+                }
+
+                if(analytics.sales.title) {
+                    new Highcharts.Chart(
+                        {
+                            chart:     { zoomType: 'xy', renderTo: "kdp-free-promo-container"},
+                            title:     { text: 'Kindle Edition Free Promo' },
+                            subtitle:  { text:  analytics.sales.title },
+                            xAxis:    [{ type: 'datetime', dateTimeLabelFormats: { month: '%e. %b',year: '%b' } }],
+                            yAxis:     { title: { text: 'Sales Estimate' }, min: 0 },
+                            tooltip:   { shared: true },
+                            series:   [{
+                                name: 'Free Promo',
+                                color: '#232F33',
+                                type: 'column',
+                                data: $.parseJSON(analytics.sales.kpd_free_promo)
+                            }
+                            ]
+                        });
+                } else {
+                    $('#kdp-free-promo-container').html('<span>Unable to locate Sales Data.</span>');
                 }
 
                 if(analytics.rank.title) {
                     new Highcharts.Chart(
                         {
                             chart: {zoomType: 'xy', renderTo: "price-ranking-container"},
-                            title: {text: analytics.rank.title},
-                            subtitle: {text: 'Amazon Price and Ranking Numbers'},
+                            title: {text: 'Amazon Price and Ranking Numbers' },
+                            subtitle: {text: analytics.rank.title },
                             xAxis: [{type: 'datetime', dateTimeLabelFormats: {month: '%e. %b', year: '%b'}}],
                             yAxis: [{
                                 title: {text: 'Price', style: {color: '#AED991'}},
@@ -101,8 +144,8 @@
                     new Highcharts.Chart(
                     {
                         chart:     { zoomType: 'xy', renderTo: "apple-daily-sales-container"},
-                        title:     { text: analytics.sales.title },
-                        subtitle:  { text: 'Daily Apple Sales' },
+                        title:     { text: 'Daily Apple US Only Estimated Sales' },
+                        subtitle:  { text:  analytics.sales.title },
                         xAxis:    [{ type: 'datetime', dateTimeLabelFormats: { month: '%e. %b',year: '%b' } }],
                         yAxis:     { title: { text: 'Sales Estimate' }, min: 0 },
                         tooltip:   { shared: true },
@@ -133,8 +176,8 @@
                     new Highcharts.Chart(
                     {
                         chart:     { zoomType: 'xy', renderTo: "nook-daily-sales-container"},
-                        title:     { text: analytics.sales.title },
-                        subtitle:  { text: 'Daily Nook Sales' },
+                        title:     { text: 'Daily Nook US Only Estimated Sales' },
+                        subtitle:  { text:  analytics.sales.title },
                         xAxis:    [{ type: 'datetime', dateTimeLabelFormats: { month: '%e. %b',year: '%b' } }],
                         yAxis:     { title: { text: 'Sales Estimate' }, min: 0 },
                         tooltip:   { shared: true },
@@ -156,5 +199,7 @@
 </script>
 <div id="price-ranking-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 <div id="daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
+<div id="kdp-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
+<div id="kdp-free-promo-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 <div id="apple-daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 <div id="nook-daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
