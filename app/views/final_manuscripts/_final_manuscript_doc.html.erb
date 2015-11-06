@@ -1,0 +1,11 @@
+<%=
+   render partial: "shared/amazon_s3_upload", locals: {
+   label: "Final Manuscript <strong>(.doc or .docx only)</strong>"
+   required: false,
+   callback_url: project_final_manuscript_url(@project),
+   base: "final_manuscript_doc",
+   column_name: "doc",
+   object: @final_manuscript,
+   filename_suffixes: ['doc', 'docx]
+   }
+%>

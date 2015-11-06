@@ -35,8 +35,8 @@ class CoverConcept < ActiveRecord::Base
   }
 
   # The following methods are to unescape the direct upload url path
-  def cover_concept_image_direct_upload_url=(escaped_url)
-    write_attribute(:cover_concept_image_direct_upload_url, self.unescape_url(escaped_url))
+  def cover_concept_direct_upload_url=(escaped_url)
+    write_attribute(:cover_concept_direct_upload_url, self.unescape_url(escaped_url))
   end
 
   def stock_cover_image_direct_upload_url=(escaped_url)
@@ -49,7 +49,7 @@ class CoverConcept < ActiveRecord::Base
   def transfer_and_cleanup
     transfer_and_cleanup_with_block do |type|
       if type == :cover_concept
-        self.update_column(:cover_concept_image_processed, true)
+        self.update_column(:cover_concept_processed, true)
       end
 
       if type == :stock_cover_image
@@ -77,8 +77,8 @@ class CoverConcept < ActiveRecord::Base
   end
 
   def get_direct_upload_url
-    if cover_concept_image_direct_upload_url_changed?
-      return DIRECT_UPLOAD_URL_FORMAT.match(cover_concept_image_direct_upload_url)
+    if cover_concept_direct_upload_url_changed?
+      return DIRECT_UPLOAD_URL_FORMAT.match(cover_concept_direct_upload_url)
     end
 
     if stock_cover_image_direct_upload_url_changed?
@@ -87,7 +87,7 @@ class CoverConcept < ActiveRecord::Base
   end
 
   def get_uploaded_type
-    if cover_concept_image_direct_upload_url_changed?
+    if cover_concept_direct_upload_url_changed?
       return :cover_concept
     end
     if stock_cover_image_direct_upload_url_changed?

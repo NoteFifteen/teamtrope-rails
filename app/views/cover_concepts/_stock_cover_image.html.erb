@@ -1,0 +1,10 @@
+<%=
+   render partial: "shared/amazon_s3_upload", locals: {
+   label: "Stock Cover Image (.jpg, .png, or .zip)",
+   required: true,
+   callback_url: project_cover_concepts_url(@project),
+   base: "stock_cover_image",
+   object: @cover_concept,
+   filename_suffixes: ['jpg', 'jpeg', 'png', 'zip']
+   }
+%>

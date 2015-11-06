@@ -19,4 +19,11 @@ class Task < ActiveRecord::Base
   # if we have a partial to save make sure to strip off the leading '_' and the extensions
   before_save { self.partial = partial.gsub(/^_/,"").gsub(/\.html\.erb/,"") unless partial.nil? }
 
+  # before destroying, destroy associated tab, and remove this task from unlocked tasks lists
+  # (should only ever come up in migrations!)
+  before_destroy do |task|
+    tab = Tab.find_by_task_id(task.id)
+    tab.destroy if tab
+    UnlockedTask.where(unlocked_task_id: task.id).destroy_all
+  end
 end

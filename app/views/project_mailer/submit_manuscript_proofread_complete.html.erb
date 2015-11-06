@@ -1,0 +1,11 @@
+<p>Thank you for submitting your proofread complete manuscript.</p>
+
+<div>
+  - Booktrope
+</div>
+<br>
+<%= render 'table_hash' %>
+
+<% if( ! @project.manuscript.proofread_complete_file_name.nil? ) %>
+    <p>Download: <%= link_to(@project.manuscript.proofread_complete_file_name, url_for(controller: 'projects', action: 'download_proofread_complete', id: @project, only_path: false)) %></p>
+<% end %>

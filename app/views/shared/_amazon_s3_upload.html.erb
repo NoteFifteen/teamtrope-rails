@@ -1,29 +1,91 @@
+<%
+
+# Locals:
+#   label: text that goes above the upload button (html_safe)
+#   required: whether to put a * following the label
+#   base: add _s3_uploader for form id etc.
+#         add _uploads_container for the container name
+#         add download_ for controller action
+#         etc.
+#   column_name: add _file_name, _content_type, _file_size, _updated_at, _direct_upload_url,
+#             _processed for column names if different from "base"
+#   callback_param_base: S3 POSTs with this param + [direct_upload_url] if different from "base"
+#         (would be nice to merge this with "base")
+#   callback_url: S3 POSTs to this when the upload is complete
+#   object: the object containing the upload
+#   explanation: text that goes beneath the upload area (html_safe)
+#   filename_suffixes: ruby list of suffixes that file.name must match (leave empty for no check)
+#   (note: file.type is not reliable, so we no longer test it)
+#
+
+column_name = base if not defined?(column_name)
+callback_param_base = base if not defined?(callback_param_base)
+uploader = base + '_s3_uploader'
+container = base + '_uploads_container'
+
+%>
+
+
+<script>
+$(function() {
+    $('#<%= uploader %>').S3Uploader({
+        remove_completed_progress_bar: false,
+        progress_bar_target: $('#<%= container %>')
+<%
+if defined?(filename_suffixes)
+    filename_regexp = "\.(" + filename_suffixes.join('|') + ")$"
+    if filename_suffixes.length == 1
+        fail_msg = "File must be #{filename_suffixes[0]}"
+    else
+        suffix_list = filename_suffixes.map {|s| ".#{s}"}.join(', ')
+        fail_msg = "File must be one of: #{suffix_list}"
+    end
+%>
+        , before_add: function (file) {
+            if (/<%= filename_regexp %>/i.test(file.name)) {
+                return true;
+            } else {
+                alert("<%= fail_msg %>");
+                return false;
+            }
+        }
+<% end %>
+    });
+    $('#<%= uploader %>').bind('s3_upload_failed', function (e, content) {
+        return alert(content.filename + ' failed to upload');
+    });
+});
+</script>
+
+
 <div>
-  <label><%= label %><% if required %><span class="required">*</span><% end %></label>
+  <label><%= label.html_safe %><% if required %><span class="required">*</span><% end %></label>
   <%= s3_uploader_form callback_url: callback_url,
-                       id: form_id,
+                       id: uploader,
                        acl: "private",
-                       callback_param: callback_param,
+                       callback_param: base + "[direct_upload_url]",
                        expiration: 24.hours.from_now.utc.iso8601,
                        max_file_size: 100.megabytes do %>
   <div>
     <% unless object.nil? %>
-    <p>Existing file: <%= (object.send(column_name+"?")) ? link_to(object.send(column_name+"_file_name"),
+    <p>Existing file: <%= (object.send(base + "?")) ? link_to(object.send(base + "_file_name"),
           url_for(
                 controller: 'projects',
-                action: controller_action,
+                action: 'download_' + base,
                 id: object.send('project_id'),
                 only_path: false)) : 'N/A' %></p>
     <% end %>
   </div>
       <%= file_field_tag :file, multiple: false %>
   <% end %>
-  <div id="<%= container_id%>"></div>
+  <div id="<%= container %>"></div>
   <script id="template-upload" type="text/x-tmpl">
         <div id="upload_{%=o.unique_id%}" class="upload">
           <h5>{%=o.name%}</h5>
           <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
         </div>
-
   </script>
+  <% if defined?(explanation) and explanation %>
+    <p><%= explanation.html_safe %></p>
+  <% end %>
 </div>

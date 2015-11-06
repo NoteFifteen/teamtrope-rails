@@ -1,0 +1,5 @@
+A new original manuscript has been uploaded for <%= @project.title %>
+
+<% if( ! @project.manuscript.original_file_name.nil? ) %>
+    <p>Download: <%= link_to(@project.manuscript.original_file_name, url_for(controller: 'projects', action: 'download_original', id: @project, only_path: false)) %></p>
+<% end %>

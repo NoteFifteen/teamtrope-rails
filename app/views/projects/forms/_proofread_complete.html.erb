@@ -1,0 +1,237 @@
+<!-- Submit Final Proofed Document -->
+<div class="container">
+  <h1>Submit Final Proofed Document</h1>
+  <div class="row">
+    <div class="col-md-12">
+
+        <%= simple_form_for @project,
+                url: url_for(controller: 'projects', action: 'proofed_manuscript', id: @project) ,
+                html: { id: "submit_proofread" } do | f |%>
+            <div>
+                <span>The Author must upload your final manuscript after proofreading here.  This is your LAST CHANCE to submit corrections for typos or any other proofreading errors. Content or proofing changes requested after the book has gone through layout may result in additional fees.You are only allowed to submit once, so please ensure editing is final! (.doc or .docx only)</span>
+            </div>
+
+            <div>
+                <ul>
+                    <li>
+                        <h4>Are you ready to upload your proofread manuscript for layout?<span class="required">*</span></h4>
+                        <div>
+                            <ul>
+                            <%
+                                [ 'Content text has been converted to palatino linotype, size 10',
+                                'Any Acknowledgments, Dedication, Author Notes, etc. that I want included are included in this manuscript',
+                                'Any and all tracked changes have been accepted or rejected; Comments have been removed',
+                                'All text is fully justified (text is aligned with both the left and right margin)',
+                                'Chapter Headings are the way I want them to appear in the final manuscript (e.g. "Chapter One," "Chapter 1", "1", "CHAPTER ONE"). Also, I have reviewed and made sure that Chapter Numbering is correct (No missing or duplicated numbers).',
+                                'All editing and stylistic choices (italics, caps) have been made and are final',
+                                'All chapter headings are size 14 font and there is a page break inserted between each chapter',
+                                'I have looked over and approved the delivered proofreading and the content.  Nothing more will be added or removed from this document, and no further changes will be made.'
+                                ].each_with_index do | label, index |
+                            %>
+                                <li><%= check_box_tag "checklist_#{index}", index, false, class: "proofread_manuscript_checklist" %> <%= label_tag "checklist_#{index}", label, class: "proofread_manuscript_checklist" %></li>
+                            <% end %>
+                            </ul>
+                        </div>
+
+                        <div>Preparing your document with the above items will ensure layout is completely accurately and timely.
+                            IMPORTANT: Once you have submitted your manuscript via this form, the expectation is that NO FURTHER content or proofing changes will be requested. If they are, you may be responsible for additional fees.
+                        </div>
+                    </li>
+
+                    <li>
+                  <li>
+                    <h4>Has this title been published previously?<span class="required">*</span></h4>
+                    <div>
+                      <!-- The choice here should conditionally unlock fields below -->
+                      <%= f.collection_radio_buttons :previously_published,
+                                                     [[true, 'Yes'], [false, 'No']], :first, :last,
+                                                     :collection_wrapper_tag => 'ul',
+                                                     :item_wrapper_tag => 'li'
+                      %>
+                    </div>
+                  </li>
+
+                  <li class='previously_published_true'>
+                    <%= f.input :previously_published_title, label: 'What was the title?', input_html: { class: 'optional'} %>
+                  </li>
+
+                  <li class='previously_published_true'>
+                    <%= f.input :previously_published_year, label: 'What was the year it was published?', input_html: { class: 'optional'} %>
+                  </li>
+
+                  <li class='previously_published_true'>
+                    <%= f.input :previously_published_publisher, label: 'Who was the publisher?', input_html: { class: 'optional'} %>
+                  </li>
+
+                    <li>
+                        <h4>Scene Changes</h4>
+                        <div>
+                            <%= check_box_tag 'scene_changes' %> <%= label_tag 'scene_changes', 'All narrative breaks/scene changes are indicated with three asterisks (***).' %>
+                        </div>
+                        <div>
+                            Checking this box will instruct us to add a scene change indicator (a line or other graphic mark at the layout artist's discretion) to separate scenes in the book.
+                            Note: If you prefer your breaks to appear as blank space in the final book, please leave this unchecked and note as much in the "text needing special treatment" field below.
+                        </div>
+                    </li>
+
+                    <li>
+                        <h4>Does your book contain sub-chapters?<span class="required">*</span></h4>
+                        <%= f.collection_radio_buttons :has_sub_chapters, [[false, 'No'],[true, 'Yes, and all sub-section headers are indicated by increments of increasing font size']], :first, :last, :collection_wrapper_tag => 'ul', :item_wrapper_tag => 'li' %>
+                    </li>
+
+                    <li>
+                        <h4>Does your manuscript contain images?<span class="required">*</span></h4>
+                        <div>
+                            <ul class="gfield_checkbox">
+                            <%
+                                [
+                                    'No',
+                                    'Yes ‐ I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don\'t need to increase their size) have been uploaded to the Docs section of my teamroom.',
+                                    'Yes - I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don\'t need to increase their size) have been uploaded to a Dropbox folder available here:'
+                                ].each_with_index do | radio, index | %>
+                                <li><label><%= radio_button_tag :does_contain_images, index %> <strong><%= radio %></strong></label></li>
+                            <% end %>
+                            </ul>
+                        </div>
+                        <div>
+                            <p>If your manuscript contains images: Please insert the images into the manuscript so we have an idea of where you want them placed, size, positioning, etc. Note that due to the difference in dimensions between your proofread manuscript and the final product, we may not be able to replicate exactly.</p>
+                            <p>The images you insert in your manuscript are placeholders only - they will be replaced with the print-ready jpegs you provide. You MUST provide the print-ready jpegs in either the Docs section of your teamroom or Dropbox.</p>
+                            <p> Images must be jpegs and they must be 300 dpi and large enough height x width that we won't need to increase their size.</p>
+                        </div>
+                    </li>
+
+                    <li class="does_contain_images_1" style="display: none;">
+                        <h4>Link to Images in Docs Section of Teamroom<span>*</span></h4>
+                        <div>
+                            <%= text_field_tag "teamtrope_link" %>
+                        </div>
+                    </li>
+
+                    <li class="does_contain_images_2" style="display: none;">
+                        <h4>Link to Dropbox file containing images<span>*</span></h4>
+                        <div>
+                            <%= text_field_tag "dropbox_link" %>
+                        </div>
+                    </li>
+                    <li>
+                        <h4 >Imprint<span class="required">*</span></h4>
+                        <%= f.collection_radio_buttons :imprint_id, Imprint.all, :id, :name,
+                                                       :checked => 1,
+                                                       :collection_wrapper_tag => 'ul', :item_wrapper_tag => 'li' %>
+                        <div>IMPORTANT: If you have not discussed being part of a specific imprint with the imprint's Managing Director or Booktrope Management, please select "Booktrope Editions." </div>
+                    </li>
+                    <li>
+                      <h4>I have sections of text needing special treatment (optional)</h4>
+                        <div>
+                        <%= f.input :special_text_treatment,
+                                    label: false,
+                                    as: :text,
+                                    input_html: { class: %q[textarea medium], rows: 10, cols: 50 }
+                            %>
+                            <div class="charleft ginput_counter">0 of 1200 max characters</div>
+                        </div>
+
+                        <div>
+                            <p>Please include page/chapter numbers when possible.</p>
+                            <p>Examples include:</p>
+                            <ul>
+                                <li>A letter or newspaper article</li>
+                                <li>Text messages or anything that should be offset from the body text</li>
+                                <li>Any other special requests</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                      <h4>Additional Credits</h4>
+                        <div>
+                        <%= f.input :credit_request,
+                                    label: false,
+                                    as: :text,
+                                    input_html: { class: %q[textarea medium], rows: 5, cols: 30 }
+                            %>
+                        </div>
+
+                        <p>If you enlisted a photographer or cover model other than the cover designer, please list name and role so that they can be credited on the copyright page. This does NOT apply to stock photos.</p>
+                    </li>
+
+                    <li>
+                      <h4>Manuscript Word Count <span class="required">*</span></h4>
+                        <%= f.input :proofed_word_count, label: false, required: true %>
+                        <div>In Word: Go to File, Properties, click on the Statistics tab and enter the "Words:" count value. This will help us estimate and schedule your layout resource efficiently.</div>
+                    </li>
+
+                    <li>
+                      <h4>Target Marketing Launch Date <span class='required'>*</span></h4>
+
+                      <b>Do you have a Marketing Launch Date scheduled?</b>
+                      <ul>
+                        <li>
+                            <%= radio_button_tag 'have_target_market_date', 'yes', false %> Yes &nbsp;
+                            <%=
+                                f.input( :target_market_launch_date_display,
+                                         as: :fake,
+                                         label: false,
+                                         wrapper: false,
+                                         input_html: {
+                                                 id: 'target_market_launch_date_display',
+                                         },
+                                         placeholder: 'MM/DD/YYYY'
+                                         ) %><br>
+                            <%= f.input_field(:target_market_launch_date, as: :string, :style => 'display: none;') %>
+                            <span>(Please be sure to discuss this with your marketing manager prior to submitting.)<br></span>
+                        </li>
+                        <li>
+                            <%= radio_button_tag 'have_target_market_date', 'no', false %> No - We do not have a specific date in mind.
+                        </li>
+                      </ul>
+                      <br>
+                      <div class="row">
+                        <div class="col-md-6">
+                          Please note: Layout takes approximately 3-4 weeks. The date you select should be NO SOONER than
+                          5 weeks from today's date to include time for approval, final covers, and the Publication Fact
+                          Sheet.<br><br>
+                          To view a sample production timeline, please click <%= link_to 'here', 'https://teamtrope.com/docs/sample-timeline-production-through-publication/', :target => '_blank' %>.
+                          For more information on the difference between publication date and marketing launch date,
+                          please click <%= link_to 'here', 'https://teamtrope.com/2014/03/book-release-date-versus-marketing-launch-date/', :target => '_blank' %>.
+                        </div>
+                      </div>
+                    </li>
+                </ul>
+            </div>
+            <br>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'submit_proofread_submitted_task_id' %>
+            <%= f.submit "Submit", id: 'submit_proofed_manuscript_hidden', style: 'display: none;' %>
+        <% end %>
+
+      <br>
+      <%= render partial: "manuscripts/proofread_complete" %>
+      <br>
+
+      <button class="btn disabled" disabled id="proofread_complete_fake_submit_button" onclick="submitProofreadManuscriptForm();" >Submit</button>
+      <script>
+          $(function() {
+              // This attaches the datepicker to a "fake" input field with the MM/DD/YYYY format that users
+              // are familiar with, but updates a real hidden input field with the date format yyyy-mm-dd
+              // format that Rails wants.
+              $('#target_market_launch_date_display').datepicker({
+                  altField: '#project_target_market_launch_date',
+                  altFormat: 'yy-mm-dd',
+                  minDate: '+5w'
+              });
+
+              $('#target_market_launch_date_display').blur(function() {
+                  $('#submit_proofread').validate();
+              });
+          });
+
+          $('#submit_proofread').submit(function() {
+              // Reset the value in case they plug something in and then change their minds
+              if($('input[name=have_target_market_date]:checked').val() == 'no') {
+                  $('#project_target_market_launch_date').val('');
+              }
+          });
+      </script>
+    </div>
+  </div>
+</div>

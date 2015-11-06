@@ -190,54 +190,69 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def original_manuscript
+  def manuscript_common(version, activity, success, failure)
     @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
-
-    # Validate the file has been uploaded before moving forward
-    if ! @manuscript.original.nil?
-      @project.create_activity :submitted_original_manuscript, owner: current_user, parameters: {text: 'Uploaded the Original Manuscript', form_data: params[:project].to_s}
-      flash[:success] = 'Original Manuscript Uploaded'
+    if @manuscript.send(version)
+      @project.create_activity "submitted_#{version}_manuscript".to_sym,
+                               owner: current_user,
+                               parameters: {text: activity, form_data: params[:project].to_s}
+      flash[:success] = success
       update_current_task
-      ProjectMailer.original_manuscript_uploaded(@project, current_user)
+      ProjectMailer.send('manuscript_' + version, @project, current_user)
       redirect_to @project
     else
-      flash[:danger] = 'There was a problem Uploading your Original Manuscript, please review.'
+      flash[:danger] = failure
       render 'show'
     end
+  end
+
+  def original_manuscript
+    manuscript_common(
+      'original',
+      'Uploaded the Original Manuscript',
+      'Original Manuscript Uploaded',
+      'There was a problem uploading your Original Manuscript, please review.'
+    )
+  end
+
+  def first_pass_edit
+    manuscript_common(
+      'first_pass_edit',
+      'Uploaded the First Pass Edit Manuscript',
+      'First Pass Edit Manuscript Uploaded',
+      'There was a problem uploading your First Pass Edit Manuscript, please review.'
+    )
   end
 
   def edited_manuscript
-    @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
-
-    if ! @manuscript.edited.nil? && @project.update(update_project_params)
-      @project.create_activity :submitted_edited_manuscript, owner: current_user, parameters: {text: 'Uploaded the Edited Manuscript', form_data: params[:project].to_s}
-      update_current_task
-      flash[:success] = 'Edited Manuscript Uploaded'
-      ProjectMailer.submit_edited_manuscript(@project, current_user)
-      redirect_to @project
-    else
-      flash[:danger] = 'There was a problem Uploading your Edited Manuscript, please review.'
-      render 'show'
-    end
+    manuscript_common(
+      'edited',
+      'Uploaded the Edited Manuscript',
+      'Edited Manuscript Uploaded',
+      'There was a problem uploading your Edited Manuscript, please review.'
+    )
   end
 
   def proofed_manuscript
-    @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
+    manuscript_common(
+      'proofed',
+      'Uploaded the Proofed Manuscript',
+      'Proofed Manuscript Uploaded',
+      'There was a problem uploading your Proofed Manuscript, please review.'
+    )
+  end
 
-    if @project.update(update_project_params)
-      @project.create_activity :submitted_proofed_manuscript, owner: current_user, parameters: {text: 'Uploaded the Proofed Manuscript', form_data: params[:project].to_s}
-      update_current_task
-      flash[:success] = "Proofed Manuscript Uploaded. WAIT! Before you celebrate, you are still on the clock for the project and we won't be working on your book until you complete the next step.
+  def proofread_complete_manuscript
+    manuscript_common(
+      'proofread_complete',
+      'Uploaded the Proofread Complete Manuscript',
+      "Proofed Manuscript Uploaded. WAIT! Before you celebrate, you are still on the clock for the project and we won't be working on your book until you complete the next step.
       To do this:
         1) Refresh the  project page (see link below),
         2) Open the Choose Style tab in the Design Layout phase of the project.
-        3) Submit Choose Style form. And that's it!"
-      ProjectMailer.proofed_manuscript(@project, current_user, params)
-      redirect_to @project
-    else
-      flash[:danger] = 'There was a problem Uploading your Proofed Manuscript, please review.'
-      render 'show'
-    end
+        3) Submit Choose Style form. And that's it!",
+      'There was a problem uploading your Proofread Complete Manuscript, please review.'
+    )
   end
 
   def layout_upload
@@ -812,16 +827,24 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def download_original_manuscript
+  def download_original
     redirect_to @project.manuscript.original.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
-    def download_edited_manuscript
+  def download_first_pass_edit
+    redirect_to @project.manuscript.first_pass_edit.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_edited
     redirect_to @project.manuscript.edited.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
-    def download_proofed_manuscript
+  def download_proofed
     redirect_to @project.manuscript.proofed.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_proofread_complete
+    redirect_to @project.manuscript.proofread_complete.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
   def download_published_file_mobi
@@ -836,7 +859,7 @@ class ProjectsController < ApplicationController
     redirect_to @project.published_file.pdf.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
-  def download_media_kit
+  def download_media_kit_document
     redirect_to @project.media_kit.document.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
@@ -947,7 +970,7 @@ class ProjectsController < ApplicationController
       :layout_attributes => [:id, :layout_style_choice, :page_header_display_name, :use_pen_name_on_title, :pen_name, :legal_name,
                              :use_pen_name_for_copyright, :exact_name_on_copyright, :layout_upload, :layout_notes,
                              :layout_approved, :layout_approved_date, :final_page_count, :trim_size, :trim_size_w, :trim_size_h],
-      :manuscript_attributes => [:id, :original, :edited, :proofed],
+      :manuscript_attributes => [:id, :original, :first_pass_edit, :edited, :proofed, :proofread_complete],
       :marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information , :other_type, :other_service_provider],
       :media_kits_attributes => [:document],
       :price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion, :sites => []],

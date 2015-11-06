@@ -2,5 +2,5 @@
 
 <% if( ! @project.media_kit.document_file_name.nil? ) %>
     <p>Download: <%= link_to(@project.media_kit.document_file_name,
-    url_for(controller: 'projects', action: 'download_media_kit', id: @project, only_path: false)) %></p>
+    url_for(controller: 'projects', action: 'download_media_kit_document', id: @project, only_path: false)) %></p>
 <% end %>

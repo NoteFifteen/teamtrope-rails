@@ -1,0 +1,10 @@
+<%=
+   render partial: "shared/amazon_s3_upload", locals: {
+   label: "First Pass Edit <strong>(.doc or .docx only)</strong>",
+   required: true,
+   callback_url: project_manuscript_url(@project),
+   base: "first_pass_edit",
+   object: @manuscript,
+   filename_suffixes: ['doc', 'docx']
+   }
+%>

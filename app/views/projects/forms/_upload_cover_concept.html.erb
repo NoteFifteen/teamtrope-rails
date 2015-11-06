@@ -6,27 +6,9 @@
         <p>When you are ready for Booktrope management to review your cover, upload it here. We will review and approve or
           give notes on necessary changes. If your design is not approved, you will have a chance to upload a revised cover
           concept.</p>
-
         <br>
-        <div>
-          <label>Cover Concept Image (.jpg) <span class="required">*</span></label>
-          <%= s3_uploader_form callback_url: project_cover_concepts_url(@project),
-                               id: "cover_concept_image_s3_uploader",
-                               acl: "private",
-                               callback_param: "cover_concept_image[direct_upload_url]",
-                               expiration: 24.hours.from_now.utc.iso8601,
-                               max_file_size: 100.megabytes do %>
-              <%= file_field_tag :file, multiple: false %>
-          <% end %>
-          <div id="cover_concept_image_uploads_container"></div>
-          <script id="template-upload" type="text/x-tmpl">
-                  <div id="upload_{%=o.unique_id%}" class="upload">
-                    <h5>{%=o.name%}</h5>
-                    <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
-                  </div>
-          </script>
-          <p>Please select an image file (.jpg) of your cover concept for approval.</p>
-        </div>
+
+        <%= render partial: "cover_concepts/cover_concept_image" %>
 
         <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'cover_concept_upload', id: @project), html: {id: "cover_concept_upload", class: "cover_concept_upload"}  do | f | %>
             <%= f.error_notification %>
@@ -68,7 +50,7 @@
             <% end %>
 
             <div>
-              <%= f.submit "Submit", disabled: '', class: 'btn disabled', id: 'cover_concept_image_submit_button' %>
+              <%= f.submit "Submit", disabled: '', class: 'btn disabled', id: 'cover_concept_submit_button' %>
             </div>
         <% end %>
       </div>

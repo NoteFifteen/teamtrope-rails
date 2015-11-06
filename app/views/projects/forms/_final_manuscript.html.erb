@@ -1,4 +1,3 @@
-
 <!-- Final Manuscript -->
 <div class="container">
   <div class="row">
@@ -8,43 +7,11 @@
 
         <br>
 
-        <div>
-          <label>Final .PDF <span class="required">*</span></label>
-          <%= s3_uploader_form callback_url: project_final_manuscript_url(@project),
-                   id: "final_manuscript_pdf_s3_uploader",
-                   acl: "private",
-                   callback_param: "final_manuscript_pdf[direct_upload_url]",
-                   expiration: 24.hours.from_now.utc.iso8601,
-                   max_file_size: 100.megabytes do %>
-                  <%= file_field_tag :file, multiple: false %>
-          <% end %>
-          <div id="final_manuscript_pdf_uploads_container"></div>
-          <script id="template-upload" type="text/x-tmpl">
-            <div id="upload_{%=o.unique_id%}" class="upload">
-              <h5>{%=o.name%}</h5>
-              <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
-            </div>
-          </script>
-        </div>
+        <%= render partial: "final_manuscripts/final_manuscript_pdf" %>
         <br>
-        <div>
-          <label>Final .DOC</label>
-          <%= s3_uploader_form callback_url: project_final_manuscript_url(@project),
-                   id: "final_manuscript_doc_s3_uploader",
-                   acl: "private",
-                   callback_param: "final_manuscript_doc[direct_upload_url]",
-                   expiration: 24.hours.from_now.utc.iso8601,
-                   max_file_size: 100.megabytes do %>
-                  <%= file_field_tag :file, multiple: false %>
-          <% end %>
-          <div id="final_manuscript_doc_uploads_container"></div>
-          <script id="template-upload" type="text/x-tmpl">
-            <div id="upload_{%=o.unique_id%}" class="upload">
-              <h5>{%=o.name%}</h5>
-              <div class="progress progress-striped active"><div class="bar" style="width: 0%"></div></div>
-            </div>
-          </script>
-        </div>
+
+        <%= render partial: "final_manuscripts/final_manuscript_doc" %>
+        <br>
 
         <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'final_manuscript', id: @project),
             html: {id: "final_manuscript"} do | f |

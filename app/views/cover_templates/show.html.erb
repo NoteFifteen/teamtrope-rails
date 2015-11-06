@@ -68,7 +68,7 @@
     <tr>
       <td>Font License</td>
       <% if ! @cover_template.font_license_file_name.nil? %>
-         <td><%= link_to @cover_template.font_license_file_name, url_for(controller: 'projects', action: 'download_font_file, id: @cover_template.project, only_path: false) %></td>
+         <td><%= link_to @cover_template.font_license_file_name, url_for(controller: 'projects', action: 'download_font_file', id: @cover_template.project, only_path: false) %></td>
       <% else %>
          <td> - </td>
       <% end %>

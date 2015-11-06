@@ -1,5 +1,0 @@
-<p>Edited manuscript for <%= @project.title %> has been submitted.</p>
-
-<% if( ! @project.manuscript.edited_file_name.nil? ) %>
-    <p>Download: <%= link_to(@project.manuscript.edited_file_name, url_for(controller: 'projects', action: 'download_edited_manuscript', id: @project, only_path: false)) %></p>
-<% end %>
