@@ -15,7 +15,7 @@ require 'pp'
         response = {
           sales: {
             title: sales_result['title'],
-            data: sales_result['crawl'].map{ |crawl_data| [Time.parse(crawl_data['crawlDate']['iso']).utc.to_i * 1000, crawl_data['dailySales']] }.inspect,
+            data: sales_result['crawl'].map{ |crawl_data| [Time.parse(crawl_data['crawlDate']['iso']).utc.to_i * 1000, crawl_data['dailySales']] }.reject!{ | crawl_data | crawl_data[1] == nil }.inspect,
             kdp_unlimited: sales_result['crawl'].map{ |crawl_data| [Time.parse(crawl_data['crawlDate']['iso']).utc.to_i * 1000, crawl_data['dailyKdpUnlimited']] }.reject!{ | crawl_data | crawl_data[1] == nil }.inspect,
             kpd_free_promo: sales_result['crawl'].map{ |crawl_data| [Time.parse(crawl_data['crawlDate']['iso']).utc.to_i * 1000, crawl_data['dailyFreeUnitsPromo']] }.reject!{ | crawl_data | crawl_data[1] == nil }.inspect
           },
