@@ -1,4 +1,4 @@
-<h4>Publication Fact Sheet</h4> 
+<h4>Publication Fact Sheet</h4>
 Final Title: <%= @project.final_title %> <br/>
 Series Name: <%= publication_fact_sheet.series_name %><br/>
 Series Number: <%= publication_fact_sheet.series_number %><br/>
@@ -12,5 +12,8 @@ BISAC Code 1: <%= publication_fact_sheet.bisac_code_one %><br/>
 BISAC Code 2: <%= publication_fact_sheet.bisac_code_two %><br/>
 BISAC Code 3: <%= publication_fact_sheet.bisac_code_three %><br/>
 Search Terms: <%= publication_fact_sheet.search_terms %><br/>
-Age Range: <%= publication_fact_sheet.age_range %><br/>
+Age Range: <%= PublicationFactSheet::AGE_RANGES.to_h[publication_fact_sheet.try(:age_range)] %><br/>
+<% unless publication_fact_sheet.starting_grade_index.nil? %>
+Starting Grade Level: <%= publication_fact_sheet.starting_grade_level %></br>
+<% end %>
 Cover Type: <%= publication_fact_sheet.paperback_cover_type %><br/>

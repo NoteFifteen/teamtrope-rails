@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016195332) do
+ActiveRecord::Schema.define(version: 20151021073353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -682,6 +682,10 @@ ActiveRecord::Schema.define(version: 20151016195332) do
     t.string   "paperback_cover_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "bisac_code_name_one"
+    t.string   "bisac_code_name_two"
+    t.string   "bisac_code_name_three"
+    t.integer  "starting_grade_index"
   end
 
   add_index "publication_fact_sheets", ["project_id"], name: "index_publication_fact_sheets_on_project_id", using: :btree
