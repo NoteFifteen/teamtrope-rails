@@ -39,7 +39,7 @@ class NewManuscriptTabs < ActiveRecord::Migration
     add_column :manuscripts, :proofed_file_direct_upload_url, :string
     add_column :manuscripts, :proofed_file_processed,         :boolean
 
-    # new columns for first_pass_edit
+    # # new columns for first_pass_edit
     add_column :manuscripts, :first_pass_edit_file_name,              :string
     add_column :manuscripts, :first_pass_edit_file_size,              :integer
     add_column :manuscripts, :first_pass_edit_content_type,           :string
@@ -57,33 +57,33 @@ class NewManuscriptTabs < ActiveRecord::Migration
       end
     end
 
-    # TTR-86: "First Pass Edit" goes after "Original Manuscript" and before "Edited Manuscript"
-    reversible do |direction|
-      direction.up do
-        # task-fu
-        fpe_task = Task.new(
-          name: 'First Pass Edit',
-          tab_text: 'First Pass Edit',
-          partial: 'first_pass_edit',
-          icon: 'icon-bookmark',
-          next_id: edited_task.id,
-          team_only: true,
-          workflow: edited_task.workflow,
-          unlocked: original_task.unlocked
-        )
-        fpe_task.save
-        fpe_task.performers << editor_role
-        original_task.unlocked_tasks.create!(unlocked_task: fpe_task)
+    # # TTR-86: "First Pass Edit" goes after "Original Manuscript" and before "Edited Manuscript"
+    # reversible do |direction|
+    #   direction.up do
+    #     # task-fu
+    #     fpe_task = Task.new(
+    #       name: 'First Pass Edit',
+    #       tab_text: 'First Pass Edit',
+    #       partial: 'first_pass_edit',
+    #       icon: 'icon-bookmark',
+    #       next_id: edited_task.id,
+    #       team_only: true,
+    #       workflow: edited_task.workflow,
+    #       unlocked: original_task.unlocked
+    #     )
+    #     fpe_task.save
+    #     fpe_task.performers << editor_role
+    #     original_task.unlocked_tasks.create!(unlocked_task: fpe_task)
 
-        # tab-fu
-#        original_tab.make_new_tab_after(fpe_task)
-      end
+    #     # tab-fu
+    #     original_tab.make_new_tab_after(fpe_task)
+    #   end
 
-      direction.down do
-        fpe_task = Task.find_by_name('First Pass Edit')
-        fpe_task.destroy if fpe_task  # before_destroy takes care of all cleanup
-      end
-    end
+    #   direction.down do
+    #     fpe_task = Task.find_by_name('First Pass Edit')
+    #     fpe_task.destroy if fpe_task  # before_destroy takes care of all cleanup
+    #   end
+    # end
 
     # TTR-87: "Proofed Manuscript" goes after "Edited Manuscript" and before "Proofread Complete"
     reversible do |direction|

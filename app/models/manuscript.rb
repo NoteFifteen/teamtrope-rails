@@ -36,7 +36,8 @@ class Manuscript < ActiveRecord::Base
   before_save :set_upload_attributes
   after_save :transfer_and_cleanup
 
-  MANUSCRIPT_VERSIONS = ['original', 'first_pass_edit', 'edited', 'proofed', 'proofread_complete']
+#  MANUSCRIPT_VERSIONS = ['original', 'first_pass_edit', 'edited', 'proofed', 'proofread_complete']
+  MANUSCRIPT_VERSIONS = ['original', 'edited', 'proofed', 'proofread_complete']
 
   # The following methods are to unescape the direct upload url path
   MANUSCRIPT_VERSIONS.each do |version|
