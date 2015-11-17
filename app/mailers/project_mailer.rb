@@ -686,7 +686,7 @@ class ProjectMailer < ActionMailer::Base
 
     user_subject = "KDP Select Enrollment Submitted for #{project.title}"
 
-    send_email_message('kdp_select_enrollment', tokens, get_project_recipient_list(@project, roles: [:none]), user_subject)
+    send_email_message('kdp_select_enrollment', tokens, get_project_recipient_list(@project, send_submitter: true, roles: [:author, :book_manager]), user_subject)
     send_email_message('kdp_select_enrollment', tokens, admin_kdp_select_enrollment_list, user_subject)
   end
 
@@ -725,7 +725,7 @@ class ProjectMailer < ActionMailer::Base
     user_subject = "KDP Select Update from #{current_user.name} for #{project.title}"
     admin_subject = "New " + user_subject
 
-    send_email_message('kdp_select_update', tokens, get_project_recipient_list(@project, roles: [:none]), user_subject)
+    send_email_message('kdp_select_update', tokens, get_project_recipient_list(@project, send_submitter: true, roles: [:author, :book_manager]), user_subject)
     send_email_message('kdp_select_update', tokens, admin_kdp_select_update_list, user_subject)
   end
 
