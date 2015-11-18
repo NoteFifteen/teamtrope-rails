@@ -21,7 +21,8 @@
             </li>
 
             <li>
-              <%= f.input :final_title, label: 'Final Title', required: true %>
+              <label>Final Title<span class="required">*</span></label>
+              <%= f.input :final_title, label: false, required: true %>
               <div class="gfield_description">This is the final agreed upon official book title. </div>
             </li>
 
@@ -30,12 +31,13 @@
               f.object.publication_fact_sheet, id: @project.publication_fact_sheet do | pfs | %>
 
                 <li>
-                  <%= pfs.input :author_name, label: 'Author Name', required: true %>
+                  <label>Author Name<span class="required">*</span></label>
+                  <%= pfs.input :author_name, label: false, required: true %>
                   <div><!-- gfield_description --> This is the name of the Author exactly as it appears on the cover and title page. If multiple Authors, please separate with a comma and indicate roles (e.g. "Jane Doe (Author), Joe Blow (Illustrator)"). </div>
                 </li>
 
                 <li>
-                  <%= pfs.input :series_name, label: 'Series name' %>
+                  <%= pfs.input :series_name, label: 'Series Name' %>
                   <div><!-- gfield_description -->If this book is part of a series, please enter the series name EXACTLY as you want it displayed on Amazon, Barnes and Noble, etc. Example: The River Valley Collection</div>
                 </li>
 
@@ -49,7 +51,8 @@
                 </li>
 
                 <li>
-                  <%= pfs.input :description, label: 'Back Blurb / Book Description',
+                  <label>Back Blurb / Book Description<span class="required">*</span></label>
+                  <%= pfs.input :description, label: false,
                         required: true,
                         input_html: { rows: 10, cols: 50 }
                    %>
@@ -65,7 +68,8 @@
                 </li>
 
                 <li>
-                  <%= pfs.input :author_bio, label: 'Author Bio',
+                  <label>Author Bio<span class="required">*</span></label>
+                  <%= pfs.input :author_bio, label: false,
                         required: true,
                         input_html: { rows: 10, cols: 50 } %>
                   <div><!-- gfield_description -->Be sure to include: author name, writing experience, and any work experience that pertains to the book (like if you wrote a diet book and you’re a certified nutritionist). Also, always include where they can find more information about the author (website URL).</div>
@@ -78,7 +82,8 @@
                 </li>
 
                 <li>
-                  <%= pfs.input :one_line_blurb, required: true %>
+                  <label>One Line Blurb<span class="required">*</span></label>
+                  <%= pfs.input :one_line_blurb, required: true, label: false %>
                   <div><!-- gfield_description -->Short blurb for inclusion in "Other Great Reads" at the back of similar books. Short blurb for inclusion in “Other Great Reads” at the back of similar Booktrope books - This is a
                   short catchy phrase to communicate the flavor of the book. We include it at the end of other, similar
                   books. Here is an example:
@@ -91,7 +96,8 @@
                 </li>
 
                 <li>
-                  <%= pfs.input :ebook_price, label: 'ebook Price', required: true %>
+                  <label>eBook Price<span class="required">*</span></label>
+                  <%= pfs.input :ebook_price, label: false, required: true %>
                   <div class="gfield_description">In US dollars. Fiction ebooks are recommended to be priced between $2.99 - $4.99. For exceptions, please talk to your book manager team leader.</div>
                 </li>
 
@@ -105,15 +111,31 @@
                 </li>
 
                 <li>
-                  <%= pfs.input :bisac_code_one, label: 'BISAC Code One', required: true %>
+                  <label>BISAC Code One<span class="required">*</span></label>
+                  <%= pfs.input :bisac_code_one, label: false, required: true, placeholder: "ex: ANT000000" %>
                 </li>
 
                 <li>
-                  <%= pfs.input :bisac_code_two, label: 'BISAC Code Two' %>
+                  <label>BISAC Code Name One<span class="required">*</span></label>
+                  <%= pfs.input :bisac_code_name_one, label: false, required: true, placeholder: "ex: ANTIQUES & COLLECTIBLES / General" %>
                 </li>
 
                 <li>
-                  <%= pfs.input :bisac_code_three, label: 'BISAC Code Three' %>
+                  <%= pfs.input :bisac_code_two, label: 'BISAC Code Two', placeholder: "ex: ANT000000" %>
+                </li>
+
+                <li>
+                  <label>BISAC Code Name Two</label>
+                  <%= pfs.input :bisac_code_name_two, label: false, placeholder: "ex: ANTIQUES & COLLECTIBLES / General" %>
+                </li>
+
+                <li>
+                  <%= pfs.input :bisac_code_three, label: 'BISAC Code Three', placeholder: "ex: ANT000000" %>
+                </li>
+
+                <li>
+                  <label>BISAC Code Name Three</label>
+                  <%= pfs.input :bisac_code_name_three, label: false, placeholder: "ex: ANTIQUES & COLLECTIBLES / General" %>
                 </li>
 
                 <li>
@@ -130,7 +152,7 @@
                 </li>
 
                 <li>
-                  <%= pfs.label :age_range, 'What age range is most appropriate for your book?<span>*</span>'.html_safe %>
+                  <label>What age range is most appropriate for your book?<span class="required">*</span></label>
                   <%= pfs.collection_radio_buttons :age_range, PublicationFactSheet::AGE_RANGES,
                          :first, :last, required: true,
                          collection_wrapper_tag: 'ul',
@@ -145,7 +167,7 @@
                 <%= pfs.input :starting_grade_index, as: :hidden %>
 
                 <li>
-                  <%= pfs.label :paperback_cover_type, 'Do you want your paperback cover to be matte or glossy?<span>*</span>'.html_safe %>
+                  <label>Do you want your paperback cover to be matte or glossy?<span class="required">*</span></label>
                   <%= pfs.collection_radio_buttons :paperback_cover_type, PublicationFactSheet::COVER_TYPES,
                         :first, :last, required: true,
                         collection_wrapper_tag: 'ul',

@@ -367,6 +367,13 @@ jQuery ->
     }
   })
 
+# Custom ASIN Format Validator
+jQuery.validator.addMethod('bisacFormatValidator', (value, element, params) ->
+  match = value.match(/([A-z]{3}[0-9]{6})/gi)
+  return ((value.length == 9 && match != null) || value == '')
+, jQuery.validator.format('Bisac must be 9 characters long and follow the foramt: ABC123456.')
+)
+
 jQuery ->
   $("#publication_fact_sheet").validate({
     rules: {
@@ -382,6 +389,16 @@ jQuery ->
       'project[publication_fact_sheet_attributes][one_line_blurb]':{
         required: true,
         maxlength: 300
+      },
+      'project[publication_fact_sheet_attributes][bisac_code_one]': {
+        required: true,
+        bisacFormatValidator: true
+      },
+      'project[publication_fact_sheet_attributes][bisac_code_two]': {
+        bisacFormatValidator: true
+      },
+      'project[publication_fact_sheet_attributes][bisac_code_three]': {
+        bisacFormatValidator: true
       }
     }
   })
