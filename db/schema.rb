@@ -682,6 +682,7 @@ ActiveRecord::Schema.define(version: 20151021073353) do
     t.string   "paperback_cover_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "starting_grade_index"
     t.string   "bisac_code_name_one"
     t.string   "bisac_code_name_two"
     t.string   "bisac_code_name_three"
