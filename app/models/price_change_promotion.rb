@@ -15,7 +15,6 @@ class PriceChangePromotion < ActiveRecord::Base
 
   SITES =
   [
-    ['midlist', 'The Midlist (Only submit for Free Feature, not the $100 ad) - https://www.themidlist.com/submit'],
     ['bargain_booksy', 'Bargain Booksy (only submit for free editorial consideration, not the $50 guarantee) - http://bargainbooksy.com/for-authors/']
   ]
 
