@@ -58,6 +58,8 @@ gem 'bcrypt-ruby', '3.1.2'
 
 gem 'parse-ruby-client', '~> 0.3.0'
 
+gem 'amazon-ecs', '2.3.1'
+
 gem 'humanize', '1.1.0'
 
 # Handle attachments & store them in S3

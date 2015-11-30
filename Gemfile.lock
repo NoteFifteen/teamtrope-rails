@@ -55,6 +55,9 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     addressable (2.3.7)
+    amazon-ecs (2.3.1)
+      nokogiri (~> 1.4)
+      ruby-hmac (~> 0.3)
     arel (5.0.1.20140414130214)
     autoprefixer-rails (5.1.7)
       execjs
@@ -245,6 +248,7 @@ GEM
     resque-status (0.5.0)
       resque (~> 1.19)
     ruby-graphviz (1.0.9)
+    ruby-hmac (0.4.0)
     s3_direct_upload (0.1.6)
       coffee-rails (>= 3.2.1)
       jquery-fileupload-rails (~> 0.4.1)
@@ -307,6 +311,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  amazon-ecs (= 2.3.1)
   aws-sdk
   bcrypt-ruby (= 3.1.2)
   bootstrap-sass (~> 3.3.3)
@@ -353,3 +358,6 @@ DEPENDENCIES
   unicorn
   will_paginate (= 3.0.7)
   wisper
+
+BUNDLED WITH
+   1.10.6

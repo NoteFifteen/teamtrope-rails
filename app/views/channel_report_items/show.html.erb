@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Channel report:</strong>
+  <%= @channel_report_item.channel_report %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @channel_report_item.title %>
+</p>
+
+<p>
+  <strong>Kdp select:</strong>
+  <%= @channel_report_item.kdp_select %>
+</p>
+
+<p>
+  <strong>Amazon:</strong>
+  <%= @channel_report_item.amazon %>
+</p>
+
+<p>
+  <strong>Apple:</strong>
+  <%= @channel_report_item.apple %>
+</p>
+
+<p>
+  <strong>Nook:</strong>
+  <%= @channel_report_item.nook %>
+</p>
+
+<p>
+  <strong>Amazon link:</strong>
+  <%= @channel_report_item.amazon_link %>
+</p>
+
+<p>
+  <strong>Apple link:</strong>
+  <%= @channel_report_item.apple_link %>
+</p>
+
+<p>
+  <strong>Nook link:</strong>
+  <%= @channel_report_item.nook_link %>
+</p>
+
+<%= link_to 'Edit', edit_channel_report_item_path(@channel_report_item) %> |
+<%= link_to 'Back', channel_report_items_path %>

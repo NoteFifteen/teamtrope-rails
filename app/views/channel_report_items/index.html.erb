@@ -1,0 +1,41 @@
+<h1>Listing channel_report_items</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Channel report</th>
+      <th>Title</th>
+      <th>Kdp select</th>
+      <th>Amazon</th>
+      <th>Apple</th>
+      <th>Nook</th>
+      <th>Amazon link</th>
+      <th>Apple link</th>
+      <th>Nook link</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @channel_report_items.each do |channel_report_item| %>
+      <tr>
+        <td><%= channel_report_item.channel_report %></td>
+        <td><%= channel_report_item.title %></td>
+        <td><%= channel_report_item.kdp_select %></td>
+        <td><%= channel_report_item.amazon %></td>
+        <td><%= channel_report_item.apple %></td>
+        <td><%= channel_report_item.nook %></td>
+        <td><%= channel_report_item.amazon_link %></td>
+        <td><%= channel_report_item.apple_link %></td>
+        <td><%= channel_report_item.nook_link %></td>
+        <td><%= link_to 'Show', channel_report_item %></td>
+        <td><%= link_to 'Edit', edit_channel_report_item_path(channel_report_item) %></td>
+        <td><%= link_to 'Destroy', channel_report_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Channel report item', new_channel_report_item_path %>

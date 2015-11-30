@@ -1,0 +1,19 @@
+<%= simple_form_for(@channel_report_item) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :channel_report %>
+    <%= f.input :title %>
+    <%= f.input :kdp_select %>
+    <%= f.input :amazon %>
+    <%= f.input :apple %>
+    <%= f.input :nook %>
+    <%= f.input :amazon_link %>
+    <%= f.input :apple_link %>
+    <%= f.input :nook_link %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

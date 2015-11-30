@@ -128,6 +128,8 @@ Rails.application.routes.draw do
   resources :audit_team_membership_removals
   resources :blog_tours
   resources :bookbub_submissions
+　resources :channel_report_items
+　resources :channel_reports
   resources :control_numbers
   resources :cover_concepts
   resources :cover_templates

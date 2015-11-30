@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  channel_report_id: 
+  title: MyString
+  kdp_select: 
+  amazon: 
+  apple: 
+  nook: 
+  amazon_link: MyString
+  apple_link: MyString
+  nook_link: MyString
+
+two:
+  channel_report_id: 
+  title: MyString
+  kdp_select: 
+  amazon: 
+  apple: 
+  nook: 
+  amazon_link: MyString
+  apple_link: MyString
+  nook_link: MyString

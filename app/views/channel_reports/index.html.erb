@@ -1,0 +1,25 @@
+<h1>Channel Reports</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Scan Date</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @channel_reports.each do |channel_report| %>
+      <tr>
+        <td><%= channel_report.scan_date %></td>
+        <td><%= link_to 'Show', channel_report %></td>
+        <td><%= link_to 'Edit', edit_channel_report_path(channel_report) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Channel report', new_channel_report_path %>

@@ -29,6 +29,31 @@ module Booktrope
       end
     end
 
+    def ParseWrapper.get_books(options = {})
+      ParseWrapper.request do
+        skip_by = 1000
+        skip = 0
+        done = false
+        books = []
+
+        options[:exists] = [] if options[:exists].nil?
+        while !done
+          response = Parse::Query.new("Book").tap do | q |
+            options[:exists].each do | field |
+              q.exists(field)
+            end
+            q.count = 1
+            q.limit = skip_by
+            q.skip = skip
+          end.get
+          books.concat response["results"]
+          skip += skip_by
+          done = true if skip >= response["count"]
+        end
+        books
+      end
+    end
+
     def ParseWrapper.get_queued_items(book)
       ParseWrapper.request do
         Parse::Query.new(PriceChangeQueue).tap do | q |
