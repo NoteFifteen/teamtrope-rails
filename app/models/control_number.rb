@@ -6,6 +6,14 @@ class ControlNumber < ActiveRecord::Base
 
   validates_uniqueness_of :apple_id, :asin, :bnid, :epub_isbn, :encore_asin, :hardback_isbn, :paperback_isbn, :parse_id, :allow_nil => true
 
+  def bnid=(bnid)
+    if bnid.nil? || bnid.length == 0
+      super(nil)
+    else
+      super(bnid)
+    end
+  end
+
   def epub_isbn=(isbn)
     if isbn.nil? || isbn.length == 0
       super(nil)
