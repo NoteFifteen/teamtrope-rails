@@ -122,14 +122,15 @@ Rails.application.routes.draw do
 
   match 'visitors', to: 'static_pages#visitors', via: 'get'
 
+  match 'kdp-select-exception-report', to: 'channel_reports#most_resent_report', via: 'get'
 
   resources :approve_blurbs
   resources :artwork_rights_requests
   resources :audit_team_membership_removals
   resources :blog_tours
   resources :bookbub_submissions
-　resources :channel_report_items
-　resources :channel_reports
+  resources :channel_report_items
+  resources :channel_reports
   resources :control_numbers
   resources :cover_concepts
   resources :cover_templates

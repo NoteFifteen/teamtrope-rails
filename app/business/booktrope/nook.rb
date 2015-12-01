@@ -53,6 +53,7 @@ module Booktrope
             when Net::HTTPMovedPermanently, Net::HTTPOK
               book_wrapper = $book_hash[wrapper[:bnid].strip]
               book_wrapper[:status] = true
+              book_wrapper[:location] = "http://barnesandnoble.com/s/#{wrapper[:bnid].strip}"
               #puts "On Sale"
             #not on sale
             when Net::HTTPFound

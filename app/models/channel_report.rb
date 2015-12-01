@@ -32,6 +32,16 @@ class ChannelReport < ActiveRecord::Base
     end
   end
 
+  def mark_kdp_books(kdp_books)
+    kdp_books.each do | kdp_book |
+      next if kdp_book.control_number.nil?
+      if @report_hash.has_key? kdp_book.control_number.parse_id
+        report_item = @report_hash[kdp_book.control_number.parse_id]
+        report_item.update_attributes(kdp_select: true)
+      end
+    end
+  end
+
   def mark_books_for_sale_on_channel(result_hash, channel)
     result_hash.each do | key, book_wrapper |
       if @report_hash.has_key? book_wrapper[:book]['objectId']
@@ -42,7 +52,7 @@ class ChannelReport < ActiveRecord::Base
         when :apple
           report_item.update_attributes(apple: book_wrapper[:status])
         when :nook
-          report_item.update_attributes(nook: book_wrapper[:status])
+          report_item.update_attributes(nook: book_wrapper[:status], nook_link: book_wrapper[:location])
         end
       end
     end

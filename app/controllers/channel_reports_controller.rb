@@ -10,6 +10,12 @@ class ChannelReportsController < ApplicationController
     respond_with(@channel_reports)
   end
 
+  # get the most recently ran report and display it.
+  def most_resent_report
+    @channel_report = ChannelReport.order(scan_date: :desc).first
+    respond_with(@channel_report)
+  end
+
   def show
     respond_with(@channel_report)
   end
