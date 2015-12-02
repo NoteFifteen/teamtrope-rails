@@ -90,8 +90,8 @@ class Project < ActiveRecord::Base
   }
 
   BOOK_TYPES = [
-    ['ebook Only', 'ebook_only'],
-    ['ebook and Print', 'ebook_and_print']
+    ['ebook only', 'ebook_only'],
+    ['ebook and print', 'ebook_and_print']
   ]
 
   # Not an actual column, but used in the ProjectsController
