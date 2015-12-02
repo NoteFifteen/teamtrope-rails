@@ -89,6 +89,11 @@ class Project < ActiveRecord::Base
     .where("current_tasks.task_id = ?", Task.where(name: task_name).first.try(:id))
   }
 
+  BOOK_TYPES = [
+    ['ebook only', 'ebook_only'],
+    ['ebook and print', 'ebook_and_print']
+  ]
+
   # Not an actual column, but used in the ProjectsController
   attr_accessor :blurb_approval_decision
 

@@ -548,6 +548,9 @@ jQuery ->
       checklist_0: {
         checklistValidator: ["input.proofread_manuscript_checklist"]
       },
+      'project[book_type]': {
+        required: true
+      },
       'project[has_sub_chapters]': {
         required: true
       },

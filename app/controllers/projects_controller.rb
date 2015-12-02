@@ -928,7 +928,7 @@ class ProjectsController < ApplicationController
   def update_project_params
     params.require(:project).permit(:id, :final_title, :title, :synopsis, :stock_image_request_link,
       :previously_published, :previously_published_title, :previously_published_year, :previously_published_publisher,
-      :credit_request, :proofed_word_count, :teamroom_link,
+      :credit_request, :book_type, :proofed_word_count, :teamroom_link,
       :publication_date, :target_market_launch_date, :special_text_treatment, :has_sub_chapters, :has_index,
       :non_standard_size, :has_internal_illustrations, :color_interior, :childrens_book,
       :edit_complete_date, :imprint_id,

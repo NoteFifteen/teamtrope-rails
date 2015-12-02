@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021073353) do
+ActiveRecord::Schema.define(version: 20151202061353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,29 @@ ActiveRecord::Schema.define(version: 20151021073353) do
   end
 
   add_index "box_credentials", ["anti_forgery_token"], name: "index_box_credentials_on_anti_forgery_token", unique: true, using: :btree
+
+  create_table "channel_report_items", force: true do |t|
+    t.integer  "channel_report_id"
+    t.string   "title"
+    t.string   "parse_id"
+    t.boolean  "kdp_select",        default: false
+    t.boolean  "amazon",            default: false
+    t.boolean  "apple",             default: false
+    t.boolean  "nook",              default: false
+    t.string   "amazon_link"
+    t.string   "apple_link"
+    t.string   "nook_link"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "channel_report_items", ["channel_report_id"], name: "index_channel_report_items_on_channel_report_id", using: :btree
+
+  create_table "channel_reports", force: true do |t|
+    t.datetime "scan_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "control_numbers", force: true do |t|
     t.integer  "project_id"
@@ -656,6 +679,7 @@ ActiveRecord::Schema.define(version: 20151021073353) do
     t.text     "credit_request"
     t.integer  "page_count"
     t.date     "target_market_launch_date"
+    t.string   "book_type"
   end
 
   add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree
@@ -682,10 +706,10 @@ ActiveRecord::Schema.define(version: 20151021073353) do
     t.string   "paperback_cover_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "starting_grade_index"
     t.string   "bisac_code_name_one"
     t.string   "bisac_code_name_two"
     t.string   "bisac_code_name_three"
+    t.integer  "starting_grade_index"
   end
 
   add_index "publication_fact_sheets", ["project_id"], name: "index_publication_fact_sheets_on_project_id", using: :btree

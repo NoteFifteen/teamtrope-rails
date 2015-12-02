@@ -29,7 +29,7 @@
                                 'I have looked over and approved the delivered proofreading and the content.  Nothing more will be added or removed from this document, and no further changes will be made.'
                                 ].each_with_index do | label, index |
                             %>
-                                <li><%= check_box_tag "checklist_#{index}", index, false, class: "proofread_manuscript_checklist" %> <%= label_tag "checklist_#{index}", label, class: "proofread_manuscript_checklist" %></li>
+                              <li><%= check_box_tag "checklist_#{index}", index, false, class: "proofread_manuscript_checklist" %> <%= label_tag "checklist_#{index}", label, class: "proofread_manuscript_checklist" %></li>
                             <% end %>
                             </ul>
                         </div>
@@ -39,7 +39,16 @@
                         </div>
                     </li>
 
-                    <li>
+                  <li>
+                    <h4>Project Type<span class='required'>*</span></h4>
+                    <%= f.input :book_type, as: :radio_buttons,
+                        collection: Project::BOOK_TYPES,
+                        wrapper: :vertical_radio_and_checkboxes,
+                        label: false,
+                        id: 'book_type_radio'
+                    %>
+                    <p class="input_description">Please specify if this book is ebook only or ebook and print.</p>
+                  </li>
                   <li>
                     <h4>Has this title been published previously?<span class="required">*</span></h4>
                     <div>
