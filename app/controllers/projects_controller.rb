@@ -226,7 +226,7 @@ class ProjectsController < ApplicationController
 
     if @project.update(update_project_params)
       @project.create_activity :submitted_proofed_manuscript, owner: current_user, parameters: {text: 'Uploaded the Proofed Manuscript', form_data: params[:project].to_s}
-      #update_current_task
+      update_current_task
       flash[:success] = "Proofed Manuscript Uploaded. WAIT! Before you celebrate, you are still on the clock for the project and we won't be working on your book until you complete the next step.
       To do this:
         1) Refresh the  project page (see link below),
