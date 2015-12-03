@@ -43,7 +43,8 @@ Teamtrope.KdpSelectUpdate.prototype.getCountdownDealValues = function () {
         start_time: this.getTimeFromInputs('countdown_start_time'),
         number_of_days: this.getSelectedValue('countdown_num_days'),
         number_of_price_increments: this.getSelectedValue('countdown_num_price_increments'),
-        starting_promo_price: this.getInputValue('countdown_start_price')
+        starting_promo_price: this.getInputValue('countdown_start_price'),
+        countdown_country: this.getRadioButtonValue('countdown_country')
     };
 };
 
@@ -105,6 +106,15 @@ Teamtrope.KdpSelectUpdate.prototype.getInputValue = function (name) {
     return '';
 };
 
+// Get the value of a radio button
+Teamtrope.KdpSelectUpdate.prototype.getRadioButtonValue = function (name) {
+    var element = $('[name=' + name + ']:checked');
+    if(typeof element !== 'undefined') {
+        return element.val();
+    }
+    return '';
+};
+
 // Function to handle Removing KDP Select -- Not sure how to handle this
 
 
@@ -138,6 +148,14 @@ $(document).ready(function(){
                         return (selected_option === 'countdown_deal');
                     }
                 }
+            },
+            'countdown_country': {
+                required: {
+                    depends: function(element) {
+                        var selected_option = $('input[name=project\\[kdp_select_enrollment_attributes\\]\\[update_type\\]]:checked').val();
+                        return (selected_option === 'countdown_deal')
+                    }
+                }
             }
         },
         messages: {
@@ -146,6 +164,9 @@ $(document).ready(function(){
             },
             'countdown_start_price': {
                 required: 'A starting price is necessary for this promotion'
+            },
+            'countdown_country': {
+                required: 'Please select a country.'
             }
         }
     });

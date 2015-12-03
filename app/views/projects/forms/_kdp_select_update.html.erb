@@ -102,6 +102,18 @@
                   </label>
                 </div>
                 <div>
+                  <label>Country<span class="required">*</span>
+                  <ul style='margin:0px;'>
+                    <% KdpSelectEnrollment::CountdownCountries.each do | countdown_country | %>
+                    <li>
+                      <%= radio_button_tag(:countdown_country, countdown_country[0]) %>
+                      <%= label_tag("countdown_country_#{countdown_country[0]}", countdown_country[1]) %>
+                    </li>
+                    <% end %>
+                  </ul>
+                  </label>
+                </div>
+                <div>
                   <label>Starting Promotional Price<span class="required">*</span><br/>
                     <%= text_field_tag 'countdown_start_price', nil, placeholder: 'Enter starting price..' %>
                   </label>
