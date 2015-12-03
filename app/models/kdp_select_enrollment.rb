@@ -12,4 +12,10 @@ class KdpSelectEnrollment < ActiveRecord::Base
       ['remove_from_kdp', 'Remove this book from KDP Select at the end of the current 90 day period'],
   ]
 
+  CountdownCountries = [
+    ['us', 'United States'],
+    ['uk', 'United Kingdom'],
+    ['both', 'Both']
+  ]
+
 end
