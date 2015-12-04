@@ -1,3 +1,21 @@
+<div class='containter'>
+  <h4>Contract Information</h4>
+  <div class='row'>
+    <div class='col-md-6'>
+      <p>
+      The information below is what will appear on contracts when a team member is added to the project.
+      If the information below is incorrect please contact support using the Booktrope Assistance widget to correct the information.
+      </p>
+
+    </div>
+  </div>
+</div>
+<ul>
+  <li><strong>Book Name:</strong> <%= @project.title %></li>
+  <li><strong>Author's Legal Name:</strong> <%= @project.layout.legal_name unless @project.layout.nil? %></li>
+  <li><strong>Pen Name:</strong> <%= @project.layout.use_pen_name_on_title ? @project.layout.pen_name  : "N/A" unless @project.layout.nil? %></li>
+</ul>
+
 <% if ! @project.control_number.nil? %>
     <h4>Control Numbers</h4>
     <ul>
