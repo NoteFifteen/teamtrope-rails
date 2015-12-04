@@ -6,6 +6,9 @@
 # Generated May 06, 2015
 #
 # This configuration file is custom generated for Booktrope
+#
+# For full documentation of agent configuration options, please refer to
+# https://docs.newrelic.com/docs/agents/ruby-agent/installation-configuration/ruby-agent-configuration
 
 
 # Here are the settings that are common to all environments
@@ -91,6 +94,10 @@ common: &default_settings
       # By default the agent automatically injects the monitoring JavaScript
       # into web pages. Set this attribute to false to turn off this behavior.
       auto_instrument: true
+
+  # Add a rule so we ignore serving assets as part of our response time calculations
+  # since the value is an average and serving static assets is fast vs generating pages.
+  rules.ignore_url_regexes: ["^/assets"]
 
   # Proxy settings for connecting to the New Relic server.
   #

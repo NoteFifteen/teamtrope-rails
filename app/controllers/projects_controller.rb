@@ -58,7 +58,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @activities = PublicActivity::Activity.order('created_at DESC').where(trackable_type: 'Project', trackable_id: @project)
+    @activities = PublicActivity::Activity.includes(:owner, owner: [:profile]).order('created_at DESC').where(trackable_type: 'Project', trackable_id: @project)
     @users = User.all
     @current_user = current_user
   end

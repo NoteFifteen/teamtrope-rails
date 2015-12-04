@@ -156,12 +156,12 @@ class Project < ActiveRecord::Base
   end
 
   def team_roles(user)
-    team_memberships.where(member_id: user.id).map { | membership | membership.role }
+    team_memberships.includes(:role).where(member_id: user.id).map { | membership | membership.role }
   end
 
   def team_members_with_roles
     team_memberships.select("roles.name").joins(:role).includes(:role,
-    :member).order("roles.name").group_by(&:member_id).map do | key, memberships |
+    :member, member: [:profile]).order("roles.name").group_by(&:member_id).map do | key, memberships |
         { :member => memberships.first.member, :roles => memberships.map {|membership|
         membership.role.name }.join(", ")
         }
@@ -183,7 +183,7 @@ class Project < ActiveRecord::Base
   # Returns a list of all roles and each member in those roles (there may be multiples) if they've been assigned
   def team_allocations
     team = []
-    project_type.required_roles.each do |rr|
+    project_type.required_roles.includes(:role).each do |rr|
 
       role = self.send(rr.role.name.normalize.pluralize)
 
@@ -211,7 +211,7 @@ class Project < ActiveRecord::Base
   end
 
   def members_available_for_removal
-    team_memberships.reject{|s| s.new_record? }
+    team_memberships.includes(:role, :member).reject{|s| s.new_record? }
                     .reject{|s| s.role.name.normalize == 'author' unless self.authors.count > 1}
                     .map { |member| {
                       membership_id: member.id,
@@ -222,7 +222,7 @@ class Project < ActiveRecord::Base
 
   def remaining_task_ids
     remaining_tasks = []
-    current_tasks.each do | ct |
+    current_tasks.includes(:task).each do | ct |
       task = ct.task
       while(task.next_id != nil)
         remaining_tasks << task.id
