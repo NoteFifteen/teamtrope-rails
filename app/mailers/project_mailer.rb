@@ -86,6 +86,24 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('edit_control_numbers', tokens, admin_edit_control_numbers_list, admin_subject)
   end
 
+  # Social Media Marketing has been updated
+  def update_social_media_marketing(project, current_user)
+    @project = project
+    @current_user = current_user
+
+    tokens = {
+        'Author Facebook Page' => project.social_media_marketing.try(:author_facebook_page),
+        'Author Central Account' => project.social_media_marketing.try(:author_central_account_link),
+        'Website Url'  => project.social_media_marketing.try(:website_url),
+        'Twitter'  => project.social_media_marketing.try(:twitter),
+        'Pintrest' => project.social_media_marketing.try(:pintrest),
+        'Goodreads' => project.social_media_marketing.try(:goodreads),
+    }
+
+    admin_subject = "New Social Media Marketing links from #{@current_user.name} for #{@project.title}"
+    send_email_message('update_social_media_marketing', tokens, admin_social_media_marketing_list, admin_subject)
+  end
+
   # A new team member has been added to the team
   def accepted_team_member(project, current_user, params)
     @project = project
@@ -833,6 +851,10 @@ class ProjectMailer < ActionMailer::Base
   # Used for Control Number updates
   def admin_edit_control_numbers_list
     %w( tt_edit_control_numbers_list@booktrope.com )
+  end
+
+  def admin_social_media_marketing_list
+    %w( tt_add_author_links_list@booktrope.com )
   end
 
   # Notify Payroll list of a new 1099 in Box

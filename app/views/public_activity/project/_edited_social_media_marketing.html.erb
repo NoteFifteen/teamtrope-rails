@@ -1,0 +1,11 @@
+<%= link_to image_tag(activity.owner.profile.avatar(:thumb), size: "40x40"), activity.owner.profile_page unless activity.owner.nil? || activity.owner.profile.nil? %>
+<%= link_to activity.owner.name, activity.owner.profile_page unless activity.owner.nil? || activity.owner.profile.nil? %>
+
+<% social_media_marketing = SocialMediaMarketing.find_by_id(activity.parameters[:object_id]) %>
+<% unless social_media_marketing.nil? %>
+  <%= "#{activity.parameters[:text]} #{link_to("Social Media Marketing", social_media_marketing)}".html_safe %>
+<% else %>
+  <%= "#{activity.parameters[:text]} Social Media Marketing" %>
+<% end %>
+on <%= activity.created_at.strftime("%Y/%m/%d %H:%M:%S") %>
+<br />

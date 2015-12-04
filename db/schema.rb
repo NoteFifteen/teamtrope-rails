@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151202061353) do
+ActiveRecord::Schema.define(version: 20151203084124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -828,6 +828,20 @@ ActiveRecord::Schema.define(version: 20151202061353) do
   end
 
   add_index "roles", ["name"], name: "index_roles_on_name", unique: true, using: :btree
+
+  create_table "social_media_marketings", force: true do |t|
+    t.integer  "project_id"
+    t.string   "author_facebook_page"
+    t.string   "author_central_account_link"
+    t.string   "website_url"
+    t.string   "twitter"
+    t.string   "pintrest"
+    t.string   "goodreads"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "social_media_marketings", ["project_id"], name: "index_social_media_marketings_on_project_id", using: :btree
 
   create_table "tabs", force: true do |t|
     t.integer  "task_id"

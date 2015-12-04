@@ -1,0 +1,66 @@
+<div class="container">
+  <h1>Social Media Marketing</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <p>
+      We would like to collect your social media links to use in marketing your books from a corporate perspective.
+      Please fill in the following for each individual title for our direct marketing team to utilize.
+      </p>
+      <br />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <%= simple_form_for @project,
+                          url: url_for(controller: 'projects', action: 'update_social_media_mkt', id: @project),
+                          html: { id: "social_media_marketing" } do |f| %>
+        <%= f.simple_fields_for :social_media_marketing, ((f.object.social_media_marketing.nil?) ? f.object.build_social_media_marketing : f.object.social_media_marketing) do | builder | %>
+
+          <% author_facebook_page_example = 'https://www.facebook.com/authorsharijryan' %>
+          <label>
+            Author Facebook Page (for example, please see:
+              <%= link_to author_facebook_page_example, author_facebook_page_example, target: :blank %>)
+          </label>
+          <%= builder.input :author_facebook_page, label: false  %>
+
+          <% author_central_account_example = 'http://www.amazon.com/Rachel-Thompson/e/B004KTY7Q0/ref=sr_ntt_srch_lnk_1?qid=1447195105&sr=8-1' %>
+          <label>
+            Author Central Account (for an example, please see Rachel Thompson’s page:
+            <%= link_to author_central_account_example, author_central_account_example, target: :blank %>)
+          </label>
+          <%= builder.input :author_central_account_link, label: false %>
+
+          <% website_url_example = 'http://meredithschorr.com/' %>
+
+          <label>Website Url (for examples of what you might include on your own site, please see:
+          <%= link_to website_url_example, website_url_example, target: :blank %>)
+          </label>
+          <%= builder.input :website_url, label: false %>
+
+          <% twitter_example = 'https://twitter.com/jennifergracen' %>
+          <label>
+            Twitter (for an example of someone who rocks the Twitter conversations, please see:
+            <%= link_to twitter_example, twitter_example, label: :blank %>)
+          </label>
+          <%= builder.input :twitter, label: false %>
+
+          <% pintrest_example = 'https://www.pinterest.com/heatherhuffman/' %>
+          <label>
+            Pintrest (<%= link_to pintrest_example, pintrest_example, label: :blank %>)
+          </label>
+          <%= builder.input :pintrest, label: false %>
+
+          <% goodreads_example = 'https://www.goodreads.com/author/show/1677547.Tess_Thompson' %>
+          <label>
+            Goodreads (for an example of what to include, please see:
+            <%= link_to goodreads_example, goodreads_example, target: :blank %>)
+          </label>
+          <%= builder.input :goodreads, label: false %>
+        <% end %>
+        <%= f.submit 'Submit' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+

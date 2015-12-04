@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :social_media_marketings
+
   resources :hellosign_documents
 
   match 'hellosign_documents/cancel_request/:id', to: 'hellosign_documents#cancel_signature_request', via: :patch
@@ -79,6 +81,8 @@ Rails.application.routes.draw do
   match '/projects/revenue_allocation_split/:id', to: 'projects#revenue_allocation_split', via: 'patch'
   match '/projects/request_images/:id',           to: 'projects#request_images',           via: 'patch'
   match '/projects/rollback_current_task/:id',    to: 'projects#rollback_current_task',    via: 'patch'
+  # Post is defined for this path since creates and updates are used interchangeably.
+  match '/projects/social_media_marketing/:id',   to: 'projects#update_social_media_mkt',  via: [:patch, :post]
   match '/projects/submit_blurb/:id',             to: 'projects#submit_blurb',             via: 'patch'
   match '/projects/submit_form_1099/:id',         to: 'projects#submit_form_1099',         via: 'patch'
   match '/projects/submit_submit_pfs/:id',        to: 'projects#submit_pfs',               via: 'patch'

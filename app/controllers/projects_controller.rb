@@ -763,6 +763,20 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def update_social_media_mkt
+    if @project.update(update_project_params)
+      @project.create_activity :social_media_marketing, owner: current_user,
+        parameters: { text: 'Submitted Social Media Marketing Information', form_data: params[:project].to_s }
+      flash[:success] = 'Social Media Markting Information Submitted.'
+
+      ProjectMailer.update_social_media_marketing(@project, current_user)
+      redirect_to @project
+    else
+      flash[:danger] = 'There was a problem saving the Social Media Marketing Information, please review.'
+      render 'show'
+    end
+  end
+
   def production_expense
     if @project.update(update_project_params)
       update_current_task
@@ -958,6 +972,8 @@ class ProjectsController < ApplicationController
             :bisac_code_three, :bisac_code_name_three, :search_terms, :age_range, :starting_grade_index,
             :paperback_cover_type ],
       :published_file_attributes => [:publication_date],
+      :social_media_marketing_attributes => [:author_facebook_page, :author_central_account_link, :website_url,
+                          :twitter, :pintrest, :goodreads],
       :status_updates_attributes => [:type, :status],
       :team_memberships_attributes => [:id, :role_id, :member_id, :percentage, :_destroy],
       :print_corners_attributes => [:id, :user_id, :order_type, :first_order, :additional_order, :over_125, :billing_acceptance, :quantity, :has_author_profile, :has_marketing_plan,
