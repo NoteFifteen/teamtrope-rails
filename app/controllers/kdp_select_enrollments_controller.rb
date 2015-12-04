@@ -26,6 +26,14 @@ class KdpSelectEnrollmentsController < ApplicationController
   def create
     @kdp_select_enrollment = KdpSelectEnrollment.new(kdp_select_enrollment_params)
     @kdp_select_enrollment.save
+
+    # Even though it shouldn't be possible to create a new enrollment from here, I wanted to include
+    # the necessary code since this function for create already exists. [BR]
+    @kdp_select_enrollment.project.create_activity :kdp_select_enrolled, owner: current_user,
+                                                   parameters: { text: 'Enrolled in KDP Select', form_data: params[:project].to_s}
+
+    ProjectMailer.kdp_select_enrollment(@kdp_select_enrollment.project, current_user)
+
     respond_with(@kdp_select_enrollment)
   end
 
@@ -34,6 +42,7 @@ class KdpSelectEnrollmentsController < ApplicationController
         @project.create_activity :edited_kdp_select_enrollment, owner: current_user,
                                  parameters: { text: 'Edited', object_id: @kdp_select_enrollment.id, form_data: kdp_select_enrollment_params.to_s}
 
+        ProjectMailer.kdp_select_update(@project, current_user)
     end
 
     respond_with(@kdp_select_enrollment)
@@ -41,6 +50,12 @@ class KdpSelectEnrollmentsController < ApplicationController
 
   def destroy
     @kdp_select_enrollment.destroy
+
+    @kdp_select_enrollment.project.create_activity :kdp_select_withdrawn, owner: current_user,
+                                                   parameters: { text: 'Withdrew enrollment in KDP Select', form_data: params[:project].to_s}
+
+    ProjectMailer.kdp_withdraw_enrollment(@project, current_user)
+
     respond_with(@kdp_select_enrollment)
   end
 
