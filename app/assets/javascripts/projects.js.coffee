@@ -213,6 +213,13 @@ jQuery.validator.addMethod("priceAfterPromotionValidator", (value, element, para
   return value > 0
 , jQuery.validator.format("Price After Promotion must be greater than 0.")
 )
+jQuery.validator.addMethod("priceValidator", (value, element, params) ->
+  if value >= 0.99 && value <= 9.99
+    return true
+  else
+    return false
+, jQuery.validator.format("Price must be within $0.99 and $9.99 Use force free promotion for free book promotions")
+)
 jQuery ->
   $("#price_promotion_form").validate({
     rules: {
@@ -226,11 +233,13 @@ jQuery ->
         required: false
       },
       'project[price_change_promotions_attributes][0][price_promotion]': {
-        required: true
+        required: true,
+        priceValidator: 'price_promotion_form'
       },
       'project[price_change_promotions_attributes][0][price_after_promotion]': {
         required: true,
-        priceAfterPromotionValidator: "#price_promotion_form"
+        priceAfterPromotionValidator: "#price_promotion_form",
+        priceValidator: 'price_promotion_form'
       }
     }
   })
