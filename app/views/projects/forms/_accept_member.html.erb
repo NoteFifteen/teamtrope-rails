@@ -88,13 +88,13 @@
     Teamtrope.acceptForm.updateMemberSelect();
 
     // Add team members first so we can filter them out of the list of available members
-    Teamtrope.acceptForm.addTeamMembers(<%= @project.team_memberships.map { |member|
+    Teamtrope.acceptForm.addTeamMembers(<%= @project.team_memberships.includes(:role, :member).map { |member|
         next if member.new_record?
         { role: member.role.name.normalize, id: member.member_id, name: member.member.name, percentage: member.percentage }
     }.to_json.html_safe %>);
 
     // Add our list of available members for the various roles
-    <% @project.project_type.required_roles.each do |r| %>
+    <% @project.project_type.required_roles.includes(:role).each do |r| %>
 
       Teamtrope.acceptForm.addMembersToRole('<%= r.role.name.normalize.pluralize %>',
               <% if %w( advisor agent ).include?(r.role.name.normalize) %>

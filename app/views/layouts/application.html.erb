@@ -27,662 +27,419 @@
   <%= stylesheet_link_tag('twentyfourteen/demo.css') %>
   <%= stylesheet_link_tag('twentyfourteen/pcss3t.css') %>
   <%= stylesheet_link_tag('genericons/genericons.css', media: 'all') %>
-
-<!--  <link rel='stylesheet' id='bp-admin-bar-css'  href='https://teamtrope.com/wp-content/plugins/buddypress/bp-core/css/admin-bar.min.css?ver=2.0.1' type='text/css' media='all' /> -->
-<!--  <link rel='stylesheet' id='rcpt_style-css'  href='https://teamtrope.com/wp-content/plugins/recent_custom_post_type/media/style.css?ver=3.9.2' type='text/css' media='all' /> -->
-
-<!--  <link rel='stylesheet' id='bowe-codes-css-css'  href='https://teamtrope.com/wp-content/plugins/bowe-codes/css/bowe-codes.css?ver=2.1' type='text/css' media='all' /> -->
-<!--  <link rel='stylesheet' id='bp-legacy-css-css'  href='https://teamtrope.com/wp-content/plugins/buddypress/bp-templates/bp-legacy/css/buddypress.css?ver=2.0.1' type='text/css' media='screen' /> -->
-
   <%= stylesheet_link_tag('twentyfourteen/style.css', media: 'all') %>
 
   <!--[if lt IE 9]>
     <%= stylesheet_link_tag('twentyfourteen/ie.css', media: 'all') %>
   <![endif]-->
 
-<!--  <link rel='stylesheet' id='wp-advanced-rp-css-css'  href='https://teamtrope.com/wp-content/plugins/advanced-recent-posts-widget/css/advanced-recent-posts-widget.css?ver=3.9.2' type='text/css' media='all' /> -->
-
-<!-- <link rel='stylesheet' id='wpcountdown-css'  href='https://teamtrope.com/wp-content/plugins/wpcountdown/static/css/main.css?ver=1.1' type='text/css' media='all' /> -->
-
   <style id="fourteen-colors" type="text/css">
 
     /* Custom accent color. */
-
     button,
-
     .button,
-
     .contributor-posts-link,
-
     input[type="button"],
-
     input[type="reset"],
-
     input[type="submit"],
-
     .search-toggle,
-
     .hentry .mejs-controls .mejs-time-rail .mejs-time-current,
-
     .hentry .mejs-overlay:hover .mejs-overlay-button,
-
     .widget button,
-
     .widget .button,
-
     .widget input[type="button"],
-
     .widget input[type="reset"],
-
     .widget input[type="submit"],
-
     .widget_calendar tbody a,
-
     .content-sidebar .widget input[type="button"],
-
     .content-sidebar .widget input[type="reset"],
-
     .content-sidebar .widget input[type="submit"],
-
     .slider-control-paging .slider-active:before,
-
     .slider-control-paging .slider-active:hover:before,
-
     .slider-direction-nav a:hover,
-
     .ie8 .primary-navigation ul ul,
-
     .ie8 .secondary-navigation ul ul,
-
     .ie8 .primary-navigation li:hover > a,
-
     .ie8 .primary-navigation li.focus > a,
-
     .ie8 .secondary-navigation li:hover > a,
-
     .ie8 .secondary-navigation li.focus > a {
-
       background-color: #4992bc;
-
     }
-
-
 
     .site-navigation a:hover {
-
       color: #4992bc;
-
     }
-
-
 
     ::-moz-selection {
-
       background: #4992bc;
-
     }
-
-
 
     ::selection {
-
       background: #4992bc;
-
     }
-
-
 
     .paging-navigation .page-numbers.current {
-
       border-color: #4992bc;
-
     }
-
-
 
     @media screen and (min-width: 782px) {
-
       .primary-navigation li:hover > a,
-
       .primary-navigation li.focus > a,
-
       .primary-navigation ul ul {
-
         background-color: #4992bc;
-
       }
-
     }
-
-
 
     @media screen and (min-width: 1008px) {
-
       .secondary-navigation li:hover > a,
-
       .secondary-navigation li.focus > a,
-
       .secondary-navigation ul ul {
-
         background-color: #4992bc;
-
       }
-
     }
 
+    .contributor-posts-link,
+    .button,
+    button,
+    input[type="button"],
+    input[type="reset"],
+    input[type="submit"],
+    .search-toggle:before,
+    .hentry .mejs-overlay:hover .mejs-overlay-button,
+    .widget button,
+    .widget .button,
+    .widget input[type="button"],
+    .widget input[type="reset"],
+    .widget input[type="submit"],
+    .widget_calendar tbody a,
+    .widget_calendar tbody a:hover,
+    .site-footer .widget_calendar tbody a,
+    .content-sidebar .widget input[type="button"],
+    .content-sidebar .widget input[type="reset"],
+    .content-sidebar .widget input[type="submit"],
+    button:hover,
+    button:focus,
+    .button:hover,
+    .button:focus,
+    .widget a.button:hover,
+    .widget a.button:focus,
+    .widget a.button:active,
+    .content-sidebar .widget a.button,
+    .content-sidebar .widget a.button:hover,
+    .content-sidebar .widget a.button:focus,
+    .content-sidebar .widget a.button:active,
+    .contributor-posts-link:hover,
+    .contributor-posts-link:active,
+    input[type="button"]:hover,
+    input[type="button"]:focus,
+    input[type="reset"]:hover,
+    input[type="reset"]:focus,
+    input[type="submit"]:hover,
+    input[type="submit"]:focus,
+    .slider-direction-nav a:hover:before,
+    .ie8 .primary-navigation li:hover > a,
+    .ie8 .primary-navigation li.focus > a,
+    .ie8 .secondary-navigation li:hover > a,
+    .ie8 .secondary-navigation li.focus > a {
+      color: #2b2b2b;
+    }
 
-
-      .contributor-posts-link,
-
-      .button,
-
-      button,
-
-      input[type="button"],
-
-      input[type="reset"],
-
-      input[type="submit"],
-
-      .search-toggle:before,
-
-      .hentry .mejs-overlay:hover .mejs-overlay-button,
-
-      .widget button,
-
-      .widget .button,
-
-      .widget input[type="button"],
-
-      .widget input[type="reset"],
-
-      .widget input[type="submit"],
-
-      .widget_calendar tbody a,
-
-      .widget_calendar tbody a:hover,
-
-      .site-footer .widget_calendar tbody a,
-
-      .content-sidebar .widget input[type="button"],
-
-      .content-sidebar .widget input[type="reset"],
-
-      .content-sidebar .widget input[type="submit"],
-
-      button:hover,
-
-      button:focus,
-
-      .button:hover,
-
-      .button:focus,
-
-      .widget a.button:hover,
-
-      .widget a.button:focus,
-
-      .widget a.button:active,
-
-      .content-sidebar .widget a.button,
-
-      .content-sidebar .widget a.button:hover,
-
-      .content-sidebar .widget a.button:focus,
-
-      .content-sidebar .widget a.button:active,
-
-      .contributor-posts-link:hover,
-
-      .contributor-posts-link:active,
-
-      input[type="button"]:hover,
-
-      input[type="button"]:focus,
-
-      input[type="reset"]:hover,
-
-      input[type="reset"]:focus,
-
-      input[type="submit"]:hover,
-
-      input[type="submit"]:focus,
-
-      .slider-direction-nav a:hover:before,
-
-      .ie8 .primary-navigation li:hover > a,
-
-      .ie8 .primary-navigation li.focus > a,
-
-      .ie8 .secondary-navigation li:hover > a,
-
-      .ie8 .secondary-navigation li.focus > a {
-
+    @media screen and (min-width: 782px) {
+      .site-navigation li .current_page_item > a,
+      .site-navigation li .current_page_ancestor > a,
+      .site-navigation li .current-menu-item > a,
+      .site-navigation li .current-menu-ancestor > a,
+      .primary-navigation ul ul a,
+      .primary-navigation li:hover > a,
+      .primary-navigation li.focus > a,
+      .primary-navigation ul ul {
         color: #2b2b2b;
-
       }
+    }
 
-
-
-      @media screen and (min-width: 782px) {
-
-        .site-navigation li .current_page_item > a,
-
-        .site-navigation li .current_page_ancestor > a,
-
-        .site-navigation li .current-menu-item > a,
-
-        .site-navigation li .current-menu-ancestor > a,
-
-        .primary-navigation ul ul a,
-
-        .primary-navigation li:hover > a,
-
-        .primary-navigation li.focus > a,
-
-        .primary-navigation ul ul {
-
-          color: #2b2b2b;
-
-        }
-
-      }
-
-
-
-      @media screen and (min-width: 1008px) {
-
-        .secondary-navigation ul ul a,
-
-        .secondary-navigation li:hover > a,
-
-        .secondary-navigation li.focus > a,
-
-        .secondary-navigation ul ul {
-
-          color: #2b2b2b;
-
-        }
-
-      }
-
-
-
-      ::selection {
-
+    @media screen and (min-width: 1008px) {
+      .secondary-navigation ul ul a,
+      .secondary-navigation li:hover > a,
+      .secondary-navigation li.focus > a,
+      .secondary-navigation ul ul {
         color: #2b2b2b;
-
       }
+    }
 
+    ::selection {
+      color: #2b2b2b;
+    }
 
+    ::-moz-selection {
+      color: #2b2b2b;
+    }
 
-      ::-moz-selection {
-
-        color: #2b2b2b;
-
-      }
-
-
-
-      .hentry .mejs-controls .mejs-time-rail .mejs-time-loaded {
-
-        background-color: #2b2b2b;
-
-      }
-
-
-
-
+    .hentry .mejs-controls .mejs-time-rail .mejs-time-loaded {
+      background-color: #2b2b2b;
+    }
 
     /* Generated variants of custom accent color. */
 
-    a,
-
-    .content-sidebar .widget a {
-
+    a, .content-sidebar .widget a {
       color: #3079a3;
-
     }
-
-
 
     .contributor-posts-link:hover,
-
     .button:hover,
-
     .button:focus,
-
     .slider-control-paging a:hover:before,
-
     .search-toggle:hover,
-
     .search-toggle.active,
-
     .search-box,
-
     .widget_calendar tbody a:hover,
-
     button:hover,
-
     button:focus,
-
     input[type="button"]:hover,
-
     input[type="button"]:focus,
-
     input[type="reset"]:hover,
-
     input[type="reset"]:focus,
-
     input[type="submit"]:hover,
-
     input[type="submit"]:focus,
-
     .widget button:hover,
-
     .widget .button:hover,
-
     .widget button:focus,
-
     .widget .button:focus,
-
     .widget input[type="button"]:hover,
-
     .widget input[type="button"]:focus,
-
     .widget input[type="reset"]:hover,
-
     .widget input[type="reset"]:focus,
-
     .widget input[type="submit"]:hover,
-
     .widget input[type="submit"]:focus,
-
     .content-sidebar .widget input[type="button"]:hover,
-
     .content-sidebar .widget input[type="button"]:focus,
-
     .content-sidebar .widget input[type="reset"]:hover,
-
     .content-sidebar .widget input[type="reset"]:focus,
-
     .content-sidebar .widget input[type="submit"]:hover,
-
     .content-sidebar .widget input[type="submit"]:focus,
-
     .ie8 .primary-navigation ul ul a:hover,
-
     .ie8 .primary-navigation ul ul li.focus > a,
-
     .ie8 .secondary-navigation ul ul a:hover,
-
     .ie8 .secondary-navigation ul ul li.focus > a {
-
       background-color: #66afd9;
-
     }
-
-
 
     .featured-content a:hover,
-
     .featured-content .entry-title a:hover,
-
     .widget a:hover,
-
     .widget-title a:hover,
-
     .widget_twentyfourteen_ephemera .entry-meta a:hover,
-
     .hentry .mejs-controls .mejs-button button:hover,
-
     .site-info a:hover,
-
     .featured-content a:hover {
-
       color: #66afd9;
-
     }
 
-
-
     a:active,
-
     a:hover,
 
     .entry-title a:hover,
-
     .entry-meta a:hover,
-
     .cat-links a:hover,
-
     .entry-content .edit-link a:hover,
-
     .post-navigation a:hover,
-
     .image-navigation a:hover,
-
     .comment-author a:hover,
-
     .comment-list .pingback a:hover,
-
     .comment-list .trackback a:hover,
-
     .comment-metadata a:hover,
-
     .comment-reply-title small a:hover,
-
     .content-sidebar .widget a:hover,
-
     .content-sidebar .widget .widget-title a:hover,
-
     .content-sidebar .widget_twentyfourteen_ephemera .entry-meta a:hover {
-
       color: #4d96c0;
-
     }
-
-
 
     .page-links a:hover,
-
     .paging-navigation a:hover {
-
       border-color: #4d96c0;
-
     }
-
-
 
     .entry-meta .tag-links a:hover:before {
-
       border-right-color: #4d96c0;
-
     }
-
-
 
     .page-links a:hover,
-
     .entry-meta .tag-links a:hover {
-
       background-color: #4d96c0;
-
     }
-
-
 
     @media screen and (min-width: 782px) {
-
       .primary-navigation ul ul a:hover,
-
       .primary-navigation ul ul li.focus > a {
-
         background-color: #66afd9;
-
       }
-
     }
-
-
 
     @media screen and (min-width: 1008px) {
-
       .secondary-navigation ul ul a:hover,
-
       .secondary-navigation ul ul li.focus > a {
-
         background-color: #66afd9;
-
       }
-
     }
-
-
 
     button:active,
-
     .button:active,
-
     .contributor-posts-link:active,
-
     input[type="button"]:active,
-
     input[type="reset"]:active,
-
     input[type="submit"]:active,
-
     .widget input[type="button"]:active,
-
     .widget input[type="reset"]:active,
-
     .widget input[type="submit"]:active,
-
     .content-sidebar .widget input[type="button"]:active,
-
     .content-sidebar .widget input[type="reset"]:active,
-
     .content-sidebar .widget input[type="submit"]:active {
-
       background-color: #7ac3ed;
-
     }
-
-
 
     .site-navigation .current_page_item > a,
-
     .site-navigation .current_page_ancestor > a,
-
     .site-navigation .current-menu-item > a,
-
     .site-navigation .current-menu-ancestor > a {
-
       color: #7ac3ed;
+    }
 
+    @media screen and (min-width: 783px){
+      .primary-navigation{
+        float: right;
+        margin-left: 20px;
+      }
+      a {
+        transition: all .5s ease;
+      }
+    }
+
+    .site {
+      margin: 0 auto;
+      max-width: 1260px;
+      width: 100%;
+    }
+    .site-header{
+      max-width: 1260px;
+    }
+    @media screen and (min-width: 1110px) {
+      .archive-header,.comments-area,.image-navigation,.page-header,.page-content,.post-navigation,.site-content .entry-header,
+      .site-content .entry-content,.site-content .entry-summary,.site-content footer.entry-meta{
+        padding-left: 55px;
+      }
+    }
+
+    .site-content .entry-header,.site-content .entry-content,.site-content .entry-summary,.site-content .entry-meta,.page-content {
+      max-width: 700px;
+    }
+    .comments-area{
+      max-width: 700px;
+    }
+    .post-navigation, .image-navigation{
+      max-width: 700px;
+   }
+
+    .site:before,#secondary{
+      width:0;
+      display:none;
+    }
+
+    .ie8 .site:before,.ie8 #secondary{
+      width:0px;
+      display:none;
+    }
+
+    .featured-content{
+      padding-left:0;
+    }
+    .site-content,.site-main .widecolumn{
+      margin-left:0;
+    }
+    .ie8 .site-content,.ie8 .site-main .widecolumn{
+      margin-left:0;
+    }
+
+    @media screen and (min-width: 1008px) {
+      .search-box-wrapper{padding-left:0;}
+    }
+    @media screen and (min-width: 1080px) {
+      .search-box-wrapper,.featured-content{padding-left:0;}
+    }
+    @media screen and (min-width: 1080px) {
+      .grid-content{padding-left:0;}
+    }
+
+    .hentry{
+      max-width: 1038px;
+    }
+
+    img.size-full,img.size-large,.wp-post-image,.post-thumbnail img,.site-content .post-thumbnail img{
+      max-height: 572px;
+    }
+
+    .slider .featured-content .hentry{
+      max-height: 500px;
+    }
+    .slider .featured-content{
+      max-width: 1600px;
+      margin: 0px auto;
+    }
+    .slider .featured-content .post-thumbnail img{
+      max-width: 1600px;
+      width: 100%;
+    }
+
+    .slider .featured-content .post-thumbnail{
+      background:none;
+    }
+
+    .slider .featured-content a.post-thumbnail:hover{
+      background-color:transparent;
+    }
+
+    .ui-widget {
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    .ui-tabs .ui-tabs-panel {
+      padding: 0 1.4em;
+    }
+
+    .ui-state-highlight p, .ui-state-error p {
+      line-height: 1em;
+    }
+
+    .ui-accordion .ui-accordion-content {
+      padding: 0 1.4em;
+    }
+
+    .ui-widget-content p, .ui-widget p {
+      margin: 1em 0;
+    }
+
+    .ui-helper-reset {
+      line-height: inherit;
+    }
+
+    .ui-dialog-content {
+      line-height: 1.3em;
+    }
+
+    /* Twenty Ten specific fix. */
+    #content .ui-accordion h3 {
+      margin: 0;
     }
 
   </style>
-  <style>@media screen and (min-width: 783px){.primary-navigation{float: right;margin-left: 20px;}a { transition: all .5s ease; }}</style>
-  <style>.site {margin: 0 auto;max-width: 1260px;width: 100%;}.site-header{max-width: 1260px;}
-    @media screen and (min-width: 1110px) {.archive-header,.comments-area,.image-navigation,.page-header,.page-content,.post-navigation,.site-content .entry-header,
 
-      .site-content .entry-content,.site-content .entry-summary,.site-content footer.entry-meta{padding-left: 55px;}}
-  </style>
-  <style>
-      .site-content .entry-header,.site-content .entry-content,.site-content .entry-summary,.site-content .entry-meta,.page-content
-
-    {max-width: 700px;}.comments-area{max-width: 700px;}.post-navigation, .image-navigation{max-width: 700px;}
-  </style>
-
-  <style>.site:before,#secondary{width:0;display:none;}.ie8 .site:before,.ie8 #secondary{width:0px;display:none;}
-
-      .featured-content{padding-left:0;}.site-content,.site-main .widecolumn{margin-left:0;}.ie8 .site-content,.ie8 .site-main .widecolumn{margin-left:0;}
-
-    @media screen and (min-width: 1008px) {.search-box-wrapper{padding-left:0;}}
-
-    @media screen and (min-width: 1080px) {.search-box-wrapper,.featured-content{padding-left:0;}}
-
-    @media screen and (min-width: 1080px) {.grid-content{padding-left:0;}}
-  </style>
-  <style>.hentry{max-width: 1038px;}
-
-      img.size-full,img.size-large,.wp-post-image,.post-thumbnail img,.site-content .post-thumbnail img{max-height: 572px;}
-  </style>
-  <style>
-
-    .slider .featured-content .hentry{max-height: 500px;}.slider .featured-content{max-width: 1600px;
-
-    margin: 0px auto;}.slider .featured-content .post-thumbnail img{max-width: 1600px;width: 100%;}
-
-    .slider .featured-content .post-thumbnail{background:none;}.slider .featured-content a.post-thumbnail:hover{background-color:transparent;}
-  </style>
-  <style type="text/css">
-
-.ui-widget {
-
-font-family: inherit;
-
-font-size: inherit;
-
-}
-
-.ui-tabs .ui-tabs-panel {
-
-padding: 0 1.4em;
-
-}
-
-.ui-state-highlight p, .ui-state-error p {
-
-line-height: 1em;
-
-}
-
-.ui-accordion .ui-accordion-content {
-
-padding: 0 1.4em;
-
-}
-
-.ui-widget-content p, .ui-widget p {
-
-margin: 1em 0;
-
-}
-
-.ui-helper-reset {
-
-line-height: inherit;
-
-}
-
-.ui-dialog-content {
-
-line-height: 1.3em;
-
-}
-
-/* Twenty Ten specific fix. */
-
-#content .ui-accordion h3 {
-
-margin: 0;
-
-}
-  </style>
-
-  <style type='text/css'>img#wpstats{display:none}</style><style type="text/css" id="custom-background-css">
-    body.custom-background { background-color: #ffffff; }
-  </style>
-  <style type="text/css" media="print">#wpadminbar { display:none; }</style>
   <style type="text/css" media="screen">
-  html { margin-top: 32px !important; }
-  * html body { margin-top: 32px !important; }
-  @media screen and ( max-width: 782px ) {
-    html { margin-top: 46px !important; }
-    * html body { margin-top: 46px !important; }
-  }
+    html { margin-top: 32px !important; }
+    * html body { margin-top: 32px !important; }
+    @media screen and ( max-width: 782px ) {
+      html { margin-top: 46px !important; }
+      * html body { margin-top: 46px !important; }
+    }
   </style>
 
   <!-- Google Analytics Tracking by Google Analyticator 6.4.7.3: http://www.videousermanuals.com/google-analyticator/ -->
@@ -702,32 +459,6 @@ margin: 0;
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
   </script>
-
-  <style type='text/css'>
-#wpadminbar .quicklinks li#wp-admin-bar-stats {
-  height: 28px;
-}
-#wpadminbar .quicklinks li#wp-admin-bar-stats a {
-  height: 28px;
-  padding: 0;
-}
-#wpadminbar .quicklinks li#wp-admin-bar-stats a div {
-  height: 28px;
-  width: 95px;
-  overflow: hidden;
-  margin: 0 10px;
-}
-#wpadminbar .quicklinks li#wp-admin-bar-stats a:hover div {
-  width: auto;
-  margin: 0 8px 0 10px;
-}
-#wpadminbar .quicklinks li#wp-admin-bar-stats a img {
-  height: 24px;
-  padding: 2px 0;
-  max-width: none;
-  border: none;
-}
-  </style>
 
   <!-- Rails tags -->
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>

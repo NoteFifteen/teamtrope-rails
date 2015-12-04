@@ -93,7 +93,9 @@ gem 'wisper'
 # login
 gem 'devise'
 gem 'omniauth'
-gem 'omniauth-wordpress_hosted', github: 'jwickard/omniauth-wordpress-oauth2-plugin'
+# gem 'omniauth-wordpress_hosted', github: 'jwickard/omniauth-wordpress-oauth2-plugin'
+# gem 'omniauth-wordpress_hosted', :path => "/Users/brianr/Projects/omniauth-wordpress-oauth2-plugin/"
+gem 'omniauth-wordpress_hosted', github: 'dalml/omniauth-wordpress-oauth2-plugin', :tag => 'v0.0.2'
 
 # permalinks
 gem 'friendly_id', '~> 5.1.0'
@@ -115,5 +117,11 @@ gem 'newrelic_rpm', group: [:staging, :production]
 group :development do
   gem 'rails-erd'
   gem 'seed_dump'
+
+  # Adds a little widget in the top left-hand corner that shows a profiler
+  gem 'rack-mini-profiler'
+
+  # Adds a footer identifying N+1 Queries and suggests optimizations
+  # gem 'bullet'
 end
 

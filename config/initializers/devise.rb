@@ -237,9 +237,7 @@ Devise.setup do |config|
     "kSKs6mk3L9xTXOeLmryceEhOWE6yPK", "gaD0DKnXO87l15agQxHpKW31L0GRyv",
     strategy_class: OmniAuth::Strategies::WordpressHosted,
     client_options: {
-      site: 'https://teamtrope.com',
-      token_url: "/oauth/token",
-      access_url: "/oauth/me/"
+      site: 'https://teamtrope.com'
     }
 
   # ==> Warden configuration
