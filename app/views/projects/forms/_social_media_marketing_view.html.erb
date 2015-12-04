@@ -1,0 +1,83 @@
+<div class="container">
+  <h1>Social Media Marketing</h1>
+
+  <h4>Books</h4>
+  <% unless @project.control_number.nil? || @project.control_number.not_in_stores? %>
+  <div class="row">
+    <div class="col-md-16">
+    <%
+      # label: link text/channel name
+      # control_number: the control number
+      # override: the field to override the control number if it has one (encore_asin)
+      # url: the retail page url
+      book_channels = [
+        { label: 'Amazon', control_number: :asin, override: :encore_asin, url: 'http://amzn.com/' },
+        { label: 'Apple', control_number: :apple_id, url: 'https://itunes.apple.com/book/id' },
+        { label: 'Barnes and Noble', control_number: :bnid, url: 'http://barnesandnoble.com/s/' },
+      ]
+    %>
+
+    <% # looping through the book channels to geneate the links %>
+    <ul>
+    <% book_channels.each do | book_channel | %>
+      <%
+        control_number_field = book_channel[:control_number]
+
+        # checking if we have an override and it's not nil
+        if book_channel.has_key? :override && @project.control_number.try(book_channel[:override])
+          control_number_field = book_channel[:override]
+        end
+
+        control_number = @project.control_number.try(control_number_field)
+
+        # don't generate a link if we don't have the control number for the current platform
+        next if control_number.nil?
+
+        book_link = "#{book_channel[:url]}#{control_number}"
+      %>
+      <li><%= link_to book_channel[:label], book_link, target: :blank %></li>
+    <% end %>
+    </ul>
+    </div>
+  </div>
+  <% else %>
+  <p>
+    Once your book has been published and the control numbers have been entered the links to the retail pages
+    will appear here.
+  </p>
+  <% end %>
+
+  <% unless @project.social_media_marketing.nil? %>
+  <h4>Social Media</h4>
+  <div class="row">
+    <div class="col-md-16">
+    <%
+      social_media_channels = [
+        { label: 'Author Facebook Page', field: :author_facebook_page },
+        { label: 'Author Central Account', field: :author_central_account_link },
+        { label: 'Website Url', field: :website_url },
+        { label: 'Twitter', field: :twitter },
+        { label: 'Pintrest', field: :pintrest },
+        { label: 'Goodreads', field: :goodreads }
+      ]
+    %>
+    <ul>
+    <% social_media_channels.each do | social_media_channel | %>
+      <% if @project.social_media_marketing.try(social_media_channel[:field]) %>
+        <% sns_link = @project.social_media_marketing[social_media_channel[:field]] %>
+        <li><b><%= social_media_channel[:label] %>:</b> <%= link_to sns_link, sns_link, target: :blank %></li>
+      <% end %>
+    <% end %>
+    </ul>
+
+    </div>
+  </div>
+  <% else %>
+      <p>
+        We would like to collect your social media links to use in marketing your books from a corporate perspective.
+        Please use the 'Update Social Media' Tab to submit social media marketing links. Upon submission they
+        will appear here.
+      </p>
+  <% end %>
+
+</div>

@@ -82,6 +82,13 @@ class ControlNumber < ActiveRecord::Base
     end
   end
 
+  def not_in_stores?
+    (asin == false || asin == nil) &&
+    (encore_asin == false || encore_asin == nil) &&
+    (apple_id == false || apple_id == nil) &&
+    (bnid == false || bnid == nil)
+  end
+
   private
 
   # Remove dashes from the ISBN before storing

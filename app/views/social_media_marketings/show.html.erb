@@ -1,0 +1,43 @@
+<h1>Social Media Marketing for: <br /><%= link_to @social_media_marketing.project.title, @social_media_marketing.project %></h1>
+
+
+<p>
+  <strong>Author facebook page:</strong>
+  <% link = @social_media_marketing.author_facebook_page %>
+  <%= link_to link, link, target: :blank unless link.nil? %>
+</p>
+
+<p>
+  <strong>Author central account link:</strong>
+  <% link = @social_media_marketing.author_central_account_link %>
+  <%= link_to link, link, target: :blank unless link.nil? %>
+</p>
+
+<p>
+  <strong>Website url:</strong>
+  <% link = @social_media_marketing.website_url %>
+  <%= link_to link, link, target: :blank unless link.nil? %>
+</p>
+
+<p>
+  <strong>Twitter:</strong>
+  <% link = @social_media_marketing.twitter %>
+  <%= link_to link, link, target: :blank unless link.nil? %>
+</p>
+
+<p>
+  <strong>Pintrest:</strong>
+  <% link = @social_media_marketing.pintrest %>
+  <%= link_to link, link, target: :blank unless link.nil? %>
+</p>
+
+<p>
+  <strong>Goodreads:</strong>
+  <% link = @social_media_marketing.goodreads %>
+  <%= link_to link, link, target: :blank unless link.nil? %>
+</p>
+
+<% if can? :edit, @social_media_marketing %>
+  <%= link_to 'Edit', edit_social_media_marketing_path(@social_media_marketing) %> |
+  <%= link_to 'Back', social_media_marketings_path %>
+<% end %>

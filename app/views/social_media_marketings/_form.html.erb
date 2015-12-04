@@ -1,0 +1,16 @@
+<%= simple_form_for(@social_media_marketing) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :author_facebook_page %>
+    <%= f.input :author_central_account_link %>
+    <%= f.input :website_url %>
+    <%= f.input :twitter %>
+    <%= f.input :pintrest %>
+    <%= f.input :goodreads %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

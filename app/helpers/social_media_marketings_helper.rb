@@ -1,0 +1,2 @@
+module SocialMediaMarketingsHelper
+end

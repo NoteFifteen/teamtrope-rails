@@ -1,0 +1,86 @@
+<% provide(:title, "Social Media Marketing") %>
+<h1>Social Media Marketing</h1>
+
+  <script type="text/javascript">
+    function toggleTable1() {
+    var lTable = document.getElementById("projectGridTable");
+    lTable.style.display = (lTable.style.display == "table") ? "none" : "table";}
+  </script>
+
+<table id="social_Media_Marketing" class="projectListTable">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Author Facebook Page</th>
+      <th>Author Central Account Link</th>
+      <th>Website Url</th>
+      <th>Twitter</th>
+      <th>Pintrest</th>
+      <th>Goodreads</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @social_media_marketings.each do |social_media_marketing| %>
+      <tr>
+        <td class="book-title"><%= link_to social_media_marketing.project.title, social_media_marketing.project %></td>
+        <td>
+          <% unless social_media_marketing.author_facebook_page.nil? %>
+            <%= link_to "Goto", social_media_marketing.author_facebook_page %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td>
+          <% unless social_media_marketing.author_central_account_link.nil? %>
+            <%= link_to "Goto", social_media_marketing.author_central_account_link %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td>
+          <% unless social_media_marketing.website_url.nil? %>
+            <%= link_to "Goto", social_media_marketing.website_url %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td>
+          <% unless social_media_marketing.twitter.nil? %>
+            <%= link_to "Goto", social_media_marketing.twitter %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td>
+          <% unless social_media_marketing.pintrest.nil? %>
+            <%= link_to "Goto", social_media_marketing.pintrest %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td>
+          <% unless social_media_marketing.goodreads.nil? %>
+            <%= link_to "Goto", social_media_marketing.goodreads %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td><%= link_to 'Show', social_media_marketing %></td>
+        <td><% if can? :edit, social_media_marketing %><%= link_to 'Edit', edit_social_media_marketing_path(social_media_marketing) %><% end %></td>
+        <td><% if can? :destroy, social_media_marketing%><%= link_to 'Destroy', social_media_marketing, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  <script>
+  $("#social_Media_Marketing").DataTable({
+       "paging": false
+  });
+  </script>
+<br>
+
+
