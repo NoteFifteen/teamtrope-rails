@@ -207,39 +207,105 @@ jQuery ->
           $(".price_after_promotion").slideUp()
           $(".temp_price_promotion").slideUp()
 
+  # $("#price_promotion_form").submit (event) ->
+  #   #starting_grade_level = $("#starting_grade_level").val()
+  #   #$("#project_publication_fact_sheet_attributes_starting_grade_index").val(starting_grade_level)
+  #   alert('saving')
+
+checkIfFieldIsRequired = (field_name) ->
+
+  selected_promotion = $("input[name=project\\[price_change_promotions_attributes\\]\\[0\\]\\[type\\]]:radio:checked").val()
+
+  #'temporary_force_free' : 'promotion_start_date_display', 'promotion_end_date_display', 'price_after_promotion'
+  #'temporary_price_drop' : 'promotion_start_date_display', 'promotion_end_date_display', 'price_promotion', 'price_after_promotion'
+  #'permanent_force_free' : 'stpromotion_start_date_displayart_date'
+  #'permanent_price_drop' : 'promotion_start_date_display', 'price_promotion'
+
+  switch selected_promotion
+    when 'temporary_force_free'
+      switch field_name
+        when 'promotion_start_date_display','promotion_end_date_display', 'price_after_promotion'
+          return true
+    when 'temporary_price_drop'
+      switch field_name
+        when 'promotion_start_date_display', 'promotion_end_date_display', 'project[price_change_promotions_attributes][0][price_promotion]', 'price_after_promotion'
+          return true
+    when 'permanent_force_free'
+        switch field_name
+          when 'promotion_start_date_display'
+            return true
+    when 'permanent_price_drop'
+        switch field_name
+          when 'promotion_start_date_display','project[price_change_promotions_attributes][0][price_promotion]'
+            return true
+
+  return false
+
 ## price change promotion form validators
-## Blog Tour Form validations
 jQuery.validator.addMethod("priceAfterPromotionValidator", (value, element, params) ->
   return value > 0
 , jQuery.validator.format("Price After Promotion must be greater than 0.")
 )
 jQuery.validator.addMethod("priceValidator", (value, element, params) ->
+  alert(element.getAttribute('name'))
   if value >= 0.99 && value <= 9.99
     return true
   else
     return false
 , jQuery.validator.format("Price must be within $0.99 and $9.99 Use force free promotion for free book promotions")
 )
+
+## target marketing launch date custom validator -- Must be 1 day in the future or more
+jQuery.validator.addMethod("promotionDateValidator", (value, element, params) ->
+
+  inputDate = Date.parse(value);
+
+  if (isNaN(inputDate))
+    return false
+
+  oneDay = new Date();
+  oneDay.setDate(oneDay.getDate());
+
+  return (oneDay <= inputDate)
+, jQuery.validator.format("You must select a date at least one day in the future.")
+)
+
+jQuery.validator.addMethod("endDateGreaterThanStartDateValidator", (value, element, params) ->
+
+  if (! checkIfFieldIsRequired('promotion_end_date_display'))
+    return true
+
+  startDate = $("input[name=promotion_start_date_display]").val()
+  endDate   = $("input[name=promotion_end_date_display]"  ).val()
+
+
+  if(Date.parse(endDate) < Date.parse(startDate))
+    return false
+  else
+    return true
+
+, jQuery.validator.format("The promotion end date must occur after the start date")
+)
+
 jQuery ->
   $("#price_promotion_form").validate({
     rules: {
       'project[price_change_promotions_attributes][0][type]': {
         required: true
       },
-      'project[price_change_promotions_attributes][0][start_date]': {
-        required: false
-      },
-      'project[price_change_promotions_attributes][0][end_date]': {
-        required: false
-      },
       'project[price_change_promotions_attributes][0][price_promotion]': {
-        required: true,
-        priceValidator: 'price_promotion_form'
+        priceValidator: true
       },
       'project[price_change_promotions_attributes][0][price_after_promotion]': {
-        required: true,
-        priceAfterPromotionValidator: "#price_promotion_form",
-        priceValidator: 'price_promotion_form'
+        priceValidator: true,
+        priceAfterPromotionValidator: true,
+      },
+      'promotion_start_date_display': {
+        promotionDateValidator: true
+      },
+      'promotion_end_date_display': {
+        promotionDateValidator: true,
+        endDateGreaterThanStartDateValidator: true,
       }
     }
   })

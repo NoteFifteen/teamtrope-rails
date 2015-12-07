@@ -5,74 +5,139 @@
   <div class="row">
     <div class="col-md-8">
         <% if @project.try(:control_number).try(:parse_id) && @project.try(:kdp_select_enrollment).nil? %>
+        <div>
+          <span>
+            <p>NOTE: If you are enrolled in KDP Select, DO NOT use this form to schedule your Free or Kindle Countdown
+              promotions. For KDP promos, please use the "KDP Update" Form located in your book's Project.</p>
+            <p>For more information how to schedule and effectively and execute a free book campaign, check out
+              <a href="https://teamtrope.com/docs/free-book-promotions/" target="blank">this document</a>.</p>
+            <p>If you choose an iTunes/Force Free promotion, there is NO guarantee your book will go free on Amazon.
+              Please do not commit to any promotional spend or ads until Amazon has actually made your book free.</p>
+            <p>PLEASE REVIEW THE FREE BOOK PROMOTION GUIDELINES BEFORE PROCEEDING:
+              <a href="https://teamtrope.com/docs/free-book-promotions-2/">Free Book Promos</a></p>
+          </span>
+        </div>
+        <div>
+          <ul>
           <%= simple_form_for @project,
-                  url: url_for(controller: 'projects', action: 'price_promotion', id: @project),
-                  html: { id: "price_promotion_form" } do | f | %>
-            <div>
-              <span>
-                <p>NOTE: If you are enrolled in KDP Select, DO NOT use this form to schedule your Free or Kindle Countdown
-                  promotions. For KDP promos, please use the "KDP Update" Form located in your book's Project.</p>
-                <p>For more information how to schedule and effectively and execute a free book campaign, check out
-                  <a href="https://teamtrope.com/docs/free-book-promotions/" target="blank">this document</a>.</p>
-                <p>If you choose an iTunes/Force Free promotion, there is NO guarantee your book will go free on Amazon.
-                  Please do not commit to any promotional spend or ads until Amazon has actually made your book free.</p>
-                <p>PLEASE REVIEW THE FREE BOOK PROMOTION GUIDELINES BEFORE PROCEEDING:
-                  <a href="https://teamtrope.com/docs/free-book-promotions-2/">Free Book Promos</a></p>
-              </span>
-            </div>
-            <div>
-              <ul>
-                <%= f.simple_fields_for :price_change_promotions, f.object.price_change_promotions.build do | pcp | %>
-                    <li>
-                      <label>Please select the type of promotion you'd like to schedule<span class="required">*</span></label>
-                      <%= pcp.collection_radio_buttons :type,PriceChangePromotion::PROMOTION_TYPES, :first, :last,
-                        collection_wrapper_tag: 'ul',
-                        item_wrapper_tag: 'li' %>
-                      <div>
-                        *If you are doing a promotion and want a temporary price change but you aren't sure when you'll
-                        want to raise the price again (or what price you'll want to raise it to), use this option.
-                        Please be sure to submit this form again, using the Permanent Price Change option, when you want
-                        the book removed from "free" status and priced on iTunes again.
-                      </div>
-                    </li>
-                    <li class="start_date" style="display: none;">
-                      <%= pcp.input :start_date, as: :date, start_year: Date.today.year, label: 'Start Date' %>
-                      <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(4i)]", "8" %>
-                      <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(5i)]", "0" %>
-                      <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(6i)]", "0" %>
-                    </li>
-                    <li class="price_promotion" style="display: none;">
-                      <%= pcp.input :price_promotion, label: 'Promotion Price' %>
-                    </li>
-                    <li class="end_date" style="display: none;">
-                      <%= pcp.input :end_date, as: :date, start_year: Date.today.year, label: 'End Date' %>
-                      <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(4i)]", "7" %>
-                      <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(5i)]", "59" %>
-                      <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(6i)]", "59" %>
-                    </li>
-                    <li class="price_after_promotion" style="display: none;">
-                      <%= pcp.input :price_after_promotion, label: 'Price After Promotion' %>
-                    </li>
+                url: url_for(controller: 'projects', action: 'price_promotion', id: @project),
+                html: { id: "price_promotion_form" } do | f | %>
 
-                    <li class="temp_price_promotion" style="display: none;">
-                      <label>Get the word out about your $0.99 price promotions and contact the sites below</label>
-                      <%= pcp.collection_check_boxes :sites, PriceChangePromotion::SITES,
-                        :first, :last,
-                        collection_wrapper_tag: 'ul',
-                        item_wrapper_tag: 'li'
-                      %>
-                      <p>If you're doing a $0.99 promotion, we strongly encourage you to submit to these sites to help let readers
-                        know about the deal.  Don't forget to spread the word on social media as well!</p>
-                    </li>
-                <% end %>
+            <%= f.simple_fields_for :price_change_promotions, f.object.price_change_promotions.build do | pcp | %>
+            <li>
+              <label>Please select the type of promotion you'd like to schedule<span class="required">*</span></label>
+              <%= pcp.collection_radio_buttons :type,PriceChangePromotion::PROMOTION_TYPES, :first, :last,
+                    collection_wrapper_tag: 'ul',
+                    item_wrapper_tag: 'li' %>
+              <div>
+                *If you are doing a promotion and want a temporary price change but you aren't sure when you'll
+                want to raise the price again (or what price you'll want to raise it to), use this option.
+                Please be sure to submit this form again, using the Permanent Price Change option, when you want
+                the book removed from "free" status and priced on iTunes again.
+              </div>
+            </li>
 
-                <li class="submit_button" style="display: none;">
-                  <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'price_promotion_submitted_task_id' %>
-                  <%= submit_tag "Submit" %>
-                </li>
-              </ul>
-            </div>
-          <% end %>
+            <li class="start_date" style="display: none;">
+              <%#= pcp.input :start_date, as: :date, start_year: Date.today.year, default: 1.days.from_now, label: 'Start Date' %>
+              <label>Start Date <span class="required">*</span></label>
+              <%= text_field_tag :promotion_start_date_display, nil, id: 'promotion_start_date_display', class: ['fake', 'optional', 'form-control', 'hasDatePicker'], placeholder: 'MM/DD/YYYY'  %><br />
+              <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(1i)]", Date.today.year %>
+              <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(2i)]", Date.today.month %>
+              <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(3i)]", Date.today.day + 1 %>
+              <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(4i)]", "8" %>
+              <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(5i)]", "0" %>
+              <%= hidden_field_tag "project[price_change_promotions_attributes][0][start_date(6i)]", "0" %>
+            </li>
+
+            <li class="price_promotion" style="display: none;">
+              <label>Promotion Price<span class="required">*</span></label>
+              <%= pcp.input :price_promotion, label: false %>
+            </li>
+
+            <li class="end_date" style="display: none;">
+              <%#= pcp.input :end_date, as: :date, start_year: Date.today.year, default: 1.days.from_now, label: 'End Date' %>
+              <label>End Date <span class="required">*</span></label>
+
+
+              <%= text_field_tag :promotion_end_date_display, nil, id: 'promotion_end_date_display', class: ['fake', 'optional', 'form-control', 'hasDatePicker'], placeholder: 'MM/DD/YYYY'  %><br />
+              <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(1i)]", Date.today.year %>
+              <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(2i)]", Date.today.month %>
+              <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(3i)]", Date.today.day + 1 %>
+              <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(4i)]", "7" %>
+              <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(5i)]", "59" %>
+              <%= hidden_field_tag "project[price_change_promotions_attributes][0][end_date(6i)]", "59" %>
+            </li>
+
+            <li class="price_after_promotion" style="display: none;">
+              <label>Price After Promotion<span class="required">*</span></label>
+              <%= pcp.input :price_after_promotion, label: false %>
+            </li>
+
+            <li class="temp_price_promotion" style="display: none;">
+              <label>Get the word out about your $0.99 price promotions and contact the sites below</label>
+              <%= pcp.collection_check_boxes :sites, PriceChangePromotion::SITES,
+                :first, :last,
+                collection_wrapper_tag: 'ul',
+                item_wrapper_tag: 'li'
+              %>
+              <p>If you're doing a $0.99 promotion, we strongly encourage you to submit to these sites to help let readers
+                know about the deal.  Don't forget to spread the word on social media as well!</p>
+            </li>
+
+            <% end # end of simple_fields_for :price_change_promotions %>
+
+            <li class="submit_button" style="display: none;">
+              <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'price_promotion_submitted_task_id' %>
+              <%= f.submit "submit" %>
+            </li>
+          <% end # end of simple_form_for @project %>
+          </ul>
+        </div>
+        <script>
+            $(function() {
+                // This attaches the datepicker to a "fake" input field with the MM/DD/YYYY format that users
+                // are familiar with, but updates a real hidden input field with the date format yyyy-mm-dd
+                // format that Rails wants.
+                $('#promotion_start_date_display').datepicker({
+                    altField: '#promotion_start_date',
+                    altFormat: 'yy-mm-dd',
+                    minDate: '+1d'
+                });
+
+                $('#promotion_end_date_display').datepicker({
+                    altField: '#promotion_end_date',
+                    altFormat: 'yy-mm-dd',
+                    minDate: '+1d'
+                });
+
+                $('#promotion_start_date_display').blur(function() {
+                    $('#price_promotion_form').validate();
+                });
+
+                $('#promotion_end_date_display').blur(function() {
+                    $('#price_promotion_form').validate();
+                });
+            });
+
+            $('#price_promotion_form').submit(function() {
+                // set the actual value
+                setActualDate("start_date");
+                setActualDate("end_date");
+            });
+            function setActualDate(displayDateLabel)
+            {
+              if($('input[name=promotion_'+ displayDateLabel +'_display]').val() != '')
+              {
+                displayDate = $('input[name=promotion_'+ displayDateLabel +'_display]').val()
+                dateParts = displayDate.split('/');
+                $("input[name=project\\[price_change_promotions_attributes\\]\\[0\\]\\["+ displayDateLabel +"\\(1i\\)\\]]").val(dateParts[2]);
+                $("input[name=project\\[price_change_promotions_attributes\\]\\[0\\]\\["+ displayDateLabel +"\\(2i\\)\\]]").val(dateParts[0]);
+                $("input[name=project\\[price_change_promotions_attributes\\]\\[0\\]\\["+ displayDateLabel +"\\(3i\\)\\]]").val(dateParts[1]);
+              }
+              return false;
+
+            }
+        </script>
         <% else %>
           <% if ! @project.try(:kdp_select_enrollment).nil? %>
             <p>This book is in KDP.  Please submit a Booktrope Assistance ticket if you wish to change your price.</p>
