@@ -5,6 +5,13 @@ class AddSocialMediaMarketingTask < ActiveRecord::Migration
     return if pricing_and_promos.nil?
 
     #creating the new tasks
+    social_media_marketing_edit = Task.new
+    social_media_marketing_edit.name = 'Social Media Marketing Edit'
+    social_media_marketing_edit.tab_text = 'Update Social Media'
+    social_media_marketing_edit.partial = 'social_media_marketing_edit'
+    social_media_marketing_edit.icon = 'icon-cogs'
+    social_media_marketing_edit.save
+
     social_media_marketing_view = Task.new
     social_media_marketing_view.name = 'Social Media Marketing View'
     social_media_marketing_view.tab_text = 'Social Media'
@@ -12,13 +19,6 @@ class AddSocialMediaMarketingTask < ActiveRecord::Migration
     social_media_marketing_view.icon = 'icon-file-alt'
     social_media_marketing_view.team_only = false
     social_media_marketing_view.save
-
-    social_media_marketing_edit = Task.new
-    social_media_marketing_edit.name = 'Social Media Marketing Edit'
-    social_media_marketing_edit.tab_text = 'Update Social Media'
-    social_media_marketing_edit.partial = 'social_media_marketing_edit'
-    social_media_marketing_edit.icon = 'icon-cogs'
-    social_media_marketing_edit.save
 
     # add performer roles to social_media_marketing_edit
     performers = Role.where(name: ['Author', 'Book Manager'])
@@ -30,8 +30,8 @@ class AddSocialMediaMarketingTask < ActiveRecord::Migration
     # update unlocked tasks
     production_workflow = Workflow.find_by_name('Production')
     production_workflow.tasks.each do | task |
-      task.unlocked_tasks.create(unlocked_task: social_media_marketing_view)
       task.unlocked_tasks.create(unlocked_task: social_media_marketing_edit)
+      task.unlocked_tasks.create(unlocked_task: social_media_marketing_view)
     end
 
 
@@ -41,17 +41,18 @@ class AddSocialMediaMarketingTask < ActiveRecord::Migration
     phase = pricing_and_promos_tab.phase
     order = pricing_and_promos_tab.order
 
-    social_media_marketing_view_tab = Tab.new
-    social_media_marketing_view_tab.task = social_media_marketing_view
-    social_media_marketing_view_tab.phase = phase
-    social_media_marketing_view_tab.order = order + 1
-    social_media_marketing_view_tab.save
-
     social_media_marketing_edit_tab = Tab.new
     social_media_marketing_edit_tab.task = social_media_marketing_edit
     social_media_marketing_edit_tab.phase = phase
-    social_media_marketing_edit_tab.order = order + 2
+    social_media_marketing_edit_tab.order = order + 1
     social_media_marketing_edit_tab.save
+
+    social_media_marketing_view_tab = Tab.new
+    social_media_marketing_view_tab.task = social_media_marketing_view
+    social_media_marketing_view_tab.phase = phase
+    social_media_marketing_view_tab.order = order + 2
+    social_media_marketing_view_tab.save
+
 
     # adjust all remaining tabs
     remaining_tabs = phase.tabs.joins(:task)

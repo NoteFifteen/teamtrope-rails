@@ -1,7 +1,7 @@
 <div class="container">
   <h1>Social Media Marketing</h1>
 
-  <h4>Books</h4>
+  <h4>Book Pages</h4>
   <% unless @project.control_number.nil? || @project.control_number.not_in_stores? %>
   <div class="row">
     <div class="col-md-16">
@@ -47,7 +47,7 @@
   </p>
   <% end %>
 
-  <% unless @project.social_media_marketing.nil? %>
+  <% unless @project.social_media_marketing.new_record? %>
   <h4>Social Media</h4>
   <div class="row">
     <div class="col-md-16">
@@ -72,12 +72,6 @@
 
     </div>
   </div>
-  <% else %>
-      <p>
-        We would like to collect your social media links to use in marketing your books from a corporate perspective.
-        Please use the 'Update Social Media' Tab to submit social media marketing links. Upon submission they
-        will appear here.
-      </p>
   <% end %>
 
 </div>
