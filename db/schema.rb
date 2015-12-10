@@ -11,11 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151209070738) do
+ActiveRecord::Schema.define(version: 20151209193207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "pg_stat_statements"
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -680,6 +681,8 @@ ActiveRecord::Schema.define(version: 20151209070738) do
     t.integer  "page_count"
     t.date     "target_market_launch_date"
     t.string   "book_type"
+    t.string   "createspace_store_url"
+    t.string   "createspace_coupon_code"
   end
 
   add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree

@@ -649,29 +649,13 @@ class ProjectMailer < ActionMailer::Base
         'Submitted By' => User.find(pc.user_id).name
     }
 
-    case pc.order_type
-      when 'author_copies'
-        tokens.store('Order Type', 'Author Copies')
-        tokens.store('First order?', ((pc.first_order == true) ? 'Yes' : 'No'))
-        tokens.store('Additional copies?', ((pc.additional_order == true) ? 'Yes' : 'No'))
-        tokens.store('Over 125 copies?', ((pc.over_125 == true) ? 'Yes' : 'No'))
-        tokens.store('Agreed to Billing Terms', ((pc.billing_acceptance == true) ? 'Yes' : 'No'))
-      when 'creative_member'
-        tokens.store('Order Type', 'Creative Team Member')
-        tokens.store('Agreed to Billing Terms', ((pc.billing_acceptance == true) ? 'Yes' : 'No'))
-      when 'marketing'
-        tokens.store('Order Type', 'Marketing Purposes')
-        tokens.store('Has author bio', ((pc.has_author_profile == true) ? 'Yes' : 'No'))
-        tokens.store('Has Marketing Plan', ((pc.has_marketing_plan == true) ? 'Yes' : 'No'))
-        tokens.store('Marketing Plan', pc.marketing_plan_link)
+    tokens.store('Order Type', 'Author Copies')
+    tokens.store('First Order', (project.print_corners.size <= 1) ? 'Yes' : 'No')
 
-        if(pc.marketing_copy_message != '')
-          tokens.store('Marketing Message', ('<pre>' + pc.marketing_copy_message + '</pre>').html_safe)
-        end
-    end
+    tokens.store('Agreed to Billing Terms', ((pc.billing_acceptance == true) ? 'Yes' : 'No'))
 
     tokens.store('Quantity', pc.quantity)
-    tokens.store('Ship To name', pc.shipping_recipient)
+    tokens.store('Ship to Name', pc.shipping_recipient)
     tokens.store('Phone Contact', pc.contact_phone)
 
     tokens.store('Address 1', pc.shipping_address_street_1)
@@ -681,10 +665,6 @@ class ProjectMailer < ActionMailer::Base
     tokens.store('Zip', pc.shipping_address_zip)
     tokens.store('Country', pc.shipping_address_country)
 
-    if(pc.expedite_instructions != '')
-      tokens.store('Expedite Instructions', ('<pre>' + pc.expedite_instructions + '</pre>').html_safe)
-    end
-
     tokens.store('Email', email_address_link(current_user).html_safe)
 
     user_subject = "Print Corner from #{current_user.name} for #{project.title}"
@@ -692,6 +672,17 @@ class ProjectMailer < ActionMailer::Base
 
     send_email_message('print_corner', tokens, get_project_recipient_list(@project, send_submitter: true, roles: [:author]), user_subject)
     send_email_message('print_corner_admin', tokens, admin_print_corner_list, admin_subject)
+  end
+
+  # User has requested Adam set up an e-Store
+  def print_corner_estore_request(project, current_user)
+    @project = project
+    @current_user = current_user
+    user_subject = "Print Corner eStore Request from #{current_user.name} for #{project.title}"
+    admin_subject = "New " + user_subject
+
+    send_email_message('print_corner_estore_request', {}, get_project_recipient_list(@project, send_submitter: true, roles: [:author]), user_subject)
+    send_email_message('print_corner_estore_request_admin', {}, admin_print_corner_list, admin_subject)
   end
 
   def kdp_select_enrollment(project, current_user)

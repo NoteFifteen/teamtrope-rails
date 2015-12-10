@@ -4,447 +4,222 @@
   <h1>Print Corner</h1>
   <div class="row">
     <div class="col-md-8">
-      <%= simple_form_for @project,
-                 url: url_for(controller: 'projects', action: 'print_corner_request', id: @project),
-                 html: { id: 'add_print_request_form' } do | f | %>
-        <%= f.error_notification %>
-        <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'print_corner_submitted_task_id' %>
 
-        <%= f.simple_fields_for :print_corners, f.object.print_corners.build do | pc | %>
-          <%= pc.input :user_id, as: :hidden, input_html: { value: @current_user.try(:id) }  %>
+      <!-- Disclosure -->
+      <div>
+        <ol>
+          <li>All Authors US and International will be provided with 15 complimentary copies of each newly published book
+            by placing your order via Print Corner (we recommend 10 for author use, 5 for marketing use, if so desired.</li>
+          <li>US Authors Only- Additional copies can be ordered by the author directly from the book’s Createspace e-store.
+            Authors will be provided with a link to their book's unique e-store and a coupon code to use every time they
+            place an order. This coupon code will enable authors to receive a 55% discount on each order (plus shipping
+            and any applicable tax). The creative team (including the author) will receive royalties on these orders.</li>
+          <li>Many of you want your creative team to earn royalties on author copies. For this to be possible, we can
+            no longer offer copies at cost. However we have increased the discount to 55% off list price so they remain
+            attractive to authors for events and so your creative team will be compensated.</li>
+          <li>Paperback marketing copies will no longer be sent directly from Booktrope – authors and book managers will
+            be responsible for coordinating with each other and sending these copies (to reviewers, contest winners,
+            etc.) Marketing copies in the past were treated as a marketing expense. They have now been included with
+            the author copies and are no longer charged to the team yeah.</li>
+          <li>Creative Team Member Copies, US Only – Creative team members will also have access to the book’s
+            Createspace e-store and coupon code and can purchase books at a 55% discount.</li>
+          <li>There is no longer an option to purchase books from Lightning Source for author copies. If you wish to
+            have copies from LS, you will need to purchase copies through Barnes and Noble. Unfortunately, this will
+            not include the 55% discount available via Createspace.</li>
+          <li>International Authors will still place your initial and all subsequent orders via the Print tab in the
+            book's Project. Any request beyond the initial 15 orders will be discounted 55% off list price (plus shipping
+            and any applicable tax).  International Authors will continue to be invoiced by Booktrope via Paypal.</li>
+          <li>US and International Authors- Paperback orders will no longer be treated as an advance against royalties.</li>
+        </ol>
+      </div>
 
-            <div>
-                <span>Please wait until your book is available for sale on Amazon or Barnes and Noble before placing your order.<br><br>
-                PLEASE NOTE WE CANNOT SHIP TO PO BOXES.  YOU MUST PROVIDE A PHYSICAL ADDRESS OR YOUR ORDER WILL BE REJECTED.</span>
-            </div>
+      <%
+         has_first_order = ! @project.print_corners.first.nil?
+         first_order_intl = has_first_order && @project.print_corners.first.try(:shipping_address_country) != 'United States'
 
-            <div>
-              <ul>
-                <li>
-                  <label>I'm ready to order print copies of my books!<span class="required">*</span></label>
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <%= pc.input :order_type, label: false,
-                                   collection: PrintCorner::OrderTypes,
-                                   label_method: :last, value_method: :first,
-                                   include_blank: false,
-                                   input_html: {
-                                           id: 'print_corner_type'
-                                   },
-                                   required: true
-                      %>
-                    </div>
-                  </div>
+         # Determine if user is the author
+         current_user_is_author = false
+         @project.authors.each{ |a| current_user_is_author = true if (a.member.id == @current_user.id) }
 
-                  <div>For more information on print copies, please visit our policy <a href="https://teamtrope.com/docs/booktrope-policy-author-copies/" target="_top">here</a>.
-                    <p>PLEASE NOTE:  RETURNS ARE NOT ALLOWED ON ANY TYPE OF ORDER FROM BOOKTROPE</p>
-                  </div>
-                </li>
-                <li id="pc_author_copies" style="display: block;">
-                  <label>Author Copies<span class="required">*</span></label>
-                  <div>
-                    <ul>
-                      <li>
-                        <%= pc.input :first_order, as: :boolean, input_html: { class: 'author_copies_select' },
-                                     label: 'This is my first order.  I understand the first 10 are complimentary, next 15 treated as an advance on royalties.' %>
-                      </li>
-                      <li>
-                        <%= pc.input :additional_order, as: :boolean, input_html: { class: 'author_copies_select' },
-                                     label: "I want to order additional author copies beyond my allotted 25.  I understand that I will be invoiced for these copies at cost up to 100 books." %>
-                      </li>
-                      <li>
-                        <%= pc.input :over_125, as: :boolean, input_html: { class: 'author_copies_select' },
-                                     label: "I've already received 125 copies. I understand I will be invoiced at 50% off list price for all add'l copies." %>
-                      </li>
-                    </ul>
-                  </div>
+        # Testing Overrides here
+        # has_first_order = false
+        # first_order_intl = false
+        # current_user_is_author = true
+      %>
 
-                  <div><p>Authors please note:  If you've already received 100 copies in total, you will be invoiced at
-                    50% off list price.</p>
-                    <p>Unless this is my first order for less than 25 copies, I acknowledge that I am responsible for
-                      the full cost of this order, including books and shipping. I understand I will be billed via
-                      Paypal per the terms specified in the Booktrope Author and Team Member Copies Policy found here:
-                      <a href="https://teamtrope.com/docs/booktrope-policy-author-copies/" target="_top">https://teamtrope.com/docs/booktrope-policy-author-copies/</a> Payment is due immediately upon
-                      receipt of the bill. Failure to pay this bill in a timely manner will result in suspension of my
-                      ability to order print copies directly from Booktrope in the future.</p>
-                  </div>
-                </li>
+      <!-- See if they've submitted before -->
+      <!-- If they're not international, direct them to CreateSpace, show a coupon code -->
+      <% if has_first_order && ! first_order_intl || ! current_user_is_author %>
 
-                <li id="pc_billing_acceptance" style="display: block;">
-                  <label>Billing Acceptance<span class="required">*</span></label>
-                  <div>
-                    <ul>
-                      <li>
-                        <%= pc.input :billing_acceptance, as: :boolean, label: "By checking the box, I am stating I agree to the terms below." %>
-                      </li>
-                    </ul>
-                  </div>
-                  <div><p>I understand I will be billed via Paypal per the terms specified in the Print Books found here:
-                    <a href="https://teamtrope.com/docs/booktrope-policy-author-copies/" target="_top">https://teamtrope.com/docs/booktrope-policy-author-copies/</a></p>
-                    <p>Payment is due immediately upon receipt of the bill.  Failure to pay this bill in a timely manner
-                      will result in suspension of my ability to order print copies directly from Booktrope in the future.</p>
-                  </div>
-                </li>
+          <!-- If we have the eBook Store Info -->
+          <% if ! @project.createspace_store_url.nil? %>
+              <h3>e-Store Info</h3>
+              <b>CreateSpace Store URL</b>: <%= link_to @project.createspace_store_url, @project.createspace_store_url %><br/>
+              <b>CreateSpace Discount Code</b>: <%= @project.createspace_coupon_code %><br/>
+          <% else %>
+            <!-- If we're the author and the eBook Store info isn't there, contact Adam -->
+            <% if current_user_is_author %>
+              <p><b>It looks like your store hasn't been set up yet.  If you'd like, you can send a request to have your store
+              set up by clicking the button below.</b></p>
 
-                <!-- Optional -->
-                <li id="pc_marketing_checkboxes" style="display: none;">
-                  <label>Before you can order copies for marketing purposes, the following items must be completed:<span class="required">*</span></label>
-                  <div>
-                    <ul>
-                      <li>
-                        <%= pc.input :has_author_profile, as: :boolean, label: "I (or the author I am ordering for) have an author profile filled out in my teamroom" %>
-                      </li>
-                      <li>
-                        <%= pc.input :has_marketing_plan, as: :boolean, label: "I have a marketing plan that I am contributing to in my teamroom and I've provided a link to it below." %>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
+              <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'print_corner_estore_request', id: @project) do | f | %>
+                <%= f.submit 'Request an e-Store' %>
+              <% end %>
 
-                <li id="pc_marketing_plan_link" style="display: none;">
-                  <label>Link to Marketing Plan<span class="required">*</span></label>
-                  <div>
-                    <%= pc.input :marketing_plan_link, label: false, input_html: { class: 'form-control', placeholder: 'http://' } %>
-                  </div>
-                  <div>Please include a hyperlink to your active marketing plan in your teamroom in order to receive book copies for marketing purposes.</div>
-                </li>
+            <% else %>
+              <!-- Notice for everyone else -->
+              <p><b>Sorry, the e-Store has not been set up yet.  Please check back later!</b></p>
 
-                <li id="pc_quantity" style="display: block;">
-                  <label id="pc_quantity_author" >Quantity for Author Orders<span class="required">*</span></label>
-                  <label id="pc_quantity_creative" style="display: none">Quantity for Creative Team Member<span class="required">*</span></label>
-                  <label id="pc_quantity_marketing" style="display: none">Quantity to be shipped for Marketing Purposes<span class="required">*</span></label>
-
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div class="input-group">
-                        <%= pc.input :quantity, label:false, class: 'form-control' %>
-                        <span class="input-group-addon">Qty</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-12">
-                      <!-- Author Disclosure -->
-                      <span id="pc_author_disclosure">Our standard is to provide 15 copies as an author advance (the first 10 are complimentary). </span>
-                      <!-- Creative Disclosure -->
-                      <span id="pc_creative_disclosure" style="display: none">Please note you will be invoiced at 50% off list price.  You must order a minimum of 10 copies.</span>
-                      <span id="pc_marketing_disclosure" style="display: none">We allow 5 print copies (and unlimited ebooks) to be used for marketing purposes.  This includes high profile book bloggers, contest awards, etc.  If you require more, please explain why below.</span>
-                    </div>
-                  </div>
-                </li>
-
-                <li id="pc_ship_to_name">
-                  <label>Ship To Name<span class="required">*</span></label>
-                  <div>
-                    <%= pc.input :shipping_recipient, label: false %>
-                  </div>
-                </li>
-
-                <li id="pc_shipping_address" style="display: block;">
-                  <!-- Author / Creative -->
-                  <h4>Shipping Address<span class="required">*</span></h4>
-                  <!-- Marketing -->
-                  <label style="display: none;">Shipping Address for Marketing Copies<span class="required">*</span></label>
-
-                  <div>
-                    <div>
-                      <label>Street Address</label>
-                      <%= pc.input :shipping_address_street_1, label: false %>
-                    </div>
-
-                    <div>
-                      <label>Address Line 2</label>
-                        <%= pc.input :shipping_address_street_2, label: false %>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>City</label>
-                        <%= pc.input :shipping_address_city, label: false, input_html: { id: 'pc_shipping_city' } %>
-                      </div>
-                      <div class="col-md-6">
-                        <!-- Marketing Only-->
-                        <div id="pc_shipping_state_list" style="display: none;">
-                          <label>State</label>
-                          <%
-                          #  pc.input :shipping_address_state, label: false, collection: us_states_list, label_method: :last, value_method: :first, required: false
-                          %>
-                        </div>
-
-                        <!-- Author / Creative only-->
-                        <div id="pc_shipping_state">
-                          <label>State / Province / Region</label>
-                          <%= pc.input :shipping_address_state, label: false %>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>ZIP / Postal Code</label>
-                        <%= pc.input :shipping_address_zip, label: false %>
-                      </div>
-                      <div class="col-md-6">
-                        <div id="pc_country_list">
-                        <!-- Country Selection // Author / Creative only -->
-                        <label>Country</label>
-                        <%= pc.input :shipping_address_country, label: false,
-                                     collection: countries_list,
-                                     label_method: :last, value_method: :first,
-                                     :selected => 'United States',
-                                     include_blank: false,
-                                     required: false
-                        %>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <span id="pc_market_ship_disclosure">We will only ship print copies within the United States.</span>
-                </li>
-
-
-                <!-- Optional -->
-                <li id="pc_marketing_copy_msg" style="display: none;">
-                  <label>Message to be included with marketing copy</label>
-                  <div>
-                    <%= pc.input :marketing_copy_message,
-                                 label: false,
-                                 required: false,
-                                 as: :text,
-                                 input_html: { rows: 10, cols: 50 } %>
-                    <!-- <span>0 of 250 max characters</span> -->
-                  </div>
-                  <div>If you would like to include a personalized message with your book, please type EXACTLY what you want it to read below.  Messages are limited to 5 lines and 250 characters.  We will copy and paste your information into the order.</div>
-                </li>
-
-                <li id="pc_contact_phone">
-                  <label>Phone<span class="required">*</span></label>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <div class="input-group">
-                        <%= pc.input :contact_phone, label: false, input_html: { class: 'form-control' } %>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>Our print partners require a phone number so the delivery carrier can call if there are any special instructions.</div>
-                </li>
-
-                <li id="pc_expedite_instructions" style="display: block;">
-                  <label>Do you need your books to arrive by a certain date?*</label>
-                  <div>
-                    <%= pc.input :expedite_instructions,
-                                 label: false,
-                                 required: false,
-                                 as: :text,
-                                 input_html: { rows: 10, cols: 50 } %>
-
-                    <!-- <span>0 of 250 max characters</span> -->
-                  </div>
-                  <div>
-                    <p>If so, please indicate the date and reason (event, etc).</p>
-                    <p>*PLEASE NOTE:  Standard printing and shipping time is 3 weeks.  If you want us to try to expedite
-                      this, our team will be in contact with you for options and you will be charged upfront for any
-                      additional costs.</p>
-                  </div>
-                </li>
-              </ul>
-            </div>
+            <% end %>
           <% end %>
-        <div>
-        <br>
-          <%= f.submit "Submit" %>
-        </div>
+      <% else %>
+        <p>
+          In order to process your complimentary order of 15 books and to set up your Createspace e-store and discount
+          code, follow the steps below.
+        </p>
+        <p>
+          Once you’ve completed the form, your 15 complimentary copies will be sent to you and your Createspace
+          e-store/coupon code will be set up. To order additional copies, you will need to place your order via the
+          Createspace e-store. You will be provided with the link to your e-store and your coupon code once it’s been
+          set up. The same link and coupon code can be used for all orders moving forward.
+        </p>
+        <p>
+          If you have any questions, please feel free to submit a help ticket via the “Booktrope Assistance” link on the
+          right-hand side of the page.
+        </p>
 
+
+        <!-- New Submissions here -->
+          <%= simple_form_for @project,
+                              url: url_for(controller: 'projects', action: 'print_corner_request', id: @project),
+                              html: { id: 'add_print_request_form' } do | f | %>
+              <%= f.error_notification %>
+              <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'print_corner_submitted_task_id' %>
+
+              <%= f.simple_fields_for :print_corners, f.object.print_corners.build do | pc | %>
+                  <%= pc.input :user_id, as: :hidden, input_html: { value: @current_user.try(:id) }  %>
+
+                  <div>
+                    <p>Please wait until your book's Publication Fact Sheet has been submitted before placing your order.</p>
+                  </div>
+
+                  <div>
+                    <ul>
+                      <li id="pc_billing_acceptance" style="display: block;">
+                        <label>Billing Acceptance<span class="required">*</span></label>
+                        <div>
+                          <ul>
+                            <li>
+                              <%= pc.input :billing_acceptance, as: :boolean, label: "By checking the box, I am stating I agree to the terms below." %>
+                            </li>
+                          </ul>
+                        </div>
+                        <div><p>I understand I will be billed via Paypal per the terms specified in the Print Books found here:
+                          <a href="https://teamtrope.com/docs/booktrope-policy-author-copies/" target="_top">https://teamtrope.com/docs/booktrope-policy-author-copies/</a></p>
+                          <p>Payment is due immediately upon receipt of the bill.  Failure to pay this bill in a timely manner
+                            will result in suspension of my ability to order print copies directly from Booktrope in the future.</p>
+                        </div>
+                      </li>
+
+                      <!-- Make hidden?  Or hard-code?  -->
+                      <%= pc.input :quantity, as: :hidden, input_html: { value: 15 }, label:false %>
+
+                      <li id="pc_ship_to_name">
+                        <label>Ship To Name<span class="required">*</span></label>
+                        <div>
+                          <%= pc.input :shipping_recipient, label: false %>
+                        </div>
+                      </li>
+
+                      <li id="pc_shipping_address" style="display: block;">
+                        <!-- Author / Creative -->
+                        <h4>Shipping Address<span class="required">*</span></h4>
+                        <!-- Marketing -->
+                        <label style="display: none;">Shipping Address for Marketing Copies<span class="required">*</span></label>
+
+                        <div>
+                          <div>
+                            <label>Street Address</label>
+                            <%= pc.input :shipping_address_street_1, label: false %>
+                          </div>
+
+                          <div>
+                            <label>Address Line 2</label>
+                            <%= pc.input :shipping_address_street_2, label: false %>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-6">
+                              <label>City</label>
+                              <%= pc.input :shipping_address_city, label: false, input_html: { id: 'pc_shipping_city' } %>
+                            </div>
+                            <div class="col-md-6">
+                              <div id="pc_shipping_state">
+                                <label>State / Province / Region</label>
+                                <%= pc.input :shipping_address_state, label: false %>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-6">
+                              <label>ZIP / Postal Code</label>
+                              <%= pc.input :shipping_address_zip, label: false %>
+                            </div>
+                            <div class="col-md-6">
+                              <div id="pc_country_list">
+                                <!-- Country Selection // Author / Creative only -->
+                                <label>Country</label>
+                                <%= pc.input :shipping_address_country, label: false,
+                                             collection: countries_list,
+                                             label_method: :last, value_method: :first,
+                                             :selected => 'United States',
+                                             include_blank: false,
+                                             required: false
+                                %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li id="pc_contact_phone">
+                        <label>Phone<span class="required">*</span></label>
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <div class="input-group">
+                              <%= pc.input :contact_phone, label: false, input_html: { class: 'form-control' } %>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>Our print partners require a phone number so the delivery carrier can call if there are any special instructions.</div>
+                      </li>
+
+                    </ul>
+                  </div>
+              <% end %>
+              <div>
+                <br>
+                <%= f.submit "Submit" %>
+              </div>
+
+          <% end %>
+        <!-- End New Submission -->
       <% end %>
+
     </div>
   </div>
 </div>
 <script type="text/javascript">
-  /**
-   * Switches the layout for Author
-   */
-  function enable_author_copies()
-  {
-      var disable = [
-        'pc_quantity_creative', 'pc_creative_disclosure', 'pc_marketing_checkboxes', 'pc_marketing_plan_link',
-        'pc_quantity_creative', 'pc_quantity_marketing', 'pc_marketing_disclosure', 'pc_shipping_state_list',
-        'pc_marketing_copy_msg', 'pc_market_ship_disclosure', 'pc_marketing_checkboxes'
-      ];
-
-      var enable = [
-        'pc_author_copies', 'pc_billing_acceptance', 'pc_quantity_author', 'pc_author_disclosure', 'pc_ship_to_name',
-        'pc_shipping_address', 'pc_shipping_state', 'pc_contact_phone', 'pc_expedite_instructions', 'pc_country_list'
-      ];
-
-      toggleVisibility(enable, disable);
-  }
-
-  /**
-   * Switches the layout for Creative
-   */
-  function enable_creative_member()
-  {
-      var disable = [
-        'pc_quantity_author', 'pc_author_disclosure', 'pc_author_copies', 'pc_marketing_checkboxes',
-        'pc_marketing_plan_link', 'pc_quantity_marketing', 'pc_marketing_disclosure', 'pc_shipping_state_list',
-        'pc_marketing_checkboxes', 'pc_market_ship_disclosure'
-      ];
-
-      var enable = [
-        'pc_billing_acceptance', 'pc_quantity_creative', 'pc_ship_to_name', 'pc_shipping_address',
-        'pc_shipping_state', 'pc_country_list', 'pc_contact_phone', 'pc_expedite_instructions'
-      ];
-
-      toggleVisibility(enable, disable);
-  }
-
-  /**
-   * Enables the boiler-plate marketing layout.
-   */
-  function enable_marketing()
-  {
-      var disable = [
-        'pc_billing_acceptance', 'pc_shipping_address', 'pc_shipping_state', 'pc_shipping_state_list', 'pc_country_list',
-        'pc_contact_phone', 'pc_expedite_instructions', 'pc_author_copies', 'pc_billing_acceptance', 'pc_quantity',
-        'pc_quantity_author', 'pc_quantity_creative', 'pc_author_disclosure'
-      ];
-
-      var enable = [ 'pc_marketing_checkboxes', 'pc_ship_to_name', 'pc_contact_phone' ];
-
-      toggleVisibility(enable, disable);
-      enable_marketing_steps();
-  }
-
-  /**
-   * Enables the marketing steps based on which check-boxes are selected.
-   */
-  function enable_marketing_steps()
-  {
-      var market_field_list = [
-        'pc_quantity', 'pc_quantity_marketing', 'pc_marketing_disclosure', 'pc_shipping_address', 'pc_shipping_state',
-        'pc_market_ship_disclosure', 'pc_marketing_copy_msg'
-      ];
-
-      var author_profile_checked =  $('#project_print_corners_attributes_0_has_author_profile').is(':checked');
-      var market_plan_checked =  $('#project_print_corners_attributes_0_has_marketing_plan').is(':checked');
-
-      if(market_plan_checked) {
-          toggleVisibility(['pc_marketing_plan_link'], []);
-      } else {
-          toggleVisibility([], ['pc_marketing_plan_link']);
-      }
-
-      if (author_profile_checked && market_plan_checked) {
-        toggleVisibility(market_field_list, []);
-      } else {
-        toggleVisibility([], market_field_list);
-      }
-  }
-
-  /**
-   * Enables & disables elements with their id's listed in arrays
-   *
-   * @param enable_list []
-   * @param disable_list []
-   */
-  function toggleVisibility(enable_list, disable_list)
-  {
-      $(disable_list).each(function(key, id){
-          $('#' + id).hide();
-      });
-
-      $(enable_list).each(function(key, id){
-          $('#' + id).show();
-      });
-  }
-
-  var request_type = $('#print_corner_type');
-  request_type.change(function(){
-      var current_value = request_type.find('option:selected').val();
-      switch(current_value) {
-          case 'author_copies':
-              enable_author_copies();
-              break;
-          case 'creative_member':
-              enable_creative_member();
-              break;
-          case 'marketing':
-              enable_marketing();
-              break;
-      }
-  });
-
-  $('#project_print_corners_attributes_0_has_author_profile').change(function(){
-      // Enable fields based on whether they're checked
-      enable_marketing_steps()
-  });
-
-  $('#project_print_corners_attributes_0_has_marketing_plan').change(function(){
-      // Enable fields based on whether they're checked
-      enable_marketing_steps()
-  });
-
-  function validate_author_copy()
-  {
-      // Skip if it's not author copies
-      if(!( $('#print_corner_type').val() == 'author_copies' )) {
-          return true;
-      }
-
-      // One of the three needs to be checked
-      var first_order_checked = $('#project_print_corners_attributes_0_first_order').is(':checked');
-      var additional_order_checked = $('#project_print_corners_attributes_0_additional_order').is(':checked');
-      var over_125_checked = $('#project_print_corners_attributes_0_over_125').is(':checked');
-
-      var result =  (first_order_checked || additional_order_checked || over_125_checked);
-      return (! result);
-  }
-
   $(document).ready(function(){
       var validator = $('#add_print_request_form').validate({
           rules: {
 
-              // One of these three is required if Author Copy is selected
-              'project[print_corners_attributes][0][first_order]' : {
-                  required: {
-                      depends: function (element) {
-                          return validate_author_copy();
-                      }
-                  }
-              },
-              'project[print_corners_attributes][0][additional_order]' : {
-                  required: {
-                      depends: function (element) {
-                          return validate_author_copy();
-                      }
-                  }
-              },
-              'project[print_corners_attributes][0][over_125]' : {
-                  required: {
-                      depends: function (element) {
-                          return validate_author_copy();
-                      }
-                  }
-              },
-
               // Required for Author Copy or Creative
               'project[print_corners_attributes][0][billing_acceptance]': {
-                  required: {
-                      depends: function (element) {
-                          var type =  $('#print_corner_type').val();
-                          return (type == 'author_copies' || type == 'creative_member')
-                      }
-                  }
-              },
-
-              // Should probably validate the quantity
-              'project[print_corners_attributes][0][quantity]': {
                   required: true
               },
-
               'project[print_corners_attributes][0][shipping_recipient]': {
                   required: true
               },
@@ -465,17 +240,8 @@
               }
           },
           messages: {
-              'project[print_corners_attributes][0][first_order]' :
-                      'You must select one or more options.',
-              'project[print_corners_attributes][0][additional_order]' :
-                      'You must select one or more options.',
-              'project[print_corners_attributes][0][over_125]' :
-                      'You must select one or more options.',
-
               'project[print_corners_attributes][0][billing_acceptance]':
                       'You must accept the billing terms to proceed',
-              'project[print_corners_attributes][0][quantity]':
-                      'Please select a quantity',
               'project[print_corners_attributes][0][shipping_recipient]':
                       'Please enter a recipient name for this shipment',
               'project[print_corners_attributes][0][shipping_address_street_1]':

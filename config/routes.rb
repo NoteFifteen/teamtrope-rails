@@ -75,6 +75,7 @@ Rails.application.routes.draw do
   match '/projects/production_expense/:id',       to: 'projects#production_expense',       via: 'patch'
   match '/projects/price_promotion/:id',          to: 'projects#price_promotion',          via: 'patch'
   match '/projects/print_corner_request/:id',     to: 'projects#print_corner_request',     via: 'patch'
+  match '/projects/print_corner_estore_request/:id',     to: 'projects#print_corner_estore_request',     via: 'patch'
   match '/projects/proofed_manuscript/:id',       to: 'projects#proofed_manuscript',       via: 'patch'
   match '/projects/publish_book/:id',             to: 'projects#publish_book',             via: 'patch'
   match '/projects/remove_team_member/:id',       to: 'projects#remove_team_member',       via: 'patch'
