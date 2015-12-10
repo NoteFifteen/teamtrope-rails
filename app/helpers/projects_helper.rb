@@ -24,14 +24,14 @@ module ProjectsHelper
 
     unless filter_by.nil? || !filters.has_key?(filter_by.to_sym)
       if filter_by.to_sym == :all
-        @projects = ProjectGridTableRow.includes(:project).all
+        @projects = ProjectGridTableRow.includes(project: [:cover_template]).all
       elsif filter_by.to_sym == :my_books
         get_my_projects
       else
         @grid_title =  filters[filter_by.to_sym][:label]
         @grid_title =  filters[filter_by.to_sym][:task_name] if @grid_title.empty?
         pgtr_meta_hash = filters[filter_by.to_sym]
-        @projects = ProjectGridTableRow.includes(:project).where("#{pgtr_meta_hash[:workflow_name]}_task_name = ?", pgtr_meta_hash[:task_name])
+        @projects = ProjectGridTableRow.includes(project: [:cover_template]).where("#{pgtr_meta_hash[:workflow_name]}_task_name = ?", pgtr_meta_hash[:task_name])
       end
     end
   end

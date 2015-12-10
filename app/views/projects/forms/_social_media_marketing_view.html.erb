@@ -47,7 +47,7 @@
   </p>
   <% end %>
 
-  <% unless @project.social_media_marketing.new_record? %>
+  <% unless @project.social_media_marketing.try(:new_record?) %>
   <h4>Social Media</h4>
   <div class="row">
     <div class="col-md-16">
