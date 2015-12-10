@@ -70,6 +70,18 @@ class User < ActiveRecord::Base
     "https://teamtrope.com/members/#{nickname}"
   end
 
+  # Converts display_name into last name first separated by a comma.
+  # display_name: Andy Roberts Output: Roberts, Andy
+  # display_name: John Smith Sr. Output: Smith Sr., John
+  def last_name_first
+    if display_name
+      name_parts = display_name.split(' ')
+      [name_parts[1, name_parts.length].join(' '), name_parts[0]].join(', ')
+    else
+      "" # return empty string instead of nil if no display_name
+    end
+  end
+
   def self.find_for_wordpress_oauth2(oauth, signed_in_user=nil)
     #if the user was already signed in / but they navigated through the authorization with wordpress
     if signed_in_user

@@ -10,6 +10,11 @@ class TeamMembership < ActiveRecord::Base
 
   has_one :hellosign_document
 
+  # delegate display name and last_name_first to the member association
+  # to allow_nil to true eliminates the need to use try.
+  # ex: team_membership.try(:member).try(:display_name) => team_membership.display_name
+  delegate :display_name, :last_name_first, to: :member, allow_nil: true
+
   # callbacks - when a team_membership has been created or the percentage has been
   # modified create and send a signing request via hellsign
   after_create :send_creative_team_agreement, unless: :skip_callbacks

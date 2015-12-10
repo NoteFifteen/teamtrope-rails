@@ -236,7 +236,7 @@ class ProjectMailer < ActionMailer::Base
         'Does your book contain sub-chapters?' => (params[:project]['has_sub_chapters'] == 'true') ? 'Yes, and all sub-section headers are indicated by increments of increasing font sizes' : 'No',
         'Does your manuscript contain images?' => (params['does_contain_images'] != '0') ? 'Yes' : 'No',
         'Imprint' => (! @project.imprint.nil?) ? @project.try(:imprint).try(:name) : 'N/A',
-        'Project Type' => (! @project.book_type.nil?) ? Project::BOOK_TYPES.map{|n| n.reverse}.to_h[@project.book_type] : 'N/A'
+        'Project Type' => @project.book_type_pretty
       }
 
 

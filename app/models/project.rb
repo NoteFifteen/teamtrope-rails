@@ -96,6 +96,10 @@ class Project < ActiveRecord::Base
     ['ebook and print', 'ebook_and_print']
   ]
 
+  def book_type_pretty
+    book_type.nil?? "" : BOOK_TYPES.map{ |n| n.reverse }.to_h[book_type]
+  end
+
   # Not an actual column, but used in the ProjectsController
   attr_accessor :blurb_approval_decision
 
