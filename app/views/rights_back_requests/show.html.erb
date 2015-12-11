@@ -1,0 +1,106 @@
+<p id="notice"><%= notice %></p>
+
+<% pgtr = @rights_back_request.project.project_grid_table_row %>
+
+<p>
+  <strong>Project:</strong>
+  <%= link_to @rights_back_request.project.title, @rights_back_request.project %>
+</p>
+
+<p>
+  <strong>Submitted by Name:</strong>
+  <%= @rights_back_request.submitted_by_name %>
+</p>
+
+<p>
+  <strong>Submitted by ID:</strong>
+  <%= @rights_back_request.submitted_by_id %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @rights_back_request.title %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @rights_back_request.author %>
+</p>
+
+<p>
+  <strong>Reason:</strong>
+  <%= @rights_back_request.reason %>
+</p>
+
+<p>
+  <strong>Proofread:</strong>
+  <%= @rights_back_request.proofed %>
+</p>
+
+<p>
+  <strong>Edited:</strong>
+  <%= @rights_back_request.edited %>
+</p>
+
+<p>
+  <strong>Published:</strong>
+  <%= @rights_back_request.published %>
+</p>
+
+<p>
+  <strong>Production Task Name</strong>
+  <%= pgtr.production_task_name %>
+</p>
+
+<p>
+  <strong>Production Task Last Update</strong>
+  <%= pgtr.production_task_last_update %>
+</p>
+
+<p>
+  <strong>Design Task Name</strong>
+  <%= pgtr.design_task_name %>
+</p>
+
+<p>
+  <strong>Design Task Last Update</strong>
+  <%= pgtr.design_task_last_update %>
+</p>
+
+<p>
+  <strong>Marketing Task Name</strong>
+  <%= pgtr.marketing_task_name %>
+</p>
+
+<p>
+  <strong>Marketing Task Last Update</strong>
+  <%= pgtr.marketing_task_last_update %>
+</p>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Role</th>
+    <th>Member</th>
+    <th>Percentage Allocated</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% total_suggested = 0.0 %>
+  <% @rights_back_request.project.team_allocations.each do | role | %>
+      <tr>
+        <td><%= role[:role_name] %></td>
+        <td><%= role[:member_name] %></td>
+        <td><%= role[:allocated_percentage] %>%</td>
+      </tr>
+  <% end %>
+  </tbody>
+  </table>
+
+<p>
+  <strong>Total Allocation</strong>
+  <%= @rights_back_request.project.total_team_percent_allocation %> %
+</p>
+
+<%= link_to 'Edit', edit_rights_back_request_path(@rights_back_request) %> |
+<%= link_to 'Back', rights_back_requests_path %>

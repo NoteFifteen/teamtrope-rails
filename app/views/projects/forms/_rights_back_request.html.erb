@@ -1,0 +1,43 @@
+<div class="container">
+  <h1>Rights Back Request</h1>
+  <div class="row">
+    <div class="col-md-8">
+
+      <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'rights_back_request',
+            id: @project), html: { id: 'rights_back_request' } do | f | %>
+        <%= f.simple_fields_for :rights_back_request,
+          ((f.object.rights_back_request.nil?) ? f.object.build_rights_back_request : f.object.rights_back_request) do | rbr | %>
+
+          <p>
+            We have situations where it is mutually beneficial for an author to receive rights back for a title. Please
+            use this form to begin the process. This form is only visible to select Booktrope staff.
+          </p>
+
+          <p>
+            <%= rbr.input :title %>
+
+            <%= rbr.input :author %>
+
+            <%= rbr.input :reason, label: 'Reason for leaving' %>
+          </p>
+
+          <p>
+            <%= rbr.input :proofed, as: :boolean, label: 'This title has been proofread' %>
+          </p>
+          <p>
+            <%= rbr.input :edited, as: :boolean, label: 'This title has been edited' %>
+          </p>
+          <p>
+            <%= rbr.input :published, as: :boolean, label: 'This title has been published' %>
+          </p>
+
+          <%= rbr.input :submitted_by_name, label: 'Person submitting form',  input_html: { value: @current_user.display_name } %>
+          <%= rbr.input :submitted_by_id, as: :hidden, label: false, input_html: { value: @current_user.id } %>
+
+          <%= f.submit 'Submit Request' %>
+
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

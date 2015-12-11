@@ -71,14 +71,16 @@
     <% merged_array.uniq! %>
 
     <% @project.project_type.project_view.phases.each do | phase | %>
-        <!-- rails tabs -->
+        <!-- Phase Rows -->
         <div class="pcss3t pcss3t-icons-left  pcss3t-height-auto pcss3t-theme-3-<%= phase.color %>">
             <input type="radio" name="pcss3t0<%= phase.order %>" checked id="tab00<%= phase.order %>" class="tab-content-first" >
             <label for="tab00<%= phase.order %>"><%= phase.name %><i class="<%= phase.icon %>"></i></label>
                 <% form_content = "" %>
                 <%= form_content %>
 
+            <!-- Tabs for the Phase -->
             <% phase.tabs.includes(:task).each do | tab | %>
+              <% next if ! tab.task.visible?(@project, @current_user) %>
                 <input type="radio" name="pcss3t0<%= phase.order %>" id="tab<%= tab.order+1 %>0<%= phase.order %>" class="tab-content-<%= tab.order+1 %>">
                 <label  <% if merged_array.include? tab.task.id %>for="tab<%=tab.order+1%>0<%=phase.order%>"<% else %> class="tab-inactive"<%end%>><%= tab.task.tab_text %><i class="<%= tab.task.icon %>"></i></label>
 

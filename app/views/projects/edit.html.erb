@@ -21,7 +21,7 @@
 
         <%= f.input :teamroom_link %>
 
-        <h2>Genre</h2>
+        <h3>Genre</h3>
         <%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: false } ) %><br /><br />
 
         <label >Imprint&nbsp;<span class="required">*</span></label><br/>
@@ -70,7 +70,7 @@
         <br/>
 
         <div style="padding: 0px 20px 20px 20px; margin-bottom: 20px; border-color: #C7C6C6; border-width: 1px; border-style: solid;">
-          <h2>Print Corner</h2>
+          <h3>Print Corner</h3>
 
           <p>After the author has ordered their initial 15 copies, they will be provided with an e-store link for CreateSpace
             and provided with a coupon code for a 55% discount on their order.  This store link and coupon code needs to be
@@ -80,6 +80,13 @@
           <%= f.input :createspace_coupon_code, label: 'Coupon Code' %>
         </div>
 
+        <div style="padding: 0px 20px 20px 20px; margin-bottom: 20px; border-color: #C7C6C6; border-width: 1px; border-style: solid;">
+          <h3>Rights Back Request Form Visibility</h3>
+
+          <p>If enabled, a limited group of users may view this form on the Project Page and request .</p>
+
+          <%= f.input :enable_rights_request, as: :boolean, label: 'Enable Rights Back Request Form'%>
+        </div>
 
         <%= f.submit %>
       <% end %>

@@ -16,7 +16,6 @@ ActiveRecord::Schema.define(version: 20151215121345) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
-  enable_extension "pg_stat_statements"
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -700,6 +699,7 @@ ActiveRecord::Schema.define(version: 20151215121345) do
     t.string   "book_type"
     t.string   "createspace_store_url"
     t.string   "createspace_coupon_code"
+    t.boolean  "enable_rights_request",          default: false
   end
 
   add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree
@@ -726,10 +726,10 @@ ActiveRecord::Schema.define(version: 20151215121345) do
     t.string   "paperback_cover_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "starting_grade_index"
     t.string   "bisac_code_name_one"
     t.string   "bisac_code_name_two"
     t.string   "bisac_code_name_three"
-    t.integer  "starting_grade_index"
   end
 
   add_index "publication_fact_sheets", ["project_id"], name: "index_publication_fact_sheets_on_project_id", using: :btree
@@ -861,6 +861,22 @@ ActiveRecord::Schema.define(version: 20151215121345) do
   add_index "required_roles", ["project_type_id"], name: "index_required_roles_on_project_type_id", using: :btree
   add_index "required_roles", ["role_id", "project_type_id"], name: "index_required_roles_on_role_id_and_project_type_id", unique: true, using: :btree
   add_index "required_roles", ["role_id"], name: "index_required_roles_on_role_id", using: :btree
+
+  create_table "rights_back_requests", force: true do |t|
+    t.integer  "project_id"
+    t.string   "submitted_by_name"
+    t.integer  "submitted_by_id"
+    t.string   "title"
+    t.string   "author"
+    t.text     "reason"
+    t.boolean  "proofed"
+    t.boolean  "edited"
+    t.boolean  "published"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "rights_back_requests", ["project_id"], name: "index_rights_back_requests_on_project_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"

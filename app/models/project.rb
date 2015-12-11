@@ -13,6 +13,7 @@ class Project < ActiveRecord::Base
   delegate :name, to: :imprint, allow_nil: true, prefix: "imprint"
 
   has_one  :approve_blurb, dependent: :destroy
+  has_many :artwork_rights_requests, dependent: :destroy
   has_many :audit_team_membership_removals
   has_many :blog_tours, dependent: :destroy
   has_many :book_genres, foreign_key: :project_id, dependent: :destroy
@@ -33,19 +34,20 @@ class Project < ActiveRecord::Base
   has_many :members, through: :team_memberships, source: :member
   has_one  :netgalley_submission, dependent: :destroy
   has_many :price_change_promotions, dependent: :destroy
+  has_many :print_corners, dependent: :destroy
+  has_many :production_expenses, dependent: :destroy
   has_one  :project_grid_table_row, dependent: :destroy
   has_one  :publication_fact_sheet, dependent: :destroy
   has_one  :published_file, dependent: :destroy
+  has_one  :rights_back_request, dependent: :destroy
   has_many :roles, through: :team_memberships, source: :role
-  has_many :team_memberships, inverse_of: :project
-  has_many :artwork_rights_requests, dependent: :destroy
-  has_many :print_corners, dependent: :destroy
-  has_many :production_expenses, dependent: :destroy
   has_one  :social_media_marketing, dependent: :destroy
+  has_many :team_memberships, inverse_of: :project
 
   #TODO: we might not need to allow destroy via the project form for associations that
   # are only written by form. (media_kits, price_change_promotions, published_file)
   accepts_nested_attributes_for :approve_blurb, reject_if: :all_blank, allow_destroy: false
+  accepts_nested_attributes_for :artwork_rights_requests, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :audit_team_membership_removals, reject_if: :all_blank, allow_destroy: false
   accepts_nested_attributes_for :blog_tours, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :book_genres, reject_if: :all_blank, allow_destroy: true
@@ -63,13 +65,13 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :manuscript, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :netgalley_submission, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :price_change_promotions, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :publication_fact_sheet, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :published_file, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :artwork_rights_requests, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :print_corners, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :production_expenses, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :publication_fact_sheet, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :published_file, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :rights_back_request, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :social_media_marketing, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :team_memberships, reject_if: :all_blank, allow_destroy: true
 
   # scope that returns projects with an allocation higher than percent
   scope :high_allocations, -> (percent) {

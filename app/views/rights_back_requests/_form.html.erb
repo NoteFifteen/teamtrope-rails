@@ -1,0 +1,19 @@
+<%= simple_form_for(@rights_back_request) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :project %>
+    <%= f.input :submitted_by_id %>
+    <%= f.input :submitted_by_name %>
+    <%= f.input :title %>
+    <%= f.input :author %>
+    <%= f.input :reason %>
+    <%= f.input :proofed %>
+    <%= f.input :edited %>
+    <%= f.input :published %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

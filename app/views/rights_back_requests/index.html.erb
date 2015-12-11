@@ -1,0 +1,39 @@
+<h1>Listing Rights Back Requests</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Submitted by ID</th>
+      <th>Submitted by Name</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Reason</th>
+      <th>Proofread</th>
+      <th>Edited</th>
+      <th>Published</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rights_back_requests.each do |rights_back_request| %>
+      <tr>
+        <td><%= link_to rights_back_request.project.title, rights_back_request.project %></td>
+        <td><%= rights_back_request.submitted_by_id %></td>
+        <td><%= rights_back_request.submitted_by_name %></td>
+        <td><%= rights_back_request.title %></td>
+        <td><%= rights_back_request.author %></td>
+        <td><%= rights_back_request.reason %></td>
+        <td><%= rights_back_request.proofed %></td>
+        <td><%= rights_back_request.edited %></td>
+        <td><%= rights_back_request.published %></td>
+        <td><%= link_to 'Show', rights_back_request %></td>
+        <td><%= link_to 'Edit', edit_rights_back_request_path(rights_back_request) %></td>
+        <td><%= link_to 'Destroy', rights_back_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
