@@ -10,6 +10,8 @@ class Project < ActiveRecord::Base
   belongs_to :project_type
   belongs_to :imprint
 
+  delegate :name, to: :imprint, allow_nil: true, prefix: "imprint"
+
   has_one  :approve_blurb, dependent: :destroy
   has_many :audit_team_membership_removals
   has_many :blog_tours, dependent: :destroy
@@ -28,6 +30,7 @@ class Project < ActiveRecord::Base
   has_one  :manuscript, dependent: :destroy
   has_one  :media_kit, dependent: :destroy
   has_many :members, through: :team_memberships, source: :member
+  has_one  :netgalley_submission, dependent: :destroy
   has_many :price_change_promotions, dependent: :destroy
   has_one  :project_grid_table_row, dependent: :destroy
   has_one  :publication_fact_sheet, dependent: :destroy
@@ -56,6 +59,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :media_kit, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :marketing_expenses, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :manuscript, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :netgalley_submission, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :price_change_promotions, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :publication_fact_sheet, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :published_file, reject_if: :all_blank, allow_destroy: true

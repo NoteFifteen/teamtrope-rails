@@ -1,0 +1,25 @@
+<%= simple_form_for(@netgalley_submission) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :title %>
+    <%= f.input :author_name %>
+    <%= f.input :publication_date %>
+    <%= f.input :isbn %>
+    <%= f.input :retail_price %>
+
+    <%= f.input :website_one %>
+    <%= f.input :website_two %>
+    <%= f.input :website_three %>
+
+    <%= f.input :category_one %>
+    <%= f.input :category_two %>
+
+    <%= f.input :blurb %>
+    <%= f.input :praise %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

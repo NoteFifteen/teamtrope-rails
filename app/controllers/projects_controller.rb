@@ -749,6 +749,20 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def new_netgalley_submission
+    if @project.update(update_project_params)
+      update_current_task
+      @project.create_activity :netgalley_submission, owner: current_user,
+                                parameters: { text: 'New Netgalley Submission', form_data: params[:project].to_s }
+      flash[:success] = 'New Netgalley Submission'
+      ProjectMailer.new_netgalley_submission(@project, current_user)
+      redirect_to @project
+    else
+      flash[:danger] = 'There was a problem with your Netgalley Submission. Please Review.'
+      render 'show'
+    end
+  end
+
   def blog_tour
     if @project.update(update_project_params)
       update_current_task
@@ -971,6 +985,7 @@ class ProjectsController < ApplicationController
       :manuscript_attributes => [:id, :original, :edited, :proofed],
       :marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information , :other_type, :other_service_provider],
       :media_kits_attributes => [:document],
+      :netgalley_submission_attributes => [:title, :isbn, :author_name, :retail_price, :blurb, :category_one, :category_two, :praise, :website_one, :website_two, :website_three],
       :price_change_promotions_attributes => [:type, :start_date, :price_promotion, :end_date, :price_after_promotion, :sites => []],
       :production_expenses_attributes => [:additional_booktrope_cost, :additional_costs, :additional_team_cost, :author_advance_cost, :author_advance_quantity, :calculation_explanation, :complimentary_cost, :complimentary_quantity, :effective_date, :marketing_quantity, :marketing_cost, :paypal_invoice_amount, :purchased_cost, :purchased_quantity, :total_cost, :total_quantity_ordered],
       :publication_fact_sheet_attributes => [ :id, :author_name, :series_name, :series_number, :description,

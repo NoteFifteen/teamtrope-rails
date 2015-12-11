@@ -1,0 +1,109 @@
+<div class="container">
+  <h1>Netgalley Submission</h1>
+  <div class="row">
+    <div class="col-md-10">
+      <p>
+        Please use this form if you are interested in having your title submitted
+        to Netgalley which is a review service. The cost for a month on Netgalley
+        is $40 and will be treated as a normal marketing expense. These spots are
+        available on a first come first serve basis. You will need to have the
+        Epub file available when you submit the title.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <%= simple_form_for @project,
+                          url: url_for(controller: 'projects', action: 'new_netgalley_submission', id: @project),
+                          html: { id: 'netgalley_submission' } do | f | %>
+
+        <%= f.simple_fields_for :netgalley_submission,
+                ((f.object.netgalley_submission.nil?) ? f.object.build_netgalley_submission : f.object.netgalley_submission) do | netgalley_submission | %>
+
+          <label>Title<span class="required">*</span></label>
+          <%= netgalley_submission.input :title, label: false %>
+
+          <label>ISBN<span class="required">*</span></label>
+          <%= netgalley_submission.input :isbn, label: false %>
+
+          <label>Author Name<span class="required">*</span></label>
+          <%= netgalley_submission.input :author_name, label: false %>
+
+          <label>Retail Price<span class="required">*</span></label>
+          <%= netgalley_submission.input :retail_price, label: false %>
+          <p>
+            Doesn't need to be updated if you have sales. Set this to whatever
+            your ideal price is - $3.99, $4.99.
+          </p>
+
+          <label>Blurb<span class="required">*</span></label>
+          <%= netgalley_submission.input :blurb, label: false %>
+
+          <label>Advance Praise</label>
+          <%= netgalley_submission.input :praise, label: false %>
+          <p>
+            Any advance praise or review snippets you already have. These should
+            not be full reviews but highlights of 1-6 strong reviews.
+          </p>
+
+          <h4>Websites</h4>
+          <p>
+            Up to 3 websites to link to (examples: your website, your twitter,
+            your FB page.) Please include the complete link, not just @TwitterHandle Etc.
+          </p>
+
+          <label>Website One<span class="required">*</span></label>
+          <%= netgalley_submission.input :website_one, label: false %>
+
+          <label>Website Two</label>
+          <%= netgalley_submission.input :website_two, label: false %>
+
+          <label>Website Three</label>
+          <%= netgalley_submission.input :website_three, label: false %>
+
+          <h4>Categories</h4>
+          <p>
+            <% category_url = "https://www.netgalley.com/catalog/list" %>
+            Please select two categories. You can click here (<%= link_to category_url, category_url %>)
+            and look along the left-side nav bar to see the categories available.
+            They're very broad, so you may only fit in one category.
+          </p>
+
+          <label>Category One</label>
+          <%= netgalley_submission.input :category_one, label: false,
+              collection: NetgalleySubmission::CATEGORIES %>
+
+          <label>Category Two</label>
+          <%= netgalley_submission.input :category_two, label: false,
+              collection: NetgalleySubmission::CATEGORIES %>
+
+          <%= f.submit "Submit" %>
+        <% end %>
+
+<!--
+(1) Title (and subtitle if you have a series name, series number)
+(2) ISBN-13 (without dashes)
+(3) Author Name
+(4) Imprint Name
+(5) Publication date - it's okay to advance date this
+(6) Retail Price - Doesn't need to be updated if you have sales. Set this to whatever your ideal price is - $3.99, $4.99.
+(7) Your book blurb
+(8) Up to 3 websites you want me to link to (examples: your website, your twitter, your FB page.) Please include the complete link, not just @TwitterHandle Etc.
+(10) The two categories you want. You can click here (https://www.netgalley.com/catalog/list) and look along the left-side nav bar to see the categories available. They're very broad, so you may only fit in one category.
+(11) Any advance praise or review snippets you already have (I will copy and paste them in). These should not be full reviews but highlights of 1-6 strong reviews.
+Files
+(1) Cover file in .jpg or .png, must be bigger than 500x500
+(2) Epub file (NetGalley will convert this to the formats they utilize) -->
+      <% end %>
+      <script>
+          $(function() {
+
+          });
+      </script>
+    </div>
+  </div>
+</div>
+
+
+
