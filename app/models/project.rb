@@ -174,6 +174,15 @@ class Project < ActiveRecord::Base
     end
   end
 
+  def team_members_with_roles_and_pcts
+    team_memberships.select("roles.name").joins(:role).includes(:role,
+    :member, member: [:profile]).order("roles.name").group_by(&:member_id).map do | key, memberships |
+        { :member => memberships.first.member, :role_pcts => memberships.map {|membership|
+        { role: membership.role.name, pct: membership.percentage } }
+        }
+    end
+  end
+
   # Returns a suggested per-member allocation for a given role
   # (taking into account the possibility of zero or multiple members in that role)
   def suggested_allocation(role)

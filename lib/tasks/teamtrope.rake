@@ -59,7 +59,7 @@ namespace :teamtrope do
 
     csv_text = ""
     # building the header
-    header = "Title,Series Name,Series Number,\"Author (Last,First)\",\"Author (First,Last)\",Other Contributors,Imprint,Print ISBN,epub ISBN,Format,Publication Date,Month,Year,Page Count,Print Price,Ebook Price(Will vary based on promos and price chagnes),Library Price,BISAC,BISAC2,BISAC3,Search Terms,Summary,Author Bio,Squib"
+    header = "Project ID,Title,Series Name,Series Number,\"Author (Last,First)\",\"Author (First,Last)\",Other Contributors,Team and Pct,Imprint,Print ISBN,epub ISBN,Format,Publication Date,Month,Year,Page Count,Print Price,Ebook Price(Will vary based on promos and price chagnes),Library Price,BISAC,BISAC2,BISAC3,Search Terms,Summary,Author Bio,Squib"
 
     # set the row size which is equal to our header row split on the
     row_size = header.gsub(/\".*?,.*?\"/,'').split(',').count
@@ -76,9 +76,10 @@ namespace :teamtrope do
 
       project = pgtr.project
 
-      row[0] = project.final_title
-      row[1] = project.publication_fact_sheet.series_name
-      row[2] = project.publication_fact_sheet.series_number
+      row[0] = project.id
+      row[1] = project.final_title
+      row[2] = project.publication_fact_sheet.series_name
+      row[3] = project.publication_fact_sheet.series_number
 
       # if there are are two authors most likely the main author was the one added first
       # project.authors returns a TeamMembership::ActiveRecord_AssociationRelation so we
@@ -87,43 +88,46 @@ namespace :teamtrope do
 
       first_author = authors.slice!(0)
 
-      row[3] = "\"#{first_author.last_name_first}\""
-      row[4] = first_author.display_name
+      row[4] = "\"#{first_author.last_name_first}\""
+      row[5] = first_author.display_name
 
-      # row[5] = "\"#{project.team_memberships.reject{|membership| membership.role.name == "Author" }.map{ | membership |
+      # row[6] = "\"#{project.team_memberships.reject{|membership| membership.role.name == "Author" }.map{ | membership |
       #   "#{membership.member.name} (#{membership.role.name})"
       # }.join(",")}\""
 
-      row[5] = "\"#{authors.map { | author | "#{author.member.name} (#{author.role.name})" }.join(',')}\""
+      row[6] = "\"#{authors.map { | author | "#{author.member.name} (#{author.role.name})" }.join(', ')}\""
 
-      row[6] = pgtr.imprint
-      row[7] = project.control_number.paperback_isbn
-      row[8] = project.control_number.epub_isbn
-      row[9] = project.book_type_pretty
+      row[7] = "\"#{project.team_members_with_roles_and_pcts.map{ |n| "#{n[:member].display_name} #{ n[:role_pcts].map{ |role_pcts | "(#{role_pcts[:role]} #{role_pcts[:pct]})"}.join(',')}"  }.join(';')}\""
+
+      row[8] = pgtr.imprint
+      row[9] = project.control_number.paperback_isbn
+      row[10] = project.control_number.epub_isbn
+      row[11] = project.book_type_pretty
 
       # look up the publication date that we have in parse via the project's parse_id which matches the ParseBook object_id
-      publication_date_amazon = ParseBooks.find_by_parse_id(project.control_number.parse_id).try(:publication_date_amazon)
-      unless publication_date_amazon.nil?
-        row[10] = publication_date_amazon.strftime("%m/%d/%Y")
-        row[11] = publication_date_amazon.strftime("%B")
-        row[12] = publication_date_amazon.strftime("%Y")
+      #publication_date_amazon = ParseBooks.find_by_parse_id(project.control_number.parse_id).try(:publication_date_amazon)
+      publication_date = project.published_file.publication_date
+      unless publication_date.nil?
+        row[12] = publication_date.strftime("%m/%d/%Y")
+        row[13] = publication_date.strftime("%B")
+        row[14] = publication_date.strftime("%Y")
       end
 
-      row[13] = project.layout.final_page_count
-      row[14] = "$#{"%.2f" % project.publication_fact_sheet.print_price}" unless project.publication_fact_sheet.print_price.nil?
+      row[15] = project.layout.final_page_count
+      row[16] = "$#{"%.2f" % project.publication_fact_sheet.print_price}" unless project.publication_fact_sheet.print_price.nil?
       unless project.publication_fact_sheet.ebook_price.nil?
-        row[15] = "$#{"%.2f" % project.publication_fact_sheet.ebook_price}"
-        row[16] = "$#{"%.2f" % lookup_library_pricing(project.publication_fact_sheet.ebook_price)}"
+        row[17] = "$#{"%.2f" % project.publication_fact_sheet.ebook_price}"
+        row[18] = "$#{"%.2f" % lookup_library_pricing(project.publication_fact_sheet.ebook_price)}"
       end
 
-      row[17] = project.publication_fact_sheet.bisac_code_one
-      row[18] = project.publication_fact_sheet.bisac_code_two
-      row[19] = project.publication_fact_sheet.bisac_code_three
+      row[19] = project.publication_fact_sheet.bisac_code_one
+      row[20] = project.publication_fact_sheet.bisac_code_two
+      row[21] = project.publication_fact_sheet.bisac_code_three
 
-      row[20] = "\"#{project.publication_fact_sheet.search_terms}\""
-      row[21] = "\"#{project.draft_blurb.draft_blurb}\""
-      row[22] = "\"#{project.publication_fact_sheet.author_bio}\""
-      row[23] = "\"#{project.publication_fact_sheet.one_line_blurb}\""
+      row[22] = "\"#{project.publication_fact_sheet.search_terms}\""
+      row[23] = "\"#{project.draft_blurb.draft_blurb}\""
+      row[24] = "\"#{project.publication_fact_sheet.author_bio}\""
+      row[25] = "\"#{project.publication_fact_sheet.one_line_blurb}\""
 
       # generate the csv row by joining the array with ','
       puts row.join(",")
@@ -131,7 +135,7 @@ namespace :teamtrope do
     end
 
     puts 'sending email...'
-    ReportMailer.master_spread_sheet(csv_text)
+    ReportMailer.master_spread_sheet(csv_text, Date.today.strftime('%Y-%m-%d'))
     puts 'done'
 
   end

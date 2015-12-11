@@ -1,16 +1,11 @@
 class ReportMailer < ActionMailer::Base
 
-  def master_spread_sheet(csv_text)
-    attachment_name = "master_metadata_spreadsheet_#{Date.today.strftime('%Y-%m-%d')}.csv"
+  def master_spread_sheet(csv_text, report_date)
+    attachment_name = "master_metadata_spreadsheet_#{report_date}.csv"
     attachments[attachment_name] = {  mime_type: "text/csv",
                                       content: csv_text}
 
-    recipients = [
-      "justin.jeffress@booktrope.com",
-      "brian.ronald@booktrope.com",
-      "andy@booktrope.com"
-    ]
-    send_email_message('master_spread_sheet', {}, recipients, "Master Meta Spreadsheet #{Date.today.strftime('%m/%d/%Y')}")
+    send_email_message('master_spread_sheet', {}, master_spreadsheet_recipients, "Master Meta Spreadsheet #{Date.today.strftime('%m/%d/%Y')}")
 
   end
 
@@ -28,6 +23,10 @@ class ReportMailer < ActionMailer::Base
             template_name: template_name
       ).deliver
     end
+  end
+
+  def master_spreadsheet_recipients
+    %w( tt_metadata_export_list@booktrope.com )
   end
 
 end
