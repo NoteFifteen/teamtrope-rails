@@ -96,6 +96,16 @@ class Project < ActiveRecord::Base
     ['ebook and print', 'ebook_and_print']
   ]
 
+  # gets the title of the book depending on if it has a final_title or not.
+  # final_title overrides title
+  def book_title
+    unless final_title.nil? || final_title.strip == ""
+      final_title
+    else
+      title
+    end
+  end
+
   def book_type_pretty
     book_type.nil?? "" : BOOK_TYPES.map{ |n| n.reverse }.to_h[book_type]
   end
@@ -181,6 +191,10 @@ class Project < ActiveRecord::Base
         { role: membership.role.name, pct: membership.percentage } }
         }
     end
+  end
+
+  def total_team_percent_allocation
+    team_memberships.sum(:percentage)
   end
 
   # Returns a suggested per-member allocation for a given role
