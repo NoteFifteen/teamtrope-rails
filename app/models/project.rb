@@ -96,6 +96,16 @@ class Project < ActiveRecord::Base
     ['ebook and print', 'ebook_and_print']
   ]
 
+  # gets the title of the book depending on if it has a final_title or not.
+  # final_title overrides title
+  def book_title
+    unless final_title.nil?
+      final_title
+    else
+      title
+    end
+  end
+
   def book_type_pretty
     book_type.nil?? "" : BOOK_TYPES.map{ |n| n.reverse }.to_h[book_type]
   end

@@ -77,7 +77,7 @@ namespace :teamtrope do
       project = pgtr.project
 
       row[0] = project.id
-      row[1] = "\"#{project.final_title}\""
+      row[1] = "\"#{project.book_title}\""
 
       unless project.publication_fact_sheet.nil?
         row[2] = "\"#{project.publication_fact_sheet.series_name}\""
