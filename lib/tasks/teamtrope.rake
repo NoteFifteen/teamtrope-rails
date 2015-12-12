@@ -111,8 +111,11 @@ namespace :teamtrope do
 
       # look up the publication date that we have in parse via the project's parse_id which matches the ParseBook object_id
       #publication_date_amazon = ParseBooks.find_by_parse_id(project.control_number.parse_id).try(:publication_date_amazon)
-      publication_date = project.published_file.publication_date
-      unless project.publication_date || publication_date.nil?
+      publication_date = unless project.published_file.nil?
+        project.published_file.publication_date
+      end
+
+      unless publication_date.nil?
         row[12] = publication_date.strftime("%m/%d/%Y")
         row[13] = publication_date.strftime("%B")
         row[14] = publication_date.strftime("%Y")
