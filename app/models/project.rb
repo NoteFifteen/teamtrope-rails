@@ -96,6 +96,10 @@ class Project < ActiveRecord::Base
     ['ebook and print', 'ebook_and_print']
   ]
 
+  def book_type_pretty
+    book_type.nil?? "" : BOOK_TYPES.map{ |n| n.reverse }.to_h[book_type]
+  end
+
   # Not an actual column, but used in the ProjectsController
   attr_accessor :blurb_approval_decision
 
@@ -166,6 +170,15 @@ class Project < ActiveRecord::Base
     :member, member: [:profile]).order("roles.name").group_by(&:member_id).map do | key, memberships |
         { :member => memberships.first.member, :roles => memberships.map {|membership|
         membership.role.name }.join(", ")
+        }
+    end
+  end
+
+  def team_members_with_roles_and_pcts
+    team_memberships.select("roles.name").joins(:role).includes(:role,
+    :member, member: [:profile]).order("roles.name").group_by(&:member_id).map do | key, memberships |
+        { :member => memberships.first.member, :role_pcts => memberships.map {|membership|
+        { role: membership.role.name, pct: membership.percentage } }
         }
     end
   end

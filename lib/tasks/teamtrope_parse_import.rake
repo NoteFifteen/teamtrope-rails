@@ -9,7 +9,7 @@ namespace :teamtrope do
     query.limit = 1000
     query.get.each do |b|
       puts "Processing #{b['objectId']}  - #{b['title']}"
-      rec = ParseBooks.where(object_id: b['objectId']).first_or_create
+      rec = ParseBooks.where(parse_id: b['objectId']).first_or_create
 
       # Note - Postgres doesn't handled mixed case column names very well, and you have to properly quote them
       # so it's advised to stick with lowercase.  I've added an underscore before each camel-cased word and
