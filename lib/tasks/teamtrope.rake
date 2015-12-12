@@ -135,9 +135,9 @@ namespace :teamtrope do
         row[21] = project.publication_fact_sheet.bisac_code_three
 
         row[22] = "\"#{project.publication_fact_sheet.search_terms}\""
-        row[23] = "\"#{project.publication_fact_sheet.description.gsub(/\r\n/, " ").gsub(/\n/, " ")}\"" unless project.publication_fact_sheet.description.nil?
-        row[24] = "\"#{project.publication_fact_sheet.author_bio.gsub(/\r\n/, " ").gsub(/\n/, " ")}\"" unless project.publication_fact_sheet.author_bio.nil?
-        row[25] = "\"#{project.publication_fact_sheet.one_line_blurb.gsub(/\r\n/, " ").gsub(/\n/, " ")}\"" unless project.publication_fact_sheet.one_line_blurb.nil?
+        row[23] = "\"#{project.publication_fact_sheet.description.gsub(/"/, "\"\"").gsub(/\r\n/, " ").gsub(/\n/, " ")}\"" unless project.publication_fact_sheet.description.nil?
+        row[24] = "\"#{project.publication_fact_sheet.author_bio.gsub(/"/, "\"\"").gsub(/\r\n/, " ").gsub(/\n/, " ")}\"" unless project.publication_fact_sheet.author_bio.nil?
+        row[25] = "\"#{project.publication_fact_sheet.one_line_blurb.gsub(/"/, "\"\"").gsub(/\r\n/, " ").gsub(/\n/, " ")}\"" unless project.publication_fact_sheet.one_line_blurb.nil?
       end
 
       # generate the csv row by joining the array with ','
