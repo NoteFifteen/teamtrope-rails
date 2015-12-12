@@ -117,7 +117,8 @@ namespace :teamtrope do
       row[16] = "$#{"%.2f" % project.publication_fact_sheet.print_price}" unless project.publication_fact_sheet.print_price.nil?
       unless project.publication_fact_sheet.ebook_price.nil?
         row[17] = "$#{"%.2f" % project.publication_fact_sheet.ebook_price}"
-        row[18] = "$#{"%.2f" % lookup_library_pricing(project.publication_fact_sheet.ebook_price)}"
+        library_price = lookup_library_pricing(project.publication_fact_sheet.ebook_price)
+        row[18] = "$#{"%.2f" % library_price}" unless library_price.nil?
       end
 
       row[19] = project.publication_fact_sheet.bisac_code_one
@@ -125,9 +126,9 @@ namespace :teamtrope do
       row[21] = project.publication_fact_sheet.bisac_code_three
 
       row[22] = "\"#{project.publication_fact_sheet.search_terms}\""
-      row[23] = "\"#{project.publication_fact_sheet.description}\""
-      row[24] = "\"#{project.publication_fact_sheet.author_bio}\""
-      row[25] = "\"#{project.publication_fact_sheet.one_line_blurb}\""
+      row[23] = "\"#{project.publication_fact_sheet.description.gsub(/\r\n/, " ").gsub(/\n/, " ")}\""
+      row[24] = "\"#{project.publication_fact_sheet.author_bio.gsub(/\r\n/, " ").gsub(/\n/, " ")}\""
+      row[25] = "\"#{project.publication_fact_sheet.one_line_blurb.gsub(/\r\n/, " ").gsub(/\n/, " ")}\""
 
       # generate the csv row by joining the array with ','
       puts row.join(",")
