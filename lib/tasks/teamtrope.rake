@@ -125,7 +125,7 @@ namespace :teamtrope do
       row[21] = project.publication_fact_sheet.bisac_code_three
 
       row[22] = "\"#{project.publication_fact_sheet.search_terms}\""
-      row[23] = "\"#{project.draft_blurb.draft_blurb}\""
+      row[23] = "\"#{project.publication_fact_sheet.description}\""
       row[24] = "\"#{project.publication_fact_sheet.author_bio}\""
       row[25] = "\"#{project.publication_fact_sheet.one_line_blurb}\""
 
