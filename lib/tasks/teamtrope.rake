@@ -56,7 +56,7 @@ namespace :teamtrope do
   # using the key at each index and fetching the data out of the hash with it.
   desc "Generates the Master Metadata Spreadsheet"
   task generate_master_metadata_spreadsheet: :environment do
-    require 'CSV'
+    require 'csv'
 
     # building the header
     header = "Project ID,Title,Series Name,Series Number,\"Author (Last,First)\",\"Author (First,Last)\",Other Contributors,Team and Pct,Imprint,Print ISBN,epub ISBN,Format,Publication Date,Month,Year,Page Count,Print Price,Ebook Price(Will vary based on promos and price chagnes),Library Price,BISAC,BISAC2,BISAC3,Search Terms,Summary,Author Bio,Squib"
