@@ -3,7 +3,10 @@ class ReportMailer < ActionMailer::Base
   def master_spread_sheet(csv_text, report_date)
     attachment_name = "master_metadata_spreadsheet_#{report_date}.csv"
     attachments[attachment_name] = {  mime_type: "text/csv",
-                                      content: csv_text}
+                                      content: csv_text,
+                                      encoding: 'quoted-printable'}
+
+    @report_date = report_date
 
     send_email_message('master_spread_sheet', {}, master_spreadsheet_recipients, "Master Meta Spreadsheet #{Date.today.strftime('%m/%d/%Y')}")
 

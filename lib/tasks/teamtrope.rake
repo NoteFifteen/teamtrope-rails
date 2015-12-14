@@ -59,9 +59,9 @@ namespace :teamtrope do
     require 'csv'
 
     # building the header
-    header = "Project ID,Title,Series Name,Series Number,\"Author (Last,First)\",\"Author (First,Last)\",Other Contributors,Team and Pct,Imprint,Print ISBN,epub ISBN,Format,Publication Date,Month,Year,Page Count,Print Price,Ebook Price(Will vary based on promos and price chagnes),Library Price,BISAC,BISAC2,BISAC3,Search Terms,Summary,Author Bio,Squib"
+    header = "Project ID,Title,Series Name,Series Number,\"Author (Last,First)\",\"Author (First,Last)\",Other Contributors,Team and Pct,Imprint,Print ISBN,epub ISBN,Format,Publication Date,Month,Year,Page Count,Print Price,Ebook Price(Will vary based on promos and price chagnes),Library Price,BISAC, BISAC Description,BISAC2, BISAC Description 2,BISAC3, BISAC Description 3,Search Terms,Summary,Author Bio,Squib"
 
-    csv_header = ["Project ID","Title","Series Name","Series Number","Author (Last,First)","Author (First,Last)","Other Contributors","Team and Pct","Imprint","ASIN","Print ISBN","epub ISBN","Format","Publication Date","Month","Year","Page Count","Print Price","Ebook Price(Will vary based on promos and price changes)","Library Price","BISAC","BISAC2","BISAC3","Search Terms","Summary","Author Bio","Squib"]
+    csv_header = ["Project ID","Title","Series Name","Series Number","Author (Last,First)","Author (First,Last)","Other Contributors","Team and Pct","Imprint","ASIN","Print ISBN","epub ISBN","Format","Publication Date","Month","Year","Page Count","Print Price","Ebook Price(Will vary based on promos and price changes)","Library Price","BISAC", "BISAC Description","BISAC2", "BISAC Description 2","BISAC3", "BISAC Description 3","Search Terms","Summary","Author Bio","Squib"]
 
     # set the row size which is equal to our header row split on the
     row_size = header.gsub(/\".*?,.*?\"/,'').split(',').count
@@ -138,14 +138,33 @@ namespace :teamtrope do
         end
 
         unless project.publication_fact_sheet.nil?
-          row[20] = "#{project.publication_fact_sheet.bisac_code_one} #{project.publication_fact_sheet.bisac_code_name_one}"
-          row[21] = "#{project.publication_fact_sheet.bisac_code_two} #{project.publication_fact_sheet.bisac_code_name_two}"
-          row[22] = "#{project.publication_fact_sheet.bisac_code_three} #{project.publication_fact_sheet.bisac_code_name_three}"
 
-          row[23] = project.publication_fact_sheet.search_terms
-          row[24] = project.publication_fact_sheet.description.gsub(/"/, "\"\"").gsub(/\r\n/, " ").gsub(/\n/, " ") unless project.publication_fact_sheet.description.nil?
-          row[25] = project.publication_fact_sheet.author_bio.gsub(/"/, "\"\"").gsub(/\r\n/, " ").gsub(/\n/, " ") unless project.publication_fact_sheet.author_bio.nil?
-          row[26] = project.publication_fact_sheet.one_line_blurb.gsub(/"/, "\"\"").gsub(/\r\n/, " ").gsub(/\n/, " ") unless project.publication_fact_sheet.one_line_blurb.nil?
+          bisac_one = prepare_bisac_code(
+            project.publication_fact_sheet.bisac_code_one,
+            project.publication_fact_sheet.bisac_code_name_one
+          )
+
+          bisac_two = prepare_bisac_code(
+            project.publication_fact_sheet.bisac_code_two,
+            project.publication_fact_sheet.bisac_code_name_two
+          )
+
+          bisac_three = prepare_bisac_code(
+            project.publication_fact_sheet.bisac_code_three,
+            project.publication_fact_sheet.bisac_code_name_three
+          )
+
+          row[20] = bisac_one[:code]
+          row[21] = bisac_one[:name]
+          row[22] = bisac_two[:code]
+          row[23] = bisac_two[:name]
+          row[24] = bisac_three[:code]
+          row[25] = bisac_three[:name]
+
+          row[26] = project.publication_fact_sheet.search_terms
+          row[27] = project.publication_fact_sheet.description.gsub(/"/, "\"\"").gsub(/\r\n/, " ").gsub(/\n/, " ") unless project.publication_fact_sheet.description.nil?
+          row[28] = project.publication_fact_sheet.author_bio.gsub(/"/, "\"\"").gsub(/\r\n/, " ").gsub(/\n/, " ") unless project.publication_fact_sheet.author_bio.nil?
+          row[29] = project.publication_fact_sheet.one_line_blurb.gsub(/"/, "\"\"").gsub(/\r\n/, " ").gsub(/\n/, " ") unless project.publication_fact_sheet.one_line_blurb.nil?
         end
 
         # generate the csv row by joining the array with ','
@@ -158,6 +177,24 @@ namespace :teamtrope do
     ReportMailer.master_spread_sheet(csv_string, Date.today.strftime('%Y-%m-%d'))
     puts 'done'
 
+  end
+
+  def prepare_bisac_code(bisac_code, bisac_code_name)
+    #project.publication_fact_sheet.bisac_code_one.gsub(/#{bisac_code_one}/, "")
+    results =
+    {
+      code: bisac_code,
+      name: bisac_code_name
+    }
+    if bisac_code_name.nil?
+      if bisac_code =~ /([A-Z]{3}[0-9]{6})/
+        results[:code] = $1
+      else
+        results[:code] = ""
+      end
+      results[:name] = bisac_code
+    end
+    results
   end
 
   def lookup_library_pricing(ebook_price)
@@ -181,8 +218,10 @@ namespace :teamtrope do
       "$11.95"
     elsif ebook_price <= 8.99 && ebook_price < 9.99
       "$13.25"
-    elsif ebook_price >= 9.99
+    elsif ebook_price >= 9.99 && ebook_price < 14.50
       "$14.50"
+    elsif ebook_price > 14.50
+      ("$%.2f" % ebook_price)
     else
       ""
     end
