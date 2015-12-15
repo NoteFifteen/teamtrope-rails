@@ -976,7 +976,7 @@ class ProjectMailer < ActionMailer::Base
 
   #Waiting for new list for now use blog tou
   def admin_new_netgalley_submission_list
-    %w( tt_blog_tour_list@booktrope.com )
+    %w( tt_netgalley_list@booktrope.com )
   end
 
   def admin_blog_tour_list
