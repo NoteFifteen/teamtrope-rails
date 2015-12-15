@@ -1,0 +1,56 @@
+<label>Title<span class="required">*</span></label>
+<%= builder.input :title, label: false %>
+
+<label>ISBN<span class="required">*</span></label>
+<%= builder.input :isbn, label: false %>
+
+<label>Author Name<span class="required">*</span></label>
+<%= builder.input :author_name, label: false %>
+
+<label>Retail Price<span class="required">*</span></label>
+<%= builder.input :retail_price, label: false %>
+<p>
+  Doesn't need to be updated if you have sales. Set this to whatever
+  your ideal price is - $3.99, $4.99.
+</p>
+
+<label>Blurb<span class="required">*</span></label>
+<%= builder.input :blurb, label: false, size: "10x5", as: :text%>
+
+<label>Advance Praise<span class="required">*</span></label>
+<%= builder.input :praise, label: false %>
+<p>
+  Any advance praise or review snippets you already have. These should
+  not be full reviews but highlights of 1-6 strong reviews.
+</p>
+
+<h4>Websites</h4>
+<p>
+  Up to 3 websites to link to (examples: your website, your twitter,
+  your FB page.) Please include the complete link, not just @TwitterHandle Etc.
+</p>
+
+<label>Website One<span class="required">*</span></label>
+<%= builder.input :website_one, label: false %>
+
+<label>Website Two</label>
+<%= builder.input :website_two, label: false %>
+
+<label>Website Three</label>
+<%= builder.input :website_three, label: false %>
+
+<h4>Categories</h4>
+<p>
+  <% category_url = "https://www.netgalley.com/catalog/list" %>
+  Please select two categories. You can click here (<%= link_to category_url, category_url %>)
+  and look along the left-side nav bar to see the categories available.
+  They're very broad, so you may only fit in one category.
+</p>
+
+<label>Category One<span class="required">*</span></label>
+<%= builder.input :category_one, label: false,
+    collection: NetgalleySubmission::CATEGORIES %>
+
+<label>Category Two<span class="required">*</span></label>
+<%= builder.input :category_two, label: false,
+    collection: NetgalleySubmission::CATEGORIES %>
