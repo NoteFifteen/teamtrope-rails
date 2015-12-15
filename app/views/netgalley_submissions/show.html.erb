@@ -1,0 +1,74 @@
+<h1>Netgalley Submission</h1>
+
+<div class="row">
+  <div class="col-md-8">
+
+    <p>
+      <strong>Project:</strong>
+      <%= link_to @netgalley_submission.project.title, @netgalley_submission.project %>
+    </p>
+
+    <p>
+      <strong>Title:</strong>
+      <%= @netgalley_submission.title %>
+    </p>
+
+    <p>
+      <strong>Author name:</strong>
+      <%= @netgalley_submission.author_name %>
+    </p>
+
+    <p>
+      <strong>Publication date:</strong>
+      <%= @netgalley_submission.publication_date %>
+    </p>
+
+    <p>
+      <strong>Retail price:</strong>
+      $<%= @netgalley_submission.retail_price %>
+    </p>
+
+    <p>
+      <strong>Isbn:</strong>
+      <%= @netgalley_submission.isbn %>
+    </p>
+
+    <p>
+      <strong>Website one:</strong>
+      <%= link_to @netgalley_submission.website_one, @netgalley_submission.website_one %>
+    </p>
+
+    <p>
+      <strong>Website two:</strong>
+      <%= link_to @netgalley_submission.website_two, @netgalley_submission.website_two %>
+    </p>
+
+    <p>
+      <strong>Website three:</strong>
+      <%= link_to @netgalley_submission.website_three, @netgalley_submission.website_three %>
+    </p>
+
+    <p>
+      <strong>Category one:</strong>
+      <%= @netgalley_submission.category_one %>
+    </p>
+
+    <p>
+      <strong>Category two:</strong>
+      <%= @netgalley_submission.category_two %>
+    </p>
+
+    <strong>Blurb:</strong>
+    <pre>
+      <%= @netgalley_submission.blurb %>
+    </pre>
+
+    <strong>Praise:</strong>
+    <pre>
+      <%= @netgalley_submission.praise %>
+    </pre>
+
+    <%= link_to 'Edit', edit_netgalley_submission_path(@netgalley_submission) %> |
+    <%= link_to 'Back', netgalley_submissions_path %>
+  </div>
+</div>

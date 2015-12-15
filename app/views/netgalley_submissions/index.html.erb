@@ -1,0 +1,51 @@
+<h1>Netgalley Submissions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Title</th>
+      <th>Author Name</th>
+      <th>Publication Date</th>
+      <th>Retail Price</th>
+      <th>ISBN</th>
+      <th>Websites</th>
+      <th>Category One</th>
+      <th>Category Two</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @netgalley_submissions.each do |netgalley_submission| %>
+      <tr>
+        <td class="book-title">
+          <%= link_to netgalley_submission.project.title, netgalley_submission.project %>
+        </td>
+        <td><%= netgalley_submission.title %></td>
+        <td><%= netgalley_submission.author_name %></td>
+        <td><%= netgalley_submission.publication_date %></td>
+        <td><%= netgalley_submission.retail_price %></td>
+        <td><%= netgalley_submission.isbn %></td>
+        <td>
+          <%= link_to "Link One", netgalley_submission.website_one %><br />
+          <% if !netgalley_submission.website_two.empty? %>
+            <%= link_to "Link Two", netgalley_submission.website_two %><br />
+          <% end %>
+          <% if !netgalley_submission.website_three.empty? %>
+            <%= link_to "Link Three", netgalley_submission.website_three %><br />
+          <% end %>
+        </td>
+        <td><%= netgalley_submission.category_one %></td>
+        <td><%= netgalley_submission.category_two %></td>
+        <td><%= link_to 'Show', netgalley_submission %></td>
+        <td><%= link_to 'Edit', edit_netgalley_submission_path(netgalley_submission) %></td>
+        <td><%= link_to 'Destroy', netgalley_submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

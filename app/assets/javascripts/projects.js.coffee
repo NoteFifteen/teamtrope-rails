@@ -360,6 +360,37 @@ jQuery ->
     }
   })
 
+## netgalley validators
+jQuery ->
+  $("#netgalley_submission").validate({
+    rules: {
+      'project[netgalley_submission_attributes][title]': {
+        required: true
+      },
+      'project[netgalley_submission_attributes][isbn]': {
+        required: true
+      },
+      'project[netgalley_submission_attributes][author_name]': {
+        required: true
+      },
+      'project[netgalley_submission_attributes][retail_price]': {
+        required: true
+      },
+      'project[netgalley_submission_attributes][category_one]': {
+        required: true
+      },
+      'project[netgalley_submission_attributes][category_two]': {
+        required: true
+      },
+      'project[netgalley_submission_attributes][website_one]': {
+        required: true
+      },
+      'project[netgalley_submission_attributes][praise]': {
+        required: true
+      }
+
+    }
+  })
 
 ## Blog Tour Form validations
 jQuery.validator.addMethod("blogTourCostValidator", (value, element, params) ->

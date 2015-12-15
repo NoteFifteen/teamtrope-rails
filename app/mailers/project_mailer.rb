@@ -575,6 +575,35 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('media_kit', {}, admin_media_kit_list, admin_subject)
   end
 
+  def new_netgalley_submission(project, current_user)
+
+    @project = project
+    @current_user = current_user
+
+    tokens = {
+      "Title" => @project.netgalley_submission.title,
+      "Series Name" => @project.try(:publication_fact_sheet).try(:series_name),
+      "Series Number" => @project.try(:publication_fact_sheet).try(:series_number),
+      "ISBN" => @project.netgalley_submission.isbn,
+      "Imprint" => @project.netgalley_submission.imprint,
+      "Publication Date" => @project.published_file.publication_date,
+      "Retail Price" => @project.netgalley_submission.retail_price,
+      "Blurb" => @project.netgalley_submission.blurb,
+      "Website One" => @project.netgalley_submission.website_one,
+      "Website Two" => !@project.netgalley_submission.website_two.nil?? @project.netgalley_submission.website_two : "N/A",
+      "Website Three" => !@project.netgalley_submission.website_three.nil?? @project.netgalley_submission.website_three : "N/A",
+      "Praise" => @project.netgalley_submission.praise,
+      "Category One" => @project.netgalley_submission.category_one,
+      "Category Two" => @project.netgalley_submission.category_two
+    }
+
+    user_subject = "Netgalley Submission from #{current_user.name} for #{project.title}"
+    admin_subject = "New " + user_subject
+
+    send_email_message('new_netgalley_submission', tokens, get_project_recipient_list(@project, roles: [:author, :book_manager]), user_subject)
+    send_email_message('new_netgalley_submission', tokens, admin_new_netgalley_submission_list, admin_subject)
+  end
+
   def blog_tour(project, current_user)
     @project = project
     @current_user = current_user
@@ -943,6 +972,11 @@ class ProjectMailer < ActionMailer::Base
 
   def admin_media_kit_list
     %w( tt_media_kit_list@booktrope.com )
+  end
+
+  #Waiting for new list for now use blog tou
+  def admin_new_netgalley_submission_list
+    %w( tt_netgalley_list@booktrope.com )
   end
 
   def admin_blog_tour_list
