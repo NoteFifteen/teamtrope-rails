@@ -47,6 +47,12 @@
     </ul>
 <% end %>
 
+<% if ! @project.createspace_store_url.nil? %>
+<h4>CreateSpace e-Store Info</h4>
+    <b>CreateSpace Store URL</b>: <%= link_to @project.createspace_store_url, @project.createspace_store_url %><br/>
+    <b>CreateSpace Discount Code</b>: <%= @project.createspace_coupon_code %><br/>
+<% end %>
+
 <h4>Published Files</h4>
 <%= image_tag download_ebook_front_cover_path(@project), class: 'alignright', width: "340" if @project.try(:cover_template).try(:ebook_front_cover?) %>
 

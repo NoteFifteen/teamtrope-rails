@@ -826,6 +826,13 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def print_corner_estore_request
+    @project.create_activity :print_corner_estore_request, owner: current_user, parameters: { text: 'Submitted Request to set up CreateSpace e-Store.' }
+    flash[:success] = 'Submitted Request to set up CreateSpace e-Store.'
+    redirect_to @project
+    ProjectMailer.print_corner_estore_request(@project, current_user)
+  end
+
   def download_original_manuscript
     redirect_to @project.manuscript.original.expiring_url(*Constants::DefaultLinkExpiration)
   end
@@ -945,7 +952,7 @@ class ProjectsController < ApplicationController
       :credit_request, :book_type, :proofed_word_count, :teamroom_link,
       :publication_date, :target_market_launch_date, :special_text_treatment, :has_sub_chapters, :has_index,
       :non_standard_size, :has_internal_illustrations, :color_interior, :childrens_book,
-      :edit_complete_date, :imprint_id,
+      :edit_complete_date, :imprint_id, :createspace_store_url, :createspace_coupon_code,
       :genre_ids => [],
       :artwork_rights_requests_attributes => [:id, :role_type, :full_name, :email, :_destroy],
       :blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],

@@ -1,58 +1,86 @@
 <% provide(:title, "Edit Project") %>
-<h1>Edit Project</h1>
-<%= form_for(@project) do | f | %>
-  <%= f.label :final_title %><br />
-  <%= f.text_field :final_title %><br />
+<div class="container">
+  <h1>Edit Project</h1>
+  <div class="row">
+    <div class="col-md-8">
 
-  <%= f.label "On Screen Title" %><br />
-  <%= f.text_field :title %><br />
+      <%= simple_form_for(@project) do |f| %>
 
-  <%= f.label :synopsis, "Synopsis"%>
-  <%= f.text_area :synopsis, size: "50x10" %><br /><br />
+        <%= f.input :final_title %>
 
-  <%= f.label :project_type_id %><br />
-  <%= f.collection_select :project_type_id, ProjectType.all, :id, :name %><br />
+        <%= f.input :title, label: 'On Screen Title' %>
 
-  <%= f.label :stock_image_request_link %><br />
-  <%= f.text_field :stock_image_request_link %><br />
-  <%= f.label :previously_published %>
-  <%= f.check_box :previously_published %><br />
-  <%= f.label :proofed_word_count %><br />
-  <%= f.text_field :proofed_word_count %><br />
-  <%= f.label :cover_concept %><br />
-  <%= f.text_field :cover_concept %><br />
-  <%= f.label :teamroom_link %><br />
-  <%= f.text_field :teamroom_link %><br />
-  <%= f.label :publication_date %><br />
-  <%= f.text_field :publication_date %><br />
-  <%= f.label :special_text_treatment %><br />
-  <%= f.text_field :special_text_treatment %><br />
-  <%= f.label :has_sub_chapters %><br />
-  <%= f.text_field :has_sub_chapters %><br />
-  <%= f.label :has_index %><br />
-  <%= f.text_field :has_index %><br />
-  <%= f.label :non_standard_size %><br />
-  <%= f.text_field :non_standard_size %><br />
-  <%= f.label :has_internal_illustrations %>
-  <%= f.check_box :has_internal_illustrations %><br />
-  <%= f.label :color_interior %><br />
-  <%= f.text_field :color_interior %><br />
-  <%= f.label :childrens_book %><br />
-  <%= f.text_field :childrens_book %><br />
-  <%= f.label :edit_complete_date %><br />
-  <%= f.text_field :edit_complete_date %><br />
+        <%= f.input :project_type_id,
+                    collection: ProjectType.all,
+                    label_method: :name, value_method: :id,
+                    :include_blank => 'Select Project Type',
+                    :selected => ProjectType.where(name: 'Standard Project').first.id
+        %>
 
-  <%= f.fields_for :layout, (f.object.layout.nil?)? f.object.build_layout :
-    f.object.layout do | project_layout | %>
-    <%= project_layout.label :pen_name %><br />
-    <%= project_layout.text_field :pen_name %><br />
-    <%= project_layout.label :legal_name %><br />
-    <%= project_layout.text_field :legal_name %>
-  <% end %>
+        <%= f.input :teamroom_link %>
+
+        <h2>Genre</h2>
+        <%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: false } ) %><br /><br />
+
+        <label >Imprint&nbsp;<span class="required">*</span></label><br/>
+        <%= f.input :imprint_id, as: :radio_buttons,
+                    collection: Imprint.all.map{ |imp| [imp.name, imp.id ] },
+                    wrapper: :vertical_radio_and_checkboxes,
+                    label: false
+        %>
+
+        <%= f.input :previously_published, as: :boolean %>
+
+        <%= f.input :proofed_word_count %>
+        <%= f.input :edit_complete_date, as: :date %>
+        <%= f.input :publication_date, as: :date %>
+
+        <%= f.label :synopsis, "Synopsis"%>
+        <%= f.text_area :synopsis, size: "50x10" %><br /><br />
+
+        <%= f.label :stock_image_request_link %><br />
+        <%= f.text_field :stock_image_request_link %><br />
 
 
-  <h2>Genres</h2>
-  <%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: false } ) %><br /><br />
+        <%= f.label :cover_concept %><br />
+        <%= f.text_field :cover_concept %><br />
 
-  <%= f.submit %>
-<% end %>
+        <%= f.input :special_text_treatment,
+                    as: :text,
+                    input_html: { class: %q[textarea medium], rows: 10, cols: 50 }
+        %>
+
+        <%= f.input :has_sub_chapters, as: :boolean %>
+        <%= f.input :has_index, as: :boolean %>
+        <%= f.input :non_standard_size, as: :boolean %>
+        <%= f.input :has_internal_illustrations, as: :boolean %>
+        <%= f.input :color_interior, as: :boolean, label: 'Full color interior' %>
+        <%= f.input :childrens_book, as: :boolean, label: "Children's book" %>
+
+
+
+        <%= f.simple_fields_for :layout, (f.object.layout.nil?)? f.object.build_layout :
+          f.object.layout do | project_layout | %>
+          <%= project_layout.input :pen_name %>
+          <%= project_layout.input :legal_name %>
+        <% end %>
+
+        <br/>
+
+        <div style="padding: 0px 20px 20px 20px; margin-bottom: 20px; border-color: #C7C6C6; border-width: 1px; border-style: solid;">
+          <h2>Print Corner</h2>
+
+          <p>After the author has ordered their initial 15 copies, they will be provided with an e-store link for CreateSpace
+            and provided with a coupon code for a 55% discount on their order.  This store link and coupon code needs to be
+            entered below, then it will be shown to the author on the Print tab.</p>
+
+          <%= f.input :createspace_store_url, label: 'Createspace Store URL'%>
+          <%= f.input :createspace_coupon_code, label: 'Coupon Code' %>
+        </div>
+
+
+        <%= f.submit %>
+      <% end %>
+    </div>
+  </div>
+</div>
