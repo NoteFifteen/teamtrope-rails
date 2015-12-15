@@ -17,6 +17,8 @@
                     :selected => ProjectType.where(name: 'Standard Project').first.id
         %>
 
+        <%= f.input :book_type, collection: Project::BOOK_TYPES %>
+
         <%= f.input :teamroom_link %>
 
         <h2>Genre</h2>

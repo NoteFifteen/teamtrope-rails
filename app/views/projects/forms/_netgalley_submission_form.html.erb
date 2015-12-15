@@ -1,5 +1,7 @@
 <div class="container">
   <h1>Netgalley Submission</h1>
+
+  <% if @project.netgalley_submission.nil? %>
   <div class="row">
     <div class="col-md-10">
       <p>
@@ -14,21 +16,25 @@
 
   <div class="row">
     <div class="col-md-6">
-      <%= simple_form_for @project,
-                          url: url_for(controller: 'projects', action: 'new_netgalley_submission', id: @project),
-                          html: { id: 'netgalley_submission' } do | f | %>
+        <%= simple_form_for @project,
+                            url: url_for(controller: 'projects', action: 'new_netgalley_submission', id: @project),
+                            html: { id: 'netgalley_submission' } do | f | %>
 
-        <%= f.simple_fields_for :netgalley_submission,
-                ((f.object.netgalley_submission.nil?) ? f.object.build_netgalley_submission : f.object.netgalley_submission) do | netgalley_submission | %>
+          <%= f.simple_fields_for :netgalley_submission,
+                  ((f.object.netgalley_submission.nil?) ? f.object.build_netgalley_submission : f.object.netgalley_submission) do | netgalley_submission | %>
 
-          <%= render "shared/netgalley_fields", builder: netgalley_submission %>
+            <%= render "shared/netgalley_fields", builder: netgalley_submission %>
 
-          <%= f.submit "Submit" %>
+            <%= f.submit "Submit" %>
+          <% end %>
         <% end %>
-
-      <% end %>
     </div>
   </div>
+  <% else %>
+  <div>
+    Your title has already been submitted for Netgalley.
+  </div>
+  <% end %>
 </div>
 
 

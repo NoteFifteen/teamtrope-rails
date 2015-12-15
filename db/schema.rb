@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151211130859) do
+ActiveRecord::Schema.define(version: 20151215121345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -244,6 +244,26 @@ ActiveRecord::Schema.define(version: 20151211130859) do
   end
 
   add_index "draft_blurbs", ["project_id"], name: "index_draft_blurbs_on_project_id", using: :btree
+
+  create_table "ebook_only_incentives", force: true do |t|
+    t.integer  "project_id"
+    t.string   "title"
+    t.string   "author_name"
+    t.date     "publication_date"
+    t.float    "retail_price"
+    t.text     "blurb"
+    t.string   "website_one"
+    t.string   "website_two"
+    t.string   "website_three"
+    t.string   "category_one"
+    t.string   "category_two"
+    t.text     "praise"
+    t.string   "isbn"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ebook_only_incentives", ["project_id"], name: "index_ebook_only_incentives_on_project_id", using: :btree
 
   create_table "final_manuscripts", force: true do |t|
     t.integer  "project_id"

@@ -360,6 +360,38 @@ jQuery ->
     }
   })
 
+## ebook only incentive validators
+jQuery ->
+  $("#ebook_only_incentive").validate({
+    rules: {
+      'project[ebook_only_incentive_attributes][title]': {
+        required: true
+      },
+      'project[ebook_only_incentive_attributes][isbn]': {
+        required: true
+      },
+      'project[ebook_only_incentive_attributes][author_name]': {
+        required: true
+      },
+      'project[ebook_only_incentive_attributes][retail_price]': {
+        required: true
+      },
+      'project[ebook_only_incentive_attributes][category_one]': {
+        required: true
+      },
+      'project[ebook_only_incentive_attributes][category_two]': {
+        required: true
+      },
+      'project[ebook_only_incentive_attributes][website_one]': {
+        required: true
+      },
+      'project[ebook_only_incentive_attributes][praise]': {
+        required: true
+      }
+
+    }
+  })
+
 ## netgalley validators
 jQuery ->
   $("#netgalley_submission").validate({

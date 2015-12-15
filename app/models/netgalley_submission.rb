@@ -2,7 +2,6 @@ class NetgalleySubmission < ActiveRecord::Base
   belongs_to :project
 
   after_initialize :custom_init
-  serialize :category, Array
 
   delegate :imprint_name, to: :project, allow_nil: true
 

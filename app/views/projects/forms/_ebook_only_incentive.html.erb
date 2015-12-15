@@ -1,0 +1,50 @@
+<div class="container">
+  <h1>eBook Only Incentive</h1>
+  <% if @project.book_type.nil? || @project.book_type != "ebook_only" %>
+  <div class="row">
+    <div class="col-md-10">
+      <div>The eBook Only Incentive is only available for eBook only projects.</div>
+    </div>
+  </div>
+  <% elsif @project.ebook_only_incentive.nil? %>
+  <div class="row">
+    <div class="col-md-10">
+      <p>
+        To acknowledge the fact that ebook only published titles do not get
+        complimentary author copies, we wanted to provide an incentive just for
+        ebook only titles. Netgalley is a review site. Each ebook only title is
+        eligible for a free month on Netgalley. You are also eligible for a
+        month of Netgalley that is treated as a marketing expense. This free
+        month will be fully funded by Booktrope. If you would like to take
+        advantage of your free month, please fill out the following completely.
+        Thank you.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <%= simple_form_for @project,
+                          url: url_for(controller: 'projects', action: 'ebook_only_incentive', id: @project),
+                          html: { id: 'ebook_only_incentive' } do | f | %>
+
+        <%= f.simple_fields_for :ebook_only_incentive,
+                ((f.object.ebook_only_incentive.nil?) ? f.object.build_ebook_only_incentive : f.object.ebook_only_incentive) do | ebook_only_incentive | %>
+
+          <%= render "shared/netgalley_fields", builder: ebook_only_incentive %>
+
+          <%= f.submit "Submit" %>
+        <% end %>
+
+      <% end %>
+    </div>
+  </div>
+  <% else %>
+  <div class="row">
+    <div class="col-md-10">
+      <div>This title has already been enrolled into the eBook Only Incentive Program.</div>
+    </div>
+  </div>
+  <% end %>
+
+</div>
