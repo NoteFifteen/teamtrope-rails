@@ -812,6 +812,38 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('kdp_select_withdraw', tokens, admin_kdp_select_enrollment_list, user_subject)
   end
 
+  def rights_back_request(project)
+    @project = project
+    @request = project.rights_back_request
+    pgtr = project.project_grid_table_row
+
+    tokens = {
+      'Title' => @request.title,
+      'Author' => @request.author,
+      'Imprint' => project.try(:imprint).try(:name),
+      'Publication Date' => project.try(:published_file).try(:publication_date),
+      'Reason for leaving' => @request.reason,
+      'This title has been proofed' => (@request.proofed) ? 'Yes' : 'No',
+      'This title has been edited' => (@request.edited) ? 'Yes' : 'No',
+      'This title has been published' => (@request.published) ? 'Yes' : 'No',
+      'Production Task Name' => pgtr.production_task_name,
+      'Production Task Last Update' => pgtr.production_task_last_update,
+      'Design Task Name' => pgtr.design_task_name,
+      'Design Task Last Update' => pgtr.design_task_last_update,
+      'Marketing Task Name' => pgtr.marketing_task_name,
+      'Marketing Task Last Update' => pgtr.marketing_task_last_update,
+    }
+
+    project.team_memberships.each do |m|
+      tokens.store("Role: #{m.role.name}", "#{m.member.display_name} (#{m.percentage}%)")
+    end
+
+    tokens.store('Total Allocation', project.total_team_percent_allocation.to_s + "%")
+
+    send_email_message('rights_back_request', tokens, admin_rights_back_request_list, "Rights Back Request for #{@request.title}")
+  end
+
+
   private
 
   # Generates a link for an email address for a User
@@ -1036,6 +1068,10 @@ class ProjectMailer < ActionMailer::Base
 
   def admin_kdp_select_update_list
     %w( tt_kdp_select_update_list@booktrope.com )
+  end
+
+  def admin_rights_back_request_list
+    %w( tt_rights_back_request@booktrope.com )
   end
 
   # Set the campaign header for MailGun tracking

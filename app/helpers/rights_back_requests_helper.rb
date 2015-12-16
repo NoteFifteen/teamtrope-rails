@@ -1,0 +1,2 @@
+module RightsBackRequestsHelper
+end

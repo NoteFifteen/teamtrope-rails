@@ -572,6 +572,17 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def rights_back_request
+    if @project.update(update_project_params)
+      flash[:success] = 'Submitted Rights Back Request'
+      ProjectMailer.rights_back_request(@project)
+      redirect_to @project
+    else
+      flash[:danger] = 'There was an error submitting the Rights Back Request.  Please review.'
+      render 'show'
+    end
+  end
+
   def update_final_page_count
     if @project.update(update_project_params)
       update_current_task
@@ -980,7 +991,7 @@ class ProjectsController < ApplicationController
       :credit_request, :book_type, :proofed_word_count, :teamroom_link,
       :publication_date, :target_market_launch_date, :special_text_treatment, :has_sub_chapters, :has_index,
       :non_standard_size, :has_internal_illustrations, :color_interior, :childrens_book,
-      :edit_complete_date, :imprint_id, :createspace_store_url, :createspace_coupon_code,
+      :edit_complete_date, :imprint_id, :createspace_store_url, :createspace_coupon_code, :enable_rights_request,
       :genre_ids => [],
       :artwork_rights_requests_attributes => [:id, :role_type, :full_name, :email, :_destroy],
       :blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
@@ -1009,6 +1020,7 @@ class ProjectsController < ApplicationController
             :bisac_code_three, :bisac_code_name_three, :search_terms, :age_range, :starting_grade_index,
             :paperback_cover_type ],
       :published_file_attributes => [:publication_date],
+      :rights_back_request_attributes => [:submitted_by_name, :submitted_by_id, :title, :author, :reason, :proofed, :edited, :published],
       :social_media_marketing_attributes => [:author_facebook_page, :author_central_account_link, :website_url,
                           :twitter, :pintrest, :goodreads],
       :status_updates_attributes => [:type, :status],
