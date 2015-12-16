@@ -575,6 +575,34 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('media_kit', {}, admin_media_kit_list, admin_subject)
   end
 
+  def ebook_only_incentive(project, current_user)
+    @project = project
+    @current_user = current_user
+
+    tokens = {
+      "Title" => @project.ebook_only_incentive.title,
+      "Series Name" => @project.try(:publication_fact_sheet).try(:series_name),
+      "Series Number" => @project.try(:publication_fact_sheet).try(:series_number),
+      "ISBN" => @project.ebook_only_incentive.isbn,
+      "Imprint" => @project.ebook_only_incentive.imprint,
+      "Publication Date" => @project.published_file.publication_date,
+      "Retail Price" => @project.ebook_only_incentive.retail_price,
+      "Blurb" => @project.ebook_only_incentive.blurb,
+      "Website One" => @project.ebook_only_incentive.website_one,
+      "Website Two" => !@project.ebook_only_incentive.website_two.nil?? @project.ebook_only_incentive.website_two : "N/A",
+      "Website Three" => !@project.ebook_only_incentive.website_three.nil?? @project.ebook_only_incentive.website_three : "N/A",
+      "Praise" => @project.ebook_only_incentive.praise,
+      "Category One" => @project.ebook_only_incentive.category_one,
+      "Category Two" => @project.ebook_only_incentive.category_two
+    }
+
+    user_subject = "eBook Only Incentive from #{current_user.name} for #{project.title}"
+    admin_subject = "New " + user_subject
+
+    send_email_message('ebook_only_incentive', tokens, get_project_recipient_list(@project, roles: [:author, :book_manager]), user_subject)
+    send_email_message('ebook_only_incentive', tokens, admin_ebook_only_incentive_list, admin_subject)
+  end
+
   def new_netgalley_submission(project, current_user)
 
     @project = project
@@ -974,7 +1002,10 @@ class ProjectMailer < ActionMailer::Base
     %w( tt_media_kit_list@booktrope.com )
   end
 
-  #Waiting for new list for now use blog tou
+  def admin_ebook_only_incentive_list
+    %w( tt_netgalley_ebook_list@booktrope.com )
+  end
+
   def admin_new_netgalley_submission_list
     %w( tt_netgalley_list@booktrope.com )
   end

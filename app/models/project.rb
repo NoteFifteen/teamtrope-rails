@@ -21,6 +21,7 @@ class Project < ActiveRecord::Base
   has_one  :cover_template, dependent: :destroy
   has_many :current_tasks, dependent: :destroy
   has_one  :draft_blurb, dependent: :destroy
+  has_one  :ebook_only_incentive, dependent: :destroy
   has_one  :final_manuscript, dependent: :destroy
   has_many :genres, through: :book_genres, source: :genre
   has_one  :kdp_select_enrollment, dependent: :destroy
@@ -52,6 +53,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :cover_template, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :cover_concept, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :draft_blurb, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :ebook_only_incentive, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :final_manuscript, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :kdp_select_enrollment, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :layout, reject_if: :all_blank, allow_destroy: false

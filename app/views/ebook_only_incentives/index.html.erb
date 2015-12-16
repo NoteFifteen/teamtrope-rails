@@ -1,0 +1,50 @@
+<% provide(:title, "eBook Only Incentives") %>
+<h1>eBook Only Incentives</h1>
+
+<table id="ebook_only_incentive_table">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Title</th>
+      <th>Author name</th>
+      <th>Publication date</th>
+      <th>Retail price</th>
+      <th>Website one</th>
+      <th>Website two</th>
+      <th>Website three</th>
+      <th>Category one</th>
+      <th>Category two</th>
+      <th>Isbn</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ebook_only_incentives.each do |ebook_only_incentive| %>
+      <tr>
+        <td class="book-title"><%= link_to ebook_only_incentive.project.book_title, ebook_only_incentive.project %></td>
+        <td class="book-title"><%= ebook_only_incentive.title %></td>
+        <td><%= ebook_only_incentive.author_name %></td>
+        <td><%= ebook_only_incentive.publication_date %></td>
+        <td><%= ebook_only_incentive.retail_price %></td>
+        <td><%= link_to ebook_only_incentive.website_one, ebook_only_incentive.website_one %></td>
+        <td><%= link_to ebook_only_incentive.website_two, ebook_only_incentive.website_two unless ebook_only_incentive.website_two.nil? %></td>
+        <td><%= link_to ebook_only_incentive.website_three, ebook_only_incentive.website_three unless ebook_only_incentive.website_three.nil? %></td>
+        <td><%= ebook_only_incentive.category_one %></td>
+        <td><%= ebook_only_incentive.category_two %></td>
+        <td><%= ebook_only_incentive.isbn %></td>
+        <td><%= link_to 'Show', ebook_only_incentive %></td>
+        <td><%= link_to 'Edit', edit_ebook_only_incentive_path(ebook_only_incentive) %></td>
+        <td><%= link_to 'Destroy', ebook_only_incentive, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<script>
+  $("#ebook_only_incentive_table").DataTable({ 'pageLength': '100'});
+</script>

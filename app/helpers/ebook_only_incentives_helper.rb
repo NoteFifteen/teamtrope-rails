@@ -1,0 +1,2 @@
+module EbookOnlyIncentivesHelper
+end

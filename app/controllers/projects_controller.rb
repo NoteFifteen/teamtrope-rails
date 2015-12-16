@@ -749,6 +749,20 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def ebook_only_incentive
+    if @project.update_attributes(update_project_params)
+      update_current_task
+      @project.create_activity :ebook_only_incentive, owner: current_user,
+                                parameters: { text: 'eBook Only Incentive Submission', form_data: params[:project].to_s }
+      flash[:success] = 'eBook Only Incentive Submitted'
+      ProjectMailer.ebook_only_incentive(@project, current_user)
+      redirect_to @project
+    else
+      flash[:danger] = "There was a problme with your eBook Only Incentive Submission."
+      render 'show'
+    end
+  end
+
   def new_netgalley_submission
     if @project.update(update_project_params)
       update_current_task
@@ -977,6 +991,7 @@ class ProjectsController < ApplicationController
       :cover_template_attributes => [:id, :final_cover_approved, :final_cover_approval_date, :final_cover_notes],
       :draft_blurb_attributes => [:id, :draft_blurb],
       :approve_blurb_attributes => [:id, :blurb_approval_decision, :blurb_approval_date, :blurb_notes],
+      :ebook_only_incentive_attributes => [:title, :isbn, :author_name, :retail_price, :blurb, :category_one, :category_two, :praise, :website_one, :website_two, :website_three],
       :final_manuscript_attributes => [:id, :pdf, :doc],
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
       :layout_attributes => [:id, :layout_style_choice, :page_header_display_name, :use_pen_name_on_title, :pen_name, :legal_name,
