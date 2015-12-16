@@ -52,7 +52,7 @@ class NetgalleySubmission < ActiveRecord::Base
   def custom_init
     return if project.nil?
 
-    self.title ||= (project.final_title) ? project.final_title : project.title
+    self.title ||= project.book_title
     self.author_name ||= project.authors.first.member.display_name
     self.retail_price ||= project.try(:publication_fact_sheet).try(:ebook_price)
     self.publication_date ||= project.try(:published_file).try(:publication_date)
