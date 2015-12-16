@@ -1,13 +1,18 @@
-<p id="notice"><%= notice %></p>
+<h1>eBook Only Incentive</h1>
 
 <p>
   <strong>Project:</strong>
-  <%= @ebook_only_incentive.project %>
+  <%= link_to @project.book_title, @project %>
 </p>
 
 <p>
   <strong>Title:</strong>
   <%= @ebook_only_incentive.title %>
+</p>
+
+<p>
+  <strong>Isbn:</strong>
+  <%= @ebook_only_incentive.isbn %>
 </p>
 
 <p>
@@ -26,23 +31,21 @@
 </p>
 
 <p>
-  <strong>Blurb:</strong>
-  <%= @ebook_only_incentive.blurb %>
-</p>
-
-<p>
   <strong>Website one:</strong>
-  <%= @ebook_only_incentive.website_one %>
+  <%= link_to @ebook_only_incentive.website_one,
+        @ebook_only_incentive.website_one %>
 </p>
 
 <p>
   <strong>Website two:</strong>
-  <%= @ebook_only_incentive.website_two %>
+  <%= link_to @ebook_only_incentive.website_two,
+   @ebook_only_incentive.website_two unless @ebook_only_incentive.website_two.nil? %>
 </p>
 
 <p>
   <strong>Website three:</strong>
-  <%= @ebook_only_incentive.website_three %>
+  <%= link_to @ebook_only_incentive.website_three,
+   @ebook_only_incentive.website_three unless @ebook_only_incentive.website_three.nil? %>
 </p>
 
 <p>
@@ -56,14 +59,15 @@
 </p>
 
 <p>
+  <strong>Blurb:</strong>
+  <%= @ebook_only_incentive.blurb %>
+</p>
+
+<p>
   <strong>Praise:</strong>
   <%= @ebook_only_incentive.praise %>
 </p>
 
-<p>
-  <strong>Isbn:</strong>
-  <%= @ebook_only_incentive.isbn %>
-</p>
 
 <%= link_to 'Edit', edit_ebook_only_incentive_path(@ebook_only_incentive) %> |
 <%= link_to 'Back', ebook_only_incentives_path %>

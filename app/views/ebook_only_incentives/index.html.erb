@@ -1,6 +1,7 @@
-<h1>Listing ebook_only_incentives</h1>
+<% provide(:title, "eBook Only Incentives") %>
+<h1>eBook Only Incentives</h1>
 
-<table>
+<table id="ebook_only_incentive_table">
   <thead>
     <tr>
       <th>Project</th>
@@ -8,33 +9,31 @@
       <th>Author name</th>
       <th>Publication date</th>
       <th>Retail price</th>
-      <th>Blurb</th>
       <th>Website one</th>
       <th>Website two</th>
       <th>Website three</th>
       <th>Category one</th>
       <th>Category two</th>
-      <th>Praise</th>
       <th>Isbn</th>
-      <th colspan="3"></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
 
   <tbody>
     <% @ebook_only_incentives.each do |ebook_only_incentive| %>
       <tr>
-        <td><%= ebook_only_incentive.project %></td>
-        <td><%= ebook_only_incentive.title %></td>
+        <td class="book-title"><%= link_to ebook_only_incentive.project.book_title, ebook_only_incentive.project %></td>
+        <td class="book-title"><%= ebook_only_incentive.title %></td>
         <td><%= ebook_only_incentive.author_name %></td>
         <td><%= ebook_only_incentive.publication_date %></td>
         <td><%= ebook_only_incentive.retail_price %></td>
-        <td><%= ebook_only_incentive.blurb %></td>
-        <td><%= ebook_only_incentive.website_one %></td>
-        <td><%= ebook_only_incentive.website_two %></td>
-        <td><%= ebook_only_incentive.website_three %></td>
+        <td><%= link_to ebook_only_incentive.website_one, ebook_only_incentive.website_one %></td>
+        <td><%= link_to ebook_only_incentive.website_two, ebook_only_incentive.website_two unless ebook_only_incentive.website_two.nil? %></td>
+        <td><%= link_to ebook_only_incentive.website_three, ebook_only_incentive.website_three unless ebook_only_incentive.website_three.nil? %></td>
         <td><%= ebook_only_incentive.category_one %></td>
         <td><%= ebook_only_incentive.category_two %></td>
-        <td><%= ebook_only_incentive.praise %></td>
         <td><%= ebook_only_incentive.isbn %></td>
         <td><%= link_to 'Show', ebook_only_incentive %></td>
         <td><%= link_to 'Edit', edit_ebook_only_incentive_path(ebook_only_incentive) %></td>
@@ -46,4 +45,6 @@
 
 <br>
 
-<%= link_to 'New Ebook only incentive', new_ebook_only_incentive_path %>
+<script>
+  $("#ebook_only_incentive_table").DataTable({ 'pageLength': '100'});
+</script>
