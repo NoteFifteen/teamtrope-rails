@@ -821,6 +821,7 @@ class ProjectMailer < ActionMailer::Base
       'Title' => @request.title,
       'Author' => @request.author,
       'Imprint' => project.try(:imprint).try(:name),
+      'Publication Date' => project.try(:published_file).try(:publication_date),
       'Reason for leaving' => @request.reason,
       'This title has been proofed' => (@request.proofed) ? 'Yes' : 'No',
       'This title has been edited' => (@request.edited) ? 'Yes' : 'No',
