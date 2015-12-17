@@ -1,13 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  project_id: 
-  original: 
-  edited: 
-  proofed: 
+  project_id:
+  original:
+  edited:
+  proofread_reviewed:
+  proofread_final:
 
 two:
-  project_id: 
-  original: 
-  edited: 
-  proofed: 
+  project_id:
+  original:
+  edited:
+  proofread_reviewed:
+  proofread_final:

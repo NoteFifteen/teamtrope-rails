@@ -48,13 +48,13 @@ class ManuscriptsController < ApplicationController
       @updated_file = 'proofread_reviewed_manuscript'
     end
 
-    if ! params[:proofed_manuscript].nil?
-      update_hash[:proofed_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
-      update_hash[:proofed_content_type] = params[:filetype] unless params[:filetype].nil? || params[:filetype] == ''
-      update_hash[:proofed_file_size] = params[:filesize] unless params[:filesize].nil? || params[:filesize] == ''
-      update_hash[:proofed_file_direct_upload_url] = params[:proofed_manuscript]['direct_upload_url'] unless params[:proofed_manuscript]['direct_upload_url'].nil?
-      update_hash[:proofed_file_processed] = false
-      @updated_file = 'proofed_manuscript'
+    if ! params[:proofread_final_manuscript].nil?
+      update_hash[:proofread_final_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
+      update_hash[:proofread_final_content_type] = params[:filetype] unless params[:filetype].nil? || params[:filetype] == ''
+      update_hash[:proofread_final_file_size] = params[:filesize] unless params[:filesize].nil? || params[:filesize] == ''
+      update_hash[:proofread_final_file_direct_upload_url] = params[:proofread_final_manuscript]['direct_upload_url'] unless params[:proofread_final_manuscript]['direct_upload_url'].nil?
+      update_hash[:proofread_final_file_processed] = false
+      @updated_file = 'proofread_final_manuscript'
     end
 
     @manuscript.update(update_hash)
@@ -70,8 +70,8 @@ class ManuscriptsController < ApplicationController
     # setting the update text.
     [ {key: :updated_original_manuscript,           tag: 'Original'},
       {key: :updated_edited_manuscript,             tag: 'Edited'},
-      {key: :updated_proofed_manuscript,            tag: 'Proofed'},
       {key: :updated_proofread_reviewed_manuscript, tag: 'Proofread Reviewed'}
+      {key: :updated_proofread_final_manuscript,    tag: 'Final Proof'},
     ].each_with_index do | item, index |
       if !params[item[:key]].nil? && params[item[:key]] == 'yes'
         updated.push item[:tag]
@@ -87,11 +87,10 @@ class ManuscriptsController < ApplicationController
     end
 
     # sending alert emails based on the upload mask
-    ProjectMailer.original_manuscript_uploaded(@project, current_user) if upload_mask & 1 == 1
-    ProjectMailer.submit_edited_manuscript(@project, current_user) if upload_mask & 2 == 2
-    ProjectMailer.proofed_manuscript(@project, current_user, params) if upload_mask & 4 == 4
-    ProjectMailer.submit_proofread_reviewed_manuscript(@project, current_user) if upload_mask & 8 == 8
-
+    ProjectMailer.original_manuscript_uploaded(@project, current_user)         if upload_mask & 1 == 1
+    ProjectMailer.submit_edited_manuscript(@project, current_user)             if upload_mask & 2 == 2
+    ProjectMailer.submit_proofread_reviewed_manuscript(@project, current_user) if upload_mask & 4 == 4
+    ProjectMailer.proofread_final_manuscript(@project, current_user, params)   if upload_mask & 8 == 8
 
     redirect_to @manuscript
   end

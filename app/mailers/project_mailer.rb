@@ -230,7 +230,7 @@ class ProjectMailer < ActionMailer::Base
   end
 
   # Manuscript submitted by Proof-Reader
-  def proofed_manuscript(project, current_user, params)
+  def proofread_final_manuscript(project, current_user, params)
     @project = project
     @current_user = current_user
 
@@ -292,8 +292,8 @@ class ProjectMailer < ActionMailer::Base
 
     tokens ||= {}
 
-    send_email_message('proofed_manuscript', tokens, get_project_recipient_list(@project, roles: [:project_manager, :author]), subject)
-    send_email_message('proofed_manuscript_admin', tokens, admin_proofed_manuscript_list, subject)
+    send_email_message('proofread_final_manuscript', tokens, get_project_recipient_list(@project, roles: [:project_manager, :author]), subject)
+    send_email_message('proofread_final_manuscript_admin', tokens, admin_proofread_final_manuscript_list, subject)
   end
 
   def edit_layout_style(project, current_user)
@@ -1018,7 +1018,7 @@ class ProjectMailer < ActionMailer::Base
   end
 
   # The proofed manuscript has been uploaded
-  def admin_proofed_manuscript_list
+  def admin_proofread_final_manuscript_list
     %w( tt_proofed_manuscript_list@booktrope.com )
   end
 

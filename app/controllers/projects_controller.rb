@@ -236,21 +236,21 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def proofed_manuscript
+  def proofread_final_manuscript
     @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
 
     if @project.update(update_project_params)
       @project.create_activity :submitted_proofed_manuscript, owner: current_user, parameters: {text: 'Uploaded the Proofed Manuscript', form_data: params[:project].to_s}
       update_current_task
-      flash[:success] = "Proofed Manuscript Uploaded. WAIT! Before you celebrate, you are still on the clock for the project and we won't be working on your book until you complete the next step.
+      flash[:success] = "Final Proofed Manuscript Uploaded. WAIT! Before you celebrate, you are still on the clock for the project and we won't be working on your book until you complete the next step.
       To do this:
-        1) Refresh the  project page (see link below),
+        1) Refresh the project page (see link below),
         2) Open the Choose Style tab in the Design Layout phase of the project.
         3) Submit Choose Style form. And that's it!"
-      ProjectMailer.proofed_manuscript(@project, current_user, params)
+      ProjectMailer.proofread_final_manuscript(@project, current_user, params)
       redirect_to @project
     else
-      flash[:danger] = 'There was a problem Uploading your Proofed Manuscript, please review.'
+      flash[:danger] = 'There was a problem Uploading your Final Proofed Manuscript, please review.'
       render 'show'
     end
   end
@@ -910,8 +910,8 @@ class ProjectsController < ApplicationController
     redirect_to @project.manuscript.proofread_reviewed.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
-  def download_proofed_manuscript
-    redirect_to @project.manuscript.proofed.expiring_url(*Constants::DefaultLinkExpiration)
+  def download_proofread_final_manuscript
+    redirect_to @project.manuscript.proofread_final.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
   def download_published_file_mobi
@@ -1039,7 +1039,7 @@ class ProjectsController < ApplicationController
       :layout_attributes => [:id, :layout_style_choice, :page_header_display_name, :use_pen_name_on_title, :pen_name, :legal_name,
                              :use_pen_name_for_copyright, :exact_name_on_copyright, :layout_upload, :layout_notes,
                              :layout_approved, :layout_approved_date, :final_page_count, :trim_size, :trim_size_w, :trim_size_h],
-      :manuscript_attributes => [:id, :original, :edited, :proofed],
+      :manuscript_attributes => [:id, :original, :edited, :proofread_reviewed, :proofread_final],
       :marketing_expenses_attributes => [:invoice_due_date, :start_date, :end_date, :expense_type, :service_provider, :cost, :other_information , :other_type, :other_service_provider],
       :media_kits_attributes => [:document],
       :netgalley_submission_attributes => [:title, :isbn, :publication_date, :author_name, :retail_price, :blurb, :category_one, :category_two, :praise, :website_one, :website_two, :website_three, :book_manager, :personal_submission, :paypal_email],

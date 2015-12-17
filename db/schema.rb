@@ -431,18 +431,18 @@ ActiveRecord::Schema.define(version: 20151223201744) do
     t.string   "edited_content_type"
     t.integer  "edited_file_size"
     t.datetime "edited_updated_at"
-    t.string   "proofed_file_name"
-    t.string   "proofed_content_type"
-    t.integer  "proofed_file_size"
-    t.datetime "proofed_updated_at"
+    t.string   "proofread_final_file_name"
+    t.string   "proofread_final_content_type"
+    t.integer  "proofread_final_file_size"
+    t.datetime "proofread_final_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "original_file_direct_upload_url"
     t.boolean  "original_file_processed",                   default: false
     t.string   "edited_file_direct_upload_url"
     t.boolean  "edited_file_processed",                     default: false
-    t.string   "proofed_file_direct_upload_url"
-    t.boolean  "proofed_file_processed",                    default: false
+    t.string   "proofread_final_file_direct_upload_url"
+    t.boolean  "proofread_final_file_processed",            default: false
     t.string   "proofread_reviewed_content_type"
     t.string   "proofread_reviewed_file_direct_upload_url"
     t.string   "proofread_reviewed_file_name"

@@ -78,7 +78,7 @@ namespace :teamtrope do
               project.manuscript.edited = prepare_url(document.url, document)
             when 'book_manuscript_proofed'
               project.build_manuscript if project.manuscript.nil?
-              project.manuscript.proofed = prepare_url(document.url, document)
+              project.manuscript.proofread_final = prepare_url(document.url, document)
             when 'book_layout_upload'
               project.build_layout if project.layout.nil?
               project.layout.layout_upload = prepare_url(document.url, document)

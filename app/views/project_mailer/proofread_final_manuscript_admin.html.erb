@@ -1,0 +1,10 @@
+<p>The document referenced has been submitted as a final, proofed document ready for layout.</p>
+
+<%= render 'table_hash' %>
+
+<% if( ! @project.manuscript.proofread_final_file_name.nil? ) %>
+    <p>Download: <%= link_to(@project.manuscript.proofread_final_file_name,
+                            url_for(controller: 'projects',
+                                    action: 'download_proofread_final_manuscript',
+                                    id: @project, only_path: false)) %></p>
+<% end %>

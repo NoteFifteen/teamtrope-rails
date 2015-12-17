@@ -20,10 +20,10 @@
     controller_action: 'download_proofread_reviewed_manuscript'
   },
   {
-    label: "Proofed Manuscript", required: true, callback_url: project_manuscript_url(@project),
-    form_id: "proofed_manuscript_s3_uploader", callback_param: "proofed_manuscript[direct_upload_url]",
-    container_id: "proofed_manuscript_uploads_container", object: @manuscript, column_name: "proofed",
-    controller_action: 'download_proofed_manuscript'
+    label: "Proofread Final Manuscript", required: true, callback_url: project_manuscript_url(@project),
+    form_id: "proofread_final_manuscript_s3_uploader", callback_param: "proofread_final_manuscript[direct_upload_url]",
+    container_id: "proofread_final_manuscript_uploads_container", object: @manuscript, column_name: "proofread_final",
+    controller_action: 'download_proofread_final_manuscript'
 
   }
 ].each do | s3_upload_hash | %>
@@ -40,7 +40,7 @@
     <%= hidden_field_tag :updated_original_manuscript, 'no' %>
     <%= hidden_field_tag :updated_edited_manuscript, 'no' %>
     <%= hidden_field_tag :updated_proofread_reviewed_manuscript, 'no' %>
-    <%= hidden_field_tag :updated_proofed_manuscript, 'no' %>
+    <%= hidden_field_tag :updated_proofread_final_manuscript, 'no' %>
   </div>
 
   <div class="form-actions">

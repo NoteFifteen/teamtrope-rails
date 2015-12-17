@@ -76,7 +76,7 @@ Rails.application.routes.draw do
   match '/projects/price_promotion/:id',          to: 'projects#price_promotion',          via: 'patch'
   match '/projects/print_corner_request/:id',     to: 'projects#print_corner_request',     via: 'patch'
   match '/projects/print_corner_estore_request/:id',     to: 'projects#print_corner_estore_request',     via: 'patch'
-  match '/projects/proofed_manuscript/:id',              to: 'projects#proofed_manuscript',              via: 'patch'
+  match '/projects/proofread_final_manuscript/:id',      to: 'projects#proofread_final_manuscript',      via: 'patch'
   match '/projects/proofread_reviewed_manuscript/:id',   to: 'projects#proofread_reviewed_manuscript',   via: 'patch'
   match '/projects/publish_book/:id',             to: 'projects#publish_book',             via: 'patch'
   match '/projects/remove_team_member/:id',       to: 'projects#remove_team_member',       via: 'patch'
@@ -96,7 +96,7 @@ Rails.application.routes.draw do
   match '/projects/download_original_manuscript/:id',           to: 'projects#download_original_manuscript',           via: 'get', as: 'download_original_manuscript'
   match '/projects/download_edited_manuscript/:id',             to: 'projects#download_edited_manuscript',             via: 'get', as: 'download_edited_manuscript'
   match '/projects/download_proofread_reviewed_manuscript/:id', to: 'projects#download_proofread_reviewed_manuscript', via: 'get', as: 'download_proofread_reviewed_manuscript'
-  match '/projects/download_proofed_manuscript/:id',            to: 'projects#download_proofed_manuscript',            via: 'get', as: 'download_proofed_manuscript'
+  match '/projects/download_proofread_final_manuscript/:id',    to: 'projects#download_proofread_final_manuscript',    via: 'get', as: 'download_proofread_final_manuscript'
 
   match '/projects/download_published_file_mobi/:id',  to: 'projects#download_published_file_mobi', via: 'get', as: 'download_published_file_mobi'
   match '/projects/download_published_file_epub/:id',  to: 'projects#download_published_file_epub', via: 'get', as: 'download_published_file_epub'
