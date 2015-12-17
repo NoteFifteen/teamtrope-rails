@@ -1,16 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :ebook_only_incentives
-
-  resources :bookbub_submissions
-
-  resources :netgalley_submissions
-
-  resources :rights_back_requests
-
-  resources :social_media_marketings
-  
-  resources :hellosign_documents
 
   match 'hellosign_documents/cancel_request/:id', to: 'hellosign_documents#cancel_signature_request', via: :patch
 
@@ -87,7 +76,8 @@ Rails.application.routes.draw do
   match '/projects/price_promotion/:id',          to: 'projects#price_promotion',          via: 'patch'
   match '/projects/print_corner_request/:id',     to: 'projects#print_corner_request',     via: 'patch'
   match '/projects/print_corner_estore_request/:id',     to: 'projects#print_corner_estore_request',     via: 'patch'
-  match '/projects/proofed_manuscript/:id',       to: 'projects#proofed_manuscript',       via: 'patch'
+  match '/projects/proofed_manuscript/:id',              to: 'projects#proofed_manuscript',              via: 'patch'
+  match '/projects/proofread_reviewed_manuscript/:id',   to: 'projects#proofread_reviewed_manuscript',   via: 'patch'
   match '/projects/publish_book/:id',             to: 'projects#publish_book',             via: 'patch'
   match '/projects/remove_team_member/:id',       to: 'projects#remove_team_member',       via: 'patch'
   match '/projects/revenue_allocation_split/:id', to: 'projects#revenue_allocation_split', via: 'patch'
@@ -103,9 +93,10 @@ Rails.application.routes.draw do
   match '/projects/update_genre/:id',             to: 'projects#update_genre',             via: 'patch'
   match '/projects/upload_cover_templates/:id',   to: 'projects#upload_cover_templates',   via: 'patch'
 
-  match '/projects/download_original_manuscript/:id',  to: 'projects#download_original_manuscript', via: 'get', as: 'download_original_manuscript'
-  match '/projects/download_edited_manuscript/:id',    to: 'projects#download_edited_manuscript',   via: 'get', as: 'download_edited_manuscript'
-  match '/projects/download_proofed_manuscript/:id',   to: 'projects#download_proofed_manuscript',  via: 'get', as: 'download_proofed_manuscript'
+  match '/projects/download_original_manuscript/:id',           to: 'projects#download_original_manuscript',           via: 'get', as: 'download_original_manuscript'
+  match '/projects/download_edited_manuscript/:id',             to: 'projects#download_edited_manuscript',             via: 'get', as: 'download_edited_manuscript'
+  match '/projects/download_proofread_reviewed_manuscript/:id', to: 'projects#download_proofread_reviewed_manuscript', via: 'get', as: 'download_proofread_reviewed_manuscript'
+  match '/projects/download_proofed_manuscript/:id',            to: 'projects#download_proofed_manuscript',            via: 'get', as: 'download_proofed_manuscript'
 
   match '/projects/download_published_file_mobi/:id',  to: 'projects#download_published_file_mobi', via: 'get', as: 'download_published_file_mobi'
   match '/projects/download_published_file_epub/:id',  to: 'projects#download_published_file_epub', via: 'get', as: 'download_published_file_epub'
@@ -136,17 +127,24 @@ Rails.application.routes.draw do
   resources :artwork_rights_requests
   resources :audit_team_membership_removals
   resources :blog_tours
+  resources :bookbub_submissions
   resources :control_numbers
+  resources :cover_concepts
   resources :cover_templates
   resources :current_tasks
   resources :document_import_queues
   resources :draft_blurbs
+  resources :ebook_only_incentives
+  resources :final_manuscripts
   resources :genres
+  resources :hellosign_documents
   resources :imprints
   resources :kdp_select_enrollments
   resources :man_devs
+  resources :manuscripts
   resources :marketing_expenses
   resources :media_kits
+  resources :netgalley_submissions
   resources :phases
   resources :publication_fact_sheets
   resources :published_files
@@ -157,7 +155,9 @@ Rails.application.routes.draw do
   resources :project_types
   resources :project_views
   resources :required_roles
+  resources :rights_back_requests
   resources :roles
+  resources :social_media_marketings
   resources :tabs
   resources :tasks
   resources :task_dependencies
@@ -165,11 +165,6 @@ Rails.application.routes.draw do
   resources :task_prerequisite_fields
   resources :unlocked_tasks
   resources :workflows
-
-  resources :cover_concepts
-  resources :final_manuscripts
-  resources :manuscripts
-  resources :published_files
 
 
   # Example of regular route:

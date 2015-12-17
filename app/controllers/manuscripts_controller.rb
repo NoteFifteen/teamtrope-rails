@@ -39,6 +39,15 @@ class ManuscriptsController < ApplicationController
       @updated_file = 'edited_manuscript'
     end
 
+    if ! params[:proofread_reviewed_manuscript].nil?
+      update_hash[:proofread_reviewed_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
+      update_hash[:proofread_reviewed_content_type] = params[:filetype] unless params[:filetype].nil? || params[:filetype] == ''
+      update_hash[:proofread_reviewed_file_size] = params[:filesize] unless params[:filesize].nil? || params[:filesize] == ''
+      update_hash[:proofread_reviewed_file_direct_upload_url] = params[:proofread_reviewed_manuscript]['direct_upload_url'] unless params[:proofread_reviewed_manuscript]['direct_upload_url'].nil?
+      update_hash[:proofread_reviewed_file_processed] = false
+      @updated_file = 'proofread_reviewed_manuscript'
+    end
+
     if ! params[:proofed_manuscript].nil?
       update_hash[:proofed_file_name] = params[:filename] unless params[:filename].nil? || params[:filename] == ''
       update_hash[:proofed_content_type] = params[:filetype] unless params[:filetype].nil? || params[:filetype] == ''
@@ -59,9 +68,10 @@ class ManuscriptsController < ApplicationController
     updated = []
     upload_mask = 0 # mask for determining which file was updated and requires a notification email.
     # setting the update text.
-    [ {key: :updated_original_manuscript, tag: 'Original'},
-      {key: :updated_edited_manuscript,   tag: 'Edited'},
-      {key: :updated_proofed_manuscript,  tag: 'Proofed'}
+    [ {key: :updated_original_manuscript,           tag: 'Original'},
+      {key: :updated_edited_manuscript,             tag: 'Edited'},
+      {key: :updated_proofed_manuscript,            tag: 'Proofed'},
+      {key: :updated_proofread_reviewed_manuscript, tag: 'Proofread Reviewed'}
     ].each_with_index do | item, index |
       if !params[item[:key]].nil? && params[item[:key]] == 'yes'
         updated.push item[:tag]
@@ -80,6 +90,7 @@ class ManuscriptsController < ApplicationController
     ProjectMailer.original_manuscript_uploaded(@project, current_user) if upload_mask & 1 == 1
     ProjectMailer.submit_edited_manuscript(@project, current_user) if upload_mask & 2 == 2
     ProjectMailer.proofed_manuscript(@project, current_user, params) if upload_mask & 4 == 4
+    ProjectMailer.submit_proofread_reviewed_manuscript(@project, current_user) if upload_mask & 8 == 8
 
 
     redirect_to @manuscript

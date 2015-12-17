@@ -54,6 +54,26 @@ $(function() {
     });
 });
 
+/** Upload Proofread Reviewed Manuscript Form **/
+$(function() {
+
+    // PDF File
+    $('#proofread_reviewed_manuscript_s3_uploader').S3Uploader(
+        {
+            remove_completed_progress_bar: false,
+            progress_bar_target: $('#proofread_reviewed_manuscript_uploads_container'),
+            before_add: function (file) {
+                    return true;
+            }
+
+        }
+    );
+    $('#proofread_reviewed_manuscript_s3_uploader').bind('s3_upload_failed', function (e, content) {
+        return alert(content.filename + ' failed to upload');
+    });
+});
+
+
 /** Proofed Edited Manuscript Form **/
 $(function() {
 

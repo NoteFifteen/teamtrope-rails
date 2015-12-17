@@ -14,6 +14,12 @@
     controller_action: 'download_edited_manuscript'
   },
   {
+    label: "Proofread Reviewed", required: true, callback_url: project_manuscript_url(@project),
+    form_id: "proofread_reviewed_manuscript_s3_uploader", callback_param: "proofread_reviewed_manuscript[direct_upload_url]",
+    container_id: "proofread_reviewed_manuscript_uploads_container", object: @manuscript, column_name: "proofread_reviewed",
+    controller_action: 'download_proofread_reviewed_manuscript'
+  },
+  {
     label: "Proofed Manuscript", required: true, callback_url: project_manuscript_url(@project),
     form_id: "proofed_manuscript_s3_uploader", callback_param: "proofed_manuscript[direct_upload_url]",
     container_id: "proofed_manuscript_uploads_container", object: @manuscript, column_name: "proofed",
@@ -33,6 +39,7 @@
   <div class="form-inputs">
     <%= hidden_field_tag :updated_original_manuscript, 'no' %>
     <%= hidden_field_tag :updated_edited_manuscript, 'no' %>
+    <%= hidden_field_tag :updated_proofread_reviewed_manuscript, 'no' %>
     <%= hidden_field_tag :updated_proofed_manuscript, 'no' %>
   </div>
 

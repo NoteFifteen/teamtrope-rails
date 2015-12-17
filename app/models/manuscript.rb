@@ -2,22 +2,28 @@ class Manuscript < ActiveRecord::Base
   include PaperclipS3UploadProcessing
 
   belongs_to :project
-  
+
   has_attached_file :original, preserve_files: true,
                     :s3_permissions => 'authenticated-read'
 
   has_attached_file :edited, preserve_files: true,
                     :s3_permissions => 'authenticated-read'
 
+  has_attached_file :proofread_reviewed, preserve_files: true,
+                    s3_permissions: 'authenticated-read'
+
   has_attached_file :proofed, preserve_files: true,
                     :s3_permissions => 'authenticated-read'
 
   validates_attachment :original,
   	*Constants::DefaultContentTypeDocumentParams
-  	
-  validates_attachment :edited, 
+
+  validates_attachment :edited,
   	*Constants::DefaultContentTypeDocumentParams
-  	
+
+  validates_attachment :proofread_reviewed,
+    *Constants::DefaultContentTypeDocumentParams
+
   validates_attachment :proofed,
   	*Constants::DefaultContentTypeDocumentParams
 
@@ -31,6 +37,10 @@ class Manuscript < ActiveRecord::Base
 
   def edited_file_direct_upload_url=(escaped_url)
     write_attribute(:edited_file_direct_upload_url, self.unescape_url(escaped_url))
+  end
+
+  def proofread_reviewed_file_direct_upload_url=(escaped_url)
+    write_attribute(:proofread_reviewed_file_direct_upload_url, self.unescape_url(escaped_url))
   end
 
   def proofed_file_direct_upload_url=(escaped_url)
@@ -48,6 +58,10 @@ class Manuscript < ActiveRecord::Base
 
       if type == :edited
         self.update_column(:edited_file_processed, true)
+      end
+
+      if type == :proofread_reviewed
+        self.update_column(:proofread_reviewed_file_processed, true)
       end
 
       if type == :proofed
@@ -71,6 +85,12 @@ class Manuscript < ActiveRecord::Base
           self.edited_content_type  = direct_upload_head.content_type
           self.edited_updated_at    = direct_upload_head.last_modified
 
+        when :proofread_reviewed
+          self.proofread_reviewed_file_name     = direct_upload_url_data[:filename]
+          self.proofread_reviewed_file_size     = direct_upload_head.content_length
+          self.proofread_reviewed_content_type  = direct_upload_head.content_type
+          self.proofread_reviewed_updated_at    = direct_upload_head.last_modified
+
         when :proofed
           self.proofed_file_name     = direct_upload_url_data[:filename]
           self.proofed_file_size     = direct_upload_head.content_length
@@ -89,6 +109,10 @@ class Manuscript < ActiveRecord::Base
       return DIRECT_UPLOAD_URL_FORMAT.match(edited_file_direct_upload_url)
     end
 
+    if proofread_reviewed_file_direct_upload_url_changed?
+      return DIRECT_UPLOAD_URL_FORMAT.match(proofread_reviewed_file_direct_upload_url)
+    end
+
     if proofed_file_direct_upload_url_changed?
       return DIRECT_UPLOAD_URL_FORMAT.match(proofed_file_direct_upload_url)
     end
@@ -101,6 +125,11 @@ class Manuscript < ActiveRecord::Base
     if edited_file_direct_upload_url_changed?
       return :edited
     end
+
+    if proofread_reviewed_file_direct_upload_url_changed?
+      return :proofread_reviewed
+    end
+
     if proofed_file_direct_upload_url_changed?
       return :proofed
     end

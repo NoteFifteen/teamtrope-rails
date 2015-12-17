@@ -221,6 +221,21 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def proofread_reviewed_manuscript
+    @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
+
+    if @project.update(update_project_params)
+      @project.create_activity :submitted_proofread_reviewed_manuscript, owner: current_user, parameters: { text: 'Uploaded Proofread Reviewed Manuscript', form_data: params[:project].to_s }
+      update_current_task
+      flash[:success] = 'Proofed Manuscript Uploaded'
+      ProjectMailer.submit_proofread_reviewed_manuscript(@project, current_user)
+      redirect_to @project
+    else
+      flash[:danger] = "There was a problem uploading your Proofed Manuscript, please review."
+      render 'show'
+    end
+  end
+
   def proofed_manuscript
     @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
 
@@ -887,11 +902,15 @@ class ProjectsController < ApplicationController
     redirect_to @project.manuscript.original.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
-    def download_edited_manuscript
+  def download_edited_manuscript
     redirect_to @project.manuscript.edited.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
-    def download_proofed_manuscript
+  def download_proofread_reviewed_manuscript
+    redirect_to @project.manuscript.proofread_reviewed.expiring_url(*Constants::DefaultLinkExpiration)
+  end
+
+  def download_proofed_manuscript
     redirect_to @project.manuscript.proofed.expiring_url(*Constants::DefaultLinkExpiration)
   end
 

@@ -1,0 +1,36 @@
+<div class='container'>
+  <h1>Proofed Manuscript</h1>
+  <div class='row'>
+    <div class='col-md-6'>
+
+      <p>
+        This is where you upload a prefinalized proofed version of your manuscript.
+        Use the Proofread Complete Tab to submit the final proofread complete version
+        of your manuscript.
+      </p>
+
+      <% # amazon s3 upload
+      s3_upload_hash =  {
+          label: "Proofed Manuscript", required: true, callback_url: project_manuscript_url(@project),
+          form_id: "proofread_reviewed_manuscript_s3_uploader", callback_param: "proofread_reviewed_manuscript[direct_upload_url]",
+          container_id: "proofread_reviewed_manuscript_uploads_container", object: @project.manuscript, column_name: "proofread_reviewed",
+          controller_action: 'download_proofread_reviewed_manuscript'
+      } %>
+
+      <div>
+        <%= render partial: "shared/amazon_s3_upload", locals: s3_upload_hash %>
+        <strong>Please only upload .doc & .docx files!</strong>
+      </div>
+
+
+      <%= simple_form_for @project,
+                          url: url_for(controller: 'projects', action: 'proofread_reviewed_manuscript', id: @project),
+                          html: { id: 'submit_proofread_reviewed_manuscript' } do | f | %>
+        <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'proofread_reviewed_manuscript_task_id' %>
+        <%= f.simple_fields_for :manuscript, ((f.object.manuscript.nil?)? f.object.build_manuscript : f.object.manuscript)  do | manuscript | %>
+        <% end %>
+        <%= f.submit "Submit", disabled: '', class: 'btn disabled', id: 'proofread_reviewed_manuscript_submit_button' %>
+      <% end %>
+    </div>
+  </div>
+</div>
