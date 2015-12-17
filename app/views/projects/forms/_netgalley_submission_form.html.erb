@@ -23,13 +23,58 @@
           <%= f.simple_fields_for :netgalley_submission,
                   ((f.object.netgalley_submission.nil?) ? f.object.build_netgalley_submission : f.object.netgalley_submission) do | netgalley_submission | %>
 
-            <%= render "shared/netgalley_fields", builder: netgalley_submission %>
+            <%= render partial: "shared/netgalley_fields",  locals: {
+                                          builder: netgalley_submission,
+                                          date_name: :netgalley_submission_publication_date,
+                                          date_id: "netgalley_submission_publication_date" } %>
 
             <%= f.submit "Submit" %>
           <% end %>
         <% end %>
     </div>
   </div>
+  <script>
+      $(function() {
+          // This attaches the datepicker to a "fake" input field with the MM/DD/YYYY format that users
+          // are familiar with, but updates a real hidden input field with the date format yyyy-mm-dd
+          // format that Rails wants.
+          $('#netgalley_submission_publication_date').datepicker({
+              altField: '#promotion_start_date',
+              altFormat: 'yy-mm-dd',
+          });
+
+          $('#netgalley_submission_publication_date').blur(function() {
+              setNetgalleySubmissionPublicationDate();
+              $('#netgalley_submission').validate();
+          });
+
+          $(document).on('ready page:load', function () {
+            actualDate = $('input[name=project\\[netgalley_submission_attributes\\]\\[publication_date\\]]').val();
+            dateParts = actualDate.split('-');
+            displayDate = dateParts[1] + '/' + dateParts[2] + '/' + dateParts[0];
+            $('input[name=netgalley_submission_publication_date]').val(displayDate);
+          });
+
+      });
+
+      $('#netgalley_submission').submit(function() {
+          // set the actual value
+          setNetgalleySubmissionPublicationDate();
+      });
+      function setNetgalleySubmissionPublicationDate()
+      {
+        if($('input[name=netgalley_submission_publication_date]').val() != '')
+        {
+          displayDate = $('input[name=netgalley_submission_publication_date]').val()
+
+          dateParts = displayDate.split('/');
+          $('input[name=project\\[netgalley_submission_attributes\\]\\[publication_date\\]]').val(dateParts[2] + '-' + dateParts[0] + '-' + dateParts[1]);
+
+        }
+        return false;
+
+      }
+  </script>
   <% else %>
   <div>
     Your title has already been submitted for Netgalley.

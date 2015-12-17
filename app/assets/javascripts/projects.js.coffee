@@ -373,6 +373,9 @@ jQuery ->
       'project[ebook_only_incentive_attributes][author_name]': {
         required: true
       },
+      'ebook_only_incentive_publication_date': {
+        required: true
+      },
       'project[ebook_only_incentive_attributes][retail_price]': {
         required: true
       },
@@ -403,6 +406,9 @@ jQuery ->
         required: true
       },
       'project[netgalley_submission_attributes][author_name]': {
+        required: true
+      },
+      'netgalley_submission_publication_date': {
         required: true
       },
       'project[netgalley_submission_attributes][retail_price]': {

@@ -14,6 +14,11 @@
   your ideal price is - $3.99, $4.99.
 </p>
 
+<label>Publication Date<span class="required">*</span></label>
+<%= builder.input :publication_date, as: :hidden %>
+<%= text_field_tag date_name, nil, id: date_id, class: ['fake', 'optional', 'form-control', 'hasDatePicker'], placeholder: 'MM/DD/YYYY'  %>
+<p>It's okay to advance date this</p>
+
 <label>Blurb<span class="required">*</span></label>
 <%= builder.input :blurb, label: false, size: "10x5", as: :text%>
 

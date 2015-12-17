@@ -31,7 +31,10 @@
         <%= f.simple_fields_for :ebook_only_incentive,
                 ((f.object.ebook_only_incentive.nil?) ? f.object.build_ebook_only_incentive : f.object.ebook_only_incentive) do | ebook_only_incentive | %>
 
-          <%= render "shared/netgalley_fields", builder: ebook_only_incentive %>
+          <%= render partial: "shared/netgalley_fields",  locals: {
+                                              builder: ebook_only_incentive,
+                                              date_name: :ebook_only_incentive_publication_date,
+                                              date_id: "ebook_only_incentive_publication_date" } %>
 
           <%= f.submit "Submit" %>
         <% end %>
@@ -39,6 +42,48 @@
       <% end %>
     </div>
   </div>
+  <script>
+      $(function() {
+          // This attaches the datepicker to a "fake" input field with the MM/DD/YYYY format that users
+          // are familiar with, but updates a real hidden input field with the date format yyyy-mm-dd
+          // format that Rails wants.
+          $('#ebook_only_incentive_publication_date').datepicker({
+              altField: '#promotion_start_date',
+              altFormat: 'yy-mm-dd',
+          });
+
+          $('#ebook_only_incentive_publication_date').blur(function() {
+              setEbookOnlyIncentivePublicationDate();
+              $('#ebook_only_incentive').validate();
+          });
+
+          $(document).on('ready page:load', function () {
+            actualDate = $('input[name=project\\[ebook_only_incentive_attributes\\]\\[publication_date\\]]').val();
+            dateParts = actualDate.split('-');
+            displayDate = dateParts[1] + '/' + dateParts[2] + '/' + dateParts[0];
+            $('input[name=ebook_only_incentive_publication_date]').val(displayDate);
+          });
+
+      });
+
+      $('#ebook_only_incentive').submit(function() {
+          // set the actual value
+          setEbookOnlyIncentivePublicationDate();
+      });
+      function setEbookOnlyIncentivePublicationDate()
+      {
+        if($('input[name=ebook_only_incentive_publication_date]').val() != '')
+        {
+          displayDate = $('input[name=ebook_only_incentive_publication_date]').val()
+
+          dateParts = displayDate.split('/');
+          $('input[name=project\\[ebook_only_incentive_attributes\\]\\[publication_date\\]]').val(dateParts[2] + '-' + dateParts[0] + '-' + dateParts[1]);
+
+        }
+        return false;
+
+      }
+  </script>
   <% else %>
   <div class="row">
     <div class="col-md-10">
@@ -46,5 +91,4 @@
     </div>
   </div>
   <% end %>
-
 </div>
