@@ -70,7 +70,7 @@ class ManuscriptsController < ApplicationController
     # setting the update text.
     [ {key: :updated_original_manuscript,           tag: 'Original'},
       {key: :updated_edited_manuscript,             tag: 'Edited'},
-      {key: :updated_proofread_reviewed_manuscript, tag: 'Proofread Reviewed'}
+      {key: :updated_proofread_reviewed_manuscript, tag: 'Proofread Reviewed'},
       {key: :updated_proofread_final_manuscript,    tag: 'Final Proof'},
     ].each_with_index do | item, index |
       if !params[item[:key]].nil? && params[item[:key]] == 'yes'
