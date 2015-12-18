@@ -107,21 +107,24 @@
 
                   <div>
                     <ul>
-                      <li id="pc_billing_acceptance" style="display: block;">
-                        <label>Billing Acceptance<span class="required">*</span></label>
-                        <div>
-                          <ul>
-                            <li>
-                              <%= pc.input :billing_acceptance, as: :boolean, label: "By checking the box, I am stating I agree to the terms below." %>
-                            </li>
-                          </ul>
-                        </div>
-                        <div><p>I understand I will be billed via Paypal per the terms specified in the Print Books found here:
-                          <a href="https://teamtrope.com/docs/booktrope-policy-author-copies/" target="_top">https://teamtrope.com/docs/booktrope-policy-author-copies/</a></p>
-                          <p>Payment is due immediately upon receipt of the bill.  Failure to pay this bill in a timely manner
-                            will result in suspension of my ability to order print copies directly from Booktrope in the future.</p>
-                        </div>
-                      </li>
+                      <% if first_order_intl %>
+                        <!-- Only for International orders, after their first order -->
+                        <li id="pc_billing_acceptance" style="display: block;">
+                          <label>Billing Acceptance<span class="required">*</span></label>
+                          <div>
+                            <ul>
+                              <li>
+                                <%= pc.input :billing_acceptance, as: :boolean, label: "By checking the box, I am stating I agree to the terms below." %>
+                              </li>
+                            </ul>
+                          </div>
+                          <div><p>I understand I will be billed via Paypal per the terms specified in the Print Books found here:
+                            <a href="https://teamtrope.com/docs/booktrope-policy-author-copies/" target="_top">https://teamtrope.com/docs/booktrope-policy-author-copies/</a></p>
+                            <p>Payment is due immediately upon receipt of the bill.  Failure to pay this bill in a timely manner
+                              will result in suspension of my ability to order print copies directly from Booktrope in the future.</p>
+                          </div>
+                        </li>
+                      <% end %>
 
                       <!-- Make hidden?  Or hard-code?  -->
                       <%= pc.input :quantity, as: :hidden, input_html: { value: 15 }, label:false %>
