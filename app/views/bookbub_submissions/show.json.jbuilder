@@ -1,0 +1,1 @@
+json.extract! @bookbub_submission, :id, :project_id, :submitted_by_id, :author, :title, :asin, :asin_linked_url, :current_price, :num_stars, :num_reviews, :avg_rating, :num_pages, :created_at, :updated_at

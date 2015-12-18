@@ -1,0 +1,79 @@
+
+<!-- Bookbub Submission -->
+<div class="container">
+  <h1>Bookbub Submission</h1>
+  <div class="row">
+    <div class="col-md-6">
+
+      <div>
+        Please use this form to request inclusion in the Booktrope $.99 Bookbub Submissions. The title must meet the criteria below prior to filling out this form:
+        <ul style="list-style-type: disc; margin: 0px 0px 0px 15px; ">
+          <li>20 or more reviews on Amazon</li>
+          <li>4 star or better average on Amazon</li>
+          <li>The title must not have been included in a Bookbub in the previous 6 months</li>
+          <li>The author must not have been included in a Bookbub in the previous month</li>
+          <li>The title must be 150 pages or more in Kindle length (click here for help in finding Kindle page length)</li>
+          <li>The title cannot be a multi-author anthology</li>
+        </ul>
+      </div>
+
+      <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'bookbub_submission',
+                                                 id: @project), html: { id: 'bookbub_submission' } do | f | %>
+          <%= f.simple_fields_for :bookbub_submissions, f.object.bookbub_submissions.build do | bs | %>
+
+              <%= bs.input :submitted_by_id, as: :hidden, label: false, input_html: { value: @current_user.id } %>
+
+              <%= bs.input :author, label: 'Author Name' %>
+              <%= bs.input :title, label: 'Book Title' %>
+
+              <%= bs.input :asin, label: 'ASIN' %>
+              <%= bs.input :asin_linked_url, label: 'ASIN Linked URL' %>
+
+              <%= bs.input :current_price, label: 'Current Price' %>
+
+              <div class="form-group float">
+                <label>Has this title had a Bookbub in the past 6 months?</label><span>
+
+                <br/>
+                <%= radio_button_tag "bookbub_past_6_months", 'no', false %>
+                <label for="bookbub_past_6_months_no">No</label>
+                <br/>
+
+                <%= radio_button_tag "bookbub_past_6_months", 'yes', false %>
+                <label for="bookbub_past_6_months_yes">Yes</label>
+                <br/>
+                </span>
+              </div>
+
+              <div class="form-group float">
+                <label>Has this author had a Bookbub feature in the past 30 days?</label><span>
+                <br/>
+                <%= radio_button_tag "bookbub_feature_past_30_days", 'no', false %>
+                <label for="bookbub_feature_past_30_days_no">No</label>
+                <br/>
+
+                <%= radio_button_tag "bookbub_feature_past_30_days", 'yes', false %>
+                <label for="bookbub_feature_past_30_days_yes">Yes</label>
+                <br/>
+                </span>
+              </div>
+
+              <%= bs.input :num_reviews, label: 'How many reviews on Amazon?' %>
+
+              <%= bs.input :num_stars, label: 'Average star rating?' %>
+
+              <%= bs.input :num_pages, label: 'How many pages does the title have?' %>
+
+              <div id="bookbub_submit_does_not_qualify" style="display: none;">
+
+              </div>
+
+              <div id="bookbub_submission_button_box">
+                <%= f.submit 'Submit Request', input_html: { id: 'bookbub_submit_button'} %>
+              </div>
+
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

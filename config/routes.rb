@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   resources :ebook_only_incentives
 
+  resources :bookbub_submissions
+
   resources :netgalley_submissions
 
   resources :rights_back_requests
@@ -63,6 +65,7 @@ Rails.application.routes.draw do
   match '/projects/approve_layout/:id',           to: 'projects#approve_layout',           via: 'patch'
   match '/projects/artwork_rights_request/:id',   to: 'projects#artwork_rights_request',   via: 'patch'
   match '/projects/blog_tour/:id',                to: 'projects#blog_tour',                via: 'patch'
+  match '/projects/bookbub_submission/:id',       to: 'projects#bookbub_submission',       via: 'patch'
   match '/projects/check_imprint/:id',            to: 'projects#check_imprint',            via: 'patch'
   match '/projects/cover_concept_upload/:id',     to: 'projects#cover_concept_upload',     via: 'patch'
   # Post is defined for this path since creates and updates are used interchangeably.

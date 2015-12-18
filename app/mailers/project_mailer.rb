@@ -847,6 +847,30 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('rights_back_request', tokens, admin_rights_back_request_list, "Rights Back Request for #{@request.title}")
   end
 
+  def bookbub_submission(project, current_user)
+    @project = project
+    @current_user = current_user
+    bookbub = project.bookbub_submissions.last
+    tokens = {
+        'Author Name' => bookbub.author,
+        'Book Title' => bookbub.title,
+        'Imprint' => project.try(:imprint).try(:name),
+        'Genre' => project.try(:genres).try(:first).try(:name),
+        'ASIN' => bookbub.asin,
+        'ASIN Linked URL' => bookbub.asin_linked_url,
+        'Current price' => bookbub.current_price,
+        '# of Stars' => bookbub.num_stars,
+        '# of Reviews' => bookbub.num_reviews,
+        'Has this title had a Bookbub in the past 6 months?' => 'No',
+        'Has this author had a Bookbub feature in the past 30 days?' => 'No',
+        'How many pages does the title have?' => bookbub.num_pages
+    }
+
+    subject = "Bookbub Submission Request for #{project.title}"
+
+    send_email_message('bookbub_submission', tokens, get_project_recipient_list(@project, send_submitter: true, roles: [:author, :book_manager]), subject)
+    send_email_message('bookbub_submission_admin', tokens, admin_bookbub_submission_request_list, subject)
+  end
 
   private
 
@@ -1076,6 +1100,10 @@ class ProjectMailer < ActionMailer::Base
 
   def admin_rights_back_request_list
     %w( tt_rights_back_request@booktrope.com )
+  end
+
+  def admin_bookbub_submission_request_list
+    %w( tt_bookbub_submissions@booktrope.com )
   end
 
   # Set the campaign header for MailGun tracking

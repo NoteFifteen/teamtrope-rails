@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @bookbub_submission.project %>
+</p>
+
+<p>
+  <strong>Submitted by:</strong>
+  <%= @bookbub_submission.submitted_by_id %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @bookbub_submission.author %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @bookbub_submission.title %>
+</p>
+
+<p>
+  <strong>Asin:</strong>
+  <%= @bookbub_submission.asin %>
+</p>
+
+<p>
+  <strong>Asin linked url:</strong>
+  <%= @bookbub_submission.asin_linked_url %>
+</p>
+
+<p>
+  <strong>Current price:</strong>
+  <%= @bookbub_submission.current_price %>
+</p>
+
+<p>
+  <strong>Num stars:</strong>
+  <%= @bookbub_submission.num_stars %>
+</p>
+
+<p>
+  <strong>Num reviews:</strong>
+  <%= @bookbub_submission.num_reviews %>
+</p>
+
+<p>
+  <strong>Avg rating:</strong>
+  <%= @bookbub_submission.avg_rating %>
+</p>
+
+<p>
+  <strong>Num pages:</strong>
+  <%= @bookbub_submission.num_pages %>
+</p>
+
+<%= link_to 'Edit', edit_bookbub_submission_path(@bookbub_submission) %> |
+<%= link_to 'Back', bookbub_submissions_path %>

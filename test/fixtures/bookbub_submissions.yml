@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project_id: 
+  submitted_by_id: 1
+  author: MyString
+  title: MyString
+  asin: MyString
+  asin_linked_url: MyString
+  current_price: 1.5
+  num_stars: 1
+  num_reviews: 1
+  avg_rating: 1
+  num_pages: 
+
+two:
+  project_id: 
+  submitted_by_id: 1
+  author: MyString
+  title: MyString
+  asin: MyString
+  asin_linked_url: MyString
+  current_price: 1.5
+  num_stars: 1
+  num_reviews: 1
+  avg_rating: 1
+  num_pages: 

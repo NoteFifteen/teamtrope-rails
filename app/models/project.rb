@@ -17,6 +17,7 @@ class Project < ActiveRecord::Base
   has_many :audit_team_membership_removals
   has_many :blog_tours, dependent: :destroy
   has_many :book_genres, foreign_key: :project_id, dependent: :destroy
+  has_many :bookbub_submissions, dependent: :destroy
   has_one  :control_number, dependent: :destroy
   has_one  :cover_concept, dependent: :destroy
   has_one  :cover_template, dependent: :destroy
@@ -51,6 +52,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :audit_team_membership_removals, reject_if: :all_blank, allow_destroy: false
   accepts_nested_attributes_for :blog_tours, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :book_genres, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :bookbub_submissions, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :control_number, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :cover_template, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :cover_concept, reject_if: :all_blank, allow_destroy: true
