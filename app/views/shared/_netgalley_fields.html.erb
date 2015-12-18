@@ -7,6 +7,9 @@
 <label>Author Name<span class="required">*</span></label>
 <%= builder.input :author_name, label: false %>
 
+<label>Book Manager<span class="required">*</span></label>
+<%= builder.input :book_manager, label: false %>
+
 <label>Retail Price<span class="required">*</span></label>
 <%= builder.input :retail_price, label: false %>
 <p>
@@ -20,10 +23,10 @@
 <p>It's okay to advance date this</p>
 
 <label>Blurb<span class="required">*</span></label>
-<%= builder.input :blurb, label: false, size: "10x5", as: :text%>
+<%= builder.input :blurb, label: false, input_html: { rows: 10,  cols: 5 }, as: :text %>
 
 <label>Advance Praise<span class="required">*</span></label>
-<%= builder.input :praise, label: false %>
+<%= builder.input :praise, label: false, input_html: { rows: 10, cols: 5 }, as: :text %>
 <p>
   Any advance praise or review snippets you already have. These should
   not be full reviews but highlights of 1-6 strong reviews.
@@ -47,7 +50,7 @@
 <h4>Categories</h4>
 <p>
   <% category_url = "https://www.netgalley.com/catalog/list" %>
-  Please select two categories. You can click here (<%= link_to category_url, category_url %>)
+  Please select two categories. You can click here (<%= link_to category_url, category_url, target: :blank %>)
   and look along the left-side nav bar to see the categories available.
   They're very broad, so you may only fit in one category.
 </p>
@@ -56,6 +59,6 @@
 <%= builder.input :category_one, label: false,
     collection: NetgalleySubmission::CATEGORIES %>
 
-<label>Category Two<span class="required">*</span></label>
+<label>Category Two</label>
 <%= builder.input :category_two, label: false,
     collection: NetgalleySubmission::CATEGORIES %>

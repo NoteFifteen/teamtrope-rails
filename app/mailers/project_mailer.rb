@@ -581,6 +581,8 @@ class ProjectMailer < ActionMailer::Base
 
     tokens = {
       "Title" => @project.ebook_only_incentive.title,
+      "Author" => @project.ebook_only_incentive.author_name,
+      "Book Manager" => @project.ebook_only_incentive.book_manager,
       "Series Name" => @project.try(:publication_fact_sheet).try(:series_name),
       "Series Number" => @project.try(:publication_fact_sheet).try(:series_number),
       "ISBN" => @project.ebook_only_incentive.isbn,
@@ -610,6 +612,8 @@ class ProjectMailer < ActionMailer::Base
 
     tokens = {
       "Title" => @project.netgalley_submission.title,
+      "Author" => @project.netgalley_submission.author_name,
+      "Book Manager" => @project.netgalley_submission.book_manager,
       "Series Name" => @project.try(:publication_fact_sheet).try(:series_name),
       "Series Number" => @project.try(:publication_fact_sheet).try(:series_number),
       "ISBN" => @project.netgalley_submission.isbn,
