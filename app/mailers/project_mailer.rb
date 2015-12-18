@@ -724,7 +724,7 @@ class ProjectMailer < ActionMailer::Base
 
     tokens.store('Email', email_address_link(current_user).html_safe)
 
-    user_subject = "Print Corner from #{current_user.name} for #{project.title}"
+    user_subject = "Paperback Order from #{current_user.name} for #{project.title}"
     admin_subject = "New " + user_subject
 
     send_email_message('print_corner', tokens, get_project_recipient_list(@project, send_submitter: true, roles: [:author]), user_subject)
@@ -735,7 +735,7 @@ class ProjectMailer < ActionMailer::Base
   def print_corner_estore_request(project, current_user)
     @project = project
     @current_user = current_user
-    user_subject = "Print Corner eStore Request from #{current_user.name} for #{project.title}"
+    user_subject = "Paperback e-Store Request from #{current_user.name} for #{project.title}"
     admin_subject = "New " + user_subject
 
     send_email_message('print_corner_estore_request', {}, get_project_recipient_list(@project, send_submitter: true, roles: [:author]), user_subject)

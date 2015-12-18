@@ -855,12 +855,12 @@ class ProjectsController < ApplicationController
     if @project.update(update_project_params)
       update_current_task
       @project.create_activity :print_corner_request, owner: current_user,
-                               parameters: { text: 'Submitted a Print Copy Request', form_data: params[:project].to_s}
-      flash[:success] = 'Submitted Print Copy Request.'
+                               parameters: { text: 'Submitted a Paperback Order', form_data: params[:project].to_s}
+      flash[:success] = 'Submitted Paperback Order.'
       redirect_to @project
       ProjectMailer.print_corner_request(@project, current_user)
     else
-      flash[:danger] = 'There was a problem adding your Print Copy request.  Please review.'
+      flash[:danger] = 'There was a problem adding your Paperback Order request.  Please review.'
       render 'show'
     end
   end
