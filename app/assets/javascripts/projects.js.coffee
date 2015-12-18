@@ -372,13 +372,16 @@ jQuery ->
       'project[ebook_only_incentive_attributes][author_name]': {
         required: true
       },
+      'project[ebook_only_incentive_attributes][book_manager]': {
+        required: true
+      },
+      'ebook_only_incentive_publication_date': {
+        required: true
+      },
       'project[ebook_only_incentive_attributes][retail_price]': {
         required: true
       },
       'project[ebook_only_incentive_attributes][category_one]': {
-        required: true
-      },
-      'project[ebook_only_incentive_attributes][category_two]': {
         required: true
       },
       'project[ebook_only_incentive_attributes][website_one]': {
@@ -404,13 +407,16 @@ jQuery ->
       'project[netgalley_submission_attributes][author_name]': {
         required: true
       },
+      'project[netgalley_submission_attributes][book_manager]': {
+        required: true
+      },
+      'netgalley_submission_publication_date': {
+        required: true
+      },
       'project[netgalley_submission_attributes][retail_price]': {
         required: true
       },
       'project[netgalley_submission_attributes][category_one]': {
-        required: true
-      },
-      'project[netgalley_submission_attributes][category_two]': {
         required: true
       },
       'project[netgalley_submission_attributes][website_one]': {

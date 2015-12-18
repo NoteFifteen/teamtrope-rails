@@ -581,11 +581,13 @@ class ProjectMailer < ActionMailer::Base
 
     tokens = {
       "Title" => @project.ebook_only_incentive.title,
+      "Author" => @project.ebook_only_incentive.author_name,
+      "Book Manager" => @project.ebook_only_incentive.book_manager,
       "Series Name" => @project.try(:publication_fact_sheet).try(:series_name),
       "Series Number" => @project.try(:publication_fact_sheet).try(:series_number),
       "ISBN" => @project.ebook_only_incentive.isbn,
       "Imprint" => @project.ebook_only_incentive.imprint,
-      "Publication Date" => @project.published_file.publication_date,
+      "Publication Date" => @project.ebook_only_incentive.publication_date,
       "Retail Price" => @project.ebook_only_incentive.retail_price,
       "Blurb" => @project.ebook_only_incentive.blurb,
       "Website One" => @project.ebook_only_incentive.website_one,
@@ -610,11 +612,13 @@ class ProjectMailer < ActionMailer::Base
 
     tokens = {
       "Title" => @project.netgalley_submission.title,
+      "Author" => @project.netgalley_submission.author_name,
+      "Book Manager" => @project.netgalley_submission.book_manager,
       "Series Name" => @project.try(:publication_fact_sheet).try(:series_name),
       "Series Number" => @project.try(:publication_fact_sheet).try(:series_number),
       "ISBN" => @project.netgalley_submission.isbn,
       "Imprint" => @project.netgalley_submission.imprint,
-      "Publication Date" => @project.published_file.publication_date,
+      "Publication Date" => @project.netgalley_submission.publication_date,
       "Retail Price" => @project.netgalley_submission.retail_price,
       "Blurb" => @project.netgalley_submission.blurb,
       "Website One" => @project.netgalley_submission.website_one,

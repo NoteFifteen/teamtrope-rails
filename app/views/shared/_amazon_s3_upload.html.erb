@@ -1,5 +1,18 @@
 <div>
   <label><%= label %><% if required %><span class="required">*</span><% end %></label>
+
+  <%
+    prefix ||= nil
+    unless prefix.nil?
+      form_id = AmazonDirectUploadHelper.append_prefix(prefix, form_id)
+      container_id = AmazonDirectUploadHelper.append_prefix(prefix, container_id)
+    end
+  %>
+
+  <% unless prefix.nil? %>
+    <div id="published_file_prefix" style="display: none;"><%= prefix %></div>
+  <% end %>
+
   <%= s3_uploader_form callback_url: callback_url,
                        id: form_id,
                        acl: "private",
