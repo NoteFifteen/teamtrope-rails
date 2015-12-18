@@ -89,7 +89,7 @@ $(function() {
             remove_completed_progress_bar: false,
             progress_bar_target: $('#ebook_published_file_epub_uploads_container'),
             before_add: function(file) {
-                if (/(\.epub)$/i.test(file.name) || (/(epub)$/i.test(file.name))) {
+                if (/(\.epub)$/i.test(file.name) || (/(epub)$/i.test(file.name)) || (/(docx?)$/i.test(file.name))) {
                     return true;
                 } else {
                     alert('File type must be .epub');
@@ -114,7 +114,7 @@ $(function() {
             remove_completed_progress_bar: false,
             progress_bar_target: $('#netgalley_published_file_epub_uploads_container'),
             before_add: function(file) {
-                if (/(\.epub)$/i.test(file.name) || (/(epub)$/i.test(file.name))) {
+                if (/(\.epub)$/i.test(file.name) || (/(epub)$/i.test(file.name)) || (/(docx?)$/i.test(file.name))) {
                     return true;
                 } else {
                     alert('File type must be .epub');
