@@ -55,9 +55,13 @@
 
           $(document).on('ready page:load', function () {
             actualDate = $('input[name=project\\[netgalley_submission_attributes\\]\\[publication_date\\]]').val();
-            dateParts = actualDate.split('-');
-            displayDate = dateParts[1] + '/' + dateParts[2] + '/' + dateParts[0];
-            $('input[name=netgalley_submission_publication_date]').val(displayDate);
+
+            if(actualDate != '') {
+              dateParts = actualDate.split('-');
+              displayDate = dateParts[1] + '/' + dateParts[2] + '/' + dateParts[0];
+              $('input[name=netgalley_submission_publication_date]').val(displayDate);
+
+            }
           });
 
       });

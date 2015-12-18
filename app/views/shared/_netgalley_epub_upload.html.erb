@@ -1,6 +1,6 @@
 <div>
 <h4>ePub File</h4>
-<% unless @project.published_file.epub? %>
+<% unless @project.published_file && @project.published_file.epub? %>
   <div id='<%= upload_div_id %>' style="display: none;">false</div>
   <div>
     <%
