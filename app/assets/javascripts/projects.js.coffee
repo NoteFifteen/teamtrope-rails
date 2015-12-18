@@ -247,7 +247,6 @@ jQuery.validator.addMethod("priceAfterPromotionValidator", (value, element, para
 , jQuery.validator.format("Price After Promotion must be greater than 0.")
 )
 jQuery.validator.addMethod("priceValidator", (value, element, params) ->
-  alert(element.getAttribute('name'))
   if value >= 0.99 && value <= 9.99
     return true
   else
