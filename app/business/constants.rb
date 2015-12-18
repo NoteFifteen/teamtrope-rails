@@ -32,7 +32,7 @@ module Constants
     # :content_type => {
     #   content_type: ['application/epub\+zip', 'application/octet-stream', 'text/plain']
     # },
-    :file_name => { :matches => [/epub$/i] },
+    :file_name => { :matches => [/(epub|docx?)$/i] },
     :size => DefaultSizeIn
   ]
 
