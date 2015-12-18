@@ -1,0 +1,25 @@
+<div>
+<h4>ePub File</h4>
+<% unless @project.published_file.epub? %>
+  <div id='<%= upload_div_id %>' style="display: none;">false</div>
+  <div>
+    <%
+      s3_upload_hash = {
+        label: ".epub File", required: true, callback_url: project_published_file_url(@project),
+        form_id: "published_file_epub_s3_uploader", callback_param: "published_file_epub[direct_upload_url]",
+        container_id: "published_file_epub_uploads_container", object: @project.published_file, column_name: "epub",
+         controller_action: 'download_published_file_epub', prefix: prefix
+      }
+    %>
+    <%= render partial: "shared/amazon_s3_upload", locals: s3_upload_hash %>
+    <button class="btn disabled" disabled id="submit_<%= fake_button_id %>_fake" onclick="submitForm('<%= fake_button_id %>');" >Submit</button>
+  </div>
+<% else %>
+  <div>
+    <p>
+      The epub file has already been uploaded you can view it here: <%= link_to(@project.published_file.epub_file_name, url_for(controller: 'projects', action: 'download_published_file_epub', id: @project, only_path: false)) %>
+    </p><br />
+    <button class="btn" id="submit_<%= fake_button_id %>_fake" onclick="submitForm('<%= fake_button_id %>');" >Submit</button>
+  </div>
+<% end %>
+</div>

@@ -7,13 +7,30 @@
         $('#upload_<%=params[:unique_id]%>').hide();
 
         <% if ! @updated_file.nil? %>
-            $('#published_file_<%=@updated_file%>_s3_uploader').html('<span><%=params[:filename] %> was successfully uploaded.</span>');
+
 
             // Add the new book type
             if(published_books_uploaded_types) {
                 console.log('Adding <%=@updated_file%> to uploaded types list.');
                 published_books_uploaded_types.push('<%=@updated_file%>');
-                requiredPublishBooksUnlockSubmit();
+
+                uploaded_ebook_only_incentive_epub = $("#uploaded_ebook_only_incentive_epub").text();
+                uploaded_netgalley_epub = $("#uploaded_netgalley_epub").text();
+
+
+                if (uploaded_ebook_only_incentive_epub === 'true') {
+                    $('#ebook_published_file_<%=@updated_file%>_s3_uploader').html('<span><%=params[:filename] %> was successfully uploaded.</span>');
+                    uploaded_ebook_only_incentive_epub.text('false');
+                }
+                else if(uploaded_netgalley_epub === 'true') {
+
+                    $('#netgalley_published_file_<%=@updated_file%>_s3_uploader').html('<span><%=params[:filename] %> was successfully uploaded.</span>');
+                    uploaded_netgalley_epub.text('false');
+                }
+                else {
+                    $('#published_file_<%=@updated_file%>_s3_uploader').html('<span><%=params[:filename] %> was successfully uploaded.</span>');
+                    requiredPublishBooksUnlockSubmit();
+                }
             } else {
                 console.error('published_books_uploaded_types is undefined!  Cannot track uploaded book.')
             }

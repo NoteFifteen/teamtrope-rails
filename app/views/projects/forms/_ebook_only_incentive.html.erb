@@ -36,10 +36,16 @@
                                               date_name: :ebook_only_incentive_publication_date,
                                               date_id: "ebook_only_incentive_publication_date" } %>
 
-          <%= f.submit "Submit" %>
-        <% end %>
+          <%= f.simple_fields_for :published_file, ((f.object.published_file.nil?) ? f.object.build_published_file : f.object.published_file) do |published_file| %>
+          <% end %>
 
+          <%= f.submit "Submit", id: 'ebook_published_file_submit_button' , style: 'display: none;' %>
+        <% end %>
       <% end %>
+      <%= render partial: "shared/netgalley_epub_upload", locals: {
+                                                    prefix: 'ebook',
+                                                    upload_div_id: 'uploaded_ebook_only_incentive_epub',
+                                                    fake_button_id: 'ebook_only_incentive' } %>
     </div>
   </div>
   <script>

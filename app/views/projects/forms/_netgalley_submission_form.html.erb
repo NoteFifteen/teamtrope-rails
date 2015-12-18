@@ -28,9 +28,14 @@
                                           date_name: :netgalley_submission_publication_date,
                                           date_id: "netgalley_submission_publication_date" } %>
 
-            <%= f.submit "Submit" %>
+            <%= f.submit "Submit", id: 'netgalley_published_file_submit_button' ,style: 'display: none;' %>
           <% end %>
         <% end %>
+        <%= render partial: "shared/netgalley_epub_upload", locals: {
+                                                    prefix: 'netgalley',
+                                                    upload_div_id: 'uploaded_netgalley_epub',
+                                                    fake_button_id: 'netgalley_submission' } %>
+
     </div>
   </div>
   <script>
