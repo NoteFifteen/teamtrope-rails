@@ -27,7 +27,7 @@
   <tbody>
     <% @production_expenses.each do |production_expense| %>
       <tr>
-        <td class="book-title"><%= link_to production_expense.project.title, production_expense.project %></td>
+        <td class="book-title"><%= link_to production_expense.project.book_title, production_expense.project %></td>
         <td><%= production_expense.total_quantity_ordered %></td>
         <td>$<%= production_expense.total_cost %></td>
         <td><%= production_expense.complimentary_quantity %></td>

@@ -208,7 +208,7 @@ if Rails.env == "development"
   ])
 
   Project.all.each do | project |
-    pgtr = project.build_project_grid_table_row(title: project.title)
+    pgtr = project.build_project_grid_table_row(title: project.book_title)
     project.project_type.workflows.each do | workflow |
       ct = project.current_tasks.create(task_id: workflow.root.id)
       pgtr[workflow.name.downcase.gsub(/ /, "_") + "_task_id"] = workflow.root.id

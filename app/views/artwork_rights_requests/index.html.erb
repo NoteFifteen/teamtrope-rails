@@ -15,7 +15,7 @@
   <tbody>
     <% @artwork_rights_requests.each do |artwork_rights_request| %>
       <tr>
-        <td><%= link_to artwork_rights_request.project.title, artwork_rights_request.project %></td>
+        <td><%= link_to artwork_rights_request.project.book_title, artwork_rights_request.project %></td>
         <td><%= artwork_rights_request.email %></td>
         <td><%= artwork_rights_request.full_name %></td>
         <td><%= artwork_rights_request.role_type %></td>

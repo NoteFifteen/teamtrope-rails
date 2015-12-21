@@ -27,7 +27,7 @@
   <tbody>
     <% @publication_fact_sheets.each do |publication_fact_sheet| %>
       <tr>
-        <td class="book-title"><%= link_to publication_fact_sheet.project.title, publication_fact_sheet.project %></td>
+        <td class="book-title"><%= link_to publication_fact_sheet.project.book_title, publication_fact_sheet.project %></td>
         <td><%= publication_fact_sheet.author_name %></td>
         <td><%= publication_fact_sheet.series_name %></td>
         <td><%= publication_fact_sheet.series_number %></td>

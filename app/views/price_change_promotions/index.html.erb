@@ -27,7 +27,7 @@
   <tbody>
     <% @price_change_promotions.each do |price_change_promotion| %>
       <tr>
-        <td class="book-title"><%= link_to price_change_promotion.project.title, price_change_promotion.project %></td>
+        <td class="book-title"><%= link_to price_change_promotion.project.book_title, price_change_promotion.project %></td>
         <td><%= price_change_promotion.type.map(&:humanize).join(",") %></td>
         <td><nobr><%= price_change_promotion.start_date %></nobr></td>
         <td><%= price_change_promotion.price_promotion %></td>

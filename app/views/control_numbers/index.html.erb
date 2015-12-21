@@ -18,7 +18,7 @@
   <tbody>
     <% @control_numbers.each do |control_number| %>
       <tr>
-        <td class="title"><%= link_to control_number.project.title, control_number.project %></td>
+        <td class="title"><%= link_to control_number.project.book_title, control_number.project %></td>
         <td><%= control_number.asin %></td>
         <td><%= control_number.apple_id %></td>
         <td><%= control_number.epub_isbn %></td>

@@ -15,7 +15,7 @@
   <tbody>
     <% @approve_blurbs.each do |approve_blurb| %>
       <tr>
-        <td><%= link_to approve_blurb.project.title, approve_blurb.project %></td>
+        <td><%= link_to approve_blurb.project.book_title, approve_blurb.project %></td>
         <td><%= approve_blurb.blurb_notes %></td>
         <td><%= approve_blurb.blurb_approval_decision?? "Approved" : "Rejected" %></td>
         <td><%= approve_blurb.blurb_approval_date %></td>
