@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151217234719) do
+ActiveRecord::Schema.define(version: 20151221071148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -304,6 +304,7 @@ ActiveRecord::Schema.define(version: 20151217234719) do
     t.json     "ccs"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "version"
   end
 
   add_index "hellosign_document_types", ["name"], name: "index_hellosign_document_types_on_name", unique: true, using: :btree
@@ -420,11 +421,17 @@ ActiveRecord::Schema.define(version: 20151217234719) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "original_file_direct_upload_url"
-    t.boolean  "original_file_processed",         default: false
+    t.boolean  "original_file_processed",                   default: false
     t.string   "edited_file_direct_upload_url"
-    t.boolean  "edited_file_processed",           default: false
+    t.boolean  "edited_file_processed",                     default: false
     t.string   "proofed_file_direct_upload_url"
-    t.boolean  "proofed_file_processed",          default: false
+    t.boolean  "proofed_file_processed",                    default: false
+    t.string   "proofread_reviewed_content_type"
+    t.string   "proofread_reviewed_file_direct_upload_url"
+    t.string   "proofread_reviewed_file_name"
+    t.boolean  "proofread_reviewed_file_processed"
+    t.integer  "proofread_reviewed_file_size"
+    t.datetime "proofread_reviewed_updated_at"
   end
 
   add_index "manuscripts", ["project_id"], name: "index_manuscripts_on_project_id", using: :btree

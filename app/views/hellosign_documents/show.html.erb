@@ -1,6 +1,6 @@
 <% provide(:title, "#{@hellosign_document.name}") %>
 <h1><%= @hellosign_document.name %>
-  <% unless @hellosign_document.team_membership.nil? %>
+  <% unless @hellosign_document.team_membership.nil? || @hellosign_document.team_membership.project.nil? %>
   <br />for<br /> <%= link_to @hellosign_document.team_membership.project.book_title, @hellosign_document.team_membership.project %>
   <% end %>
 </h1>
@@ -33,6 +33,10 @@
   <tr>
     <td>Hellosign ID:</td>
     <td><%= @hellosign_document.hellosign_id %></td>
+  </tr>
+  <tr>
+    <td>Version:</td>
+    <td><%= @hellosign_document.version %></td>
   </tr>
   <tr>
     <td>Status</td>

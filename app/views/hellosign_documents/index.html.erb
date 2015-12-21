@@ -22,7 +22,7 @@
       <tr>
         <td><% if hellosign_document.is_complete then%>Yes<% else %>No<% end %> </td>
         <td class="book-title">
-          <% unless hellosign_document.team_membership.nil? %>
+          <% unless hellosign_document.team_membership.nil? || hellosign_document.team_membership.project.nil? %>
             <%= link_to hellosign_document.team_membership.project.book_title, hellosign_document.team_membership.project %>
           <% else %>
           Member removed from project.

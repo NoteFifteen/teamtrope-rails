@@ -2,7 +2,7 @@ class HellosignDocument < ActiveRecord::Base
   belongs_to :hellosign_document_type
   belongs_to :team_membership
 
-  delegate :name, :template_id, :subject, :message, :ccs, :signers, to: :hellosign_document_type, allow_nil: true
+  delegate :name, :template_id, :subject, :message, :ccs, :signers, :version, to: :hellosign_document_type, allow_nil: true
 
   has_many :hellosign_signatures, dependent: :destroy
   alias :signatures :hellosign_signatures
@@ -156,6 +156,7 @@ class HellosignDocument < ActiveRecord::Base
     "Booktrope-CEO"  => Figaro.env.hellosign_override_ceo,
     'Intake Manager' => Figaro.env.hellosign_override_intake,
     'HR/Accounting'  => Figaro.env.hellosign_override_hr,
+    'Payroll'        => Figaro.env.hellosign_override_payroll,
     'DEFAULT'        => Figaro.env.hellosign_document_default
   }
 
