@@ -24,7 +24,7 @@
   <% @projects.each do | project | %>
     <% next if project.nil? %>
     <tr>
-      <td><%= link_to   project.title,   project %></td>
+      <td><%= link_to   project.book_title,   project %></td>
       <td><%= project.sum_percentage %></td>
       <td><%= (project.authors.try(:first).try(:member).nil?) ? 'N/A' : project.authors.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>
       <td><%= (project.editors.try(:first).try(:member).nil?) ? 'N/A' : project.editors.map{|item| "#{item.member.name} #{item.percentage}"}.join(', ') %></td>

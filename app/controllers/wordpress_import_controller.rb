@@ -100,7 +100,7 @@ class WordpressImportController < ApplicationController
             project.book_genres.build(genre: Genre.where(wp_id: genre).first)
         end
       else
-        @errors << { type: 'Genre::Missing', message: "Genre missing for #{project.title}" }
+        @errors << { type: 'Genre::Missing', message: "Genre missing for #{project.book_title}" }
       end
 
 
@@ -168,7 +168,7 @@ class WordpressImportController < ApplicationController
   def create_current_task(project, project_meta, key)
     wp_task_name = fetch_field_value(project_meta, key)
     unless $wf_task_map.has_key? wp_task_name
-      @errors.push({type: "CurrentTask::NoMatchingTask", message: "wp task name: #{wp_task_name} project: #{project.title}"})
+      @errors.push({type: "CurrentTask::NoMatchingTask", message: "wp task name: #{wp_task_name} project: #{project.book_title}"})
       return
     end
     task = Task.where(name: $wf_task_map[wp_task_name]).first
@@ -328,7 +328,7 @@ class WordpressImportController < ApplicationController
         end
         #@errors.push "role info: #{item.xpath("./wp:post_id").text}\t#{wp_member_role}\t#{wp_member_role_pct}\t#{item.xpath("./title").text}"
       else
-        @errors.push( { type: 'TeamMembership::UnmappableRole', message: "Unmappable role: #{tm_hash[:role_name]} project: #{project.title}" })
+        @errors.push( { type: 'TeamMembership::UnmappableRole', message: "Unmappable role: #{tm_hash[:role_name]} project: #{project.book_title}" })
       end
     end
   end

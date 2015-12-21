@@ -1,4 +1,4 @@
-<p><%= @current_user.name %> has just published <%= @project.title %> with a publication date of <%= @project.try(:published_file).try(:publication_date) %>.</p>
+<p><%= @current_user.name %> has just published <%= @project.book_title %> with a publication date of <%= @project.try(:published_file).try(:publication_date) %>.</p>
 
 
 <% if( @project.published_file.mobi? ) %>

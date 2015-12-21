@@ -43,7 +43,7 @@ require 'pp'
         sales_result = Parse::Cloud::Function.new('getSalesDataForNook').call('book' => @project.control_number.parse_id)
         response = {
           sales: {
-            title: sales_result['title'].nil?? @project.title : sales_result['title'],
+            title: sales_result['title'].nil?? @project.book_title : sales_result['title'],
             data: sales_result['crawl'].map{ |crawl_data| [Time.parse(crawl_data['crawlDate']['iso']).utc.to_i * 1000, crawl_data['nookSales']]}.inspect
           },
           no_data: false
@@ -55,7 +55,7 @@ require 'pp'
         puts sales_result['title']
         response = {
           sales: {
-            title: sales_result['title'].nil?? @project.title : sales_result['title'],
+            title: sales_result['title'].nil?? @project.book_title : sales_result['title'],
             data: sales_result['crawl'].map{ |crawl_data| [Time.parse(crawl_data['crawlDate']['iso']).utc.to_i * 1000, crawl_data['appleSales']]}.inspect
           },
           no_data: false

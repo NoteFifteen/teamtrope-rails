@@ -17,7 +17,7 @@
   <tbody>
     <% @cover_templates.each do |cover_template| %>
       <tr>
-        <td class='book-title'><%= link_to cover_template.project.title, cover_template.project %></td>
+        <td class='book-title'><%= link_to cover_template.project.book_title, cover_template.project %></td>
 
         <td><%= cover_template.updated_at %></td>
 

@@ -21,7 +21,7 @@
   <% @projects.each do | project | %>
     <% next if project.nil? %>
     <tr>
-      <td><%= link_to project.title, project %></td>
+      <td><%= link_to project.book_title, project %></td>
       <td><%=  3 - project.task_count %></td>
       <td><%= project.current_task_for_workflow('Production').try(:task).try(:name) %></td>
       <td><%= project.current_task_for_workflow('Design').try(:task).try(:name) %></td>

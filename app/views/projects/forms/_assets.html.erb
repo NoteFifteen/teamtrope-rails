@@ -11,7 +11,7 @@
   </div>
 </div>
 <ul>
-  <li><strong>Book Name:</strong> <%= (! @project.final_title.nil?) ? @project.final_title : @project.title %></li>
+  <li><strong>Book Name:</strong> <%= @project.book_title %></li>
   <li><strong>Author's Legal Name:</strong> <%= @project.layout.legal_name unless @project.layout.nil? %></li>
   <li><strong>Pen Name:</strong> <%= @project.layout.use_pen_name_on_title ? @project.layout.pen_name  : "N/A" unless @project.layout.nil? %></li>
 </ul>

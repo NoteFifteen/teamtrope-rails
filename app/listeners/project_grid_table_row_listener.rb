@@ -25,7 +25,7 @@ class ProjectGridTableRowListener
     pgtr = project.project_grid_table_row
     pgtr ||= project.build_project_grid_table_row
 
-    pgtr.title = project.title
+    pgtr.title = project.book_title
     pgtr.teamroom_link = project.teamroom_link
     pgtr.genre = project.genres.map(&:name).join(", ")
     pgtr.save
@@ -49,7 +49,7 @@ class ProjectGridTableRowListener
 
   def create_project(project)
     pgtr = project.build_project_grid_table_row
-    pgtr.title = project.title
+    pgtr.title = project.book_title
     pgtr.genre = project.genres.map(&:name).join(", ")
     pgtr.teamroom_link = project.teamroom_link
 

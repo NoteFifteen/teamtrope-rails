@@ -26,7 +26,7 @@
   <tbody>
     <% @social_media_marketings.each do |social_media_marketing| %>
       <tr>
-        <td class="book-title"><%= link_to social_media_marketing.project.title, social_media_marketing.project %></td>
+        <td class="book-title"><%= link_to social_media_marketing.project.book_title, social_media_marketing.project %></td>
         <td>
           <% unless social_media_marketing.author_facebook_page.nil? %>
             <%= link_to "Goto", social_media_marketing.author_facebook_page %>

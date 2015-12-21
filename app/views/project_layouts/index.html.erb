@@ -23,7 +23,7 @@
   <tbody>
     <% @project_layouts.each do |project_layout| %>
       <tr>
-        <td class="book-title"><%= link_to project_layout.project.title, project_layout.project %></td>
+        <td class="book-title"><%= link_to project_layout.project.book_title, project_layout.project %></td>
       <% if ! project_layout.layout_upload.nil? %>
          <td><%= link_to project_layout.layout_upload_file_name, url_for(controller: 'projects', action: 'download_layout', id: project_layout.project, only_path: false) %></td>
       <% else %>

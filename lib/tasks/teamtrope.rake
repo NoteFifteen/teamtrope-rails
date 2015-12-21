@@ -32,7 +32,7 @@ namespace :teamtrope do
       pgtr.teamroom_link = project.teamroom_link
 
       # adding the title
-      pgtr.title = project.title
+      pgtr.title = project.book_title
 
       # adding the imprint
       pgtr.imprint = project.imprint.name unless project.imprint.nil?

@@ -22,7 +22,7 @@
     <% @netgalley_submissions.each do |netgalley_submission| %>
       <tr>
         <td class="book-title">
-          <%= link_to netgalley_submission.project.title, netgalley_submission.project %>
+          <%= link_to netgalley_submission.project.book_title, netgalley_submission.project %>
         </td>
         <td><%= netgalley_submission.title %></td>
         <td><%= netgalley_submission.author_name %></td>

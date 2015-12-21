@@ -32,7 +32,7 @@ class HellosignDocument < ActiveRecord::Base
     ]
 
     custom_fields = {
-      book_title: team_membership.project.title,
+      book_title: team_membership.project.book_title,
       team_role: team_membership.role.name,
       legal_name: team_membership.project.layout.legal_name,
       pen_name: team_membership.project.layout.use_pen_name_on_title ? team_membership.project.layout.pen_name  : "N/A",

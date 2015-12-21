@@ -1,7 +1,7 @@
 <% provide(:title, "#{@hellosign_document.name}") %>
 <h1><%= @hellosign_document.name %>
   <% unless @hellosign_document.team_membership.nil? %>
-  <br />for<br /> <%= link_to @hellosign_document.team_membership.project.title, @hellosign_document.team_membership.project %>
+  <br />for<br /> <%= link_to @hellosign_document.team_membership.project.book_title, @hellosign_document.team_membership.project %>
   <% end %>
 </h1>
 

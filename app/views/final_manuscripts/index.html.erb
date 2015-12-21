@@ -15,7 +15,7 @@
   <tbody>
     <% @final_manuscripts.each do |final_manuscript| %>
       <tr>
-        <td><%= link_to final_manuscript.project.title, final_manuscript.project %></td>
+        <td><%= link_to final_manuscript.project.book_title, final_manuscript.project %></td>
         <td><%= final_manuscript.updated_at %></td>
         <td>
           <% unless final_manuscript.pdf_file_name.nil? %>

@@ -16,7 +16,7 @@
   <tbody>
     <% @manuscripts.each do |manuscript| %>
       <tr>
-        <td><%= link_to manuscript.project.title, manuscript.project %></td>
+        <td><%= link_to manuscript.project.book_title, manuscript.project %></td>
         <td><%= manuscript.updated_at %></td>
         <td>
           <% unless manuscript.original_file_name.nil? %>

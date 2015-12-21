@@ -21,7 +21,7 @@ class ProjectMailer < ActionMailer::Base
     @project.genres.all.each { |g| genres.push( g.name ) }
 
     tokens = {
-        'Title' => @project.title,
+        'Title' => @project.book_title,
         'Author' => (@project.authors.try(:first).try(:member).nil?) ? 'N/A' : @project.authors.first.member.name,
         'Genre(s)' => genres.join(', '),
         'Imprint' => (@project.try(:imprint).try(:name).nil?) ? 'N/A' : @project.try(:imprint).try(:name),
@@ -42,8 +42,8 @@ class ProjectMailer < ActionMailer::Base
     tokens.store('Submitted Date', @project.created_at.strftime("%Y/%m/%d"))
 
     # Admin From: jennifer.gilbert@booktrope.com - Do we need this?
-    admin_subject = "New Project submitted: #{project.title}"
-    user_subject = "#{@project.title} project request received"
+    admin_subject = "New Project submitted: #{project.book_title}"
+    user_subject = "#{@project.book_title} project request received"
 
     send_email_message('project_created', tokens, get_project_recipient_list(@project, roles: [:author]), user_subject)
     send_email_message('project_created_admin', tokens, admin_project_created_list, admin_subject)
@@ -58,7 +58,7 @@ class ProjectMailer < ActionMailer::Base
       'Paperback ISBN' => project.control_number.try(:paperback_isbn)
     }
 
-    admin_subject = "Imprint and Paperback ISBN from #{@current_user.name} for #{@project.title}"
+    admin_subject = "Imprint and Paperback ISBN from #{@current_user.name} for #{@project.book_title}"
 
     # The layout of email is the same as edit_control_numbers so we simply pass the subset of tokens that
     # this form collects.
@@ -82,7 +82,7 @@ class ProjectMailer < ActionMailer::Base
         'Paperback ISBN'  => project.control_number.try(:paperback_isbn)
     }
 
-    admin_subject = "New Control Numbers from #{@current_user.name} for #{@project.title}"
+    admin_subject = "New Control Numbers from #{@current_user.name} for #{@project.book_title}"
     send_email_message('edit_control_numbers', tokens, admin_edit_control_numbers_list, admin_subject)
   end
 
@@ -100,7 +100,7 @@ class ProjectMailer < ActionMailer::Base
         'Goodreads' => project.social_media_marketing.try(:goodreads),
     }
 
-    admin_subject = "New Social Media Marketing links from #{@current_user.name} for #{@project.title}"
+    admin_subject = "New Social Media Marketing links from #{@current_user.name} for #{@project.book_title}"
     send_email_message('update_social_media_marketing', tokens, admin_social_media_marketing_list, admin_subject)
   end
 
@@ -121,7 +121,7 @@ class ProjectMailer < ActionMailer::Base
       'Effective Date' => "#{params[:accept_member_effective_date][:year]} / #{params[:accept_member_effective_date][:month]} / #{params[:accept_member_effective_date][:day]}"
     }
 
-    user_subject = "Accept Team Member from #{@current_user.name} for #{@project.title}"
+    user_subject = "Accept Team Member from #{@current_user.name} for #{@project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('accept_team_member', tokens, get_project_recipient_list(@project), user_subject)
@@ -160,8 +160,8 @@ class ProjectMailer < ActionMailer::Base
 
     tokens.store('Effective Date', effective_date)
 
-    user_subject = "Revenue Allocation for #{project.title}"
-    admin_subject = "New Project Revenue Allocation from #{current_user.name} for #{project.title}"
+    user_subject = "Revenue Allocation for #{project.book_title}"
+    admin_subject = "New Project Revenue Allocation from #{current_user.name} for #{project.book_title}"
 
     send_email_message('rev_allocation_change', tokens, get_project_recipient_list(@project, roles: roles), user_subject)
     send_email_message('rev_allocation_change_admin', tokens, admin_rev_allocation_change_list, admin_subject)
@@ -186,7 +186,7 @@ class ProjectMailer < ActionMailer::Base
         'Notified' => (notified) ? 'Yes' : 'No'
     }
 
-    user_subject = "Removal Team Member Request from #{current_user.name} for #{project.title}"
+    user_subject = "Removal Team Member Request from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('remove_team_member', tokens, get_project_recipient_list(@project, send_submitter: true, excluded_emails: [ membership.member.email ], roles: [:author]), user_subject)
@@ -198,7 +198,7 @@ class ProjectMailer < ActionMailer::Base
     @project = project
     @current_user = current_user
 
-    user_subject = "Original Manuscript from #{current_user.name} for #{project.title}"
+    user_subject = "Original Manuscript from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('original_manuscript', {}, get_project_recipient_list(@project, roles: [:project_manager, :book_manager, :author]), user_subject)
@@ -209,8 +209,8 @@ class ProjectMailer < ActionMailer::Base
     @project = project
     @current_user = current_user
 
-    user_subject = "Edited Manuscript Submission for #{project.title}"
-    admin_subject = "New Submit Edited Manuscript from #{current_user.name} for {project.title}"
+    user_subject = "Edited Manuscript Submission for #{project.book_title}"
+    admin_subject = "New Submit Edited Manuscript from #{current_user.name} for {project.book_title}"
 
     send_email_message('submit_edited_manuscript', {}, get_project_recipient_list(@project, roles: [:author, :project_manager, :book_manager, :editor, :proofreader]), user_subject)
     send_email_message('submit_edited_manuscript_admin', {}, admin_edited_manuscript_list, admin_subject)
@@ -272,9 +272,9 @@ class ProjectMailer < ActionMailer::Base
 
       tokens.store('Manuscript Word Count:', params[:project]['proofed_word_count'])
 
-      subject = "New Submit Final Proofed Document from #{current_user.name} for #{project.title} (#{params[:project]['proofed_word_count']} words)"
+      subject = "New Submit Final Proofed Document from #{current_user.name} for #{project.book_title} (#{params[:project]['proofed_word_count']} words)"
     else
-      subject = "New Verion of Final Proofed Document from #{current_user.name} for #{project.title}"
+      subject = "New Verion of Final Proofed Document from #{current_user.name} for #{project.book_title}"
     end
 
     tokens ||= {}
@@ -299,7 +299,7 @@ class ProjectMailer < ActionMailer::Base
       tokens.store('Exact name to appear on copyright', project.layout.exact_name_on_copyright)
     end
 
-    user_subject = "Select Layout Style from #{current_user.name} for #{project.title}"
+    user_subject = "Select Layout Style from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('edit_layout_style', tokens, get_project_recipient_list(@project, send_submitter: true, roles: [:none]), user_subject)
@@ -311,7 +311,7 @@ class ProjectMailer < ActionMailer::Base
     @current_user = current_user
     @layout_notes = project.layout.layout_notes
 
-    user_subject = "Layout Upload from #{current_user.name} for #{project.title}"
+    user_subject = "Layout Upload from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('layout_upload', {}, get_project_recipient_list(@project, roles: [:author, :project_manager]), user_subject)
@@ -322,7 +322,7 @@ class ProjectMailer < ActionMailer::Base
     @project = project
     @current_user = current_user
 
-    user_subject = "Layout Approved from #{current_user.name} for #{project.title}"
+    user_subject = "Layout Approved from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('layout_approved', {}, get_project_recipient_list(@project, send_submitter: true, roles: [:none]), user_subject)
@@ -333,7 +333,7 @@ class ProjectMailer < ActionMailer::Base
     @project = project
     @current_user = current_user
 
-    user_subject = "Final Page Count from #{current_user.name} for #{project.title}"
+    user_subject = "Final Page Count from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     tokens = {
@@ -351,7 +351,7 @@ class ProjectMailer < ActionMailer::Base
     @project = project
     @current_user = current_user
 
-    user_subject = "Upload Cover Concept from #{current_user.name} for #{project.title}"
+    user_subject = "Upload Cover Concept from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('cover_concept_upload', {}, get_project_recipient_list(@project, roles: [:author, :book_manager, :cover_designer, :project_manager]), user_subject)
@@ -363,7 +363,7 @@ class ProjectMailer < ActionMailer::Base
     @current_user = current_user
     @approved = approved
 
-    user_subject = "Approve Cover Art from #{current_user.name} for #{project.title}"
+    user_subject = "Approve Cover Art from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('approve_cover_art', {}, get_project_recipient_list(@project, roles: [:author, :book_manager, :cover_designer, :project_manager]), user_subject)
@@ -374,7 +374,7 @@ class ProjectMailer < ActionMailer::Base
     @project = project
     @current_user = current_user
 
-    user_subject = "Request Image from #{current_user.name} for #{project.title}"
+    user_subject = "Request Image from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('request_images', {}, get_project_recipient_list(@project, roles: [:cover_designer, :project_manager]), user_subject)
@@ -385,7 +385,7 @@ class ProjectMailer < ActionMailer::Base
     @project = project
     @current_user = current_user
 
-    user_subject = "Add Image from #{current_user.name} for #{project.title}"
+    user_subject = "Add Image from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('add_stock_cover_image', {}, get_project_recipient_list(@project, roles: [:author, :cover_designer, :project_manager]), user_subject)
@@ -404,7 +404,7 @@ class ProjectMailer < ActionMailer::Base
         'All fonts are for commercial use and appropriate license(s) have been acquired?' => '&#10004;'.html_safe,
     }
 
-    user_subject = "Upload Cover Templates from #{current_user.name} for #{project.title}"
+    user_subject = "Upload Cover Templates from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('upload_cover_templates', tokens, get_project_recipient_list(@project, roles: [:author, :book_manager, :cover_designer, :project_manager]), user_subject)
@@ -416,7 +416,7 @@ class ProjectMailer < ActionMailer::Base
     @current_user = current_user
     @approved = approved
 
-    user_subject = "Final Cover Approval from #{current_user.name} for #{project.title}"
+    user_subject = "Final Cover Approval from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('final_cover_approval', {}, get_project_recipient_list(@project, roles: [:author, :book_manager, :cover_designer, :project_manager]), user_subject)
@@ -427,7 +427,7 @@ class ProjectMailer < ActionMailer::Base
     @project = project
     @current_user = current_user
 
-    user_subject = "Artwork Rights Request from #{current_user.name} for #{project.title}"
+    user_subject = "Artwork Rights Request from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('artwork_rights_request', {}, get_project_recipient_list(@project, roles: [:author]), user_subject)
@@ -437,7 +437,7 @@ class ProjectMailer < ActionMailer::Base
   def submit_blurb(project, current_user)
     @project = project
 
-    user_subject = "Blurb Submit from #{current_user.name} for #{project.title}"
+    user_subject = "Blurb Submit from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('submit_blurb', {}, get_project_recipient_list(@project, roles: [:author, :book_manager]), user_subject)
@@ -448,7 +448,7 @@ class ProjectMailer < ActionMailer::Base
     @project = project
     @approved = approved
 
-    user_subject = "Approve Blurb from #{current_user.name} for #{project.title}"
+    user_subject = "Approve Blurb from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('approve_blurb', {}, get_project_recipient_list(@project, roles: [:author, :book_manager, :project_manager]), user_subject)
@@ -488,7 +488,7 @@ class ProjectMailer < ActionMailer::Base
         'Imprint' => project.imprint.try(:name) || 'None Provided',
     }
 
-    user_subject = "Publication Fact Sheet from #{current_user.name} for #{project.title}"
+    user_subject = "Publication Fact Sheet from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('publication_fact_sheet', tokens, get_project_recipient_list(@project, roles: [:author, :book_manager, :project_manager]), user_subject)
@@ -507,7 +507,7 @@ class ProjectMailer < ActionMailer::Base
       "Other Information" => ("<pre>#{marketing_expense.other_information}</pre>").html_safe
     }
 
-    admin_subject = "New Marketing Expense from #{current_user.name} for #{project.title}"
+    admin_subject = "New Marketing Expense from #{current_user.name} for #{project.book_title}"
     send_email_message('marketing_expense_admin', tokens, admin_marketing_expense_list, admin_subject)
 
   end
@@ -533,7 +533,7 @@ class ProjectMailer < ActionMailer::Base
       'Date costs should be allocated against revenue' => production_expense[:effective_date]
     }
 
-    user_subject = "Production Expense from #{current_user.name} for #{project.title}"
+    user_subject = "Production Expense from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('production_expense', tokens, get_project_recipient_list(@project, roles: [:none]), user_subject)
@@ -545,7 +545,7 @@ class ProjectMailer < ActionMailer::Base
     @project = project
     @current_user = current_user
 
-    user_subject = "Final Manuscript from #{current_user.name} for #{project.title}"
+    user_subject = "Final Manuscript from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('final_manuscript', {}, get_project_recipient_list(@project, roles: [:none]), user_subject)
@@ -556,7 +556,7 @@ class ProjectMailer < ActionMailer::Base
     @project = project
     @current_user = current_user
     imprint_text = (@project.try(:imprint).try(:name).nil?) ? '' : @project.try(:imprint).try(:name)
-    user_subject = "#{imprint_text} Book #{project.title} is Published! (submitted by #{current_user.name})"
+    user_subject = "#{imprint_text} Book #{project.book_title} is Published! (submitted by #{current_user.name})"
     admin_subject = "New " + user_subject
 
 
@@ -568,7 +568,7 @@ class ProjectMailer < ActionMailer::Base
     @project = project
     @current_user = current_user
 
-    user_subject = "Media Kit from #{current_user.name} for #{project.title}"
+    user_subject = "Media Kit from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('media_kit', {}, get_project_recipient_list(@project, roles: [:author, :book_manager]), user_subject)
@@ -598,7 +598,7 @@ class ProjectMailer < ActionMailer::Base
       "Category Two" => @project.ebook_only_incentive.category_two
     }
 
-    user_subject = "eBook Only Incentive from #{current_user.name} for #{project.title}"
+    user_subject = "eBook Only Incentive from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('ebook_only_incentive', tokens, get_project_recipient_list(@project, roles: [:author, :book_manager]), user_subject)
@@ -629,7 +629,7 @@ class ProjectMailer < ActionMailer::Base
       "Category Two" => @project.netgalley_submission.category_two
     }
 
-    user_subject = "Netgalley Submission from #{current_user.name} for #{project.title}"
+    user_subject = "Netgalley Submission from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('new_netgalley_submission', tokens, get_project_recipient_list(@project, roles: [:author, :book_manager]), user_subject)
@@ -650,7 +650,7 @@ class ProjectMailer < ActionMailer::Base
         'Tour Start'        => blog_tour.start_date.to_s,
         'Tour End'          => blog_tour.end_date.to_s
     }
-    user_subject = "Blog Tour from #{current_user.name} for #{project.title}"
+    user_subject = "Blog Tour from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('blog_tour', tokens, get_project_recipient_list(@project, roles: [:author, :book_manager]), user_subject)
@@ -694,7 +694,7 @@ class ProjectMailer < ActionMailer::Base
         tokens.store('Promotion Price', '$' + promo.price_promotion.to_s)
     end
 
-    user_subject = "Free/Price Promo from #{current_user.name} for #{project.title}"
+    user_subject = "Free/Price Promo from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('price_promotion', tokens, get_project_recipient_list(@project, roles: [:author, :book_manager]), user_subject)
@@ -728,7 +728,7 @@ class ProjectMailer < ActionMailer::Base
 
     tokens.store('Email', email_address_link(current_user).html_safe)
 
-    user_subject = "Paperback Order from #{current_user.name} for #{project.title}"
+    user_subject = "Paperback Order from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('print_corner', tokens, get_project_recipient_list(@project, send_submitter: true, roles: [:author]), user_subject)
@@ -739,7 +739,7 @@ class ProjectMailer < ActionMailer::Base
   def print_corner_estore_request(project, current_user)
     @project = project
     @current_user = current_user
-    user_subject = "Paperback e-Store Request from #{current_user.name} for #{project.title}"
+    user_subject = "Paperback e-Store Request from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
     send_email_message('print_corner_estore_request', {}, get_project_recipient_list(@project, send_submitter: true, roles: [:author]), user_subject)
@@ -758,7 +758,7 @@ class ProjectMailer < ActionMailer::Base
         'Submitted by' => current_user.name,
     }
 
-    user_subject = "KDP Select Enrollment Submitted for #{project.title}"
+    user_subject = "KDP Select Enrollment Submitted for #{project.book_title}"
 
     send_email_message('kdp_select_enrollment', tokens, get_project_recipient_list(@project, send_submitter: true, roles: [:author, :book_manager]), user_subject)
     send_email_message('kdp_select_enrollment', tokens, admin_kdp_select_enrollment_list, user_subject)
@@ -796,7 +796,7 @@ class ProjectMailer < ActionMailer::Base
       end
     end
 
-    user_subject = "KDP Select Update from #{current_user.name} for #{project.title}"
+    user_subject = "KDP Select Update from #{current_user.name} for #{project.book_title}"
 
     send_email_message('kdp_select_update', tokens, get_project_recipient_list(@project, send_submitter: true, roles: [:author, :book_manager]), user_subject)
     send_email_message('kdp_select_update', tokens, admin_kdp_select_update_list, user_subject)
@@ -810,7 +810,7 @@ class ProjectMailer < ActionMailer::Base
         'Withdrawn by' => current_user.name,
     }
 
-    user_subject = "KDP Select Withdrawal Submitted for #{project.title}"
+    user_subject = "KDP Select Withdrawal Submitted for #{project.book_title}"
 
     send_email_message('kdp_select_withdraw', tokens, get_project_recipient_list(@project, send_submitter: true, roles: [:author, :book_manager]), user_subject)
     send_email_message('kdp_select_withdraw', tokens, admin_kdp_select_enrollment_list, user_subject)

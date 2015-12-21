@@ -17,7 +17,7 @@
   <tbody>
     <% @published_files.each do |published_file| %>
       <tr>
-        <td><%= link_to published_file.project.title, project_path(published_file.project) %></td>
+        <td><%= link_to published_file.project.book_title, project_path(published_file.project) %></td>
 
         <td><%= published_file.updated_at %></td>
 

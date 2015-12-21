@@ -24,7 +24,7 @@
     <% @document_import_queues.each do |document_import_queue| %>
       <tr>
         <% project = Project.where(wp_id: document_import_queue.wp_id).first %>
-        <td><%= link_to project.title, project unless project.nil? %></td>
+        <td><%= link_to project.book_title, project unless project.nil? %></td>
         <td><%= document_import_queue.wp_id %></td>
         <td><%= document_import_queue.attachment_id %></td>
         <td><%= document_import_queue.fieldname %></td>

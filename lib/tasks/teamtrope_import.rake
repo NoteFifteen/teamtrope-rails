@@ -47,7 +47,7 @@ namespace :teamtrope do
           document.save
           next
         else
-          puts "Found project #{project.id} - #{project.title}"
+          puts "Found project #{project.id} - #{project.book_title}"
 
           # locking the project
           # project.with_lock do

@@ -14,7 +14,7 @@
   <tbody>
     <% @media_kits.each do |media_kit| %>
       <tr>
-        <td><%= link_to media_kit.project.title, media_kit.project %></td>
+        <td><%= link_to media_kit.project.book_title, media_kit.project %></td>
         <td><%= media_kit.project.updated_at %></td>
         <td>
           <% unless media_kit.document_file_name.nil? %>

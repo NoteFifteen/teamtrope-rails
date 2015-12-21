@@ -13,7 +13,7 @@
   <tbody>
     <% @draft_blurbs.each do |draft_blurb| %>
       <tr>
-        <td class="book-title"><%= link_to draft_blurb.project.title, draft_blurb.project  %></td>
+        <td class="book-title"><%= link_to draft_blurb.project.book_title, draft_blurb.project  %></td>
         <td><%= draft_blurb.draft_blurb %></td>
         <td><%= link_to 'Show', draft_blurb %></td>
         <td><%= link_to 'Edit', edit_draft_blurb_path(draft_blurb) %></td>

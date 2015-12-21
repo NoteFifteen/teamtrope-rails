@@ -21,7 +21,7 @@
 <%= yield %>
 
 <% if !@project.nil? %>
-    <p>Project Link: <%= link_to(@project.title, url_for(controller: 'projects', action: 'show', id: @project, only_path: false)) %></p>
+    <p>Project Link: <%= link_to(@project.book_title, url_for(controller: 'projects', action: 'show', id: @project, only_path: false)) %></p>
 <% end %>
 
 </body>

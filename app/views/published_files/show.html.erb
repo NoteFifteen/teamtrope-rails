@@ -1,6 +1,6 @@
-<h2>Showing Publication Files for <%= @published_file.project.title %></h2>
+<h2>Showing Publication Files for <%= @published_file.project.book_title %></h2>
 
-<div>Project: <%= link_to @published_file.project.title, project_path(@published_file.project) %></div>
+<div>Project: <%= link_to @published_file.project.book_title, project_path(@published_file.project) %></div>
 <div>Publication Date: <%= @published_file.publication_date %></div>
 
 <table>

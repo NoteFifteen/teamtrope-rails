@@ -16,7 +16,7 @@
   <tbody>
     <% @audit_team_membership_removals.each do |audit_team_membership_removal| %>
       <tr>
-        <td class="book-title"><%= link_to audit_team_membership_removal.project.title, audit_team_membership_removal.project %></td>
+        <td class="book-title"><%= link_to audit_team_membership_removal.project.book_title, audit_team_membership_removal.project %></td>
         <td><%= link_to audit_team_membership_removal.member.name, audit_team_membership_removal.member.profile_page %></td>
         <td><%= audit_team_membership_removal.notes %></td>
         <td><% if audit_team_membership_removal.notified_member? %><i class="fa fa-check-circle"></i><% end %></td>
