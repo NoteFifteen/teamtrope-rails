@@ -221,10 +221,12 @@
       var validator = $('#add_print_request_form').validate({
           rules: {
 
-              // Required for Author Copy or Creative
+            <% if first_order_intl %>
+              // Required for International Orders
               'project[print_corners_attributes][0][billing_acceptance]': {
                   required: true
               },
+            <% end %>
               'project[print_corners_attributes][0][shipping_recipient]': {
                   required: true
               },
