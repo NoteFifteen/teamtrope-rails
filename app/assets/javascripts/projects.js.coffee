@@ -386,11 +386,7 @@ jQuery ->
       },
       'project[ebook_only_incentive_attributes][website_one]': {
         required: true
-      },
-      'project[ebook_only_incentive_attributes][praise]': {
-        required: true
       }
-
     }
   })
 
@@ -421,11 +417,7 @@ jQuery ->
       },
       'project[netgalley_submission_attributes][website_one]': {
         required: true
-      },
-      'project[netgalley_submission_attributes][praise]': {
-        required: true
       }
-
     }
   })
 
