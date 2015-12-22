@@ -11,7 +11,7 @@
       <%-# TODO revisit this periodically as browser list changes...it would be nice to fix... -%>
 
       <li class="cover_template_list">
-        <label>Raw Cover File<span class="required">*</span></label>
+        <label>Raw Cover File</label>
         <%= s3_uploader_form callback_url: project_cover_template_url(@project),
                               id: "cover_template_raw_cover_s3_uploader",
                               acl: 'private',
