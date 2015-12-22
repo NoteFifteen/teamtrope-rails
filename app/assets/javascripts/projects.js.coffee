@@ -862,8 +862,8 @@ jQuery(document).ready () ->
 
 ## production_expense Form validations
 jQuery.validator.addMethod("complimentaryCopyValidator", (value, element, params) ->
-  return value <= 10 && value >= 0
-, jQuery.validator.format("Complimentary orders must be 0 or less than or equal to 10")
+  return value <= 15 && value >= 0
+, jQuery.validator.format("Complimentary orders must be 0 or less than or equal to 15")
 )
 
 ## Custom validation rules for production_expense
