@@ -162,9 +162,9 @@ namespace :teamtrope do
           row[25] = bisac_three[:name]
 
           row[26] = project.publication_fact_sheet.search_terms
-          row[27] = project.publication_fact_sheet.description.gsub(/"/, "\"\"").gsub(/\r\n/, " ").gsub(/\n/, " ") unless project.publication_fact_sheet.description.nil?
-          row[28] = project.publication_fact_sheet.author_bio.gsub(/"/, "\"\"").gsub(/\r\n/, " ").gsub(/\n/, " ") unless project.publication_fact_sheet.author_bio.nil?
-          row[29] = project.publication_fact_sheet.one_line_blurb.gsub(/"/, "\"\"").gsub(/\r\n/, " ").gsub(/\n/, " ") unless project.publication_fact_sheet.one_line_blurb.nil?
+          row[27] = filter_special_characters(project.publication_fact_sheet.description)    unless project.publication_fact_sheet.description.nil?
+          row[28] = filter_special_characters(project.publication_fact_sheet.author_bio)     unless project.publication_fact_sheet.author_bio.nil?
+          row[29] = filter_special_characters(project.publication_fact_sheet.one_line_blurb) unless project.publication_fact_sheet.one_line_blurb.nil?
         end
 
         # generate the csv row by joining the array with ','
@@ -177,6 +177,27 @@ namespace :teamtrope do
     ReportMailer.master_spread_sheet(csv_string, Date.today.strftime('%Y-%m-%d'))
     puts 'done'
 
+  end
+
+  def filter_special_characters(text)
+    text.gsub(/"/, "\"\"")
+          .gsub(/\r\n/, " ")
+          .gsub(/\n/, " ")
+          .gsub(/\u201c|\u201d|\u201e/, '\"\"')     # smart double quote
+          .gsub(/\u2018|\u2019|\u201A|\uFFFD/, "'") # smart single quote
+          .gsub( /\u02C6/, '^' )
+          .gsub( /\u2039/, '<' )
+          .gsub( /\u203A/, '>' )
+          .gsub( /\u2013/, '-' )
+          .gsub( /\u2014/, '--' )
+          .gsub( /\u2026/, '...' )
+          .gsub( /\u00A9/, '(c)' )
+          .gsub( /\u00AE/, '(r)' )
+          .gsub( /\u2122/, 'TM' )
+          .gsub( /\u00BC/, '1/4' )
+          .gsub( /\u00BD/, '1/2' )
+          .gsub( /\u00BE/, '3/4' )
+          .gsub(/[\u02DC|\u00A0]/, " ")
   end
 
   def prepare_bisac_code(bisac_code, bisac_code_name)
