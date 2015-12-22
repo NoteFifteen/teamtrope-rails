@@ -183,7 +183,7 @@ namespace :teamtrope do
     text.gsub(/"/, "\"\"")
           .gsub(/\r\n/, " ")
           .gsub(/\n/, " ")
-          .gsub(/\u201c|\u201d|\u201e/, '\"\"')     # smart double quote
+          .gsub(/\u201c|\u201d|\u201e/, "\"\"")     # smart double quote
           .gsub(/\u2018|\u2019|\u201A|\uFFFD/, "'") # smart single quote
           .gsub( /\u02C6/, '^' )
           .gsub( /\u2039/, '<' )
