@@ -712,20 +712,15 @@ class ProjectMailer < ActionMailer::Base
 
     tokens.store('Order Type', 'Author Copies')
     tokens.store('First Order', (project.print_corners.size <= 1) ? 'Yes' : 'No')
-
-    tokens.store('Agreed to Billing Terms', ((pc.billing_acceptance == true) ? 'Yes' : 'No'))
-
     tokens.store('Quantity', pc.quantity)
     tokens.store('Ship to Name', pc.shipping_recipient)
     tokens.store('Phone Contact', pc.contact_phone)
-
     tokens.store('Address 1', pc.shipping_address_street_1)
     tokens.store('Address 2', pc.shipping_address_street_2)
     tokens.store('City', pc.shipping_address_city)
     tokens.store('State/Province/Region', pc.shipping_address_state)
     tokens.store('Zip', pc.shipping_address_zip)
     tokens.store('Country', pc.shipping_address_country)
-
     tokens.store('Email', email_address_link(current_user).html_safe)
 
     user_subject = "Paperback Order from #{current_user.name} for #{project.book_title}"
