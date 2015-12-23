@@ -14,6 +14,8 @@
     </div>
   </div>
 
+  <% if ! @project.try(:cover_template).try(:ebook_front_cover).nil? %>
+
   <div class="row">
     <div class="col-md-6">
         <%= simple_form_for @project,
@@ -101,6 +103,9 @@
 
       }
   </script>
+    <% else %>
+      <div class="alert alert-danger" role="alert">Sorry, this title must first have a final cover template before it can be submitted to Netgalley.</div>
+    <% end %>
   <% else %>
   <div>
     Your title has already been submitted for Netgalley.
