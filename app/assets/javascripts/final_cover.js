@@ -2,7 +2,7 @@
 var cover_template_uploaded_files = [];
 
 function requiredCoverTemplateFilesUnlockSubmit() {
-  unlock = ['raw_cover', 'ebook_front_cover'].every(function(upload) {
+  unlock = ['ebook_front_cover'].every(function(upload) {
       return cover_template_uploaded_files.indexOf(upload) > -1
   })
   if (unlock) {
