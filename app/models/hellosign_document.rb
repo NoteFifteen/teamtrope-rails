@@ -36,7 +36,6 @@ class HellosignDocument < ActiveRecord::Base
       team_role: team_membership.role.name,
       legal_name: team_membership.project.layout.legal_name,
       pen_name: team_membership.project.layout.use_pen_name_on_title ? team_membership.project.layout.pen_name  : "N/A",
-      signature_date: Date.today.strftime("%m/%d/%Y"),
     }.merge(hellosign_document.prepare_parties_and_payments(TeamMembership.where(project_id: team_membership.project_id)))
 
     hellosign_document.send_agreement(custom_fields, signers)
