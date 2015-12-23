@@ -28,7 +28,13 @@
                                           date_name: :netgalley_submission_publication_date,
                                           date_id: "netgalley_submission_publication_date" } %>
 
-            <%= f.submit "Submit", id: 'netgalley_published_file_submit_button' ,style: 'display: none;' %>
+              <%= netgalley_submission.input :personal_submission, as: :boolean, label: 'This book does not qualify for a month on Netgalley using marketing funds, but I would like to spend $40 for a month on my own. I understand I will be invoiced via PayPal by Patchwork Press directly.' %>
+
+              <div id="netgalley_agreed_personal_submission" style="display: none;">
+                <%= netgalley_submission.input :paypal_email, label: 'Email address to send the invoice to' %>
+              </div>
+
+            <%= f.submit "Submit", id: 'netgalley_published_file_submit_button', style: 'display: none;' %>
           <% end %>
         <% end %>
         <%= render partial: "shared/netgalley_epub_upload", locals: {
@@ -63,6 +69,17 @@
 
             }
           });
+
+        $('#project_netgalley_submission_attributes_personal_submission').on('change', function() {
+          var paypal_input = $('#netgalley_agreed_personal_submission');
+          var checked = $('#project_netgalley_submission_attributes_personal_submission').is(':checked');
+
+          if(checked) {
+            paypal_input.show();
+          } else {
+            paypal_input.hide();
+          }
+        });
 
       });
 

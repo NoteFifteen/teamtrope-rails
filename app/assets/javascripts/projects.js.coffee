@@ -367,7 +367,8 @@ jQuery ->
         required: true
       },
       'project[ebook_only_incentive_attributes][isbn]': {
-        required: true
+        required: true,
+        isbnFormatValidator: true
       },
       'project[ebook_only_incentive_attributes][author_name]': {
         required: true
@@ -398,7 +399,8 @@ jQuery ->
         required: true
       },
       'project[netgalley_submission_attributes][isbn]': {
-        required: true
+        required: true,
+        isbnFormatValidator: true
       },
       'project[netgalley_submission_attributes][author_name]': {
         required: true
@@ -417,6 +419,12 @@ jQuery ->
       },
       'project[netgalley_submission_attributes][website_one]': {
         required: true
+      },
+      'project[netgalley_submission_attributes][paypal_email]': {
+        required: {
+          depends: (element) =>
+            return ($('#project_netgalley_submission_attributes_personal_submission').is(':checked'));
+        }
       }
     }
   })
@@ -604,7 +612,8 @@ jQuery ->
         required: true
       },
       'project[control_number_attributes][paperback_isbn]': {
-        required: true
+        required: true,
+        isbnFormatValidator: true
       }
     }
   })

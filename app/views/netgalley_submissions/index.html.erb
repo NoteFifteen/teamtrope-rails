@@ -12,6 +12,7 @@
       <th>Websites</th>
       <th>Category One</th>
       <th>Category Two</th>
+      <th>Will Cover Costs</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
@@ -40,6 +41,7 @@
         </td>
         <td><%= netgalley_submission.category_one %></td>
         <td><%= netgalley_submission.category_two %></td>
+        <td><%= (netgalley_submission.personal_submission) ? 'Yes' : 'No' %></td>
         <td><%= link_to 'Show', netgalley_submission %></td>
         <td><%= link_to 'Edit', edit_netgalley_submission_path(netgalley_submission) %></td>
         <td><%= link_to 'Destroy', netgalley_submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>

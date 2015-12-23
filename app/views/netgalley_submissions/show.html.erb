@@ -19,6 +19,11 @@
     </p>
 
     <p>
+      <strong>Book Manager:</strong>
+      <%= @netgalley_submission.book_manager %>
+    </p>
+
+    <p>
       <strong>Publication date:</strong>
       <%= @netgalley_submission.publication_date %>
     </p>
@@ -67,6 +72,18 @@
     <pre>
       <%= @netgalley_submission.praise %>
     </pre>
+
+    <p>
+      <strong>Does not qualify for Mkt expense, will personally cover cost:</strong>
+      <%= (@netgalley_submission.personal_submission) ? 'Yes' : 'No' %>
+    </p>
+
+    <% if @netgalley_submission.personal_submission %>
+        <p>
+          <strong>Invoice Paypal Address:</strong>
+          <%= @netgalley_submission.paypal_email %>
+        </p>
+    <% end %>
 
     <%= link_to 'Edit', edit_netgalley_submission_path(@netgalley_submission) %> |
     <%= link_to 'Back', netgalley_submissions_path %>
