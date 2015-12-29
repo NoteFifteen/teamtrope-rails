@@ -95,6 +95,23 @@ ActiveRecord::Schema.define(version: 20151221071148) do
   add_index "book_genres", ["genre_id"], name: "index_book_genres_on_genre_id", using: :btree
   add_index "book_genres", ["project_id"], name: "index_book_genres_on_project_id", using: :btree
 
+  create_table "bookbub_submissions", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "submitted_by_id"
+    t.string   "author"
+    t.string   "title"
+    t.string   "asin"
+    t.string   "asin_linked_url"
+    t.float    "current_price"
+    t.float    "num_stars"
+    t.integer  "num_reviews"
+    t.integer  "num_pages"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "bookbub_submissions", ["project_id"], name: "index_bookbub_submissions_on_project_id", using: :btree
+
   create_table "box_credentials", force: true do |t|
     t.string   "access_token"
     t.string   "refresh_token"

@@ -872,6 +872,17 @@ class ProjectsController < ApplicationController
     ProjectMailer.print_corner_estore_request(@project, current_user)
   end
 
+  def bookbub_submission
+    if @project.update(update_project_params)
+      @project.create_activity :bookbub_submission, owner: current_user, parameters: { text: 'Submitted Bookbub Submission Request' }
+      flash[:success] = 'Thank you for your submission. If your book is not accepted by Bookbub in this round, we will continue submitting on your behalf. If your book is accepted, your team will be notified in the Teamroom.'
+      redirect_to @project
+      ProjectMailer.bookbub_submission(@project, current_user)
+    else
+      flash[:danger] = 'An error occurred trying to submit your Bookbub Submission Request.  Please review.'
+    end
+  end
+
   def download_original_manuscript
     redirect_to @project.manuscript.original.expiring_url(*Constants::DefaultLinkExpiration)
   end
@@ -996,6 +1007,7 @@ class ProjectsController < ApplicationController
       :artwork_rights_requests_attributes => [:id, :role_type, :full_name, :email, :_destroy],
       :blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
       :book_genres_attributes => [:genre_id],
+      :bookbub_submissions_attributes => [:submitted_by_id, :author, :title, :asin, :asin_linked_url, :current_price, :num_stars, :num_reviews, :num_pages],
       :control_number_attributes => [:id, :ebook_library_price, :asin, :bnid, :encore_asin, :apple_id, :epub_isbn, :hardback_isbn,
                                      :paperback_isbn, :parse_id],
       :cover_concept_attributes => [:id, :cover_concept_notes, :cover_art_approval_date, :image_request_list],

@@ -1,0 +1,45 @@
+<h1>Listing bookbub_submissions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Submitted by</th>
+      <th>Author</th>
+      <th>Title</th>
+      <th>Asin</th>
+      <th>Asin linked url</th>
+      <th>Current price</th>
+      <th>Num stars</th>
+      <th>Num reviews</th>
+      <th>Avg rating</th>
+      <th>Num pages</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bookbub_submissions.each do |bookbub_submission| %>
+      <tr>
+        <td><%= bookbub_submission.project %></td>
+        <td><%= bookbub_submission.submitted_by_id %></td>
+        <td><%= bookbub_submission.author %></td>
+        <td><%= bookbub_submission.title %></td>
+        <td><%= bookbub_submission.asin %></td>
+        <td><%= bookbub_submission.asin_linked_url %></td>
+        <td><%= bookbub_submission.current_price %></td>
+        <td><%= bookbub_submission.num_stars %></td>
+        <td><%= bookbub_submission.num_reviews %></td>
+        <td><%= bookbub_submission.avg_rating %></td>
+        <td><%= bookbub_submission.num_pages %></td>
+        <td><%= link_to 'Show', bookbub_submission %></td>
+        <td><%= link_to 'Edit', edit_bookbub_submission_path(bookbub_submission) %></td>
+        <td><%= link_to 'Destroy', bookbub_submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Bookbub submission', new_bookbub_submission_path %>

@@ -6,6 +6,9 @@ class AddAgentAndAdvisorToRequiredRoles < ActiveRecord::Migration
 
   # Add the role and the required_role to the Standard Project project type.
   def up
+    # Make sure the seeds already exist, break if not because this is done in the seeds.rb already
+    return if Role.find_by_name('Author').nil?
+
     project_type = get_project_type
 
     RoleAdditions.each do |role_hash|
