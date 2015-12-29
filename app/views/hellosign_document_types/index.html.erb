@@ -10,6 +10,7 @@
       <th>Template</th>
       <th>Signers</th>
       <th>Ccs</th>
+      <th>Version</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
@@ -36,6 +37,9 @@
             <li class='list-group-item'><%= "#{cc["role"]} #{cc["email_address"]}"  %></li>
           <% end %>
           </ul>
+        </td>
+        <td>
+          <%= hellosign_document_type.version %>
         </td>
         <td><%= link_to 'Show', hellosign_document_type %></td>
         <td><%= link_to 'Edit', edit_hellosign_document_type_path(hellosign_document_type) %></td>
