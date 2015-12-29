@@ -216,8 +216,21 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('submit_edited_manuscript_admin', {}, admin_edited_manuscript_list, admin_subject)
   end
 
+  def submit_proofread_reviewed_manuscript(project, current_user)
+    @project = project
+    @current_user = current_user
+
+    user_subject = "Proofed Manuscript Submission from #{current_user.name} for #{project.book_title}"
+    admin_subject = "New " + user_subject
+
+    tokens = {}
+
+    send_email_message('submit_proofread_reviewed_manuscript', tokens, get_project_recipient_list(@project, roles: [:project_manager, :author, :proofreader]), user_subject)
+    send_email_message('submit_proofread_reviewed_manuscript_admin', tokens, admin_proofread_reviewed_manuscript_list, admin_subject)
+  end
+
   # Manuscript submitted by Proof-Reader
-  def proofed_manuscript(project, current_user, params)
+  def proofread_final_manuscript(project, current_user, params)
     @project = project
     @current_user = current_user
 
@@ -279,8 +292,8 @@ class ProjectMailer < ActionMailer::Base
 
     tokens ||= {}
 
-    send_email_message('proofed_manuscript', tokens, get_project_recipient_list(@project, roles: [:project_manager, :author]), subject)
-    send_email_message('proofed_manuscript_admin', tokens, admin_proofed_manuscript_list, subject)
+    send_email_message('proofread_final_manuscript', tokens, get_project_recipient_list(@project, roles: [:project_manager, :author]), subject)
+    send_email_message('proofread_final_manuscript_admin', tokens, admin_proofread_final_manuscript_list, subject)
   end
 
   def edit_layout_style(project, current_user)
@@ -1000,8 +1013,12 @@ class ProjectMailer < ActionMailer::Base
     %w( tt_request_images_list@booktrope.com )
   end
 
+  def admin_proofread_reviewed_manuscript_list
+    %w( tt_first_pass_edit_list@booktrope.com )
+  end
+
   # The proofed manuscript has been uploaded
-  def admin_proofed_manuscript_list
+  def admin_proofread_final_manuscript_list
     %w( tt_proofed_manuscript_list@booktrope.com )
   end
 

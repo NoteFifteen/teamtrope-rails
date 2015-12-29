@@ -7,7 +7,8 @@
       <th>Update</th>
       <th>Original</th>
       <th>Edited</th>
-      <th>Proofed</th>
+      <th>Proofread Reviewed</th>
+      <th>Final Proofed</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
     </tr>
@@ -16,7 +17,7 @@
   <tbody>
     <% @manuscripts.each do |manuscript| %>
       <tr>
-        <td><%= link_to manuscript.project.book_title, manuscript.project %></td>
+        <td class="book-title"><%= link_to manuscript.project.book_title, manuscript.project %></td>
         <td><%= manuscript.updated_at %></td>
         <td>
           <% unless manuscript.original_file_name.nil? %>
@@ -33,8 +34,15 @@
           <% end %>
         </td>
         <td>
-          <% unless manuscript.proofed_file_name.nil? %>
-            <%= link_to manuscript.proofed_file_name, url_for(controller: 'projects', action: 'download_proofed_manuscript', id: manuscript.project, only_path: false) %>
+          <% unless manuscript.proofread_reviewed_file_name.nil? %>
+            <%= link_to manuscript.proofread_reviewed_file_name, url_for(controller: 'projects', action: 'download_proofread_reviewed_manuscript', id: manuscript.project, only_path: false) %>
+          <% else %>
+          -
+          <% end %>
+        </td>
+        <td>
+          <% unless manuscript.proofread_final_file_name.nil? %>
+            <%= link_to manuscript.proofread_final_file_name, url_for(controller: 'projects', action: 'download_proofread_final_manuscript', id: manuscript.project, only_path: false) %>
           <% else %>
           -
           <% end %>

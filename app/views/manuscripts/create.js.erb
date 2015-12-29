@@ -17,8 +17,12 @@
                 $('#edited_manuscript_submit_button').removeAttr('disabled').removeClass('disabled');
             <% end %>
 
-            <% if @updated_file == 'proofed_manuscript' %>
-                $('#submit_proofred_manuscript_fake').removeAttr('disabled').removeClass('disabled');
+            <% if @updated_file == 'proofread_reviewed_manuscript' %>
+                $('#proofread_reviewed_manuscript_submit_button').removeAttr('disabled').removeClass('disabled');
+            <% end %>
+
+            <% if @updated_file == 'proofread_final_manuscript' %>
+                $('#submit_proofread_final_manuscript_fake').removeAttr('disabled').removeClass('disabled');
             <% end %>
         <% end %>
     <% else %>

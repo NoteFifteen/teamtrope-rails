@@ -738,7 +738,7 @@ jQuery ->
             return $("input[name=does_contain_images]:checked").val() == '2';
         }
       },
-      'project[manuscript_attributes][proofed]': {
+      'project[manuscript_attributes][proofread_final]': {
         required: true
         accept: "application/(msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)"
       },

@@ -6,7 +6,7 @@
     <div class="col-md-12">
 
         <%= simple_form_for @project,
-                url: url_for(controller: 'projects', action: 'proofed_manuscript', id: @project) ,
+                url: url_for(controller: 'projects', action: 'proofread_final_manuscript', id: @project) ,
                 html: { id: "submit_proofread" } do | f |%>
             <div>
                 <span>The Author must upload your final manuscript after proofreading here.  This is your LAST CHANCE to submit corrections for typos or any other proofreading errors. Content or proofing changes requested after the book has gone through layout may result in additional fees.You are only allowed to submit once, so please ensure editing is final! (.doc or .docx only)</span>
@@ -217,14 +217,14 @@
       <div>
         <h4>Final Manuscript <span class='required'>*</span></h4>
         <%= s3_uploader_form callback_url: project_manuscript_url(@project),
-                             id: 'proofed_manuscript_s3_uploader',
+                             id: 'proofread_final_manuscript_s3_uploader',
                              acl: 'private',
-                             callback_param: 'proofed_manuscript[direct_upload_url]',
+                             callback_param: 'proofread_final_manuscript[direct_upload_url]',
                              expiration: 24.hours.from_now.utc.iso8601,
                              max_file_size: 100.megabytes do %>
             <%= file_field_tag :file, multiple: false %>
         <% end %>
-        <div id='proofed_manuscript_uploads_container'></div>
+        <div id='proofread_final_manuscript_uploads_container'></div>
         <script id='template-upload' type='text/x-tmpl'>
                   <div id='upload_{%=o.unique_id%}' class='upload'>
                     <h5>{%=o.name%}</h5>
@@ -232,10 +232,10 @@
                   </div>
 
         </script>
-        <strong>Please only upload .doc & .docx files!</strong>
+        <strong>Please only upload .doc &amp; .docx files!</strong>
       </div>
 
-      <button class="btn disabled" disabled id="submit_proofred_manuscript_fake" onclick="submitProofreadManuscriptForm();" >Submit</button>
+      <button class="btn disabled" disabled id="submit_proofread_final_manuscript_fake" onclick="submitProofreadManuscriptForm();" >Submit</button>
       <script>
           $(function() {
               // This attaches the datepicker to a "fake" input field with the MM/DD/YYYY format that users
