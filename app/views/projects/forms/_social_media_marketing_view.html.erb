@@ -1,7 +1,7 @@
 <div class="container">
   <h1>Social Media Marketing</h1>
 
-  <h4>Book Pages</h4>
+  <h4 style="margin-top: 0px;">Book Pages</h4>
   <% unless @project.control_number.nil? || @project.control_number.not_in_stores? %>
   <div class="row">
     <div class="col-md-16">
@@ -12,13 +12,15 @@
       # url: the retail page url
       book_channels = [
         { label: 'Amazon', control_number: :asin, override: :encore_asin, url: 'http://amzn.com/' },
-        { label: 'Apple', control_number: :apple_id, url: 'https://itunes.apple.com/book/id' },
-        { label: 'Barnes and Noble', control_number: :bnid, url: 'http://barnesandnoble.com/s/' },
+        { label: 'Apple', control_number: :apple_id, url: 'https://itunes.apple.com/book/id', disclaimer: true },
+        { label: 'Barnes and Noble (eBook)', control_number: :bnid, url: 'http://barnesandnoble.com/s/', disclaimer: true },
+        { label: 'Barnes and Noble (Paperback)', control_number: :paperback_isbn, url: 'http://barnesandnoble.com/s/' },
       ]
     %>
 
     <% # looping through the book channels to geneate the links %>
     <ul>
+      <li><span class="required">*</span><span>&nbsp;<i>Please confirm that the provided links are valid before using them.</i></span></li>
     <% book_channels.each do | book_channel | %>
       <%
         control_number_field = book_channel[:control_number]
@@ -35,7 +37,12 @@
 
         book_link = "#{book_channel[:url]}#{control_number}"
       %>
-      <li><%= link_to book_channel[:label], book_link, target: :blank %></li>
+      <li>
+        <%= link_to book_channel[:label], book_link, target: :blank %>
+        <% if book_channel[:disclaimer] %>
+        <span class="required">*</span><span>&nbsp;<i>This link will not be accessible and should not be used if the title is in KDP Select.</i></span>
+        <% end %>
+      </li>
     <% end %>
     </ul>
     </div>
