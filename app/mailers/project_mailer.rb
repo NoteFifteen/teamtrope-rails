@@ -611,23 +611,28 @@ class ProjectMailer < ActionMailer::Base
     @current_user = current_user
 
     tokens = {
-      "Title" => @project.netgalley_submission.title,
-      "Author" => @project.netgalley_submission.author_name,
-      "Book Manager" => @project.netgalley_submission.book_manager,
-      "Series Name" => @project.try(:publication_fact_sheet).try(:series_name),
-      "Series Number" => @project.try(:publication_fact_sheet).try(:series_number),
-      "ISBN" => @project.netgalley_submission.isbn,
-      "Imprint" => @project.netgalley_submission.imprint,
-      "Publication Date" => @project.netgalley_submission.publication_date,
-      "Retail Price" => @project.netgalley_submission.retail_price,
-      "Blurb" => @project.netgalley_submission.blurb,
-      "Website One" => @project.netgalley_submission.website_one,
-      "Website Two" => !@project.netgalley_submission.website_two.nil?? @project.netgalley_submission.website_two : "N/A",
-      "Website Three" => !@project.netgalley_submission.website_three.nil?? @project.netgalley_submission.website_three : "N/A",
-      "Praise" => @project.netgalley_submission.praise,
-      "Category One" => @project.netgalley_submission.category_one,
-      "Category Two" => @project.netgalley_submission.category_two
+      'Title' => @project.netgalley_submission.title,
+      'Author' => @project.netgalley_submission.author_name,
+      'Book Manager' => @project.netgalley_submission.book_manager,
+      'Series Name' => @project.try(:publication_fact_sheet).try(:series_name),
+      'Series Number' => @project.try(:publication_fact_sheet).try(:series_number),
+      'ISBN' => @project.netgalley_submission.isbn,
+      'Imprint' => @project.netgalley_submission.imprint,
+      'Publication Date' => @project.netgalley_submission.publication_date,
+      'Retail Price' => @project.netgalley_submission.retail_price,
+      'Blurb' => @project.netgalley_submission.blurb,
+      'Website One' => @project.netgalley_submission.website_one,
+      'Website Two' => !@project.netgalley_submission.website_two.nil?? @project.netgalley_submission.website_two : 'N/A',
+      'Website Three' => !@project.netgalley_submission.website_three.nil?? @project.netgalley_submission.website_three : 'N/A',
+      'Praise' => @project.netgalley_submission.praise,
+      'Category One' => @project.netgalley_submission.category_one,
+      'Category Two' => @project.netgalley_submission.category_two,
+      'Does not qualify for Mkt expense, will personally cover cost' => (@project.netgalley_submission.personal_submission) ? 'Yes': 'No'
     }
+
+    if(@project.netgalley_submission.personal_submission)
+      tokens.store('Invoice Paypal Email', @project.netgalley_submission.paypal_email)
+    end
 
     user_subject = "Netgalley Submission from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject

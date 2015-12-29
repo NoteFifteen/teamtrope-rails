@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151221071148) do
+ActiveRecord::Schema.define(version: 20151223201744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -501,6 +501,8 @@ ActiveRecord::Schema.define(version: 20151221071148) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "book_manager"
+    t.boolean  "personal_submission"
+    t.string   "paypal_email"
   end
 
   add_index "netgalley_submissions", ["project_id"], name: "index_netgalley_submissions_on_project_id", using: :btree

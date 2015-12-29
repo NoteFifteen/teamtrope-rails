@@ -9,6 +9,6 @@
 <p>Download epub: <%= link_to(@project.published_file.epub_file_name, url_for(controller: 'projects', action: 'download_published_file_epub', id: @project, only_path: false)) %></p>
 <% end %>
 
-<% if @project.cover_template.ebook_front_cover? %>
+<% if ! @project.try(:cover_template).try(:ebook_front_cover).nil? %>
 <p>Download eBook Front Cover: <%= link_to(@project.cover_template.ebook_front_cover_file_name, url_for(controller: 'projects', action: 'download_ebook_front_cover', id: @project, only_path: false)) %></p>
 <% end %>
