@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151223201744) do
+ActiveRecord::Schema.define(version: 20151230085439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -658,6 +658,9 @@ ActiveRecord::Schema.define(version: 20151223201744) do
     t.datetime "production_task_last_update"
     t.datetime "marketing_task_last_update"
     t.datetime "design_task_last_update"
+    t.string   "production_task_display_name"
+    t.string   "design_task_display_name"
+    t.string   "marketing_task_display_name"
   end
 
   add_index "project_grid_table_rows", ["design_task_id"], name: "index_project_grid_table_rows_on_design_task_id", using: :btree
@@ -985,6 +988,7 @@ ActiveRecord::Schema.define(version: 20151223201744) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "team_only",        default: true
+    t.string   "override_name"
   end
 
   add_index "tasks", ["next_id"], name: "index_tasks_on_next_id", using: :btree

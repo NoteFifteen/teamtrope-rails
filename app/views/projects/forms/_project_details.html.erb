@@ -4,7 +4,7 @@
 <% @project.current_tasks.includes(:task => :workflow).order("workflows.name asc").each do | ct | %>
     <tr>
       <td><%= ct.task.workflow.name %>:</td>
-      <td><%= ct.task.name %></td>
+      <td><%= ct.task.display_name %></td>
       <td>Last Updated on <%= ct.updated_at.strftime("%m/%d/%Y") unless ct.updated_at.nil? %></td>
       <td>
         <% prev_step = Task.find_by_next_id(ct.task.id) %>

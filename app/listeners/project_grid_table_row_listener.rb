@@ -43,6 +43,7 @@ class ProjectGridTableRowListener
     pgtr = project.project_grid_table_row
     pgtr[task.workflow.name.downcase.gsub(/ /, "_") + "_task_id"] = task.id
     pgtr[task.workflow.name.downcase.gsub(/ /, "_") + "_task_name"] = task.name
+    pgtr[task.workflow.name.downcase.gsub(/ /, "_") + "_task_display_name"] = task.display_name
     pgtr[task.workflow.name.downcase.gsub(/ /, "_") + "_task_last_update"] = Time.now.strftime("%Y-%m-%d %H:%M:%S")
     pgtr.save
   end
