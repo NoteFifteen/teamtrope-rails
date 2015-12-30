@@ -117,7 +117,7 @@ module Constants
     cover_concept: { label: '', task_name: 'Cover Concept', workflow_name: 'design', required_roles: [] },
     in_editing: { label: 'In Editing', task_name: 'Edited Manuscript', workflow_name: 'production', required_roles: [] },
     in_proofreading: { label: 'In Proofreading', task_name: 'Proofread Complete', workflow_name: 'production', required_roles: [] },
-    choose_style: { label: '', task_name: 'Choose Style', workflow_name: 'design', required_roles: [] },
+    choose_style: { label: '', task_name: 'Choose Style', workflow_name: 'production', required_roles: [] },
     final_covers: { label: '', task_name: 'Final Covers', workflow_name: 'design', required_roles: [] },
     submit_pfs: { label: '', task_name: 'Submit PFS', workflow_name: 'marketing', required_roles: [] },
     published: { label: 'Published', task_name: 'Production Complete', workflow_name: 'production', required_roles: [] }
