@@ -57,7 +57,8 @@ class PriceChangePromotion < ActiveRecord::Base
       when "permanent_force_free"
         queue.push([0, start_date.to_datetime, force_free: true])
       when "permanent_price_drop"
-        queue.push([price_promotion, start_date.to_datetime])
+        price_increase = Booktrope::ParseWrapper.price_increase?(project.control_number.parse_id, price_promotion)
+        queue.push([price_promotion, start_date.to_datetime, is_price_increase: price_increase])
       end
 
       is_new = (self.parse_ids).nil?? true  : false

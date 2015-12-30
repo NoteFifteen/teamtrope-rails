@@ -29,6 +29,31 @@ module Booktrope
       end
     end
 
+    def ParseWrapper.price_increase?(book,new_price)
+      is_increase = true # err on the safe side
+      ParseWrapper.request do
+        score_board = Parse::Query.new("AmazonScoreBoard").tap do | q |
+          q.eq("book", prepare_book(book))
+          q.order = :descending
+          q.order_by = "changeDate"
+        end.get.first
+
+        unless score_board.nil? || score_board["got_price"] == false
+          current_price = score_board["kindle_price"]
+
+          # set is_increase to false only if we have confirmed that new_price is
+          # less than current_price that way if there's a problem we wont raise
+          # amazon first. They are both bad situations so we should probably send
+          # and alert email.
+          if new_price.to_f < current_price.to_f
+            is_increase = false
+          end
+        end
+      end
+
+      is_increase
+    end
+
     def ParseWrapper.get_queued_items(book)
       ParseWrapper.request do
         Parse::Query.new(PriceChangeQueue).tap do | q |
@@ -240,7 +265,7 @@ module Booktrope
       end
     end
 
-    private
+
     def ParseWrapper.prepare_book(book, load = false)
       case book
       when String
@@ -256,6 +281,7 @@ module Booktrope
 
       !load ? book :  ParseWrapper.request { Parse::Query.new("Book").tap { | q | q.eq("objectId", book["objectId"]) }.get.first }
     end
+    private
 
     def ParseWrapper.table_for_channel(channel)
       case channel
