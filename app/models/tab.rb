@@ -36,6 +36,8 @@ class Tab < ActiveRecord::Base
   end
 
   def subsequent_tabs
+    # TTR-264 - no need to update this to display_name since we are getting
+    # the name of the task directly from the task itself.
     subsequent_tabs = phase.tabs.joins(:task).where(
       'tabs.order >= ? and tasks.name != ?', order, task.name
     ).order('tabs.order DESC')

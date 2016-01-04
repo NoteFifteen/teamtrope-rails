@@ -14,8 +14,8 @@
   <tbody>
     <% @task_dependencies.each do |task_dependency| %>
       <tr>
-        <td><%= link_to task_dependency.main_task.name, task_dependency.main_task unless task_dependency.main_task.nil?  %></td>
-        <td><%= link_to task_dependency.dependent_task.name, task_dependency.dependent_task unless task_dependency.dependent_task.nil? %></td>
+        <td><%= link_to task_dependency.main_task.display_name, task_dependency.main_task unless task_dependency.main_task.nil?  %></td>
+        <td><%= link_to task_dependency.dependent_task.display_name, task_dependency.dependent_task unless task_dependency.dependent_task.nil? %></td>
         <td><%= link_to 'Show', task_dependency %></td>
         <td><%= link_to 'Edit', edit_task_dependency_path(task_dependency) %></td>
         <td><%= link_to 'Destroy', task_dependency, method: :delete, data: { confirm: 'Are you sure?' } %></td>

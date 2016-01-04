@@ -6,6 +6,7 @@
       <th>Workflow</th>
       <th>Task Id</th>
       <th>Name</th>
+      <th>Override Name</th>
       <th>Next Task ID</th>
       <th>Next Task</th>
       <th>Rejected Task ID</th>
@@ -35,10 +36,17 @@
         </td>
         <td><%= task.id %></td>
         <td><%= link_to task.name, task %></td>
+        <td>
+          <% unless task.override_name.nil? %>
+            <%= link_to task.override_name, task %>
+          <% else %>
+            -
+          <% end %>
+        </td>
         <td><%= (task.next_task.nil?)? "-" : task.next_id %></td>
         <td>
           <% unless task.next_task.nil? %>
-            <%= link_to task.next_task.name, task.next_task %>
+            <%= link_to task.next_task.display_name, task.next_task %>
           <% else %>
             -
           <% end %>
@@ -46,7 +54,7 @@
         <td><%= (task.rejected_task.nil?)? "-" : task.rejected_task_id %></td>
         <td>
           <% unless task.rejected_task.nil? %>
-            <%= link_to task.rejected_task.name, task.rejected_task %>
+            <%= link_to task.rejected_task.display_name, task.rejected_task %>
           <% else %>
             -
           <% end %>

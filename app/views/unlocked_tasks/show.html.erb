@@ -2,12 +2,12 @@
 
 <p>
   <strong>Task:</strong>
-  <%= @unlocked_task.task.name unless @unlocked_task.task.nil? %>
+  <%= @unlocked_task.task.display_name unless @unlocked_task.task.nil? %>
 </p>
 
 <p>
   <strong>Unlocked task:</strong>
-  <%= @unlocked_task.unlocked_task.name unless @unlocked_task.unlocked_task_id.nil? %>
+  <%= @unlocked_task.unlocked_task.display_name unless @unlocked_task.unlocked_task_id.nil? %>
 </p>
 
 <%= link_to 'Edit', edit_unlocked_task_path(@unlocked_task) %> |

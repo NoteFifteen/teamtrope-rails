@@ -41,10 +41,11 @@ class ProjectGridTableRowListener
 
   def update_task(project, task)
     pgtr = project.project_grid_table_row
-    pgtr[task.workflow.name.downcase.gsub(/ /, "_") + "_task_id"] = task.id
-    pgtr[task.workflow.name.downcase.gsub(/ /, "_") + "_task_name"] = task.name
-    pgtr[task.workflow.name.downcase.gsub(/ /, "_") + "_task_display_name"] = task.display_name
-    pgtr[task.workflow.name.downcase.gsub(/ /, "_") + "_task_last_update"] = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+    keybase = task.workflow.name.downcase.gsub(/ /, "_")
+    pgtr[keybase + "_task_id"] = task.id
+    pgtr[keybase + "_task_name"] = task.name
+    pgtr[keybase + "_task_display_name"] = task.display_name
+    pgtr[keybase + "_task_last_update"] = Time.now.strftime("%Y-%m-%d %H:%M:%S")
     pgtr.save
   end
 
@@ -66,9 +67,11 @@ class ProjectGridTableRowListener
 
     # adding the current_tasks
     project.current_tasks.includes(:task => :workflow).each do | ct |
-      pgtr[ct.task.workflow.name.downcase.gsub(/ /, "_") + "_task_id"] = ct.task.id
-      pgtr[ct.task.workflow.name.downcase.gsub(/ /, "_") + "_task_name"] = ct.task.name
-      pgtr[ct.task.workflow.name.downcase.gsub(/ /, "_") + "_task_last_update"] = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+      keybase = ct.task.workflow.name.downcase.gsub(/ /, "_")
+      pgtr[keybase + "_task_id"] = ct.task.id
+      pgtr[keybase + "_task_name"] = ct.task.name
+      pgtr[keybase + "_task_display_name"] = ct.task.display_name
+      pgtr[keybase + "_task_last_update"] = Time.now.strftime("%Y-%m-%d %H:%M:%S")
     end
 
     pgtr.save

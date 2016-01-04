@@ -13,7 +13,7 @@
   <tbody>
     <% @task_performers.each do |task_performer| %>
       <tr>
-        <td><%= link_to task_performer.task.name, task_performer.task %></td>
+        <td><%= link_to task_performer.task.display_name, task_performer.task %></td>
         <td>
           <% unless task_performer.role.nil? %>
             <%= link_to task_performer.role.name, task_performer.role %>

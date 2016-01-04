@@ -988,7 +988,7 @@ class ProjectsController < ApplicationController
     unless current_task.nil?
       previous_task = Task.find_by_next_id(params[:current_workflow_task_id])
 
-      activity_text = "Rolled back from #{current_task.task.name} to #{previous_task.name}"
+      activity_text = "Rolled back from #{current_task.task.display_name} to #{previous_task.display_name}"
 
       current_task.task = previous_task
       current_task.save
