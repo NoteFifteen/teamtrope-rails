@@ -1,7 +1,7 @@
 class AddProofedMauscriptTask < ActiveRecord::Migration
   def up
-    edited_manuscript = Task.find_by_name("In Editing")
-    proofread_complete = Task.find_by_name("In Proofreading")
+    edited_manuscript = Task.find_by_name("Edited Manuscript")
+    proofread_complete = Task.find_by_name("Proofread Complete")
     return if edited_manuscript.nil? || proofread_complete.nil?
 
     # create new task
