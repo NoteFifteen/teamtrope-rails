@@ -358,6 +358,3 @@ DEPENDENCIES
   unicorn
   will_paginate (= 3.0.7)
   wisper
-
-BUNDLED WITH
-   1.10.6

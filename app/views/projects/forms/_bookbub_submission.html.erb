@@ -7,7 +7,7 @@
 
       <div>
         Please use this form to request inclusion in the Booktrope $.99 Bookbub Submissions. The title must meet the criteria below prior to filling out this form:
-        <ul style="list-style-type: disc; margin: 0px 0px 0px 15px; ">
+        <ul style="list-style-type: disc; margin: 0px 0px 0px 15px;">
           <li>20 or more reviews on Amazon</li>
           <li>4 star or better average on Amazon</li>
           <li>The title must not have been included in a Bookbub in the previous 6 months</li>
@@ -61,6 +61,19 @@
               <%= bs.input :num_reviews, label: 'How many reviews on Amazon?' %>
 
               <%= bs.input :num_stars, label: 'Average star rating?' %>
+
+              <div>
+                To Find Your Ebook Page Count :<br>
+                <ul style="list-style-type: disc; margin: 0px 0px 0px 15px;">
+                  <li>Go to your Amazon Author Central Page: <%= link_to 'https://authorcentral.amazon.com/', 'https://authorcentral.amazon.com/'%></li>
+                  <li>Login with your email and password.</li>
+                  <li>You will see a tab across the top that says “Books”.</li>
+                  <li>Click this and then search the page for the title you are looking for. </li>
+                  <li>Once you find it, click the title and this will take you to a new page. </li>
+                  <li>Here is where you will find your “Book Details” This tab is located below your cover. You will be able to find out the Publisher, Date, Language, Length, and File Size. </li>
+                  <li>Make sure that you have selected the Kindle Edition. You can select this on the right hand side of the page. The paperback will contain a different amount of pages from the kindle edition.</li>
+                </ul>
+              </div>
 
               <%= bs.input :num_pages, label: 'How many pages does the title have?' %>
 
