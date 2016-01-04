@@ -1,0 +1,35 @@
+<h1>Channel Reports</h1>
+
+<script type="text/javascript">
+  function toggleTable1() {
+    var lTable = document.getElementById("channel_reports_table");
+  lTable.style.display = (lTable.style.display == "table") ? "none" : "table";}
+</script>
+
+<table>
+  <thead>
+    <tr>
+      <th>Scan Date</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody id="channel_reports_table" class="">
+    <% @channel_reports.each do |channel_report| %>
+      <tr>
+        <td><%= channel_report.scan_date %></td>
+        <td><%= link_to 'Show', channel_report %></td>
+        <td><%= link_to 'Edit', edit_channel_report_path(channel_report) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<script>
+  $("#channel_report_items_table").DataTable({ 'pageLength': '100'});
+</script>
+
+<%= link_to 'New Channel report', new_channel_report_path %>

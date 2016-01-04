@@ -1,0 +1,51 @@
+<% provide(:title, "KDP Select Enrollment Report") %>
+
+<h1><%= page_title %></h1>
+
+<p>
+  <strong>Scan Date:</strong>
+  <%= @channel_report.scan_date unless @channel_report.nil? %>
+</p>
+
+<script type="text/javascript">
+  function toggleTable1() {
+    var lTable = document.getElementById("channel_report_items_table");
+  lTable.style.display = (lTable.style.display == "table") ? "none" : "table";}
+</script>
+
+<table id="channel_report_items_table" class="projectListTable">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>KDP Select</th>
+      <th>Select Error</th>
+      <th>Amazon</th>
+      <th>Amazon Link</th>
+      <th>B&amp;N</th>
+      <th>B&amp;N link</th>
+      <th>Apple</th>
+      <th>Apple Link</th>
+    </tr>
+  </thead>
+  <% unless @channel_report.nil? %>
+    <% @channel_report.report_items_by_title.each do | report_item | %>
+  <tr>
+    <td class='book-title'><%= report_item.title %></td>
+    <td><% if report_item.kdp_select %><i class="genericon genericon-checkmark"></i><% end %></td>
+    <td><% if report_item.kdp_select_error?  %><i class="genericon genericon-close"></i><% end %></td>
+    <td><i class="genericon genericon-<%= "#{ report_item.amazon  ? "checkmark" : "close" }"%>"></i></td>
+    <td><%= link_to 'goto', report_item.amazon_link unless report_item.amazon_link.nil? || !report_item.amazon %></td>
+    <td><% if report_item.nook %><i class="genericon genericon-checkmark"></i><% end %></td>
+    <td><%= link_to 'goto', report_item.nook_link unless report_item.nook_link.nil? || !report_item.nook %></td>
+    <td><% if report_item.apple %><i class="genericon genericon-checkmark"></i><% end %></td>
+    <td><%= link_to 'goto', report_item.apple_link unless report_item.apple_link.nil? || !report_item.apple %></td>
+  </tr>
+    <% end %>
+  <% end %>
+</table>
+
+<script>
+  $("#channel_report_items_table").DataTable({ 'paging': false });
+</script>
+
+<%= link_to 'Back', channel_reports_path %>

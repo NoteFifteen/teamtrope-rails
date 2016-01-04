@@ -1,0 +1,2 @@
+module ChannelReportItemsHelper
+end
