@@ -1,5 +1,5 @@
 namespace :teamtrope do
-  desc "Provided a comma delimited list of projects, enqueue all CTA signing requests. \n rake teamtrope:send_ctas PROJECT_IDS=1,2,4 ENQUEUE=1"
+  desc "Generates a list of books and the channels that they are available for sale on. \n rake teamtrope:generate_kdp_report"
   task generate_kdp_report: :environment do
 
     # getting the books out of parse
@@ -33,8 +33,6 @@ namespace :teamtrope do
     # lookup the books on barnes and noble
     nook_results = Booktrope::Nook.look_up_books book_list
     report.mark_books_for_sale_on_channel(nook_results, :nook)
-
-    #report.show_report
   end
 end
 

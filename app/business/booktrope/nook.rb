@@ -4,32 +4,38 @@ module Booktrope
     $book_hash = {}
     NOOK_LOOKUP_URL = "http://www.barnesandnoble.com/s/"
 
+    # main driver function for looking up books on nook
     def Nook.look_up_books(book_list)
       Nook.prepare_hash book_list
       valid_list = Nook.get_valid_book_list book_list
       look_up_urls = Nook.get_look_up_urls valid_list
 
+      # look up the books on barnes and noble using a multithreaded queue.
       Nook.look_up_books_asynchronously look_up_urls
 
-      $book_hash.each do | key, book_wrapper |
-        puts "#{key}\t#{book_wrapper[:status]}"
-      end
+      # $book_hash.each do | key, book_wrapper |
+      #   puts "#{key}\t#{book_wrapper[:status]}"
+      # end
 
       #File.open("/Users/Justin/Desktop/nook_results2.yaml", 'w')  { | f | f.write Marshal.dump($book_hash) }
 
       $book_hash
     end
 
+    # look up the books asynchronously using a job que
     def Nook.look_up_books_asynchronously(look_up_urls)
+      #create the job queue
       job_queue = JobQueue.new
 
       look_up_urls.each_with_index do | wrapper, index |
+        # queuing up tasks via a block/lambda
         job_queue.add_task( lambda { | thread_id |
 
             url = (wrapper[:detail_url].nil?)? wrapper[:short_url] : wrapper[:detail_url]
             puts "thread_id: #{thread_id} step #{index}/#{look_up_urls.count} #{wrapper[:bnid]} #{url}"
             uri = URI(url)
 
+            # retry 3 times if there is a failure
             max_tries = 3
             done = false
             j = 0
@@ -50,6 +56,8 @@ module Booktrope
 
             case response
             #found for sale
+            # HTTPMovedPermanently -> found via /s/<bnid> link
+            # HTTPOK -> found via :detail_url
             when Net::HTTPMovedPermanently, Net::HTTPOK
               book_wrapper = $book_hash[wrapper[:bnid].strip]
               book_wrapper[:status] = true
@@ -68,6 +76,9 @@ module Booktrope
       job_queue.perform_blocks
     end
 
+    # this function is no longer being used.
+    # given a list of URLS it looks up the book on barnes and noble.
+    # will retry 3 times upon an error.
     def Nook.look_up_books_by_urls(look_up_urls)
 
       i = 1
@@ -79,7 +90,7 @@ module Booktrope
 
         url = (wrapper[:detail_url].nil?)? wrapper[:short_url] : wrapper[:detail_url]
 
-        puts "step #{i}/#{look_up_urls.count} #{wrapper[:bnid]} #{url}"
+        #puts "step #{i}/#{look_up_urls.count} #{wrapper[:bnid]} #{url}"
 
         uri = URI(url)
 
@@ -87,7 +98,7 @@ module Booktrope
         done = false
         j = 0
         while !done
-          puts 'retrying' if j > 0
+          #puts 'retrying' if j > 0
           begin
             response = Net::HTTP.get_response(uri)
             done = true
@@ -103,6 +114,8 @@ module Booktrope
 
         case response
         #found for sale
+        # HTTPMovedPermanently -> found using /s/<bnid> link
+        # HTTPOK -> found using the :detail_url
         when Net::HTTPMovedPermanently, Net::HTTPOK
           book_wrapper = $book_hash[wrapper[:bnid].strip]
           book_wrapper[:status] = true
@@ -120,6 +133,7 @@ module Booktrope
       end
     end
 
+    # filters out bad data from the book list which is what we use to look up
     def Nook.get_valid_book_list(book_list)
       valid_list = []
       book_list.each do | book |
@@ -130,6 +144,7 @@ module Booktrope
       valid_list
     end
 
+    # get the look up urls for each book in the book list
     def Nook.get_look_up_urls(book_list)
       look_up_urls = []
       book_list.each do | book |
@@ -144,6 +159,9 @@ module Booktrope
       look_up_urls
     end
 
+    # prepares the $book_hash which is the results that gets returned for the report.
+    # the hash maps the bnid to the parse book and a status flag. True indicates
+    # that the book is for sale on the store.
     def Nook.prepare_hash(book_list)
       book_list.each do | book |
         unless book['bnid'].nil? || book['bnid'].strip == ''
