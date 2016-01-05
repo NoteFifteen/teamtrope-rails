@@ -3,6 +3,7 @@ module Booktrope
     require 'parse-ruby-client'
 
     AmazonSalesData = "AmazonSalesData"
+    AmazonScoreBoard = "AmazonScoreBoard"
     AppleSalesData = "AppleSalesData"
     NookSalesData = "NookSalesData"
 
@@ -26,6 +27,14 @@ module Booktrope
         else
           { error: e.message } #TODO: determine error codes
         end
+      end
+    end
+
+    def ParseWrapper.get_amazon_score_board(book)
+      ParseWrapper.request do
+        Parse::Query.new(AmazonScoreBoard).tap do | q |
+          q.eq("book", prepare_book(book))
+        end.get.first
       end
     end
 

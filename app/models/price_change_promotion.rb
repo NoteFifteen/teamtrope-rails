@@ -20,6 +20,11 @@ class PriceChangePromotion < ActiveRecord::Base
 
   SITES_LIST = SITES.to_h.keys
 
+  scope :with_type, ->(type) {
+      where("type_mask &
+        #{2**TYPES.index(type.to_s)} > 0")
+    }
+
   # compensate for price change promotions that start and end on the same day
   # by incrementing the end date by 1.day
   before_save {
