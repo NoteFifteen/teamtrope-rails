@@ -1,7 +1,7 @@
 namespace :teamtrope do
 
   desc "Populates ProjectGridTableRow"
-  task enqueue_ppd_validation_task: :environment do
+  task validate_permanent_price_drops: :environment do
 
     # get all permanent price drops with from now unitl next year.
     PriceChangePromotion.with_type("permanent_price_drop")
