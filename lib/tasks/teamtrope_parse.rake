@@ -5,14 +5,14 @@ namespace :teamtrope do
 
     # get all permanent price drops with from now unitl next year.
     PriceChangePromotion.with_type("permanent_price_drop")
-      .where(start_date: Date.today..1.year.since)
+      .where(start_date: Date.today..1.year.since, validated: false)
       .each do | pcp |
 
         puts pcp.project.control_number.parse_id
 
         # fetch the scoreboard record on parse.
         amazon_score_board_record = Booktrope::ParseWrapper.get_amazon_score_board(pcp.project.control_number.parse_id)
-
+        validated = true
         unless amazon_score_board_record.nil?
           if amazon_score_board_record["got_price"]
 
@@ -36,19 +36,13 @@ namespace :teamtrope do
               end
             end
           else
-            # We might want to generate a report or add a new column to the db
-            # that indicates that a permanent price drop has had it's price confirmed.
-            # After updating the increase and confirming it's correct we could
-            # mark it true and add it to the query:
-            # PriceChangePromotion.with_type("permanent_price_drop")
-            #      .where(start_date: Date.today..1.year.since, validated: false)
-            # puts "no price"
+            validated = false # don't validate if the scoreboard doesn't have a price.
           end
         else
+          validated = false # don't validate if there was no scoreboard found.
         end
+        pcp.update_attributes(validated: validated) if validated
     end
-
-
 
   end
 end
