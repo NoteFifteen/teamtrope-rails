@@ -765,7 +765,7 @@ class ProjectMailer < ActionMailer::Base
     @project.authors.each{ |a| authors.push(a.member.name) }
 
     tokens = {
-        'Title' => @project.final_title,
+        'Title' => @project.book_title,
         'Author(s)' => authors.join(', '),
         'Enrollment Date' => @project.kdp_select_enrollment.enrollment_date,
         'Submitted by' => current_user.name,
@@ -784,7 +784,7 @@ class ProjectMailer < ActionMailer::Base
     kdp = @project.kdp_select_enrollment
 
     tokens = {
-        'Title' => @project.final_title,
+        'Title' => @project.book_title,
         'Author(s)' => authors.join(', '),
         'Submitted by' => current_user.name,
         'Update Requested' => kdp.update_type.gsub(/_/, ' ').split.map(&:capitalize).join(' ')
