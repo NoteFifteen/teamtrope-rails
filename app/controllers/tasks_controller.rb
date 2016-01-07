@@ -71,6 +71,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:workflow_id, :next_id, :rejected_task_id, :partial, :name, :icon, :tab_text, :intro_video, :days_to_complete, :team_only, :performer_ids => [], :unlocked_ids => [])
+      params.require(:task).permit(:workflow_id, :next_id, :rejected_task_id, :partial, :name, :override_name, :icon, :tab_text, :intro_video, :days_to_complete, :team_only, :performer_ids => [], :unlocked_ids => [])
     end
 end

@@ -19,6 +19,11 @@ class Task < ActiveRecord::Base
   # if we have a partial to save make sure to strip off the leading '_' and the extensions
   before_save { self.partial = partial.gsub(/^_/,"").gsub(/\.html\.erb/,"") unless partial.nil? }
 
+  # return the override if we have one otherwise return the name
+  def display_name
+    override_name || name
+  end
+
   # Look for a method that can determine whether or not we're visible.  The default is true.
   def visible?(project, current_user)
     call_name = self.name.downcase.gsub(/ /, '_') + '_is_visible?'

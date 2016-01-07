@@ -14,7 +14,7 @@
   <tbody>
     <% @tabs.each do |tab| %>
       <tr>
-        <td><%= tab.task.name unless tab.task.nil? %></td>
+        <td><%= tab.task.display_name unless tab.task.nil? %></td>
         <td><%= tab.phase.name unless tab.task.nil? %></td>
         <td><%= tab.order %></td>
         <td><%= link_to 'Show', tab %></td>

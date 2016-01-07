@@ -8,14 +8,14 @@
 <p>
   <strong>Next:</strong>
   <% unless @task.next_task.nil? %>
-    <%= link_to @task.next_task.name, @task.next_task %>
+    <%= link_to @task.next_task.display_name, @task.next_task %>
   <% end %>
 </p>
 
 <p>
   <strong>Rejected task:</strong>
   <% unless @task.rejected_task.nil? %>
-    <%= link_to @task.rejected_task.name, @task.rejected_task %>
+    <%= link_to @task.rejected_task.display_name, @task.rejected_task %>
   <% end %>
 </p>
 
@@ -70,7 +70,7 @@
       <tbody>
         <% @task.unlocked_tasks.each do | unlocked_task| %>
         <%#= unlocked_task.unlocked_task.name unless unlocked_task.unlocked_task.nil? %>
-          <tr><td><%= link_to unlocked_task.unlocked_task.name, unlocked_task.unlocked_task %></td></tr>
+          <tr><td><%= link_to unlocked_task.unlocked_task.display_name, unlocked_task.unlocked_task %></td></tr>
         <% end %>
       </tbody>
     </table>

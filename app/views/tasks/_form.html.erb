@@ -1,8 +1,17 @@
 <%= simple_form_for @task do | f |  %>
   <%= f.error_notification %>
 
-  <%= f.input :name %>
+  <% if :action == :new %>
+   <%= f.input :name  %>
+   <p>
+   This is the name of the task you cannot edit this field, but you can override
+   the value using the override name field.
+   </p>
+  <% end %>
+  <%= f.input :override_name, label: "Override Name" %>
+  <p>This will be the name displayed to the user throughout the system (i.e. The Grid and Details tab)</p>
   <%= f.input :tab_text %>
+  <p>The text that appears on the tab on the project page</p>
   <%= f.input :icon %>
   <%= f.input :intro_video %>
   <%= f.input :days_to_complete %>
