@@ -100,8 +100,8 @@ module Constants
   AdminProjectsIndexFilters = {
     all: { label: 'All Projects', task_name: '', workflow_name: '' },
     manuscript_development: { label: '', task_name: 'Manuscript Development', workflow_name: 'production' },
-    upload_layout: { label: '', task_name: 'Upload Layout', workflow_name: 'design' },
-    approve_cover: { label: '', task_name: 'Approve Cover', workflow_name: 'marketing' },
+    upload_layout: { label: '', task_name: 'Upload Layout', workflow_name: 'production' },
+    approve_cover: { label: 'Approve Cover', task_name: 'Approve Final Covers', workflow_name: 'design' },
     approve_blurb: { label: '', task_name: 'Approve Blurb', workflow_name: 'marketing' },
     page_count: { label: '', task_name: 'Page Count', workflow_name: 'production' },
     final_manuscript: { label: '', task_name: 'Final Manuscript', workflow_name: 'production' },
