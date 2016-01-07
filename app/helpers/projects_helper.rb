@@ -27,6 +27,8 @@ module ProjectsHelper
         @projects = ProjectGridTableRow.includes(project: [:cover_template]).all
       elsif filter_by.to_sym == :my_books
         get_my_projects
+      elsif filter_by.to_sym == :not_published
+        get_unpublished_books
       else
         @grid_title =  filters[filter_by.to_sym][:label]
         @grid_title =  filters[filter_by.to_sym][:task_name] if @grid_title.empty?
@@ -34,6 +36,27 @@ module ProjectsHelper
         @projects = ProjectGridTableRow.includes(project: [:cover_template]).where("#{pgtr_meta_hash[:workflow_name]}_task_name = ?", pgtr_meta_hash[:task_name])
       end
     end
+  end
+
+  # gets the list of unpublished books to display in the grid
+  def get_unpublished_books
+    @grid_title = "Not Published"
+
+    # get task 'Production Complete' which is a published book
+    published_task = Task.find_by_name("Production Complete")
+    workflow_task = published_task.workflow.root
+
+    # get all tasks in the workflow that occur before production compelete.
+    not_published_tasks = []
+    while next_task = workflow_task.next_task
+
+      # we don't want to include published_task
+      break if next_task.id == published_task.id
+
+      not_published_tasks.push next_task.name
+      workflow_task = next_task
+    end
+    @projects = ProjectGridTableRow.includes(project: [:cover_template]).where("production_task_name in (?)", not_published_tasks)
   end
 
   # Search using the author's Nickname (@name in OldTrope)
