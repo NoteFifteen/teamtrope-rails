@@ -59,9 +59,9 @@ namespace :teamtrope do
     require 'csv'
 
     # building the header
-    header = "Project ID,Title,Series Name,Series Number,\"Author (Last,First)\",\"Author (First,Last)\",Other Contributors,Team and Pct,Imprint,Print ISBN,epub ISBN,Format,Publication Date,Month,Year,Page Count,Print Price,Ebook Price(Will vary based on promos and price chagnes),Library Price,BISAC, BISAC Description,BISAC2, BISAC Description 2,BISAC3, BISAC Description 3,Search Terms,Summary,Author Bio,Squib"
+    header = "Project ID,Title,Series Name,Series Number,\"Author (Last,First)\",\"Author (First,Last)\",PFS Author Name,Other Contributors,Team and Pct,Imprint,Print ISBN,epub ISBN,Format,Publication Date,Month,Year,Page Count,Print Price,Ebook Price(Will vary based on promos and price chagnes),Library Price,BISAC, BISAC Description,BISAC2, BISAC Description 2,BISAC3, BISAC Description 3,Search Terms,Summary,Author Bio,Squib"
 
-    csv_header = ["Project ID","Title","Series Name","Series Number","Author (Last,First)","Author (First,Last)","Other Contributors","Team and Pct","Imprint","ASIN","Print ISBN","epub ISBN","Format","Publication Date","Month","Year","Page Count","Print Price","Ebook Price(Will vary based on promos and price changes)","Library Price","BISAC", "BISAC Description","BISAC2", "BISAC Description 2","BISAC3", "BISAC Description 3","Search Terms","Summary","Author Bio","Squib"]
+    csv_header = ["Project ID","Title","Series Name","Series Number","Author (Last,First)","Author (First,Last)","PFS Author Name","Other Contributors","Team and Pct","Imprint","ASIN","Print ISBN","epub ISBN","Format","Publication Date","Month","Year","Page Count","Print Price","Ebook Price(Will vary based on promos and price changes)","Library Price","BISAC", "BISAC Description","BISAC2", "BISAC Description 2","BISAC3", "BISAC Description 3","Search Terms","Summary","Author Bio","Squib"]
 
     # set the row size which is equal to our header row split on the
     row_size = header.gsub(/\".*?,.*?\"/,'').split(',').count
@@ -100,21 +100,23 @@ namespace :teamtrope do
         row[4] = first_author.last_name_first
         row[5] = first_author.member.name
 
+        row[6] = project.publication_fact_sheet.author_name
+
         # row[6] = "\"#{project.team_memberships.reject{|membership| membership.role.name == "Author" }.map{ | membership |
         #   "#{membership.member.name} (#{membership.role.name})"
         # }.join(",")}\""
 
-        row[6] = authors.map { | author | "#{author.member.name} (#{author.role.name})" }.join(', ')
+        row[7] = authors.map { | author | "#{author.member.name} (#{author.role.name})" }.join(', ')
 
-        row[7] = "#{project.team_members_with_roles_and_pcts.map{ |n| "#{n[:member].name} #{ n[:role_pcts].map{ |role_pcts | "(#{role_pcts[:role]} #{role_pcts[:pct]})"}.join(',')}"  }.join(';')}; Total (#{project.total_team_percent_allocation})"
+        row[8] = "#{project.team_members_with_roles_and_pcts.map{ |n| "#{n[:member].name} #{ n[:role_pcts].map{ |role_pcts | "(#{role_pcts[:role]} #{role_pcts[:pct]})"}.join(',')}"  }.join(';')}; Total (#{project.total_team_percent_allocation})"
 
-        row[8] = pgtr.imprint
+        row[9] = pgtr.imprint
         unless project.control_number.nil?
-          row[9] = project.control_number.asin
-          row[10] = project.control_number.paperback_isbn
-          row[11] = project.control_number.epub_isbn
+          row[10] = project.control_number.asin
+          row[11] = project.control_number.paperback_isbn
+          row[12] = project.control_number.epub_isbn
         end
-        row[12] = project.book_type_pretty
+        row[13] = project.book_type_pretty
 
         # look up the publication date that we have in parse via the project's parse_id which matches the ParseBook object_id
         #publication_date_amazon = ParseBooks.find_by_parse_id(project.control_number.parse_id).try(:publication_date_amazon)
@@ -123,18 +125,18 @@ namespace :teamtrope do
         end
 
         unless publication_date.nil?
-          row[13] = publication_date.strftime("%m/%d/%Y")
-          row[14] = publication_date.strftime("%B")
-          row[15] = publication_date.strftime("%Y")
+          row[14] = publication_date.strftime("%m/%d/%Y")
+          row[15] = publication_date.strftime("%B")
+          row[16] = publication_date.strftime("%Y")
         end
 
-        row[16] = project.layout.final_page_count unless project.layout.nil?
+        row[17] = project.layout.final_page_count unless project.layout.nil?
 
-        row[17] = "$#{"%.2f" % project.publication_fact_sheet.print_price}" unless project.publication_fact_sheet.print_price.nil?
+        row[18] = "$#{"%.2f" % project.publication_fact_sheet.print_price}" unless project.publication_fact_sheet.print_price.nil?
         unless project.publication_fact_sheet.ebook_price.nil?
-          row[18] = "$#{"%.2f" % project.publication_fact_sheet.ebook_price}"
+          row[19] = "$#{"%.2f" % project.publication_fact_sheet.ebook_price}"
           library_price = lookup_library_pricing(project.publication_fact_sheet.ebook_price)
-          row[19] = library_price unless library_price.nil?
+          row[20] = library_price unless library_price.nil?
         end
 
         unless project.publication_fact_sheet.nil?
@@ -154,17 +156,17 @@ namespace :teamtrope do
             project.publication_fact_sheet.bisac_code_name_three
           )
 
-          row[20] = bisac_one[:code]
-          row[21] = bisac_one[:name]
-          row[22] = bisac_two[:code]
-          row[23] = bisac_two[:name]
-          row[24] = bisac_three[:code]
-          row[25] = bisac_three[:name]
+          row[21] = bisac_one[:code]
+          row[22] = bisac_one[:name]
+          row[23] = bisac_two[:code]
+          row[24] = bisac_two[:name]
+          row[25] = bisac_three[:code]
+          row[26] = bisac_three[:name]
 
-          row[26] = project.publication_fact_sheet.search_terms
-          row[27] = filter_special_characters(project.publication_fact_sheet.description)    unless project.publication_fact_sheet.description.nil?
-          row[28] = filter_special_characters(project.publication_fact_sheet.author_bio)     unless project.publication_fact_sheet.author_bio.nil?
-          row[29] = filter_special_characters(project.publication_fact_sheet.one_line_blurb) unless project.publication_fact_sheet.one_line_blurb.nil?
+          row[27] = project.publication_fact_sheet.search_terms
+          row[28] = filter_special_characters(project.publication_fact_sheet.description)    unless project.publication_fact_sheet.description.nil?
+          row[29] = filter_special_characters(project.publication_fact_sheet.author_bio)     unless project.publication_fact_sheet.author_bio.nil?
+          row[30] = filter_special_characters(project.publication_fact_sheet.one_line_blurb) unless project.publication_fact_sheet.one_line_blurb.nil?
         end
 
         # generate the csv row by joining the array with ','
