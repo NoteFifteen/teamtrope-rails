@@ -110,7 +110,7 @@
           <div class="input_field">
             <%= f.simple_fields_for :layout, (f.object.layout.nil?) ? f.object.build_layout : f.object.layout do | l | %>
             <label>Are you using a pen name on the title?<span class="required">*</span></label>
-            <p class="input_description">Please choose 'Yes' enter it here even if you are in Teamtrope under your pen name.</p>
+            <p class="input_description">Please choose 'Yes' and enter it here even if you are in Teamtrope under your pen name.</p>
             <div>
               <!-- The choice here should conditionally unlock fields below -->
               <%= l.collection_radio_buttons :use_pen_name_on_title,
