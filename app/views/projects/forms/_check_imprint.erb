@@ -25,7 +25,7 @@
                     <%= project.simple_fields_for :control_number, (project.object.control_number.nil?)? project.object.build_control_number :
                         project.object.control_number, html: {id: 'check_imprint_control_numbers'} do | control_number | %>
                     <li class='field'>
-                      <label>Paperback ISBN<span class="required">*</span></label>
+                      <label>Paperback ISBN</label>
                       <%= control_number.input :paperback_isbn, label: false, input_html: { id: 'check_imprint_paperback_isbn'} %>
                     </li>
                     <li class='field'>

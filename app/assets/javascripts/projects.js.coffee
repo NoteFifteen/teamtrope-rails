@@ -612,7 +612,6 @@ jQuery ->
         required: true
       },
       'project[control_number_attributes][paperback_isbn]': {
-        required: true,
         isbnFormatValidator: true
       }
     }
