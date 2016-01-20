@@ -1,0 +1,101 @@
+<% provide(:title, "Scribd Metadata Export") %>
+<div class="page" id="blog-page" role="main">
+  <h2>Scribd Metadata Export</h2><br />
+
+  <% csv_header_hash = { project_id: "Project Id", imprint: "Imprint", parent_isbn: "Parent ISBN", ebook_isbn: "Ebook ISBN", format: "Format",
+      filename:"Filename", title: "Title", subtitle: "Sub-title", authors: "Author(s)", publication_date: "Publication Date",
+      street_date: "Street Date", digital_list_price: "Digital List Price", currency: "Currency", permitted_sales_territories: "Permitted Sales Territories",
+      excluded_sales_territories: "Excluded Sales Territories", short_description: "Short Description", bisac_categories: "BISAC Categories",
+      number_of_pages: "Number of Pages", series: "Series", delete: "Delete", direct_purchase: "Direct Purchase", subscription: "Subscription",
+      preview_percent: "Preview %", language: "Language" }
+  %>
+
+  <script type="text/javascript">
+    function toggleTable1() {
+    var lTable = document.getElementById("ProjectListTable");
+    lTable.style.display = (lTable.style.display == "table") ? "none" : "table";}
+  </script>
+  <table id="ProjectListTable" class="projectListTable">
+    <thead>
+      <% Constants::ScribdCsvHeaderHash.values.each do | column_name | %>
+      <th><%= column_name %></th>
+      <% end %>
+    </thead>
+    <% @project_grid_table_rows.each do | pgtr |
+
+        project = pgtr.project
+        publication_fact_sheet = project.publication_fact_sheet %>
+    <tr>
+      <td><%= project.id %></td>
+      <td><%= pgtr.imprint %></td>
+
+      <% parent_isbn, ebook_isbn = scribd_prepare_isbn(project.control_number) %>
+
+      <td><%= parent_isbn.empty?? nil : parent_isbn %></td>
+      <td><%= ebook_isbn.empty?? nil : ebook_isbn %></td>
+      <td>EPUB</td>
+      <td><%= ebook_isbn.empty?? nil : ebook_isbn + ".epub" %></td>
+      <td class='book-title'><%= link_to project.book_title, project %> </td>
+      <td></td>
+
+      <%
+        # if there are are two authors most likely the main author was the one added first
+        # project.authors returns a TeamMembership::ActiveRecord_AssociationRelation so we
+        # cannot call order_by but we can use sort.　(what's faster to_a or map? )
+        # authors = project.authors.to_a.sort{ | a, b | a.created_at <=> b.created_at }
+      %>
+
+      <td><%= pgtr.author %></td>
+
+      <%
+
+        publication_date = unless project.published_file.nil? || project.published_file.publication_date.nil?
+          project.published_file.publication_date.strftime("%m/%d/%Y")
+        end
+      %>
+      <td><%= publication_date %></td>
+      <td><%= publication_date %></td>
+      <%
+        digital_list_price = unless project.publication_fact_sheet.ebook_price.nil?
+          price = project.publication_fact_sheet.ebook_price
+          price = 1 if price < 1 && price > 0
+          "$#{"%.2f" % price}"
+        end
+      %>
+      <td><%= digital_list_price %></td>
+      <td>USD</td>
+      <td>WORLD</td>
+      <td></td>
+      <td><%= filter_special_characters(project.publication_fact_sheet.one_line_blurb) unless project.publication_fact_sheet.one_line_blurb.nil? %></td>
+
+      <%
+        bisac_codes = []
+
+        unless publication_fact_sheet.nil?
+          ["one", "two", "three"].each do | suffix |
+            bisac_code = prepare_bisac_code(
+              publication_fact_sheet["bisac_code_#{suffix}"],
+              publication_fact_sheet["bisac_code_name_#{suffix}"]
+            )
+            bisac_codes << bisac_code[:code] unless bisac_code[:code].nil? || bisac_code[:code].empty?
+          end
+        end
+      %>
+      <td><%= bisac_codes.join(",") %></td>
+      <td><%= project.layout.final_page_count unless project.layout.nil? %></td>
+      <td><%= (publication_fact_sheet.nil? || publication_fact_sheet.series_name.empty?)? nil : publication_fact_sheet.series_name %></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>10%</td>
+      <td>eng</td>
+    </tr>
+    <% end %>
+  </table>
+  <script>
+    $("#ProjectListTable").DataTable({
+      "paging": false,
+      "order": []
+    });
+  </script>
+</div>

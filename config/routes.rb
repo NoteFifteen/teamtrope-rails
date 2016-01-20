@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   get '/admin/reports/high_allocations',     to: 'reports#high_allocations'
   get 'admin/reports/missing_current_tasks', to: 'reports#missing_current_tasks'
+  get 'admin/reports/scribd_export',         to: 'reports#scribd_metadata_export'
   match '/admin/wordpress_import/import',    to: 'wordpress_import#import', via: :get
   post '/admin/wordpress_import/upload',     to: 'wordpress_import#upload', via: :post
 

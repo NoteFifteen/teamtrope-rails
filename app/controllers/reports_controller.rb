@@ -10,4 +10,8 @@ class ReportsController < ApplicationController
     @projects = Project.missing_current_tasks
   end
 
+  def scribd_metadata_export
+    @project_grid_table_rows = ProjectGridTableRow.published_books.sort { | a, b | a.project.book_title <=> b.project.book_title }
+  end
+
 end
