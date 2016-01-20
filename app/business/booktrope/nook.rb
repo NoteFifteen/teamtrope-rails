@@ -103,7 +103,6 @@ module Booktrope
             response = Net::HTTP.get_response(uri)
             done = true
           rescue Exception => e
-            pp e
             j = j + 1
             if j >= max_tries
               done = true
