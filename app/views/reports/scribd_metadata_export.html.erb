@@ -34,72 +34,31 @@
       <th><%= column_name %></th>
       <% end %>
     </thead>
-    <% @project_grid_table_rows.each do | pgtr |
-
-        project = pgtr.project
-        publication_fact_sheet = project.publication_fact_sheet %>
+    <% @scribd_metadata_export_items.each do | scribd_meta_hash | %>
     <tr>
-      <td><%= project.id %></td>
-      <td><%= pgtr.imprint %></td>
+      <td><%= scribd_meta_hash[:project_id] %></td>
+      <td><%= scribd_meta_hash[:imprint] %></td>
 
-      <% parent_isbn, ebook_isbn = ApplicationHelper.scribd_prepare_isbn(project.control_number) %>
-
-      <td><%= parent_isbn.empty?? nil : parent_isbn %></td>
-      <td><%= ebook_isbn.empty?? nil : ebook_isbn %></td>
-      <td>EPUB</td>
-      <td><%= ebook_isbn.empty?? nil : ebook_isbn + ".epub" %></td>
-      <td class='book-title'><%= link_to project.book_title, project %> </td>
-      <td></td>
-
-      <%
-        # if there are are two authors most likely the main author was the one added first
-        # project.authors returns a TeamMembership::ActiveRecord_AssociationRelation so we
-        # cannot call order_by but we can use sort.　(what's faster to_a or map? )
-        # authors = project.authors.to_a.sort{ | a, b | a.created_at <=> b.created_at }
-      %>
-
-      <td><%= pgtr.author %></td>
-
-      <%
-
-        publication_date = unless project.published_file.nil? || project.published_file.publication_date.nil?
-          project.published_file.publication_date.strftime("%m/%d/%Y")
-        end
-      %>
-      <td><%= publication_date %></td>
-      <td><%= publication_date %></td>
-      <%
-        digital_list_price = unless project.publication_fact_sheet.ebook_price.nil?
-          price = project.publication_fact_sheet.ebook_price
-          price = 1 if price < 1 && price > 0
-          "$#{"%.2f" % price}"
-        end
-      %>
-      <td><%= digital_list_price %></td>
-      <td>USD</td>
-      <td>WORLD</td>
-      <td></td>
-      <td><%= ApplicationHelper.filter_special_characters(project.publication_fact_sheet.description) unless project.publication_fact_sheet.description.nil? %></td>
-
-      <%
-        bisac_codes = []
-
-        unless publication_fact_sheet.nil?
-          ["one", "two", "three"].each do | suffix |
-            bisac_code = ApplicationHelper.prepare_bisac_code(
-              publication_fact_sheet["bisac_code_#{suffix}"],
-              publication_fact_sheet["bisac_code_name_#{suffix}"]
-            )
-            bisac_codes << bisac_code[:code] unless bisac_code[:code].nil? || bisac_code[:code].empty?
-          end
-        end
-      %>
-      <td><%= bisac_codes.join(",") %></td>
-      <td><%= project.layout.final_page_count unless project.layout.nil? %></td>
-      <td><%= (publication_fact_sheet.nil? || publication_fact_sheet.series_name.empty?)? nil : publication_fact_sheet.series_name %></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td><%= scribd_meta_hash[:parent_isbn] %></td>
+      <td><%= scribd_meta_hash[:ebook_isbn] %></td>
+      <td><%= scribd_meta_hash[:format] %></td>
+      <td><%= scribd_meta_hash[:filename] %></td>
+      <td class='book-title'><%= link_to scribd_meta_hash[:title], scribd_meta_hash[:project] %> </td>
+      <td><%= scribd_meta_hash[:subtitle] %></td>
+      <td><%= scribd_meta_hash[:authors] %></td>
+      <td><%= scribd_meta_hash[:publication_date] %></td>
+      <td><%= scribd_meta_hash[:street_date] %></td>
+      <td><%= scribd_meta_hash[:digital_list_price] %></td>
+      <td><%= scribd_meta_hash[:currency] %></td>
+      <td><%= scribd_meta_hash[:permitted_sales_territories] %></td>
+      <td><%= scribd_meta_hash[:excluded_sales_territories] %></td>
+      <td><%= scribd_meta_hash[:short_description] %></td>
+      <td><%= scribd_meta_hash[:bisac_categories] %></td>
+      <td><%= scribd_meta_hash[:number_of_pages] %></td>
+      <td><%= scribd_meta_hash[:series] %></td>
+      <td><%= scribd_meta_hash[:delete] %></td>
+      <td><%= scribd_meta_hash[:direct_purchase] %></td>
+      <td><%= scribd_meta_hash[:subscription] %></td>
       <td>10%</td>
       <td>eng</td>
     </tr>
