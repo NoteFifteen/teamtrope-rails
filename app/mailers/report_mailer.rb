@@ -19,8 +19,9 @@ class ReportMailer < ActionMailer::Base
       content: csv_text,
       encoding: 'quoted-printable'
     }
+    @report_date = Time.now.strftime('%m/%d/%Y %H:%M:%S')
 
-    send_email_message('scribd_metadata_export', {}, [current_user.email], "Scribd Metada Spreadsheet #{Time.now.strftime('%m/%d/%Y %H:%M:%S')}")
+    send_email_message('scribd_metadata_export', {}, [current_user.email], "Scribd Metada Spreadsheet #{@report_date}")
   end
 
   # Generic email send pattern that just passes a simple hash table
