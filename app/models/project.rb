@@ -317,7 +317,7 @@ class Project < ActiveRecord::Base
         row_hash[:permitted_sales_territories] = "WORLD"
         row_hash[:excluded_sales_territories] = nil
 
-        row_hash[:short_description] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.one_line_blurb) unless project.publication_fact_sheet.one_line_blurb.nil?
+        row_hash[:short_description] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.description) unless project.publication_fact_sheet.description.nil?
 
         bisac_codes = []
 

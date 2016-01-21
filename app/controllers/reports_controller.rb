@@ -12,6 +12,13 @@ class ReportsController < ApplicationController
 
   def scribd_metadata_export
     @project_grid_table_rows = ProjectGridTableRow.published_books.sort { | a, b | a.project.book_title <=> b.project.book_title }
+    @current_page = request.original_url
+  end
+
+  def send_scribd_export_email
+    @scribd_csv_text = Project.generate_scribd_export_csv(ProjectGridTableRow.published_books)
+
+    ReportMailer.scribd_email_report @scribd_csv_text, current_user
   end
 
 end

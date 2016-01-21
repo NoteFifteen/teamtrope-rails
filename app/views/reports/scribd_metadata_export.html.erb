@@ -9,7 +9,20 @@
       number_of_pages: "Number of Pages", series: "Series", delete: "Delete", direct_purchase: "Direct Purchase", subscription: "Subscription",
       preview_percent: "Preview %", language: "Language" }
   %>
-
+  <%= button_to "Email Report",
+    {
+      controller: 'reports',
+      action: 'send_scribd_export_email',
+      page: @current_path,
+      remote: true
+    },
+    {
+      remote: true,
+      id: 'email_scribd_report_button',
+      class: 'btn',
+      method: :post
+    }
+  %>
   <script type="text/javascript">
     function toggleTable1() {
     var lTable = document.getElementById("ProjectListTable");
@@ -29,7 +42,7 @@
       <td><%= project.id %></td>
       <td><%= pgtr.imprint %></td>
 
-      <% parent_isbn, ebook_isbn = scribd_prepare_isbn(project.control_number) %>
+      <% parent_isbn, ebook_isbn = ApplicationHelper.scribd_prepare_isbn(project.control_number) %>
 
       <td><%= parent_isbn.empty?? nil : parent_isbn %></td>
       <td><%= ebook_isbn.empty?? nil : ebook_isbn %></td>
@@ -66,14 +79,14 @@
       <td>USD</td>
       <td>WORLD</td>
       <td></td>
-      <td><%= filter_special_characters(project.publication_fact_sheet.one_line_blurb) unless project.publication_fact_sheet.one_line_blurb.nil? %></td>
+      <td><%= ApplicationHelper.filter_special_characters(project.publication_fact_sheet.description) unless project.publication_fact_sheet.description.nil? %></td>
 
       <%
         bisac_codes = []
 
         unless publication_fact_sheet.nil?
           ["one", "two", "three"].each do | suffix |
-            bisac_code = prepare_bisac_code(
+            bisac_code = ApplicationHelper.prepare_bisac_code(
               publication_fact_sheet["bisac_code_#{suffix}"],
               publication_fact_sheet["bisac_code_name_#{suffix}"]
             )
