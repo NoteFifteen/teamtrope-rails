@@ -345,10 +345,6 @@ class Project < ActiveRecord::Base
 
     end
 
-    puts csv_string
-    File.open("/Users/Justin/Desktop/test.csv", "w") do |file|
-      file.write csv_string
-    end
     csv_string
   end
 
