@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160106121912) do
+ActiveRecord::Schema.define(version: 20160121233101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -578,6 +578,16 @@ ActiveRecord::Schema.define(version: 20160106121912) do
   end
 
   add_index "phases", ["project_view_id"], name: "index_phases_on_project_view_id", using: :btree
+
+  create_table "prefunk_enrollments", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "prefunk_enrollments", ["project_id"], name: "index_prefunk_enrollments_on_project_id", using: :btree
+  add_index "prefunk_enrollments", ["user_id"], name: "index_prefunk_enrollments_on_user_id", using: :btree
 
   create_table "price_change_promotions", force: true do |t|
     t.datetime "start_date"

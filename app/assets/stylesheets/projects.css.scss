@@ -76,6 +76,16 @@ label.proofread_manuscript_checklist {
   overflow: auto;
 }
 
+input.prefunk_enrollment_checklist {
+  float: left;
+  margin: 5px 10px 5px 0px !important;
+}
+
+label.prefunk_enrollment_checklist {
+  display: block;
+  overflow: auto;
+}
+
 /**
  * Temporarily necessary to override the pcss3t styles and to clean up the inputs
  *

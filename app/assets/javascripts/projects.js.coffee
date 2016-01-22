@@ -686,6 +686,15 @@ jQuery.validator.addMethod("targetMarketLaunchDateValidator", (value, element, p
 )
 
 jQuery ->
+  $("#prefunk_enrollment").validate({
+    rules:{
+      checklist_0: {
+        checklistValidator: ["input.prefunk_enrollment_checklist"]
+      }
+    }
+  })
+
+jQuery ->
   $("#submit_proofread").validate({
     rules:{
       checklist_0: {
