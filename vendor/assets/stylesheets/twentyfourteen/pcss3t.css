@@ -22,9 +22,9 @@
 	outline: none;
 	cursor: pointer;
 	transition: all 0.1s;
-	-o-transition: all 0.1s;	
-	-ms-transition: all 0.1s;	
-	-moz-transition: all 0.1s;	
+	-o-transition: all 0.1s;
+	-ms-transition: all 0.1s;
+	-moz-transition: all 0.1s;
 	-webkit-transition: all 0.1s;
 }
 .pcss3t > label i {
@@ -62,9 +62,9 @@
 	-moz-box-sizing: border-box;
 	opacity: 0;
 	transition: all 0.5s;
-	-o-transition: all 0.5s;	
-	-ms-transition: all 0.5s;	
-	-moz-transition: all 0.5s;	
+	-o-transition: all 0.5s;
+	-ms-transition: all 0.5s;
+	-moz-transition: all 0.5s;
 	-webkit-transition: all 0.5s;
 }
 .pcss3t > .tab-content-first:checked ~ ul .tab-content-first,
@@ -76,6 +76,7 @@
 .pcss3t > .tab-content-7:checked ~ ul .tab-content-7,
 .pcss3t > .tab-content-8:checked ~ ul .tab-content-8,
 .pcss3t > .tab-content-9:checked ~ ul .tab-content-9,
+.pcss3t > .tab-content-10:checked ~ ul .tab-content-10,
 .pcss3t > .tab-content-last:checked ~ ul .tab-content-last {
 	z-index: 1;
 	top: 0;
@@ -110,6 +111,7 @@
 .pcss3t-height-auto > .tab-content-7:checked ~ ul .tab-content-7,
 .pcss3t-height-auto > .tab-content-8:checked ~ ul .tab-content-8,
 .pcss3t-height-auto > .tab-content-9:checked ~ ul .tab-content-9,
+.pcss3t-height-auto > .tab-content-10:checked ~ ul .tab-content-10,
 .pcss3t-height-auto > .tab-content-last:checked ~ ul .tab-content-last {
 	display: block;
 }
@@ -165,7 +167,7 @@
 	margin-left: 17%;
 }
 .pcss3t .grid-col-offset-2 {
-	margin-left: 36%;	
+	margin-left: 36%;
 }
 .pcss3t .grid-col-offset-2:first-child {
 	margin-left: 34%;
@@ -692,7 +694,7 @@
 /* pad */
 /**/
 @media screen and (max-width: 980px) {
-	
+
 }
 
 
@@ -717,7 +719,7 @@
 /**/
 /* default */
 /**/
-.pcss3t > label {	
+.pcss3t > label {
 	padding: 0 20px;
 	background: #e5e5e5;
 	font-size: 13px;
@@ -734,7 +736,7 @@
 	text-align: left;
 }
 .pcss3t-steps > label:hover {
-	background: #e5e5e5;	
+	background: #e5e5e5;
 }
 
 
@@ -830,7 +832,7 @@
 /* theme 3 */
 /**/
 .pcss3t-theme-3 {
-	background: rgba(0,0,0,0.4);	
+	background: rgba(0,0,0,0.4);
 }
 .pcss3t-theme-3 > label {
 	background: none;
@@ -861,7 +863,7 @@
 /* theme 3 white */
 /**/
 .pcss3t-theme-3-white {
-	background: rgba(0,0,0,0.4);	
+	background: rgba(0,0,0,0.4);
 }
 .pcss3t-theme-3-white > label {
 	background: none;
@@ -892,7 +894,7 @@
 /* theme 3 yellow */
 /**/
 .pcss3t-theme-3-yellow {
-	background: rgba(0,0,0,0.4);	
+	background: rgba(0,0,0,0.4);
 }
 .pcss3t-theme-3-yellow > label {
 	background: none;
@@ -923,7 +925,7 @@
 /* theme 3 red EE2600 */
 /**/
 .pcss3t-theme-3-red {
-	background: rgba(0,0,0,0.4);	
+	background: rgba(0,0,0,0.4);
 }
 .pcss3t-theme-3-red > label {
 	background: none;
@@ -955,7 +957,7 @@
 /* theme 3 blue */
 /**/
 .pcss3t-theme-3-blue {
-	background: rgba(0,0,0,0.4);	
+	background: rgba(0,0,0,0.4);
 }
 .pcss3t-theme-3-blue > label {
 	background: none;
@@ -987,7 +989,7 @@
 /* theme 3 clear blue */
 /**/
 .pcss3t-theme-3-medblue {
-	background: rgba(0,0,0,0.4);	
+	background: rgba(0,0,0,0.4);
 }
 .pcss3t-theme-3-medblue > label {
 	background: none;
@@ -1019,7 +1021,7 @@
 /* theme 3 brown */
 /**/
 .pcss3t-theme-3-brown {
-	background: rgba(0,0,0,0.4);	
+	background: rgba(0,0,0,0.4);
 }
 .pcss3t-theme-3-brown > label {
 	background: none;
@@ -1051,7 +1053,7 @@
 /* theme 3 green */
 /**/
 .pcss3t-theme-3-green {
-	background: rgba(0,0,0,0.4);	
+	background: rgba(0,0,0,0.4);
 }
 .pcss3t-theme-3-green > label {
 	background: none;

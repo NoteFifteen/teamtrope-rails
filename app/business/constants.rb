@@ -86,7 +86,7 @@ module Constants
       :size => DefaultSizeIn
   ]
 
-  ScribdCsvHeaderHash = { project_id: "project id", imprint: "Imprint", parent_isbn: "Parent ISBN", ebook_isbn: "Ebook ISBN", format: "Format",
+  ScribdCsvHeaderHash = { project_id: "Project Id", imprint: "Imprint", parent_isbn: "Parent ISBN", ebook_isbn: "Ebook ISBN", format: "Format",
     filename:"Filename", title: "Title", subtitle: "Sub-title", authors: "Author(s)", publication_date: "Publication Date",
     street_date: "Street Date", digital_list_price: "Digital List Price", currency: "Currency", permitted_sales_territories: "Permitted Sales Territories",
     excluded_sales_territories: "Excluded Sales Territories", short_description: "Short Description", bisac_categories: "BISAC Categories",

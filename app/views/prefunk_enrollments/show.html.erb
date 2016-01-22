@@ -1,0 +1,14 @@
+<% provide(:title, "Prefunk Enrollment for #{@project.title}") %>
+
+<p>
+  <strong>Project:</strong>
+  <%= @prefunk_enrollment.project %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @prefunk_enrollment.user %>
+</p>
+
+<%= link_to 'Edit', edit_prefunk_enrollment_path(@prefunk_enrollment) %> |
+<%= link_to 'Back', prefunk_enrollments_path %>

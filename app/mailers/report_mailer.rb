@@ -12,6 +12,18 @@ class ReportMailer < ActionMailer::Base
 
   end
 
+  def prefunk_scribd_email_report(csv_text, current_user)
+    attachment_name = "prefunk_enrollment_scribd_export_#{@report_date}.csv"
+    attachments[attachment_name] = {
+      mime_type: 'text/csv',
+      content: csv_text,
+      encoding: 'quoted-printable'
+    }
+    @report_date = Time.now.strftime('%m/%d/%Y %H:%M:%S')
+    subject = "Prefunk Enrollment Scribd Export for #{@report_date}"
+    send_email_message('prefunk_scribd_email_report', {}, [current_user.email], subject)
+  end
+
   def scribd_email_report(csv_text, current_user)
     attachment_name = "scribd_metadata_export.csv"
     attachments[attachment_name] = {
