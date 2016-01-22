@@ -18,7 +18,7 @@ class ProjectGridTableRow < ActiveRecord::Base
     publication_fact_sheet = project.publication_fact_sheet
 
     row_hash[:project_id] = project.id
-    row_hash[:imprint] = imprint
+    row_hash[:imprint] = "Booktrope"
 
     parent_isbn, ebook_isbn = ApplicationHelper.scribd_prepare_isbn(project.control_number)
 
