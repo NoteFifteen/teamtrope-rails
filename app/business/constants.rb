@@ -66,7 +66,7 @@ module Constants
   DefaultContentTypeRawImageParams = [
     # These are commented out because this has not been reliable in the past.
     # :content_type => { content_type: ['image/vnd.adobe.photoshop', 'application/postscript', 'application/x-photoshop'] },
-    :file_name => { :matches => [/(psd|ai)$/i] },
+    :file_name => { :matches => [/(psd|ai|zip)$/i] },
     :size => MaxSizeIn
   ]
 
