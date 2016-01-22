@@ -10,16 +10,15 @@ class ProjectGridTableRow < ActiveRecord::Base
     .where("production_task_name = ?", "Production Complete")
   }
 
-    def self.generate_scribd_export_for_row(pgtr, page_type = :csv)
+    def generate_scribd_export_hash(page_type = :csv)
     # using the Scribd data hash as our base we will override the header info
     # with real data clone is a deep copy otherwise we overrite the constant :'(
     row_hash = Constants::ScribdCsvHeaderHash.clone
 
-    project = pgtr.project
     publication_fact_sheet = project.publication_fact_sheet
 
     row_hash[:project_id] = project.id
-    row_hash[:imprint] = pgtr.imprint
+    row_hash[:imprint] = "Booktrope"
 
     parent_isbn, ebook_isbn = ApplicationHelper.scribd_prepare_isbn(project.control_number)
 
@@ -32,7 +31,7 @@ class ProjectGridTableRow < ActiveRecord::Base
     row_hash[:project] = project if page_type != :csv
     row_hash[:subtitle] = nil
 
-    row_hash[:authors] = pgtr.author
+    row_hash[:authors] = author
 
     publication_date = unless project.published_file.nil? || project.published_file.publication_date.nil?
       project.published_file.publication_date.strftime("%m/%d/%Y")
@@ -41,7 +40,7 @@ class ProjectGridTableRow < ActiveRecord::Base
     row_hash[:publication_date] = publication_date
     row_hash[:street_date] = publication_date
 
-    digital_list_price = unless project.publication_fact_sheet.ebook_price.nil?
+    digital_list_price = unless project.publication_fact_sheet.nil? || project.publication_fact_sheet.ebook_price.nil?
       price = project.publication_fact_sheet.ebook_price
       price = 1 if price < 1 && price > 0
       "$#{"%.2f" % price}"
@@ -53,7 +52,7 @@ class ProjectGridTableRow < ActiveRecord::Base
     row_hash[:permitted_sales_territories] = "WORLD"
     row_hash[:excluded_sales_territories] = nil
 
-    row_hash[:short_description] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.description) unless project.publication_fact_sheet.description.nil?
+    row_hash[:short_description] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.description) unless project.publication_fact_sheet.nil? || project.publication_fact_sheet.description.nil?
 
     bisac_codes = []
 

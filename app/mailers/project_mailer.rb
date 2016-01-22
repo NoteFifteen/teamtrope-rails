@@ -777,6 +777,23 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('kdp_select_enrollment', tokens, admin_kdp_select_enrollment_list, user_subject)
   end
 
+  def prefunk_enrollment(project, current_user)
+    @project = project
+    tokens = {}
+
+    pgtr = ProjectGridTableRow.find_by_project_id(project.id)
+    pgtr_scribd_hash = pgtr.generate_scribd_export_hash
+
+    Constants::ScribdCsvHeaderHash.keys.each do | key |
+      tokens[Constants::ScribdCsvHeaderHash[key]] = pgtr_scribd_hash[key]
+    end
+
+    user_subject = "Prefunk Enrollment Submitted for #{project.book_title}"
+
+    send_email_message('prefunk_enrollment', tokens, get_project_recipient_list(@project, send_submitter: true, roles: [:author, :book_manager]), user_subject)
+    send_email_message('prefunk_enrollment', tokens, admin_prefunk_enrollment_list, user_subject)
+  end
+
   def kdp_select_update(project, current_user)
     @project = project
     authors = []
@@ -1113,6 +1130,10 @@ class ProjectMailer < ActionMailer::Base
 
   def admin_kdp_select_update_list
     %w( tt_kdp_select_update_list@booktrope.com )
+  end
+
+  def admin_prefunk_enrollment_list
+    %w( tt_prefunk_enrollment_list@booktrope.com )
   end
 
   def admin_rights_back_request_list

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  resources :prefunk_enrollments
+
   match 'hellosign_documents/cancel_request/:id', to: 'hellosign_documents#cancel_signature_request', via: :patch
 
   resources :hellosign_document_types
@@ -28,6 +30,8 @@ Rails.application.routes.draw do
 
   get 'admin/reports/scribd_export',             to: 'reports#scribd_metadata_export'
   post 'admin/reports/send_scribd_export_email', to: 'reports#send_scribd_export_email', via: :post
+
+  post 'prefunk_enrollments/prefunk_scribd_email_report', to: 'prefunk_enrollments#prefunk_scribd_email_report', via: :post
 
   match '/admin/wordpress_import/import',        to: 'wordpress_import#import', via: :get
   post '/admin/wordpress_import/upload',         to: 'wordpress_import#upload', via: :post
@@ -77,6 +81,7 @@ Rails.application.routes.draw do
   match '/projects/netgalley_submission/:id',     to: 'projects#new_netgalley_submission', via: 'patch'
   match '/projects/original_manuscript/:id',      to: 'projects#original_manuscript',      via: 'patch'
   match '/projects/production_expense/:id',       to: 'projects#production_expense',       via: 'patch'
+  match '/projects/prefunk_enrollment/:id',       to: 'projects#prefunk_enrollment',       via: 'patch'
   match '/projects/price_promotion/:id',          to: 'projects#price_promotion',          via: 'patch'
   match '/projects/print_corner_request/:id',     to: 'projects#print_corner_request',     via: 'patch'
   match '/projects/print_corner_estore_request/:id',     to: 'projects#print_corner_estore_request',     via: 'patch'

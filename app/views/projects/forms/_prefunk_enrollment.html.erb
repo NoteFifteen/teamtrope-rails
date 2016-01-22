@@ -1,0 +1,49 @@
+<!-- Prefunk Enrollment -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+
+      <h1>Prefunk Enrollment</h1>
+
+      <% if PrefunkEnrollment.count >= 200 %>
+        We are sorry but we have reached our maximum number of enrollments for this round.
+      <% elsif ! @project.prefunk_enrollment.nil? %>
+        You have already been enrolled.
+      <% else %>
+        <%= simple_form_for @project,
+              url: url_for(controller: 'projects', action: 'prefunk_enrollment', id: @project),
+              html: { id: 'prefunk_enrollment' } do | project | %>
+            <%= project.error_notification %>
+            <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'prefunk_enrollment_submitted_task_id' %>
+
+            <div>
+              <h4>Please sign off on the following before enrolling<span class="required">*</span></h4>
+              <ul >
+                <%
+                  ['This title is not an Amazon encore book.',
+                  'This title will not be enrolled in KDP starting Feb 1, 2016.',
+                  'I understand this book will be delisted from Nook from February 5 through February 15.',
+                  'All of the books participating in the prefunk will be Free on iTunes from February 8-10. You will see price changes as these books transition starting on February 7. During these same days, these titles will be priced at 99 cents on KDP. KDP may price match, but there is no guarantee.',
+                  'I understand starting February 11, all of the prefunk books will transition from Free or 99 cents to $1.99 to celebrate Valentine’s Day. They will stay on sale through the end of Valentine’s Day on the 14th.',
+                  'Starting on the 15th, they will transition back to regular price although we cannot guarantee the time this change occurs.',
+                  'I understand this title must be in a published status by January 27th to be eligible.',
+                  'We will be promoting these books using Booktrope funded Facebook ads, Runaway Goodness and possible marketing support from a few other places.',
+                  'I understand all of the prefunk books will be enrolled in a subscription service.'
+                  ].each_with_index do | label, index |
+                %>
+                <li><%= check_box_tag "checklist_#{index}", index, false, class: "prefunk_enrollment_checklist" %> <%= label_tag "checklist_#{index}", label, class: "prefunk_enrollment_checklist" %></li>
+                <% end %>
+              </ul>
+            </div>
+
+            <%= project.simple_fields_for :prefunk_enrollment,
+                  (project.object.prefunk_enrollment.nil?)? project.object.build_prefunk_enrollment :
+                      project.object.prefunk_enrollment, html: {id: 'prefunk_enrollment_fields'} do | prefunk_enrollment | %>
+                <%= prefunk_enrollment.input :user_id, as: :hidden, input_html: { value: current_user.id } %>
+            <% end %>
+          <%= project.submit "Submit" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

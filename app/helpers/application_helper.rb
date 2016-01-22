@@ -20,6 +20,8 @@ module ApplicationHelper
 
   def self.scribd_prepare_isbn(control_number)
 
+    return ["",""] if control_number.nil?
+
     ebook_isbn = control_number.epub_isbn
     ebook_isbn ||= ""
     parent_isbn = control_number.paperback_isbn

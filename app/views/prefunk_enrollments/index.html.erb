@@ -1,0 +1,45 @@
+<% provide(:title, 'Prefunk Enrollments') %>
+<h1>Prefunk Enrollments</h1>
+  <%= button_to "Email Report",
+    {
+      controller: 'prefunk_enrollments',
+      action: 'prefunk_scribd_email_report',
+      page: @current_path,
+      remote: true
+    },
+    {
+      remote: true,
+      id: 'prefunk_enrollment_report_button',
+      class: 'btn',
+      method: :post
+    }
+  %>
+<table id="prefunk_enrollments_table">
+  <thead>
+    <tr>
+      <% Constants::ScribdCsvHeaderHash.values.each do | header | %>
+      <th><%= header %></th>
+      <% end %>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @prefunk_enrollments.each do |prefunk_enrollment| %>
+      <tr>
+        <% ProjectGridTableRow.find_by_project_id(prefunk_enrollment.project.id).generate_scribd_export_hash.values.each do | value | %>
+        <td><%= value %></td>
+        <% end %>
+        <td><%= link_to 'Show', prefunk_enrollment.project %></td>
+        <td><%= link_to 'Destroy', prefunk_enrollment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<script>
+  $("#prefunk_enrollments_table").DataTable({ 'pageLength': '100'});
+</script>
