@@ -271,6 +271,26 @@ class Project < ActiveRecord::Base
     remaining_tasks.uniq
   end
 
+  def self.generate_scribd_export(project_grid_table_rows, page_type = :csv)
+    scribd_data_rows = []
+    project_grid_table_rows.each do | pgtr |
+
+      scribd_data_rows.push(ProjectGridTableRow.generate_scribd_export_for_row(pgtr))
+    end
+    scribd_data_rows
+  end
+
+  def self.generate_scribd_export_csv(scribd_data_rows)
+    require 'csv'
+    csv_string = CSV.generate do | csv |
+      csv << Constants::ScribdCsvHeaderHash.values
+      scribd_data_rows.each do | scribd_data_row_hash |
+        csv << scribd_data_row_hash.values
+      end
+    end
+    csv_string
+  end
+
   def self.provide_methods_for(role)
     Project.class_eval %Q{
       def has_#{role.downcase.gsub(/ /, "_")}?
