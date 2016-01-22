@@ -50,7 +50,7 @@ $(function() {
                 if (/\.(psd|ai|zip)$/i.test(file.name)) {
                     return true;
                 } else {
-                    alert('File type must be .psd, .ai, or .zip');
+                    alert('File type must be .psd, .ai or .zip');
                     return false;
                 }
             }
