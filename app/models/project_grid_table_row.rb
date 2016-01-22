@@ -68,7 +68,7 @@ class ProjectGridTableRow < ActiveRecord::Base
 
     row_hash[:bisac_categories] = bisac_codes.join(",")
     row_hash[:number_of_pages] = project.layout.final_page_count unless project.layout.nil?
-    row_hash[:series] = (publication_fact_sheet.nil? || publication_fact_sheet.series_name.empty?)? nil : publication_fact_sheet.series_name
+    row_hash[:series] = (publication_fact_sheet.nil? || publication_fact_sheet.series_name.nil? || publication_fact_sheet.series_name.empty?)? nil : publication_fact_sheet.series_name
     row_hash[:delete] = nil
     row_hash[:direct_purchase] = nil
     row_hash[:subscription] = nil
