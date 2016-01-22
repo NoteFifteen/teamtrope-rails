@@ -628,7 +628,7 @@ jQuery(document).ready () ->
 jQuery.validator.addMethod('isbnFormatValidator', (value, element, params) ->
   value = value.replace(/-/g, '')
   return ((value.length == 13 && ! isNaN(value)) || value == '')
-, jQuery.validator.format('ISBN must only contain numbers and dashses and must contain 13 digits')
+, jQuery.validator.format('ISBN must only contain numbers and dashes and field must contain 13 numbers (plus any amount of dashes)')
 )
 
 # Custom ASIN Format Validator
