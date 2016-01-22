@@ -14,41 +14,6 @@ class ControlNumber < ActiveRecord::Base
     end
   end
 
-  def epub_isbn=(isbn)
-    if isbn.nil? || isbn.length == 0
-      super(nil)
-    else
-      super(strip_dashes(isbn))
-    end
-  end
-
-  def epub_isbn
-    add_dashes_to_isbn(super)
-  end
-
-  def hardback_isbn=(isbn)
-    if isbn.nil? || isbn.length == 0
-      super(nil)
-    else
-      super(strip_dashes(isbn))
-    end
-  end
-
-  def hardback_isbn
-    add_dashes_to_isbn(super)
-  end
-
-  def paperback_isbn=(isbn)
-    if isbn.nil? || isbn.length == 0
-      super(nil)
-    else
-      super(strip_dashes(isbn))
-    end
-  end
-
-  def paperback_isbn
-    add_dashes_to_isbn(super)
-  end
 
   def asin=(asin)
     if asin.nil? || asin.length == 0
@@ -95,6 +60,9 @@ class ControlNumber < ActiveRecord::Base
   def strip_dashes(value)
     value.gsub(/-/, '') unless value.nil?
   end
+
+  # no longer in use but leaving it here just in case we decide to add more
+  # format options to the isbn later.
 
   # Add dashes to an ISBN number, like 9781620150320 to 978-1-62015-032-0
   def add_dashes_to_isbn(isbn)
