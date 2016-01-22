@@ -10,4 +10,20 @@ class ReportsController < ApplicationController
     @projects = Project.missing_current_tasks
   end
 
+  def scribd_metadata_export
+    @scribd_metadata_export_items = Project.generate_scribd_export(
+      ProjectGridTableRow.published_books.sort { | a, b | a.project.book_title <=> b.project.book_title },
+      :html)
+    @current_page = request.original_url
+  end
+
+  def send_scribd_export_email
+    @scribd_csv_text = Project.generate_scribd_export_csv(
+      Project.generate_scribd_export(
+        ProjectGridTableRow.published_books.sort {| a, b | a.project.book_title <=> b.project.book_title }
+      )
+    )
+    ReportMailer.scribd_email_report @scribd_csv_text, current_user
+  end
+
 end

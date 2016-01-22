@@ -23,10 +23,14 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'static_pages#home'
 
-  get '/admin/reports/high_allocations',     to: 'reports#high_allocations'
-  get 'admin/reports/missing_current_tasks', to: 'reports#missing_current_tasks'
-  match '/admin/wordpress_import/import',    to: 'wordpress_import#import', via: :get
-  post '/admin/wordpress_import/upload',     to: 'wordpress_import#upload', via: :post
+  get '/admin/reports/high_allocations',         to: 'reports#high_allocations'
+  get 'admin/reports/missing_current_tasks',     to: 'reports#missing_current_tasks'
+
+  get 'admin/reports/scribd_export',             to: 'reports#scribd_metadata_export'
+  post 'admin/reports/send_scribd_export_email', to: 'reports#send_scribd_export_email', via: :post
+
+  match '/admin/wordpress_import/import',        to: 'wordpress_import#import', via: :get
+  post '/admin/wordpress_import/upload',         to: 'wordpress_import#upload', via: :post
 
   get '/box/request_access', to: 'static_pages#box_request_access', as: 'box_request'
   get '/box/redirect',       to: 'static_pages#box_redirect',       as: 'box-redirect'

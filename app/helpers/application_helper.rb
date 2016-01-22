@@ -18,6 +18,88 @@ module ApplicationHelper
     link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
   end
 
+  def self.scribd_prepare_isbn(control_number)
+
+    ebook_isbn = control_number.epub_isbn
+    ebook_isbn ||= ""
+    parent_isbn = control_number.paperback_isbn
+    parent_isbn ||= ""
+
+
+    [parent_isbn.gsub(/-/, ''), ebook_isbn.gsub(/-/, '')]
+
+  end
+
+  def self.prepare_bisac_code(bisac_code, bisac_code_name)
+    #project.publication_fact_sheet.bisac_code_one.gsub(/#{bisac_code_one}/, "")
+    results =
+    {
+      code: bisac_code,
+      name: bisac_code_name
+    }
+    if bisac_code_name.nil?
+      if bisac_code =~ /([A-Z]{3}[0-9]{6})/
+        results[:code] = $1
+      else
+        results[:code] = ""
+      end
+      results[:name] = bisac_code
+    end
+    results
+  end
+
+  def self.filter_special_characters(text)
+    text.gsub(/"/, "\"")
+          .gsub(/\r\n/, " ")
+          .gsub(/\n/, " ")
+          .gsub(/\u201c|\u201d|\u201e/, "\"")     # smart double quote
+          .gsub(/\u2018|\u2019|\u201A|\uFFFD/, "'") # smart single quote
+          .gsub( /\u02C6/, '^' )
+          .gsub( /\u2039/, '<' )
+          .gsub( /\u203A/, '>' )
+          .gsub( /\u2013/, '-' )
+          .gsub( /\u2014/, '--' )
+          .gsub( /\u2026/, '...' )
+          .gsub( /\u00A9/, '(c)' )
+          .gsub( /\u00AE/, '(r)' )
+          .gsub( /\u2122/, 'TM' )
+          .gsub( /\u00BC/, '1/4' )
+          .gsub( /\u00BD/, '1/2' )
+          .gsub( /\u00BE/, '3/4' )
+          .gsub(/[\u02DC|\u00A0]/, " ")
+  end
+
+
+  def self.lookup_library_pricing(ebook_price)
+    if ebook_price >= 0 && ebook_price < 0.99
+      "$1.50"
+    elsif ebook_price <= 0.99 && ebook_price < 1.99
+      "$2.50"
+    elsif ebook_price <= 1.99 && ebook_price < 2.99
+      "$3.50"
+    elsif ebook_price <= 2.99 && ebook_price < 3.99
+      "$5.45"
+    elsif ebook_price <= 3.99 && ebook_price < 4.99
+      "$6.75"
+    elsif ebook_price <= 4.99 && ebook_price < 5.99
+      "$7.95"
+    elsif ebook_price <= 5.99 && ebook_price < 6.99
+      "$9.25"
+    elsif ebook_price <= 6.99 && ebook_price < 7.99
+      "$10.50"
+    elsif ebook_price <= 7.99 && ebook_price < 8.99
+      "$11.95"
+    elsif ebook_price <= 8.99 && ebook_price < 9.99
+      "$13.25"
+    elsif ebook_price >= 9.99 && ebook_price < 14.50
+      "$14.50"
+    elsif ebook_price > 14.50
+      ("$%.2f" % ebook_price)
+    else
+      ""
+    end
+  end
+
   # List of countries for any Country selection
   def countries_list
     [

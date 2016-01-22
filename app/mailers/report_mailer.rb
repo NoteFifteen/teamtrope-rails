@@ -12,6 +12,18 @@ class ReportMailer < ActionMailer::Base
 
   end
 
+  def scribd_email_report(csv_text, current_user)
+    attachment_name = "scribd_metadata_export.csv"
+    attachments[attachment_name] = {
+      mime_type: "text/csv",
+      content: csv_text,
+      encoding: 'quoted-printable'
+    }
+    @report_date = Time.now.strftime('%m/%d/%Y %H:%M:%S')
+
+    send_email_message('scribd_metadata_export', {}, [current_user.email], "Scribd Metada Spreadsheet #{@report_date}")
+  end
+
   # Generic email send pattern that just passes a simple hash table
   def send_email_message (template_name, message_tokens, recipient_list, subject)
     recipient_list = Array(recipient_list) unless recipient_list.is_a?(Array)
