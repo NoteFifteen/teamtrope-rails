@@ -1,5 +1,6 @@
 <% provide(:title, 'Prefunk Enrollments') %>
 <h1>Prefunk Enrollments</h1>
+<div id="prefunk_enrollment_export_results"></div>
   <%= button_to "Email Report",
     {
       controller: 'prefunk_enrollments',
@@ -11,9 +12,18 @@
       remote: true,
       id: 'prefunk_enrollment_report_button',
       class: 'btn',
-      method: :post
+      method: :post,
+      form: { id: "prefunk_enrollment_report_form" }
     }
   %>
+  <script type="text/javascript">
+
+    $('#prefunk_enrollment_report_form').bind("submit", function() {
+      $("#prefunk_enrollment_report_button").attr("disabled", true)
+      $("#prefunk_enrollment_report_button").addClass("disabled")
+    });
+  </script>
+
 <table id="prefunk_enrollments_table">
   <thead>
     <tr>

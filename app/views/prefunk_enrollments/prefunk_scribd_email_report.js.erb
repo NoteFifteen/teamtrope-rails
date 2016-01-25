@@ -1,2 +1,5 @@
-$("#prefunk_enrollment_report_button").attr("disabled", true)
-$("#prefunk_enrollment_report_button").addClass("disabled")
+$("#prefunk_enrollment_report_button").removeAttr("disabled")
+$("#prefunk_enrollment_report_button").removeClass("disabled")
+$("#prefunk_enrollment_export_results").addClass("alert")
+$("#prefunk_enrollment_export_results").addClass("alert-success")
+$("#prefunk_enrollment_export_results").text("Report Email Sent. Please check your inbox.")

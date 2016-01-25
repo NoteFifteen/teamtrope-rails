@@ -1,2 +1,5 @@
-$("#email_scribd_report_button").attr("disabled", true)
-$("#email_scribd_report_button").addClass("disabled")
+$("#email_scribd_report_button").removeAttr("disabled")
+$("#email_scribd_report_button").removeClass("disabled")
+$("#scribd_metadata_export_results").addClass("alert")
+$("#scribd_metadata_export_results").addClass("alert-success")
+$("#scribd_metadata_export_results").text("Report Email Sent. Please check your inbox.")
