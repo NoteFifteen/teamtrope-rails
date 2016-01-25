@@ -277,7 +277,7 @@ class Project < ActiveRecord::Base
     scribd_data_rows = []
     project_grid_table_rows.each do | pgtr |
 
-      scribd_data_rows.push(pgtr.generate_scribd_export_hash)
+      scribd_data_rows.push(pgtr.generate_scribd_export_hash(page_type))
     end
     scribd_data_rows
   end
