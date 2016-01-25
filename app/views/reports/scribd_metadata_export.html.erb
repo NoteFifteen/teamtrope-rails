@@ -1,21 +1,29 @@
 <% provide(:title, "Scribd Metadata Export") %>
 <div class="page" id="blog-page" role="main">
   <h2>Scribd Metadata Export</h2><br />
+  <div id="scribd_metadata_export_results"></div>
   <%= button_to "Email Report",
     {
       controller: 'reports',
       action: 'send_scribd_export_email',
       page: @current_path,
-      remote: true
     },
     {
       remote: true,
       id: 'email_scribd_report_button',
       class: 'btn',
-      method: :post
+      on_click: "alert('test');",
+      method: :post,
+      form: { id: "scribd_metadata_export_form" }
     }
   %>
   <script type="text/javascript">
+
+    $('#scribd_metadata_export_form').bind("submit", function() {
+      $("#email_scribd_report_button").attr("disabled", true)
+      $("#email_scribd_report_button").addClass("disabled")
+    });
+
     function toggleTable1() {
     var lTable = document.getElementById("ProjectListTable");
     lTable.style.display = (lTable.style.display == "table") ? "none" : "table";}
