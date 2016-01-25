@@ -29,7 +29,7 @@ namespace :teamtrope do
                     q.eq("objectId", parse_id)
                   end.get.first
 
-                  price_change_queue_item["is_price_increase"] = true
+                  price_change_queue_item["isPriceIncrease"] = true
                   price_change_queue_item.save
                 end
                 sleep 1.0
