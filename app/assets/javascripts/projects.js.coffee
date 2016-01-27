@@ -526,6 +526,9 @@ jQuery ->
       'project[publication_fact_sheet_attributes][age_range]': {
         required: true
       },
+      'project[publication_fact_sheet_attributes][ebook_price]':{
+        required: true
+      },
       'project[publication_fact_sheet_attributes][paperback_cover_type]': {
         required: true
       },
