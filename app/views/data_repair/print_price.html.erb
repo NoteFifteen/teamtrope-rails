@@ -1,0 +1,27 @@
+<div class="container">
+  <h1>Data Repair Results</h1>
+    <table class="table">
+      <thead>
+        <th>Updated</th>
+        <th>Project</th>
+        <th>Project Type</th>
+        <th class="book-title">Updated Print Price</th>
+      </thead>
+      <tbody>
+       <% @updated_projects.each do | updated_item | %>
+        <tr>
+          <td>
+            <span class="glyphicon glyphicon-<%= (updated_item[:updated] == true )? "ok" : "remove" %>"></span>
+          </td>
+          <td>
+            <% unless updated_item[:project].nil? %>
+              <%= link_to updated_item[:title], updated_item[:project] %>
+            <% end %>
+          </td>
+          <td><%= updated_item[:book_type] %></td>
+          <td><%= updated_item[:submitted_price] %></td>
+        </tr>
+       <% end %>
+      </tbody>
+    </table>
+</div>
