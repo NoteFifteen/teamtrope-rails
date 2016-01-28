@@ -226,8 +226,8 @@ namespace :teamtrope do
       end
 
       unless print_price.nil? || print_price.strip == ""
-        #project.publication_fact_sheet.print_price = print_price
-        #project.publication_fact_sheet.save
+        project.publication_fact_sheet.print_price = print_price
+        project.publication_fact_sheet.save
         updated.push report_meta
       else
         needs_updating.push report_meta
