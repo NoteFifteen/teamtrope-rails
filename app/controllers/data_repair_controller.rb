@@ -36,7 +36,7 @@ class DataRepairController < ApplicationController
       result_hash[:book_type] = project.book_type
 
       project.publication_fact_sheet.print_price = row["submitted_price"]
-      #project.publication_fact_sheet.save
+      project.publication_fact_sheet.save
 
       result_hash[:updated] = true
       @updated_projects << result_hash
