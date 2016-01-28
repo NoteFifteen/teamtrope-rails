@@ -181,4 +181,102 @@ namespace :teamtrope do
 
   end
 
+  desc "Fixes the print price for books"
+  task fix_print_price: :environment do
+    require 'csv'
+    require 'pp'
+
+    published_projects = ProjectGridTableRow.published_books.map(&:project)
+
+    published_project_ids = published_projects.map(&:id)
+    missing_print_price = PublicationFactSheet.where("project_id in (?) and print_price is null", published_project_ids).includes(:project)
+
+    missing_count = missing_print_price.count
+
+    updated = []
+    needs_updating = []
+
+    missing_print_price.each do | pfs |
+      project = pfs.project
+
+      report_meta = {
+        project_id: project.id,
+        book_type: project.book_type,
+        title: project.book_title,
+        url: "projects.teamtrope.com/projects/#{project.slug}",
+      }
+
+      #puts "#{project.id}\t#{project.book_type}\t#{project.book_title}"
+      activity_record, print_price = get_updated_final_page_count_activity(project)
+
+      report_meta[:submitted_price] = print_price
+      report_meta[:activity_type] = "updated_final_page_count"
+
+      #puts "\t#{activity_record.created_at}\t#{print_price}\t#{activity_record.parameters[:form_data]}" unless activity_record.nil?
+      if activity_record.nil? || print_price.nil?
+        activity_record, print_price = get_submitted_pfs_activity(project)
+        report_meta[:submitted_price] = print_price
+        report_meta[:activity_type] = "submitted_pfs"
+        #puts "\t#{activity_record.created_at}\t#{print_price}\t#{activity_record.parameters[:form_data]}" unless activity_record.nil?
+      end
+
+      unless activity_record.nil?
+        report_meta[:submit_date] = activity_record.created_at
+        report_meta[:form_data] = activity_record.parameters[:form_data]
+      end
+
+      unless print_price.nil? || print_price.strip == ""
+        #project.publication_fact_sheet.print_price = print_price
+        #project.publication_fact_sheet.save
+        updated.push report_meta
+      else
+        needs_updating.push report_meta
+      end
+    end
+
+    updated_report = generate_csv updated
+    needs_updating_report = generate_csv needs_updating
+
+    puts "Updated: #{updated.count} out of #{missing_count}"
+
+    ReportMailer.print_price_update(updated_report, needs_updating_report)
+  end
+
+  def generate_csv(report_list)
+    csv_header = [ "project_id", "book_type", "title", "url", "submitted_price", "activity_type", "form_submit_date", "form_data" ]
+    CSV.generate do |csv|
+      csv << csv_header
+
+      report_list.each do | report_hash |
+        csv << [
+          report_hash[:project_id],
+          report_hash[:book_type],
+          report_hash[:title],
+          report_hash[:url],
+          report_hash[:submitted_price],
+          report_hash[:activity_type],
+          report_hash[:submit_date],
+          report_hash[:form_data]
+        ]
+      end
+    end
+  end
+
+  def extract_print_price(activity_record)
+    print_price = unless activity_record.nil?
+      /"print_price"=>"(?<submitted_price>.*?)"/i =~ activity_record.parameters[:form_data]
+      submitted_price
+    end
+  end
+
+  def get_updated_final_page_count_activity(project)
+    activity_record = PublicActivity::Activity.where(trackable_id: project.id, key: "project.updated_final_page_count").order(created_at: :desc).first
+    [activity_record, extract_print_price(activity_record)]
+  end
+
+  def get_submitted_pfs_activity(project)
+    activity_record = PublicActivity::Activity.where(trackable_id: project.id, key: "project.submitted_pfs").order(created_at: :desc).first
+    [activity_record, extract_print_price(activity_record)]
+  end
+
 end

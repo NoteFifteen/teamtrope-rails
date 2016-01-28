@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   get 'wordpress_import/import'
   post 'wordpress_import/upload'
 
+  match '/data_repair', to: 'data_repair#home', via: :get
+  match '/data_repair', to: 'data_repair#print_price', via: :post
+
+
   match '/parse/get_amazon_sales_rank',            to: 'parse#get_amazon_sales_rank',          via: 'get'
   match '/parse/get_queued_items',                 to: 'parse#get_queued_items',               via: 'get'
   match '/parse/add_book_to_price_change_queue',   to: 'parse#add_book_to_price_change_queue', via: 'get'

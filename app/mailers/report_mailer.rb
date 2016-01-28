@@ -24,6 +24,29 @@ class ReportMailer < ActionMailer::Base
     send_email_message('prefunk_scribd_email_report', {}, [current_user.email], subject)
   end
 
+  def print_price_update(updated_report, needs_updating_report)
+
+    @report_date = Time.now.strftime('%m/%d/%Y %H:%M:%S')
+    updated_attachment_name = "updated_print_price_report_#{@report_date}.csv"
+    needs_updating_attachment_name = "needs_updating_report_#{@report_date}.csv"
+
+    attachments[updated_attachment_name] = {
+      mime_type: 'text/csv',
+      content: updated_report,
+      encoding: 'quoted-printable'
+    }
+
+    attachments[needs_updating_attachment_name] = {
+      mime_type: 'text/csv',
+      content: needs_updating_report,
+      encoding: 'quoted-printable'
+    }
+
+    subject = "Print Price Update Report"
+    send_email_message('print_price_update_report', {}, print_price_update_report_recipients, subject)
+
+  end
+
   def scribd_email_report(csv_text, current_user)
     attachment_name = "scribd_metadata_export.csv"
     attachments[attachment_name] = {
@@ -54,6 +77,10 @@ class ReportMailer < ActionMailer::Base
 
   def master_spreadsheet_recipients
     %w( tt_metadata_export_list@booktrope.com )
+  end
+
+  def print_price_update_report_recipients
+      %w( tt_print_price_update_list@booktrope.com )
   end
 
 end
