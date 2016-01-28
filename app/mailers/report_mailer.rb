@@ -43,7 +43,7 @@ class ReportMailer < ActionMailer::Base
     }
 
     subject = "Print Price Update Report"
-    send_email_message('print_price_update_report', {}, "justin.jeffress@booktrope.com", subject)
+    send_email_message('print_price_update_report', {}, print_price_update_report_recipients, subject)
 
   end
 
@@ -77,6 +77,10 @@ class ReportMailer < ActionMailer::Base
 
   def master_spreadsheet_recipients
     %w( tt_metadata_export_list@booktrope.com )
+  end
+
+  def print_price_update_report_recipients
+      %w( tt_print_price_update_list@booktrope.com )
   end
 
 end
