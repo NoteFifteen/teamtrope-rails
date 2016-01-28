@@ -25,9 +25,10 @@ class DataRepairController < ApplicationController
         print_price: row["submitted_price"]
       }
 
-      if row["project_id"].nil? || row["project_id"].strip == ""
-        next
-      end
+      @updated_projects << result_hash
+
+      next if row["project_id"].nil? || row["project_id"].strip == ""
+
       project = Project.find(row["project_id"])
 
       # getting the real information from the DB maybe it changed since.
@@ -35,13 +36,14 @@ class DataRepairController < ApplicationController
       result_hash[:title] = project.book_title
       result_hash[:book_type] = project.book_type
 
+      next if row["submitted_price"].nil? || row["submitted_price"].strip == ""
+
       project.publication_fact_sheet.print_price = row["submitted_price"]
       project.publication_fact_sheet.save
 
       result_hash[:updated] = true
-      @updated_projects << result_hash
-    end
 
+    end
   end
 
 end

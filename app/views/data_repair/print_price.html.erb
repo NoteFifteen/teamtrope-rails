@@ -10,7 +10,9 @@
       <tbody>
        <% @updated_projects.each do | updated_item | %>
         <tr>
-          <td><span class="glyphicon glyphicon-ok"></span></td>
+          <td>
+            <span class="glyphicon glyphicon-<%= (updated_item[:updated] == true )? "ok" : "remove" %>"></span>
+          </td>
           <td>
             <% unless updated_item[:project].nil? %>
               <%= link_to updated_item[:title], updated_item[:project] %>
