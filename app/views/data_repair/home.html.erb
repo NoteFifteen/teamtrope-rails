@@ -2,8 +2,18 @@
 <div class="row">
   <h1>Data Repair</h1>
   <div class="col-md-4">
-    <%= form_tag({ action: :print_price }, multipart: true) do %>
+    <%= form_tag({ action: :repair_data }, multipart: true) do %>
       <div class="form-group">
+        <%= label_tag "Data to import:" %>
+        <%= select_tag(
+          :type,
+          options_for_select(
+            [
+              ['Print Price', 'print_price'],
+              ['ISBN', 'isbn']
+            ]),
+          class: "form-control")%>
+
         <%= label_tag "Upload File" %>
         <%= file_field_tag 'upload_file', class: "form-control" %>
       </div>
