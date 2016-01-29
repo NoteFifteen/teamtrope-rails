@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   post 'wordpress_import/upload'
 
   match '/data_repair', to: 'data_repair#home', via: :get
-  match '/data_repair', to: 'data_repair#print_price', via: :post
+  match '/data_repair', to: 'data_repair#repair_data', via: :post
 
 
   match '/parse/get_amazon_sales_rank',            to: 'parse#get_amazon_sales_rank',          via: 'get'
