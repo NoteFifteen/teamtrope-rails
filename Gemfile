@@ -63,7 +63,7 @@ gem 'amazon-ecs', '2.3.1'
 gem 'humanize', '1.1.0'
 
 # Handle attachments & store them in S3
-gem 'aws-sdk'
+gem 'aws-sdk', '< 2.0'
 gem "paperclip", "~> 4.2"
 gem "s3_direct_upload"
 
