@@ -73,7 +73,7 @@ class DataRepairController < ApplicationController
 
       puts "found! #{control_number.id}\t#{project.book_title}"
 
-      unless ! previously_updated
+      unless previously_updated
         control_number.paperback_isbn = csv_paperback_isbn
         control_number.save
         result_hash[:updated] = true
