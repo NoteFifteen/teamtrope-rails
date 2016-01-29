@@ -6,6 +6,7 @@
         <th>Project</th>
         <th>Project Type</th>
         <th class="book-title">Updated Print Price</th>
+        <th>Reason</th>
       </thead>
       <tbody>
        <% @updated_projects.each do | updated_item | %>
@@ -19,7 +20,8 @@
             <% end %>
           </td>
           <td><%= updated_item[:book_type] %></td>
-          <td><%= updated_item[:submitted_price] %></td>
+          <td><%= updated_item[:submitted_print_price] %></td>
+          <td><%= updated_item[:reason] %></td>
         </tr>
        <% end %>
       </tbody>

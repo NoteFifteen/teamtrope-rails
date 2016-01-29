@@ -22,12 +22,15 @@ class DataRepairController < ApplicationController
         project_id: row["project_id"],
         book_type: row["book_type"],
         title: row["title"],
-        print_price: row["submitted_price"]
+        submitted_print_price: row["submitted_price"]
       }
-
+      #binding.pry
       @updated_projects << result_hash
 
-      next if row["project_id"].nil? || row["project_id"].strip == ""
+      if row["project_id"].nil? || row["project_id"].strip == ""
+        result_hash[:reason] = "No project_id"
+        next
+      end
 
       project = Project.find(row["project_id"])
 
@@ -36,9 +39,12 @@ class DataRepairController < ApplicationController
       result_hash[:title] = project.book_title
       result_hash[:book_type] = project.book_type
 
-      next if row["submitted_price"].nil? || row["submitted_price"].strip == ""
+      if row["submitted_price"].nil? || row["submitted_price"].strip == ""
+        result_hash[:reason] = "No submitted_price #{row["submitted_price"]}"
+        next
+      end
 
-      project.publication_fact_sheet.print_price = row["submitted_price"]
+      project.publication_fact_sheet.print_price = row["submitted_price"].gsub(/\$/, '')
       project.publication_fact_sheet.save
 
       result_hash[:updated] = true
