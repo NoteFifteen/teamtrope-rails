@@ -1,6 +1,103 @@
 namespace :teamtrope do
 
-  desc "Populates ProjectGridTableRow"
+  desc "Syncs the amazon publication date with teamtrope"
+  task sync_publication_date_with_amazon: :environment do
+    require 'CSV'
+
+    book_list = Booktrope::ParseWrapper.get_books(exists: ["publicationDateAmazon"])
+
+    results = []
+
+    puts book_list.count
+
+    book_list.each do | book |
+
+
+      parse_object_id = book["objectId"]
+      publication_date_time = book["publicationDateAmazon"].value
+
+
+      result_hash = {
+        updated: "No",
+        parse_id: parse_object_id,
+        asin: book["asin"],
+        amazon_publication_date: publication_date_time.strftime("%Y/%m/%d"),
+        project_title: book["title"],
+        former_publication_date: nil,
+        reason: nil
+      }
+
+      results << result_hash
+
+      control_number = ControlNumber.where(parse_id: parse_object_id).includes(project: [:published_file]).first
+
+      if control_number.nil?
+        result_hash[:reason] = "parse_id not found in db"
+        next
+      end
+
+      project = control_number.project
+
+      if project.nil?
+        result_hash[:reason] = "project not found"
+        next
+      end
+
+      result_hash[:project_title] = project.book_title
+
+      published_file = project.published_file
+
+      # todo: create a published file if none exists
+      if published_file.nil?
+        result_hash[:reason] = "published file not found"
+        next
+      end
+
+      result_hash[:former_publication_date] = published_file.publication_date
+      published_file.publication_date = publication_date_time
+
+      published_file.save
+
+      result_hash[:updated] = "Yes"
+    end
+
+    # amazon publication date update csv header
+    amzn_pub_date_header = {
+      updated: "Validated",
+      parse_id: "Parse Id",
+      asin: "ASIN",
+      project_id: "Project ID",
+      project: "Project",
+      amazon_publication_date: "New Date",
+      former_publication_date: "Data Before Change",
+      reason: "Reason"
+     }
+
+    csv_string = CSV.generate do |csv|
+      csv << amzn_pub_date_header.values
+      results.each do | result_hash |
+        row = []
+
+        row.push result_hash[:updated]
+        row.push result_hash[:parse_id]
+        row.push result_hash[:asin]
+        row.push result_hash[:project_id]
+        row.push result_hash[:project_title]
+        row.push result_hash[:amazon_publication_date]
+        row.push result_hash[:former_publication_date]
+        row.push result_hash[:reason]
+
+        csv << row
+      end
+    end
+
+    ReportMailer.amazon_publication_date_sync(csv_string)
+
+  end
+
+
+
+  desc "Validates permanent price changes to ensure they are entered into the queue correctly as a price increase or a price drop."
   task validate_permanent_price_drops: :environment do
 
     # get all permanent price drops with from now unitl next year.
