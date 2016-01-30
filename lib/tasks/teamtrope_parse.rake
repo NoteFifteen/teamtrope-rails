@@ -2,7 +2,7 @@ namespace :teamtrope do
 
   desc "Syncs the amazon publication date with teamtrope"
   task sync_publication_date_with_amazon: :environment do
-    require 'CSV'
+    require 'csv'
 
     book_list = Booktrope::ParseWrapper.get_books(exists: ["publicationDateAmazon"])
 
