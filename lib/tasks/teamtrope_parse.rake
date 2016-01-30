@@ -8,8 +8,6 @@ namespace :teamtrope do
 
     results = []
 
-    puts book_list.count
-
     book_list.each do | book |
 
 
@@ -47,10 +45,11 @@ namespace :teamtrope do
 
       published_file = project.published_file
 
-      # todo: create a published file if none exists
+      # create a published file if none exists
       if published_file.nil?
-        result_hash[:reason] = "published file not found"
-        next
+        project.create_published_file(publication_date: publication_date_time)
+        published_file = project.published_file
+        result_hash[:reason] = "published file not found so we created a new one"
       end
 
       result_hash[:former_publication_date] = published_file.publication_date
@@ -63,14 +62,14 @@ namespace :teamtrope do
 
     # amazon publication date update csv header
     amzn_pub_date_header = {
-      updated: "Validated",
+      updated: "Updated",
       parse_id: "Parse Id",
       asin: "ASIN",
       project_id: "Project ID",
       project: "Project",
       amazon_publication_date: "New Date",
       former_publication_date: "Data Before Change",
-      reason: "Reason"
+      reason: "Notes"
      }
 
     csv_string = CSV.generate do |csv|
