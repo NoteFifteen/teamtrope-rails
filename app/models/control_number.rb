@@ -14,6 +14,29 @@ class ControlNumber < ActiveRecord::Base
     end
   end
 
+  def epub_isbn=(isbn)
+    if isbn.nil? || isbn.length == 0
+      super(nil)
+    else
+      super(isbn)
+    end
+  end
+
+  def hardback_isbn=(isbn)
+    if isbn.nil? || isbn.length == 0
+      super(nil)
+    else
+      super(isbn)
+    end
+  end
+
+  def paperback_isbn=(isbn)
+    if isbn.nil? || isbn.length == 0
+      super(nil)
+    else
+      super(isbn)
+    end
+  end
 
   def asin=(asin)
     if asin.nil? || asin.length == 0
