@@ -74,6 +74,7 @@ class ProjectGridTableRow < ActiveRecord::Base
     row_hash[:subscription] = nil
     row_hash[:preview_percent] = "10%"
     row_hash[:language] = "eng"
+    row_hash[:genre] = project.genres.map(&:name).join(",")
 
     row_hash
   end
