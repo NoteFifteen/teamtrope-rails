@@ -10,7 +10,7 @@ class ProjectGridTableRow < ActiveRecord::Base
     .where("production_task_name = ?", "Production Complete")
   }
 
-    def generate_scribd_export_hash(page_type = :csv)
+  def generate_scribd_export_hash(page_type = :csv)
     # using the Scribd data hash as our base we will override the header info
     # with real data clone is a deep copy otherwise we overrite the constant :'(
     row_hash = Constants::ScribdCsvHeaderHash.clone

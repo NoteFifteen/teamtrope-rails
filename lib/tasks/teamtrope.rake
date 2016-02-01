@@ -225,7 +225,7 @@ namespace :teamtrope do
         report_meta[:form_data] = activity_record.parameters[:form_data]
       end
 
-      unless print_price.nil? || print_price.strip == ""
+      unless print_price.nil? || print_price.strip == "" || print_price == 0
         project.publication_fact_sheet.print_price = print_price
         project.publication_fact_sheet.save
         updated.push report_meta
