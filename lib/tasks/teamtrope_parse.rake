@@ -52,12 +52,15 @@ namespace :teamtrope do
         result_hash[:reason] = "published file not found so we created a new one"
       end
 
-      result_hash[:former_publication_date] = published_file.publication_date
-      published_file.publication_date = publication_date_time
+      if published_file.publication_date.nil?
+        published_file.publication_date = publication_date_time
+        published_file.save
+        result_hash[:updated] = "Yes"
+      else
+        result_hash[:former_publication_date] = published_file.publication_date
+        result_hash[:reason] = "publication_date already exists #{result_hash[:former_publication_date]}"
+      end
 
-      published_file.save
-
-      result_hash[:updated] = "Yes"
     end
 
     # amazon publication date update csv header
