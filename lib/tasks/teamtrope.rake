@@ -83,10 +83,10 @@ namespace :teamtrope do
         project = pgtr.project
 
         row[0] = project.id
-        row[1] = project.book_title
+        row[1] = ApplicationHelper.filter_special_characters(project.book_title)
 
         unless project.publication_fact_sheet.nil?
-          row[2] = project.publication_fact_sheet.series_name
+          row[2] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.series_name)
           row[3] = project.publication_fact_sheet.series_number
         end
 
@@ -163,10 +163,14 @@ namespace :teamtrope do
           row[25] = bisac_three[:code]
           row[26] = bisac_three[:name]
 
-          row[27] = project.publication_fact_sheet.search_terms
+          row[27] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.search_terms)
           row[28] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.description)    unless project.publication_fact_sheet.description.nil?
           row[29] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.author_bio)     unless project.publication_fact_sheet.author_bio.nil?
           row[30] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.one_line_blurb) unless project.publication_fact_sheet.one_line_blurb.nil?
+        end
+
+        row.each_with_index do | item, index |
+          row[index] = ApplicationHelper.filter_special_characters(item) if item.class == String
         end
 
         # generate the csv row by joining the array with ','
