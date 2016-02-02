@@ -76,12 +76,20 @@ class ProjectGridTableRow < ActiveRecord::Base
     row_hash[:language] = "eng"
     row_hash[:genre] = project.genres.map(&:name).join(",")
 
-    row_hash
+    filter_report_data(row_hash)
   end
 
   def set_task_display_name(workflow, name)
     puts self["#{workflow}_task_id"]
     task = Task.find self["#{workflow}_task_id"]
     self["#{workflow}_task_display_name"] = name
+  end
+
+  private
+  def filter_report_data(row_hash)
+    row_hash.each do | key, value |
+      row_hash[key] = ApplicationHelper.filter_special_characters(value) if value.class == String
+    end
+    row_hash
   end
 end
