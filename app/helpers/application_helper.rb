@@ -108,6 +108,7 @@ module ApplicationHelper
           .gsub(/\u02C6/, '^')
           .gsub(/\u2039/, '<')
           .gsub(/\u203A/, '>')
+          .gsub(/\u02C3/, '>')
           .gsub(/\u2013/, '-')
           .gsub(/\u2014/, '--')
           .gsub(/\u2015/, '--')
