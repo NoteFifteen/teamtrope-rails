@@ -76,6 +76,9 @@ class ProjectGridTableRow < ActiveRecord::Base
     row_hash[:language] = "eng"
     row_hash[:genre] = genre
     row_hash[:enrollment_date] = ! project.prefunk_enrollment.nil?? project.prefunk_enrollment.created_at : nil
+    row_hash[:asin] = project.control_number.asin unless project.control_number.nil?
+    row_hash[:apple_id] = project.control_number.apple_id unless project.control_number.nil?
+
 
     filter_report_data(row_hash)
   end
