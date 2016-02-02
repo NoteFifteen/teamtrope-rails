@@ -58,36 +58,67 @@ namespace :teamtrope do
   task generate_master_metadata_spreadsheet: :environment do
     require 'csv'
 
-    # building the header
-    header = "Project ID,Title,Series Name,Series Number,\"Author (Last,First)\",\"Author (First,Last)\",PFS Author Name,Other Contributors,Team and Pct,Imprint,Print ISBN,epub ISBN,Format,Publication Date,Month,Year,Page Count,Print Price,Ebook Price(Will vary based on promos and price chagnes),Library Price,BISAC, BISAC Description,BISAC2, BISAC Description 2,BISAC3, BISAC Description 3,Search Terms,Summary,Author Bio,Squib"
-
-    csv_header = ["Project ID","Title","Series Name","Series Number","Author (Last,First)","Author (First,Last)","PFS Author Name","Other Contributors","Team and Pct","Imprint","ASIN","Print ISBN","epub ISBN","Format","Publication Date","Month","Year","Page Count","Print Price","Ebook Price(Will vary based on promos and price changes)","Library Price","BISAC", "BISAC Description","BISAC2", "BISAC Description 2","BISAC3", "BISAC Description 3","Search Terms","Summary","Author Bio","Squib"]
-
-    # set the row size which is equal to our header row split on the
-    row_size = header.gsub(/\".*?,.*?\"/,'').split(',').count
+    csv_header = {
+      project_id: "Project ID",
+      prefunk: "Prefunk",
+      prefunk_enrollment_date: "Prefunk Enrollment Date",
+      title: "Title",
+      series_name: "Series Name",
+      series_number: "Series Number",
+      author_last_first: "Author (Last,First)",
+      author_first_last: "Author (First,Last)",
+      pfs_author_name: "PFS Author Name",
+      other_contributors: "Other Contributors",
+      team_and_pct: "Team and Pct",
+      imprint: "Imprint",
+      asin: "ASIN",
+      print_isbn: "Print ISBN",
+      epub_isbn: "epub ISBN",
+      format: "Format",
+      publication_date: "Publication Date",
+      month: "Month",
+      year: "Year",
+      page_count: "Page Count",
+      print_price: "Print Price",
+      ebook_price: "Ebook Price(Will vary based on promos and price changes)",
+      library_price: "Library Price",
+      bisac_one: "BISAC",
+      bisac_one_description: "BISAC Description",
+      bisac_two: "BISAC2",
+      bisac_two_description: "BISAC Description 2",
+      bisac_three: "BISAC3",
+      bisac_three_description: "BISAC Description 3",
+      search_terms: "Search Terms",
+      summary: "Summary",
+      author_bio: "Author Bio",
+      squib: "Squib" }
 
 
     csv_string = CSV.generate do |csv|
 
-      puts header
-      csv << csv_header
-
+      csv << csv_header.values
 
       # fetch all projects that are production complete which indicates that they have been published.
       project_grid_table_rows = ProjectGridTableRow.published_books
 
       project_grid_table_rows.each do | pgtr |
 
-        row = Array.new(row_size)
+        # initialize the row_hash with empty data.
+        row_hash = {}
+        csv_header.each do | key, value |
+          row_hash[key] = ''
+        end
 
         project = pgtr.project
 
-        row[0] = project.id
-        row[1] = ApplicationHelper.filter_special_characters(project.book_title)
+        row_hash[:project_id] = project.id
+        row_hash[:prefunk] = project.prefunk_enrollment.nil?? "No" : "Yes"
+        row_hash[:prefunk_enrollment_date] = project.prefunk_enrollment.created_at unless project.prefunk_enrollment.nil?
+        row_hash[:title] = project.book_title
 
         unless project.publication_fact_sheet.nil?
-          row[2] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.series_name)
-          row[3] = project.publication_fact_sheet.series_number
+          row_hash[:series_name] = project.publication_fact_sheet.series_name
+          row_hash[:series_number] = project.publication_fact_sheet.series_number
         end
 
         # if there are are two authors most likely the main author was the one added first
@@ -97,26 +128,26 @@ namespace :teamtrope do
 
         first_author = authors.slice!(0)
 
-        row[4] = first_author.last_name_first
-        row[5] = first_author.member.name
+        row_hash[:author_last_first] = first_author.last_name_first
+        row_hash[:author_first_last] = first_author.member.name
 
-        row[6] = project.publication_fact_sheet.author_name
+        row_hash[:pfs_author_name] = project.publication_fact_sheet.author_name
 
         # row[6] = "\"#{project.team_memberships.reject{|membership| membership.role.name == "Author" }.map{ | membership |
         #   "#{membership.member.name} (#{membership.role.name})"
         # }.join(",")}\""
 
-        row[7] = authors.map { | author | "#{author.member.name} (#{author.role.name})" }.join(', ')
+        row_hash[:other_contributors] = authors.map { | author | "#{author.member.name} (#{author.role.name})" }.join(', ')
 
-        row[8] = "#{project.team_members_with_roles_and_pcts.map{ |n| "#{n[:member].name} #{ n[:role_pcts].map{ |role_pcts | "(#{role_pcts[:role]} #{role_pcts[:pct]})"}.join(',')}"  }.join(';')}; Total (#{project.total_team_percent_allocation})"
+        row_hash[:team_and_pct] = "#{project.team_members_with_roles_and_pcts.map{ |n| "#{n[:member].name} #{ n[:role_pcts].map{ |role_pcts | "(#{role_pcts[:role]} #{role_pcts[:pct]})"}.join(',')}"  }.join(';')}; Total (#{project.total_team_percent_allocation})"
 
-        row[9] = pgtr.imprint
+        row_hash[:imprint] = pgtr.imprint
         unless project.control_number.nil?
-          row[10] = project.control_number.asin
-          row[11] = project.control_number.paperback_isbn
-          row[12] = project.control_number.epub_isbn
+          row_hash[:asin] = project.control_number.asin
+          row_hash[:print_isbn] = project.control_number.paperback_isbn
+          row_hash[:epub_isbn] = project.control_number.epub_isbn
         end
-        row[13] = project.book_type_pretty
+        row_hash[:format] = project.book_type_pretty
 
         # look up the publication date that we have in parse via the project's parse_id which matches the ParseBook object_id
         #publication_date_amazon = ParseBooks.find_by_parse_id(project.control_number.parse_id).try(:publication_date_amazon)
@@ -125,18 +156,18 @@ namespace :teamtrope do
         end
 
         unless publication_date.nil?
-          row[14] = publication_date.strftime("%m/%d/%Y")
-          row[15] = publication_date.strftime("%B")
-          row[16] = publication_date.strftime("%Y")
+          row_hash[:publication_date] = publication_date.strftime("%m/%d/%Y")
+          row_hash[:month] = publication_date.strftime("%B")
+          row_hash[:year] = publication_date.strftime("%Y")
         end
 
-        row[17] = project.layout.final_page_count unless project.layout.nil?
+        row_hash[:page_count] = project.layout.final_page_count unless project.layout.nil?
 
-        row[18] = "$#{"%.2f" % project.publication_fact_sheet.print_price}" unless project.publication_fact_sheet.print_price.nil?
+        row_hash[:print_price] = "$#{"%.2f" % project.publication_fact_sheet.print_price}" unless project.publication_fact_sheet.print_price.nil?
         unless project.publication_fact_sheet.ebook_price.nil?
-          row[19] = "$#{"%.2f" % project.publication_fact_sheet.ebook_price}"
+          row_hash[:ebook_price] = "$#{"%.2f" % project.publication_fact_sheet.ebook_price}"
           library_price = ApplicationHelper.lookup_library_pricing(project.publication_fact_sheet.ebook_price)
-          row[20] = library_price unless library_price.nil?
+          row_hash[:library_price] = library_price unless library_price.nil?
         end
 
         unless project.publication_fact_sheet.nil?
@@ -156,26 +187,20 @@ namespace :teamtrope do
             project.publication_fact_sheet.bisac_code_name_three
           )
 
-          row[21] = bisac_one[:code]
-          row[22] = bisac_one[:name]
-          row[23] = bisac_two[:code]
-          row[24] = bisac_two[:name]
-          row[25] = bisac_three[:code]
-          row[26] = bisac_three[:name]
+          row_hash[:bisac_one] = bisac_one[:code]
+          row_hash[:bisac_one_description] = bisac_one[:name]
+          row_hash[:bisac_two] = bisac_two[:code]
+          row_hash[:bisac_two_description] = bisac_two[:name]
+          row_hash[:bisac_three] = bisac_three[:code]
+          row_hash[:bisac_three_description] = bisac_three[:name]
 
-          row[27] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.search_terms)
-          row[28] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.description)    unless project.publication_fact_sheet.description.nil?
-          row[29] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.author_bio)     unless project.publication_fact_sheet.author_bio.nil?
-          row[30] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.one_line_blurb) unless project.publication_fact_sheet.one_line_blurb.nil?
+          row_hash[:search_terms] = project.publication_fact_sheet.search_terms
+          row_hash[:summary] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.description)    unless project.publication_fact_sheet.description.nil?
+          row_hash[:author_bio] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.author_bio)     unless project.publication_fact_sheet.author_bio.nil?
+          row_hash[:squib] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.one_line_blurb) unless project.publication_fact_sheet.one_line_blurb.nil?
         end
 
-        row.each_with_index do | item, index |
-          row[index] = ApplicationHelper.filter_special_characters(item) if item.class == String
-        end
-
-        # generate the csv row by joining the array with ','
-        puts row.join(",")
-        csv << row
+        csv << row_hash.values
       end
     end
 

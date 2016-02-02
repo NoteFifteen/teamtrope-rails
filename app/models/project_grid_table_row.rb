@@ -6,7 +6,7 @@ class ProjectGridTableRow < ActiveRecord::Base
 
   scope :published_books, -> {
     joins(:project)
-    .includes(project: [:control_number, :publication_fact_sheet, :layout, :published_file])
+    .includes(project: [:control_number, :publication_fact_sheet, :layout, :published_file, :prefunk_enrollment])
     .where("production_task_name = ?", "Production Complete")
   }
 
@@ -74,7 +74,8 @@ class ProjectGridTableRow < ActiveRecord::Base
     row_hash[:subscription] = nil
     row_hash[:preview_percent] = "10%"
     row_hash[:language] = "eng"
-    row_hash[:genre] = project.genres.map(&:name).join(",")
+    row_hash[:genre] = genre
+    row_hash[:enrollment_date] = ! project.prefunk_enrollment.nil?? project.prefunk_enrollment.created_at : nil
 
     filter_report_data(row_hash)
   end
