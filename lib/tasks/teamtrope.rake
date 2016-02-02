@@ -189,7 +189,7 @@ namespace :teamtrope do
     published_projects = ProjectGridTableRow.published_books.map(&:project)
 
     published_project_ids = published_projects.map(&:id)
-    missing_print_price = PublicationFactSheet.where("project_id in (?) and print_price is null", published_project_ids).includes(:project)
+    missing_print_price = PublicationFactSheet.where("project_id in (?) and (print_price is null or print_price = 0.0 )", published_project_ids).includes(:project)
 
     missing_count = missing_print_price.count
 
@@ -206,13 +206,14 @@ namespace :teamtrope do
         url: "projects.teamtrope.com/projects/#{project.slug}",
       }
 
-      #puts "#{project.id}\t#{project.book_type}\t#{project.book_title}"
+      # fetching the activity record for this project: project.updated_final_page_count
       activity_record, print_price = get_updated_final_page_count_activity(project)
 
       report_meta[:submitted_price] = print_price
       report_meta[:activity_type] = "updated_final_page_count"
 
-      #puts "\t#{activity_record.created_at}\t#{print_price}\t#{activity_record.parameters[:form_data]}" unless activity_record.nil?
+      # if no activity exists it may have been submitted on the PFS which is where it used to be submitted
+      # project.submitted_pfs
       if activity_record.nil? || print_price.nil?
         activity_record, print_price = get_submitted_pfs_activity(project)
         report_meta[:submitted_price] = print_price
@@ -220,12 +221,14 @@ namespace :teamtrope do
         #puts "\t#{activity_record.created_at}\t#{print_price}\t#{activity_record.parameters[:form_data]}" unless activity_record.nil?
       end
 
+      # updating the meta data for our report if we found public activity
       unless activity_record.nil?
         report_meta[:submit_date] = activity_record.created_at
         report_meta[:form_data] = activity_record.parameters[:form_data]
       end
 
-      unless print_price.nil? || print_price.strip == "" || print_price == 0
+      # upate unless we have nil, blank or 0 for our price.
+      unless print_price.nil? || print_price.strip == "" || print_price.to_i == 0
         project.publication_fact_sheet.print_price = print_price
         project.publication_fact_sheet.save
         updated.push report_meta
