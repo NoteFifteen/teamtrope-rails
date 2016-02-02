@@ -97,6 +97,7 @@ module ApplicationHelper
           .gsub(/\u00E9/,'e')
           .gsub(/\u00EA/,'e')
           .gsub(/\u00EB/,'e')
+          .gsub(/\u0113/,'e')
           .gsub(/\u00EC/,'i')
           .gsub(/\u00ED/,'i')
           .gsub(/\u00EE/,'i')
@@ -125,6 +126,7 @@ module ApplicationHelper
           .gsub(/\u00BE/, '3/4')
           .gsub(/[\u02DC|\u00A0]/, " ")
           .gsub(/\uFB01/, 'fi')
+          .gsub(/\u23AF/, '-')
   end
 
 
