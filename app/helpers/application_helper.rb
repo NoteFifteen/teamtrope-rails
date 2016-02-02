@@ -103,6 +103,7 @@ module ApplicationHelper
           .gsub(/\u00EF/,'i')
           .gsub(/\u00F0/,'e')
           .gsub(/\u00F3/,'o')
+          .gsub(/\u00F6/,'o')
           .gsub(/\u201c|\u201d|\u201e/, "\"")     # smart double quote
           .gsub(/\u2018|\u2019|\u201A|\uFFFD/, "'") # smart single quote
           .gsub(/\u02C6/, '^')
