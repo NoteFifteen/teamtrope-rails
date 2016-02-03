@@ -77,6 +77,7 @@ class ProjectGridTableRow < ActiveRecord::Base
     row_hash[:genre] = genre
     row_hash[:enrollment_date] = ! project.prefunk_enrollment.nil?? project.prefunk_enrollment.created_at : nil
     row_hash[:asin] = project.control_number.asin unless project.control_number.nil?
+    row_hash[:amazon_link] = (!project.control_number.nil? && !project.control_number.asin.nil?)? "http://amzn.com/#{project.control_number.asin}" : ""
     row_hash[:apple_id] = project.control_number.apple_id unless project.control_number.nil?
 
 

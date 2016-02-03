@@ -91,7 +91,7 @@ module Constants
     street_date: "Street Date", digital_list_price: "Digital List Price", currency: "Currency", permitted_sales_territories: "Permitted Sales Territories",
     excluded_sales_territories: "Excluded Sales Territories", short_description: "Short Description", bisac_categories: "BISAC Categories",
     number_of_pages: "Number of Pages", series: "Series", delete: "Delete", direct_purchase: "Direct Purchase", subscription: "Subscription",
-    preview_percent: "Preview %", language: "Language", genre: "Genre", enrollment_date: "Enrollment Date", asin: "ASIN", apple_id: "Apple ID" }
+    preview_percent: "Preview %", language: "Language", genre: "Genre", enrollment_date: "Enrollment Date", asin: "ASIN", amazon_link: "Amazon Link", apple_id: "Apple ID" }
 
   def Constants.attachment_validation_params(*content_type, size: DefaultSize)
     [
