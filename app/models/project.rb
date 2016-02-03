@@ -276,7 +276,6 @@ class Project < ActiveRecord::Base
   def self.generate_scribd_export(project_grid_table_rows, page_type = :csv)
     scribd_data_rows = []
     project_grid_table_rows.each do | pgtr |
-
       scribd_data_rows.push(pgtr.generate_scribd_export_hash(page_type))
     end
     scribd_data_rows
@@ -286,9 +285,15 @@ class Project < ActiveRecord::Base
     require 'csv'
     csv_string = CSV.generate do | csv |
       csv << Constants::ScribdCsvHeaderHash.values
+
       scribd_data_rows.each do | scribd_data_row_hash |
-        csv << scribd_data_row_hash.values
+        values = []
+        scribd_data_row_hash.each do | key, value |
+          values << value if Constants::ScribdCsvHeaderHash.has_key? key
+        end
+        csv << values
       end
+
     end
     csv_string
   end

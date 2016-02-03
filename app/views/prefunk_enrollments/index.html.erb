@@ -38,8 +38,10 @@
   <tbody>
     <% @prefunk_enrollments.each do |prefunk_enrollment| %>
       <tr>
-        <% ProjectGridTableRow.find_by_project_id(prefunk_enrollment.project.id).generate_scribd_export_hash.values.each do | value | %>
-        <td><%= value %></td>
+        <% ProjectGridTableRow.find_by_project_id(prefunk_enrollment.project.id).generate_scribd_export_hash.each do | key, value | %>
+          <% if Constants::ScribdCsvHeaderHash.has_key? key %>
+          <td><%= value %></td>
+          <% end %>
         <% end %>
         <td><%= link_to 'Show', prefunk_enrollment.project %></td>
         <td><%= link_to 'Destroy', prefunk_enrollment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -51,5 +53,8 @@
 <br>
 
 <script>
-  $("#prefunk_enrollments_table").DataTable({ 'pageLength': '100'});
+  $("#prefunk_enrollments_table").DataTable({
+    "paging": false,
+    "order": []
+  });
 </script>
