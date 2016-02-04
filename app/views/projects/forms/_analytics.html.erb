@@ -33,6 +33,16 @@
                             }
                             ]
                         });
+                        // YAxis 100 button action
+                        $('#button').click(function () {
+                            var chart = $('#daily-sales-container').highcharts();
+                            chart.yAxis[0].setExtremes(0, 100);
+                        });
+                        // YAxis 25 button action
+                        $('#button-2').click(function () {
+                            var chart = $('#daily-sales-container').highcharts();
+                            chart.yAxis[0].setExtremes(0, 25);
+                        });
                 } else {
                     $('#daily-sales-container').html('<span>Unable to locate Sales Data.</span>');
                 }
@@ -199,6 +209,8 @@
 </script>
 <div id="price-ranking-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 <div id="daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
+<button id="button" class="autocompare">Scale 100</button>
+<button id="button-2" class="autocompare">Scale 25</button>
 <div id="kdp-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 <div id="kdp-free-promo-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
 <div id="apple-daily-sales-container" style="min-width: 910px; height: 400px; margin: 0 auto"></div>
