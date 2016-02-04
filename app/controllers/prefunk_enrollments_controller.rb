@@ -7,8 +7,21 @@ class PrefunkEnrollmentsController < ApplicationController
   respond_to :html
 
   def index
-    @prefunk_enrollments = PrefunkEnrollment.all
-    respond_with(@prefunk_enrollments)
+
+    respond_to do |format|
+      format.html { @prefunk_enrollments = PrefunkEnrollment.all }
+      format.json {
+        prefunk_enrollments = Project.generate_scribd_export(
+          ProjectGridTableRow.where("project_id in (?)",
+            PrefunkEnrollment.all.map(&:project_id)
+          ).sort {
+            # sorting the projects by their book title
+            | a, b | a.project.book_title <=> b.project.book_title
+            },
+         )
+        render json: prefunk_enrollments.map { | hash | { project_id: hash[:project_id], asin: hash[:asin], apple_id: hash[:apple_id], parse_id: hash[:parse_id] } }
+      }
+   end
   end
 
   def show

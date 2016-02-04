@@ -80,6 +80,7 @@ class ProjectGridTableRow < ActiveRecord::Base
     row_hash[:amazon_link] = (!project.control_number.nil? && !project.control_number.asin.nil?)? "http://amzn.com/#{project.control_number.asin}" : ""
     row_hash[:apple_id] = project.control_number.apple_id unless project.control_number.nil?
 
+    row_hash[:parse_id] = project.control_number.parse_id unless project.control_number.nil?
 
     filter_report_data(row_hash)
   end
