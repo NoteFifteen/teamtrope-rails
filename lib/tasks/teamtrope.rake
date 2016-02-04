@@ -200,6 +200,10 @@ namespace :teamtrope do
           row_hash[:squib] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.one_line_blurb) unless project.publication_fact_sheet.one_line_blurb.nil?
         end
 
+        row_hash.each do | key, value |
+          row_hash[key] = ApplicationHelper.filter_special_characters(value) if value.class == String
+        end
+
         csv << row_hash.values
       end
     end
