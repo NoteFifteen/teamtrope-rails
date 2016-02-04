@@ -201,7 +201,7 @@ namespace :teamtrope do
         end
 
         row_hash.each do | key, value |
-          row_hash[key] = ApplicationHelper.filter_special_characters(value) if value.class == String
+          row_hash[key] = ApplicationHelper.filter_special_characters(value) if value.class == String or value.class == Fixnum
         end
 
         csv << row_hash.values
