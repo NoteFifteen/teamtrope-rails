@@ -18,15 +18,10 @@
     }
   %>
   <script type="text/javascript">
-
     $('#scribd_metadata_export_form').bind("submit", function() {
       $("#email_scribd_report_button").attr("disabled", true)
       $("#email_scribd_report_button").addClass("disabled")
     });
-
-    function toggleTable1() {
-    var lTable = document.getElementById("ProjectListTable");
-    lTable.style.display = (lTable.style.display == "table") ? "none" : "table";}
   </script>
   <table id="ProjectListTable" class="projectListTable">
     <thead>

@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
 
 
-  resources :prefunk_enrollments
-
   match 'hellosign_documents/cancel_request/:id', to: 'hellosign_documents#cancel_signature_request', via: :patch
 
   resources :hellosign_document_types
@@ -34,6 +32,9 @@ Rails.application.routes.draw do
 
   get 'admin/reports/scribd_export',             to: 'reports#scribd_metadata_export'
   post 'admin/reports/send_scribd_export_email', to: 'reports#send_scribd_export_email', via: :post
+
+  get  'admin/reports/master_metadata',           to: 'reports#master_metadata'
+  post 'admin/reports/master_metadata',           to: 'reports#master_metadata_export', via: :post
 
   post 'prefunk_enrollments/prefunk_scribd_email_report', to: 'prefunk_enrollments#prefunk_scribd_email_report', via: :post
 
@@ -164,6 +165,7 @@ Rails.application.routes.draw do
   resources :phases
   resources :publication_fact_sheets
   resources :published_files
+  resources :prefunk_enrollments
   resources :price_change_promotions
   resources :print_corners
   resources :production_expenses

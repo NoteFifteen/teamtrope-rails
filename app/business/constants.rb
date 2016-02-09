@@ -86,6 +86,42 @@ module Constants
       :size => DefaultSizeIn
   ]
 
+  MasterMetadataHeaderHash  = {
+      project_id: "Project ID",
+      prefunk: "Prefunk",
+      prefunk_enrollment_date: "Prefunk Enrollment Date",
+      title: "Title",
+      series_name: "Series Name",
+      series_number: "Series Number",
+      author_last_first: "Author (Last,First)",
+      author_first_last: "Author (First,Last)",
+      pfs_author_name: "PFS Author Name",
+      other_contributors: "Other Contributors",
+      team_and_pct: "Team and Pct",
+      imprint: "Imprint",
+      asin: "ASIN",
+      print_isbn: "Print ISBN",
+      epub_isbn: "epub ISBN",
+      format: "Format",
+      publication_date: "Publication Date",
+      month: "Month",
+      year: "Year",
+      page_count: "Page Count",
+      print_price: "Print Price",
+      ebook_price: "Ebook Price(Will vary based on promos and price changes)",
+      library_price: "Library Price",
+      bisac_one: "BISAC",
+      bisac_one_description: "BISAC Description",
+      bisac_two: "BISAC2",
+      bisac_two_description: "BISAC Description 2",
+      bisac_three: "BISAC3",
+      bisac_three_description: "BISAC Description 3",
+      search_terms: "Search Terms",
+      summary: "Summary",
+      author_bio: "Author Bio",
+      squib: "Squib"
+  }
+
   ScribdCsvHeaderHash = { project_id: "Project Id", imprint: "Imprint", parent_isbn: "Parent ISBN", ebook_isbn: "Ebook ISBN", format: "Format",
     filename:"Filename", title: "Title", subtitle: "Sub-title", authors: "Author(s)", publication_date: "Publication Date",
     street_date: "Street Date", digital_list_price: "Digital List Price", currency: "Currency", permitted_sales_territories: "Permitted Sales Territories",
