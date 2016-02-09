@@ -9,8 +9,8 @@ class DataRepairController < ApplicationController
 
   def repair_data
     case params[:type]
-    when 'print_price'
-      repair_print_price
+    when 'prices'
+      repair_prices
     when 'isbn'
       repair_isbn
     else
@@ -27,7 +27,6 @@ class DataRepairController < ApplicationController
 
   def repair_isbn
     @updated_projects = []
-    @updated_column = "Updated Paperback ISBN"
     handle_csv(params[:upload_file]) do | row |
       csv_paperback_isbn = row["ot"]
 
@@ -37,6 +36,7 @@ class DataRepairController < ApplicationController
         updated: false,
         project_id: nil,
         book_type: "Unknown",
+        column_name: 'paperback_isbn',
         title: row["Title"].nil?? "" : row["Title"].force_encoding(Encoding::UTF_8),
         updated_field: csv_paperback_isbn,
       }
@@ -82,9 +82,8 @@ class DataRepairController < ApplicationController
     end
   end
 
-  def repair_print_price
+  def repair_prices
     @updated_projects = []
-    @updated_column = "Updated Print Price"
 
     handle_csv(params[:upload_file]) do | row |
       result_hash = {
@@ -92,10 +91,16 @@ class DataRepairController < ApplicationController
         project_id: row["project_id"],
         book_type: row["book_type"],
         title: row["title"],
-        updated_field: row["submitted_price"]
+        column_name: 'print_price',
+        updated_field: row["print_price"]
       }
-      #binding.pry
+
+      ebook_hash = result_hash.clone
+      ebook_hash[:column_name] = 'ebook_price'
+      ebook_hash[:updated_field] = row['ebook_price']
+
       @updated_projects << result_hash
+      @updated_projects << ebook_hash
 
       if row["project_id"].nil? || row["project_id"].strip == ""
         result_hash[:reason] = "No project_id"
@@ -109,15 +114,26 @@ class DataRepairController < ApplicationController
       result_hash[:title] = project.book_title
       result_hash[:book_type] = project.book_type
 
-      if row["submitted_price"].nil? || row["submitted_price"].strip == ""
-        result_hash[:reason] = "No submitted_price #{row["submitted_price"]}"
-        next
+      ebook_hash[:project] = project
+      ebook_hash[:title] = project.book_title
+      ebook_hash[:book_type] = project.book_type
+
+      if row["print_price"].nil? || row["print_price"].strip == ""
+        result_hash[:reason] = "No print_price #{row["print_price"]}"
+      else
+        project.publication_fact_sheet.print_price = row["print_price"].gsub(/\$/, '')
+        result_hash[:updated] = true
       end
 
-      project.publication_fact_sheet.print_price = row["submitted_price"].gsub(/\$/, '')
-      project.publication_fact_sheet.save
+      if row["ebook_price"].nil? || row["ebook_price"].strip == ""
+        ebook_hash[:reason] = "No ebook_price #{row["ebook_price"]}"
+      else
+        project.publication_fact_sheet.ebook_price = row["ebook_price"].gsub(/\$/, '')
+        ebook_hash[:updated] = true
+      end
 
-      result_hash[:updated] = true
+      # update the pfs we updated either the ebook or print price.
+      project.publication_fact_sheet.save if project.publication_fact_sheet.print_price_changed? || project.publication_fact_sheet.ebook_price_changed?
 
     end
   end
