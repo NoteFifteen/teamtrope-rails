@@ -5,7 +5,8 @@
         <th>Updated</th>
         <th class="book-title">Project</th>
         <th>Project Type</th>
-        <th class="book-title"><%= @updated_column %></th>
+        <th class="book-title">Updated Column</th>
+        <th class="book-title">Updated with</th>
         <th>Reason</th>
       </thead>
       <tbody>
@@ -22,6 +23,7 @@
             <% end %>
           </td>
           <td><%= updated_item[:book_type] %></td>
+          <td><%= updated_item[:column_name] %></td>
           <td><%= updated_item[:updated_field] %></td>
           <td><%= updated_item[:reason] %></td>
         </tr>
@@ -29,6 +31,6 @@
       </tbody>
     </table>
     <script>
-      $("#data_repair_results_table").DataTable({ 'pageLength': '100'});
+      $("#data_repair_results_table").DataTable({ 'paging': false});
     </script>
 </div>
