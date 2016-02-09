@@ -40,4 +40,20 @@ class ReportsController < ApplicationController
     ReportMailer.scribd_email_report @scribd_csv_text, current_user
   end
 
+  def master_metadata
+    @master_metadata_export = Project.generate_master_meta_export(
+      ProjectGridTableRow.published_books.sort { | a, b | a.project.book_title <=> b.project.book_title }
+    )
+  end
+
+  def master_metadata_export
+    csv_string = Project.generate_master_meta_export_csv(
+      Project.generate_master_meta_export(
+        ProjectGridTableRow.published_books.sort { | a, b | a.project.book_title <=> b.project.book_title }
+      )
+    )
+
+    ReportMailer.master_spread_sheet(csv_string, Time.now.strftime("%Y-%d-%m-%H:%M:%S"))
+  end
+
 end
