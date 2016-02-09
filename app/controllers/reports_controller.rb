@@ -39,7 +39,7 @@ class ReportsController < ApplicationController
       )
     )
 
-    ReportMailer.master_spread_sheet(csv_string, Date.today.strftime('%Y-%m-%d %H:%M:%S'))
+    ReportMailer.master_spread_sheet(csv_string, Time.now.strftime("%Y-%d-%m-%H:%M:%S"))
   end
 
 end
