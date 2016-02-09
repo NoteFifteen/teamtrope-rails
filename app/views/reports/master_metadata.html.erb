@@ -1,0 +1,78 @@
+<% provide(:title, "Master Metadata Spreadsheet") %>
+<div class="page"  role="main">
+  <h2>Master Metadata Spreadsheet Export</h2><br />
+  <div id="master_metadata_export_results"></div>
+
+  <%= button_to @current_path, controller: 'reports', action: 'master_metadata_export',
+        remote: true,
+        form: { id: "master_metadata_export_form" },
+        class: "btn btn-primary has-spinner",
+        style: "width:125px",
+        id: "email_master_metadata_button" do %>
+        <span class="spinner"><i class="fa fa-spinner"></i></span>Email Report
+  <% end %>
+  <script type="text/javascript">
+
+    $('#master_metadata_export_form').bind("submit", function() {
+      $("#master_metadata_export_results").hide()
+      $("#email_master_metadata_button").attr("disabled", true)
+      $("#email_master_metadata_button").addClass("active")
+      $("#email_master_metadata_button").addClass("disabled")
+    });
+  </script>
+  <hr />
+  <table id="ProjectListTable" class="projectListTable">
+    <thead>
+      <% Constants::MasterMetadataHeaderHash.values.each do | column_name | %>
+      <th><%= column_name %></th>
+      <% end %>
+    </thead>
+    <tbody>
+    <% @master_metadata_export.each do | master_metadata_export_hash | %>
+      <tr>
+        <td><%= master_metadata_export_hash[:project_id] %></td>
+        <td><%= master_metadata_export_hash[:prefunk] %></td>
+        <td><%= master_metadata_export_hash[:prefunk_enrollment_date] %></td>
+        <td class="book-title"><%= master_metadata_export_hash[:title] %></td>
+        <td><%= master_metadata_export_hash[:series_name] %></td>
+        <td><%= master_metadata_export_hash[:series_number] %></td>
+        <td><%= master_metadata_export_hash[:author_last_first] %></td>
+        <td><%= master_metadata_export_hash[:author_first_last] %></td>
+        <td><%= master_metadata_export_hash[:pfs_author_name] %></td>
+        <td><%= master_metadata_export_hash[:other_contributors] %></td>
+        <td><%= master_metadata_export_hash[:team_and_pct] %></td>
+        <td><%= master_metadata_export_hash[:imprint] %></td>
+        <td><%= master_metadata_export_hash[:asin] %></td>
+        <td><%= master_metadata_export_hash[:print_isbn] %></td>
+        <td><%= master_metadata_export_hash[:epub_isbn] %></td>
+        <td><%= master_metadata_export_hash[:format] %></td>
+        <td><%= master_metadata_export_hash[:publication_date] %></td>
+        <td><%= master_metadata_export_hash[:month] %></td>
+        <td><%= master_metadata_export_hash[:year] %></td>
+        <td><%= master_metadata_export_hash[:page_count] %></td>
+        <td><%= master_metadata_export_hash[:print_price] %></td>
+        <td><%= master_metadata_export_hash[:ebook_price] %></td>
+        <td><%= master_metadata_export_hash[:library_price] %></td>
+        <td><%= master_metadata_export_hash[:bisac_one] %></td>
+        <td><%= master_metadata_export_hash[:bisac_one_description] %></td>
+        <td><%= master_metadata_export_hash[:bisac_two] %></td>
+        <td><%= master_metadata_export_hash[:bisac_two_description] %></td>
+        <td><%= master_metadata_export_hash[:bisac_three] %></td>
+        <td><%= master_metadata_export_hash[:bisac_three_description] %></td>
+        <td><%= master_metadata_export_hash[:search_terms] %></td>
+        <td><%= master_metadata_export_hash[:summary] %></td>
+        <td><%= master_metadata_export_hash[:author_bio] %></td>
+        <td><%= master_metadata_export_hash[:squib] %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <script>
+    $("#ProjectListTable").DataTable({
+      "paging": false,
+      "order": []
+    });
+  </script>
+
+</div>
