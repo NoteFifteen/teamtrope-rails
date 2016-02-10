@@ -1,6 +1,8 @@
 class PublicationFactSheet < ActiveRecord::Base
   belongs_to :project
 
+  after_initialize :custom_init
+
   AGE_RANGES =
   [
     ['grade_school', 'Grade School'],
@@ -33,6 +35,18 @@ class PublicationFactSheet < ActiveRecord::Base
     "11th Grade",
     "12th Grade"
   ]
+
+  def custom_init
+    return if project.nil?
+
+    self.author_name ||= project.authors.map(&:member).map(&:name).join(",")
+
+    # if the pfs exists (which it will on submit pfs since update page count creates it)
+    # override the empty description with the draft blurb
+    self.description = nil if self.description.strip == ""
+    self.description ||= project.try(:draft_blurb).try(:draft_blurb)
+
+  end
 
   def starting_grade_level
     unless self.starting_grade_index.nil? ||

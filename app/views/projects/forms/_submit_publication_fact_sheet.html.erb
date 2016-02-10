@@ -22,7 +22,7 @@
 
             <li>
               <label>Final Title<span class="required">*</span></label>
-              <%= f.input :final_title, label: false, required: true %>
+              <%= f.input :final_title, label: false, required: true, input_html: { value: @project.book_title } %>
               <div class="gfield_description">This is the final agreed upon official book title. </div>
             </li>
 
