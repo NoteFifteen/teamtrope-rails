@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160121233101) do
+ActiveRecord::Schema.define(version: 20160210025827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 20160121233101) do
     t.integer  "num_pages"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "enrollment_date"
   end
 
   add_index "bookbub_submissions", ["project_id"], name: "index_bookbub_submissions_on_project_id", using: :btree

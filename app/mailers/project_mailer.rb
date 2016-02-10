@@ -882,6 +882,7 @@ class ProjectMailer < ActionMailer::Base
     @current_user = current_user
     bookbub = project.bookbub_submissions.last
     tokens = {
+        'Enrollment Date' => bookbub.enrollment_date.strftime("%Y/%m/%d"),
         'Author Name' => bookbub.author,
         'Book Title' => bookbub.title,
         'Imprint' => project.try(:imprint).try(:name),
