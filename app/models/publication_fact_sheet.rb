@@ -43,7 +43,9 @@ class PublicationFactSheet < ActiveRecord::Base
 
     # if the pfs exists (which it will on submit pfs since update page count creates it)
     # override the empty description with the draft blurb
-    self.description = nil if self.description.strip == ""
+    unless self.description.nil?
+      self.description = nil if self.description.strip == ""
+    end
     self.description ||= project.try(:draft_blurb).try(:draft_blurb)
 
   end
