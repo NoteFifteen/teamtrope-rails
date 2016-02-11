@@ -104,10 +104,17 @@ class DataRepairController < ApplicationController
 
       if row["project_id"].nil? || row["project_id"].strip == ""
         result_hash[:reason] = "No project_id"
+        ebook_hash[:reason] = "No project_id"
         next
       end
 
-      project = Project.find(row["project_id"])
+      project = Project.find_by_id(row["project_id"])
+
+      if project.nil?
+        result_hash[:reason] = "Book not found in teamtrope"
+        ebook_hash[:reason] = "Book not found in teamtrope"
+        next
+      end
 
       # getting the real information from the DB maybe it changed since.
       result_hash[:project] = project
