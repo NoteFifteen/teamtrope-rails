@@ -1038,7 +1038,7 @@ class ProjectsController < ApplicationController
       :artwork_rights_requests_attributes => [:id, :role_type, :full_name, :email, :_destroy],
       :blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
       :book_genres_attributes => [:genre_id],
-      :bookbub_submissions_attributes => [:submitted_by_id, :author, :title, :asin, :asin_linked_url, :current_price, :num_stars, :num_reviews, :num_pages],
+      :bookbub_submissions_attributes => [:submitted_by_id, :author, :title, :asin, :asin_linked_url, :current_price, :enrollment_date, :num_stars, :num_reviews, :num_pages],
       :control_number_attributes => [:id, :ebook_library_price, :asin, :bnid, :encore_asin, :apple_id, :epub_isbn, :hardback_isbn,
                                      :paperback_isbn, :parse_id],
       :cover_concept_attributes => [:id, :cover_concept_notes, :cover_art_approval_date, :image_request_list],

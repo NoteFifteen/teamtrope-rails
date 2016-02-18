@@ -45,6 +45,10 @@ $(document).ready(function(){
                 required: true,
                 reviewStarsValid: true
             },
+            'project[bookbub_submissions_attributes][0][enrollment_date(1i)]': {
+                required: true,
+                enrollmentDateValid: true
+            },
             'project[bookbub_submission_attributes][num_pages]': {
                 required: true
             }
@@ -64,6 +68,9 @@ $(document).ready(function(){
             },
             'project[bookbub_submission_attributes][current_price]': {
                 required: 'Please enter the current price'
+            },
+            'project[bookbub_submissions_attributes][0][enrollment_date(1i)]': {
+                required: 'Please select a valid date'
             },
             'bookbub_past_6_months': {
                 required: 'Please answer'
@@ -88,6 +95,23 @@ $(document).ready(function(){
         return (value >= 0 && value <= 5);
     }, 'Please enter a value between 0 and 5');
 
+    var enrollmentDateMessage = ""
+    $.validator.addMethod("enrollmentDateValid", function(value, element, params) {
+        var currentDate = new Date();
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        currentDate.setDate(1);
+        currentDate.setHours(0);
+        currentDate.setMinutes(0);
+        currentDate.setSeconds(0);
+        currentDate.setMilliseconds(0);
+
+        var upperBound = new Date(currentDate.getFullYear() + 1, currentDate.getMonth());
+
+        selectedMonth = $("#project_bookbub_submissions_attributes_0_enrollment_date_2i").val()
+        var selectedDate = new Date(value, selectedMonth - 1,1 );
+
+        return currentDate <= selectedDate && selectedDate <= upperBound;
+    }, 'Your enrollment date must be no more than one year in the future and cannot be in the past.');
 
     $('#bookbub_submission').submit(function(){
         if(bookbub_validator.valid()) {

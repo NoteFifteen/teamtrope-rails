@@ -29,6 +29,21 @@
               <%= bs.input :asin, label: 'ASIN' %>
               <%= bs.input :asin_linked_url, label: 'ASIN Linked URL' %>
 
+              <div class="form-group">
+                <label>Enrollment Date<span class="required">*</span></label>
+                <div>
+                  <p>
+                    What month would you like your BookBub submitted for?
+                  </p>
+                </div>
+                <%= bs.input :enrollment_date, label: false,
+                      as: :date,
+                      start_year: Date.today.year,
+                      end_year: Date.today.year + 1,
+                      selected: Date.today + 1.month,
+                      discard_day: true %>
+              </div>
+
               <%= bs.input :current_price, label: 'Current Price' %>
 
               <div class="form-group float">
