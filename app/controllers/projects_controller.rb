@@ -255,6 +255,21 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def submit_to_layout
+    @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
+
+    if @project.update(update_project_params)
+      @project.create_activity :submitted_to_manuscript, owner: current_user, parameters: { text: 'Submitted proofread final manuscript to layout.', form_data: params[:project].to_s }
+      update_current_task
+      flash[:success] = "Final Proofed Manuscript Uploaded and Submitted to Layout."
+      ProjectMailer.submit_to_layout(@project, current_user, params)
+      redirect_to @project
+    else
+      flash[:danger] = 'There was a problem uploading your Final Proofed Manuscript, please review.'
+      render 'show'
+    end
+  end
+
   def layout_upload
     if @project.update(update_project_params)
       @project.create_activity :uploaded_layout, owner: current_user,
@@ -1034,6 +1049,7 @@ class ProjectsController < ApplicationController
       :publication_date, :target_market_launch_date, :special_text_treatment, :has_sub_chapters, :has_index,
       :non_standard_size, :has_internal_illustrations, :color_interior, :childrens_book,
       :edit_complete_date, :imprint_id, :createspace_store_url, :createspace_coupon_code, :enable_rights_request,
+      :has_works_previously_published_with_booktrope, :works_previously_published_with_booktrope, :table_of_contents,
       :genre_ids => [],
       :artwork_rights_requests_attributes => [:id, :role_type, :full_name, :email, :_destroy],
       :blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],

@@ -86,6 +86,16 @@ label.prefunk_enrollment_checklist {
   overflow: auto;
 }
 
+input.submit_to_layout_checklist {
+  float: left;
+  margin: 5px 10px 5px 0px !important;
+}
+
+label.submit_to_layout_checklist {
+  display: block;
+  overflow: auto;
+}
+
 /**
  * Temporarily necessary to override the pcss3t styles and to clean up the inputs
  *
