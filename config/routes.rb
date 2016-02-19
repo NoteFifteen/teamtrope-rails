@@ -101,6 +101,7 @@ Rails.application.routes.draw do
   match '/projects/social_media_marketing/:id',   to: 'projects#update_social_media_mkt',  via: [:patch, :post]
   match '/projects/submit_blurb/:id',             to: 'projects#submit_blurb',             via: 'patch'
   match '/projects/submit_form_1099/:id',         to: 'projects#submit_form_1099',         via: 'patch'
+  match '/projects/submit_to_layout/:id',         to: 'projects#submit_to_layout',         via: 'patch'
   match '/projects/submit_submit_pfs/:id',        to: 'projects#submit_pfs',               via: 'patch'
   match '/projects/update_final_page_count/:id',  to: 'projects#update_final_page_count',  via: 'patch'
   match '/projects/update_genre/:id',             to: 'projects#update_genre',             via: 'patch'

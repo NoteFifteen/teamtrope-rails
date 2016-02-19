@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160210025827) do
+ActiveRecord::Schema.define(version: 20160218004109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -755,8 +755,8 @@ ActiveRecord::Schema.define(version: 20160210025827) do
     t.integer  "wp_id"
     t.string   "slug"
     t.text     "synopsis"
-    t.boolean  "lock",                           default: false
-    t.boolean  "done",                           default: false
+    t.boolean  "lock",                                          default: false
+    t.boolean  "done",                                          default: false
     t.string   "previously_published_title"
     t.integer  "previously_published_year"
     t.string   "previously_published_publisher"
@@ -766,7 +766,10 @@ ActiveRecord::Schema.define(version: 20160210025827) do
     t.string   "book_type"
     t.string   "createspace_store_url"
     t.string   "createspace_coupon_code"
-    t.boolean  "enable_rights_request",          default: false
+    t.boolean  "enable_rights_request",                         default: false
+    t.boolean  "has_works_previously_published_with_booktrope"
+    t.text     "works_previously_published_with_booktrope"
+    t.boolean  "table_of_contents"
   end
 
   add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree

@@ -451,15 +451,15 @@ jQuery ->
 ## form.
 jQuery ->
 
-  field = $("#submit_proofread input[name=project\\[previously_published\\]]:radio")
-  field_value = $("#submit_proofread input[name=project\\[previously_published\\]]:checked")
+  field = $("input[name=project\\[previously_published\\]]:radio")
+  field_value = $("input[name=project\\[previously_published\\]]:checked")
 
   if ! field.is(':checked') || field_value.val() == 'false'
     $('.previously_published_true').hide()
 
   $(field).change (event) =>
      if field.is(':checked')
-       field_value = $("#submit_proofread input[name=project\\[previously_published\\]]:checked")
+       field_value = $("input[name=project\\[previously_published\\]]:checked")
 
        if field_value.val() == 'true'
          $('.previously_published_true').slideDown()
@@ -485,6 +485,20 @@ jQuery ->
         $('.does_contain_images_1').slideUp()
         $('.does_contain_images_2').slideUp()
 
+jQuery ->
+  field = $('input[name=project\\[has_works_previously_published_with_booktrope\\]]')
+  field_value = $('input[name=project\\[has_works_previously_published_with_booktrope\\]]:checked')
+
+  if !field.is(':checked') || (field.is(':checked') && field_value.val() == 'false')
+    $('.works_previously_published_with_booktrope').hide()
+
+  $(field).change (event) ->
+    field_value = $('input[name=project\\[has_works_previously_published_with_booktrope\\]]:checked')
+    if field.is(':checked')
+      if field_value.val() == 'true'
+        $('.works_previously_published_with_booktrope').slideDown()
+      else
+        $('.works_previously_published_with_booktrope').slideUp()
 
 ## checklist custom validator
 jQuery.validator.addMethod("checklistValidator", (value, element, params) ->

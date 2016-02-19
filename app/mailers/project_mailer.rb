@@ -229,6 +229,95 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('submit_proofread_reviewed_manuscript_admin', tokens, admin_proofread_reviewed_manuscript_list, admin_subject)
   end
 
+  def submit_to_layout(project, current_user, params)
+    @project = project
+    @current_user = current_user
+
+    subject = "Final Manuscript Submitted to Layout from #{current_user.name} for #{project.book_title}"
+
+    # form page 1
+    tokens = {
+      'All Acknowledgments, Dedications, Author Notes, etc. that you want included in the front and back of the book are included in this manuscript'  => '&#10004;'.html_safe,
+      'Chapter Headings are the way you want them to appear in the final manuscript (e.g. "Chapter One," "Chapter 1", "1", "CHAPTER ONE") and chapter numbering is correct' => '&#10004;'.html_safe,
+      'All body text is Palatino Linotype, size 10' => '&#10004;'.html_safe,
+      'All chapter headings are Palatino Linotype, size 14 (note: Actual Title and Chapter Heading font will be selected via the “Choose Style” form)' => '&#10004;'.html_safe,
+      'All body text is fully justified (excluding text that you wish to be centered, which should be centered)' => '&#10004;'.html_safe,
+      'All paragraphs end in hard returns (Enter ¶), not soft returns (Shift + Enter )' => '&#10004;'.html_safe,
+      'Indents were created using the Tab key or a Format > Paragraph > First Line rule, not by repeatedly pressing the Spacebar' => '&#10004;'.html_safe,
+      'There is a page break inserted between each chapter' => '&#10004;'.html_safe,
+      'All tracked changes have been accepted or rejected and all comments have been removed. If tracked changes or comments are included in the document, it will be returned to you for correction, resulting in layout delays' => '&#10004;'.html_safe,
+      'Any body text you wish to appear italicized, bolded, or in all caps is treated as such in this document'  => '&#10004;'.html_safe,
+    }
+
+    # form page 2
+    tokens['Project Type'] = @project.book_type_pretty
+
+    if @project.previously_published == true
+      tokens['Previously Published'] = 'Yes'
+      tokens['Previously Published Title'] = @project.previously_published_title
+      tokens['Previously Published Year'] = @project.previously_published_year
+      tokens['Previous Publisher'] = @project.previously_published_publisher
+    else
+      tokens['Previously Published'] = 'No'
+    end
+
+    tokens['Genre'] = @project.genres.distinct.map(&:name).join(",")
+    tokens['Imprint'] = (! @project.imprint.nil?) ? @project.try(:imprint).try(:name) : 'N/A'
+
+    if @project.has_works_previously_published_with_booktrope?
+      tokens['Previously Booktrope Published Titles'] = "<pre>#{params[:works_previously_published_with_booktrope]}</pre>".html_safe
+    end
+
+    if !@project.try(:credit_request).nil?
+      tokens['Additional Credits Requested'] = "<pre>#{@project.credit_request}</pre>".html_safe
+    end
+
+    # form page 3
+
+    tokens['All narrative breaks/scene changes are indicated with three asterisks (***).'] = params['scene_changes'].nil?? 'No' : 'Yes'
+    tokens['Are any of your chapters divided into sections with subheadings?'] = (params[:project]['has_sub_chapters'] == 'true') ? 'Yes, and all subheadings are indicated with a larger font size' : 'No'
+
+    tokens['Does your manuscript contain images?'] = (params['does_contain_images'] != '0') ? 'Yes' : 'No'
+
+    if params[:dropbox_link] != ''
+      tokens['Images have been uploaded to Dropbox Folder'] = params['dropbox_link']
+    end
+
+    if params[:teamtrope_link] != ''
+      tokens['Images have been uploaded to Teamtrope Docs Section'] = params['teamtrope_link']
+    end
+
+    tokens['Included a TOC for the paperback edition of my book'] = @project.table_of_contents?? 'Yes' : 'No'
+
+
+    if params[:project]['special_text_treatment'] != ''
+      tokens['Sections requiring special treatment:'] = "<pre>#{params[:project]['special_text_treatment']}</pre>".html_safe
+    end
+
+    # form page 4
+    tokens['Inside Book Title and Chapter font'] = @project.layout.layout_style_choice
+    tokens['Left Side Page Header Display - Name'] = @project.layout.page_header_display_name
+    tokens['Using pen name'] = (@project.layout.use_pen_name_on_title) ? 'Yes' : 'No'
+
+
+    if(@project.layout.use_pen_name_on_title)
+      tokens['Pen name'] = @project.layout.pen_name
+      tokens['Using pen name for copyright'] = (@project.layout.use_pen_name_for_copyright) ? 'Yes' : 'No'
+      tokens['Exact name to appear on copyright'] = @project.layout.exact_name_on_copyright
+    end
+
+    # form page 5
+    if ! @project.target_market_launch_date.nil?
+      tokens['Target Market Launch Date'] = @project.target_market_launch_date
+    end
+
+    tokens['Manuscript Word Count:'] = params[:project]['proofed_word_count']
+
+    send_email_message('proofread_final_manuscript', tokens, get_project_recipient_list(@project, roles: [:project_manager, :author]), subject)
+    send_email_message('proofread_final_manuscript_admin', tokens, admin_proofread_final_manuscript_list, subject)
+
+  end
+
   # Manuscript submitted by Proof-Reader
   def proofread_final_manuscript(project, current_user, params)
     @project = project
