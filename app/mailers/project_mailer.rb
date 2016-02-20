@@ -280,9 +280,9 @@ class ProjectMailer < ActionMailer::Base
 
       works_list = "<pre><ul>"
       previous_works.each do | previous_work |
-        work_list = work_list + "<li>#{previous_work.book_title}</li>"
+        works_list = works_list + "<li>#{previous_work.book_title}</li>"
       end
-      works_list = work_list + "</ul></pre>"
+      works_list = works_list + "</ul></pre>"
 
       tokens['Previously Booktrope Published Titles'] = works_list.html_safe
     end
