@@ -264,8 +264,27 @@ class ProjectMailer < ActionMailer::Base
     tokens['Genre'] = @project.genres.distinct.map(&:name).join(",")
     tokens['Imprint'] = (! @project.imprint.nil?) ? @project.try(:imprint).try(:name) : 'N/A'
 
-    if @project.has_works_previously_published_with_booktrope?
-      tokens['Previously Booktrope Published Titles'] = "<pre>#{params[:works_previously_published_with_booktrope]}</pre>".html_safe
+
+    # look up if any of the authors on this project have any other book(s)
+    # published by booktrope.
+    previous_works = Project.includes(:team_memberships)
+          .joins(:team_memberships)
+          .where("team_memberships.role_id = ? and
+              team_memberships.member_id in (?) and
+              team_memberships.project_id != ? ",
+              Role.find_by_name("Author"),
+              @project.authors.map(&:member_id),
+              @project.id).distinct
+
+    if previous_works.count > 0
+
+      works_list = "<pre><ul>"
+      previous_works.each do | previous_work |
+        work_list = work_list + "<li>#{previous_work.book_title}</li>"
+      end
+      works_list = work_list + "</ul></pre>"
+
+      tokens['Previously Booktrope Published Titles'] = works_list.html_safe
     end
 
     if !@project.try(:credit_request).nil?
@@ -314,7 +333,7 @@ class ProjectMailer < ActionMailer::Base
     tokens['Manuscript Word Count:'] = params[:project]['proofed_word_count']
 
     send_email_message('proofread_final_manuscript', tokens, get_project_recipient_list(@project, roles: [:project_manager, :author]), subject)
-    send_email_message('proofread_final_manuscript_admin', tokens, admin_proofread_final_manuscript_list, subject)
+    send_email_message('proofread_final_manuscript_admin', tokens, admin_submit_to_layout_list, subject)
 
   end
 
@@ -340,8 +359,6 @@ class ProjectMailer < ActionMailer::Base
         'Imprint' => (! @project.imprint.nil?) ? @project.try(:imprint).try(:name) : 'N/A',
         'Project Type' => @project.book_type_pretty
       }
-
-
 
       if(@project.previously_published == true)
         tokens.store('Previously Published', 'Yes')
@@ -1127,6 +1144,10 @@ class ProjectMailer < ActionMailer::Base
   # The proofed manuscript has been uploaded
   def admin_proofread_final_manuscript_list
     %w( tt_proofed_manuscript_list@booktrope.com )
+  end
+
+  def admin_submit_to_layout_list
+    %w( tt_submit_to_layout_list@booktrope.com )
   end
 
   # The layout style has been selected

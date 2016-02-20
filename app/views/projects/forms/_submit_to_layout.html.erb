@@ -107,24 +107,6 @@
           <p class="help-block">IMPORTANT: If you have not discussed being part of a specific imprint with the imprint's Managing Director or Booktrope Management, please select "Booktrope Editions." </p>
         </div>
 
-
-        <div class="form-group">
-          <h4>Other Works</h4>
-          <label>Have you previously released titles through Booktrope?<span class="required">*</span></label><br />
-          <%= f.collection_radio_buttons :has_works_previously_published_with_booktrope,
-                                       [[true, 'Yes'], [false, 'No']], :first, :last,
-                                       :collection_wrapper_tag => 'ul',
-                                       :item_wrapper_tag => 'li'
-          %>
-        </div>
-
-        <div class="form-group works_previously_published_with_booktrope">
-          <label>Please list them below<span class="required">*</span></label>
-          <%= f.input :works_previously_published_with_booktrope,
-                label: false,
-                input_html: { class: %q[textarea medium], rows: 5, cols: 30 } %>
-        </div>
-
         <div class="form-group">
           <h4>Additional Credits</h4>
           <div>

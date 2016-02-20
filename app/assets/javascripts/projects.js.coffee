@@ -485,21 +485,6 @@ jQuery ->
         $('.does_contain_images_1').slideUp()
         $('.does_contain_images_2').slideUp()
 
-jQuery ->
-  field = $('input[name=project\\[has_works_previously_published_with_booktrope\\]]')
-  field_value = $('input[name=project\\[has_works_previously_published_with_booktrope\\]]:checked')
-
-  if !field.is(':checked') || (field.is(':checked') && field_value.val() == 'false')
-    $('.works_previously_published_with_booktrope').hide()
-
-  $(field).change (event) ->
-    field_value = $('input[name=project\\[has_works_previously_published_with_booktrope\\]]:checked')
-    if field.is(':checked')
-      if field_value.val() == 'true'
-        $('.works_previously_published_with_booktrope').slideDown()
-      else
-        $('.works_previously_published_with_booktrope').slideUp()
-
 ## checklist custom validator
 jQuery.validator.addMethod("checklistValidator", (value, element, params) ->
   is_user_ready_to_upload = true
