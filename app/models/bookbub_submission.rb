@@ -13,4 +13,8 @@ class BookbubSubmission < ActiveRecord::Base
 
   end
 
+  def asin_link
+    (asin.nil?) ? nil : "http://amzn.com/#{asin}"
+  end
+
 end
