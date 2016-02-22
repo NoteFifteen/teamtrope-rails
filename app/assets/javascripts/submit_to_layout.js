@@ -175,6 +175,8 @@ $(document).ready(function(){
     if(stlPageValidator.valid()) {
       $("#submit-to-layout-page-1").hide();
       $("#submit-to-layout-page-2").show();
+
+      $("html, body").animate({scrollTop: $('#submit_to_layout_form').offset().top - 120 }, 500);
     }
   });
 
@@ -199,6 +201,7 @@ $(document).ready(function(){
     if(isValid) {
       $("#submit-to-layout-page-2").hide();
       $("#submit-to-layout-page-3").show();
+      $("html, body").animate({scrollTop: $('#submit_to_layout_form').offset().top - 120 }, 500);
     }
   });
 
@@ -219,6 +222,7 @@ $(document).ready(function(){
     if(isValid) {
       $("#submit-to-layout-page-3").hide();
       $("#submit-to-layout-page-4").show();
+      $("html, body").animate({scrollTop: $('#submit_to_layout_form').offset().top - 120 }, 500);
     }
 
   });
@@ -243,6 +247,7 @@ $(document).ready(function(){
       $("#submit-to-layout-page-4").hide();
       $("#submit-to-layout-page-5").show();
       $("#final_manuscript_upload").show();
+      $("html, body").animate({scrollTop: $('#submit_to_layout_form').offset().top - 120 }, 500);
     }
 
   });
@@ -266,22 +271,26 @@ $(document).ready(function(){
   $("#submit_to_layout_back_button_2").click(function() {
     $("#submit-to-layout-page-1").show();
     $("#submit-to-layout-page-2").hide();
+    $("html, body").animate({scrollTop: $('#submit_to_layout_form').offset().top - 120 }, 500);
   });
 
   $("#submit_to_layout_back_button_3").click(function() {
     $("#submit-to-layout-page-2").show();
     $("#submit-to-layout-page-3").hide();
+    $("html, body").animate({scrollTop: $('#submit_to_layout_form').offset().top - 120 }, 500);
   });
 
   $("#submit_to_layout_back_button_4").click(function() {
     $("#submit-to-layout-page-3").show();
     $("#submit-to-layout-page-4").hide();
+    $("html, body").animate({scrollTop: $('#submit_to_layout_form').offset().top - 120 }, 500);
   });
 
   $("#submit_to_layout_back_button_5").click(function() {
     $("#submit-to-layout-page-4").show();
     $("#submit-to-layout-page-5").hide();
     $("#final_manuscript_upload").hide();
+    $("html, body").animate({scrollTop: $('#submit_to_layout_form').offset().top - 120 }, 500);
   });
 
 });
