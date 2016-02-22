@@ -49,15 +49,6 @@ $(document).ready(function(){
         "project[imprint_id]": {
           required: true
         },
-        "project[has_works_previously_published_with_booktrope]": {
-          required: true
-        },
-        "project[works_previously_published_with_booktrope]": {
-          required: true
-        },
-        // "project[credit_request]": {
-        //   required: true
-        // },
         does_contain_images: {
           required: true
         },
@@ -130,15 +121,6 @@ $(document).ready(function(){
         "project[imprint_id]": {
           required: "Please select an imprint"
         },
-        "project[has_works_previously_published_with_booktrope]": {
-          required: "Please indicate if you have previously released titles through Booktrope"
-        },
-        "project[works_previously_published_with_booktrope]": {
-          required: "Please list previously released titles through Booktrope"
-        },
-        // "project[credit_request]": {
-        //   required: "Please provide a credit request"
-        // },
         does_contain_images: {
           required: "Please indicate if the book contains images"
         },
@@ -186,7 +168,6 @@ $(document).ready(function(){
     });
 
 
-
   // next buttons
   $("#submit_to_layout_next_button_1").click(function() {
 
@@ -214,13 +195,6 @@ $(document).ready(function(){
       isValid = false
     if (!stlPageValidator.element('[name=project\\[imprint_id\\]]'))
       isValid = false
-    if (!stlPageValidator.element('[name=project\\[has_works_previously_published_with_booktrope\\]]'))
-      isValid = false
-    if (!stlPageValidator.element('[name=project\\[works_previously_published_with_booktrope\\]]'))
-      isValid = false
-    // if (!stlPageValidator.element('[name=project\\[credit_request\\]]'))
-    //   isValid = false
-
 
     if(isValid) {
       $("#submit-to-layout-page-2").hide();
