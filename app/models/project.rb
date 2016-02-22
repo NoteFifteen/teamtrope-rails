@@ -131,10 +131,6 @@ class Project < ActiveRecord::Base
   # Not an actual column, but used in the ProjectsController
   attr_accessor :man_dev_decision
 
-  def has_works_previously_published_with_booktrope?
-    has_works_previously_published_with_booktrope
-  end
-
   def table_of_contents?
     table_of_contents
   end
