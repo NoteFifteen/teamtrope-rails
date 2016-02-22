@@ -23,11 +23,14 @@
 
               <%= bs.input :submitted_by_id, as: :hidden, label: false, input_html: { value: @current_user.id } %>
 
-              <%= bs.input :author, label: 'Author Name' %>
-              <%= bs.input :title, label: 'Book Title' %>
+              <label>Author Name<span class="required">*</span></label>
+              <%= bs.input :author, label: false %>
 
-              <%= bs.input :asin, label: 'ASIN' %>
-              <%= bs.input :asin_linked_url, label: 'ASIN Linked URL' %>
+              <label>Book Title<span class="required">*</span></label>
+              <%= bs.input :title, label: false %>
+
+              <label>ASIN<span class="required">*</span></label>
+              <%= bs.input :asin, label: false %>
 
               <div class="form-group">
                 <label>Enrollment Date<span class="required">*</span></label>
@@ -44,10 +47,11 @@
                       discard_day: true %>
               </div>
 
-              <%= bs.input :current_price, label: 'Current Price' %>
+              <label>Current Price<span class="required">*</span></label>
+              <%= bs.input :current_price, label: false %>
 
               <div class="form-group float">
-                <label>Has this title had a Bookbub in the past 6 months?</label><span>
+                <label>Has this title had a Bookbub in the past 6 months?<span class="required">*</span></label><span>
 
                 <br/>
                 <%= radio_button_tag "bookbub_past_6_months", 'no', false %>
@@ -61,7 +65,7 @@
               </div>
 
               <div class="form-group float">
-                <label>Has this author had a Bookbub feature in the past 30 days?</label><span>
+                <label>Has this author had a Bookbub feature in the past 30 days?<span class="required">*</span></label><span>
                 <br/>
                 <%= radio_button_tag "bookbub_feature_past_30_days", 'no', false %>
                 <label for="bookbub_feature_past_30_days_no">No</label>
@@ -73,9 +77,11 @@
                 </span>
               </div>
 
-              <%= bs.input :num_reviews, label: 'How many reviews on Amazon?' %>
+              <label>How many reviews on Amazon?<span class="required">*</span></label>
+              <%= bs.input :num_reviews, label: false %>
 
-              <%= bs.input :num_stars, label: 'Average star rating?' %>
+              <label>Average star rating?<span class="required">*</span></label>
+              <%= bs.input :num_stars, label: false %>
 
               <div>
                 To Find Your Ebook Page Count :<br>
@@ -90,7 +96,8 @@
                 </ul>
               </div>
 
-              <%= bs.input :num_pages, label: 'How many pages does the title have?' %>
+              <label>How many pages does the title have?<span class="required">*</span></label>
+              <%= bs.input :num_pages, label: false %>
 
               <div id="bookbub_submit_does_not_qualify" style="display: none;">
 
