@@ -977,7 +977,7 @@ class ProjectMailer < ActionMailer::Base
         'Imprint' => project.try(:imprint).try(:name),
         'Genre' => project.try(:genres).try(:first).try(:name),
         'ASIN' => bookbub.asin,
-        'ASIN Linked URL' => bookbub.asin_linked_url,
+        'ASIN Linked URL' => bookbub.asin_link,
         'Current price' => bookbub.current_price,
         '# of Stars' => bookbub.num_stars,
         '# of Reviews' => bookbub.num_reviews,
