@@ -3,6 +3,15 @@ class Project < ActiveRecord::Base
   include ApplicationHelper
   include PublicActivity::Model
 
+
+  # constants
+  SceneChangeOptions = [
+    'All scene changes are indicated with 3 asterisks (***) ',
+    'All scene changes are indicated with extra line spaces',
+    'All scene changes are indicated with an image',
+    'Manuscript contains a combination of different types of scene breaks/POV changes and uses multiple methods (e.g. asterisks for scene breaks, extra line space for POV changes)',
+  ]
+
   # friendly_id
   extend FriendlyId
   friendly_id :title, use: :slugged

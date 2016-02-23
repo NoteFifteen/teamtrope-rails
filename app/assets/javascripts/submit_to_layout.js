@@ -49,6 +49,9 @@ $(document).ready(function(){
         "project[imprint_id]": {
           required: true
         },
+        scene_change:{
+          required: true
+        },
         does_contain_images: {
           required: true
         },
@@ -121,6 +124,9 @@ $(document).ready(function(){
         "project[imprint_id]": {
           required: "Please select an imprint"
         },
+        scene_change:{
+          required: "Please select how scene changes are indicated"
+        },
         does_contain_images: {
           required: "Please indicate if the book contains images"
         },
@@ -170,7 +176,6 @@ $(document).ready(function(){
 
   // next buttons
   $("#submit_to_layout_next_button_1").click(function() {
-
     stlPageValidator.element('[name=checklist_0]')
     if(stlPageValidator.valid()) {
       $("#submit-to-layout-page-1").hide();
@@ -208,6 +213,8 @@ $(document).ready(function(){
   $("#submit_to_layout_next_button_3").click(function() {
 
     var isValid = true
+    if (!stlPageValidator.element('[name=scene_change]'))
+      isValid = false
     if (!stlPageValidator.element('[name=does_contain_images]'))
       isValid = false
     if (!stlPageValidator.element('[name=dropbox_link]'))

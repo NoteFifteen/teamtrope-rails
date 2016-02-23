@@ -124,13 +124,16 @@
 
       <div id="submit-to-layout-page-3" style="display: none;">
         <div class="form-group">
-          <h4>Scene Changes</h4>
           <div>
-              <%= check_box_tag 'scene_changes' %> <%= label_tag 'scene_changes', 'All narrative breaks/scene changes are indicated with three asterisks (***).' %>
-          </div>
-          <div class="help-block">
-              Checking this box will instruct us to add a scene change indicator (a line or other graphic mark at the layout artist's discretion) to separate scenes in the book.
-              Note: If you prefer your breaks to appear as blank space in the final book, please leave this unchecked and note as much in the "text needing special treatment" field below.
+            <h4>How are scene changes indicated within this manuscript?<span class="required">*</span></h4>
+            <ul>
+              <%
+                  Project::SceneChangeOptions.each_with_index do | radio, index |
+              %>
+                <li><label><%= radio_button_tag :scene_change, index %> <strong><%= radio %></strong></label></li>
+              <% end %>
+            </ul>
+            <p class="help-block">Note: The final product will match what you currently have in the document.</p>
           </div>
         </div>
 
