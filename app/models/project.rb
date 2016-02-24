@@ -103,6 +103,10 @@ class Project < ActiveRecord::Base
     .where("current_tasks.task_id = ?", Task.where(name: task_name).first.try(:id))
   }
 
+  scope :with_no_contracts, -> () {
+    where.not(id: Project.joins(team_memberships: :hellosign_document).distinct.ids)
+  }
+
   BOOK_TYPES = [
     ['ebook only', 'ebook_only'],
     ['ebook and print', 'ebook_and_print']
@@ -181,6 +185,13 @@ class Project < ActiveRecord::Base
       HellosignDocument
         .where(team_membership_id: team_memberships.where(member: user).ids, is_complete: false)
         .where.not(cancelled: true, pending_cancellation: true)
+  end
+
+  def contracts
+    HellosignDocument
+      .joins(team_membership: :role)
+      .includes(team_membership: [:role, :member])
+      .where("team_memberships.project_id = ?", id)
   end
 
   def is_team_member?(user)

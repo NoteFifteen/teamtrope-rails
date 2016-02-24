@@ -59,8 +59,18 @@ class ProjectsController < ApplicationController
 
   def show
     @activities = PublicActivity::Activity.includes(:owner, owner: [:profile]).order('created_at DESC').where(trackable_type: 'Project', trackable_id: @project)
+    @contract_activities = @activities.where(key: ["project.hs_signature_request_sent", "project.hs_signature_request_viewed", "project.hs_signature_request_signed"])
     @users = User.all
     @current_user = current_user
+    @hellosign_documents = HellosignDocument.joins(team_membership: :role)
+          .includes(team_membership: [ :role, :member ])
+          .where("team_memberships.project_id = ? ", @project.id)
+          .order("roles.name asc", created_at: :asc)
+    @current_user_contracts = HellosignDocument.joins(team_membership: :role)
+          .includes(team_membership: [ :role, :member ])
+          .where("team_memberships.project_id = ? and
+            team_memberships.member_id = ?", @project.id, current_user.id)
+          .order("roles.name asc", created_at: :asc)
   end
 
   def grid_view

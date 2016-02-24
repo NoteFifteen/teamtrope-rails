@@ -54,6 +54,23 @@ class HellosignDocument < ActiveRecord::Base
     {parties: parties, payments: payments}
   end
 
+  def status_text
+    case status
+    when "signature_request_sent"
+      "Sent"
+    when "signature_request_viewed"
+      "Viewed"
+    when "signature_request_signed"
+      "Single Party Signed"
+    when "signature_request_all_signed"
+      "All Parties Signed"
+    when "signature_request_remind"
+      "Reminder Sent"
+    else
+      status
+    end
+  end
+
   def send_agreement(custom_fields, signers)
 
     #send the signature request to hellosign using their api

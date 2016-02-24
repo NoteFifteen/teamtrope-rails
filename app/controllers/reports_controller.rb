@@ -6,6 +6,14 @@ class ReportsController < ApplicationController
     @projects = Project.high_allocations @percent
   end
 
+  def no_contracts
+    # getting the optimized data set for all projects without contracts.
+    @project_grid_table_rows = ProjectGridTableRow
+          .includes(:project)
+          .where(project_id: Project.with_no_contracts.ids)
+          .order(title: :asc)
+  end
+
   def missing_current_tasks
     @projects = Project.missing_current_tasks
   end

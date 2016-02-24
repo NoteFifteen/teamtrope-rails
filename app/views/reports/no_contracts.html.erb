@@ -1,0 +1,39 @@
+<%= provide :title, "No Contracts" %>
+<div class="container">
+  <h1>Books With Zero Contracts</h1>
+  <% if @project_grid_table_rows.count > 0 %>
+  <div class="alert alert-danger">
+    There are <%= @project_grid_table_rows.count %> projects out of <%= Project.count %> without contracts!
+  </div>
+  <% end %>
+
+  <table id="no_contracts_table" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Book Title</th>
+        <th>Author</th>
+        <th>Proofreader</th>
+        <th>Project Manager</th>
+        <th>Marketing Manger</th>
+        <th>Cover Designer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @project_grid_table_rows.each do | pgtr | %>
+      <tr>
+        <td class="book-title"><%= link_to pgtr.project.book_title, pgtr.project %></td>
+        <td><%= pgtr.author %></td>
+        <td><%= pgtr.proofreader %></td>
+        <td><%= pgtr.project_manager %></td>
+        <td><%= pgtr.book_manager %></td>
+        <td><%= pgtr.cover_designer %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<script>
+$("#no_contracts_table").DataTable({
+     "pageLength": 100
+});
+</script>

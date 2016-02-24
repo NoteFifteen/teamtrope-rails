@@ -1,0 +1,197 @@
+<%
+# :name,
+# :template_id,
+# :subject,
+# :message,
+# :ccs,
+# :signers,
+# :version
+
+# status: string,
+# created_at: datetime,
+# updated_at: datetime,
+# hellosign_document_type_id: integer,
+# team_membership_id: integer,
+# signing_url: string,
+# files_url: string,
+# details_url: string,
+# is_complete: boolean,
+# pending_cancellation: boolean,
+# cancelled: boolean,
+# has_error: boolean
+%>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Contracts</h1>
+      <ul class="nav nav-tabs">
+        <li id="my_contracts_tab" class="active"><a href="#">My Contracts</a></li>
+        <% if current_user.role? :booktrope_staff %>
+          <li id="member_contracts_tab"><a href="#">Team Member Contracts</a></li>
+        <% end %>
+        <li id="contract_activity_tab" ><a href="#">Contract Activity</a></li>
+      </ul>
+      <br />
+      <br />
+
+      <div id="my_contracts">
+        <% if @current_user_contracts.count > 0 %>
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Creation Date</th>
+              <th>Role</th>
+              <th>Version</th>
+              <th>Status</th>
+              <th>Percentage</th>
+              <th>Status</th>
+              <th>Links</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @current_user_contracts.each do | my_contract | %>
+            <tr>
+              <td><%= my_contract.created_at %></td>
+              <td><%= my_contract.team_membership.role.name %></td>
+              <td><%= my_contract.version %></td>
+              <td><i class="genericon genericon-<%= my_contract.is_complete ? "checkmark" : "close" %>"></i></td>
+              <td><%= my_contract.team_membership.percentage %></td>
+              <td><%= my_contract.status_text %></td>
+              <td>
+                <% [
+                  { link: my_contract.details_url, text: "Details" },
+                  { link: my_contract.signing_url, text: "Sign Here" }
+                ].each do | link | %>
+                  <%= link_to link[:text], link[:link], target: :blank %><br />
+                <% end %>
+              </td>
+            </tr>
+             <% end %>
+          </tbody>
+        </table>
+        <% else %>
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              No Contracts
+            </div>
+            <div class="panel-body">
+            <% if @project.is_team_member?(current_user) %>
+              You're a member of this team but there are no contracts in the system.
+              Please contact ...
+            <% else %>
+              You're not a member of this team.
+            <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <% if current_user.role? :booktrope_staff
+        # todo: refactor this to get it from the controller
+        alert_class = "success"
+        member_contracts_status = "Congratulations! All Members have signed their contracts."
+
+        @hellosign_documents.each do | hellosign_document |
+          if !hellosign_document.complete?
+            alert_class = "danger"
+            member_contracts_status = "There are outstanding signature requests."
+          end
+        end
+
+        if @hellosign_documents.count <= 0
+          alert_class = "danger"
+          member_contracts_status = "Warning there are no contracts in the system for this project!"
+        end
+      %>
+      <div id="member_contracts" style="display:none;">
+        <div id="member_contracts_status" class="alert alert-<%= alert_class %>">
+          <%= member_contracts_status %>
+        </div>
+        <table class="table table-condensed">
+          <thead>
+            <tr>
+              <th>Complete</th>
+              <th>Creation Date</th>
+              <th>Signer</th>
+              <th>Role</th>
+              <th>Version</th>
+              <th>Status</th>
+              <th>Last Updated</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @hellosign_documents.each do | hellosign_document | %>
+              <tr class="alert alert-<%= hellosign_document.complete?? "success" : "danger" %>">
+                <td><i class="genericon genericon-<%= hellosign_document.is_complete ? "checkmark" : "close" %>"></i></td>
+                <td><%= hellosign_document.created_at %></td>
+                <td>
+                  <%= link_to hellosign_document.team_membership.member.name,
+                        hellosign_document.team_membership.member.profile_page %>
+                </td>
+                <td><%= hellosign_document.team_membership.role.name %></td>
+                <td><%= hellosign_document.version %></td>
+                <td><%= hellosign_document.status_text %></td>
+                <td><%= hellosign_document.updated_at %></td>
+                <td><%= link_to "Details", hellosign_document.details_url %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <% end %>
+
+      <div id="contract_activity" style="display:none; overflow-y: scroll; height:150px;">
+        <%= render_activities(@contract_activities, fallback: 'default') %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+
+  var activeTab = $("#my_contracts_tab");
+  var activeContent = $("#my_contracts");
+
+  $("#my_contracts_tab").click(function(e){
+    e.preventDefault();
+
+    $("#my_contracts_tab").addClass("active");
+    activeTab.removeClass("active");
+    activeTab = $("#my_contracts_tab");
+
+    activeContent.hide();
+    activeContent = $("#my_contracts")
+    activeContent.show();
+
+  });
+
+  <% if current_user.role? :booktrope_staff %>
+  $("#member_contracts_tab").click(function(e){
+    e.preventDefault();
+
+    $("#member_contracts_tab").addClass("active");
+    activeTab.removeClass("active")
+    activeTab = $("#member_contracts_tab")
+
+    activeContent.hide();
+    activeContent = $("#member_contracts")
+    $("#member_contracts").show();
+
+  });
+  <% end %>
+
+  $("#contract_activity_tab").click(function(e){
+    e.preventDefault();
+
+    $("#contract_activity_tab").addClass("active");
+    activeTab.removeClass("active")
+    activeTab = $("#contract_activity_tab")
+
+    activeContent.hide();
+    activeContent = $("#contract_activity")
+    $("#contract_activity").show();
+  });
+</script>
