@@ -10,7 +10,7 @@ namespace :teamtrope do
     report.insert_books(book_list)
 
     # getting the books that we expect to be in enrolled in KDP Select
-    kdp_books = KdpSelectEnrollment.joins(:project).where(enrollment_date: 90.days.ago..Date.today).map { | kdpse | kdpse.project  }
+    kdp_books = KdpSelectEnrollment.includes(:project).all.map(&:project)
 
     # marking the books that were found for sale on KDP
     report.mark_kdp_books kdp_books
