@@ -293,7 +293,11 @@ class ProjectMailer < ActionMailer::Base
 
     # form page 3
 
-    tokens['All narrative breaks/scene changes are indicated with three asterisks (***).'] = params['scene_changes'].nil?? 'No' : 'Yes'
+    tokens['Scene changes are inidcated by:'] = "No Scene Changes"
+    unless params['scene_change'].nil?
+      tokens['Scene changes are inidcated by:'] = Project::SceneChangeOptions[params['scene_change'].to_i]
+    end
+
     tokens['Are any of your chapters divided into sections with subheadings?'] = (params[:project]['has_sub_chapters'] == 'true') ? 'Yes, and all subheadings are indicated with a larger font size' : 'No'
 
     tokens['Does your manuscript contain images?'] = (params['does_contain_images'] != '0') ? 'Yes' : 'No'
