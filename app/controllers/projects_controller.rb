@@ -258,6 +258,9 @@ class ProjectsController < ApplicationController
   def submit_to_layout
     @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
 
+    # Only necessary due to the one-to-many relationship originally set up.
+    @project.book_genres.destroy_all
+
     if @project.update(update_project_params)
       @project.create_activity :submitted_to_manuscript, owner: current_user, parameters: { text: 'Submitted proofread final manuscript to layout.', form_data: params[:project].to_s }
       update_current_task
