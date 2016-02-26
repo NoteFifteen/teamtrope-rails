@@ -88,15 +88,13 @@
       </div>
 
       <% if current_user.role? :booktrope_staff
-        # todo: refactor this to get it from the controller
+
         alert_class = "success"
         member_contracts_status = "Congratulations! All Members have signed their contracts."
 
-        @hellosign_documents.each do | hellosign_document |
-          if !hellosign_document.complete?
-            alert_class = "danger"
-            member_contracts_status = "There are outstanding signature requests."
-          end
+        if @outstanding_contracts
+          alert_class = "danger"
+          member_contracts_status = "There are outstanding signature requests."
         end
 
         if @hellosign_documents.count <= 0

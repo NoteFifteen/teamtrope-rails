@@ -66,6 +66,8 @@ class ProjectsController < ApplicationController
           .includes(team_membership: [ :role, :member ])
           .where("team_memberships.project_id = ? ", @project.id)
           .order("roles.name asc", created_at: :asc)
+    @outstanding_contracts = @hellosign_documents.where(is_complete: false).count > 0
+
     @current_user_contracts = HellosignDocument.joins(team_membership: :role)
           .includes(team_membership: [ :role, :member ])
           .where("team_memberships.project_id = ? and
