@@ -37,7 +37,7 @@
               'Indents were created using the Tab key or a Format > Paragraph > First Line rule, not by repeatedly pressing the Spacebar',
               'There is a page break inserted between each chapter',
               'All tracked changes have been accepted or rejected and all comments have been removed. If tracked changes or comments are included in the document, it will be returned to you for correction, resulting in layout delays',
-              'Any body text you wish to appear italicized, bolded, or in all caps is treated as such in this document'
+              'Any body text you wish to appear italicized, bolded, or in all caps is treated as such in this document '
             ].each_with_index do | label, index |
           %>
             <li><%= check_box_tag "checklist_#{index}", index, false, class: "submit_to_layout_checklist" %> <%= label_tag "checklist_#{index}", label, class: "submit_to_layout_checklist" %></li>
