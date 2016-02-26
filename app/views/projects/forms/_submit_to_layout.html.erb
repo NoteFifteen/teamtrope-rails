@@ -52,6 +52,7 @@
 
         <div class="form-group">
           <h4>Project Type<span class='required'>*</span></h4>
+          <p class="help-block">If your manuscript is less than 35,000 words, please select ebook only.</p>
           <%= f.input :book_type, as: :radio_buttons,
             collection: Project::BOOK_TYPES,
             wrapper: :vertical_radio_and_checkboxes,
@@ -59,7 +60,6 @@
             item_wrapper_tag: 'li',
             label: false,
             id: 'book_type_radio' %>
-          <p class="help-block">If your manuscript is less than 35,000 words, please select ebook only.</p>
         </div>
 
         <div class="form-group">
@@ -128,7 +128,8 @@
       <div id="submit-to-layout-page-3" style="display: none;">
         <div class="form-group">
           <div>
-            <h4>How are scene changes indicated within this manuscript?<span class="required">*</span></h4>
+            <h4>Scene Changes<span class="required">*</span></h4>
+            <p class="help-block">How are scene changes indicated within this manuscript? Note: The final product will match what you currently have in the document.</p>
             <ul>
               <%
                   Project::SceneChangeOptions.each_with_index do | radio, index |
@@ -136,12 +137,12 @@
                 <li><label><%= radio_button_tag :scene_change, index %> <strong><%= radio %></strong></label></li>
               <% end %>
             </ul>
-            <p class="help-block">Note: The final product will match what you currently have in the document.</p>
           </div>
         </div>
 
         <div class="form-group">
-          <h4>Are any of your chapters divided into sections with subheadings?<span class="required">*</span></h4>
+          <h4>Subheadings<span class="required">*</span></h4>
+          <p class="help-block">Are any of your chapters divided into sections with subheadings?</p>
           <%= f.collection_radio_buttons :has_sub_chapters,
                 [
                   [false, 'No'],
@@ -155,18 +156,6 @@
 
         <div class="form-group">
           <h4>Does your manuscript contain images?<span class="required">*</span></h4>
-          <div>
-            <ul class="gfield_checkbox">
-              <%
-                [
-                  'No',
-                  'Yes ‐ I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don\'t need to increase their size) have been uploaded to the Docs section of my teamroom.',
-                  'Yes - I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don\'t need to increase their size) have been uploaded to a Dropbox folder available here:'
-                ].each_with_index do | radio, index | %>
-              <li><label><%= radio_button_tag :does_contain_images, index %> <strong><%= radio %></strong></label></li>
-              <% end %>
-            </ul>
-          </div>
           <div class="help-block">
             <p class="help-block">
               If your manuscript contains images: Please insert the images into the manuscript so we have an idea of
@@ -186,6 +175,18 @@
               NOTE: If you do not provide images that meet the specs indicated above, they WILL NOT be included in your
               final product.
             </p>
+          </div>
+          <div>
+            <ul class="gfield_checkbox">
+              <%
+                [
+                  'No',
+                  'Yes ‐ I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don\'t need to increase their size) have been uploaded to the Docs section of my teamroom.',
+                  'Yes - I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don\'t need to increase their size) have been uploaded to a Dropbox folder available here:'
+                ].each_with_index do | radio, index | %>
+              <li><label><%= radio_button_tag :does_contain_images, index %> <strong><%= radio %></strong></label></li>
+              <% end %>
+            </ul>
           </div>
         </div>
 
@@ -225,7 +226,7 @@
         </div>
 
         <div class="form-group">
-          <h4>I have sections of text needing special treatment (optional)</h4>
+          <h4>Sections of text needing special treatment</h4>
             <div>
               <%= f.input :special_text_treatment,
                     label: false,
@@ -252,7 +253,13 @@
       <div id="submit-to-layout-page-4" style="display: none;">
       <%= f.simple_fields_for :layout, (f.object.layout.nil?) ? f.object.build_layout : f.object.layout do | l | %>
         <div class="form-group">
-          <label>Select your Inside Book Title and Chapter font<span class="required">*</span></label><br />
+        <h4>Choose Styles</h4>
+        <h4>Title Page and Chapter Font<span class="required">*</span></h4>
+          <label>Select your Inside Book Title and Chapter font</label><br />
+          <div class="help-block">
+            (Note: &nbsp;This font will only impact print books, not ebooks, so 9/10
+            readers will not be affected by this)
+          </div>
           <%= l.collection_radio_buttons(:layout_style_choice,
                 Layout::LayoutStyleFonts, :first, :first,
                 :collection_wrapper_tag => 'ul',
@@ -267,23 +274,19 @@
                           link_to("see full sample", asset_path("pdf/layout_examples/#{pdf_name}"), :target => '_blank')
                   }
               end %>
-          <div class="help-block">
-            (Note: &nbsp;This font will only impact print books, not ebooks, so 9/10
-            readers will not be affected by this)
-          </div>
         </div>
 
         <div class="form-group">
           <label>Left Side Page Header Display - Name<span class="required">*</span></label>
+          <div class="help-block">
+            You are choosing the text that will display on the left side header of all interior pages in the book.<br>
+            Note: Right side page header is always the title of book.
+          </div>
           <div>
             <%= l.collection_radio_buttons :page_header_display_name,
                   Layout::PageHeaderDisplayNameChoices, :first, :last,
                   :collection_wrapper_tag => 'ul',
                   :item_wrapper_tag => 'li' %>
-          </div>
-          <div class="help-block">
-            You are choosing the text that will display on the left side header of all interior pages in the book.<br>
-            Note: Right side page header is always the title of book.
           </div>
         </div>
 
@@ -307,17 +310,17 @@
         </div>
         <div class='form-group pen_name_optional'>
           <label>Are you using a pen name for the copyright?<span class="required">*</span></label>
+          <div class="help-block">
+            According to the copyright office, you can use either but we
+            generally recommend you use your legal name, unless you want to
+            remain completely anonymous – then we can go with your pen name.
+          </div>
           <div>
             <%= l.collection_radio_buttons :use_pen_name_for_copyright,
                                            [[true, 'Yes'], [false, 'No']], :first, :last,
                                            :collection_wrapper_tag => 'ul',
                                            :item_wrapper_tag => 'li'
             %>
-          </div>
-          <div class="help-block">
-            According to the copyright office, you can use either but we
-            generally recommend you use your legal name, unless you want to
-            remain completely anonymous – then we can go with your pen name.
           </div>
         </div>
         <div class='form-group pen_name_optional'>
@@ -333,16 +336,20 @@
         <div class="form-group">
           <h4>Manuscript Word Count <span class="required">*</span></h4>
           <%= f.input :proofed_word_count, label: false, required: true %>
-          <div class="help-block">
-            In Word: Go to File, Properties, click on the Statistics tab and
-            enter the "Words:" count value. This will help us estimate and
-            schedule your layout resource efficiently.
-          </div>
         </div>
 
         <div class="form-group">
           <h4>Target Marketing Launch Date</h4>
           <b>Do you have a Marketing Launch Date scheduled?<span class='required'>*</span></b>
+          <span>(Please be sure to discuss this with your marketing manager prior to submitting.)<br></span>
+          <div class="row">
+            <div class="col-md-6">
+              Please note: Layout takes approximately 3-4 weeks. The date you select should be NO SOONER than 5 weeks from today's date to include time for approval, final covers, and the Publication Fact Sheet.<br><br>
+              To view a sample production timeline, please click <%= link_to 'here', 'https://teamtrope.com/docs/sample-timeline-production-through-publication/', :target => '_blank' %>.
+              For more information on the difference between publication date and marketing launch date,
+              please click <%= link_to 'here', 'https://teamtrope.com/2014/03/book-release-date-versus-marketing-launch-date/', :target => '_blank' %>.
+            </div>
+          </div>
           <ul>
             <li>
                 <%= radio_button_tag 'have_target_market_date', 'yes', false %> Yes &nbsp;
@@ -357,23 +364,11 @@
                              placeholder: 'MM/DD/YYYY'
                              ) %><br>
                 <%= f.input_field(:target_market_launch_date, as: :string, :style => 'display: none;') %>
-                <span>(Please be sure to discuss this with your marketing manager prior to submitting.)<br></span>
             </li>
             <li>
                 <%= radio_button_tag 'have_target_market_date', 'no', false %> No - We do not have a specific date in mind.
             </li>
           </ul>
-          <br>
-          <div class="row">
-            <div class="col-md-6">
-              Please note: Layout takes approximately 3-4 weeks. The date you select should be NO SOONER than
-              5 weeks from today's date to include time for approval, final covers, and the Publication Fact
-              Sheet.<br><br>
-              To view a sample production timeline, please click <%= link_to 'here', 'https://teamtrope.com/docs/sample-timeline-production-through-publication/', :target => '_blank' %>.
-              For more information on the difference between publication date and marketing launch date,
-              please click <%= link_to 'here', 'https://teamtrope.com/2014/03/book-release-date-versus-marketing-launch-date/', :target => '_blank' %>.
-            </div>
-          </div>
         </div>
 
         <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'submit_to_layout_task_id' %>
@@ -388,6 +383,7 @@
 
   <div id="final_manuscript_upload" style="display:none;" >
     <h4>Final Manuscript <span class='required'>*</span></h4>
+    <strong>Please only upload .doc &amp; .docx files!</strong>
     <%= s3_uploader_form callback_url: project_manuscript_url(@project),
                          id: 'proofread_final_manuscript_s3_uploader',
                          acl: 'private',
@@ -404,7 +400,7 @@
               </div>
 
     </script>
-    <strong>Please only upload .doc &amp; .docx files!</strong>
+
     <br />
     <br />
     <div>
