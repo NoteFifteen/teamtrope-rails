@@ -62,11 +62,14 @@ class ProjectsController < ApplicationController
     @contract_activities = @activities.where(key: ["project.hs_signature_request_sent", "project.hs_signature_request_viewed", "project.hs_signature_request_signed"])
     @users = User.all
     @current_user = current_user
-    @hellosign_documents = HellosignDocument.joins(team_membership: :role)
-          .includes(team_membership: [ :role, :member ])
-          .where("team_memberships.project_id = ? ", @project.id)
-          .order("roles.name asc", created_at: :asc)
-    @outstanding_contracts = @hellosign_documents.where(is_complete: false).count > 0
+
+    if current_user.role? :booktrope_staff
+      @hellosign_documents = HellosignDocument.joins(team_membership: :role)
+            .includes(team_membership: [ :role, :member ])
+            .where("team_memberships.project_id = ? ", @project.id)
+            .order("roles.name asc", created_at: :asc)
+      @outstanding_contracts = @hellosign_documents.where(is_complete: false).count > 0
+    end
 
     @current_user_contracts = HellosignDocument.joins(team_membership: :role)
           .includes(team_membership: [ :role, :member ])
