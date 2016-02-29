@@ -4258,7 +4258,7 @@ div.pcss3t.pcss3t-theme-3-all-white > label {
 table tr th{font-size:16px;padding:8px;vertical-align:bottom;text-align: center;background: #dfdfdf;}
 table tr td{padding:8px;vertical-align:middle;text-align: center;}
 table tr:nth-child(odd){background-color: #efefef;}
-table tr.alert-danger { background-color: #ebccd1; }
+table tr.alert-danger { background-color: #f2dede; }
 table tr.alert-success{ background-color: #dff0d8; }
 table tr td.book-title{min-width: 250px;text-align: left;}
 table tr td.label{width:25%;}
