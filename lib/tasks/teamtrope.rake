@@ -100,6 +100,8 @@ namespace :teamtrope do
 
       # fetch all projects that are production complete which indicates that they have been published.
       project_grid_table_rows = ProjectGridTableRow.published_books
+        .where
+        .not(project_id: RightsBackRequest.all.map(&:project_id))
 
       project_grid_table_rows.each do | pgtr |
 
