@@ -85,10 +85,8 @@
           </div>
 
           <div class="input_field">
-            <%= f.simple_fields_for :book_genres, f.object.book_genres.build do | genre | %>
-                <label>Genres:&nbsp;<span class="required">*</span></label><br/>
-                <%= genre.collection_select(:genre_id, Genre.all, :id, :name, { prompt: true, include_hidden: false }, { multiple: false } ) %>
-            <% end %>
+            <label>Genres:&nbsp;<span class="required">*</span></label><br/>
+            <%= f.association :genre, as: :select, label: false %>
           </div>
 
           <div class="input_field">

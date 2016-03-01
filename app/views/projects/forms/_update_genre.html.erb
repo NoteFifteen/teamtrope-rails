@@ -11,10 +11,8 @@
           <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'update_genre_submitted_task_id' %>
 
             <div class="input_field">
-              <%= f.simple_fields_for :book_genres, f.object.book_genres.build do | genre | %>
-                  <label>Genre:&nbsp;<span class="required">*</span></label><br/>
-                  <%= genre.input(:genre_id, collection: Genre.all, as: :radio_buttons, label: false, :item_wrapper_class => 'radio-inline', checked: @project.book_genres.first.genre_id ) %>
-              <% end %>
+              <label>Genre:&nbsp;<span class="required">*</span></label><br/>
+              <%= f.association :genre, as: :radio_buttons, label: false , item_wrapper_class: 'radio-inline' %>
             </div>
             <br/>
           <div>
