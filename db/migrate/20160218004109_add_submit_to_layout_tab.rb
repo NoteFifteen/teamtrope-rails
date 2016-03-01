@@ -55,7 +55,7 @@ class AddSubmitToLayoutTab < ActiveRecord::Migration
     # because it's indeterministic what they used to point to. If we want that we would
     # have to create a record of what they used to point to in the db.)
     CurrentTask.where(task_id: choose_style_task.id).each do | current_task |
-      current_task.task = choose_style_task.next_task
+      current_task.task = submit_to_layout_task
       current_task.save
     end
 
