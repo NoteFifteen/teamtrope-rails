@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218004109) do
+ActiveRecord::Schema.define(version: 20160301011133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -768,8 +768,10 @@ ActiveRecord::Schema.define(version: 20160218004109) do
     t.string   "createspace_coupon_code"
     t.boolean  "enable_rights_request",          default: false
     t.boolean  "table_of_contents"
+    t.integer  "genre_id"
   end
 
+  add_index "projects", ["genre_id"], name: "index_projects_on_genre_id", using: :btree
   add_index "projects", ["imprint_id"], name: "index_projects_on_imprint_id", using: :btree
   add_index "projects", ["project_type_id"], name: "index_projects_on_project_type_id", using: :btree
   add_index "projects", ["slug"], name: "index_projects_on_slug", unique: true, using: :btree

@@ -16,6 +16,7 @@ class Project < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: :slugged
 
+  belongs_to :genre
   belongs_to :project_type
   belongs_to :imprint
 

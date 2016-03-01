@@ -258,9 +258,6 @@ class ProjectsController < ApplicationController
   def submit_to_layout
     @manuscript = Manuscript.find_or_initialize_by(project_id: @project.id)
 
-    # Only necessary due to the one-to-many relationship originally set up.
-    @project.book_genres.destroy_all
-
     if @project.update(update_project_params)
       @project.create_activity :submitted_to_manuscript, owner: current_user, parameters: { text: 'Submitted proofread final manuscript to layout.', form_data: params[:project].to_s }
       update_current_task
@@ -745,9 +742,6 @@ class ProjectsController < ApplicationController
   end
 
   def update_genre
-    # Only necessary due to the one-to-many relationship originally set up.
-    @project.book_genres.destroy_all
-
     if @project.update(update_project_params)
       publish(:modify_project, @project)
       @project.create_activity :updated_genre, owner: current_user,
@@ -1038,8 +1032,7 @@ class ProjectsController < ApplicationController
   def new_project_params
     params.require(:project).permit(:title, :final_title, :project_type_id, :teamroom_link, :synopsis,
                                     :page_count, :has_internal_illustrations, :previously_published,
-                                    :special_text_treatment, :imprint_id,
-                                    :book_genres_attributes => [:genre_id],
+                                    :special_text_treatment, :imprint_id, :genre_id,
                                     :layout_attributes => [:pen_name, :legal_name, :use_pen_name_on_title],
                                     :team_memberships_attributes => [:role_id, :member_id, :percentage]
     )
@@ -1053,10 +1046,9 @@ class ProjectsController < ApplicationController
       :non_standard_size, :has_internal_illustrations, :color_interior, :childrens_book,
       :edit_complete_date, :imprint_id, :createspace_store_url, :createspace_coupon_code, :enable_rights_request,
       :table_of_contents,
-      :genre_ids => [],
+      :genre_id,
       :artwork_rights_requests_attributes => [:id, :role_type, :full_name, :email, :_destroy],
       :blog_tours_attributes => [:cost, :tour_type, :blog_tour_service, :number_of_stops, :start_date, :end_date],
-      :book_genres_attributes => [:genre_id],
       :bookbub_submissions_attributes => [:submitted_by_id, :author, :title, :asin, :asin_linked_url, :current_price, :enrollment_date, :num_stars, :num_reviews, :num_pages],
       :control_number_attributes => [:id, :ebook_library_price, :asin, :bnid, :encore_asin, :apple_id, :epub_isbn, :hardback_isbn,
                                      :paperback_isbn, :parse_id],

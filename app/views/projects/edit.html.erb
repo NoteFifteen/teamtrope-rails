@@ -22,7 +22,7 @@
         <%= f.input :teamroom_link %>
 
         <h3>Genre</h3>
-        <%= f.collection_select(:genre_ids, Genre.all, :id, :name, { include_hidden: false }, { multiple: false } ) %><br /><br />
+        <%= f.association :genre, as: :select, label: false %><br /><br />
 
         <label >Imprint&nbsp;<span class="required">*</span></label><br/>
         <%= f.input :imprint_id, as: :radio_buttons,
