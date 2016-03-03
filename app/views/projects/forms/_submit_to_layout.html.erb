@@ -11,7 +11,7 @@
         <p>
           This is where the author uploads the final proofread version for Booktrope’s layout designers.
           Prior to completing this form, you should ensure that all proofreading issues and typos have been resolved.
-          Content or proofing changes requested after the book has gone through layout may result in additional fees.
+          Content or proofing changes requested after the book has gone through layout will result in additional fees.
           You are only allowed to submit once, so please ensure you are uploading the correct document.
         </p>
         <p>
@@ -103,7 +103,7 @@
           <h4>Imprint<span class="required">*</span></h4>
           <p class="help-block">If your title is General Fiction or Non-fiction please select the “Booktrope Editions” imprint below.</p>
           <p class="help-block">If your title is Erotica, please select “Entice.” If your title is Horror, please select “Forsaken.” If your title is BDSM/Intense or Disturbing Thriller, please select “Edge.” If your title is Middle-grade Fiction, please select “Updrift.” If your title is Parenting Non-Fiction, please select “Uprush.”</p>
-          <p class="help-block">Please do not select “Vox Dei” or “Gravity” without first discussing with those imprints’ Managing Directors. 
+          <p class="help-block">Please do not select the Gravity imprint without first discussing with that imprints’ Managing Directors. 
           </p>
           <%= f.collection_radio_buttons :imprint_id, Imprint.all, :id, :name,
                                        :checked => 1,
@@ -158,7 +158,7 @@
           <h4>Does your manuscript contain images?<span class="required">*</span></h4>
           <div class="help-block">
             <p class="help-block">
-              If your manuscript contains images: Please insert the images into the manuscript so we have an idea of
+              If your manuscript contains images: please insert the images into the manuscript so we have an idea of
               where you want them placed, size, positioning, etc. Note that due to the difference in dimensions between
               your proofread manuscript and the final product, we may not be able to replicate exactly.
             </p>
@@ -180,7 +180,7 @@
             <ul class="gfield_checkbox">
               <%
                 [
-                  'No',
+                  'No images',
                   'Yes ‐ I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don\'t need to increase their size) have been uploaded to the Docs section of my teamroom.',
                   'Yes - I have pictures. Print ready jpegs (300 dpi, large enough H x W that we don\'t need to increase their size) have been uploaded to a Dropbox folder available here:'
                 ].each_with_index do | radio, index | %>
@@ -227,16 +227,7 @@
 
         <div class="form-group">
           <h4>Sections of text needing special treatment</h4>
-            <div>
-              <%= f.input :special_text_treatment,
-                    label: false,
-                    as: :text,
-                    input_html: { class: %q[textarea medium], rows: 10, cols: 50 }
-              %>
-              <div class="charleft">1200 max characters</div>
-            </div>
-
-            <div>
+          <div>
                 <p>Please include page/chapter numbers when possible.</p>
                 <p>Examples include:</p>
                 <ul>
@@ -244,6 +235,14 @@
                     <li>Text messages or anything that should be offset from the body text</li>
                     <li>Any other special requests</li>
                 </ul>
+            </div>
+            <div>
+              <%= f.input :special_text_treatment,
+                    label: false,
+                    as: :text,
+                    input_html: { class: %q[textarea medium], rows: 10, cols: 50 }
+              %>
+              <div class="charleft">1,200 characters max</div>
             </div>
         </div>
         <button id="submit_to_layout_back_button_3" class="btn btn-primary" type="button">Back</button>
