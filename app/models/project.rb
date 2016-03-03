@@ -323,4 +323,38 @@ class Project < ActiveRecord::Base
     provide_methods_for(role)
   end
 
+  def json_export
+    self.as_json(root: false, include: {
+        activities: { except: [:id] },
+        team_memberships: { except: [:id]},
+        project_grid_table_row: {except: [:id]},
+        current_tasks: { except: [:id] },
+        layout: { except: [:id] },
+        manuscript: { except: [:id]},
+        print_corners: { except: [:id]},
+        kdp_select_enrollment: { except: [:id]},
+        man_dev: { except: [:id]},
+        marketing_expenses: { except: [:id]},
+        media_kit: { except: [:id]},
+        netgalley_submission: { except: [:id]},
+        price_change_promotions: { except: [:id]},
+        production_expenses: { except: [:id]},
+        publication_fact_sheet: { except: [:id]},
+        published_file: { except: [:id]},
+        rights_back_request: { except: [:id]},
+        social_media_marketing: { except: [:id]},
+        approve_blurb: { except: [:id]},
+        artwork_rights_requests: { except: [:id]},
+        blog_tours: { except: [:id]},
+        control_number: { except: [:id]},
+        cover_concept: { except: [:id]},
+        cover_template: { except: [:id]},
+        draft_blurb: { except: [:id]},
+        ebook_only_incentive: { except: [:id]},
+        final_manuscript: { except: [:id]},
+        book_genres: { except: [:id]}
+      }
+    )
+  end
+
 end

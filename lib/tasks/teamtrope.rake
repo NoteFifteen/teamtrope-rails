@@ -317,4 +317,28 @@ namespace :teamtrope do
     [activity_record, extract_print_price(activity_record)]
   end
 
+  # Test an export of a project
+  desc "Export a Project as JSON"
+  task project_export: :environment do
+
+    raise "You must specify a project id!\n" if !ENV['project_id']
+
+    raise "Unable to locate project #{ENV['project_id']}" unless project = Project.find(ENV['project_id'])
+
+    # puts "Dumping #{project.title}"
+    puts project.json_export
+
+  end
+
+  desc "Import a Project from a JSON file"
+  task project_import: :environment do
+    raise "Cannot locate #{ENV['project_file']}!" unless File.exist?(ENV['project_file'])
+
+    project = Project.new.from_json(File.read(ENV['project_file']), true)
+    project.save
+
+    puts "Saved #{project.title} as ID #{project.id}"
+
+  end
+
 end
