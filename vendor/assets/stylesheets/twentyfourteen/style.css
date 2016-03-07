@@ -4230,7 +4230,7 @@ a.post-thumbnail:hover {
 }
 
 .pcss3t-theme-3-all-white {
-	background: #fff;	
+	background: #fff;
 }
 
 div.pcss3t.pcss3t-theme-3-all-white > label {
@@ -4258,6 +4258,8 @@ div.pcss3t.pcss3t-theme-3-all-white > label {
 table tr th{font-size:16px;padding:8px;vertical-align:bottom;text-align: center;background: #dfdfdf;}
 table tr td{padding:8px;vertical-align:middle;text-align: center;}
 table tr:nth-child(odd){background-color: #efefef;}
+table tr.alert-danger { background-color: #f2dede; }
+table tr.alert-success{ background-color: #dff0d8; }
 table tr td.book-title{min-width: 250px;text-align: left;}
 table tr td.label{width:25%;}
 table tr td.thread-info p{margin:0;}
@@ -4281,7 +4283,7 @@ background:none;
 display:block;
 }
 .needs li {
-float:left; 
+float:left;
 display:block;
 padding:10px;
 margin:5px;
@@ -4340,7 +4342,7 @@ margin:5px;
 	position: absolute;
 }
 .tooltip:hover span {
-	border-radius: 5px 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
+	border-radius: 5px 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
 	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1); -webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.1); -moz-box-shadow: 5px 5px rgba(0, 0, 0, 0.1);
 	font-family: Calibri, Tahoma, Geneva, sans-serif;
 	position: absolute; left: 1em; top: 2em; z-index: 99;
