@@ -10,17 +10,16 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
-  get 'wordpress_import/import'
-  post 'wordpress_import/upload'
-
   match '/data_repair', to: 'data_repair#home', via: :get
   match '/data_repair', to: 'data_repair#repair_data', via: :post
 
 
-  match '/parse/get_amazon_sales_rank',            to: 'parse#get_amazon_sales_rank',          via: 'get'
-  match '/parse/get_queued_items',                 to: 'parse#get_queued_items',               via: 'get'
-  match '/parse/add_book_to_price_change_queue',   to: 'parse#add_book_to_price_change_queue', via: 'get'
-  match '/parse/get_sales_data_for_channel',       to: 'parse#get_sales_data_for_channel',     via: 'get'
+  scope :parse do
+    get 'get_amazon_sales_rank',            to: 'parse#get_amazon_sales_rank'
+    get 'get_queued_items',                 to: 'parse#get_queued_items'
+    get 'add_book_to_price_change_queue',   to: 'parse#add_book_to_price_change_queue'
+    get 'get_sales_data_for_channel',       to: 'parse#get_sales_data_for_channel'
+  end
 
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -29,16 +28,29 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'static_pages#home'
 
-  get '/admin/reports/high_allocations',         to: 'reports#high_allocations'
-  get 'admin/reports/missing_current_tasks',     to: 'reports#missing_current_tasks'
 
-  get 'admin/reports/scribd_export',             to: 'reports#scribd_metadata_export'
-  post 'admin/reports/send_scribd_export_email', to: 'reports#send_scribd_export_email', via: :post
+  scope :admin do
+
+    # /admin/wordress_import/#{path}
+    scope :wordpress_import do
+      get 'import',  to: 'wordpress_import#import'
+      post 'upload', to: 'wordpress_import#upload'
+    end
+
+    # /admin/reports/#{path}
+    scope :reports do
+      get 'no_contracts',          to: 'reports#no_contracts'
+      get 'high_allocations',      to: 'reports#high_allocations'
+      get 'missing_current_tasks', to: 'reports#missing_current_tasks'
+      get 'scribd_export',         to: 'reports#scribd_metadata_export'
+
+      post 'send_scribd_export_email', to: 'reports#send_scribd_export_email', via: :post
+    end
+
+  end
 
   post 'prefunk_enrollments/prefunk_scribd_email_report', to: 'prefunk_enrollments#prefunk_scribd_email_report', via: :post
 
-  match '/admin/wordpress_import/import',        to: 'wordpress_import#import', via: :get
-  post '/admin/wordpress_import/upload',         to: 'wordpress_import#upload', via: :post
 
   get '/box/request_access', to: 'static_pages#box_request_access', as: 'box_request'
   get '/box/redirect',       to: 'static_pages#box_redirect',       as: 'box-redirect'
