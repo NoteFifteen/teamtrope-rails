@@ -39,6 +39,83 @@ class ProjectGridTableRowListener
     end
   end
 
+  # update the control number fields for the pgtr
+  def submit_control_numbers(project)
+    unless project.control_number.nil?
+      pgtr = project.project_grid_table_row
+      pgtr.asin            = project.control_number.asin
+      pgtr.paperback_isbn  = project.control_number.paperback_isbn
+      pgtr.epub_isbn       = project.control_number.epub_isbn
+      pgtr.save
+    end
+  end
+
+  # update the final page count for the pgtr
+  def update_final_page_count(project)
+    unless project.layout.nil?
+      pgtr = project.project_grid_table_row
+      pgtr.page_count = project.layout.final_page_count
+    end
+  end
+
+  def submit_to_layout(project)
+    pgtr = project.project_grid_table_row
+    pgtr.book_format = project.book_format_pretty
+
+    pgtr.save
+  end
+
+  def update_publication_date(project, publication_date)
+    pgtr = project.project_grid_table_row
+    pgtr.publication_date = publication_date
+    pgtr.save
+  end
+
+  def prefunk_enrollement(project)
+    pgtr = project.project_grid_table_row
+    pgtr.prefunk_enrolled = "Yes"
+    pgtr.prefunk_enrollment_date = project.prefunk_enrollment.created_at.strftime("%m/%d/%Y")
+
+    pgtr.save
+  end
+
+  # update the pgtr once the pfs has been subitted.
+  def update_pfs(project)
+    pgtr = project.project_grid_table_row
+    pfs = project.pfs
+
+    pgtr.series_name   = pfs.series_name
+    pgtr.series_number = pfs.series_number
+    pgtr.pfs_author_name = pfs.author_name
+
+    pgtr.formatted_print_price = "$#{"%.2f" % pfs.print_price}" unless pfs.print_price.nil?
+    unless pfs.ebook_price.nil?
+      pgtr.formatted_ebook_price = "$#{"%.2f" %pfs.ebook_price}"
+      library_price = ApplicationHelper.lookup_library_pricing(pfs.ebook_price)
+      pgtr.formatted_library_price = library_price unless library_price.nil?
+    end
+
+    pgtr.bisac_one_code          = pfs.bisac_code_one
+    pgtr.bisac_one_description   = pfs.bisac_code_name_one
+
+
+    pgtr.bisac_two_code          = pfs.bisac_code_two
+    pgtr.bisac_two_description   = pfs.bisac_code_name_two
+
+
+
+    pgtr.bisac_three_code        = pfs.bisac_code_three
+    pgtr.bisac_three_description = pfs.bisac_code_name_three
+
+
+    pgtr.search_terms   = pfs.search_terms
+    pgtr.description    = ApplicationHelper.filter_special_characters(pfs.description)    unless pfs.description.nil?
+    pgtr.author_bio     = ApplicationHelper.filter_special_characters(pfs.author_bio)     unless pfs.author_bio.nil?
+    pgtr.one_line_blurb = ApplicationHelper.filter_special_characters(pfs.one_line_blurb) unless pfs.one_line_blurb.nil?
+
+    pgtr.save
+  end
+
   def update_task(project, task)
     pgtr = project.project_grid_table_row
     keybase = task.workflow.name.downcase.gsub(/ /, "_")
@@ -49,6 +126,7 @@ class ProjectGridTableRowListener
     pgtr.save
   end
 
+  # create_project must ONLY be published via projects#create
   def create_project(project)
     pgtr = project.build_project_grid_table_row
     pgtr.title = project.book_title
@@ -65,6 +143,16 @@ class ProjectGridTableRowListener
       pgtr[key] = project.team_memberships.includes(:member).where(role_id: value).map(&:member).map(&:name).join(", ")
     end
 
+    # since the publisher only publishes :create_project on projects#create
+    # there will only every be one author since we only allow one author selection
+    # when creating a new project. We can also skip other_contributors
+    author = project.team_memberships
+      .includes(:member)
+      .where(role: Role.find_by_name("Author")).first.member
+
+    pgtr.author_last_first = author.last_name_first
+    pgtr.author_first_last = author.name
+
     # adding the current_tasks
     project.current_tasks.includes(:task => :workflow).each do | ct |
       keybase = ct.task.workflow.name.downcase.gsub(/ /, "_")
@@ -78,4 +166,3 @@ class ProjectGridTableRowListener
   end
 
 end
-

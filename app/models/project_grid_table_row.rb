@@ -5,106 +5,66 @@ class ProjectGridTableRow < ActiveRecord::Base
   belongs_to :design_task, class_name: "Task"
 
   scope :published_books, -> {
-    joins(:project)
-    .includes(project: [:control_number, :publication_fact_sheet, :layout, :published_file, :prefunk_enrollment])
-    .where("production_task_name = ?", "Production Complete")
+    where("production_task_name = ?", "Production Complete")
   }
 
-  def generate_master_metadata_export_hash(page_type = :csv)
+  scope :excude_rights_returned, -> {
+    published_books.where.not(project: Project.joins(:rights_back_request))
+  }
 
-    # initialize the row_hash with empty data.
-    row_hash = {}
-    Constants::MasterMetadataHeaderHash.each do | key, value |
-      row_hash[key] = ''
+  def self.generate_master_metadata_export_hash(pgtr, page_type = :csv)
+
+    # initialize the row_hash with a clone of the header hash
+    row_hash = Constants::MasterMetadataHeaderHash.clone
+
+    row_hash[:project_id]              = pgtr.project_id
+    row_hash[:prefunk]                 = pgtr.prefunk_enrolled
+    row_hash[:prefunk_enrollment_date] = pgtr.prefunk_enrollment_date
+
+    row_hash[:title]                   = pgtr.title
+    row_hash[:series_name]             = pgtr.series_name
+    row_hash[:series_number]           = pgtr.series_number
+
+    row_hash[:author_last_first]       = pgtr.author_last_first
+    row_hash[:author_first_last]       = pgtr.author_first_last
+    row_hash[:pfs_author_name]         = pgtr.pfs_author_name
+    row_hash[:other_contributors]      = pgtr.other_contributors
+    row_hash[:team_and_pct]            = pgtr.team_and_pct
+    row_hash[:imprint]                 = pgtr.imprint
+
+    row_hash[:asin]                    = pgtr.asin
+    row_hash[:print_isbn]              = pgtr.paperback_isbn
+    row_hash[:epub_isbn]               = pgtr.epub_isbn
+    row_hash[:format]                  = pgtr.book_format
+
+    unless pgtr.publication_date.nil?
+      row_hash[:publication_date]      = pgtr.publication_date.strftime("%m/%d/%Y")
+      row_hash[:month]                 = pgtr.publication_date.strftime("%B")
+      row_hash[:year]                  = pgtr.publication_date.strftime("%Y")
     end
 
-    row_hash[:project_id] = project.id
-    row_hash[:prefunk] = project.prefunk_enrollment.nil?? "No" : "Yes"
-    row_hash[:prefunk_enrollment_date] = project.prefunk_enrollment.created_at unless project.prefunk_enrollment.nil?
-    row_hash[:title] = project.book_title
+    row_hash[:page_count]              = pgtr.page_count
 
-    unless project.publication_fact_sheet.nil?
-      row_hash[:series_name] = project.publication_fact_sheet.series_name
-      row_hash[:series_number] = project.publication_fact_sheet.series_number
-    end
+    row_hash[:print_price]             = pgtr.formatted_print_price
+    row_hash[:ebook_price]             = pgtr.formatted_ebook_price
+    row_hash[:library_price]           = pgtr.formatted_library_price
 
-    # if there are are two authors most likely the main author was the one added first
-    # project.authors returns a TeamMembership::ActiveRecord_AssociationRelation so we
-    # cannot call order_by but we can use sort.　(what's faster to_a or map? )
-    authors = project.authors.to_a.sort{ | a, b | a.created_at <=> b.created_at }
+    row_hash[:bisac_one]               = pgtr.bisac_one_code
+    row_hash[:bisac_one_description]   = pgtr.bisac_one_description
+    row_hash[:bisac_two]               = pgtr.bisac_two_code
+    row_hash[:bisac_two_description]   = pgtr.bisac_two_description
+    row_hash[:bisac_three]             = pgtr.bisac_three_code
+    row_hash[:bisac_three_description] = pgtr.bisac_three_description
 
-    first_author = authors.slice!(0)
-
-    row_hash[:author_last_first] = first_author.last_name_first
-    row_hash[:author_first_last] = first_author.member.name
-
-    row_hash[:pfs_author_name] = project.publication_fact_sheet.author_name
-
-    row_hash[:other_contributors] = authors.map { | author | "#{author.member.name} (#{author.role.name})" }.join(', ')
-
-    row_hash[:team_and_pct] = "#{project.team_members_with_roles_and_pcts.map{ |n| "#{n[:member].name} #{ n[:role_pcts].map{ |role_pcts | "(#{role_pcts[:role]} #{role_pcts[:pct]})"}.join(',')}"  }.join(';')}; Total (#{project.total_team_percent_allocation})"
-
-    row_hash[:imprint] = imprint
-    unless project.control_number.nil?
-      row_hash[:asin] = project.control_number.asin
-      row_hash[:print_isbn] = project.control_number.paperback_isbn
-      row_hash[:epub_isbn] = project.control_number.epub_isbn
-    end
-    row_hash[:format] = project.book_type_pretty
-
-    # look up the publication date that we have in parse via the project's parse_id which matches the ParseBook object_id
-    #publication_date_amazon = ParseBooks.find_by_parse_id(project.control_number.parse_id).try(:publication_date_amazon)
-    publication_date = unless project.published_file.nil?
-      project.published_file.publication_date
-    end
-
-    unless publication_date.nil?
-      row_hash[:publication_date] = publication_date.strftime("%m/%d/%Y")
-      row_hash[:month] = publication_date.strftime("%B")
-      row_hash[:year] = publication_date.strftime("%Y")
-    end
-
-    row_hash[:page_count] = project.layout.final_page_count unless project.layout.nil?
-
-    row_hash[:print_price] = "$#{"%.2f" % project.publication_fact_sheet.print_price}" unless project.publication_fact_sheet.print_price.nil?
-    unless project.publication_fact_sheet.ebook_price.nil?
-      row_hash[:ebook_price] = "$#{"%.2f" % project.publication_fact_sheet.ebook_price}"
-      library_price = ApplicationHelper.lookup_library_pricing(project.publication_fact_sheet.ebook_price)
-      row_hash[:library_price] = library_price unless library_price.nil?
-    end
-
-    unless project.publication_fact_sheet.nil?
-
-      bisac_one = ApplicationHelper.prepare_bisac_code(
-        project.publication_fact_sheet.bisac_code_one,
-        project.publication_fact_sheet.bisac_code_name_one
-      )
-
-      bisac_two = ApplicationHelper.prepare_bisac_code(
-        project.publication_fact_sheet.bisac_code_two,
-        project.publication_fact_sheet.bisac_code_name_two
-      )
-
-      bisac_three = ApplicationHelper.prepare_bisac_code(
-        project.publication_fact_sheet.bisac_code_three,
-        project.publication_fact_sheet.bisac_code_name_three
-      )
-
-      row_hash[:bisac_one] = bisac_one[:code]
-      row_hash[:bisac_one_description] = bisac_one[:name]
-      row_hash[:bisac_two] = bisac_two[:code]
-      row_hash[:bisac_two_description] = bisac_two[:name]
-      row_hash[:bisac_three] = bisac_three[:code]
-      row_hash[:bisac_three_description] = bisac_three[:name]
-
-      row_hash[:search_terms] = project.publication_fact_sheet.search_terms
-      row_hash[:summary] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.description)    unless project.publication_fact_sheet.description.nil?
-      row_hash[:author_bio] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.author_bio)     unless project.publication_fact_sheet.author_bio.nil?
-      row_hash[:squib] = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.one_line_blurb) unless project.publication_fact_sheet.one_line_blurb.nil?
-    end
+    row_hash[:search_terms]            = pgtr.search_terms
+    row_hash[:summary]                 = pgtr.description
+    row_hash[:author_bio]              = pgtr.author_bio
+    row_hash[:squib]                   = pgtr.one_line_blurb
 
     row_hash.each do | key, value |
-      row_hash[key] = ApplicationHelper.filter_special_characters(value) if value.class == String
+      if value.class == String
+        row_hash[key] = ApplicationHelper.filter_special_characters(value)
+      end
     end
 
     row_hash

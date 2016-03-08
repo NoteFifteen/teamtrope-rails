@@ -15,8 +15,96 @@ namespace :teamtrope do
       # adding each role
       roles.each do | key, value |
         next if %w( advisor agent ).include?(key.to_s)
-        pgtr[key] = project.team_memberships.includes(:member).where(role_id: value).map(&:member).map(&:name).join(", ")
+        pgtr[key] = project
+          .team_memberships
+          .includes(:member)
+          .where(role_id: value)
+          .map(&:member)
+          .map(&:name)
+          .join(", ")
       end
+
+      pgtr.prefunk_enrolled = pgtr.project.prefunk_enrollment.nil?? "No" : "Yes"
+
+      unless pgtr.project.prefunk_enrollment.nil?
+        pgtr.prefunk_enrollment_date = pgtr.project.prefunk_enrollment.created_at.strftime("%m/%d/%Y")
+      end
+
+      # if there are are two authors most likely the main author was the one added first
+      authors = project.authors.order(created_at: :asc)
+
+      unless authors.count < 1
+        first_author = authors.first
+        pgtr.author_last_first = first_author.last_name_first
+        pgtr.author_first_last = first_author.member.name
+
+        pgtr.other_contributors = authors.reject{ | a |
+          a.id == first_author.id
+        }.map { | author |
+          "#{author.member.name} (#{author.role.name})"
+        }.join(', ')
+      end
+
+      pgtr.team_and_pct = "#{
+        project.team_members_with_roles_and_pcts.map{ |n|
+          "#{n[:member].name} #{
+            n[:role_pcts].map{ |role_pcts |
+              "(#{role_pcts[:role]} #{role_pcts[:pct]})"}.join(',')
+            }" }.join(';')
+          }; Total (#{project.total_team_percent_allocation})"
+
+      unless pgtr.project.control_number.nil?
+        pgtr.asin = project.control_number.asin
+        pgtr.paperback_isbn = project.control_number.paperback_isbn
+        pgtr.epub_isbn = project.control_number.epub_isbn
+      end
+
+      unless pgtr.project.publication_fact_sheet.nil?
+
+        pgtr.series_name   = pgtr.project.publication_fact_sheet.series_name
+        pgtr.series_number = pgtr.project.publication_fact_sheet.series_number
+
+        pgtr.pfs_author_name = pgtr.project.publication_fact_sheet.author_name
+
+        pgtr.formatted_print_price = "$#{"%.2f" % pgtr.project.publication_fact_sheet.print_price}" unless pgtr.project.publication_fact_sheet.print_price.nil?
+        unless pgtr.project.publication_fact_sheet.ebook_price.nil?
+          pgtr.formatted_ebook_price = "$#{"%.2f" % pgtr.project.publication_fact_sheet.ebook_price}"
+          library_price = ApplicationHelper.lookup_library_pricing(pgtr.project.publication_fact_sheet.ebook_price)
+          pgtr.formatted_library_price = library_price unless library_price.nil?
+        end
+
+        # todo: refactor this mess!
+        bisac_one = ApplicationHelper.prepare_bisac_code(
+          project.publication_fact_sheet.bisac_code_one,
+          project.publication_fact_sheet.bisac_code_name_one
+        )
+
+        pgtr.bisac_one_code = bisac_one[:code]
+        pgtr.bisac_one_description = bisac_one[:name]
+
+        bisac_two = ApplicationHelper.prepare_bisac_code(
+          project.publication_fact_sheet.bisac_code_two,
+          project.publication_fact_sheet.bisac_code_name_two
+        )
+
+        pgtr.bisac_two_code = bisac_one[:code]
+        pgtr.bisac_two_description = bisac_one[:name]
+
+        bisac_three = ApplicationHelper.prepare_bisac_code(
+          project.publication_fact_sheet.bisac_code_three,
+          project.publication_fact_sheet.bisac_code_name_three
+        )
+
+        pgtr.bisac_three_code = bisac_one[:code]
+        pgtr.bisac_three_description = bisac_one[:name]
+
+
+        pgtr.search_terms   = project.publication_fact_sheet.search_terms
+        pgtr.description    = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.description)    unless project.publication_fact_sheet.description.nil?
+        pgtr.author_bio     = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.author_bio)     unless project.publication_fact_sheet.author_bio.nil?
+        pgtr.one_line_blurb = ApplicationHelper.filter_special_characters(project.publication_fact_sheet.one_line_blurb) unless project.publication_fact_sheet.one_line_blurb.nil?
+      end
+
       # adding the genres
       pgtr.genre = project.genres.map(&:name).join(", ")
 
@@ -27,6 +115,19 @@ namespace :teamtrope do
         pgtr[ct.task.workflow.name.downcase.gsub(/ /, "_") + "_task_display_name"] = ct.task.display_name
         pgtr[ct.task.workflow.name.downcase.gsub(/ /, "_") + "_task_last_update"] = ct.updated_at
       end
+
+      publication_date = unless pgtr.project.published_file.nil?
+        pgtr.project.published_file.publication_date
+      end
+
+      unless publication_date.nil?
+        pgtr.publication_date = publication_date
+      end
+
+      pgtr.page_count = pgtr.project.layout.final_page_count unless pgtr.project.layout.nil?
+
+      # book format
+      pgtr.book_format = project.book_type_pretty
 
       # adding the teamroom_link
       pgtr.teamroom_link = project.teamroom_link

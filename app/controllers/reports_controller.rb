@@ -20,10 +20,9 @@ class ReportsController < ApplicationController
 
   def scribd_metadata_export
     @scribd_metadata_export_items = Project.generate_scribd_export(
-      ProjectGridTableRow.published_books
-        .where
-        .not(project_id: RightsBackRequest.all.map(&:project_id))
-        .sort { | a, b | a.project.book_title <=> b.project.book_title },
+      ProjectGridTableRow.published_books.excude_rights_returned.sort { | a, b |
+        a.title <=> b.title
+      },
       :html)
     @current_page = request.original_url
   end
@@ -31,10 +30,9 @@ class ReportsController < ApplicationController
   def send_scribd_export_email
     @scribd_csv_text = Project.generate_scribd_export_csv(
       Project.generate_scribd_export(
-        ProjectGridTableRow.published_books
-          .where
-          .not(project_id: RightsBackRequest.all.map(&:project_id))
-          .sort {| a, b | a.project.book_title <=> b.project.book_title }
+        ProjectGridTableRow.published_books.excude_rights_returned.sort { | a, b |
+          a.title <=> b.title
+        }
       )
     )
     ReportMailer.scribd_email_report @scribd_csv_text, current_user
@@ -42,14 +40,20 @@ class ReportsController < ApplicationController
 
   def master_metadata
     @master_metadata_export = Project.generate_master_meta_export(
-      ProjectGridTableRow.published_books.sort { | a, b | a.project.book_title <=> b.project.book_title }
-    )
+      ProjectGridTableRow.published_books.excude_rights_returned
+      .sort { | a, b |
+        a.title <=> b.title
+      },
+      :html)
   end
 
   def master_metadata_export
     csv_string = Project.generate_master_meta_export_csv(
       Project.generate_master_meta_export(
-        ProjectGridTableRow.published_books.sort { | a, b | a.project.book_title <=> b.project.book_title }
+        ProjectGridTableRow.published_books.excude_rights_returned
+        .sort { | a, b |
+          a.title <=> b.title
+        }
       )
     )
 
