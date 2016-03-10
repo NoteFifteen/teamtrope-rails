@@ -454,18 +454,19 @@ jQuery ->
   field = $("input[name=project\\[previously_published\\]]:radio")
   field_value = $("input[name=project\\[previously_published\\]]:checked")
 
-  if ! field.is(':checked') || field_value.val() == 'false'
+  if (!field.is(':checked') || field_value.val() == 'false') && $('.previously_published_true').length
     $('.previously_published_true').hide()
 
-  $(field).change (event) =>
-     if field.is(':checked')
-       field_value = $("input[name=project\\[previously_published\\]]:checked")
+  if $('.previously_published_true').length
+    $(field).change (event) =>
+      if field.is(':checked')
+        field_value = $("input[name=project\\[previously_published\\]]:checked")
 
-       if field_value.val() == 'true'
-         $('.previously_published_true').slideDown()
-       else
-         $('.previously_published_true').slideUp()
-         $('.optional input').val('').prop("checked", false)
+        if field_value.val() == 'true'
+          $('.previously_published_true').slideDown()
+        else
+          $('.previously_published_true').slideUp()
+          $('.optional input').val('').prop("checked", false)
 
 jQuery ->
   field = $("input[name=does_contain_images]:radio")

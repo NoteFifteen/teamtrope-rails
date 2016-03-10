@@ -279,6 +279,7 @@ class ProjectsController < ApplicationController
     if @project.update(update_project_params)
       @project.create_activity :submitted_to_manuscript, owner: current_user, parameters: { text: 'Submitted proofread final manuscript to layout.', form_data: params[:project].to_s }
       update_current_task
+      publish(:submit_to_layout, @project)
       flash[:success] = "Final Proofed Manuscript Uploaded and Submitted to Layout."
       ProjectMailer.submit_to_layout(@project, current_user, params)
       redirect_to @project
@@ -318,6 +319,7 @@ class ProjectsController < ApplicationController
 
   def prefunk_enrollment
     if @project.update(update_project_params)
+      publish(:prefunk_enrollement, @project)
       @project.create_activity :prefunk_enrolled, owner: current_user,
                                parameters: { text: 'Enrolled in Prefunk', form_data: params[:project].to_s}
       flash[:success] = 'Enrolled in Prefunk'
@@ -408,6 +410,7 @@ class ProjectsController < ApplicationController
   def edit_control_numbers
     if @project.update(update_project_params)
       publish(:modify_imprint, @project)
+      publish(:submit_control_numbers, @project)
 
       # Update the record in Parse
       if ! @project.control_number.nil?
@@ -646,6 +649,7 @@ class ProjectsController < ApplicationController
   def update_final_page_count
     if @project.update(update_project_params)
       update_current_task
+      publish(:update_final_page_count, @project)
       @project.create_activity :updated_final_page_count, owner: current_user,
                                 parameters: { text: 'Updated Final Page Count', form_data: params[:project].to_s}
       flash[:success] = 'Updated Final Page Count'
@@ -748,6 +752,7 @@ class ProjectsController < ApplicationController
   def submit_pfs
     if @project.update(update_project_params)
       update_current_task
+      publish(:update_pfs, @project)
       @project.create_activity :submitted_pfs, owner: current_user,
                                 parameters: { text: 'Submitted the Publication Fact Sheet', form_data: params[:project].to_s}
       flash[:success] = 'Submitted Publication Fact Sheet'
@@ -791,6 +796,7 @@ class ProjectsController < ApplicationController
 
     if @published_file.update(publication_date: publication_date)
       update_current_task
+      publish(:update_publication_date, @project, publication_date)
       @project.create_activity :published_book, owner: current_user,
                                 parameters: { text: 'Submitted the Publish Book form', form_data: params[:project].to_s}
       flash[:success] = 'Congratulations! Your book has been published'

@@ -75,8 +75,23 @@ class User < ActiveRecord::Base
   # display_name: John Smith Sr. Output: Smith Sr., John
   def last_name_first
     if name
-      name_parts = name.split(' ')
-      [name_parts[1, name_parts.length].join(' '), name_parts[0]].join(', ')
+      stripped_name = name.strip
+
+      leading_dots = if name =~ /^([A-Za-z\s\.]*)\s/
+        $1
+      end
+
+      if leading_dots
+        stripped_name = stripped_name.gsub(/#{leading_dots}/, "")
+        return stripped_name + ", " + leading_dots
+      end
+
+      name_parts = stripped_name.split(' ')
+      if name_parts.count > 1
+        [name_parts[1, name_parts.length].join(' '), name_parts[0]].join(', ')
+      else
+        name
+      end
     else
       "" # return empty string instead of nil if no name
     end
