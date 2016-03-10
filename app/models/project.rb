@@ -55,6 +55,8 @@ class Project < ActiveRecord::Base
   has_one  :social_media_marketing, dependent: :destroy
   has_many :team_memberships, inverse_of: :project
 
+  alias :pfs :publication_fact_sheet
+
   #TODO: we might not need to allow destroy via the project form for associations that
   # are only written by form. (media_kits, price_change_promotions, published_file)
   accepts_nested_attributes_for :approve_blurb, reject_if: :all_blank, allow_destroy: false
@@ -295,6 +297,25 @@ class Project < ActiveRecord::Base
       end
     end
     remaining_tasks.uniq
+  end
+
+  def self.generate_master_meta_export(project_grid_table_rows, page_type = :csv)
+    master_metadata_rows = []
+    project_grid_table_rows.each do | pgtr |
+      master_metadata_rows << ProjectGridTableRow.generate_master_metadata_export_hash(pgtr, page_type)
+    end
+    master_metadata_rows
+  end
+
+  def self.generate_master_meta_export_csv(master_metadata_rows)
+    require 'csv'
+    csv_string = CSV.generate do | csv |
+      csv << Constants::MasterMetadataHeaderHash.values
+      master_metadata_rows.each do | master_metadata_row_hash |
+        csv << master_metadata_row_hash.values
+      end
+    end
+    csv_string
   end
 
   def self.generate_scribd_export(project_grid_table_rows, page_type = :csv)

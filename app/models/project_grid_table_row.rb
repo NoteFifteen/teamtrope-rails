@@ -5,10 +5,70 @@ class ProjectGridTableRow < ActiveRecord::Base
   belongs_to :design_task, class_name: "Task"
 
   scope :published_books, -> {
-    joins(:project)
-    .includes(project: [:control_number, :publication_fact_sheet, :layout, :published_file, :prefunk_enrollment])
-    .where("production_task_name = ?", "Production Complete")
+    where("production_task_name = ?", "Production Complete")
   }
+
+  scope :excude_rights_returned, -> {
+    published_books.where.not(project: Project.joins(:rights_back_request))
+  }
+
+  def self.generate_master_metadata_export_hash(pgtr, page_type = :csv)
+
+    # initialize the row_hash with a clone of the header hash
+    row_hash = Constants::MasterMetadataHeaderHash.clone
+
+    row_hash[:project_id]              = pgtr.project_id
+    row_hash[:prefunk]                 = pgtr.prefunk_enrolled
+    row_hash[:prefunk_enrollment_date] = pgtr.prefunk_enrollment_date
+
+    row_hash[:title]                   = pgtr.title
+    row_hash[:series_name]             = pgtr.series_name
+    row_hash[:series_number]           = pgtr.series_number
+
+    row_hash[:author_last_first]       = pgtr.author_last_first
+    row_hash[:author_first_last]       = pgtr.author_first_last
+    row_hash[:pfs_author_name]         = pgtr.pfs_author_name
+    row_hash[:other_contributors]      = pgtr.other_contributors
+    row_hash[:team_and_pct]            = pgtr.team_and_pct
+    row_hash[:imprint]                 = pgtr.imprint
+
+    row_hash[:asin]                    = pgtr.asin
+    row_hash[:print_isbn]              = pgtr.paperback_isbn
+    row_hash[:epub_isbn]               = pgtr.epub_isbn
+    row_hash[:format]                  = pgtr.book_format
+
+    unless pgtr.publication_date.nil?
+      row_hash[:publication_date]      = pgtr.publication_date.strftime("%m/%d/%Y")
+      row_hash[:month]                 = pgtr.publication_date.strftime("%B")
+      row_hash[:year]                  = pgtr.publication_date.strftime("%Y")
+    end
+
+    row_hash[:page_count]              = pgtr.page_count
+
+    row_hash[:print_price]             = pgtr.formatted_print_price
+    row_hash[:ebook_price]             = pgtr.formatted_ebook_price
+    row_hash[:library_price]           = pgtr.formatted_library_price
+
+    row_hash[:bisac_one]               = pgtr.bisac_one_code
+    row_hash[:bisac_one_description]   = pgtr.bisac_one_description
+    row_hash[:bisac_two]               = pgtr.bisac_two_code
+    row_hash[:bisac_two_description]   = pgtr.bisac_two_description
+    row_hash[:bisac_three]             = pgtr.bisac_three_code
+    row_hash[:bisac_three_description] = pgtr.bisac_three_description
+
+    row_hash[:search_terms]            = pgtr.search_terms
+    row_hash[:summary]                 = pgtr.description
+    row_hash[:author_bio]              = pgtr.author_bio
+    row_hash[:squib]                   = pgtr.one_line_blurb
+
+    row_hash.each do | key, value |
+      if value.class == String
+        row_hash[key] = ApplicationHelper.filter_special_characters(value)
+      end
+    end
+
+    row_hash
+  end
 
   def generate_scribd_export_hash(page_type = :csv)
     # using the Scribd data hash as our base we will override the header info

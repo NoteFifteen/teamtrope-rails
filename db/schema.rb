@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160220013256) do
+ActiveRecord::Schema.define(version: 20160302235322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -696,6 +696,34 @@ ActiveRecord::Schema.define(version: 20160220013256) do
     t.string   "production_task_display_name"
     t.string   "design_task_display_name"
     t.string   "marketing_task_display_name"
+    t.string   "author_last_first"
+    t.string   "author_first_last"
+    t.string   "pfs_author_name"
+    t.text     "other_contributors"
+    t.text     "team_and_pct"
+    t.string   "asin"
+    t.string   "paperback_isbn"
+    t.string   "epub_isbn"
+    t.string   "book_format"
+    t.date     "publication_date"
+    t.integer  "page_count"
+    t.string   "formatted_print_price"
+    t.string   "formatted_ebook_price"
+    t.string   "formatted_library_price"
+    t.string   "bisac_one_code"
+    t.string   "bisac_one_description"
+    t.string   "bisac_two_code"
+    t.string   "bisac_two_description"
+    t.string   "bisac_three_code"
+    t.string   "bisac_three_description"
+    t.text     "search_terms"
+    t.text     "description"
+    t.text     "author_bio"
+    t.text     "one_line_blurb"
+    t.string   "series_name"
+    t.string   "series_number"
+    t.string   "prefunk_enrolled"
+    t.string   "prefunk_enrollment_date"
   end
 
   add_index "project_grid_table_rows", ["design_task_id"], name: "index_project_grid_table_rows_on_design_task_id", using: :btree
