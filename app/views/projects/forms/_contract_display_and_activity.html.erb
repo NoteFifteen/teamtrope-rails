@@ -26,11 +26,11 @@
     <div class="col-md-12">
       <h1>Contracts</h1>
       <ul class="nav nav-tabs">
-        <li id="my_contracts_tab" class="active"><a href="#">My Contracts</a></li>
+        <li id="my_contracts_tab" class="active"><a class="no-decoration" href="#">My Contracts</a></li>
         <% if current_user.role? :booktrope_staff %>
-          <li id="member_contracts_tab"><a href="#">Team Member Contracts</a></li>
+          <li id="member_contracts_tab"><a class="no-decoration" href="#">Team Member Contracts</a></li>
         <% end %>
-        <li id="contract_activity_tab" ><a href="#">Contract Activity</a></li>
+        <li id="contract_activity_tab" ><a class="no-decoration" href="#">Contract Activity</a></li>
       </ul>
       <br />
       <br />
