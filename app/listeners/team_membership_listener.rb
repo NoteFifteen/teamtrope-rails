@@ -52,6 +52,6 @@ class TeamMembershipListener
         "#{author.member.name} (#{author.role.name})"
       }.join(', ')
     end
-    author_last_first, author_first_last, other_contributors
+    [author_last_first, author_first_last, other_contributors]
   end
 end
