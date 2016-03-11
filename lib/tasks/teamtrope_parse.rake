@@ -98,6 +98,53 @@ namespace :teamtrope do
   end
 
 
+  desc "add genre to book records"
+  task add_genre_to_parse_books: :environment do
+
+    # use the Batch class to batch up jobs to improve performance
+    batch = Parse::Batch.new
+    max_requests = 50
+
+    # build lookup hash from parse (load all in one go so we don't have to look up
+    # book by book)
+    parse_book_hash = Hash[*Booktrope::ParseWrapper
+      .get_books
+      .map {
+        | parse_book | [ parse_book["objectId"], parse_book]
+      }.flatten
+    ]
+
+    # getting all books with parse records
+    Project.joins(:control_number)
+      .includes(:control_number, :book_genres)
+      .find_each do | project |
+
+        # no need to update books that don't have any control numbers or parse records yet
+        unless project.control_number.nil? || project.control_number.parse_id.nil?
+
+          # fetch the parse book out of the hash
+          parse_book = parse_book_hash[project.control_number.parse_id]
+
+          # we might want to report this somewhere.
+          unless parse_book.nil?
+            parse_book["genre"] = project.genres.map(&:name).join(", ")
+
+            # batching the requests if we have gone over the max
+            if batch.requests.count >= max_requests
+              batch.run!
+              batch.requests.clear
+            end
+            batch.update_object parse_book
+          end
+        end
+    end
+    # run the batch if we have any more in the batch that haven't been run
+    # this happens if the set of books to update doesn't divide evently by
+    # max_requests which is 50. That max is set by parse.
+    if batch.requests.count > 0
+      batch.run!
+    end
+  end
 
   desc "Validates permanent price changes to ensure they are entered into the queue correctly as a price increase or a price drop."
   task validate_permanent_price_drops: :environment do
