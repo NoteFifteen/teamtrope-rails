@@ -60,7 +60,7 @@ class ProjectGridTableRowListener
 
   def submit_to_layout(project)
     pgtr = project.project_grid_table_row
-    pgtr.book_format = project.book_format_pretty
+    pgtr.book_format = project.book_type_pretty
 
     pgtr.save
   end
