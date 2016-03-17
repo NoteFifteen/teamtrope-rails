@@ -35,6 +35,7 @@ class Project < ActiveRecord::Base
   has_one  :ebook_only_incentive, dependent: :destroy
   has_one  :final_manuscript, dependent: :destroy
   has_many :genres, through: :book_genres, source: :genre
+  has_many :imported_contracts, dependent: :destroy
   has_one  :kdp_select_enrollment, dependent: :destroy
   has_one  :layout, dependent: :destroy
   has_one  :man_dev, dependent: :destroy
@@ -71,6 +72,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :draft_blurb, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :ebook_only_incentive, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :final_manuscript, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :imported_contracts, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :kdp_select_enrollment, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :layout, reject_if: :all_blank, allow_destroy: false
   accepts_nested_attributes_for :man_dev, reject_if: :all_blank, allow_destroy: false
@@ -211,6 +213,12 @@ class Project < ActiveRecord::Base
 
   def team_roles(user)
     team_memberships.includes(:role).where(member_id: user.id).map { | membership | membership.role }
+  end
+
+  def team_members
+    team_memberships.includes(:member).group_by(&:member_id).map{|key, memberships|
+      { id: memberships.first.member.id, name: memberships.first.member.name }
+    }
   end
 
   def team_members_with_roles

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160302235322) do
+ActiveRecord::Schema.define(version: 20160315211421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -387,6 +387,24 @@ ActiveRecord::Schema.define(version: 20160302235322) do
 
   add_index "hellosign_signatures", ["hellosign_document_id"], name: "index_hellosign_signatures_on_hellosign_document_id", using: :btree
   add_index "hellosign_signatures", ["member_id"], name: "index_hellosign_signatures_on_member_id", using: :btree
+
+  create_table "imported_contracts", force: true do |t|
+    t.string   "document_type"
+    t.text     "document_signers",           default: [], array: true
+    t.date     "document_date"
+    t.integer  "project_id"
+    t.string   "contract_file_name"
+    t.string   "contract_content_type"
+    t.integer  "contract_file_size"
+    t.datetime "contract_updated_at"
+    t.string   "contract_direct_upload_url"
+    t.boolean  "contract_processed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "imported_contracts", ["document_type"], name: "index_imported_contracts_on_document_type", using: :btree
+  add_index "imported_contracts", ["project_id"], name: "index_imported_contracts_on_project_id", using: :btree
 
   create_table "imprints", force: true do |t|
     t.string   "name"

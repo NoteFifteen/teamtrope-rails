@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  resources :imported_contracts
+
   match 'hellosign_documents/cancel_request/:id', to: 'hellosign_documents#cancel_signature_request', via: :patch
 
   resources :hellosign_document_types
@@ -63,6 +65,7 @@ Rails.application.routes.draw do
     resource :cover_concepts
     resource :cover_template
     resource :final_manuscript
+    resource :imported_contracts
     resource :manuscript
     resource :media_kit
     resource :project_layout
@@ -88,6 +91,7 @@ Rails.application.routes.draw do
   match '/projects/edit_layout_style/:id',        to: 'projects#edit_layout_style',        via: 'patch'
   match '/projects/edited_manuscript/:id',        to: 'projects#edited_manuscript',        via: 'patch'
   match '/projects/final_manuscript/:id',         to: 'projects#final_manuscript',         via: 'patch'
+  match '/projects/import_contract/:id',          to: 'projects#import_contract',          via: 'patch'
   match '/projects/kdp_select/:id',               to: 'projects#kdp_select',               via: 'patch'
   match '/projects/kdp_update/:id',               to: 'projects#kdp_update',               via: 'patch'
   match '/projects/layout_upload/:id',            to: 'projects#layout_upload',            via: 'patch'

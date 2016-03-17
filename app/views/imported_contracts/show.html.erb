@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Document type:</strong>
+  <%= @imported_contract.document_type %>
+</p>
+
+<p>
+  <strong>Document signers:</strong>
+  <%= @imported_contract.document_signers %>
+</p>
+
+<p>
+  <strong>Document date:</strong>
+  <%= @imported_contract.document_date %>
+</p>
+
+<p>
+  <strong>Contract:</strong>
+  <%= @imported_contract.contract %>
+</p>
+
+<%= link_to 'Edit', edit_imported_contract_path(@imported_contract) %> |
+<%= link_to 'Back', imported_contracts_path %>

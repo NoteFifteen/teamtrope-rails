@@ -1,0 +1,21 @@
+<% if ! @last_errors.nil? && @last_errors.length > 0 %>
+    console.log(<%=@last_errors.to_s.html_safe%>);
+    $('#upload_<%=params[:unique_id]%>').html('<span>There was an error processing your file.  Please check the file type and try again.<br><br></span>');
+<% else %>
+
+    <% if @imported_contract.persisted? %>
+        $('#upload_<%=params[:unique_id]%>').hide();
+        $('input[name=project\\[imported_contracts_attributes\\]\\[0\\]\\[id\\]]').val(<%= @imported_contract.id %>);
+
+        <% if ! @updated_file.nil? %>
+            $('#<%=@updated_file%>_s3_uploader').html('<span><%=params[:filename] %> was successfully uploaded.</span>');
+
+            <% if @updated_file == 'imported_contract' %>
+                $('#imported_contract_submit_button_fake').removeAttr('disabled').removeClass('disabled');
+            <% end %>
+
+        <% end %>
+    <% else %>
+        $('#upload_<%=params[:unique_id]%> div.progress').removeClass('active progress-striped').addClass('progress-danger');
+    <% end %>
+<% end %>

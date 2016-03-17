@@ -49,6 +49,23 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('project_created_admin', tokens, admin_project_created_list, admin_subject)
   end
 
+  def import_contract(project, imported_contract_id, current_user)
+    @project = project
+    @imported_contract = ImportedContract.find(imported_contract_id)
+    @current_user = current_user
+
+
+    tokens = {
+      'Contract Type' => ImportedContract::Document_Types.key(@imported_contract.document_type),
+      'Contract Date' => @imported_contract.document_date,
+      'Signers' => @imported_contract.signers.map(&:name).join(", ")
+    }
+
+    subject = "New legal document imported for #{@project.book_title} by #{@current_user.name}"
+
+    send_email_message('import_contract_admin', tokens, admin_contract_import_list, subject)
+  end
+
   def check_imprint(project, current_user)
     @project = project
     @current_user = current_user
@@ -1257,6 +1274,10 @@ class ProjectMailer < ActionMailer::Base
 
   def admin_bookbub_submission_request_list
     %w( tt_bookbub_submissions@booktrope.com )
+  end
+
+  def admin_contract_import_list
+    %w( tt_legal_document_import_list@booktrope.com )
   end
 
   # Set the campaign header for MailGun tracking

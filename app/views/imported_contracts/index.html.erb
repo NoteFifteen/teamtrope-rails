@@ -1,0 +1,31 @@
+<h1>Listing imported_contracts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Document type</th>
+      <th>Document signers</th>
+      <th>Document date</th>
+      <th>Contract</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @imported_contracts.each do |imported_contract| %>
+      <tr>
+        <td><%= imported_contract.document_type %></td>
+        <td><%= imported_contract.document_signers %></td>
+        <td><%= imported_contract.document_date %></td>
+        <td><%= imported_contract.contract %></td>
+        <td><%= link_to 'Show', imported_contract %></td>
+        <td><%= link_to 'Edit', edit_imported_contract_path(imported_contract) %></td>
+        <td><%= link_to 'Destroy', imported_contract, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Imported contract', new_imported_contract_path %>
