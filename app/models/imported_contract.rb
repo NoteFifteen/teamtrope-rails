@@ -24,13 +24,6 @@ class ImportedContract < ActiveRecord::Base
     @signers ||= User.find(document_signers)
   end
 
-  def document_signers=(signers)
-    unless signers.class == Array
-      signers = signers.split(",")
-    end
-    super(signers)
-  end
-
   protected
   # Final upload processing step
   def transfer_and_cleanup

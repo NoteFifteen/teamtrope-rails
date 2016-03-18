@@ -75,7 +75,7 @@ $(function() {
         data.push($(this).val());
       });
 
-      $('input[name=project\\[imported_contracts_attributes\\]\\[0\\]\\[document_signers\\]]').val(data);
+      $('input[name=project\\[imported_contracts_attributes\\]\\[0\\]\\[document_signers\\]]').val('{' + data + '}');
       $('#legal_import_form').submit();
     }
   });

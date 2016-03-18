@@ -45,6 +45,17 @@
               </td>
             </tr>
              <% end %>
+
+             <% imported_contracts = @project.imported_contracts.where("imported_contracts.document_signers @> ARRAY[?]", [current_user.id.to_s]) %>
+             <% imported_contracts.each do | imported_contract | %>
+              <tr>
+                <td><%= imported_contract.document_date %></td>
+                <td><%= ImportedContract::Document_Types.key imported_contract.document_type %></td>
+                <td colspan="4"><%= imported_contract.signers.map{ | signer | link_to signer.name, signer.profile_page }.join(", ").html_safe %></td>
+                <td><%= link_to "Download", download_imported_contracts_path(imported_contract) %></td>
+              </tr>
+             <% end %>
+
           </tbody>
         </table>
         <% else %>
@@ -97,7 +108,8 @@
             </tr>
           </thead>
           <tbody>
-            <%= render @hellosign_documents %>
+            <% legal_documents = @hellosign_documents + @project.imported_contracts.order(document_date: :asc) %>
+            <%= render legal_documents %>
           </tbody>
         </table>
       </div>

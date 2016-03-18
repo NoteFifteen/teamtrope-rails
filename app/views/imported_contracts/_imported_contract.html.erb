@@ -1,1 +1,15 @@
-<li>import contract</li>
+<tr>
+  <td><i class="genericon genericon-checkmark"></i></td>
+  <td><%= imported_contract.document_date %></td>
+  <td>
+    <%= imported_contract.signers.map{ | signer |
+          link_to signer.name, signer.profile_page
+        }.join(", ").html_safe %>
+  </td>
+  <td colspan="4"><%= ImportedContract::Document_Types.key imported_contract.document_type %></td>
+  <td>
+    <%= link_to "Download",
+        download_imported_contracts_path(imported_contract),
+        target: :blank  %>
+  </td>
+</tr>
