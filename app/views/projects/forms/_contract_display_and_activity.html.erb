@@ -1,26 +1,3 @@
-<%
-# :name,
-# :template_id,
-# :subject,
-# :message,
-# :ccs,
-# :signers,
-# :version
-
-# status: string,
-# created_at: datetime,
-# updated_at: datetime,
-# hellosign_document_type_id: integer,
-# team_membership_id: integer,
-# signing_url: string,
-# files_url: string,
-# details_url: string,
-# is_complete: boolean,
-# pending_cancellation: boolean,
-# cancelled: boolean,
-# has_error: boolean
-%>
-
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -120,21 +97,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @hellosign_documents.each do | hellosign_document | %>
-              <tr class="alert alert-<%= hellosign_document.complete?? "success" : "danger" %>">
-                <td><i class="genericon genericon-<%= hellosign_document.is_complete ? "checkmark" : "close" %>"></i></td>
-                <td><%= hellosign_document.created_at %></td>
-                <td>
-                  <%= link_to hellosign_document.team_membership.member.name,
-                        hellosign_document.team_membership.member.profile_page %>
-                </td>
-                <td><%= hellosign_document.team_membership.role.name %></td>
-                <td><%= hellosign_document.version %></td>
-                <td><%= hellosign_document.status_text %></td>
-                <td><%= hellosign_document.updated_at %></td>
-                <td><%= link_to "Details", hellosign_document.details_url, target: :blank %></td>
-              </tr>
-            <% end %>
+            <%= render @hellosign_documents %>
           </tbody>
         </table>
       </div>
