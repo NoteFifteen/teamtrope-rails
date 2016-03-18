@@ -124,6 +124,10 @@ Rails.application.routes.draw do
   match '/projects/update_genre/:id',             to: 'projects#update_genre',             via: 'patch'
   match '/projects/upload_cover_templates/:id',   to: 'projects#upload_cover_templates',   via: 'patch'
 
+  resource :imported_contracts do
+    get '/:id/download/contract', to: 'imported_contracts#download_contract', as: 'download'
+  end
+  #match '/imported_contracts/:id/contract/download',            to: 'imported_contracts#download_contract', via: 'get', as: 'download_imported_contract'
   match '/projects/download_original_manuscript/:id',           to: 'projects#download_original_manuscript',           via: 'get', as: 'download_original_manuscript'
   match '/projects/download_edited_manuscript/:id',             to: 'projects#download_edited_manuscript',             via: 'get', as: 'download_edited_manuscript'
   match '/projects/download_proofread_reviewed_manuscript/:id', to: 'projects#download_proofread_reviewed_manuscript', via: 'get', as: 'download_proofread_reviewed_manuscript'

@@ -1,24 +1,33 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <h1>Legal Document for <%= @project.book_title %></h1>
+  <hr />
+  <p>
+    <strong>Document Type:</strong>
+    <%= ImportedContract::Document_Types.key @imported_contract.document_type %>
+  </p>
 
-<p>
-  <strong>Document type:</strong>
-  <%= @imported_contract.document_type %>
-</p>
+  <p>
+    <strong>Document Signers:</strong>
+    <ul>
+      <% @imported_contract.signers.each do | signer | %>
+        <li><%= link_to signer.name, signer.profile_page %></li>
+      <% end %>
+    </ul>
+  </p>
 
-<p>
-  <strong>Document signers:</strong>
-  <%= @imported_contract.document_signers %>
-</p>
+  <p>
+    <strong>Document Date:</strong>
+    <%= @imported_contract.document_date %>
+  </p>
 
-<p>
-  <strong>Document date:</strong>
-  <%= @imported_contract.document_date %>
-</p>
+  <p>
+    <strong>Contract:</strong>
+    <%= link_to @imported_contract.contract_file_name,
+          download_imported_contracts_path(@imported_contract),
+          target: :blank %>
+  </p>
 
-<p>
-  <strong>Contract:</strong>
-  <%= @imported_contract.contract %>
-</p>
+  <%= link_to 'Edit', edit_imported_contract_path(@imported_contract) %> |
+  <%= link_to 'Back', imported_contracts_path %>
 
-<%= link_to 'Edit', edit_imported_contract_path(@imported_contract) %> |
-<%= link_to 'Back', imported_contracts_path %>
+</div>

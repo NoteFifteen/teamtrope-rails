@@ -1,1 +1,4 @@
 <%= render 'table_hash' %>
+
+<p>Legal Doc: <%= link_to @imported_contract.contract_file_name,
+      download_imported_contracts_path(@imported_contract) %></p>

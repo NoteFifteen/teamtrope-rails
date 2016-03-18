@@ -27,7 +27,7 @@ class ImportedContractsController < ApplicationController
     # load up the project that our newly imported contract belongs to
     @project = Project.friendly.find(params[:project_id])
 
-    # create a new imported_contract 
+    # create a new imported_contract
     @imported_contract = @project.imported_contracts.create()
     @updated_file = nil
     update_hash = {}
@@ -55,6 +55,11 @@ class ImportedContractsController < ApplicationController
   def destroy
     @imported_contract.destroy
     respond_with(@imported_contract)
+  end
+
+  def download_contract
+    @imported_contract = ImportedContract.find params[:id]
+    redirect_to @imported_contract.contract.expiring_url(*Constants::DefaultLinkExpiration)
   end
 
   private
