@@ -1,0 +1,13 @@
+<tr class="alert alert-<%= hellosign_document.complete?? "success" : "danger" %>">
+  <td><i class="genericon genericon-<%= hellosign_document.is_complete ? "checkmark" : "close" %>"></i></td>
+  <td><%= hellosign_document.created_at %></td>
+  <td>
+    <%= link_to hellosign_document.team_membership.member.name,
+          hellosign_document.team_membership.member.profile_page %>
+  </td>
+  <td><%= hellosign_document.team_membership.role.name %></td>
+  <td><%= hellosign_document.version %></td>
+  <td><%= hellosign_document.status_text %></td>
+  <td><%= hellosign_document.updated_at %></td>
+  <td><%= link_to "Details", hellosign_document.details_url, target: :blank %></td>
+</tr>

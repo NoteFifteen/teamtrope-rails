@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  document_type: MyString
+  document_signers: MyText
+  document_date: 2016-03-15
+  contract: 
+
+two:
+  document_type: MyString
+  document_signers: MyText
+  document_date: 2016-03-15
+  contract: 

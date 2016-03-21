@@ -1,0 +1,37 @@
+<div class="container">
+  <h1>Imported Contracts</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Project</th>
+        <th>Type</th>
+        <th>Signers</th>
+        <th>Date</th>
+        <th>Contract</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @imported_contracts.each do |imported_contract| %>
+        <tr>
+          <td class="book-title"><%= link_to imported_contract.project.book_title, imported_contract.project %></td>
+          <td><%= ImportedContract::Document_Types.key imported_contract.document_type %></td>
+          <td><%= imported_contract.signers.map(&:name).join(", ") %></td>
+          <td><%= imported_contract.document_date %></td>
+          <td><%= link_to imported_contract.contract_file_name, download_imported_contracts_path(imported_contract) %></td>
+          <td><%= link_to 'Show', imported_contract %></td>
+          <td><%= link_to 'Edit', edit_imported_contract_path(imported_contract) %></td>
+          <td><%= link_to 'Destroy', imported_contract, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <%= link_to 'New Imported contract', new_imported_contract_path %>
+</div>

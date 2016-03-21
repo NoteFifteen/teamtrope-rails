@@ -1,0 +1,109 @@
+<div class="container">
+
+  <h1>Legal Import</h1>
+  <div class="col-md-8">
+
+    <%= simple_form_for @project,
+          url: url_for(:controller => 'projects',
+            :action => 'import_contract',
+            id: @project.id),
+          html: { id: "legal_import_form"} do | f | %>
+
+      <input type="hidden" name="project[imported_contracts_attributes][0][id]" />
+      <%= f.simple_fields_for :imported_contracts,
+            f.object.imported_contracts.build do | contract | %>
+        <div class="form-group">
+          <label>Document Type<span class="required">*</span></label>
+
+          <%= contract.input :document_type,
+                collection: ImportedContract::Document_Types,
+                prompt: "Please Choose a Document Type",
+                label: false %>
+        </div>
+
+        <div class="form-group">
+          <label>Document Signer<span class="required">*</span></label>
+          <%= contract.input :document_signers, as: :hidden %>
+          <select id="signers_list" multiple="multiple"
+            class="select form-control valid" name="signers_list"></select>
+        </div>
+
+        <div class="form-group">
+          <label>Document Date<span class="required">*</span></label>
+          <%= contract.input :document_date, as: :date, label: false %>
+        </div>
+
+      <% end %>
+    <% end %>
+
+    <div class="form-group">
+      <%
+      [
+
+        {
+        label: "Contract File", required: true, callback_url: project_imported_contracts_url(@project),
+        form_id: "imported_contract_s3_uploader", callback_param: "imported_contract[direct_upload_url]",
+        container_id: "imported_contract_uploads_container", object: @imported_contract, column_name: "contract",
+        controller_action: 'download_contract'
+      }
+      ].each do | s3_upload_hash |
+      %>
+
+      <%= render partial: "shared/amazon_s3_upload", locals: s3_upload_hash %>
+      <% end %>
+      <div class="help-block">
+        .pdf file only
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button id="imported_contract_submit_button_fake" class="btn disabled" disabled="disabled" type="button">Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+$(function() {
+  $('#imported_contract_submit_button_fake').click(function() {
+    $('#legal_import_form').validate();
+
+    if($('#legal_import_form').valid()) {
+
+      var data = [];
+      $("#signers_list").find("option:selected").each(function() {
+        data.push($(this).val());
+      });
+
+      $('input[name=project\\[imported_contracts_attributes\\]\\[0\\]\\[document_signers\\]]').val('{' + data + '}');
+      $('#legal_import_form').submit();
+    }
+  });
+});
+
+
+var select = $("#project_imported_contracts_attributes_0_document_type");
+select.change(function() {
+  var documentSigners = $("#signers_list");
+  documentSigners.empty();
+
+  var signers = signersForDocumentType(select.val());
+
+  for(var i = 0; i < signers.length; i++)
+  {
+    documentSigners.append('<option value="' + signers[i].id + '">' + signers[i].name + "</option>");
+  }
+});
+
+function signersForDocumentType(type)
+{
+  if(type === "author_agreement")
+    return <%= (@project.authors.map(&:member)
+      .map{ | member | { id: member.id, name: member.name } })
+      .to_json.html_safe %>;
+  else if ( type === "cta" || type === "other")
+    return <%= @project.team_members.to_json.html_safe %>;
+  else
+    return [];
+}
+</script>

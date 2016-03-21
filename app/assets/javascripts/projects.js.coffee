@@ -518,6 +518,22 @@ jQuery.validator.addMethod('bisacFormatValidator', (value, element, params) ->
 )
 
 jQuery ->
+  $("#legal_import_form").validate({
+    rules: {
+      'project[imported_contracts_attributes][0][document_type]': {
+        required: true
+      },
+      'signers_list': {
+        required: true
+      }
+    },
+    messages: {
+      'project[imported_contract][document_type]': "You must choose a document type",
+      'project[imported_contract][signers]': "You must choose at least one signer"
+    }
+  })
+
+jQuery ->
   $("#publication_fact_sheet").validate({
     rules: {
       'starting_grade_level':{

@@ -1,0 +1,2 @@
+module ImportedContractsHelper
+end

@@ -173,6 +173,23 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def import_contract
+
+    if @project.update(update_project_params)
+      @project.create_activity :import_contract, owner: current_user,
+                               parameters: { text: ' imported a legal document', form_data: params[:project].to_s}
+
+
+      imported_contract_id = params[:project][:imported_contracts_attributes]["0"][:id]
+      ProjectMailer.import_contract(@project, imported_contract_id, current_user)
+      flash[:success] = 'Legal Doc Imported'
+      redirect_to @project
+    else
+      render 'show'
+    end
+
+  end
+
   def edit_complete_date
     if @project.update(update_project_params)
       @project.create_activity :submitted_edit_complete_date, owner: current_user, parameters: { text: " set the 'Edit Complete Date' to #{@project.edit_complete_date.strftime('%Y/%m/%d')}", form_data: params[:project].to_s}
@@ -1087,6 +1104,7 @@ class ProjectsController < ApplicationController
       :approve_blurb_attributes => [:id, :blurb_approval_decision, :blurb_approval_date, :blurb_notes],
       :ebook_only_incentive_attributes => [:title, :isbn, :publication_date, :author_name, :retail_price, :blurb, :category_one, :category_two, :praise, :website_one, :website_two, :website_three],
       :final_manuscript_attributes => [:id, :pdf, :doc],
+      :imported_contracts_attributes => [:id, :document_date, :document_signers, :document_type],
       :kdp_select_enrollment_attributes => [:member_id, :enrollment_date, :update_type, :update_data],
       :layout_attributes => [:id, :layout_style_choice, :page_header_display_name, :use_pen_name_on_title, :pen_name, :legal_name,
                              :use_pen_name_for_copyright, :exact_name_on_copyright, :layout_upload, :layout_notes,

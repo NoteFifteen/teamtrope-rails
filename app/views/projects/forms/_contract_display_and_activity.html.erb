@@ -1,26 +1,3 @@
-<%
-# :name,
-# :template_id,
-# :subject,
-# :message,
-# :ccs,
-# :signers,
-# :version
-
-# status: string,
-# created_at: datetime,
-# updated_at: datetime,
-# hellosign_document_type_id: integer,
-# team_membership_id: integer,
-# signing_url: string,
-# files_url: string,
-# details_url: string,
-# is_complete: boolean,
-# pending_cancellation: boolean,
-# cancelled: boolean,
-# has_error: boolean
-%>
-
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -68,6 +45,17 @@
               </td>
             </tr>
              <% end %>
+
+             <% imported_contracts = @project.imported_contracts.where("imported_contracts.document_signers @> ARRAY[?]", [current_user.id.to_s]) %>
+             <% imported_contracts.each do | imported_contract | %>
+              <tr>
+                <td><%= imported_contract.document_date %></td>
+                <td><%= ImportedContract::Document_Types.key imported_contract.document_type %></td>
+                <td colspan="4"><%= imported_contract.signers.map{ | signer | link_to signer.name, signer.profile_page }.join(", ").html_safe %></td>
+                <td><%= link_to "Download", download_imported_contracts_path(imported_contract) %></td>
+              </tr>
+             <% end %>
+
           </tbody>
         </table>
         <% else %>
@@ -120,21 +108,8 @@
             </tr>
           </thead>
           <tbody>
-            <% @hellosign_documents.each do | hellosign_document | %>
-              <tr class="alert alert-<%= hellosign_document.complete?? "success" : "danger" %>">
-                <td><i class="genericon genericon-<%= hellosign_document.is_complete ? "checkmark" : "close" %>"></i></td>
-                <td><%= hellosign_document.created_at %></td>
-                <td>
-                  <%= link_to hellosign_document.team_membership.member.name,
-                        hellosign_document.team_membership.member.profile_page %>
-                </td>
-                <td><%= hellosign_document.team_membership.role.name %></td>
-                <td><%= hellosign_document.version %></td>
-                <td><%= hellosign_document.status_text %></td>
-                <td><%= hellosign_document.updated_at %></td>
-                <td><%= link_to "Details", hellosign_document.details_url, target: :blank %></td>
-              </tr>
-            <% end %>
+            <% legal_documents = @hellosign_documents + @project.imported_contracts.order(document_date: :asc) %>
+            <%= render legal_documents %>
           </tbody>
         </table>
       </div>
