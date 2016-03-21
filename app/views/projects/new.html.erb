@@ -12,10 +12,8 @@
         we have a responsibility to our creative teams, we need to ensure any titles we publish have a great chance for
         commercial appeal. As such there are certain genres we are unable to publish such as screenplays, workbooks,
         most poetry, and young children’s picture books.  If the title you are submitting is a dramatic change from
-        what we have already published for you or includes something mentioned in the previous sentence, please contact
-        <a href="//teamtrope.com/members/jessejames/" target="_blank">@JesseJames</a> to discuss prior to setting up the project.</p>
-        <p>Please note: While we would not wish to do so, Booktrope reserves the right to remove any project that does
-        not follow this request.</p>
+        what we have already published for you or includes something mentioned in the previous sentence, please submit a Booktrope Assistance ticket to discuss prior to setting up the project.</p>
+        <p>Please note: While we would not wish to do so, Booktrope reserves the right to remove any project that does not follow this request.</p>
 
         <%= simple_form_for @project, html: { id: 'new_project_form' } do | f | %>
 
@@ -52,7 +50,7 @@
 
           <div class="input_field">
             <label>How long is the book? (number of words)</label><br>
-            <div class="col-xs-2">
+            <div class="col-md-4">
                 <%= f.input :page_count, label: false, :input_html => { type: 'text', size: '10' } %>
             </div>
           </div>
