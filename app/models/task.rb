@@ -21,8 +21,12 @@ class Task < ActiveRecord::Base
 
   # return the override if we have one otherwise return the name
   def display_name
-    override_name || name
+    override_name ||= name
+    # default to name if the value of override_name is empty string
+    override_name = name if override_name.strip == ""
+    override_name
   end
+
 
   # Look for a method that can determine whether or not we're visible.  The default is true.
   def visible?(project, current_user)
