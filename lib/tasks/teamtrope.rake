@@ -22,6 +22,12 @@ namespace :teamtrope do
           .map(&:member)
           .map(&:name)
           .join(", ")
+        pgtr[(key.to_s + "s_pct").to_sym] = project
+          .team_memberships
+          .includes(:member)
+          .where(role_id: value)
+          .map{ |member| "#{member.member.name} (#{member.percentage})" }
+          .join(", ")
       end
 
       pgtr.prefunk_enrolled = pgtr.project.prefunk_enrollment.nil?? "No" : "Yes"

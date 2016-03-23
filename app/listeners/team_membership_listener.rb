@@ -9,12 +9,25 @@ class TeamMembershipListener
 
     # setting the role column to a comma dilimited list fo member names for that role
     role = Role.find(role_id)
-    pgtr[role.name.downcase.gsub(/ /, "_")] = project.team_memberships
-    .where(role: role_id)
-    .map(&:member)
-    .map(&:name).join(", ")
+    role_name = role.name.downcase.gsub(/ /, "_")
+
+    return if %w( advisor agent ).include?(role_name)
+
+    pgtr[role_name] = project.team_memberships
+      .includes(:member)
+      .where(role: role_id)
+      .map(&:member)
+      .map(&:name).join(", ")
 
     pgtr.team_and_pct = team_and_pct project
+
+
+    pgtr[key + "s_pct"] = project.team_memberships
+      .includes(:member)
+      .where(role: role_id)
+      .map{ |member| "#{member.member.name} (#{member.percentage})" }
+      .join(", ")
+
 
     # only update the author fields if we've added the author.
     if role.name.downcase.gsub(/ /, "_") == "author"

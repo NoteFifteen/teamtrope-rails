@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160315211421) do
+ActiveRecord::Schema.define(version: 20160322231017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -742,6 +742,12 @@ ActiveRecord::Schema.define(version: 20160315211421) do
     t.string   "series_number"
     t.string   "prefunk_enrolled"
     t.string   "prefunk_enrollment_date"
+    t.text     "authors_pct"
+    t.text     "editors_pct"
+    t.text     "book_managers_pct"
+    t.text     "cover_designers_pct"
+    t.text     "project_managers_pct"
+    t.text     "proofreaders_pct"
   end
 
   add_index "project_grid_table_rows", ["design_task_id"], name: "index_project_grid_table_rows_on_design_task_id", using: :btree

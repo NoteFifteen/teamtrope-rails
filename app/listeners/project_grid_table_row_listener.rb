@@ -18,6 +18,14 @@ class ProjectGridTableRowListener
     .map(&:member)
     .map(&:name).join(", ")
 
+
+    pgtr[role_name + "s_pct"] = project.team_memberships
+      .includes(:member)
+      .where(role: role_id)
+      .map{ |member| "#{member.member.name} (#{member.percentage})" }
+      .join(", ")
+
+
     pgtr.save
   end
 
