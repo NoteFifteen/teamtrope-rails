@@ -119,7 +119,14 @@ module Constants
       search_terms: "Search Terms",
       summary: "Summary",
       author_bio: "Author Bio",
-      squib: "Squib"
+      squib: "Squib",
+      authors_pct: "Authors & Pct",
+      editors_pct: "Editors & Pct",
+      book_managers_pct: "Book Managers & Pct",
+      cover_designers_pct: "Cover Designers & Pct",
+      project_managers_pct: "Project Managers & Pct",
+      proofreaders_pct: "Proofreaders & Pct"
+
   }
 
   ScribdCsvHeaderHash = { project_id: "Project Id", imprint: "Imprint", parent_isbn: "Parent ISBN", ebook_isbn: "Ebook ISBN", format: "Format",

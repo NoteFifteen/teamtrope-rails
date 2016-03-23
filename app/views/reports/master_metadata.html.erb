@@ -63,6 +63,17 @@
         <td><%= master_metadata_export_hash[:summary] %></td>
         <td><%= master_metadata_export_hash[:author_bio] %></td>
         <td><%= master_metadata_export_hash[:squib] %></td>
+        <%
+        [
+          :authors_pct,
+          :editors_pct,
+          :book_managers_pct,
+          :cover_designers_pct,
+          :project_managers_pct,
+          :proofreaders_pct
+        ].each do | metadata | %>
+        <td><%= master_metadata_export_hash[metadata] %></td>
+        <% end %>
       </tr>
     <% end %>
     </tbody>

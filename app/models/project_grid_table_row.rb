@@ -61,6 +61,13 @@ class ProjectGridTableRow < ActiveRecord::Base
     row_hash[:author_bio]              = pgtr.author_bio
     row_hash[:squib]                   = pgtr.one_line_blurb
 
+    row_hash[:authors_pct]             = pgtr.authors_pct
+    row_hash[:editors_pct]             = pgtr.editors_pct
+    row_hash[:book_managers_pct]       = pgtr.book_managers_pct
+    row_hash[:cover_designers_pct]     = pgtr.cover_designers_pct
+    row_hash[:project_managers_pct]    = pgtr.project_managers_pct
+    row_hash[:proofreaders_pct]        = pgtr.proofreaders_pct
+
     row_hash.each do | key, value |
       if value.class == String
         row_hash[key] = ApplicationHelper.filter_special_characters(value)
