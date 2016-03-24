@@ -2,6 +2,7 @@ class ProjectsController < ApplicationController
 
   before_action :signed_in_user #, only: [:show, :index, :destroy, :edit]
   before_action :set_project, except: [:create, :new, :index, :grid_view]
+  before_action :set_submitted_task, except: [:show, :create, :new, :index, :grid_view]
 
   include ProjectsHelper
   include Wisper::Publisher
@@ -98,6 +99,10 @@ class ProjectsController < ApplicationController
 
       ProjectMailer.accepted_team_member(@project, current_user, params)
       flash[:success] = 'Accepted a Team Member'
+
+      unless @submitted_task.nil? || !@submitted_task.modal?
+        flash[:modal] = @submitted_task.modal_text
+      end
       redirect_to @project
     else
       flash[:danger] = 'There was a problem adding a member to the team.  Please go to the Accept Member tab and review the errors.'
@@ -1140,6 +1145,14 @@ class ProjectsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       flash[:danger] = 'The project you were looking for could not be found.'
       redirect_to projects_path
+  end
+
+  def set_submitted_task
+    begin
+      @submitted_task = Task.find(params[:submitted_task_id])
+    rescue ActiveRecord::RecordNotFound => e
+      @submitted_task = nil
+    end
   end
 
   def update_current_task

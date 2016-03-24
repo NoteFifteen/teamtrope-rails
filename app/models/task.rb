@@ -27,6 +27,9 @@ class Task < ActiveRecord::Base
     override_name
   end
 
+  def modal?
+    modal
+  end
 
   # Look for a method that can determine whether or not we're visible.  The default is true.
   def visible?(project, current_user)
