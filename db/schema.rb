@@ -1092,6 +1092,7 @@ ActiveRecord::Schema.define(version: 20160323225635) do
     t.datetime "updated_at"
     t.boolean  "team_only",        default: true
     t.string   "override_name"
+    t.string   "modal_header",     default: ""
     t.text     "modal_text",       default: ""
     t.boolean  "modal",            default: false
   end

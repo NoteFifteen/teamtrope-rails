@@ -1,82 +1,92 @@
-<h1><%= @task.name %></h1>
+<div class="container">
+  <h1><%= @task.name %></h1>
+  <% unless !@task.modal? && @task.modal_header.empty? && @task.modal_text.empty? %>
+  <div class="row">
+    <div class="col-md-4">
+      <dl class="dl-horizontal">
+        <h4>Meta Information</h4>
+        <hr />
+        <dt>Workflow</dt>
+        <dd><%= !@task.workflow.nil?? @task.workflow.name : "None" %></dd>
 
-<p>
-  <strong>Workflow:</strong>
-  <%= @task.workflow.name unless @task.workflow.nil? %>
-</p>
+        <dt>Next</dt>
+        <dd><%= !@task.next_task.nil?? link_to(@task.next_task.display_name,
+              @task.next_task) : "None" %></dd>
 
-<p>
-  <strong>Next:</strong>
-  <% unless @task.next_task.nil? %>
-    <%= link_to @task.next_task.display_name, @task.next_task %>
-  <% end %>
-</p>
 
-<p>
-  <strong>Rejected task:</strong>
-  <% unless @task.rejected_task.nil? %>
-    <%= link_to @task.rejected_task.display_name, @task.rejected_task %>
-  <% end %>
-</p>
+        <dt>Rejected Task</dt>
+        <dd><%= !@task.rejected_task.nil?? link_to(@task.rejected_task.display_name,
+              @task.rejected_task) : "None" %></dd>
 
-<p>
-  <strong>Partial:</strong>
-  <%= @task.partial %>
-</p>
+        <dt>Partial</dt>
+        <dd><%= @task.partial %></dd>
 
-<p>
-  <strong>Icon:</strong>
-  <%= @task.icon %>
-</p>
+        <dt>Icon</dt>
+        <dd><%= @task.icon %></dd>
 
-<p>
-  <strong>Tab text:</strong>
-  <%= @task.tab_text %>
-</p>
+        <dt>Tab text</dt>
+        <dd><%= @task.tab_text %></dd>
 
-<p>
-  <strong>Intro video:</strong>
-  <%= @task.intro_video %>
-</p>
+        <dt>Intro video</dt>
+        <dd><%= @task.intro_video %></dd>
 
-<p>
-  <strong>Days to complete:</strong>
-  <%= @task.days_to_complete %>
-</p>
+        <dt>Days to complete</dt>
+        <dd><%= @task.days_to_complete %></dd>
 
-<div class="row">
-  <div class="col-md-4">
-  <h4>Performer Roles:</h4>
-  <table>
-    <tr>
-      <th>Performers</th>
-    </tr>
-    <tbody>
-    <% @task.performers.each do | performer | %>
-      <tr><td><%= performer.name %></td></tr>
-    <% end %>
-    </tbody>
-  </table>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <h4>Alerts and Modals</h4>
+      <hr />
+      <dl class="dl-horizontal">
+        <dt>Modal</dt>
+        <dd><%= @task.modal?? "On" : "Off" %></dd>
+        <dt>Modal Header</dt>
+        <dd><%= @task.modal_header %></dd>
+        <dt>Modal Text</dt>
+        <dd><pre><%= @task.modal_text %></pre></dd>
+      </dl>
+    </div>
   </div>
-</div>
+  <% end %>
 
-<div class="row">
-  <div class="col-md-4">
-    <h4>Unlocked Tasks:</h4>
-    <table>
-      <tr>
-        <th>Task</th>
-      </tr>
-      <tbody>
-        <% @task.unlocked_tasks.each do | unlocked_task| %>
-        <%#= unlocked_task.unlocked_task.name unless unlocked_task.unlocked_task.nil? %>
-          <tr><td><%= link_to unlocked_task.unlocked_task.display_name, unlocked_task.unlocked_task %></td></tr>
+  <% unless @task.performers.count <= 0 %>
+  <div class="row">
+    <div class="col-md-4">
+      <h4>Performer Roles</h4>
+      <hr />
+      <table>
+        <tr>
+          <th>Performers</th>
+        </tr>
+        <tbody>
+        <% @task.performers.each do | performer | %>
+          <tr><td><%= performer.name %></td></tr>
         <% end %>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
+    <% end %>
+
+    <% unless @task.unlocked_tasks.count <= 0 %>
+    <div class="col-md-4">
+      <h4>Unlocked Tasks</h4>
+      <hr />
+      <table>
+        <tr>
+          <th>Task</th>
+        </tr>
+        <tbody>
+          <% @task.unlocked_tasks.each do | unlocked_task| %>
+          <%#= unlocked_task.unlocked_task.name unless unlocked_task.unlocked_task.nil? %>
+            <tr><td><%= link_to unlocked_task.unlocked_task.display_name, unlocked_task.unlocked_task %></td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <% end %>
   </div>
+
+  <%= link_to 'Edit', edit_task_path(@task) %> |
+  <%= link_to 'Back', tasks_path %>
 </div>
-
-
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>

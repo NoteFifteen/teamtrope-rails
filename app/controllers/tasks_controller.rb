@@ -73,8 +73,8 @@ class TasksController < ApplicationController
     def task_params
       params.require(:task).permit(:workflow_id, :next_id, :rejected_task_id,
         :partial, :name, :override_name, :icon, :tab_text, :intro_video,
-        :days_to_complete, :team_only, :modal, :modal_text, :performer_ids => [],
-        :unlocked_ids => []
+        :days_to_complete, :team_only, :modal, :modal_header, :modal_text,
+        :performer_ids => [], :unlocked_ids => []
       )
     end
 end
