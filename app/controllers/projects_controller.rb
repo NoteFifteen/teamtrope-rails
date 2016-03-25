@@ -26,6 +26,10 @@ class ProjectsController < ApplicationController
     @project = Project.new(new_project_params)
     if @project.save
       flash[:success] = 'Welcome to your new Project!'
+      flash[:modal] = {
+          modal_header: "Regarding Legal Documents",
+          modal_text: "Please note, when a new project is added to Teamtrope, the author CTA is generated automatically. Your creative team members will be added to the CTA when you add them to the project."
+      }
      # Need to create method to set the current tasks based on the workflow
       @project.create_workflow_tasks
       publish(:create_project, @project)
@@ -101,7 +105,10 @@ class ProjectsController < ApplicationController
       flash[:success] = 'Accepted a Team Member'
 
       unless @submitted_task.nil? || !@submitted_task.modal?
-        flash[:modal] = @submitted_task.modal_text
+        flash[:modal] = {
+          modal_header: @submitted_task.modal_header,
+          modal_text: @submitted_task.modal_text
+        }
       end
       redirect_to @project
     else

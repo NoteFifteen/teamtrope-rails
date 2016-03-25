@@ -476,6 +476,7 @@
       <div class="page">
         <div class='padder'>
           <% flash.each do | message_type, message | %>
+            <% next if message_type == "modal" %>
             <div class="alert alert-<%= message_type %>"><%= message %></div>
           <% end %>
           <%= yield %>
