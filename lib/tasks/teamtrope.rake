@@ -30,6 +30,8 @@ namespace :teamtrope do
           .join(", ")
       end
 
+      pgtr.total_pct = project.team_memberships.map(&:percentage).inject(:+)
+
       pgtr.prefunk_enrolled = pgtr.project.prefunk_enrollment.nil?? "No" : "Yes"
 
       unless pgtr.project.prefunk_enrollment.nil?

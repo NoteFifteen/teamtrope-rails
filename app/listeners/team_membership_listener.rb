@@ -28,6 +28,8 @@ class TeamMembershipListener
       .map{ |member| "#{member.member.name} (#{member.percentage})" }
       .join(", ")
 
+    pgtr.total_pct = project.team_memberships.map(&:percentage).inject(:+)
+
 
     # only update the author fields if we've added the author.
     if role.name.downcase.gsub(/ /, "_") == "author"

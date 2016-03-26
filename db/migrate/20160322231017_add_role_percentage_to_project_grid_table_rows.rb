@@ -6,5 +6,6 @@ class AddRolePercentageToProjectGridTableRows < ActiveRecord::Migration
     add_column :project_grid_table_rows, :cover_designers_pct, :text
     add_column :project_grid_table_rows, :project_managers_pct, :text
     add_column :project_grid_table_rows, :proofreaders_pct, :text
+    add_column :project_grid_table_rows, :total_pct, :float
   end
 end

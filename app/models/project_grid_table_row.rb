@@ -67,6 +67,7 @@ class ProjectGridTableRow < ActiveRecord::Base
     row_hash[:cover_designers_pct]     = pgtr.cover_designers_pct
     row_hash[:project_managers_pct]    = pgtr.project_managers_pct
     row_hash[:proofreaders_pct]        = pgtr.proofreaders_pct
+    row_hash[:total_pct]               = pgtr.total_pct
 
     row_hash.each do | key, value |
       if value.class == String
