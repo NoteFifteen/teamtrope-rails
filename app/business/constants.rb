@@ -125,7 +125,8 @@ module Constants
       book_managers_pct: "Book Managers & Pct",
       cover_designers_pct: "Cover Designers & Pct",
       project_managers_pct: "Project Managers & Pct",
-      proofreaders_pct: "Proofreaders & Pct"
+      proofreaders_pct: "Proofreaders & Pct",
+      total_pct: "Total PCT"
 
   }
 

@@ -25,7 +25,8 @@ class ProjectGridTableRowListener
       .map{ |member| "#{member.member.name} (#{member.percentage})" }
       .join(", ")
 
-
+    pgtr.total_pct = project.team_memberships.map(&:percentage).inject(:+)
+    
     pgtr.save
   end
 
