@@ -13,10 +13,10 @@
             <%
               enrollment_date = @project.kdp_select_enrollment.enrollment_date
               days_since_enrollment = Date.today - enrollment_date
-              # TODO: create a constant for this instead of a magic number
-              intervals = days_since_enrollment.to_i / 90 # KDP Select auto renews after 90 days
 
-              intervals = intervals + 1 if days_since_enrollment % 90 != 0 && days_since_enrollment != 0
+              # KDP Select auto renews after 90 days
+              intervals = days_since_enrollment.to_i / Constants::KdpSelectEnrollmentTerm
+              intervals = intervals + 1 if days_since_enrollment % Constants::KdpSelectEnrollmentTerm != 0 && days_since_enrollment != 0
 
               date = enrollment_date
               auto_renewed_count = intervals.to_i - 1
@@ -36,8 +36,14 @@
             <% next_end_date = date + 90.days%>
             <dt>End Date</dt>
             <dd><%= next_end_date + (intervals - 1).days  %></dd>
+
+            <% if @project.kdp_select_enrollment.update_type == "remove_from_kdp" %>
+            <dt>Will Unenroll After</dt>
+            <dd><%= next_end_date + (intervals - 1).days  %></dd>
+            <% else %>
             <dt>Next Auto Renew Date</dt>
             <dd><%= next_end_date + intervals.day %></dd>
+            <% end %>
           </dl>
         </div>
       </div>
