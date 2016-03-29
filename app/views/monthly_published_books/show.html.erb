@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Report date:</strong>
+  <%= @monthly_published_book.report_date %>
+</p>
+
+<p>
+  <strong>Published monthly:</strong>
+  <%= @monthly_published_book.published_monthly %>
+</p>
+
+<p>
+  <strong>Published total:</strong>
+  <%= @monthly_published_book.published_total %>
+</p>
+
+<p>
+  <strong>Published books:</strong>
+  <%= @monthly_published_book.published_books %>
+</p>
+
+<%= link_to 'Edit', edit_monthly_published_book_path(@monthly_published_book) %> |
+<%= link_to 'Back', monthly_published_books_path %>

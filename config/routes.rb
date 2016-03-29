@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  resources :monthly_published_books
+
   resources :imported_contracts
 
   match 'hellosign_documents/cancel_request/:id', to: 'hellosign_documents#cancel_signature_request', via: :patch

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  report_date: 2016-03-29
+  published_monthly: 1
+  published_total: 1
+  published_books: 
+
+two:
+  report_date: 2016-03-29
+  published_monthly: 1
+  published_total: 1
+  published_books: 

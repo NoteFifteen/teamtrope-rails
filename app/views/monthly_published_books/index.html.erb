@@ -1,0 +1,26 @@
+<% provide(:title, "Books Published Monthly") %>
+<h1>Monthly Published Book Report</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Number Published</th>
+      <th>Total Published</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @monthly_published_books.each do |monthly_published_book| %>
+      <tr>
+        <td><%= monthly_published_book.report_date %></td>
+        <td><%= monthly_published_book.published_monthly %></td>
+        <td><%= monthly_published_book.published_books %></td>
+        <td><%= monthly_published_book.published_total %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
