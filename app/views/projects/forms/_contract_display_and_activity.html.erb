@@ -17,7 +17,8 @@
         <table class="table table-condensed">
           <thead>
             <tr>
-              <th>Creation Date</th>
+              <th>Document Creation Date</th>
+              <th>Type</th>
               <th>Role</th>
               <th>Version</th>
               <th>Status</th>
@@ -30,6 +31,7 @@
             <% @current_user_contracts.each do | my_contract | %>
             <tr>
               <td><%= my_contract.created_at %></td>
+              <td>CTA</td>
               <td><%= my_contract.team_membership.role.name %></td>
               <td><%= my_contract.version %></td>
               <td><i class="genericon genericon-<%= my_contract.is_complete ? "checkmark" : "close" %>"></i></td>
@@ -51,6 +53,7 @@
               <tr>
                 <td><%= imported_contract.document_date %></td>
                 <td><%= ImportedContract::Document_Types.key imported_contract.document_type %></td>
+                <td>-</td>
                 <td colspan="4"><%= imported_contract.signers.map{ | signer | link_to signer.name, signer.profile_page }.join(", ").html_safe %></td>
                 <td><%= link_to "Download", download_imported_contracts_path(imported_contract) %></td>
               </tr>
@@ -98,7 +101,7 @@
           <thead>
             <tr>
               <th>Complete</th>
-              <th>Creation Date</th>
+              <th>Document Creation Date</th>
               <th>Signer</th>
               <th>Role</th>
               <th>Version</th>
