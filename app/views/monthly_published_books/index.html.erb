@@ -1,5 +1,9 @@
 <% provide(:title, "Books Published Monthly") %>
 <div class="container">
+  <div class="alert alert-success" id="monthly_published_books_report_results"
+    style="display: none;">
+    The Monthly Published Books Report has been sent to your email.
+  </div>
   <h1>Monthly Published Books</h1>
   <div class="row">
     <div class="col-xs-8 col-md-10">
@@ -13,8 +17,6 @@
             id: "monthly_published_books_report_button" do %>
             <span class="spinner"><i class="fa fa-spinner"></i></span>Email Report
       <% end %>
-
-
     </div>
     <div class="col-xs-4 col-md-2">
       <span style="vertical-align: bottom;" >
@@ -55,6 +57,14 @@
 </div>
 
 <script>
+
+  $('#monthly_published_books_report_form').bind("submit", function(e) {
+    $("#monthly_published_books_report_results").hide()
+    $("#monthly_published_books_report_button").attr("disabled", true);
+    $("#monthly_published_books_report_button").addClass("disabled");
+  });
+
+
   $("#show_books_button").click(function(e) {
     if(e.target.textContent === "Show Books") {
       e.target.textContent = "Hide Books";
