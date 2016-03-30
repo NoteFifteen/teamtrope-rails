@@ -1,26 +1,56 @@
 <% provide(:title, "Books Published Monthly") %>
-<h1>Monthly Published Book Report</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Year</th>
-      <th>Month</th>
-      <th>Number Published</th>
-      <th>Total Published</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @monthly_published_books.each do |monthly_published_book| %>
+<div class="container">
+  <h1>Monthly Published Books</h1>
+  <div class="row">
+    <div class="col-xs-8 col-md-10">
+      <button class="btn btn-primary" id="show_books_button">Show Books</button>
+    </div>
+    <div class="col-xs-4 col-md-2">
+      <span style="vertical-align: bottom;" >
+        *partial month
+      </span>
+    </div>
+  </div>
+  <hr />
+  <table>
+    <thead>
       <tr>
-        <td><%= monthly_published_book.report_date %></td>
-        <td><%= monthly_published_book.published_monthly %></td>
-        <td><%= monthly_published_book.published_books %></td>
-        <td><%= monthly_published_book.published_total %></td>
+        <th>Year</th>
+        <th>Month</th>
+        <th>Number Published</th>
+        <th>Total Published</th>
+        <th class="no-display">Books Published</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @monthly_published_books.each_with_index do |monthly_published_book, index| %>
+        <tr>
+          <td><%= monthly_published_book.report_date.strftime("%Y") %></td>
+          <td><%= monthly_published_book.report_date.strftime("%m") %></td>
+          <td><%= monthly_published_book.published_monthly %><%= "*" if index == 0 %></td>
+          <td><%= monthly_published_book.published_total %><%= "*" if index == 0 %></td>
+          <td class="no-display">
+            <ul class="list-unstyled">
+              <% monthly_published_book.published_books.each do | published_book | %>
+              <li><%= link_to published_book["title"], "/projects/#{published_book["id"]}" %></li>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  $("#show_books_button").click(function(e) {
+    if(e.target.textContent === "Show Books") {
+      e.target.textContent = "Hide Books";
+    }
+    else {
+      e.target.textContent = "Show Books";
+    }
+    $(".no-display").toggle();
+  });
+</script>

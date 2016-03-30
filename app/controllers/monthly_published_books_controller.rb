@@ -4,7 +4,7 @@ class MonthlyPublishedBooksController < ApplicationController
   respond_to :html
 
   def index
-    @monthly_published_books = MonthlyPublishedBook.all
+    @monthly_published_books = MonthlyPublishedBook.all.order(report_date: :desc)
     respond_with(@monthly_published_books)
   end
 
