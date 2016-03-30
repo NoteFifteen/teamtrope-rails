@@ -36,6 +36,19 @@ class ReportMailer < ActionMailer::Base
     send_email_message('prefunk_scribd_email_report', {}, [current_user.email], subject)
   end
 
+  def send_monthly_published_boooks_report(csv_text, current_user)
+    @report_date = Time.now.strftime("%Y-%B")
+    attachment_name = "monlthly_published_books_report_#{@report_date}.csv"
+    attachments[attachment_name] = {
+      mime_type: 'text/csv',
+      content: csv_text,
+      encoding: 'quoted-printable'
+    }
+
+    subject = "Monthly Published Books Report for #{@report_date}"
+    send_email_message('monthly_published_books', {}, [current_user.email], subject)
+  end
+
   def print_price_update(updated_report, needs_updating_report)
 
     @report_date = Time.now.strftime('%m/%d/%Y %H:%M:%S')

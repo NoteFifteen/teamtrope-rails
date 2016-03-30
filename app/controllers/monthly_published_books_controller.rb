@@ -1,4 +1,6 @@
 class MonthlyPublishedBooksController < ApplicationController
+  before_action :signed_in_user
+  before_action :booktrope_staff
   before_action :set_monthly_published_book, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
@@ -37,7 +39,8 @@ class MonthlyPublishedBooksController < ApplicationController
   end
 
   def email_report
-    render json: []
+    csv_text = MonthlyPublishedBook.csv_export
+    ReportMailer.send_monthly_published_boooks_report(csv_text, current_user)
   end
 
   private
