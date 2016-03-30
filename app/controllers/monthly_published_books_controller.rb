@@ -36,6 +36,10 @@ class MonthlyPublishedBooksController < ApplicationController
     respond_with(@monthly_published_book)
   end
 
+  def email_report
+    render json: []
+  end
+
   private
     def set_monthly_published_book
       @monthly_published_book = MonthlyPublishedBook.find(params[:id])

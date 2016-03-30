@@ -4,6 +4,17 @@
   <div class="row">
     <div class="col-xs-8 col-md-10">
       <button class="btn btn-primary" id="show_books_button">Show Books</button>
+      <br />
+      <br />
+      <%= button_to monthly_published_books_email_report_path,
+            remote: true,
+            form: { id: "monthly_published_books_report_form" },
+            class: "btn btn-primary has-spinner",
+            id: "monthly_published_books_report_button" do %>
+            <span class="spinner"><i class="fa fa-spinner"></i></span>Email Report
+      <% end %>
+
+
     </div>
     <div class="col-xs-4 col-md-2">
       <span style="vertical-align: bottom;" >
