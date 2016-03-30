@@ -68,8 +68,10 @@
             </div>
             <div class="panel-body">
             <% if @project.is_team_member?(current_user) %>
-              You're a member of this team but there are no contracts in the system.
-              Please contact ...
+              You're a member of this team but there are no contracts in the system, yet.
+              Over the next few weeks we will be importing documents created before 9.14.2015.
+              Please contact Booktrope Assistance if you cannot wait for the rest of the documents to be
+              imported....
             <% else %>
               You're not a member of this team.
             <% end %>
