@@ -1,6 +1,7 @@
 <tr class="alert alert-<%= hellosign_document.complete?? "success" : "danger" %>">
   <td><i class="genericon genericon-<%= hellosign_document.is_complete ? "checkmark" : "close" %>"></i></td>
   <td><%= hellosign_document.created_at %></td>
+  <td><%= hellosign_document.display_name %></td>
   <td>
     <%= link_to hellosign_document.team_membership.member.name,
           hellosign_document.team_membership.member.profile_page %>
