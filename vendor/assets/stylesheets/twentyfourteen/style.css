@@ -120,6 +120,10 @@ a {
 	text-decoration: none;
 }
 
+.no-display {
+	display: none;
+}
+
 a:focus {
 	outline: thin dotted;
 }

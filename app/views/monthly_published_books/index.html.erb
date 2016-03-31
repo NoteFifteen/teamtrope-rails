@@ -1,0 +1,77 @@
+<% provide(:title, "Books Published Monthly") %>
+<div class="container">
+  <div class="alert alert-success" id="monthly_published_books_report_results"
+    style="display: none;">
+    The Monthly Published Books Report has been sent to your email.
+  </div>
+  <h1>Monthly Published Books</h1>
+  <div class="row">
+    <div class="col-xs-8 col-md-10">
+      <button class="btn btn-primary" id="show_books_button">Show Books</button>
+      <br />
+      <br />
+      <%= button_to monthly_published_books_email_report_path,
+            remote: true,
+            form: { id: "monthly_published_books_report_form" },
+            class: "btn btn-primary has-spinner",
+            id: "monthly_published_books_report_button" do %>
+            <span class="spinner"><i class="fa fa-spinner"></i></span>Email Report
+      <% end %>
+    </div>
+    <div class="col-xs-4 col-md-2">
+      <span style="vertical-align: bottom;" >
+        *partial month
+      </span>
+    </div>
+  </div>
+  <hr />
+  <table>
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Month</th>
+        <th>Number Published</th>
+        <th>Total Published</th>
+        <th class="no-display">Books Published</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @monthly_published_books.each_with_index do |monthly_published_book, index| %>
+        <tr>
+          <td><%= monthly_published_book.report_date.strftime("%Y") %></td>
+          <td><%= monthly_published_book.report_date.strftime("%m") %></td>
+          <td><%= monthly_published_book.published_monthly %><%= "*" if index == 0 %></td>
+          <td><%= monthly_published_book.published_total %><%= "*" if index == 0 %></td>
+          <td class="no-display">
+            <ul class="list-unstyled">
+              <% monthly_published_book.published_books.each do | published_book | %>
+              <li><%= link_to published_book["title"], "/projects/#{published_book["id"]}" %></li>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+
+  $('#monthly_published_books_report_form').bind("submit", function(e) {
+    $("#monthly_published_books_report_results").hide()
+    $("#monthly_published_books_report_button").attr("disabled", true);
+    $("#monthly_published_books_report_button").addClass("disabled");
+  });
+
+
+  $("#show_books_button").click(function(e) {
+    if(e.target.textContent === "Show Books") {
+      e.target.textContent = "Hide Books";
+    }
+    else {
+      e.target.textContent = "Show Books";
+    }
+    $(".no-display").toggle();
+  });
+</script>

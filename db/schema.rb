@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160322231017) do
+ActiveRecord::Schema.define(version: 20160329223936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -525,6 +525,17 @@ ActiveRecord::Schema.define(version: 20160322231017) do
   end
 
   add_index "media_kits", ["project_id"], name: "index_media_kits_on_project_id", using: :btree
+
+  create_table "monthly_published_books", force: true do |t|
+    t.date     "report_date"
+    t.integer  "published_monthly"
+    t.integer  "published_total"
+    t.json     "published_books"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "monthly_published_books", ["report_date"], name: "index_monthly_published_books_on_report_date", using: :btree
 
   create_table "netgalley_submissions", force: true do |t|
     t.integer  "project_id"

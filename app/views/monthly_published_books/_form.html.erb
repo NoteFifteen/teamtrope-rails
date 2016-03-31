@@ -1,0 +1,14 @@
+<%= simple_form_for(@monthly_published_book) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :report_date %>
+    <%= f.input :published_monthly %>
+    <%= f.input :published_total %>
+    <%= f.input :published_books %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

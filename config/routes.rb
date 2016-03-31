@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-
   resources :imported_contracts
 
   match 'hellosign_documents/cancel_request/:id', to: 'hellosign_documents#cancel_signature_request', via: :patch
@@ -27,7 +26,6 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'static_pages#home'
-
 
   scope :admin do
 
@@ -71,6 +69,8 @@ Rails.application.routes.draw do
     resource :project_layout
     resource :published_file
   end
+
+  match 'monthly_published_books/email_report', to: 'monthly_published_books#email_report', via: :post
 
   get '/projects_grid_view', to: 'projects#grid_view'
 
@@ -182,6 +182,7 @@ Rails.application.routes.draw do
   resources :manuscripts
   resources :marketing_expenses
   resources :media_kits
+  resources :monthly_published_books
   resources :netgalley_submissions
   resources :phases
   resources :publication_fact_sheets
