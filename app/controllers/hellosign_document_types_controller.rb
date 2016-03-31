@@ -44,6 +44,6 @@ class HellosignDocumentTypesController < ApplicationController
     end
 
     def hellosign_document_type_params
-      params.require(:hellosign_document_type).permit(:name, :subject, :message, :template_id, :signers, :ccs)
+      params.require(:hellosign_document_type).permit(:name, :display_name, :subject, :message, :template_id, :signers, :ccs)
     end
 end
