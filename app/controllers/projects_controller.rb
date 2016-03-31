@@ -813,6 +813,8 @@ class ProjectsController < ApplicationController
 
     if @published_file.update(publication_date: publication_date)
       update_current_task
+
+      publish(:published_file_modified, @published_file)
       publish(:update_publication_date, @project, publication_date)
       @project.create_activity :published_book, owner: current_user,
                                 parameters: { text: 'Submitted the Publish Book form', form_data: params[:project].to_s}

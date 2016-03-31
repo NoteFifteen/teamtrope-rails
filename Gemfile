@@ -90,7 +90,8 @@ gem 'hellosign-ruby-sdk', :git => "https://github.com/ltlai/hellosign-ruby-sdk.g
 
 gem 'boxr'
 
-gem 'wisper'
+gem 'wisper', '1.6.0'
+gem 'wisper-celluloid', '0.0.1'
 
 # login
 gem 'devise'
@@ -126,4 +127,3 @@ group :development do
   # Adds a footer identifying N+1 Queries and suggests optimizations
   # gem 'bullet'
 end
-
