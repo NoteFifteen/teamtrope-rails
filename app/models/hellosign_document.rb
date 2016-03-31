@@ -2,7 +2,7 @@ class HellosignDocument < ActiveRecord::Base
   belongs_to :hellosign_document_type
   belongs_to :team_membership
 
-  delegate :name, :template_id, :subject, :message, :ccs, :signers, :version, to: :hellosign_document_type, allow_nil: true
+  delegate :name, :display_name, :template_id, :subject, :message, :ccs, :signers, :version, to: :hellosign_document_type, allow_nil: true
 
   has_many :hellosign_signatures, dependent: :destroy
   alias :signatures :hellosign_signatures

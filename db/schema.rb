@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329223936) do
+ActiveRecord::Schema.define(version: 20160331225842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -346,6 +346,7 @@ ActiveRecord::Schema.define(version: 20160329223936) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "version"
+    t.string   "display_name"
   end
 
   add_index "hellosign_document_types", ["name"], name: "index_hellosign_document_types_on_name", unique: true, using: :btree
