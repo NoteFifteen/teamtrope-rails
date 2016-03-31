@@ -1,0 +1,52 @@
+<div class="container">
+  <h1>KDP Select Enrollment</h1>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h4>You are already enrolled in KDP Select</h4>
+        </div>
+        <div class="panel-body">
+          <dl class="dl-horizontal">
+            <dt>Enrollment Date</dt>
+            <dd><%= @project.kdp_select_enrollment.enrollment_date %></dd>
+            <%
+              enrollment_date = @project.kdp_select_enrollment.enrollment_date
+              days_since_enrollment = Date.today - enrollment_date
+
+              # KDP Select auto renews after 90 days
+              intervals = days_since_enrollment.to_i / Constants::KdpSelectEnrollmentTerm
+              intervals = intervals + 1 if days_since_enrollment % Constants::KdpSelectEnrollmentTerm != 0 && days_since_enrollment != 0
+
+              date = enrollment_date
+              auto_renewed_count = intervals.to_i - 1
+            %>
+
+            <% if intervals > 1 %>
+              <dt>Auto Renewed</dt>
+              <dd><%= "#{auto_renewed_count} #{"time".pluralize(auto_renewed_count)}" %></dd>
+              <% intervals.times do | i | %>
+                <% next if i == 0 %>
+                <% date = date + 90.days %>
+                <dt>Auto Renew Date <%= i %></dt>
+                <dd><%= date + i.days %></dd>
+              <% end %>
+            <% end %>
+
+            <% next_end_date = date + 90.days%>
+            <dt>End Date</dt>
+            <dd><%= next_end_date + (intervals - 1).days  %></dd>
+
+            <% if @project.kdp_select_enrollment.update_type == "remove_from_kdp" %>
+            <dt>Will Unenroll After</dt>
+            <dd><%= next_end_date + (intervals - 1).days  %></dd>
+            <% else %>
+            <dt>Next Auto Renew Date</dt>
+            <dd><%= next_end_date + intervals.day %></dd>
+            <% end %>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

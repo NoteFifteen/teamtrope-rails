@@ -14,6 +14,8 @@ module Constants
   MaxSize = 0..500.megabytes
   MaxSizeIn = { in: MaxSize }
 
+  KdpSelectEnrollmentTerm = 90
+
   DefaultContentTypeDocumentParams = [
     # TTR-62 - Removing the mime-type validation due to user issues with uploading manuscripts
     # :content_type => {
