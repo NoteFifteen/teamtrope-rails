@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160331225842) do
+ActiveRecord::Schema.define(version: 20160404210052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -760,6 +760,7 @@ ActiveRecord::Schema.define(version: 20160331225842) do
     t.text     "cover_designers_pct"
     t.text     "project_managers_pct"
     t.text     "proofreaders_pct"
+    t.float    "total_pct"
   end
 
   add_index "project_grid_table_rows", ["design_task_id"], name: "index_project_grid_table_rows_on_design_task_id", using: :btree

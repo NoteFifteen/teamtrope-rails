@@ -1,0 +1,20 @@
+<% if ! @project.kdp_select_enrollment.nil? %>
+  <%= render "/projects/forms/kdp_select_enrolled" %>
+<% else %>
+<div class="container">
+  <h1>KDP Select Enrollment</h1>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h4>Not Enrolled</h4>
+        </div>
+        <div class="panel-body">
+          Your book has not been enrolled into the KDP Select Program.
+          If you would like to enroll please submit the KDP Select Form using the "KDP Select Tab".
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
