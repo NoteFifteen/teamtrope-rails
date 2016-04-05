@@ -50,6 +50,20 @@ class ReportsController < ApplicationController
     ReportMailer.scribd_email_report @scribd_csv_text, current_user
   end
 
+  def send_dashbook_email
+    require 'csv'
+    csv_string = CSV.generate do | csv |
+      csv << Constants::DashbookHeaderHash.values
+      ProjectGridTableRow.published_books.sort{ | a, b | a.title <=> b.title }.each do | pgtr |
+        ProjectGridTableRow.generate_team_member_pct(pgtr).each do | result |
+          csv << result.values
+        end
+      end
+    end
+
+    ReportMailer.master_spread_sheet(csv_string, Time.now.strftime("%Y-%d-%m-%H:%M:%S"))
+  end
+
   def master_metadata
     @master_metadata_export = Project.generate_master_meta_export(
       ProjectGridTableRow.published_books.excude_rights_returned

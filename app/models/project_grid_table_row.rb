@@ -20,6 +20,45 @@ class ProjectGridTableRow < ActiveRecord::Base
     where(archived: true)
   }
 
+  def self.generate_team_member_pct(pgtr)
+
+    row_hash = Constants::DashbookHeaderHash.clone
+
+    results = []
+
+    project = pgtr.project
+
+    row_hash[:project_id] = pgtr.project_id
+    row_hash[:product_name] = pgtr.title
+    row_hash[:title] = pgtr.title
+    row_hash[:imprint] = pgtr.imprint
+    row_hash[:genre] = pgtr.genre
+    row_hash[:published] = pgtr.publication_date.strftime("%m/%d/%y")
+    row_hash[:isbn] = project.control_number.paperback_isbn
+    row_hash[:epub_isbn] = project.control_number.epub_isbn
+    row_hash[:asin] = project.control_number.asin
+    row_hash[:minimum_royalty] = ''
+    row_hash[:publisher] = 'Booktrope'
+
+    row_hash[:product_type] = 'Book'
+    row_hash[:sales_class] = 'Retail'
+    row_hash[:royalty_type] = 'Royalty'
+
+    row_hash[:retail_price] = pgtr.formatted_print_price
+
+    project.team_memberships.includes(:role, :member).each do | team_membership |
+      member_hash = row_hash.clone
+      member_hash[:role] = 'Author'
+      member_hash[:actual_role] = team_membership.role.name
+      member_hash[:team_member] = team_membership.member.name
+      member_hash[:contract_percent] = team_membership.percentage
+      member_hash[:contract_id] = 'Contract ID'
+
+      results << member_hash
+    end
+    results
+  end
+
   def self.generate_master_metadata_export_hash(pgtr, page_type = :csv)
 
     # initialize the row_hash with a clone of the header hash
