@@ -203,6 +203,11 @@ class ProjectMailer < ActionMailer::Base
         'Notified' => (notified) ? 'Yes' : 'No'
     }
 
+    unless @project.published_file.nil? || @project.published_file.publication_date.nil?
+      tokens['Published'] = 'Yes'
+      tokens['Publication Date'] = @project.published_file.publication_date.strftime("%B %d, %Y")
+    end
+
     user_subject = "Removal Team Member Request from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
