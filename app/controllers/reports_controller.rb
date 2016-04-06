@@ -61,7 +61,7 @@ class ReportsController < ApplicationController
       end
     end
 
-    ReportMailer.master_spread_sheet(csv_string, Time.now.strftime("%Y-%d-%m-%H:%M:%S"))
+    ReportMailer.send_dashbook_email(csv_string, Time.now.strftime("%Y-%d-%m-%H:%M:%S"))
   end
 
   def master_metadata

@@ -11,6 +11,18 @@ class ReportMailer < ActionMailer::Base
     send_email_message('amazon_publication_date_sync', {}, amazon_publication_date_sync_recipients, subject)
   end
 
+  def send_dashbook_email(csv_text, report_date)
+    attachment_name = "dashbook_#{report_date}.csv"
+    attachments[attachment_name] = {
+      mime_type: "text/csv",
+      content: csv_text,
+      encoding: 'quoted-printable'
+    }
+
+    @report_date = report_date
+    send_email_message('dashbook', {}, dashbook_recipients, "Dashbook #{Date.today.strftime("%m/%d/%Y")}")
+  end
+
   def master_spread_sheet(csv_text, report_date)
     attachment_name = "master_metadata_spreadsheet_#{report_date}.csv"
     attachments[attachment_name] = {  mime_type: "text/csv",
@@ -98,6 +110,10 @@ class ReportMailer < ActionMailer::Base
             template_name: template_name
       ).deliver
     end
+  end
+
+  def dashbook_recipients
+    %w( tt_dashbook@booktrope.com )
   end
 
   def amazon_publication_date_sync_recipients
