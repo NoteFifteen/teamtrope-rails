@@ -18,7 +18,11 @@
         <td><%= required_role.project_type.name unless required_role.project_type.nil? %></td>
         <td><%= required_role.suggested_percent %></td>
         <td><%= link_to 'Show', required_role %></td>
-        <td><%= link_to 'Edit', edit_required_role_path(required_role) %></td>
+        <td>
+          <% if can? :edit, required_role %>
+            <%= link_to 'Edit', edit_required_role_path(required_role) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

@@ -13,8 +13,16 @@
       <tr>
         <td><%= genre.name %></td>
         <td><%= link_to 'Show', genre %></td>
-        <td><%= link_to 'Edit', edit_genre_path(genre) %></td>
-        <td><%= link_to 'Destroy', genre, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if can? :edit, genre %>
+            <%= link_to 'Edit', edit_genre_path(genre) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :delete, genre %>
+            <%= link_to 'Destroy', genre, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

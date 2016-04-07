@@ -16,7 +16,11 @@
         <td><%= unlocked_task.task.display_name unless unlocked_task.task.nil? %></td>
         <td><%= unlocked_task.unlocked_task.display_name unless unlocked_task.unlocked_task.nil? %></td>
         <td><%= link_to 'Show', unlocked_task %></td>
-        <td><%= link_to 'Edit', edit_unlocked_task_path(unlocked_task) %></td>
+        <td>
+          <% if can? :edit, unlocked_task %>
+            <%= link_to 'Edit', edit_unlocked_task_path(unlocked_task) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

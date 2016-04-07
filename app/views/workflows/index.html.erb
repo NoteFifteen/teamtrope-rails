@@ -14,7 +14,11 @@
       <tr>
         <td><%= workflow.name %></td>
         <td><%= link_to 'Show', workflow %></td>
-        <td><%= link_to 'Edit', edit_workflow_path(workflow) %></td>
+        <td>
+          <% if can? :edit, workflow %>
+            <%= link_to 'Edit', edit_workflow_path(workflow) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

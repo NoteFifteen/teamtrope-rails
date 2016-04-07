@@ -18,7 +18,11 @@
         <td><%= man_dev.man_dev_decision %></td>
         <td><%= man_dev.man_dev_end_date %></td>
         <td><%= link_to 'Show', man_dev %></td>
-        <td><%= link_to 'Edit', edit_man_dev_path(man_dev) %></td>
+        <td>
+          <% if can? :edit, man_dev %>
+            <%= link_to 'Edit', edit_man_dev_path(man_dev) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -29,4 +33,3 @@
 <script>
   $("#manuscript_development_table").DataTable({ 'pageLength': '100'});
 </script>
-

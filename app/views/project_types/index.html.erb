@@ -15,8 +15,16 @@
         <td><%= project_type.name %></td>
         <td><%= project_type.team_total_percent %></td>
         <td><%= link_to 'Show', project_type %></td>
-        <td><%= link_to 'Edit', edit_project_type_path(project_type) %></td>
-        <td><%= link_to 'Destroy', project_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if can? :edit, project_type %>
+            <%= link_to 'Edit', edit_project_type_path(project_type) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :delete, project_type %>
+            <%= link_to 'Destroy', project_type, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

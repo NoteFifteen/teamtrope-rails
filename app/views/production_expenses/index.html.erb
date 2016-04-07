@@ -44,7 +44,12 @@
         <td>$<%= production_expense.additional_booktrope_cost %></td>
         <td><%= production_expense.effective_date %></td>
         <td><%= link_to 'Show', production_expense %></td>
-        <td><%= link_to 'Edit', edit_production_expense_path(production_expense) %></td>
+        <td>
+          <% if can? :edit, production_expense %>
+            <%= link_to 'Edit', edit_production_expense_path(production_expense) %>
+          <% end %>
+        </td>
+
       </tr>
     <% end %>
   </tbody>
@@ -54,4 +59,3 @@
 <script>
   $("#production_expenses_table").DataTable({ 'pageLength': '100'});
 </script>
-

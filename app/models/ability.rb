@@ -1,7 +1,9 @@
 class Ability
   include CanCan::Ability
 
+
   def initialize(user)
+    alias_action :create, :read, :update, :to => :cru
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
@@ -29,10 +31,12 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
     user ||= User.new
-    if user.role? :booktrope_staff
-        can :manage, :all
+    if user.role? :booktrope_expunger
+      can :manage, :all
+    elsif user.role? :booktrope_staff
+      can :cru, :all
     else
-        can :read, :all
+      can :read, :all
     end
   end
 end

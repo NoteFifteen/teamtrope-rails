@@ -15,8 +15,16 @@
         <td><%= project_type_workflow.project_type.name %></td>
         <td><%= project_type_workflow.workflow.name %></td>
         <td><%= link_to 'Show', project_type_workflow %></td>
-        <td><%= link_to 'Edit', edit_project_type_workflow_path(project_type_workflow) %></td>
-        <td><%= link_to 'Destroy', project_type_workflow, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if can? :edit, project_type_workflow %>
+            <%= link_to 'Edit', edit_project_type_workflow_path(project_type_workflow) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :delete, project_type_workflow %>
+            <%= link_to 'Destroy', project_type_workflow, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
