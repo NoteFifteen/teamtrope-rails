@@ -167,10 +167,9 @@ module Constants
     my_books: { label: 'My Books', task_name: '', workflow_name: '', required_roles: [] },
     original_manuscript: { label: '', task_name: 'Original Manuscript', workflow_name: 'production', required_roles: [] },
     in_editing: { label: 'In Editing', task_name: 'Edited Manuscript', workflow_name: 'production', required_roles: [] },
-    in_proofreading: { label: 'In Proofreading', task_name: 'Proofread Complete', workflow_name: 'production', required_roles: [] },
+    in_proofreading: { label: 'In Proofreading', task_name: 'Submit to Layout', workflow_name: 'production', required_roles: [] },
     published: { label: 'Published', task_name: 'Production Complete', workflow_name: 'production', required_roles: [] },
     not_published: { label: 'Not Published', task_name: 'Production Complete', workflow_name: 'production', required_roles: [] },
-    choose_style: { label: '', task_name: 'Choose Style', workflow_name: 'production', required_roles: [] },
   }
 
 end
