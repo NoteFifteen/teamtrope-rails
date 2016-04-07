@@ -203,6 +203,13 @@ class ProjectMailer < ActionMailer::Base
         'Notified' => (notified) ? 'Yes' : 'No'
     }
 
+    tokens['Published'] = 'No'
+
+    if @project.project_grid_table_row.production_task_name == "Production Complete"
+      tokens['Published'] = 'Yes'
+      tokens['Publication Date'] = @project.published_file.publication_date unless @project.published_file.nil? || @project.published_file.publication_date.nil?
+    end
+
     user_subject = "Removal Team Member Request from #{current_user.name} for #{project.book_title}"
     admin_subject = "New " + user_subject
 
