@@ -28,7 +28,11 @@
         <td><%= marketing_expense.cost %></td>
         <td><%= marketing_expense.other_information %></td>
         <td><%= link_to 'Show', marketing_expense %></td>
-        <td><%= link_to 'Edit', edit_marketing_expense_path(marketing_expense) %></td>
+        <td>
+          <% if can? :edit, marketing_expense %>
+            <%= link_to 'Edit', edit_marketing_expense_path(marketing_expense) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -39,4 +43,3 @@
 <script>
   $("#marketing_expenses_table").DataTable({ 'pageLength': '100'});
 </script>
-

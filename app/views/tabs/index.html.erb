@@ -18,7 +18,11 @@
         <td><%= tab.phase.name unless tab.task.nil? %></td>
         <td><%= tab.order %></td>
         <td><%= link_to 'Show', tab %></td>
-        <td><%= link_to 'Edit', edit_tab_path(tab) %></td>
+        <td>
+          <% if can? :edit, tab %>
+            <%= link_to 'Edit', edit_tab_path(tab) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

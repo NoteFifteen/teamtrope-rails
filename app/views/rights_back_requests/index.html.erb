@@ -29,8 +29,16 @@
         <td><%= rights_back_request.edited %></td>
         <td><%= rights_back_request.published %></td>
         <td><%= link_to 'Show', rights_back_request %></td>
-        <td><%= link_to 'Edit', edit_rights_back_request_path(rights_back_request) %></td>
-        <td><%= link_to 'Destroy', rights_back_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if can? :edit, rights_back_request %>
+            <%= link_to 'Edit', edit_rights_back_request_path(rights_back_request) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :delete, rights_back_request %>
+            <%= link_to 'Destroy', rights_back_request, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

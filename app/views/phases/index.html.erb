@@ -22,7 +22,11 @@
         <td><%= phase.color %></td>
         <td><%= phase.icon %></td>
         <td><%= link_to 'Show', phase %></td>
-        <td><%= link_to 'Edit', edit_phase_path(phase) %></td>
+        <td>
+          <% if can? :edit, phase %>
+            <%= link_to 'Edit', edit_phase_path(phase) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

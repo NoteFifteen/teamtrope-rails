@@ -28,7 +28,11 @@
         <td><%= blog_tour.end_date %></td>
         <td><%= link_to 'Show', blog_tour %></td>
         <td><%= link_to 'Edit', edit_blog_tour_path(blog_tour) %></td>
-        <td><%= link_to 'Destroy', blog_tour, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if can? :delete, blog_tour %>
+            <%= link_to 'Destroy', blog_tour, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

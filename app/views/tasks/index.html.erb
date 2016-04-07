@@ -78,7 +78,11 @@
         </td>
         <td><%= task.team_only? %></td>
         <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
+        <td>
+          <% if can? :edit, task %>
+            <%= link_to 'Edit', edit_task_path(task) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

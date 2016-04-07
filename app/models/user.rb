@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   scope :inactive_users, -> { where(active: false) }
 
 
-  ROLES = %w[booktrope_staff moderator author book_manager cover_designer editor project_manager proofreader volunteer observer illustrator agent investor self_managed_author]
+  ROLES = %w[booktrope_staff moderator author book_manager cover_designer editor project_manager proofreader volunteer observer illustrator agent investor self_managed_author booktrope_expunger]
 
   # Used for the Accept Team Member available members for a role and built to exclude
   # a member who is already assigned the same role in the project
@@ -147,6 +147,7 @@ class User < ActiveRecord::Base
         roles << 'project_manager' if roles.include? 'book_manager'
         roles << 'author' if roles.include? 'self_managed_author'
         user.roles = roles
+        add_expunger(user)
         user.save
       end
 
@@ -169,6 +170,15 @@ class User < ActiveRecord::Base
 
   def role?(role)
     roles.include? role.to_s
+  end
+
+  private
+  def self.add_expunger(user)
+    if Figaro.env.booktrope_expunger_accounts.split(" ").include? user.nickname
+      roles = user.roles
+      roles << "booktrope_expunger"
+      user.roles = roles
+    end
   end
 
 end

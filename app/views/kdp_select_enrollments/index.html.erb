@@ -27,8 +27,17 @@
         <td><%= kdp_select_enrollment.update_type %></td>
         <td><%= kdp_select_enrollment.update_data %></td>
         <td><%= link_to 'Show', kdp_select_enrollment %></td>
-        <td><%= link_to 'Edit', edit_kdp_select_enrollment_path(kdp_select_enrollment) %></td>
-        <td><%= link_to 'Destroy', kdp_select_enrollment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if can? :edit, kdp_select_enrollment %>
+            <%= link_to 'Edit', edit_kdp_select_enrollment_path(kdp_select_enrollment) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :delete, kdp_select_enrollment %>
+            <%= link_to 'Destroy', kdp_select_enrollment, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
+
       </tr>
     <% end %>
   </tbody>

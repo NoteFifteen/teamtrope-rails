@@ -52,7 +52,11 @@
         <td><%= print_corner.contact_phone %></td>
         <td><%= print_corner.expedite_instructions %></td>
         <td><%= link_to 'Show', print_corner %></td>
-        <td><%= link_to 'Edit', edit_print_corner_path(print_corner) %></td>
+        <td>
+          <% if can? :edit, print_corner %>
+            <%= link_to 'Edit', edit_print_corner_path(print_corner) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

@@ -71,7 +71,7 @@
         </td>
         <td><%= link_to 'Show', social_media_marketing %></td>
         <td><% if can? :edit, social_media_marketing %><%= link_to 'Edit', edit_social_media_marketing_path(social_media_marketing) %><% end %></td>
-        <td><% if can? :destroy, social_media_marketing%><%= link_to 'Destroy', social_media_marketing, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
+        <td><% if can? :delete, social_media_marketing%><%= link_to 'Destroy', social_media_marketing, method: :delete, data: { confirm: 'Are you sure?' } %><% end %></td>
       </tr>
     <% end %>
   </tbody>
@@ -82,5 +82,3 @@
   });
   </script>
 <br>
-
-

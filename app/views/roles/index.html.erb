@@ -17,8 +17,16 @@
         <td><%= role.name %></td>
         <td><%= (role.needs_agreement?)?  "Yes" : "No" %></td>
         <td><%= link_to 'Show', role %></td>
-        <td><%= link_to 'Edit', edit_role_path(role) %></td>
-        <td><%= link_to 'Destroy', role, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if can? :edit, role %>
+            <%= link_to 'Edit', edit_role_path(role) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :delete, role %>
+            <%= link_to 'Destroy', role, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

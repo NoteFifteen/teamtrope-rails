@@ -24,7 +24,12 @@
           <% end %>
         </td>
         <td><%= link_to 'Show', media_kit %></td>
-        <td><%= link_to 'Edit', edit_media_kit_path(media_kit) %></td>
+        <td>
+          <% if can? :edit, media_kit %>
+            <%= link_to 'Edit', edit_media_kit_path(media_kit) %>
+          <% end %>
+        </td>
+
       </tr>
     <% end %>
   </tbody>

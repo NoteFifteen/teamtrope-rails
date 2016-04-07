@@ -44,7 +44,11 @@
         <td><%= Hash[PublicationFactSheet::AGE_RANGES][publication_fact_sheet.age_range] %></td>
         <td><%= publication_fact_sheet.paperback_cover_type %></td>
         <td><%= link_to 'Show', publication_fact_sheet %></td>
-        <td><%= link_to 'Edit', edit_publication_fact_sheet_path(publication_fact_sheet) %></td>
+        <td>
+          <% if can? :edit, publication_fact_sheet %>
+            <%= link_to 'Edit', edit_publication_fact_sheet_path(publication_fact_sheet) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -55,4 +59,3 @@
 <script>
   $("#publication_fact_sheets_table").DataTable({ 'pageLength': '100'});
 </script>
-

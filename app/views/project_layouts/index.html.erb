@@ -39,8 +39,16 @@
         <td><%= project_layout.pen_name %></td>
         <td><%= project_layout.use_pen_name_for_copyright %></td>
         <td><%= project_layout.use_pen_name_on_title %></td>
-        <td><%= link_to 'Show', project_layout_path(project_layout) %></td>
-        <td><%= link_to 'Edit', edit_project_layout_path(project_layout) %></td>
+        <td>
+          <% if can? :edit, project_layout %>
+            <%= link_to 'Show', project_layout_path(project_layout) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :delete, project_layout %>
+            <%= link_to 'Edit', edit_project_layout_path(project_layout) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
