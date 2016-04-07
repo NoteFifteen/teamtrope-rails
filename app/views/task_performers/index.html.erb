@@ -20,7 +20,11 @@
           <% end %>
         </td>
         <td><%= link_to 'Show', task_performer %></td>
-        <td><%= link_to 'Edit', edit_task_performer_path(task_performer) %></td>
+        <td>
+          <% if can? :edit, task_performer %>
+            <%= link_to 'Edit', edit_task_performer_path(task_performer) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

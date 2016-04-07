@@ -57,8 +57,16 @@
         <td><%= (hellosign_document.cancelled?)? "Cancelled" : "Pending Cancellation"%></td>
         <% end %>
         <td><%= link_to 'Show', hellosign_document %></td>
-        <td><%= link_to 'Edit', edit_hellosign_document_path(hellosign_document) %></td>
-        <td><%= link_to 'Destroy', hellosign_document, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if can? :edit, hellosign_document %>
+            <%= link_to 'Edit', edit_hellosign_document_path(hellosign_document) %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :delete, hellosign_document %>
+            <%= link_to 'Destroy', hellosign_document, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -69,4 +77,3 @@
 <script>
   $("#hellosign_documents_table").DataTable({ 'pageLength': '100'});
 </script>
-

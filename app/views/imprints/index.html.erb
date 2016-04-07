@@ -14,7 +14,11 @@
       <tr>
         <td><%= imprint.name %></td>
         <td><%= link_to 'Show', imprint %></td>
-        <td><%= link_to 'Edit', edit_imprint_path(imprint) %></td>
+        <td>
+          <% if can? :edit, imprint %>
+            <%= link_to 'Edit', edit_imprint_path(imprint) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

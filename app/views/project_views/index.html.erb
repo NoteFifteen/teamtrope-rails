@@ -14,7 +14,11 @@
       <tr>
         <td><%= project_view.project_type.name %></td>
         <td><%= link_to 'Show', project_view %></td>
-        <td><%= link_to 'Edit', edit_project_view_path(project_view) %></td>
+        <td>
+          <% if can? :edit, project_view %>
+            <%= link_to 'Edit', edit_project_view_path(project_view) %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
