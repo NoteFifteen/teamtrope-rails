@@ -26,7 +26,7 @@ class ProjectGridTableRowListener
       .join(", ")
 
     pgtr.total_pct = project.team_memberships.map(&:percentage).inject(:+)
-    
+
     pgtr.save
   end
 
@@ -37,6 +37,7 @@ class ProjectGridTableRowListener
     pgtr.title = project.book_title
     pgtr.teamroom_link = project.teamroom_link
     pgtr.genre = project.genres.map(&:name).join(", ")
+    pgtr.archived = project.archived
     pgtr.save
   end
 
