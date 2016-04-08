@@ -15,6 +15,14 @@ class ReportsController < ApplicationController
           .order(title: :asc)
   end
 
+  def archived_projects
+    # getting the archived projects out of the project grid table rows table
+    # the archived flag is updated via the listener upon editing the document.
+    @project_grid_table_rows = ProjectGridTableRow.includes(:project)
+          .archived
+          .order(title: :asc)
+  end
+
   def missing_current_tasks
     @projects = Project.missing_current_tasks.not_archived
   end

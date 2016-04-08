@@ -1,0 +1,31 @@
+<% provide(:title, "Archived Projects") %>
+<div class="container">
+  <h1>Archived Projects</h1>
+  <hr />
+  <table>
+    <thead>
+      <tr>
+        <th>Book Title</th>
+        <th>Cover</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>Editor</th>
+        <th>Proofreader</th>
+        <th>Project Manager</th>
+        <th>Marketing Manager</th>
+        <th>Cover Designer</th>
+        <th>Imprint</th>
+        <th>Production</th>
+        <th>Production Last Update</th>
+        <th>Design</th>
+        <th>Design Last Update</th>
+        <th>Marketing</th>
+        <th>Marketing Last Update</th>
+        <th>Teamroom Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @project_grid_table_rows %>
+    </tbody>
+  </table>
+</div>
