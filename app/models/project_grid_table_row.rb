@@ -12,6 +12,14 @@ class ProjectGridTableRow < ActiveRecord::Base
     published_books.where.not(project: Project.joins(:rights_back_request))
   }
 
+  scope :not_archived, -> {
+    where(archived: false)
+  }
+
+  scope :archived, -> {
+    where(archived: true)
+  }
+
   def self.generate_master_metadata_export_hash(pgtr, page_type = :csv)
 
     # initialize the row_hash with a clone of the header hash

@@ -6,6 +6,18 @@
 
       <%= simple_form_for(@project) do |f| %>
 
+
+        <% if can? :delete, @project %>
+        <div style="padding: 0px 20px 20px 20px; margin-bottom: 20px; border-color: #C7C6C6; border-width: 1px; border-style: solid;">
+          <h3>Archive</h3>
+          <p>
+            Checking the box below will archive this project and make it unavailable from the project grids.
+            
+          </p>
+          <%= f.input :archived %>
+        </div>
+        <% end %>
+
         <%= f.input :final_title %>
 
         <%= f.input :title, label: 'On Screen Title' %>
