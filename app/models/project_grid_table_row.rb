@@ -41,8 +41,8 @@ class ProjectGridTableRow < ActiveRecord::Base
     row_hash[:publisher] = 'Booktrope'
 
     row_hash[:product_type] = 'Book'
-    row_hash[:sales_class] = 'Retail'
-    row_hash[:royalty_type] = 'Royalty'
+    row_hash[:sales_class] = ''
+    row_hash[:royalty_type] = ''
 
     row_hash[:retail_price] = pgtr.formatted_print_price
 
