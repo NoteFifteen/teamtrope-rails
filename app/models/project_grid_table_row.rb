@@ -52,7 +52,7 @@ class ProjectGridTableRow < ActiveRecord::Base
       member_hash[:actual_role] = team_membership.role.name
       member_hash[:team_member] = team_membership.member.name
       member_hash[:contract_percent] = team_membership.percentage
-      member_hash[:contract_id] = 'Contract ID'
+      member_hash[:contract_id] = team_membership.member.uid
 
       results << member_hash
     end
