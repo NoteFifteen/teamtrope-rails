@@ -11,18 +11,29 @@ class ReportsController < ApplicationController
     @project_grid_table_rows = ProjectGridTableRow
           .includes(:project)
           .where(project_id: Project.with_no_contracts.ids)
+          .not_archived
+          .order(title: :asc)
+  end
+
+  def archived_projects
+    # getting the archived projects out of the project grid table rows table
+    # the archived flag is updated via the listener upon editing the document.
+    @project_grid_table_rows = ProjectGridTableRow.includes(:project)
+          .archived
           .order(title: :asc)
   end
 
   def missing_current_tasks
-    @projects = Project.missing_current_tasks
+    @projects = Project.missing_current_tasks.not_archived
   end
 
   def scribd_metadata_export
     @scribd_metadata_export_items = Project.generate_scribd_export(
-      ProjectGridTableRow.published_books.excude_rights_returned.sort { | a, b |
-        a.title <=> b.title
-      },
+      ProjectGridTableRow.published_books.excude_rights_returned
+            .not_archived
+            .sort { | a, b |
+              a.title <=> b.title
+            },
       :html)
     @current_page = request.original_url
   end
@@ -30,10 +41,11 @@ class ReportsController < ApplicationController
   def send_scribd_export_email
     @scribd_csv_text = Project.generate_scribd_export_csv(
       Project.generate_scribd_export(
-        ProjectGridTableRow.published_books.excude_rights_returned.sort { | a, b |
-          a.title <=> b.title
-        }
-      )
+        ProjectGridTableRow.published_books.excude_rights_returned
+          .not_archived.sort { | a, b |
+            a.title <=> b.title
+          }
+        )
     )
     ReportMailer.scribd_email_report @scribd_csv_text, current_user
   end
@@ -41,9 +53,10 @@ class ReportsController < ApplicationController
   def master_metadata
     @master_metadata_export = Project.generate_master_meta_export(
       ProjectGridTableRow.published_books.excude_rights_returned
-      .sort { | a, b |
-        a.title <=> b.title
-      },
+        .not_archived
+        .sort { | a, b |
+          a.title <=> b.title
+        },
       :html)
   end
 
@@ -51,9 +64,10 @@ class ReportsController < ApplicationController
     csv_string = Project.generate_master_meta_export_csv(
       Project.generate_master_meta_export(
         ProjectGridTableRow.published_books.excude_rights_returned
-        .sort { | a, b |
-          a.title <=> b.title
-        }
+          .not_archived
+          .sort { | a, b |
+            a.title <=> b.title
+          }
       )
     )
 

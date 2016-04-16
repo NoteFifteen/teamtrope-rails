@@ -1,0 +1,19 @@
+<tr>
+  <td class="book-title"><%= link_to project_grid_table_row.title, project_grid_table_row.project %></td>
+  <td><%= image_tag(project_grid_table_row.project.cover_template.cover_preview.url(:thumb), size: "120x120") if project_grid_table_row.project.try(:cover_template).try(:cover_preview?) %></td>
+  <td><%= project_grid_table_row.author?? project_grid_table_row.author : "-" %></td>
+  <td><%= project_grid_table_row.genre?? project_grid_table_row.genre : "-" %></td>
+  <td><%= project_grid_table_row.editor?? project_grid_table_row.editor : "-" %></td>
+  <td><%= project_grid_table_row.proofreader?? project_grid_table_row.proofreader : "-" %></td>
+  <td><%= project_grid_table_row.project_manager?? project_grid_table_row.project_manager : "-" %></td>
+  <td><%= project_grid_table_row.book_manager?? project_grid_table_row.book_manager : "-" %></td>
+  <td><%= project_grid_table_row.cover_designer?? project_grid_table_row.cover_designer : "-" %></td>
+  <td><%= project_grid_table_row.imprint?? project_grid_table_row.imprint : "-" %></td>
+  <td><%= project_grid_table_row.production_task_name?? project_grid_table_row.production_task_display_name : "-" %></td>
+  <td><%= project_grid_table_row.production_task_last_update?? project_grid_table_row.production_task_last_update.strftime("%m/%d/%Y") : "-" %></td>
+  <td><%= project_grid_table_row.design_task_name?? project_grid_table_row.design_task_display_name : "-" %></td>
+  <td><%= project_grid_table_row.design_task_last_update?? project_grid_table_row.design_task_last_update.strftime("%m/%d/%Y") : "-" %></td>
+  <td><%= project_grid_table_row.marketing_task_name?? project_grid_table_row.marketing_task_display_name : "-" %></td>
+  <td><%= project_grid_table_row.marketing_task_last_update?? project_grid_table_row.marketing_task_last_update.strftime("%m/%d/%Y") : "-" %></td>
+  <td><%= project_grid_table_row.teamroom_link?? link_to("Teamroom Link", project_grid_table_row.teamroom_link) : '-' %></td>
+</tr>

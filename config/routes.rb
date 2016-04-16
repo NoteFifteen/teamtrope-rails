@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       get 'high_allocations',      to: 'reports#high_allocations'
       get 'missing_current_tasks', to: 'reports#missing_current_tasks'
       get 'scribd_export',         to: 'reports#scribd_metadata_export'
+      get 'archived_projects',     to: 'reports#archived_projects'
 
       post 'send_scribd_export_email', to: 'reports#send_scribd_export_email', via: :post
     end

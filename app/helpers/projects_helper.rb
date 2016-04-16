@@ -24,7 +24,9 @@ module ProjectsHelper
 
     unless filter_by.nil? || !filters.has_key?(filter_by.to_sym)
       if filter_by.to_sym == :all
-        @projects = ProjectGridTableRow.includes(project: [:cover_template]).all
+        @projects = ProjectGridTableRow.includes(project: [:cover_template])
+              .not_archived
+              .all
       elsif filter_by.to_sym == :my_books
         get_my_projects
       elsif filter_by.to_sym == :not_published
@@ -33,7 +35,9 @@ module ProjectsHelper
         @grid_title =  filters[filter_by.to_sym][:label]
         @grid_title =  filters[filter_by.to_sym][:task_name] if @grid_title.empty?
         pgtr_meta_hash = filters[filter_by.to_sym]
-        @projects = ProjectGridTableRow.includes(project: [:cover_template]).where("#{pgtr_meta_hash[:workflow_name]}_task_name = ?", pgtr_meta_hash[:task_name])
+        @projects = ProjectGridTableRow.includes(project: [:cover_template])
+              .where("#{pgtr_meta_hash[:workflow_name]}_task_name = ?", pgtr_meta_hash[:task_name])
+              .not_archived
       end
     end
   end
@@ -56,7 +60,9 @@ module ProjectsHelper
       not_published_tasks.push next_task.name
       workflow_task = next_task
     end
-    @projects = ProjectGridTableRow.includes(project: [:cover_template]).where("production_task_name in (?)", not_published_tasks)
+    @projects = ProjectGridTableRow.includes(project: [:cover_template])
+          .where("production_task_name in (?)", not_published_tasks)
+          .not_archived
   end
 
   # Search using the author's Nickname (@name in OldTrope)
@@ -67,13 +73,10 @@ module ProjectsHelper
     else
       @grid_title = ("Books by #{user.name} (@#{author_name})").html_safe
 
-      #@todo May be worth refactoring in the future, though difficult due to the dependent relationships
-      @projects = ProjectGridTableRow.find_by_sql(["SELECT * FROM project_grid_table_rows
-                                                    JOIN projects ON projects.id = project_grid_table_rows.project_id
-                                                    JOIN team_memberships ON team_memberships.project_id = project_grid_table_rows.project_id
-                                                    JOIN roles ON roles.id = team_memberships.role_id
-                                                    JOIN users ON users.id = team_memberships.member_id
-                                                    WHERE roles.name = 'Author' AND LOWER(users.nickname) = LOWER(?)", author_name])
+      # refactored to use ActiveRecord justin sleepydeveloper
+      @projects = ProjectGridTableRow.joins(project: [team_memberships: [:role, :member]])
+          .where("roles.name = 'Author' and LOWER(users.nickname) = LOWER(?)", author_name)
+          .not_archived
     end
   end
 
@@ -81,7 +84,9 @@ module ProjectsHelper
   def get_my_projects
     @grid_title = "My Books"
     # We only want the book to show up once in the list so we use distinct.
-    @projects = ProjectGridTableRow.where(project_id: current_user.projects.ids).distinct
+    @projects = ProjectGridTableRow.where(project_id: current_user.projects.ids)
+          .not_archived
+          .distinct
   end
 
   def get_all_projects

@@ -120,6 +120,14 @@ class Project < ActiveRecord::Base
     where.not(id: Project.joins(team_memberships: :hellosign_document).distinct.ids)
   }
 
+  scope :archived, -> () {
+    where(archived: true)
+  }
+
+  scope :not_archived, -> () {
+    where(archived: false)
+  }
+
   BOOK_TYPES = [
     ['ebook only', 'ebook_only'],
     ['ebook and print', 'ebook_and_print']
