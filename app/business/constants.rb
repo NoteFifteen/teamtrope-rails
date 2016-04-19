@@ -88,6 +88,29 @@ module Constants
       :size => DefaultSizeIn
   ]
 
+  DashbookHeaderHash = {
+    project_id: 'Project ID',
+    product_name: 'Product Name',
+    title: 'Title',
+    imprint: 'Imprint',
+    genre: 'Genre',
+    published: 'Published',
+    isbn: 'ISBN',
+    epub_isbn: 'epub ISBN',
+    asin: 'ASIN',
+    minimum_royalty: 'Minimum Royalty',
+    publisher: 'Publisher',
+    role: 'Role',
+    actual_role: 'Actual Role',
+    team_member: 'Team Member',
+    contract_percent: 'Contract %',
+    contract_id: 'Contract ID',
+    product_type: 'Product Type',
+    sales_class: 'Sales Class',
+    royalty_type: 'Royalty Type',
+    retail_price: 'Retail Price'
+  }
+
   MasterMetadataHeaderHash  = {
       project_id: "Project ID",
       prefunk: "Prefunk",

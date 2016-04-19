@@ -1,7 +1,7 @@
 <% provide(:title, "Master Metadata Spreadsheet") %>
 <div class="page"  role="main">
   <h2>Master Metadata Spreadsheet Export</h2><br />
-  <div id="master_metadata_export_results"></div>
+  <div id="export_results"></div>
 
   <%= button_to @current_path, controller: 'reports', action: 'master_metadata_export',
         remote: true,
@@ -10,15 +10,26 @@
         style: "width:125px",
         id: "email_master_metadata_button" do %>
         <span class="spinner"><i class="fa fa-spinner"></i></span>Email Report
-  <% end %>
-  <script type="text/javascript">
+  <% end %><br />
 
-    $('#master_metadata_export_form').bind("submit", function() {
-      $("#master_metadata_export_results").hide()
-      $("#email_master_metadata_button").attr("disabled", true)
-      $("#email_master_metadata_button").addClass("active")
-      $("#email_master_metadata_button").addClass("disabled")
-    });
+  <%= button_to admin_reports_dashbook_export_path, controller: 'reports', action: 'send_dashbook_email',
+        remote: true,
+        form: { id: "dashbook_export_form" },
+        class: "btn btn-primary has-spinner",
+        style: "width:125px",
+        id: "email_dashbook_button" do %>
+        <span class="spinner"><i class="fa fa-spinner"></i></span>Dashbook
+  <% end %>
+
+  <script type="text/javascript">
+    <% ["master_metadata", "dashbook" ].each do | id | %>
+        $("#<%= id %>_export_form").bind("submit", function() {
+          $("#export_results").hide()
+          $("#email_<%= id %>_button").attr("disabled", true)
+          $("#email_<%= id %>_button").addClass("active")
+          $("#email_<%= id %>_button").addClass("disabled")
+        });
+    <% end %>
   </script>
   <hr />
   <table id="ProjectListTable" class="projectListTable">

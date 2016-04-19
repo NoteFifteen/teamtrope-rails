@@ -50,6 +50,7 @@ Rails.application.routes.draw do
 
   get  'admin/reports/master_metadata',           to: 'reports#master_metadata'
   post 'admin/reports/master_metadata',           to: 'reports#master_metadata_export', via: :post
+  post 'admin/reports/dashbook_export',           to: 'reports#send_dashbook_email'
 
   post 'prefunk_enrollments/prefunk_scribd_email_report', to: 'prefunk_enrollments#prefunk_scribd_email_report', via: :post
 
