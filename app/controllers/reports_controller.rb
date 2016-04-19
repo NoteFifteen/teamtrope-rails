@@ -54,9 +54,11 @@ class ReportsController < ApplicationController
     require 'csv'
     csv_string = CSV.generate do | csv |
       csv << Constants::DashbookHeaderHash.values
-      ProjectGridTableRow.published_books.sort{ | a, b | a.title <=> b.title }.each do | pgtr |
-        ProjectGridTableRow.generate_team_member_pct(pgtr).each do | result |
-          csv << result.values
+      ProjectGridTableRow.published_books
+        .not_archived.sort { | a, b |
+          a.title <=> b.title }.each do | pgtr |
+            ProjectGridTableRow.generate_team_member_pct(pgtr).each do | result |
+              csv << result.values
         end
       end
     end
