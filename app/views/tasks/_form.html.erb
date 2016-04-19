@@ -20,6 +20,13 @@
   <%= f.association :rejected_task %>
   <%= f.collection_select :partial, load_partials, :last, :first, include_blank: true %>
   <%= f.input :team_only %>
+
+  <div style="padding: 0px 20px 20px 20px; margin-bottom: 20px; border-color:#C7C6C6; border-width: 1px; border-style: solid;">
+    <h3>Alerts and Modal</h3>
+    <%= f.input :modal, label: "Is Modal?" %>
+    <%= f.input :modal_header %>
+    <%= f.input :modal_text %>
+  </div>
   <h4>Performers</h4>
   <%= f.association :performers, as: :check_boxes, label: false  %>
   <h4>Unlocked Tasks</h4>

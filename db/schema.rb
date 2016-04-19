@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160408002034) do
+ActiveRecord::Schema.define(version: 20160323225635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1092,6 +1092,9 @@ ActiveRecord::Schema.define(version: 20160408002034) do
     t.datetime "updated_at"
     t.boolean  "team_only",        default: true
     t.string   "override_name"
+    t.string   "modal_header",     default: ""
+    t.text     "modal_text",       default: ""
+    t.boolean  "modal",            default: false
   end
 
   add_index "tasks", ["next_id"], name: "index_tasks_on_next_id", using: :btree

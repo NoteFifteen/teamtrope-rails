@@ -11,6 +11,8 @@
 // about supported directives.
 //
 //= require jquery
+//= require bootstrap-sprockets
+//= require bootstrap
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require s3_direct_upload
@@ -22,7 +24,6 @@
 //= require highcharts/highcharts-more
 //= require highcharts/modules/exporting
 //= require turbolinks
-//= require bootstrap-sprockets
 //= require chosen-jquery
 //= require cocoon
 //= require jquery.ui.datepicker
