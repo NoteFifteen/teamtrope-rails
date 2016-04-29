@@ -121,6 +121,16 @@ class ProjectMailer < ActionMailer::Base
     send_email_message('update_social_media_marketing', tokens, admin_social_media_marketing_list, admin_subject)
   end
 
+  # Accepted file download terms
+  def accepted_download_terms(project, current_user, params)
+    @project = project
+    @current_user = current_user
+    subject = "Accepted Terms"
+    recipients = get_project_recipient_list(project) + admin_assets_access_list
+    message_template = "accepted_terms"
+    send_email_message(message_template, {}, recipients, subject)
+  end
+
   # A new team member has been added to the team
   def accepted_team_member(project, current_user, params)
     @project = project
@@ -1292,6 +1302,10 @@ class ProjectMailer < ActionMailer::Base
 
   def admin_contract_import_list
     %w( tt_legal_document_import_list@booktrope.com )
+  end
+
+  def admin_assets_access_list
+    %w( tt_assets_access_list@booktrope.com )
   end
 
   # Set the campaign header for MailGun tracking
