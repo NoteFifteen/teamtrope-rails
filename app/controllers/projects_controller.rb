@@ -117,6 +117,17 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def accept_terms
+    update_current_task
+    @project.create_activity :accepted_terms, owner: current_user,
+                             parameters: { text: ' Accepted Download Terms', form_data: params[:project].to_s}
+    flash[:success] = 'Accepted Terms'
+
+    ProjectMailer.accepted_download_terms @project, current_user, params
+
+    redirect_to @project
+  end
+
   def submit_form_1099
     # This data is sensitive. We do not store it locally.
     # instead we store it in box.

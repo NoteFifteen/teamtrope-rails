@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323225635) do
+ActiveRecord::Schema.define(version: 20160428223452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -264,6 +264,11 @@ ActiveRecord::Schema.define(version: 20160323225635) do
   add_index "current_tasks", ["project_id", "task_id"], name: "index_current_tasks_on_project_id_and_task_id", unique: true, using: :btree
   add_index "current_tasks", ["project_id"], name: "index_current_tasks_on_project_id", using: :btree
   add_index "current_tasks", ["task_id"], name: "index_current_tasks_on_task_id", using: :btree
+
+  create_table "dashes", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "document_import_queues", force: true do |t|
     t.integer  "wp_id"
@@ -762,6 +767,10 @@ ActiveRecord::Schema.define(version: 20160323225635) do
     t.text     "proofreaders_pct"
     t.float    "total_pct"
     t.boolean  "archived",                     default: false
+    t.string   "download_task_id"
+    t.string   "download_task_name"
+    t.string   "download_task_display_name"
+    t.string   "download_task_last_update"
   end
 
   add_index "project_grid_table_rows", ["design_task_id"], name: "index_project_grid_table_rows_on_design_task_id", using: :btree
