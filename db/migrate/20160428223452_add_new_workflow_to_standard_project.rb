@@ -20,7 +20,7 @@ class AddNewWorkflowToStandardProject < ActiveRecord::Migration
 
     accept_terms_task = download_workflow.tasks.create(
       name: 'Accept Terms',
-      tab_text: 'Download Your Files',
+      tab_text: 'Accept Terms to Download Files',
       next_id: accepted_task.id,
       partial: 'download_your_files',
       team_only: true,
