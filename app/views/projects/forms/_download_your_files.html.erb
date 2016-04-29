@@ -1,51 +1,54 @@
 <div class="container">
-
-  <h1>Please Accept the Following Terms</h1>
-
+  <h1>By clicking accept terms, you acknowledge</h1>
   <p>
-    File download link:
+    This form unlocks the assets tab to allow authors to download files that may
+    be needed for re-publishing books after Booktrope closes on May 31, 2016.
+    Once agreed, the assets tab provides access to downloadable copies of
+    published books in Kindle format (.mobi) and ebook format suitable for use
+    on other platforms (.epub). It also provides access to downloadable PDF
+    copies of the book interior print layout and cover templates prepared for
+    CreateSpace and Lightning Source. There may be other useful assets in the
+    tab.
   </p>
-
   <p>
-    This new link is designed to make it easier for authors to download files
-    that may be needed for re-publishing books after Booktrope closes down.
-    This link provides access to downloadable copies of published books in
-    Kindle format (.mobi) and ebook format suitable for use on other platforms
-    (.epub).  It also provides access to downloadable PDF copies of the book
-    interior print layout and cover templates prepared for CreateSpace and
-    Lightning Source.
+    All downloads must be complete by May 31, 2016.
   </p>
-
   <p>
     By clicking below, you acknowledge that any re-publication of this book by
-    yourself or by another publisher is covered by the termination provision of
-    the creative team agreement (if any) for the book.  The creative team
-    agreement can be found (note tab / location).  If there is no creative team
-    agreement, you agree to make arrangements acceptable to other creative team
-    members before using any of their work product.
+    you or by another publisher is covered by the termination provision of
+    the creative team agreement (if any) for the book. Creative team agreements
+    since 9/15/2015 are found in the legal docs section. For earlier creative
+    team agreements, each signer was provided a copy of the agreement via
+    DocuSign at the time of completion. If you don't have a copy and need one,
+    please submit a request via Booktrope Assistance. If there is no creative
+    team agreement, you agree to make arrangements acceptable to other creative
+    team members before using any of their work product.
   </p>
-
   <p>
-  If you republish these books, please note that you will need to change
-
-  <ul class="list-group">
-    <li>The title page of the book to eliminate the Booktrope logo and reference to Booktrope</li>
-    <li>The copyright page to eliminate the Booktrope ISBN numbers (most books have both a print ISBN and an EPUB ISBN listed, as well as any contact information referencing Booktrope</li>
-    <li>The final page (listing more great reads from Booktrope) to remove references to Booktrope books</li>
-    <li>The cover, to eliminate the references to Booktrope and the Booktrope logo, and the ISBN bar code with Booktrope’s ISBN.</li>
-  </ul>
+    For title that have not yet been published, please consult the termination
+    provision of the creative team agreement for the title. In general, authors
+    do not have the right to use work by creative team members unless the author
+    and creative team member agree on compensation and other terms.  If there is
+    no creative team agreement, authors will need to make independent
+    arrangements with creative team members before using any of their work.
+  </p>
   <p>
-
+    If you republish the book, you will need to do the following:
+    <ul class="list-group" style="list-style: disc;">
+      <li>Change the title page of the book to eliminate the Booktrope logo and reference to Booktrope</li>
+      <li>Change the copyright page to eliminate the Booktrope ISBN numbers (most books have both a print ISBN and an EPUB ISBN listed, as well as any contact information referencing Booktrope</li>
+      <li>Change the final page (listing more great reads from Booktrope) to remove references to Booktrope books</li>
+      <li>Change the cover of the book to eliminate reference to Booktrope, the Booktrope logo, ISBN barcode and Booktrope's ISBN</li>
+    </ul>
+  </p>
     <%= simple_form_for @project,
                         url: url_for(
                                     controller: 'projects',
                                     action: 'accept_terms',
                                     id: @project),
                         html: {id: 'accept_terms'} do |f| %>
-
       <%= f.error_notification %>
       <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'accepted_terms_submitted_task_id' %>
-
       <%= f.submit 'Accept Terms', class: 'btn btn-primary' %>
     <% end %>
 </div>
