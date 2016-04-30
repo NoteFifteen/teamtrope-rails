@@ -6,7 +6,7 @@
 //	);
 
 	<% # TODO: Refactor views/projects/show to pass the tab id as a local when calling render partial %>
-	$("input[id=tab500]").change(function (event) {
+	$("input[id=tab600]").change(function (event) {
         $.ajax({
             url: '<%= project_analytics_path(@project, channel: "amazon") %>',
             type: 'GET',
