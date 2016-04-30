@@ -17,47 +17,32 @@
       </div>
 
       <%
-         has_first_order = true
-         first_order_intl = has_first_order && @project.print_corners.first.try(:shipping_address_country) != 'United States'
-
          # Determine if user is the author
          current_user_is_author = false
          @project.authors.each{ |a| current_user_is_author = true if (a.member.id == @current_user.id) }
 
         # Testing Overrides here
-        # has_first_order = false
-        # first_order_intl = false
         # current_user_is_author = true
       %>
 
       <!-- See if they've submitted before -->
       <!-- If they're not international, direct them to CreateSpace, show a coupon code -->
-      <% if has_first_order && ! first_order_intl || ! current_user_is_author %>
-
+      <% if current_user_is_author %>
           <!-- If we have the eBook Store Info -->
           <% if ! @project.createspace_store_url.nil? %>
-              <h3>e-Store Info</h3>
-              <b>CreateSpace Store URL</b>: <%= link_to @project.createspace_store_url, @project.createspace_store_url %><br/>
-              <b>CreateSpace Discount Code</b>: <%= @project.createspace_coupon_code %><br/>
-          <% else %>
-            <!-- If we're the author and the eBook Store info isn't there, contact Adam -->
-            <% if current_user_is_author %>
-              <p><b>It looks like your store hasn't been set up yet.  If you'd like, you can send a request to have your store
-              set up by clicking the button below.</b></p>
-
-              <%= simple_form_for @project, url: url_for(controller: 'projects', action: 'print_corner_estore_request', id: @project) do | f | %>
-                <%= f.submit 'Request an e-Store' %>
-              <% end %>
-
-            <% else %>
-              <!-- Notice for everyone else -->
-              <p><b>Paperback orders are currently unavailable.  Please have the author of this book come to this task
-                and submit a request to have the Createspace e-store set up.</b></p>
-
-            <% end %>
+            <h3>e-Store Info</h3>
+            <b>CreateSpace Store URL</b>: <%= link_to @project.createspace_store_url, @project.createspace_store_url %><br/>
+            <b>CreateSpace Discount Code</b>: <%= @project.createspace_coupon_code %><br/>
           <% end %>
+          <p>Complimentary books for newly published titles are not being fulfilled at this time.</p>
       <% else %>
-        <p>Complimentary books for newly published titles are not being fulfilled at this time.</p>
+      <p>
+        <b>
+          Paperback orders are currently unavailable.  Please have the
+          author of this book come to this task and submit a request to have
+          the Createspace e-store set up.
+        </b>
+      </p>
       <% end %>
 
     </div>
@@ -68,12 +53,6 @@
       var validator = $('#add_print_request_form').validate({
           rules: {
 
-            <% if first_order_intl %>
-              // Required for International Orders
-              'project[print_corners_attributes][0][billing_acceptance]': {
-                  required: true
-              },
-            <% end %>
               'project[print_corners_attributes][0][shipping_recipient]': {
                   required: true
               },
