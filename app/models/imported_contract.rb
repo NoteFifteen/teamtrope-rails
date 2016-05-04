@@ -10,7 +10,15 @@ class ImportedContract < ActiveRecord::Base
                     :s3_permissions => 'authenticated-read'
 
   validates_attachment :contract,
-        *Constants::DefaultContentTypeDocumentParams
+        :content_type => {
+          content_type: [
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/pdf',
+            'text/plain'
+          ]
+        }
+        # *Constants::DefaultContentTypeDocumentParams
 
   before_save :set_upload_attributes
   after_save :transfer_and_cleanup
@@ -25,6 +33,7 @@ class ImportedContract < ActiveRecord::Base
   end
 
   protected
+
   # Final upload processing step
   def transfer_and_cleanup
     transfer_and_cleanup_with_block do |type|

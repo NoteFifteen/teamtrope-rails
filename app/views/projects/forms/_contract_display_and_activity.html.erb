@@ -90,7 +90,7 @@
           member_contracts_status = "There are outstanding signature requests."
         end
 
-        if @hellosign_documents.count <= 0
+        if @hellosign_documents.count <= 0 && @project.imported_contracts.count <= 0
           alert_class = "danger"
           member_contracts_status = "Warning there are no contracts in the system for this project!"
         end
