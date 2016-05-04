@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160428223452) do
+ActiveRecord::Schema.define(version: 20160503235957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,14 @@ ActiveRecord::Schema.define(version: 20160428223452) do
   end
 
   add_index "audit_team_membership_removals", ["project_id"], name: "index_audit_team_membership_removals_on_project_id", using: :btree
+
+  create_table "author_agreement_queues", force: true do |t|
+    t.string   "nickname"
+    t.string   "file"
+    t.integer  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "blog_tours", force: true do |t|
     t.integer  "project_id"
@@ -264,11 +272,6 @@ ActiveRecord::Schema.define(version: 20160428223452) do
   add_index "current_tasks", ["project_id", "task_id"], name: "index_current_tasks_on_project_id_and_task_id", unique: true, using: :btree
   add_index "current_tasks", ["project_id"], name: "index_current_tasks_on_project_id", using: :btree
   add_index "current_tasks", ["task_id"], name: "index_current_tasks_on_task_id", using: :btree
-
-  create_table "dashes", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "document_import_queues", force: true do |t|
     t.integer  "wp_id"
