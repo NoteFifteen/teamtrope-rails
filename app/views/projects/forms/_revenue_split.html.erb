@@ -1,26 +1,5 @@
 <!-- Revenue Split -->
 <div class="container">
-  <script>
-      var maxPercent = <%= @project.project_type.team_total_percent %>;
-      var total = 0;
-
-      jQuery.validator.addMethod("revenueSplitValidation", function(value, element, params)
-      {
-          total = 0;
-          $(params[0]).each(function() {
-              total += parseFloat($(this).val());
-          });
-
-          return this.optional(element) || total <= parseFloat(value);
-      }, jQuery.validator.format("You have exceed " + maxPercent + "% Please adjust the percents so they sum up accordingly."));
-
-  </script>
-  <%= simple_form_for @project, url: url_for(:controller => 'projects', :action => 'revenue_allocation_split',
-                                             id: @project), html: { id: 'revenue_allocation_split' } do | f| %>
-
-    <%= hidden_field_tag :submitted_task_id, current_tab.task.id, id: 'rev_allocation_submitted_task_id' %>
-    <%= hidden_field_tag :fullAmount, @project.project_type.team_total_percent %><br />
-
     <div class="row">
       <div class="col-md-8">
         <h1>Revenue Split</h1>
@@ -34,21 +13,18 @@
             </tr>
             </thead>
             <tbody>
+            <% total = 0 %>
             <% total_suggested = 0 %>
-            <%= f.simple_fields_for :team_memberships do | builder | %>
-                <% next if builder.object.new_record? %>
+            <% @project.team_memberships.each do |team_member| %>
+              <% next if team_member.new_record? %>
+              <% total += team_member.percentage %>
                 <tr>
-                  <td><%= builder.object.role.name %></td>
-                  <td><%= builder.object.member.name %> <%= builder.input :id, as: :hidden %></td>
-
+                  <td><%= team_member.role.name %></td>
+                  <td><%= team_member.member.name %></td>
                   <td style="width: 140px;">
-                    <div class="input-group">
-                      <%= builder.input :percentage, label: false, input_html: {class: 'percentage form-control'} %>
-                      <% input_id = 'basic-addon-id-' + builder.object.id.to_s %>
-                      <span class="input-group-addon" id="<%= input_id %>">%</span>
-                    </div>
+                      <%= team_member.percentage %>
                   </td>
-                  <% suggested = @project.suggested_allocation(builder.object.role) %>
+                  <% suggested = @project.suggested_allocation(team_member.role) %>
                   <% total_suggested += suggested %>
                   <td style="width: 140px;"><%= suggested %>%</td>
                 </tr>
@@ -58,7 +34,7 @@
             <tr>
               <td colspan="2"><strong>Total (must not exceed 70%)</strong></td>
               <td id="split_threshold">
-                0%
+                <%= total %>%
               </td>
               <td>
                 <%= total_suggested %>%
@@ -68,13 +44,5 @@
           </table>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-8">
-        <%= select_date (Date.today.day == 1)? Date.today : Date.today + 1.month, prefix: :effective_date, start_year: Date.today.year, discard_day: true %><br /><br />
-        <div>The date you would like this allocation agreement to take effect.</div><br />
-        <%= f.submit 'submit' %>
-      </div>
-    </div>
-  <% end %>
 
 </div>
